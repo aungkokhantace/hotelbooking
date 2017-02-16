@@ -6,10 +6,12 @@
  * Time: 11:28 AM
  */
 
-namespace App\Setup\Country\Country;
+namespace App\Setup\Country;
 
 
 interface CountryRepositoryInterface
 {
-
+    public function create($paramObj);
+    public function update($paramObj);
+    public function delete($id);
 }

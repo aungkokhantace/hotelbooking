@@ -5,15 +5,15 @@
  * Date: 6/21/2016
  * Time: 3:51 PM
  */
-namespace App\Setup\Township;
+namespace App\Setup\HotelRestaurantCategory;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use App\User;
-use App\Setup\Township\Township;
+use App\Setup\HotelRestaurantCategory\HotelRestaurantCategory;
 use App\Core\Utility;
 use App\Core\ReturnMessage;
-class TownshipRepository implements TownshipRepositoryInterface
+class HotelRestaurantCategoryRepository implements HotelRestaurantCategoryRepositoryInterface
 {
     public function create($paramObj){
         $returnedObj['aceplusStatusCode'] = ReturnMessage::INTERNAL_SERVER_ERROR;
@@ -53,7 +53,7 @@ class TownshipRepository implements TownshipRepositoryInterface
 
     public function delete($id)
     {
-        $tempObj                = Township::find($id);
+        $tempObj                = HotelRestaurantCategory::find($id);
         $tempObj                = Utility::addDeletedBy($tempObj);
         $tempObj->deleted_at    = date('Y-m-d H:m:i');
         $tempObj->save();

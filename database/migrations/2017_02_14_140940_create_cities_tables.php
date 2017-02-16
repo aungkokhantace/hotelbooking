@@ -9,16 +9,16 @@ class CreateCitiesTables extends Migration
     {
         Schema::create('cities', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('city_name');
-            $table->unsignedInteger('township_id');
+            $table->string('city_name')->unique();
+            $table->unsignedInteger('country_id');
             $table->integer('created_by')->default(1);
             $table->integer('updated_by')->default(1);
             $table->integer('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('township_id')
-                ->references('id')->on('townships')
+            $table->foreign('country_id')
+                ->references('id')->on('countries')
                 ->onDelete('restrict');
             
         });

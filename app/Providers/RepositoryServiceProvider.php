@@ -36,7 +36,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind('App\Setup\Feature\FeatureRepositoryInterface','App\Setup\Feature\FeatureRepository');
         $this->app->bind('App\Setup\Amendities\AmenditiesRepositoryInterface','App\Setup\Amendities\AmenditiesRepository');
         $this->app->bind('App\Setup\Facilities\FacilitiesRepositoryInterface','App\Setup\Facilities\FacilitiesRepository');
-        $this->app->bind('App\Setup\HotelRestaurantCategory\HotelRestaurantCategoryInterface','App\Setup\HotelRestaurantCategory/HotelRestaurantCategoryRepository');
+        $this->app->bind('App\Setup\HotelRestaurantCategory\HotelRestaurantCategoryRepositoryInterface','App\Setup\HotelRestaurantCategory\HotelRestaurantCategoryRepository');
 
     }
 }

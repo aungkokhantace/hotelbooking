@@ -4,13 +4,13 @@ namespace App\Setup\Country;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Country extends Model
+class HotelRestaurantCategory extends Model
 {
-    protected $table = 'countries';
+    protected $table = 'hotel_restaurant_categories';
 
     protected $fillable = [
         'id',
-        'countries_name',
+        'hotel_restaurant_category_name',
         'updated_at','created_at','deleted_at','updated_by','created_by','deleted_by'
         ,
     ];

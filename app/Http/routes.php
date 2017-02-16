@@ -71,6 +71,7 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('country/edit/{id}', array('as'=>'backend/country/edit','uses'=>'Setup\Country\CountryController@edit'));
             Route::post('country/update', array('as'=>'backend/country/update','uses'=>'Setup\Country\CountryController@update'));
             Route::post('country/destroy', array('as'=>'backend/country/destroy','uses'=>'Setup\Country\CountryController@destroy'));
+            Route::get('country/check_country_name',array('as'=>'backend/country/check_country_name','uses'=>'Setup\Country\CountryController@check_country_name'));
 
             //Township
             Route::get('township',array('as'=>'backend/township','uses'=>'Setup\Township\TownshipController@index'));
@@ -79,6 +80,7 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('township/edit/{id}', array('as'=>'backend/township/edit', 'uses'=>'Setup\Township\TownshipController@edit'));
             Route::post('township/update', array('as'=>'backend/township/update', 'uses'=>'Setup\Township\TownshipController@update'));
             Route::post('township/destroy', array('as'=>'backend/township/destroy', 'uses'=>'Setup\Township\TownshipController@destroy'));
+            Route::get('township/check_township_name', array('as'=>'backend/township/check_township_name', 'uses'=>'Setup\Township\TownshipController@check_township_name'));
 
             //City
             Route::get('city', array('as'=>'backend/city', 'uses'=>'Setup\City\CityController@index'));
@@ -87,6 +89,7 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('city/edit/{id}', array('as'=>'backend/city/edit', 'uses'=>'Setup\City\CityController@edit'));
             Route::post('city/update', array('as'=>'backend/city/update', 'uses'=>'Setup\City\CityController@update'));
             Route::post('city/destroy', array('as'=>'backend/city/destroy', 'uses'=>'Setup\City\CityController@destroy'));
+            Route::get('city/check_city_name',array('as'=>'backend/city/check_city_name','uses'=>'Setup\City\CityController@check_city_name'));
 
             //Feature
             Route::get('feature', array('as'=>'backend/feature', 'uses'=>'Setup\Feature\FeatureController@index'));
@@ -114,11 +117,11 @@ Route::group(['middleware' => 'web'], function () {
 
             //Hotel Restaurant Category
             Route::get('hotel_restaurant_category', array('as'=>'backend/hotel_restaurant_category', 'uses'=>'Setup\HotelRestaurantCategory\HotelRestaurantCategoryController@index'));
-            Route::get('hotel_restaurant_category/create', array('as'=>'backend/hotel_restaurant_category/create', 'uses'=>'Setup\HotelRestaurnatCategory\HotelRestaurantCategoryController@create'));
+            Route::get('hotel_restaurant_category/create', array('as'=>'backend/hotel_restaurant_category/create', 'uses'=>'Setup\HotelRestaurantCategory\HotelRestaurantCategoryController@create'));
             Route::post('hotel_restaurant_category/store', array('as'=>'backend/hotel_restaurant_category/store', 'uses'=>'Setup\HotelRestaurantCategory\HotelRestaurantCategoryController@store'));
             Route::get('hotel_restaurant_category/edit/{id}', array('as'=>'backend/hotel_restaurant_category/edit', 'uses'=>'Setup\HotelRestaurantCategory\HotelRestaurantCategoryController@edit'));
             Route::post('hotel_restaurant_category/update', array('as'=>'backend/hotel_restaurant_category/update', 'uses'=>'Setup\HotelRestaurantCategory\HotelRestaurantCategoryController@update'));
-            Route::post('hotel_restaurant_category/destroy', array('as'=>'backend/hotel_restaurant_category/destroy', 'uses'=>'Setup\HotelRestaurantCategory\HotelResturantCategoryController@destroy'));
+            Route::post('hotel_restaurant_category/destroy', array('as'=>'backend/hotel_restaurant_category/destroy', 'uses'=>'Setup\HotelRestaurantCategory\HotelRestaurantCategoryController@destroy'));
 
 
         });

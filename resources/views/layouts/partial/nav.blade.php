@@ -104,6 +104,17 @@
                             <li nav-id="modifier-manage-modifierpanel"><a href="/backend/country">List</a></li>
                         </ul>
                     </li>
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>City</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/city/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/city">List</a></li>
+                        </ul>
+                    </li>
                     <li nav-id="modifier-manage" class="has-sub">
                         <a href="javascript:;">
                             <b class="caret pull-right"></b>
@@ -116,18 +127,6 @@
 
                         </ul>
                     </li>
-                    <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
-                            <b class="caret pull-right"></b>
-                            <span>City</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/city/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/city">List</a></li>
-                        </ul>
-                    </li>
-
 
                 </ul>
             </li>

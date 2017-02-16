@@ -6,10 +6,10 @@
  * Time: 11:28 AM
  */
 
-namespace App\Setup\City;
+namespace App\Setup\HotelRestaurantCategory;
 
 
-interface CityRepositoryInterface
+interface HotelRestaurantCategoryRepositoryInterface
 {
     public function create($paramObj);
     public function update($paramObj);

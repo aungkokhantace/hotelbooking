@@ -10,7 +10,7 @@ class CreateCountriesTable extends Migration
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('countries_name');
+            $table->string('countries_name')->unique();
            
             $table->integer('created_by')->default(1);
             $table->integer('updated_by')->default(1);

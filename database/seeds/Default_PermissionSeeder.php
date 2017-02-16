@@ -132,6 +132,10 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>91,'module'=>'RoomCategoryAmendities','name'=>'Update','description'=>'RoomCategoryAmendities Update','url'=>'backend/room_category_amendities/update'],
             ['id'=>92,'module'=>'RoomCategoryAmendities','name'=>'Destroy','description'=>'RoomCategoryAmendities Destroy','url'=>'backend/room_category_amendities/destroy'],
 
+            //Jquery Validation for Country and Township
+            ['id'=>93,'module'=>'Country','name'=>'Jquery Validation','description'=>'Country Jquery Validation','url'=>'backend/country/check_country_name'],
+            ['id'=>94,'module'=>'City','name'=>'Jquery Validation','description'=>'City Jquery Validation','url'=>'backend/city/check_city_name'],
+
 
 
         );

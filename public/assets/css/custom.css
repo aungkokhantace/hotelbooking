@@ -1,3 +1,9 @@
+.error{
+    color:red;
+}
+.require{
+    color:red;
+}
 .image_remove_btn {
     width: 350px;
     height: 40px;

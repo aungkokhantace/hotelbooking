@@ -1,32 +1,130 @@
-$().ready(function() {
-    // validation for customer-entry
-    $("#customer-entry").validate({
+$(document).ready(function() {
+    //Country
+    $('#country').validate({
         rules: {
-            name: "required",
-            phone: {
-                required: true,
-                number: true
-            },
-            email: {
-                required: true,
-                email: true
-            },
-            birthday: "required",
-            food:"required"
+            countries_name  : {
+                required	: true,
+                remote		: {
+                    url: "/backend/country/check_country_name",
+                    type: "get",
+                    data:
+                    {
+                        countries_name: function()
+                        {
+                            return $('#countries_name').val();
+                        }
+                    }
+                }
+            }
         },
         messages: {
-            name: "Member Name is required",
-            phone: {
-                required: "Phone is required",
-                number: "Phone Number should be number only"
-            },
-            email: "Please enter a valid email address",
-            birthday: "Birthday is required",
-            food: "Favourite Item is required"
+            countries_name: {
+                required	: 'Countries Name is required',
+                remote		: jQuery.validator.format("{0} is already taken.")
+            }
+        },
+        submitHandler: function(form) {
+            $('input[type="submit"]').attr('disabled','disabled');
+            //alert('hi');
+            form.submit();
         }
     });
 
+    //City
+    $('#city').validate({
+        rules: {
+            country_id      : 'required',
+            city_name  : {
+                required	: true,
+                remote		: {
+                    url: "/backend/city/check_city_name",
+                    type: "get",
+                    data: {
+                        city_name: function () {
+                            return $('#city_name').val();
+                        },
+                        country_id : function()
+                        {
+                            return $('#country_id').val();
+                        }
+                    }
+                }
+            }
+        },
+        messages: {
+            country_id    :{
+                required  : 'Country is required',
+            },
+            countries_name: {
+                required	: 'City Name is required',
+                remote		: jQuery.validator.format("{0} is already taken.")
+            }
+        },
+        submitHandler: function(form) {
+            $('input[type="submit"]').attr('disabled','disabled');
+            //alert('hi');
+            form.submit();
+        }
+    });
 
+    //Township
+    $('#township').validate({
+        rules: {
+            city_id        : 'required',
+            township_name  : 'required',
+        },
+        messages: {
+            city_id        :{
+                required   : 'City is required',
+            },
+            township_name  : {
+                required   : 'Township Name is required',
+            }
+        },
+        submitHandler: function(form) {
+            $('input[type="submit"]').attr('disabled','disabled');
+            //alert('hi');
+            form.submit();
+        }
+    });
+
+    //Feature
+    $('#feature').validate({
+        rules: {
+            feature_name  : 'required',
+            feature_icon  : 'required',
+        },
+        messages: {
+            feature_name  : {
+                required  : 'Feature Name is required',
+            },
+            feature_icon  : {
+                required  :'Feature Icon is required',
+            }
+        },
+        submitHandler: function(form) {
+            $('input[type="submit"]').attr('disabled','disabled');
+            //alert('hi');
+            form.submit();
+        }
+    });
+
+    //HotelRestaurantCategory
+    $('#hotel_restaurant_category').validate({
+        rules: {
+            hotel_restaurant_category  : 'required'
+        },
+        messages: {
+            hotel_restaurant_category  : {
+                required  : 'Hotel Restaurant Category is required',
+            }
+        },
+        submitHandler: function(form) {
+            $('input[type="submit"]').attr('disabled','disabled');
+            //alert('hi');
+            form.submit();
+        }
+    });
 
 });
 
