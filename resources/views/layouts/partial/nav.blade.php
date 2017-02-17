@@ -198,6 +198,50 @@
                 </ul>
             </li>
 
+            <li  nav-id='modifier'  class="has-sub">
+                <a href="javascript:;">
+                    <b class="caret pull-right"></b>
+                    <i class="fa fa-users"></i>
+                    <span>Hotel</span>
+                </a>
+                <ul class="sub-menu">
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Hotel</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/hotel/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel">List</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li  nav-id='modifier'  class="has-sub">
+                <a href="javascript:;">
+                    <b class="caret pull-right"></b>
+                    <i class="fa fa-users"></i>
+                    <span>Room</span>
+                </a>
+                <ul class="sub-menu">
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Room</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/room/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room">List</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </li>
+
         </ul>
         <!-- end sidebar nav -->
     </div>
