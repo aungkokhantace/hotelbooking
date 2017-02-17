@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Backend\Infrastructure\Forms\HotelRestaurantCategoryEntryFormRequest;
+use App\Backend\Infrastructure\Forms\HotelRestaurantCategoryEntryRequest;
 use App\Backend\Infrastructure\Forms\HotelRestaurantCategoryEditRequest;
 use App\Setup\HotelRestaurantCategory\HotelRestaurantCategoryRepositoryInterface;
 
@@ -43,13 +43,13 @@ class HotelRestaurantCategoryController extends Controller
         return redirect('/');
     }
 
-    public function store(HotelRestaurantCategoryEntryFormRequest $request)
+    public function store(HotelRestaurantCategoryEntryRequest $request)
     {
         $request->validate();
-        $hotel_restaurant_category       = Input::get('hotel_restaurant_category');
+        $hotel_restaurant_category       = Input::get('hotel_restaurant_category_name');
 
-        $paramObj                            = new HotelRestaurantCategory();
-        $paramObj->hotel_restaurant_category = $hotel_restaurant_category;
+        $paramObj                                   = new HotelRestaurantCategory();
+        $paramObj->hotel_restaurant_category_name   = $hotel_restaurant_category;
 
         $result = $this->hotel_restaurant_categoryRepository->create($paramObj);
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
@@ -68,7 +68,7 @@ class HotelRestaurantCategoryController extends Controller
     {
         if (Auth::guard('User')->check()) {
             $hotel_restaurant_category = HotelRestaurantCategory::find($id);
-            return view('backend.country.country')->with('hotel_restaurant_category', $hotel_restaurant_category);
+            return view('backend.hotel_restaurant_category.hotel_restaurant_category')->with('hotel_restaurant_category', $hotel_restaurant_category);
         }
         return redirect('/backend/login');
     }

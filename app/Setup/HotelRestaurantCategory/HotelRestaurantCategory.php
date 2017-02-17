@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Setup\Country;
+namespace App\Setup\HotelRestaurantCategory;
 
 use Illuminate\Database\Eloquent\Model;
 

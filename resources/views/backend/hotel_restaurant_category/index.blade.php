@@ -55,7 +55,7 @@
                     @foreach($hotel_restaurant_categories as $category)
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $category->id }}" id="all"></td>
-                            <td><a href="/backend/country/edit/{{$category->id}}">{{$category->hotel_restaurant_category_name}}</a></td>
+                            <td><a href="/backend/hotel_restaurant_category/edit/{{$category->id}}">{{$category->hotel_restaurant_category_name}}</a></td>
 
                         </tr>
                     @endforeach

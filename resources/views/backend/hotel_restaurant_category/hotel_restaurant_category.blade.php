@@ -7,7 +7,7 @@
 
     <h1 class="page-header">{{isset($hotel_restaurant_category) ?  'HotelRestaurantCategory Edit' : 'HotelRestaurantCategory Entry' }}</h1>
 
-    @if(isset($countries))
+    @if(isset($hotel_restaurant_category))
         {!! Form::open(array('url' => '/backend/hotel_restaurant_category/update','id'=>'hotel_restaurant_category', 'class'=> 'form-horizontal user-form-border')) !!}
 
     @else

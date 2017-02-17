@@ -129,9 +129,9 @@ class FeatureController extends Controller
         $id         = Input::get('selected_checkboxes');
         $new_string = explode(',', $id);
         foreach($new_string as $id){
-            $this->townshipRepository->delete($id);
+            $this->featureRepository->delete($id);
         }
-        return redirect()->action('Setup\Township\TownshipController@index'); //to redirect listing page
+        return redirect()->action('Setup\Feature\FeatureController@index'); //to redirect listing page
     }
 
 

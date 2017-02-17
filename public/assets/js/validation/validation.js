@@ -126,5 +126,47 @@ $(document).ready(function() {
         }
     });
 
+    //Amendities
+    $('#amendities').validate({
+        rules: {
+            amendities_name  : 'required',
+            amendities_icon  : 'required'
+        },
+        messages: {
+            amendities_name  : {
+                required     : 'Amendities name is required',
+            },
+            amendities_icon  :{
+                required     : 'Amendities Icon is required',
+            }
+        },
+        submitHandler: function(form) {
+            $('input[type="submit"]').attr('disabled','disabled');
+            //alert('hi');
+            form.submit();
+        }
+    });
+
+    //Facilities
+    $('#facilities').validate({
+        rules: {
+            facilities_name  : 'required',
+            facilities_icon  : 'required'
+        },
+        messages: {
+            facilities_name  : {
+                required     : 'Facilities name is required',
+            },
+            facilities_icon  :{
+                required     : 'Facilities Icon is required',
+            }
+        },
+        submitHandler: function(form) {
+            $('input[type="submit"]').attr('disabled','disabled');
+            //alert('hi');
+            form.submit();
+        }
+    });
+
 });
 
