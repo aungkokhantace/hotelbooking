@@ -56,7 +56,7 @@ return [
             'driver'    => 'mysql',
             'port'      =>'3306',
             'host'      => env('DB_HOST', 'localhost'),
-            'database'  => env('DB_DATABASE', 'laplus_new_frontandback'),
+            'database'  => env('DB_DATABASE', 'hotelbooking_db'),
             'username'  => env('DB_USERNAME', 'root'),
             'password'  => env('DB_PASSWORD', ''),
             'charset'   => 'utf8',
