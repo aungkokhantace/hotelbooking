@@ -45,4 +45,14 @@ class ConfigRepository implements ConfigRepositoryInterface
         $configs = DB::select("SELECT * FROM $tbConfig WHERE code = 'SETTING_SITE_ACTIVATION_KEY'");
         return $configs;
     }
+
+    public function getLogMaxFiles()
+    {
+        $tbConfig =  (new Config())->getTable();
+        $configs = DB::select("SELECT * FROM $tbConfig WHERE code = 'LOG_MAX_FILES'");
+        if(isset($configs) && count($configs)>0){
+            return $configs[0]->value;
+        }
+        return 30;
+    }
 }

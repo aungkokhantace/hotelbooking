@@ -10,7 +10,7 @@ class CreateTownshipsTables extends Migration
     {
         Schema::create('townships', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('township_name');
+            $table->string('name');
             $table->unsignedInteger('city_id');
             $table->integer('created_by')->default(1);
             $table->integer('updated_by')->default(1);

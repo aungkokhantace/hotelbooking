@@ -9,7 +9,7 @@ class CreateCitiesTables extends Migration
     {
         Schema::create('cities', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('city_name')->unique();
+            $table->string('name')->unique();
             $table->unsignedInteger('country_id');
             $table->integer('created_by')->default(1);
             $table->integer('updated_by')->default(1);

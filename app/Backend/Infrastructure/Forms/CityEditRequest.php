@@ -23,15 +23,15 @@ class CityEditRequest extends Request
     {
         return [
             'country_id'         => 'required',
-            'city_name'          => 'required|string|unique:cities'
+            'name'               => "required|string|unique:cities,name,".$this->get('id'),
         ];
     }
     public function messages()
     {
         return [
             'country_id'         => 'Country is required',
-            'city_name.required' => 'City Name is required!'
-
+            'name.required'      => 'City Name is required!',
+            'name.unique'        => 'City Name is already occupied!'
         ];
     }
 }

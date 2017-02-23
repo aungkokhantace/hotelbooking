@@ -6,11 +6,7 @@
 <div id="content" class="content">
 
     <h1 class="page-header">
-        @if(isset($profile))
-            Update Profile
-        @else
-            {{ isset($township) ?  'Township Edit' : 'Township Entry' }}
-        @endif
+        {{ isset($township) ?  'Township Edit' : 'Township Entry' }}
     </h1>
 
     {{--check new or edit--}}
@@ -28,13 +24,23 @@
             <label for="country_id">City Name <span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            @if(isset($township))
-                {!! Form::select('city_id',$cities,$township->city->id,['class' => 'form-control','id'=>'city_id']) !!}
-                <p class="text-danger">{{$errors->first('city_id')}}</p>
-            @else
-                {!! Form::select('city_id',$cities,null,['class' => 'form-control','id'=>'city_id']) !!}
-                <p class="text-danger">{{$errors->first('city_id')}}</p>
-            @endif
+            <select class="form-control" name="city_id" id="city_id">
+                @if(isset($township))
+                    @foreach($cities as $city)
+                        @if($city->id == $township->city_id)
+                            <option value="{{$city->id}}" selected>{{$city->name}}</option>
+                        @else
+                            <option value="{{$city->id}}">{{$city->name}}</option>
+                        @endif
+                    @endforeach
+                @else
+                    <option value="" disabled selected>Select City</option>
+                    @foreach($cities as $city)
+                        <option value="{{$city->id}}">{{$city->name}}</option>
+                    @endforeach
+                @endif
+            </select>
+            <p class="text-danger">{{$errors->first('city_id')}}
         </div>
     </div>
     <div class="row">
@@ -42,9 +48,8 @@
             <label for="user_name">Township Name<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <input required type="text" class="form-control" id="township_name" name="township_name"
-                   placeholder="Enter Township Name" value="{{ isset($township)? $township->township_name:Request::old('township_name') }}"/>
-            <p class="text-danger">{{$errors->first('township_name')}}</p>
+            <input required type="text" class="form-control" id="name" name="name" placeholder="Enter Township Name" value="{{ isset($township)? $township->name:Request::old('name') }}"/>
+            <p class="text-danger">{{$errors->first('name')}}</p>
         </div>
     </div>
 
@@ -63,4 +68,27 @@
 @stop
 
 @section('page_script')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            //Start Validation for Entry and Edit Form
+            $('#township').validate({
+                rules: {
+                    name                  : 'required',
+                    city_id               : 'required',
+                },
+                messages: {
+                    name                  : 'Township Name is required',
+                    city_id               : 'City is required',
+                },
+                submitHandler: function(form) {
+                    $('input[type="submit"]').attr('disabled','disabled');
+                    form.submit();
+                }
+            });
+            //End Validation for Entry and Edit Form
+
+            //For checkbox picker
+            $(':checkbox').checkboxpicker();
+        });
+    </script>
 @stop

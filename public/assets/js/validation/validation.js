@@ -4,28 +4,27 @@ $(document).ready(function() {
         rules: {
             countries_name  : {
                 required	: true,
-                remote		: {
-                    url: "/backend/country/check_country_name",
-                    type: "get",
-                    data:
-                    {
-                        countries_name: function()
-                        {
-                            return $('#countries_name').val();
-                        }
-                    }
-                }
+                //remote		: {
+                //    url: "/backend/country/check_country_name",
+                //    type: "get",
+                //    data:
+                //    {
+                //        countries_name: function()
+                //        {
+                //            return $('#countries_name').val();
+                //        }
+                //    }
+                //}
             }
         },
         messages: {
             countries_name: {
-                required	: 'Countries Name is required',
-                remote		: jQuery.validator.format("{0} is already taken.")
+                required	: 'Country Name is required',
+                //remote		: jQuery.validator.format("{0} is already taken.")
             }
         },
         submitHandler: function(form) {
             $('input[type="submit"]').attr('disabled','disabled');
-            //alert('hi');
             form.submit();
         }
     });

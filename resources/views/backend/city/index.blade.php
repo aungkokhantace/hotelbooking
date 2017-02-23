@@ -6,7 +6,10 @@
 <div id="content" class="content">
 
     <h1 class="page-header">City Listing</h1>
-
+    @if(count(Session::get('message')) != 0)
+        <div>
+        </div>
+    @endif
     <div class="row">
         <div class="col-md-10"></div>
         <div class="col-md-2">
@@ -25,7 +28,7 @@
 
     </div>
 
-    {!! Form::open(array('id'=> 'frm_user' ,'url' => 'backend/city/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+    {!! Form::open(array('id'=> 'frm_city' ,'url' => 'backend/city/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
     {{ csrf_field() }}
     <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 
@@ -53,8 +56,8 @@
                     @foreach($cities as $city)
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $city->id }}" id="all"></td>
-                            <td><a href="/backend/city/edit/{{$city->id}}">{{$city->city_name}}</a></td>
-                            <td>{{$city->country->countries_name}}</td>
+                            <td><a href="/backend/city/edit/{{$city->id}}">{{$city->name}}</a></td>
+                            <td>{{$city->country->name}}</td>
                         </tr>
                     @endforeach
                     </tbody>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Setup\Country;
 
+use App\Core\Utility;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -18,25 +19,29 @@ use App\Core\ReturnMessage As ReturnMessage;
 
 class CountryController extends Controller
 {
-    private $countryRepository;
+    private $repo;
 
-    public function __construct(CountryRepositoryInterface $countryRepository)
+    public function __construct(CountryRepositoryInterface $repo)
     {
-        $this->countryRepository = $countryRepository;
+        $this->repo = $repo;
     }
 
     public function index(Request $request)
     {
-        if (Auth::guard('User')->check()) {
-            $countries = Country::all();
-            return view('backend.country.index')->with('countries',$countries);
+        try{
+            if (Auth::guard('User')->check()) {
+                $countries      = $this->repo->getObjs();
+                return view('backend.country.index')->with('countries',$countries);
+            }
+            return redirect('/');
         }
-        return redirect('/');
+        catch(\Exception $e){
+            return redirect('/error/204/country');
+        }
     }
 
-    public function create()
-    {
-        if(Auth::guard('User')->check()){
+    public function create(){
+        if (Auth::guard('User')->check()) {
             return view('backend.country.country');
         }
         return redirect('/');
@@ -45,74 +50,80 @@ class CountryController extends Controller
     public function store(CountryEntryFormRequest $request)
     {
         $request->validate();
-        $countries_name       = Input::get('countries_name');
+        $name           = (Input::has('name')) ? Input::get('name') : "";
 
         $paramObj = new Country();
-        $paramObj->countries_name = $countries_name;
+        $paramObj->name         = $name;
 
-        $result = $this->countryRepository->create($paramObj);
+        $result = $this->repo->create($paramObj);
+
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
-
             return redirect()->action('Setup\Country\CountryController@index')
                 ->withMessage(FormatGenerator::message('Success', 'Country created ...'));
         }
         else{
-
             return redirect()->action('Setup\Country\CountryController@index')
                 ->withMessage(FormatGenerator::message('Fail', 'Country did not create ...'));
         }
     }
 
-    public function edit($id)
-    {
+    public function edit($id){
         if (Auth::guard('User')->check()) {
-            $country = Country::find($id);
-            return view('backend.country.country')->with('country', $country)->with('country', $country);
+            $country = $this->repo->getObjByID($id);
+            return view('backend.country.country')->with('country',$country);
         }
-        return redirect('/backend/login');
+        return redirect('/');
     }
 
     public function update(CountryEditRequest $request){
-
         $request->validate();
-        $id                         = Input::get('id');
-        $countries_name             = Input::get('countries_name');
-        $paramObj                   = Country::find($id);
-        $paramObj->countries_name   = $countries_name;
+        $id = Input::get('id');
+        $name           = (Input::has('name')) ? Input::get('name') : "";
 
-        $result = $this->countryRepository->update($paramObj);
+        $paramObj = Country::find($id);
+
+        $paramObj->name         = $name;
+
+        $result = $this->repo->update($paramObj);
+
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
-
             return redirect()->action('Setup\Country\CountryController@index')
                 ->withMessage(FormatGenerator::message('Success', 'Country updated ...'));
         }
         else{
-
             return redirect()->action('Setup\Country\CountryController@index')
                 ->withMessage(FormatGenerator::message('Fail', 'Country did not update ...'));
         }
-
     }
 
     public function destroy(){
+
         $id         = Input::get('selected_checkboxes');
         $new_string = explode(',', $id);
+        $delete_flag = true;
         foreach($new_string as $id){
-            $this->countryRepository->delete($id);
+            $this->repo->delete($id);
         }
-        return redirect()->action('Setup\Country\CountryController@index'); //to redirect listing page
+        if($delete_flag){
+            return redirect()->action('Setup\Country\CountryController@index')
+                ->withMessage(FormatGenerator::message('Success', 'Country deleted ...'));
+        }
+        else{
+            return redirect()->action('Setup\Country\CountryController@index')
+                ->withMessage(FormatGenerator::message('Fail', 'Country did not delete ...'));
+        }
     }
 
-    public function check_country_name(){
-        $countries_name     = Input::get('countries_name');
-        $country            = Country::where('countries_name','=',$countries_name)->whereNull('deleted_at')->get();
-        $result             = false;
-        if(count($country) == 0 ){
-            $result = true;
-        }
-
-        return \Response::json($result);
-    }
+//    public function check_country_name(){
+//        $countries_name     = Input::get('countries_name');
+//        $country            = Country::where('name','=',$countries_name)->whereNull('deleted_at')->get();
+//        $result             = false;
+//        if(count($country) == 0 ){
+//            $result = true;
+//        }
+//
+//        return \Response::json($result);
+//    }
 
 
 }

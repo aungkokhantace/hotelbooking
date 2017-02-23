@@ -1,12 +1,15 @@
 @extends('layouts.master')
-@section('title','User')
+@section('title','Country')
 @section('content')
 
         <!-- begin #content -->
 <div id="content" class="content">
 
     <h1 class="page-header">Country Listing</h1>
-
+    @if(count(Session::get('message')) != 0)
+        <div>
+        </div>
+    @endif
     <div class="row">
         <div class="col-md-10"></div>
         <div class="col-md-2">
@@ -25,7 +28,7 @@
 
     </div>
 
-    {!! Form::open(array('id'=> 'frm_user' ,'url' => 'backend/country/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+    {!! Form::open(array('id'=> 'frm_country' ,'url' => 'backend/country/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
     {{ csrf_field() }}
     <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 
@@ -55,7 +58,7 @@
                     @foreach($countries as $country)
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $country->id }}" id="all"></td>
-                            <td><a href="/backend/country/edit/{{$country->id}}">{{$country->countries_name}}</a></td>
+                            <td><a href="/backend/country/edit/{{$country->id}}">{{$country->name}}</a></td>
 
                         </tr>
                     @endforeach

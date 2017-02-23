@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Setup\Township;
 
+use App\Setup\City\CityRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -19,17 +20,17 @@ use App\Core\ReturnMessage As ReturnMessage;
 
 class TownshipController extends Controller
 {
-    private $townshipRepository;
+    private $repo;
 
-    public function __construct(TownshipRepositoryInterface $townshipRepository)
+    public function __construct(TownshipRepositoryInterface $repo)
     {
-        $this->townshipRepository = $townshipRepository;
+        $this->repo = $repo;
     }
 
     public function index(Request $request)
     {
         if (Auth::guard('User')->check()) {
-            $townships = Township::all();
+            $townships      = $this->repo->getObjs();
             return view('backend.township.index')->with('townships',$townships);
         }
         return redirect('/');
@@ -38,7 +39,8 @@ class TownshipController extends Controller
     public function create()
     {
         if(Auth::guard('User')->check()){
-            $cities = City::lists('city_name','id');
+            $cityRepo = new CityRepository();
+            $cities   = $cityRepo->getObjs();
 
             return view('backend.township.township')->with('cities',$cities);
         }
@@ -47,16 +49,15 @@ class TownshipController extends Controller
 
     public function store(TownshipEntryRequest $request)
     {
-
         $request->validate();
-        $township_name       = Input::get('township_name');
+        $township_name       = Input::get('name');
         $city_id             = Input::get('city_id');
 
         $paramObj = new Township();
-        $paramObj->township_name = $township_name;
+        $paramObj->name = $township_name;
         $paramObj->city_id       = $city_id;
 
-        $result = $this->townshipRepository->create($paramObj);
+        $result = $this->repo->create($paramObj);
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
 
             return redirect()->action('Setup\Township\TownshipController@index')
@@ -73,23 +74,25 @@ class TownshipController extends Controller
     {
         if (Auth::guard('User')->check()) {
             $township  = Township::find($id);
-            $cities    = City::all();
+
+            $cityRepo = new CityRepository();
+            $cities   = $cityRepo->getObjs();
+
             return view('backend.township.township')->with('township', $township)->with('cities', $cities);
         }
         return redirect('/backend/login');
     }
 
     public function update(TownshipEditRequest $request){
-
         $request->validate();
         $id                         = Input::get('id');
-        $township_name              = Input::get('township_name');
+        $township_name              = Input::get('name');
         $city_id                    = Input::get('city_id');
         $paramObj                   = Township::find($id);
-        $paramObj->township_name    = $township_name;
+        $paramObj->name             = $township_name;
         $paramObj->city_id          = $city_id;
 
-        $result = $this->townshipRepository->update($paramObj);
+        $result = $this->repo->update($paramObj);
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
 
             return redirect()->action('Setup\Township\TownshipController@index')
@@ -107,7 +110,7 @@ class TownshipController extends Controller
         $id         = Input::get('selected_checkboxes');
         $new_string = explode(',', $id);
         foreach($new_string as $id){
-            $this->townshipRepository->delete($id);
+            $this->repo->delete($id);
         }
         return redirect()->action('Setup\Township\TownshipController@index'); //to redirect listing page
     }

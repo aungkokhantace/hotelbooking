@@ -23,14 +23,15 @@ class TownshipEntryRequest extends Request
     {
         return [
             'city_id'                => 'required',
-            'township_name'          => 'required|string|unique:townships'
+            'name'          => 'required|string|unique:townships'
         ];
     }
     public function messages()
     {
         return [
             'city_id'                => 'City is required',
-            'township_name.required' => 'Township Name is required!'
+            'name.required'          => 'Township Name is required!',
+            'name.unique'            => 'Township Name is already occupied!'
 
         ];
     }

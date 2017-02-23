@@ -1,12 +1,15 @@
 @extends('layouts.master')
-@section('title','User')
+@section('title','Township')
 @section('content')
 
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">Country Listing</h1>
-
+    <h1 class="page-header">Township Listing</h1>
+    @if(count(Session::get('message')) != 0)
+        <div>
+        </div>
+    @endif
     <div class="row">
         <div class="col-md-10"></div>
         <div class="col-md-2">
@@ -25,7 +28,7 @@
 
     </div>
 
-    {!! Form::open(array('id'=> 'frm_user' ,'url' => 'backend/township/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+    {!! Form::open(array('id'=> 'frm_township' ,'url' => 'backend/township/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
     {{ csrf_field() }}
     <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 
@@ -53,8 +56,8 @@
                     @foreach($townships as $township)
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $township->id }}" id="all"></td>
-                            <td><a href="/backend/township/edit/{{$township->id}}">{{$township->township_name}}</a></td>
-                            <td>{{$township->city->city_name}}</td>
+                            <td><a href="/backend/township/edit/{{$township->id}}">{{$township->name}}</a></td>
+                            <td>{{$township->city->name}}</td>
                         </tr>
                     @endforeach
                     </tbody>
