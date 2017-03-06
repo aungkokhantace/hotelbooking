@@ -10,7 +10,7 @@ namespace App\Backend\Infrastructure\Forms;
 
 use App\Http\Requests\Request;
 
-class HotelRestaurantCategoryEditFormRequest extends Request
+class HotelRestaurantCategoryEditRequest extends Request
 {
 
     public function authorize()
@@ -22,14 +22,13 @@ class HotelRestaurantCategoryEditFormRequest extends Request
     public function rules()
     {
         return [
-            'hotel_restaurant_category_name'          => 'required'
+            'name'          => 'required'
         ];
     }
     public function messages()
     {
         return [
-            'hotel_restaurant_category_name.required'         => 'Hotel Restaurant Category Name is required!',
-
+            'name.required'         => 'Name is required!',
         ];
     }
 }

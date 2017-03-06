@@ -6,10 +6,10 @@
  * Time: 02:00 PM
  */
 
-namespace App\Setup\HotelRestaurantCategory;
+namespace App\Setup\RoomView;
 
 
-interface HotelRestaurantCategoryRepositoryInterface
+interface RoomViewRepositoryInterface
 {
     public function getObjs();
     public function create($paramObj);

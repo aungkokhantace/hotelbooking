@@ -68,74 +68,81 @@ class Default_PermissionSeeder extends Seeder
             //Site Config
             ['id'=>44,'module'=>'Backend','name'=>'View','description'=>'Editing','url'=>'backend/site_config'],
 
-            //Features
-            ['id'=>45,'module'=>'Features','name'=>'Listing','description'=>'Features Listing','url'=>'backend/feature'],
-            ['id'=>46,'module'=>'Features','name'=>'New','description'=>'Features New','url'=>'backend/feature/create'],
-            ['id'=>47,'module'=>'Features','name'=>'store','description'=>'Features Store','url'=>'backend/feature/store'],
-            ['id'=>48,'module'=>'Features','name'=>'Edit','description'=>'Features Edit','url'=>'backend/feature/edit'],
-            ['id'=>49,'module'=>'Features','name'=>'Update','description'=>'Features Update','url'=>'backend/feature/update'],
-            ['id'=>50,'module'=>'Features','name'=>'Destroy','description'=>'Features Destroy','url'=>'backend/feature/destroy'],
-
-            //Amenities
-            ['id'=>51,'module'=>'Amenities','name'=>'Listing','description'=>'Amenities Listing','url'=>'backend/amenities'],
-            ['id'=>52,'module'=>'Amenities','name'=>'New','description'=>'Amenities New','url'=>'backend/amenities/create'],
-            ['id'=>53,'module'=>'Amenities','name'=>'store','description'=>'Amenities Store','url'=>'backend/amenities/store'],
-            ['id'=>54,'module'=>'Amenities','name'=>'Edit','description'=>'Amenities Edit','url'=>'backend/amenities/edit'],
-            ['id'=>55,'module'=>'Amenities','name'=>'Update','description'=>'Amenities Update','url'=>'backend/amenities/update'],
-            ['id'=>56,'module'=>'Amenities','name'=>'Destroy','description'=>'Amenities Destroy','url'=>'backend/amenities/destroy'],
-
-            //Facilities
-            ['id'=>57,'module'=>'Facilities','name'=>'Listing','description'=>'Facilities Listing','url'=>'backend/facilities'],
-            ['id'=>58,'module'=>'Facilities','name'=>'New','description'=>'Facilities New','url'=>'backend/facilities/create'],
-            ['id'=>59,'module'=>'Facilities','name'=>'store','description'=>'Facilities Store','url'=>'backend/facilities/store'],
-            ['id'=>60,'module'=>'Facilities','name'=>'Edit','description'=>'Facilities Edit','url'=>'backend/facilities/edit'],
-            ['id'=>61,'module'=>'Facilities','name'=>'Update','description'=>'Facilities Update','url'=>'backend/facilities/update'],
-            ['id'=>62,'module'=>'Facilities','name'=>'Destroy','description'=>'Facilities Destroy','url'=>'backend/facilities/destroy'],
-
-            //Hotel Restaurant Category
-            ['id'=>63,'module'=>'HotelRestaurantCategory','name'=>'Listing','description'=>'HotelRestaurantCategory Listing','url'=>'backend/hotel_restaurant_category'],
-            ['id'=>64,'module'=>'HotelRestaurantCategory','name'=>'New','description'=>'HotelRestaurantCategory New','url'=>'backend/hotel_restaurant_category/create'],
-            ['id'=>65,'module'=>'HotelRestaurantCategory','name'=>'store','description'=>'HotelRestaurantCategory Store','url'=>'backend/hotel_restaurant_category/store'],
-            ['id'=>66,'module'=>'HotelRestaurantCategory','name'=>'Edit','description'=>'HotelRestaurantCategory Edit','url'=>'backend/hotel_restaurant_category/edit'],
-            ['id'=>67,'module'=>'HotelRestaurantCategory','name'=>'Update','description'=>'HotelRestaurantCategory Update','url'=>'backend/hotel_restaurant_category/update'],
-            ['id'=>68,'module'=>'HotelRestaurantCategory','name'=>'Destroy','description'=>'HotelRestaurantCategory Destroy','url'=>'backend/hotel_restaurant_category/destroy'],
-
             //Country
-            ['id'=>69,'module'=>'Country','name'=>'Listing','description'=>'Country Listing','url'=>'backend/country'],
-            ['id'=>70,'module'=>'Country','name'=>'New','description'=>'Country New','url'=>'backend/country/create'],
-            ['id'=>71,'module'=>'Country','name'=>'store','description'=>'Country Store','url'=>'backend/country/store'],
-            ['id'=>72,'module'=>'Country','name'=>'Edit','description'=>'Country Edit','url'=>'backend/country/edit'],
-            ['id'=>73,'module'=>'Country','name'=>'Update','description'=>'Country Update','url'=>'backend/country/update'],
-            ['id'=>74,'module'=>'Country','name'=>'Destroy','description'=>'Country Destroy','url'=>'backend/country/destroy'],
+            ['id'=>50,'module'=>'Country','name'=>'Listing','description'=>'Country Listing','url'=>'backend/country'],
+            ['id'=>51,'module'=>'Country','name'=>'New','description'=>'Country New','url'=>'backend/country/create'],
+            ['id'=>52,'module'=>'Country','name'=>'store','description'=>'Country Store','url'=>'backend/country/store'],
+            ['id'=>53,'module'=>'Country','name'=>'Edit','description'=>'Country Edit','url'=>'backend/country/edit'],
+            ['id'=>54,'module'=>'Country','name'=>'Update','description'=>'Country Update','url'=>'backend/country/update'],
+            ['id'=>55,'module'=>'Country','name'=>'Destroy','description'=>'Country Destroy','url'=>'backend/country/destroy'],
 
             //Township
-            ['id'=>75,'module'=>'Township','name'=>'Listing','description'=>'Township Listing','url'=>'backend/township'],
-            ['id'=>76,'module'=>'Township','name'=>'New','description'=>'Township New','url'=>'backend/township/create'],
-            ['id'=>77,'module'=>'Township','name'=>'store','description'=>'Township Store','url'=>'backend/township/store'],
-            ['id'=>78,'module'=>'Township','name'=>'Edit','description'=>'Township Edit','url'=>'backend/township/edit'],
-            ['id'=>79,'module'=>'Township','name'=>'Update','description'=>'Township Update','url'=>'backend/township/update'],
-            ['id'=>80,'module'=>'Township','name'=>'Destroy','description'=>'Township Destroy','url'=>'backend/township/destroy'],
+            ['id'=>60,'module'=>'Township','name'=>'Listing','description'=>'Township Listing','url'=>'backend/township'],
+            ['id'=>61,'module'=>'Township','name'=>'New','description'=>'Township New','url'=>'backend/township/create'],
+            ['id'=>62,'module'=>'Township','name'=>'store','description'=>'Township Store','url'=>'backend/township/store'],
+            ['id'=>63,'module'=>'Township','name'=>'Edit','description'=>'Township Edit','url'=>'backend/township/edit'],
+            ['id'=>64,'module'=>'Township','name'=>'Update','description'=>'Township Update','url'=>'backend/township/update'],
+            ['id'=>65,'module'=>'Township','name'=>'Destroy','description'=>'Township Destroy','url'=>'backend/township/destroy'],
 
             //City
-            ['id'=>81,'module'=>'City','name'=>'Listing','description'=>'City Listing','url'=>'backend/city'],
-            ['id'=>82,'module'=>'City','name'=>'New','description'=>'City New','url'=>'backend/city/create'],
-            ['id'=>83,'module'=>'City','name'=>'store','description'=>'City Store','url'=>'backend/city/store'],
-            ['id'=>84,'module'=>'City','name'=>'Edit','description'=>'City Edit','url'=>'backend/city/edit'],
-            ['id'=>85,'module'=>'City','name'=>'Update','description'=>'City Update','url'=>'backend/city/update'],
-            ['id'=>86,'module'=>'City','name'=>'Destroy','description'=>'City Destroy','url'=>'backend/city/destroy'],
+            ['id'=>70,'module'=>'City','name'=>'Listing','description'=>'City Listing','url'=>'backend/city'],
+            ['id'=>71,'module'=>'City','name'=>'New','description'=>'City New','url'=>'backend/city/create'],
+            ['id'=>72,'module'=>'City','name'=>'store','description'=>'City Store','url'=>'backend/city/store'],
+            ['id'=>73,'module'=>'City','name'=>'Edit','description'=>'City Edit','url'=>'backend/city/edit'],
+            ['id'=>74,'module'=>'City','name'=>'Update','description'=>'City Update','url'=>'backend/city/update'],
+            ['id'=>75,'module'=>'City','name'=>'Destroy','description'=>'City Destroy','url'=>'backend/city/destroy'],
+
+            //Features
+            ['id'=>80,'module'=>'Features','name'=>'Listing','description'=>'Features Listing','url'=>'backend/feature'],
+            ['id'=>81,'module'=>'Features','name'=>'New','description'=>'Features New','url'=>'backend/feature/create'],
+            ['id'=>82,'module'=>'Features','name'=>'store','description'=>'Features Store','url'=>'backend/feature/store'],
+            ['id'=>83,'module'=>'Features','name'=>'Edit','description'=>'Features Edit','url'=>'backend/feature/edit'],
+            ['id'=>84,'module'=>'Features','name'=>'Update','description'=>'Features Update','url'=>'backend/feature/update'],
+            ['id'=>85,'module'=>'Features','name'=>'Destroy','description'=>'Features Destroy','url'=>'backend/feature/destroy'],
+
+            //Amenities
+            ['id'=>90,'module'=>'Amenities','name'=>'Listing','description'=>'Amenities Listing','url'=>'backend/amenities'],
+            ['id'=>91,'module'=>'Amenities','name'=>'New','description'=>'Amenities New','url'=>'backend/amenities/create'],
+            ['id'=>92,'module'=>'Amenities','name'=>'store','description'=>'Amenities Store','url'=>'backend/amenities/store'],
+            ['id'=>93,'module'=>'Amenities','name'=>'Edit','description'=>'Amenities Edit','url'=>'backend/amenities/edit'],
+            ['id'=>94,'module'=>'Amenities','name'=>'Update','description'=>'Amenities Update','url'=>'backend/amenities/update'],
+            ['id'=>95,'module'=>'Amenities','name'=>'Destroy','description'=>'Amenities Destroy','url'=>'backend/amenities/destroy'],
+
+            //Facilities
+            ['id'=>100,'module'=>'Facilities','name'=>'Listing','description'=>'Facilities Listing','url'=>'backend/facilities'],
+            ['id'=>101,'module'=>'Facilities','name'=>'New','description'=>'Facilities New','url'=>'backend/facilities/create'],
+            ['id'=>102,'module'=>'Facilities','name'=>'store','description'=>'Facilities Store','url'=>'backend/facilities/store'],
+            ['id'=>103,'module'=>'Facilities','name'=>'Edit','description'=>'Facilities Edit','url'=>'backend/facilities/edit'],
+            ['id'=>104,'module'=>'Facilities','name'=>'Update','description'=>'Facilities Update','url'=>'backend/facilities/update'],
+            ['id'=>105,'module'=>'Facilities','name'=>'Destroy','description'=>'Facilities Destroy','url'=>'backend/facilities/destroy'],
+
+            //Hotel Restaurant Category
+            ['id'=>110,'module'=>'HotelRestaurantCategory','name'=>'Listing','description'=>'HotelRestaurantCategory Listing','url'=>'backend/hotel_restaurant_category'],
+            ['id'=>111,'module'=>'HotelRestaurantCategory','name'=>'New','description'=>'HotelRestaurantCategory New','url'=>'backend/hotel_restaurant_category/create'],
+            ['id'=>112,'module'=>'HotelRestaurantCategory','name'=>'store','description'=>'HotelRestaurantCategory Store','url'=>'backend/hotel_restaurant_category/store'],
+            ['id'=>113,'module'=>'HotelRestaurantCategory','name'=>'Edit','description'=>'HotelRestaurantCategory Edit','url'=>'backend/hotel_restaurant_category/edit'],
+            ['id'=>114,'module'=>'HotelRestaurantCategory','name'=>'Update','description'=>'HotelRestaurantCategory Update','url'=>'backend/hotel_restaurant_category/update'],
+            ['id'=>115,'module'=>'HotelRestaurantCategory','name'=>'Destroy','description'=>'HotelRestaurantCategory Destroy','url'=>'backend/hotel_restaurant_category/destroy'],
 
             //Room Category Amenities
-            ['id'=>87,'module'=>'RoomCategoryAmenities','name'=>'Listing','description'=>'RoomCategoryAmenities Listing','url'=>'backend/room_category_amenities'],
-            ['id'=>88,'module'=>'RoomCategoryAmenities','name'=>'New','description'=>'RoomCategoryAmenities New','url'=>'backend/room_category_amenities/create'],
-            ['id'=>89,'module'=>'RoomCategoryAmenities','name'=>'store','description'=>'RoomCategoryAmenities Store','url'=>'backend/room_category_amenities/store'],
-            ['id'=>90,'module'=>'RoomCategoryAmenities','name'=>'Edit','description'=>'RoomCategoryAmenities Edit','url'=>'backend/room_category_amenities/edit'],
-            ['id'=>91,'module'=>'RoomCategoryAmenities','name'=>'Update','description'=>'RoomCategoryAmenities Update','url'=>'backend/room_category_amenities/update'],
-            ['id'=>92,'module'=>'RoomCategoryAmenities','name'=>'Destroy','description'=>'RoomCategoryAmenities Destroy','url'=>'backend/room_category_amenities/destroy'],
+            ['id'=>120,'module'=>'RoomCategoryAmenities','name'=>'Listing','description'=>'RoomCategoryAmenities Listing','url'=>'backend/room_category_amenities'],
+            ['id'=>121,'module'=>'RoomCategoryAmenities','name'=>'New','description'=>'RoomCategoryAmenities New','url'=>'backend/room_category_amenities/create'],
+            ['id'=>122,'module'=>'RoomCategoryAmenities','name'=>'store','description'=>'RoomCategoryAmenities Store','url'=>'backend/room_category_amenities/store'],
+            ['id'=>123,'module'=>'RoomCategoryAmenities','name'=>'Edit','description'=>'RoomCategoryAmenities Edit','url'=>'backend/room_category_amenities/edit'],
+            ['id'=>124,'module'=>'RoomCategoryAmenities','name'=>'Update','description'=>'RoomCategoryAmenities Update','url'=>'backend/room_category_amenities/update'],
+            ['id'=>125,'module'=>'RoomCategoryAmenities','name'=>'Destroy','description'=>'RoomCategoryAmenities Destroy','url'=>'backend/room_category_amenities/destroy'],
 
             //Jquery Validation for Country and Township
-            ['id'=>93,'module'=>'Country','name'=>'Jquery Validation','description'=>'Country Jquery Validation','url'=>'backend/country/check_country_name'],
-            ['id'=>94,'module'=>'City','name'=>'Jquery Validation','description'=>'City Jquery Validation','url'=>'backend/city/check_city_name'],
+            ['id'=>130,'module'=>'Country','name'=>'Jquery Validation','description'=>'Country Jquery Validation','url'=>'backend/country/check_country_name'],
+            ['id'=>131,'module'=>'City','name'=>'Jquery Validation','description'=>'City Jquery Validation','url'=>'backend/city/check_city_name'],
 
+            //Room View
+            ['id'=>140,'module'=>'Room View','name'=>'Listing','description'=>'Room View Listing','url'=>'backend/room_view'],
+            ['id'=>141,'module'=>'Room View','name'=>'New','description'=>'Room View New','url'=>'backend/room_view/create'],
+            ['id'=>142,'module'=>'Room View','name'=>'store','description'=>'Room View Store','url'=>'backend/room_view/store'],
+            ['id'=>143,'module'=>'Room View','name'=>'Edit','description'=>'Room View Edit','url'=>'backend/room_view/edit'],
+            ['id'=>144,'module'=>'Room View','name'=>'Update','description'=>'Room View Update','url'=>'backend/room_view/update'],
+            ['id'=>145,'module'=>'Room View','name'=>'Destroy','description'=>'Room View Destroy','url'=>'backend/room_view/destroy'],
 
 
         );

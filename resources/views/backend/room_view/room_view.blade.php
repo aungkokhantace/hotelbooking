@@ -1,19 +1,19 @@
 @extends('layouts.master')
-@section('title','Hotel Restaurant Category')
+@section('title','Room View')
 @section('content')
 
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">{{isset($hotel_restaurant_category) ?  'Hotel Restaurant Category Edit' : 'Hotel Restaurant Category Entry' }}</h1>
+    <h1 class="page-header">{{isset($room_view) ?  'Room View Edit' : 'Room View Entry' }}</h1>
 
-    @if(isset($hotel_restaurant_category))
-        {!! Form::open(array('url' => '/backend/hotel_restaurant_category/update','id'=>'hotel_restaurant_category', 'class'=> 'form-horizontal user-form-border')) !!}
+    @if(isset($room_view))
+        {!! Form::open(array('url' => '/backend/room_view/update','id'=>'room_view', 'class'=> 'form-horizontal user-form-border')) !!}
 
     @else
-        {!! Form::open(array('url' => '/backend/hotel_restaurant_category/store','id'=>'hotel_restaurant_category', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend/room_view/store','id'=>'room_view', 'class'=> 'form-horizontal user-form-border')) !!}
     @endif
-    <input type="hidden" name="id" value="{{isset($hotel_restaurant_category)? $hotel_restaurant_category->id:''}}"/>
+    <input type="hidden" name="id" value="{{isset($room_view)? $room_view->id:''}}"/>
     <br/>
 
     <div class="row">
@@ -21,8 +21,8 @@
             <label for="name">Name<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <input type="text" required class="form-control" id="name" name="name"
-                   placeholder="Enter Hotel Restaurant Category Name" value="{{ isset($hotel_restaurant_category)? $hotel_restaurant_category->name:Request::old('name') }}"/>
+            <input type="text" class="form-control" id="name" name="name"
+                   placeholder="Enter Room View Name" value="{{ isset($room_view)? $room_view->name:Request::old('name') }}"/>
             <p class="text-danger">{{$errors->first('name')}}</p>
         </div>
     </div>
@@ -32,7 +32,7 @@
             <label for="description">Description</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <textarea rows="5" cols="50" class="form-control" id="description" name="description" placeholder="Enter Hotel Restaurant Category Description">{{ isset($hotel_restaurant_category)? $hotel_restaurant_category->description:Request::old('description') }}</textarea>
+            <textarea rows="5" cols="50" class="form-control" id="description" name="description" placeholder="Enter Room View Description">{{ isset($room_view)? $room_view->description:Request::old('description') }}</textarea>
             <p class="text-danger">{{$errors->first('description')}}</p>
         </div>
     </div>
@@ -41,10 +41,10 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="submit" name="submit" value="{{isset($hotel_restaurant_category)? 'UPDATE' : 'ADD'}}" class="form-control btn-primary">
+            <input type="submit" name="submit" value="{{isset($room_view)? 'UPDATE' : 'ADD'}}" class="form-control btn-primary">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('hotel_restaurant_category')">
+            <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('room_view')">
         </div>
     </div>
     {!! Form::close() !!}
@@ -55,7 +55,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
             //Start Validation for Entry and Edit Form
-            $('#hotel_restaurant_category').validate({
+            $('#room_view').validate({
                 rules: {
                     name          : 'required',
                 },

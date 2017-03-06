@@ -19,17 +19,17 @@ use App\Core\ReturnMessage As ReturnMessage;
 
 class HotelRestaurantCategoryController extends Controller
 {
-    private $hotel_restaurant_categoryRepository;
+    private $repo;
 
-    public function __construct(HotelRestaurantCategoryRepositoryInterface $hotel_restaurant_categoryRepository)
+    public function __construct(HotelRestaurantCategoryRepositoryInterface $repo)
     {
-        $this->hotel_restaurant_categoryRepository = $hotel_restaurant_categoryRepository;
+        $this->repo = $repo;
     }
 
     public function index(Request $request)
     {
         if (Auth::guard('User')->check()) {
-            $hotel_restaurant_categories = HotelRestaurantCategory::all();
+            $hotel_restaurant_categories = $this->repo->getObjs();
             return view('backend.hotel_restaurant_category.index')->with('hotel_restaurant_categories',$hotel_restaurant_categories);
         }
         return redirect('/');
@@ -46,28 +46,29 @@ class HotelRestaurantCategoryController extends Controller
     public function store(HotelRestaurantCategoryEntryRequest $request)
     {
         $request->validate();
-        $hotel_restaurant_category       = Input::get('hotel_restaurant_category_name');
+        $name               = Input::get('name');
+        $description        = Input::get('description');
 
-        $paramObj                                   = new HotelRestaurantCategory();
-        $paramObj->hotel_restaurant_category_name   = $hotel_restaurant_category;
+        $paramObj           = new HotelRestaurantCategory();
+        $paramObj->name     = $name;
+        $paramObj->description     = $description;
 
-        $result = $this->hotel_restaurant_categoryRepository->create($paramObj);
+        $result = $this->repo->create($paramObj);
+
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
-
             return redirect()->action('Setup\HotelRestaurantCategory\HotelRestaurantCategoryController@index')
-                ->withMessage(FormatGenerator::message('Success', 'HotelRestaurantCategory created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Restaurant Category created ...'));
         }
         else{
-
             return redirect()->action('Setup\HotelRestaurantCategory\HotelRestaurantCategoryController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'HotelRestaurantCategory did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Restaurant Category did not create ...'));
         }
     }
 
     public function edit($id)
     {
         if (Auth::guard('User')->check()) {
-            $hotel_restaurant_category = HotelRestaurantCategory::find($id);
+            $hotel_restaurant_category = $this->repo->getObjByID($id);
             return view('backend.hotel_restaurant_category.hotel_restaurant_category')->with('hotel_restaurant_category', $hotel_restaurant_category);
         }
         return redirect('/backend/login');
@@ -77,20 +78,22 @@ class HotelRestaurantCategoryController extends Controller
 
         $request->validate();
         $id                                         = Input::get('id');
-        $hotel_restaurant_category_name             = Input::get('hotel_restaurant_category_name');
-        $paramObj                                   = HotelRestaurantCategory::find($id);
-        $paramObj->hotel_restaurant_category_name   = $hotel_restaurant_category_name;
+        $name                                       = Input::get('name');
+        $description                                = Input::get('description');
 
-        $result = $this->hotel_restaurant_categoryRepository->update($paramObj);
+        $paramObj                                   = $this->repo->getObjByID($id);
+        $paramObj->name                             = $name;
+        $paramObj->description                      = $description;
+
+        $result = $this->repo->update($paramObj);
+
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
-
             return redirect()->action('Setup\HotelRestaurantCategory\HotelRestaurantCategoryController@index')
-                ->withMessage(FormatGenerator::message('Success', 'HotelRestaurantCategory updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Restaurant Category updated ...'));
         }
         else{
-
             return redirect()->action('Setup\HotelRestaurantCategory\HotelRestaurantCategoryController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'HotelRestaurantCategory did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Restaurant Category did not update ...'));
         }
 
     }
@@ -99,21 +102,8 @@ class HotelRestaurantCategoryController extends Controller
         $id         = Input::get('selected_checkboxes');
         $new_string = explode(',', $id);
         foreach($new_string as $id){
-            $this->hotel_restaurant_categoryRepository->delete($id);
+            $this->repo->delete($id);
         }
         return redirect()->action('Setup\HotelRestaurantCategory\HotelRestaurantCategoryController@index'); //to redirect listing page
     }
-
-    public function check_country_name(){
-        $hotel_restaurant_category_name  = Input::get('hotel_restaurant_category_name');
-        $hotel_restaurant_category       = HotelRestaurantCategory::where('hotel_restaurant_category_name','=',$hotel_restaurant_category_name)->whereNull('deleted_at')->get();
-        $result             = false;
-        if(count($hotel_restaurant_category) == 0 ){
-            $result = true;
-        }
-
-        return \Response::json($result);
-    }
-
-
 }

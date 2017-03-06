@@ -10,7 +10,7 @@ namespace App\Backend\Infrastructure\Forms;
 
 use App\Http\Requests\Request;
 
-class HotelRestaurantCategoryEntryRequest extends Request
+class RoomViewEntryRequest extends Request
 {
 
     public function authorize()

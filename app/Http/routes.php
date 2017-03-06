@@ -123,7 +123,13 @@ Route::group(['middleware' => 'web'], function () {
             Route::post('hotel_restaurant_category/update', array('as'=>'backend/hotel_restaurant_category/update', 'uses'=>'Setup\HotelRestaurantCategory\HotelRestaurantCategoryController@update'));
             Route::post('hotel_restaurant_category/destroy', array('as'=>'backend/hotel_restaurant_category/destroy', 'uses'=>'Setup\HotelRestaurantCategory\HotelRestaurantCategoryController@destroy'));
 
-
+            //Room View
+            Route::get('room_view', array('as'=>'backend/room_view', 'uses'=>'Setup\RoomView\RoomViewController@index'));
+            Route::get('room_view/create', array('as'=>'backend/room_view/create', 'uses'=>'Setup\RoomView\RoomViewController@create'));
+            Route::post('room_view/store', array('as'=>'backend/room_view/store', 'uses'=>'Setup\RoomView\RoomViewController@store'));
+            Route::get('room_view/edit/{id}', array('as'=>'backend/room_view/edit', 'uses'=>'Setup\RoomView\RoomViewController@edit'));
+            Route::post('room_view/update', array('as'=>'backend/room_view/update', 'uses'=>'Setup\RoomView\RoomViewController@update'));
+            Route::post('room_view/destroy', array('as'=>'backend/room_view/destroy', 'uses'=>'Setup\RoomView\RoomViewController@destroy'));
         });
 
     });

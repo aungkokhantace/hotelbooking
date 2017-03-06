@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Setup\HotelRestaurantCategory;
+namespace App\Setup\RoomView;
 
 use Illuminate\Database\Eloquent\Model;
 
-class HotelRestaurantCategory extends Model
+class RoomView extends Model
 {
-    protected $table = 'h_restaurant_categories';
+    protected $table = 'room_views';
 
     protected $fillable = [
         'id',

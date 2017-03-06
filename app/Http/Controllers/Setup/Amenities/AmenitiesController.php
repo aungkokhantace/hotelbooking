@@ -142,7 +142,6 @@ class AmenitiesController extends Controller
                 ->withMessage(FormatGenerator::message('Success', 'Amenity updated ...'));
         }
         else{
-
             return redirect()->action('Setup\Amenities\AmenitiesController@index')
                 ->withMessage(FormatGenerator::message('Fail', 'Amenity did not update ...'));
         }
@@ -154,7 +153,7 @@ class AmenitiesController extends Controller
         foreach($new_string as $id){
             $this->repo->delete($id);
         }
-        return redirect()->action('Setup\Amenities\AmenitiesController@index'); //to redirect listing page
+        return redirect()->action('Setup\Amenities\AmenitiesController@index');//to redirect listing page
     }
 }
 
