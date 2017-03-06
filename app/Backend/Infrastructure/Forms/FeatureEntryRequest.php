@@ -22,16 +22,13 @@ class FeatureEntryRequest extends Request
     public function rules()
     {
         return [
-            'feature_name'   => 'required',
-            'feature_icon'   => 'required | mimes:jpeg,jpg,png',
+            'name'   => 'required',
         ];
     }
     public function messages()
     {
         return [
-            'feature_name.required' => 'Feature Name is required',
-            'feature_icon.required' => 'Feature Icon is required!'
-
+            'name.required' => 'Name is required',
         ];
     }
 }

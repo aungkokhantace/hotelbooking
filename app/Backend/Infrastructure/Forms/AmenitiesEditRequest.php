@@ -23,15 +23,12 @@ class AmenitiesEditRequest extends Request
     {
         return [
             'name'   => 'required',
-
         ];
     }
     public function messages()
     {
         return [
             'name.required' => 'Name is required',
-
-
         ];
     }
 }

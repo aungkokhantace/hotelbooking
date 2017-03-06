@@ -10,9 +10,11 @@ class CreateFeaturesTables extends Migration
     {
         Schema::create('features', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('feature_name');
-            $table->string('feature_icon');
+            $table->string('name');
+            $table->string('icon')->nullable()->default('');
+            $table->text('description')->nullable();
 
+            //-------common to all tables--------
             $table->integer('created_by')->default(1);
             $table->integer('updated_by')->default(1);
             $table->integer('deleted_by')->nullable();

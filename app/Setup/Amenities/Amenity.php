@@ -14,6 +14,5 @@ class Amenity extends Model
         'icon',
         'description',
         'updated_at','created_at','deleted_at','updated_by','created_by','deleted_by'
-        ,
     ];
 }

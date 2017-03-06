@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Setup\Feature;
 
+use App\Core\Utility;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -19,17 +20,17 @@ use App\Core\ReturnMessage As ReturnMessage;
 
 class FeatureController extends Controller
 {
-    private $featureRepository;
+    private $repo;
 
-    public function __construct(FeatureRepositoryInterface $featureRepository)
+    public function __construct(FeatureRepositoryInterface $repo)
     {
-        $this->featureRepository = $featureRepository;
+        $this->repo = $repo;
     }
 
     public function index(Request $request)
     {
         if (Auth::guard('User')->check()) {
-            $features = Feature::all();
+            $features = $this->repo->getObjs();
             return view('backend.feature.index')->with('features',$features);
         }
         return redirect('/');
@@ -38,7 +39,6 @@ class FeatureController extends Controller
     public function create()
     {
         if(Auth::guard('User')->check()){
-
             return view('backend.feature.feature');
         }
         return redirect('/');
@@ -46,23 +46,39 @@ class FeatureController extends Controller
 
     public function store(FeatureEntryRequest $request)
     {
-
         $request->validate();
-        $feature_name    = Input::get('feature_name');
+        $name    = Input::get('name');
+        $description    = Input::get('description');
 
-        $feature_icon    = Input::file('feature_icon');
+        //Start Saving Image
+        $removeImageFlag          = (Input::has('removeImageFlag')) ? Input::get('removeImageFlag') : 0;
+        $path         = base_path().'/public/images/upload/';
 
-        $file_name     = uniqid().'.'.$feature_icon->getClientOriginalExtension();
-        $path           = base_path().'/public/images/upload/';
-        $feature_icon->move($path, $file_name);
+        if(Input::hasFile('photo'))
+        {
+            $photo        = Input::file('photo');
 
-        $image1 = InterventionImage::make(sprintf($path .'/%s', $file_name))->resize(300, 300)->save();
+            $photo_name_original    = Utility::getImage($photo);
+            $photo_ext      = Utility::getImageExt($photo);
+            $photo_name     = uniqid() . "." . $photo_ext;
+            $image          = Utility::resizeImage($photo,$photo_name,$path);
+        }
+        else{
+            $photo_name = "";
+        }
+
+        if($removeImageFlag == 1){
+            $photo_name = "";
+        }
+        //End Saving Image
 
         $paramObj = new Feature();
-        $paramObj->feature_name = $feature_name;
-        $paramObj->feature_icon = $file_name;
+        $paramObj->name = $name;
+        $paramObj->description = $description;
+        $paramObj->icon = $photo_name;
 
-        $result = $this->featureRepository->create($paramObj);
+        $result = $this->repo->create($paramObj);
+
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
 
             return redirect()->action('Setup\Feature\FeatureController@index')
@@ -79,38 +95,46 @@ class FeatureController extends Controller
     public function edit($id)
     {
         if (Auth::guard('User')->check()) {
-            $feature  = Feature::find($id);
-
+            $feature  = $this->repo->getObjByID($id);
             return view('backend.feature.feature')->with('feature', $feature);
         }
         return redirect('/backend/login');
     }
 
     public function update(FeatureEditRequest $request){
-
         $request->validate();
         $id                         = Input::get('id');
-        $feature_name               = Input::get('feature_name');
+        $name                       = Input::get('name');
+        $description                = Input::get('description');
 
-        if(Input::hasFile('feature_icon')){
-            $feature_icon = Input::file('feature_icon');
-            $file_name     = uniqid().'.'.$feature_icon->getClientOriginalExtension();
-            $path           = base_path().'/public/images/upload/';
-            $feature_icon->move($path, $file_name);
+        $removeImageFlag          = (Input::has('removeImageFlag')) ? Input::get('removeImageFlag') : 0;
+        $path         = base_path().'/public/images/upload/';
 
-            $image1 = InterventionImage::make(sprintf($path .'/%s', $file_name))->resize(300, 300)->save();
+        if(Input::hasFile('photo')){
+            $photo        = Input::file('photo');
+
+            $photo_name_original    = Utility::getImage($photo);
+            $photo_ext      = Utility::getImageExt($photo);
+            $photo_name     = uniqid() . "." . $photo_ext;
+            $image          = Utility::resizeImage($photo,$photo_name,$path);
 
             $paramObj = Feature::find($id);
-            $paramObj->feature_name = $feature_name;
-            $paramObj->feature_icon = $feature_icon;
+            $paramObj->name = $name;
+            $paramObj->description = $description;
+            $paramObj->icon = $photo_name;
 
-            $result = $this->featureRepository->update($paramObj);
+            $result = $this->repo->update($paramObj);
         }else{
             $paramObj = Feature::find($id);
-            $paramObj->feature_name = $feature_name;
+            $paramObj->name = $name;
+            $paramObj->description = $description;
 
-            $result = $this->featureRepository->update($paramObj);
+            //without this condition, when image is removed in update, it won't be removed in DB
+            if($removeImageFlag == 1){
+                $paramObj->icon     = "";
+            }
 
+            $result = $this->repo->update($paramObj);
         }
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
@@ -129,12 +153,9 @@ class FeatureController extends Controller
         $id         = Input::get('selected_checkboxes');
         $new_string = explode(',', $id);
         foreach($new_string as $id){
-            $this->featureRepository->delete($id);
+            $this->repo->delete($id);
         }
         return redirect()->action('Setup\Feature\FeatureController@index'); //to redirect listing page
     }
-
-
-
 }
 

@@ -49,7 +49,6 @@ class FacilitiesController extends Controller
         $request->validate();
         $name    = Input::get('name');
         $description    = Input::get('description');
-//        $icon    = Input::file('photo');
 
         //Start Saving Image
         $removeImageFlag          = (Input::has('removeImageFlag')) ? Input::get('removeImageFlag') : 0;
@@ -72,12 +71,6 @@ class FacilitiesController extends Controller
             $photo_name = "";
         }
         //End Saving Image
-
-//        $file_name     = uniqid().'.'.$icon->getClientOriginalExtension();
-//        $path           = base_path().'/public/images/upload/';
-//        $icon->move($path, $file_name);
-
-//        $image1 = InterventionImage::make(sprintf($path .'/%s', $file_name))->resize(300, 300)->save();
 
         $paramObj = new Facilities();
         $paramObj->name = $name;
@@ -118,13 +111,8 @@ class FacilitiesController extends Controller
         $path         = base_path().'/public/images/upload/';
 
         if(Input::hasFile('photo')){
-//            $amenities_icon = Input::file('amenities_icon');
-//            $file_name       = uniqid().'.'.$amenities_icon->getClientOriginalExtension();
-//            $path            = base_path().'/public/images/upload/';
-//            $amenities_icon->move($path, $file_name);
             $photo        = Input::file('photo');
 
-//            $photo_name   = Utility::saveImage($photo,$path);
             $photo_name_original    = Utility::getImage($photo);
             $photo_ext      = Utility::getImageExt($photo);
             $photo_name     = uniqid() . "." . $photo_ext;

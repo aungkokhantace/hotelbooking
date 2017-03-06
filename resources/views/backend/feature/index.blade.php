@@ -5,7 +5,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">Features Listing</h1>
+    <h1 class="page-header">Feature Listing</h1>
     @if(count(Session::get('message')) != 0)
         <div>
         </div>
@@ -28,7 +28,7 @@
 
     </div>
 
-    {!! Form::open(array('id'=> 'frm_user' ,'url' => 'backend/feature/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+    {!! Form::open(array('id'=> 'frm_feature' ,'url' => 'backend/feature/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
     {{ csrf_field() }}
     <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 
@@ -41,23 +41,26 @@
                     <thead>
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
-                        <th>Feature Name</th>
-                        <th>Feature Icon</th>
+                        <th>Name</th>
+                        <th>Icon</th>
+                        <th>Description</th>
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
                         <th></th>
-                        <th class="search-col" con-id="display_name">Feature Name</th>
-                        <th class="search-col" con-id="display_name">Feature Icon</th>
+                        <th class="search-col" con-id="name">Name</th>
+                        <th class="search-col" con-id="icon">Icon</th>
+                        <th class="search-col" con-id="description">Description</th>
                     </tr>
                     </tfoot>
                     <tbody>
                     @foreach($features as $feature)
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $feature->id }}" id="all"></td>
-                            <td><a href="/backend/feature/edit/{{$feature->id}}">{{$feature->feature_name}}</a></td>
-                            <td>{{$feature->feature_icon }}</td>
+                            <td><a href="/backend/feature/edit/{{$feature->id}}">{{$feature->name}}</a></td>
+                            <td>{{$feature->icon }}</td>
+                            <td>{{$feature->description }}</td>
                         </tr>
                     @endforeach
                     </tbody>

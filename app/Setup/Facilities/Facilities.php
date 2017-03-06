@@ -10,9 +10,9 @@ class Facilities extends Model
 
     protected $fillable = [
         'id',
-        'facilities_name',
-        'facilities_icon',
+        'name',
+        'icon',
+        'description',
         'updated_at','created_at','deleted_at','updated_by','created_by','deleted_by'
-        ,
     ];
 }

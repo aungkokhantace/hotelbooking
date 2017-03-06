@@ -22,16 +22,13 @@ class FeatureEditRequest extends Request
     public function rules()
     {
         return [
-            'feature_name'   => 'required',
-
+            'name'   => 'required',
         ];
     }
     public function messages()
     {
         return [
-            'feature_name.required' => 'Feature Name is required',
-
-
+            'name.required' => 'Name is required',
         ];
     }
 }
