@@ -33,3 +33,7 @@ composer.lock
 .idea/*
 .idea/workspace.xml
 .env
+
+public/images/
+public/images/upload/
+public/images/users/

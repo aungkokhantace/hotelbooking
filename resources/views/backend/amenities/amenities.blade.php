@@ -1,31 +1,31 @@
 @extends('layouts.master')
-@section('title','Facilities')
+@section('title','Amenity')
 @section('content')
 
         <!-- begin #content -->
 <div id="content" class="content">
 
     <h1 class="page-header">
-        {{ isset($facilities) ?  'Facilities Edit' : 'Facilities Entry' }}
+        {{ isset($amenities) ?  'Amenity Edit' : 'Amenity Entry' }}
     </h1>
 
     {{--check new or edit--}}
-    @if(isset($facilities))
-        {!! Form::open(array('url' => '/backend/facilities/update','files'=>true, 'class'=> 'form-horizontal user-form-border', 'id'=>'facilities')) !!}
+    @if(isset($amenities))
+        {!! Form::open(array('url' => '/backend/amenities/update','files'=>true, 'class'=> 'form-horizontal user-form-border', 'id'=>'amenities')) !!}
 
     @else
-        {!! Form::open(array('url' => '/backend/facilities/store','files'=>true, 'class'=> 'form-horizontal user-form-border', 'id'=>'facilities')) !!}
+        {!! Form::open(array('url' => '/backend/amenities/store','files'=>true, 'class'=> 'form-horizontal user-form-border', 'id'=>'amenities')) !!}
     @endif
-    <input type="hidden" name="id" value="{{isset($facilities)? $facilities->id:''}}"/>
+    <input type="hidden" name="id" value="{{isset($amenities)? $amenities->id:''}}"/>
     <br/>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="name">Facilities Name <span class="require">*</span></label>
+            <label for="name">Name<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <input required type="text" class="form-control" id="name" name="name"
-                   placeholder="Enter Facilities Name" value="{{ isset($facilities)? $facilities->name:Request::old('name') }}"/>
+            <input type="text" class="form-control" id="name" name="name"
+                   placeholder="Enter Amenity Name" value="{{ isset($amenities)? $amenities->name:Request::old('name') }}"/>
             <p class="text-danger">{{$errors->first('name')}}</p>
         </div>
     </div>
@@ -35,14 +35,14 @@
             <label for="description">Description</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <textarea rows="5" cols="50" class="form-control" id="description" name="description" placeholder="Enter Facility Description">{{ isset($facilities)? $facilities->description:Request::old('description') }}</textarea>
+            <textarea rows="5" cols="50" class="form-control" id="description" name="description" placeholder="Enter Amenity Description">{{ isset($amenities)? $amenities->description:Request::old('description') }}</textarea>
             <p class="text-danger">{{$errors->first('description')}}</p>
         </div>
     </div>
 
     {{--<div class="row">--}}
         {{--<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">--}}
-            {{--<label for="user_name">Facilities Icon<span class="require">*</span></label>--}}
+            {{--<label for="user_name">Amenities Icon<span class="require">*</span></label>--}}
         {{--</div>--}}
         {{--<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">--}}
             {{--<div class="fileinput fileinput-new" data-provides="fileinput">--}}
@@ -53,7 +53,7 @@
 	                        {{--<span class="btn btn-default btn-file" style="background-color: #259299;border-color: #22868d;">--}}
 	                            {{--<span class="fileinput-new" data-trigger="fileinput">Select</span>--}}
 	                            {{--<span class="fileinput-exists">Image</span>--}}
-	                            {{--<input id="site_logo2" type="file" class="facilities_icon" name="facilities_icon" accept="image.*" style="width: 330px;"/>--}}
+	                            {{--<input id="site_logo2" type="file" class="amenities_icon" name="amenities_icon" accept="image.*" style="width: 330px;"/>--}}
 	                        {{--</span>--}}
                 {{--</div>--}}
             {{--</div>--}}
@@ -66,8 +66,8 @@
             <label for="photo" class="text_bold_black">Icon</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
-            @if(isset($facilities))
-                <div class="add_image_div add_image_div_red" style="background-image: url({{'/images/upload/'.$facilities ->icon}});background-position:center;background-size:cover">
+            @if(isset($amenities))
+                <div class="add_image_div add_image_div_red" style="background-image: url({{'/images/upload/'.$amenities ->icon}});background-position:center;background-size:cover">
                 </div>
                 <input type="hidden" id="removeImageFlag" value="0" name="removeImageFlag">
             @else
@@ -93,10 +93,10 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="submit" name="submit" value="{{isset($facilities)? 'UPDATE' : 'ADD'}}" class="form-control btn-primary">
+            <input type="submit" name="submit" value="{{isset($amenities)? 'UPDATE' : 'ADD'}}" class="form-control btn-primary">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('facilities')">
+            <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('amenities')">
         </div>
     </div>
 
@@ -287,7 +287,7 @@
 
 
             //Start Validation for Entry and Edit Form
-            $('#$facilities').validate({
+            $('#amenities').validate({
                 rules: {
                     name          : 'required',
                 },
@@ -301,7 +301,6 @@
             });
             //End Validation for Entry and Edit Form
         });
-
 
         //start js function for fileupload
         function showPopup() {
@@ -320,5 +319,6 @@
             $('#removeImageFlag').val(1);
         }
         //end js function for fileupload
+
     </script>
 @stop

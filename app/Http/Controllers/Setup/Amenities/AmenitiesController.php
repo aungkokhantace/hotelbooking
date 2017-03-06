@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Setup\Facilities;
+namespace App\Http\Controllers\Setup\Amenities;
 
 use App\Core\Utility;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Backend\Infrastructure\Forms\FacilitiesEntryRequest;
-use App\Backend\Infrastructure\Forms\FacilitiesEditRequest;
-use App\Setup\Facilities\FacilitiesRepositoryInterface;
-use App\Setup\Facilities\Facilities;
+use App\Backend\Infrastructure\Forms\AmenitiesEntryRequest;
+use App\Backend\Infrastructure\Forms\AmenitiesEditRequest;
+use App\Setup\Amenities\AmenitiesRepositoryInterface;
+use App\Setup\Amenities\Amenity;
 use Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
@@ -18,11 +18,11 @@ use InterventionImage;
 use App\Core\FormatGenerator As FormatGenerator;
 use App\Core\ReturnMessage As ReturnMessage;
 
-class FacilitiesController extends Controller
+class AmenitiesController extends Controller
 {
     private $repo;
 
-    public function __construct(FacilitiesRepositoryInterface $repo)
+    public function __construct(AmenitiesRepositoryInterface $repo)
     {
         $this->repo = $repo;
     }
@@ -30,8 +30,8 @@ class FacilitiesController extends Controller
     public function index(Request $request)
     {
         if (Auth::guard('User')->check()) {
-            $facilities = $this->repo->getObjs();
-            return view('backend.facilities.index')->with('facilities',$facilities);
+            $amenities = $this->repo->getObjs();
+            return view('backend.amenities.index')->with('amenities',$amenities);
         }
         return redirect('/');
     }
@@ -39,12 +39,12 @@ class FacilitiesController extends Controller
     public function create()
     {
         if(Auth::guard('User')->check()){
-            return view('backend.facilities.facilities');
+            return view('backend.amenities.amenities');
         }
         return redirect('/');
     }
 
-    public function store(FacilitiesEntryRequest $request)
+    public function store(AmenitiesEntryRequest $request)
     {
         $request->validate();
         $name    = Input::get('name');
@@ -79,7 +79,7 @@ class FacilitiesController extends Controller
 
 //        $image1 = InterventionImage::make(sprintf($path .'/%s', $file_name))->resize(300, 300)->save();
 
-        $paramObj = new Facilities();
+        $paramObj = new Amenity();
         $paramObj->name = $name;
         $paramObj->description = $description;
         $paramObj->icon = $photo_name;
@@ -87,27 +87,26 @@ class FacilitiesController extends Controller
         $result = $this->repo->create($paramObj);
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
 
-            return redirect()->action('Setup\Facilities\FacilitiesController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Facility created ...'));
+            return redirect()->action('Setup\Amenities\AmenitiesController@index')
+                ->withMessage(FormatGenerator::message('Success', 'Amenity created ...'));
         }
         else{
 
-            return redirect()->action('Setup\Facilities\FacilitiesController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Facility did not create ...'));
+            return redirect()->action('Setup\Amenities\AmenitiesController@index')
+                ->withMessage(FormatGenerator::message('Fail', 'Amenity did not create ...'));
         }
     }
 
     public function edit($id)
     {
         if (Auth::guard('User')->check()) {
-            $facilities  = $this->repo->getObjByID($id);
-
-            return view('backend.facilities.facilities')->with('facilities', $facilities);
+            $amenities  = $this->repo->getObjByID($id);
+            return view('backend.amenities.amenities')->with('amenities', $amenities);
         }
         return redirect('/backend/login');
     }
 
-    public function update(FacilitiesEditRequest $request){
+    public function update(AmenitiesEditRequest $request){
 
         $request->validate();
         $id                         = Input::get('id');
@@ -130,14 +129,14 @@ class FacilitiesController extends Controller
             $photo_name     = uniqid() . "." . $photo_ext;
             $image          = Utility::resizeImage($photo,$photo_name,$path);
 
-            $paramObj = Facilities::find($id);
+            $paramObj = Amenity::find($id);
             $paramObj->name = $name;
             $paramObj->description = $description;
             $paramObj->icon = $photo_name;
 
             $result = $this->repo->update($paramObj);
         }else{
-            $paramObj = Facilities::find($id);
+            $paramObj = Amenity::find($id);
             $paramObj->name = $name;
             $paramObj->description = $description;
 
@@ -152,13 +151,13 @@ class FacilitiesController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
 
-            return redirect()->action('Setup\Facilities\FacilitiesController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Facility updated ...'));
+            return redirect()->action('Setup\Amenities\AmenitiesController@index')
+                ->withMessage(FormatGenerator::message('Success', 'Amenity updated ...'));
         }
         else{
 
-            return redirect()->action('Setup\Facilities\FacilitiesController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Facility did not update ...'));
+            return redirect()->action('Setup\Amenities\AmenitiesController@index')
+                ->withMessage(FormatGenerator::message('Fail', 'Amenity did not update ...'));
         }
     }
 
@@ -168,7 +167,7 @@ class FacilitiesController extends Controller
         foreach($new_string as $id){
             $this->repo->delete($id);
         }
-        return redirect()->action('Setup\Facilities\FacilitiesController@index'); //to redirect listing page
+        return redirect()->action('Setup\Amenities\AmenitiesController@index'); //to redirect listing page
     }
 
 

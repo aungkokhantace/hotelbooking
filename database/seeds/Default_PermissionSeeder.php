@@ -76,13 +76,13 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>49,'module'=>'Features','name'=>'Update','description'=>'Features Update','url'=>'backend/feature/update'],
             ['id'=>50,'module'=>'Features','name'=>'Destroy','description'=>'Features Destroy','url'=>'backend/feature/destroy'],
 
-            //Amendities
-            ['id'=>51,'module'=>'Amendities','name'=>'Listing','description'=>'Amendities Listing','url'=>'backend/amendities'],
-            ['id'=>52,'module'=>'Amendities','name'=>'New','description'=>'Amendities New','url'=>'backend/amendities/create'],
-            ['id'=>53,'module'=>'Amendities','name'=>'store','description'=>'Amendities Store','url'=>'backend/amendities/store'],
-            ['id'=>54,'module'=>'Amendities','name'=>'Edit','description'=>'Amendities Edit','url'=>'backend/amendities/edit'],
-            ['id'=>55,'module'=>'Amendities','name'=>'Update','description'=>'Amendities Update','url'=>'backend/amendities/update'],
-            ['id'=>56,'module'=>'Amendities','name'=>'Destroy','description'=>'Amendities Destroy','url'=>'backend/amendities/destroy'],
+            //Amenities
+            ['id'=>51,'module'=>'Amenities','name'=>'Listing','description'=>'Amenities Listing','url'=>'backend/amenities'],
+            ['id'=>52,'module'=>'Amenities','name'=>'New','description'=>'Amenities New','url'=>'backend/amenities/create'],
+            ['id'=>53,'module'=>'Amenities','name'=>'store','description'=>'Amenities Store','url'=>'backend/amenities/store'],
+            ['id'=>54,'module'=>'Amenities','name'=>'Edit','description'=>'Amenities Edit','url'=>'backend/amenities/edit'],
+            ['id'=>55,'module'=>'Amenities','name'=>'Update','description'=>'Amenities Update','url'=>'backend/amenities/update'],
+            ['id'=>56,'module'=>'Amenities','name'=>'Destroy','description'=>'Amenities Destroy','url'=>'backend/amenities/destroy'],
 
             //Facilities
             ['id'=>57,'module'=>'Facilities','name'=>'Listing','description'=>'Facilities Listing','url'=>'backend/facilities'],
@@ -124,13 +124,13 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>85,'module'=>'City','name'=>'Update','description'=>'City Update','url'=>'backend/city/update'],
             ['id'=>86,'module'=>'City','name'=>'Destroy','description'=>'City Destroy','url'=>'backend/city/destroy'],
 
-            //Room Category Amendities
-            ['id'=>87,'module'=>'RoomCategoryAmendities','name'=>'Listing','description'=>'RoomCategoryAmendities Listing','url'=>'backend/room_category_amendities'],
-            ['id'=>88,'module'=>'RoomCategoryAmendities','name'=>'New','description'=>'RoomCategoryAmendities New','url'=>'backend/room_category_amendities/create'],
-            ['id'=>89,'module'=>'RoomCategoryAmendities','name'=>'store','description'=>'RoomCategoryAmendities Store','url'=>'backend/room_category_amendities/store'],
-            ['id'=>90,'module'=>'RoomCategoryAmendities','name'=>'Edit','description'=>'RoomCategoryAmendities Edit','url'=>'backend/room_category_amendities/edit'],
-            ['id'=>91,'module'=>'RoomCategoryAmendities','name'=>'Update','description'=>'RoomCategoryAmendities Update','url'=>'backend/room_category_amendities/update'],
-            ['id'=>92,'module'=>'RoomCategoryAmendities','name'=>'Destroy','description'=>'RoomCategoryAmendities Destroy','url'=>'backend/room_category_amendities/destroy'],
+            //Room Category Amenities
+            ['id'=>87,'module'=>'RoomCategoryAmenities','name'=>'Listing','description'=>'RoomCategoryAmenities Listing','url'=>'backend/room_category_amenities'],
+            ['id'=>88,'module'=>'RoomCategoryAmenities','name'=>'New','description'=>'RoomCategoryAmenities New','url'=>'backend/room_category_amenities/create'],
+            ['id'=>89,'module'=>'RoomCategoryAmenities','name'=>'store','description'=>'RoomCategoryAmenities Store','url'=>'backend/room_category_amenities/store'],
+            ['id'=>90,'module'=>'RoomCategoryAmenities','name'=>'Edit','description'=>'RoomCategoryAmenities Edit','url'=>'backend/room_category_amenities/edit'],
+            ['id'=>91,'module'=>'RoomCategoryAmenities','name'=>'Update','description'=>'RoomCategoryAmenities Update','url'=>'backend/room_category_amenities/update'],
+            ['id'=>92,'module'=>'RoomCategoryAmenities','name'=>'Destroy','description'=>'RoomCategoryAmenities Destroy','url'=>'backend/room_category_amenities/destroy'],
 
             //Jquery Validation for Country and Township
             ['id'=>93,'module'=>'Country','name'=>'Jquery Validation','description'=>'Country Jquery Validation','url'=>'backend/country/check_country_name'],

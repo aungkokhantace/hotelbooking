@@ -34,7 +34,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind('App\Setup\Township\TownshipRepositoryInterface','App\Setup\Township\TownshipRepository');
         $this->app->bind('App\Setup\City\CityRepositoryInterface','App\Setup\City\CityRepository');
         $this->app->bind('App\Setup\Feature\FeatureRepositoryInterface','App\Setup\Feature\FeatureRepository');
-        $this->app->bind('App\Setup\Amendities\AmenditiesRepositoryInterface','App\Setup\Amendities\AmenditiesRepository');
+        $this->app->bind('App\Setup\Amenities\AmenitiesRepositoryInterface','App\Setup\Amenities\AmenitiesRepository');
         $this->app->bind('App\Setup\Facilities\FacilitiesRepositoryInterface','App\Setup\Facilities\FacilitiesRepository');
         $this->app->bind('App\Setup\HotelRestaurantCategory\HotelRestaurantCategoryRepositoryInterface','App\Setup\HotelRestaurantCategory\HotelRestaurantCategoryRepository');
 

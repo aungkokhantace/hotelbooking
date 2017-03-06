@@ -10,7 +10,7 @@ namespace App\Backend\Infrastructure\Forms;
 
 use App\Http\Requests\Request;
 
-class AmenditiesEditRequest extends Request
+class AmenitiesEditRequest extends Request
 {
 
     public function authorize()
@@ -22,14 +22,14 @@ class AmenditiesEditRequest extends Request
     public function rules()
     {
         return [
-            'amendities_name'   => 'required',
+            'name'   => 'required',
 
         ];
     }
     public function messages()
     {
         return [
-            'amendities_name.required' => 'Amendities Name is required',
+            'name.required' => 'Name is required',
 
 
         ];

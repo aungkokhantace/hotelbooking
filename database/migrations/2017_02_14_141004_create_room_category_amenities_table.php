@@ -3,23 +3,23 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRoomCategoryAmenditiesTables extends Migration
+class CreateRoomCategoryAmenitiesTable extends Migration
 {
     
     public function up()
     {
-        Schema::create('room_category_amendities', function (Blueprint $table) {
+        Schema::create('room_category_amenities', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('amendities_id');
+            $table->unsignedInteger('amenities_id');
             $table->integer('created_by')->default(1);
             $table->integer('updated_by')->default(1);
             $table->integer('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('amendities_id')
-                ->references('id')->on('amendities')
-                ->onDelete('restrict');
+//            $table->foreign('amenities_id')
+//                ->references('id')->on('amenities')
+//                ->onDelete('restrict');
             
         });
     }

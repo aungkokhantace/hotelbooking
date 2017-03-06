@@ -125,23 +125,22 @@ $(document).ready(function() {
         }
     });
 
-    //Amendities
-    $('#amendities').validate({
+    //Amenities
+    $('#amenities').validate({
         rules: {
-            amendities_name  : 'required',
-            amendities_icon  : 'required'
+            amenities_name  : 'required',
+            amenities_icon  : 'required'
         },
         messages: {
-            amendities_name  : {
-                required     : 'Amendities name is required',
+            amenities_name  : {
+                required     : 'Amenities name is required',
             },
-            amendities_icon  :{
-                required     : 'Amendities Icon is required',
+            amenities_icon  :{
+                required     : 'Amenities Icon is required',
             }
         },
         submitHandler: function(form) {
             $('input[type="submit"]').attr('disabled','disabled');
-            //alert('hi');
             form.submit();
         }
     });

@@ -164,12 +164,12 @@
                     <li nav-id="modifier-create" class="has-sub">
                         <a href="javascript:;">
                             <b class="caret pull-right"></b>
-                            <span>Amendities</span>
+                            <span>Amenities</span>
                         </a>
 
                         <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/amendities/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/amendities">List</a></li>
+                            <li nav-id="modifier-create-modifier"><a href="/backend/amenities/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/amenities">List</a></li>
                         </ul>
                     </li>
                     <li nav-id="modifier-create" class="has-sub">

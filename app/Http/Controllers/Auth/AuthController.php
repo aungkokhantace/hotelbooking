@@ -99,10 +99,18 @@ class AuthController extends Controller
 
     public function doLogin(LoginFormRequest $request){
         $request->validate();
+        if(filter_var($request->user_name, FILTER_VALIDATE_EMAIL)){
             $validation = Auth::guard('User')->attempt([
-            'user_name'=>$request->user_name,
-            'password'=>$request->password,
-        ]);
+                'email'=>$request->user_name,
+                'password'=>$request->password,
+            ]);
+        }
+        else{
+            $validation = Auth::guard('User')->attempt([
+                'user_name'=>$request->user_name,
+                'password'=>$request->password,
+            ]);
+        }
 
         if(!$validation){
             return redirect()->back()->withErrors($this->getFailedLoginMessage());

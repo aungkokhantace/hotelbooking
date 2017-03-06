@@ -57,10 +57,10 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="submit" name="submit" value="{{isset($amendities)? 'UPDATE' : 'ADD'}}" class="form-control btn-primary">
+            <input type="submit" name="submit" value="{{isset($amenities)? 'UPDATE' : 'ADD'}}" class="form-control btn-primary">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('amendities')">
+            <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('amenities')">
         </div>
     </div>
     {!! Form::close() !!}

@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Setup\Amendities;
+namespace App\Setup\Amenities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Amendities extends Model
+class Amenity extends Model
 {
-    protected $table = 'amendities';
+    protected $table = 'amenities';
 
     protected $fillable = [
         'id',
-        'amendities_name',
-        'amendities_icon',
+        'name',
+        'icon',
+        'description',
         'updated_at','created_at','deleted_at','updated_by','created_by','deleted_by'
         ,
     ];

@@ -11,7 +11,8 @@ class CreateCountriesTable extends Migration
         Schema::create('countries', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
-           
+
+            //-------common to all tables--------
             $table->integer('created_by')->default(1);
             $table->integer('updated_by')->default(1);
             $table->integer('deleted_by')->nullable();

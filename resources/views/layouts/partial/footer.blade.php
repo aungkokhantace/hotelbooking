@@ -1,6 +1,6 @@
 <!-- begin #Footer -->
 <div id="footer" class="footer">
-    <div class="pull-right">&copy; <?php echo date('Y'); ?> Ace Plus Solution All Rights Reserved</div>
+    <div class="pull-right">&copy; <?php echo date('Y'); ?> AcePlus Solutions All Rights Reserved</div>
     Backend v1.0.0
 </div>        <!-- end #footer -->
 

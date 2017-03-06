@@ -22,16 +22,13 @@ class FacilitiesEntryRequest extends Request
     public function rules()
     {
         return [
-            'facilities_name'   => 'required',
-            'facilities_icon'   => 'required | mimes:jpeg,jpg,png',
+            'name'   => 'required',
         ];
     }
     public function messages()
     {
         return [
-            'facilities_name.required' => 'Facilities Name is required',
-            'facilities_icon.required' => 'Facilities Icon is required!'
-
+            'name.required' => 'Facilities Name is required',
         ];
     }
 }

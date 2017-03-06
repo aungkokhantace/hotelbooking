@@ -22,14 +22,14 @@ class FacilitiesEditRequest extends Request
     public function rules()
     {
         return [
-            'facilities_name'   => 'required',
+            'name'   => 'required',
 
         ];
     }
     public function messages()
     {
         return [
-            'facilities_name.required' => 'Facilities Name is required',
+            'name.required' => 'Name is required',
 
 
         ];

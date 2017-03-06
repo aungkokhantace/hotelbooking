@@ -11,7 +11,10 @@ namespace App\Setup\Facilities;
 
 interface FacilitiesRepositoryInterface
 {
+    public function getObjs();
     public function create($paramObj);
     public function update($paramObj);
+    public function getObjByID($id);
     public function delete($id);
+    public function getArrays();
 }

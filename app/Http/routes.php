@@ -99,13 +99,13 @@ Route::group(['middleware' => 'web'], function () {
             Route::post('feature/update', array('as'=>'backend/feature/update', 'uses'=>'Setup\Feature\FeatureController@update'));
             Route::post('feature/destroy', array('as'=>'backend/feature/destroy', 'uses'=>'Setup\Feature\FeatureController@destroy'));
 
-            //Amendities
-            Route::get('amendities', array('as'=>'backend/amendities', 'uses'=>'Setup\Amendities\AmenditiesController@index'));
-            Route::get('amendities/create', array('as'=>'backend/amendities/create', 'uses'=>'Setup\Amendities\AmenditiesController@create'));
-            Route::post('amendities/store', array('as'=>'backend/amendities/store', 'uses'=>'Setup\Amendities\AmenditiesController@store'));
-            Route::get('amendities/edit/{id}', array('as'=>'backend/amendities/edit', 'uses'=>'Setup\Amendities\AmenditiesController@edit'));
-            Route::post('amendities/update', array('as'=>'backend/amendities/update', 'uses'=>'Setup\Amendities\AmenditiesController@update'));
-            Route::post('amendities/destroy', array('as'=>'backend/amendities/destroy', 'uses'=>'Setup\Amendities\AmenditiesController@destroy'));
+            //Amenities
+            Route::get('amenities', array('as'=>'backend/amenities', 'uses'=>'Setup\Amenities\AmenitiesController@index'));
+            Route::get('amenities/create', array('as'=>'backend/amenities/create', 'uses'=>'Setup\Amenities\AmenitiesController@create'));
+            Route::post('amenities/store', array('as'=>'backend/amenities/store', 'uses'=>'Setup\Amenities\AmenitiesController@store'));
+            Route::get('amenities/edit/{id}', array('as'=>'backend/amenities/edit', 'uses'=>'Setup\Amenities\AmenitiesController@edit'));
+            Route::post('amenities/update', array('as'=>'backend/amenities/update', 'uses'=>'Setup\Amenities\AmenitiesController@update'));
+            Route::post('amenities/destroy', array('as'=>'backend/amenities/destroy', 'uses'=>'Setup\Amenities\AmenitiesController@destroy'));
 
             //Facilities
             Route::get('facilities', array('as'=>'backend/facilities', 'uses'=>'Setup\Facilities\FacilitiesController@index'));

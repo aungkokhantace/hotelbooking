@@ -1,11 +1,11 @@
 @extends('layouts.master')
-@section('title','Amendities')
+@section('title','Amenity')
 @section('content')
 
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">Amendities Listing</h1>
+    <h1 class="page-header">Amenity Listing</h1>
     @if(count(Session::get('message')) != 0)
         <div>
         </div>
@@ -14,13 +14,13 @@
         <div class="col-md-10"></div>
         <div class="col-md-2">
             <div class="buttons pull-right">
-                <button type="button" onclick='create_setup("amendties");' class="btn btn-default btn-md first_btn">
+                <button type="button" onclick='create_setup("amenities");' class="btn btn-default btn-md first_btn">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </button>
-                <button type="button" onclick='edit_setup("amendities");' class="btn btn-default btn-md second_btn">
+                <button type="button" onclick='edit_setup("amenities");' class="btn btn-default btn-md second_btn">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </button>
-                <button type="button" onclick="delete_setup('amendities');" class="btn btn-default btn-md third_btn">
+                <button type="button" onclick="delete_setup('amenities');" class="btn btn-default btn-md third_btn">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 </button>
             </div>
@@ -28,7 +28,7 @@
 
     </div>
 
-    {!! Form::open(array('id'=> 'frm_user' ,'url' => 'backend/amendities/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+    {!! Form::open(array('id'=> 'frm_amenities' ,'url' => '/backend/amenities/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
     {{ csrf_field() }}
     <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 
@@ -41,23 +41,26 @@
                     <thead>
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
-                        <th>Feature Name</th>
-                        <th>Feature Icon</th>
+                        <th>Name</th>
+                        <th>Icon</th>
+                        <th>Description</th>
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
                         <th></th>
-                        <th class="search-col" con-id="display_name">Amendities Name</th>
-                        <th class="search-col" con-id="display_name">Amendities Icon</th>
+                        <th class="search-col" con-id="name">Name</th>
+                        <th class="search-col" con-id="icon">Icon</th>
+                        <th class="search-col" con-id="description">Description</th>
                     </tr>
                     </tfoot>
                     <tbody>
-                    @foreach($amendities as $amendity)
+                    @foreach($amenities as $amenity)
                         <tr>
-                            <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $amendity->id }}" id="all"></td>
-                            <td><a href="/backend/feature/edit/{{$amendity->id}}">{{$amendity->amendities_name}}</a></td>
-                            <td>{{$amendity->amendities_icon }}</td>
+                            <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $amenity->id }}" id="all"></td>
+                            <td><a href="/backend/amenities/edit/{{$amenity->id}}">{{$amenity->name}}</a></td>
+                            <td>{{$amenity->icon }}</td>
+                            <td>{{$amenity->description }}</td>
                         </tr>
                     @endforeach
                     </tbody>
