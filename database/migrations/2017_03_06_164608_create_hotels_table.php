@@ -29,11 +29,11 @@ class CreateHotelsTable extends Migration
             $table->text('description')->nullable();
             $table->integer('number_of_floors');
             $table->string('class');
-            $table->string('website');
-            $table->time('check_in_time');
-            $table->time('check_out_time');
-            $table->time('breakfast_start_time');
-            $table->time('breakfast_end_time');
+            $table->string('website')->nullable();
+            $table->string('check_in_time');
+            $table->string('check_out_time');
+            $table->string('breakfast_start_time');
+            $table->string('breakfast_end_time');
 
             //-------common to all tables--------
             $table->integer('created_by')->default(1);

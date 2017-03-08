@@ -49,6 +49,9 @@ $companyLogo = \App\Core\Check::companyLogo();
     {{--For summernote editor--}}
     <link rel="stylesheet" href="/assets/plugins/summernote/summernote.css" type="text/css" media="all" />
 
+    <link media="all" type="text/css" rel="stylesheet" href="/assets/plugins/bootstrap-datepicker/css/datepicker3.css">
+    <link media="all" type="text/css" rel="stylesheet" href="/assets/plugins/bootstrap-timepicker/css/bootstrap-timepicker.css">
+
     <script src="/assets/js/jquery.js"></script>
     <script src="/assets/js/apps.min.js"></script>
     <script src="/assets/plugins/jquery/jquery-1.9.1.min.js"></script>
@@ -78,6 +81,9 @@ $companyLogo = \App\Core\Check::companyLogo();
 
     {{--For summernote editor--}}
     <script src="/assets/plugins/summernote/summernote.min.js"></script>
+
+    <script src="/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="/assets/plugins/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
 
     <script>
         $(document).ready(function() {

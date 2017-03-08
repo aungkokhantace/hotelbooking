@@ -56,3 +56,8 @@
 .error{
     text-align: left;
 }
+
+/*To generate a horizontal scrollbar for listing pages that are wider than browser window*/
+.content{
+    overflow: auto !important;
+}

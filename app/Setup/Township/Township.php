@@ -20,4 +20,9 @@ class Township extends Model
     {
         return $this->belongsTo('App\Setup\City\City','city_id','id');
     }
+
+    public function hotel()
+    {
+        return $this->hasMany('App\Setup\Hotel\Hotel');
+    }
 }

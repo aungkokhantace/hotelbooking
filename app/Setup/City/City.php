@@ -20,4 +20,9 @@ class City extends Model
     {
         return $this->belongsTo('App\Setup\Country\Country','country_id','id');
     }
+
+    public function hotel()
+    {
+        return $this->hasMany('App\Setup\Hotel\Hotel');
+    }
 }

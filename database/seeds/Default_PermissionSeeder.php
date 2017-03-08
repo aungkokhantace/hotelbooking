@@ -144,7 +144,13 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>144,'module'=>'Room View','name'=>'Update','description'=>'Room View Update','url'=>'backend/room_view/update'],
             ['id'=>145,'module'=>'Room View','name'=>'Destroy','description'=>'Room View Destroy','url'=>'backend/room_view/destroy'],
 
-
+            //Hotel
+            ['id'=>150,'module'=>'Hotel','name'=>'Listing','description'=>'Hotel Listing','url'=>'backend/hotel'],
+            ['id'=>151,'module'=>'Hotel','name'=>'New','description'=>'Hotel New','url'=>'backend/hotel/create'],
+            ['id'=>152,'module'=>'Hotel','name'=>'store','description'=>'Hotel Store','url'=>'backend/hotel/store'],
+            ['id'=>153,'module'=>'Hotel','name'=>'Edit','description'=>'Hotel Edit','url'=>'backend/hotel/edit'],
+            ['id'=>154,'module'=>'Hotel','name'=>'Update','description'=>'Hotel Update','url'=>'backend/hotel/update'],
+            ['id'=>155,'module'=>'Hotel','name'=>'Destroy','description'=>'Hotel Destroy','url'=>'backend/hotel/destroy'],
         );
 
         DB::table('core_permissions')->insert($permissions);

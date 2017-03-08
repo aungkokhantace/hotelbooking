@@ -130,6 +130,14 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('room_view/edit/{id}', array('as'=>'backend/room_view/edit', 'uses'=>'Setup\RoomView\RoomViewController@edit'));
             Route::post('room_view/update', array('as'=>'backend/room_view/update', 'uses'=>'Setup\RoomView\RoomViewController@update'));
             Route::post('room_view/destroy', array('as'=>'backend/room_view/destroy', 'uses'=>'Setup\RoomView\RoomViewController@destroy'));
+
+            //Hotels
+            Route::get('hotel', array('as'=>'backend/hotel', 'uses'=>'Setup\Hotel\HotelController@index'));
+            Route::get('hotel/create', array('as'=>'backend/hotel/create', 'uses'=>'Setup\Hotel\HotelController@create'));
+            Route::post('hotel/store', array('as'=>'backend/hotel/store', 'uses'=>'Setup\Hotel\HotelController@store'));
+            Route::get('hotel/edit/{id}', array('as'=>'backend/hotel/edit', 'uses'=>'Setup\Hotel\HotelController@edit'));
+            Route::post('hotel/update', array('as'=>'backend/hotel/update', 'uses'=>'Setup\Hotel\HotelController@update'));
+            Route::post('hotel/destroy', array('as'=>'backend/hotel/destroy', 'uses'=>'Setup\Hotel\HotelController@destroy'));
         });
 
     });
