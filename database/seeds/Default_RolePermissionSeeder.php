@@ -144,6 +144,14 @@ class Default_RolePermissionSeeder extends Seeder
             ['role_id'=>1, 'permission_id'=>154],
             ['role_id'=>1, 'permission_id'=>155],
 
+            //Hotel Room Type
+            ['role_id'=>1, 'permission_id'=>160],
+            ['role_id'=>1, 'permission_id'=>161],
+            ['role_id'=>1, 'permission_id'=>162],
+            ['role_id'=>1, 'permission_id'=>163],
+            ['role_id'=>1, 'permission_id'=>164],
+            ['role_id'=>1, 'permission_id'=>165],
+
         );
 
         DB::table('core_permission_role')->insert($roles);
