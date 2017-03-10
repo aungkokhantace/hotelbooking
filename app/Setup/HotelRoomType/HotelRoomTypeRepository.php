@@ -118,4 +118,12 @@ class HotelRoomTypeRepository implements HotelRoomTypeRepositoryInterface
             LogCustom::create($date,$message);
         }
     }
+
+    public function getHotelRoomTypeWithHotelId($hotel_id){
+        $objs   = HotelRoomType::select('id','hotel_id','name')
+                                ->where('hotel_id','=',$hotel_id)
+                                ->get();
+
+        return $objs;
+    }
 }

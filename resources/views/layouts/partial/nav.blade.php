@@ -208,6 +208,17 @@
                     <li nav-id="modifier-create" class="has-sub">
                         <a href="javascript:;">
                             <b class="caret pull-right"></b>
+                            <span>Hotel Room Category</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/hotel_room_category/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_room_category">List</a></li>
+                        </ul>
+                    </li>
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
                             <span>Room View</span>
                         </a>
 

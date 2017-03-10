@@ -114,4 +114,10 @@ class HotelRoomTypeController extends Controller
         return redirect()->action('Setup\HotelRoomType\HotelRoomTypeController@index'); //to redirect listing page
     }
 
+    public function getHotelRoomType($hotel_id){
+        $result = $this->repo->getHotelRoomTypeWithHotelId($hotel_id);
+
+        return \Response::json($result);
+    }
+
 }

@@ -16,4 +16,5 @@ interface HotelRoomTypeRepositoryInterface
     public function getObjByID($id);
     public function create($paramObj);
     public function update($paramObj);
+    public function getHotelRoomTypeWithHotelId($hotel_id);
 }
