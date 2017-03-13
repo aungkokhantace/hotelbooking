@@ -227,6 +227,8 @@
         </div>
     </div>
 
+    <div id="added-image"></div>
+
     <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         </div>
@@ -245,23 +247,40 @@
 @section('page_script')
     <script type="text/javascript">
         $(document).ready(function(){
+            var count = 0;  //to add count in class name
 
+            //for uploadBtn
             document.getElementById("uploadBtn").onchange = function () {
                 document.getElementById("uploadFile").value = this.value;
             };
 
+            //for added uploadBtn-i
+            $('.upload').live('click',function(){
+                console.log($(this).attr('id'));
+                var btn_id = $(this).attr('id');
+                var i = btn_id.split('-');
+                var file_id = 'uploadFile-'+i[1];
+                $('#'+btn_id).change(function() {
+                    var value = $('#'+btn_id).val();
+                    console.log('success - '+ value);
+                    $('#'+file_id).val(value);
+                });
+            });
+
             $('.btn-add').live('click', function() {
-                var test = $('#multi-image:first');
+                //var test = $('#multi-image:first');
+                count = count + 1;
                 //var clone = test.html();
                 var html_tmp = "<div class='row multi btn-height'>";
                 html_tmp    += "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'><label for='image'>Image</label> </div>";
-                html_tmp    += "<div class='col-lg-3 col-md-3 col-sm-3 col-xs-3'><input id='uploadFile' placeholder='Choose Image' disabled='disabled' class='form-control'/></div>";
-                html_tmp    += "<div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'><div class='fileUpload btn btn-primary'><span>Browse</span><input id='uploadBtn' type='file' class='upload'/> </div></div>";
+                html_tmp    += "<div class='col-lg-3 col-md-3 col-sm-3 col-xs-3'><input id='uploadFile-"+count+"' placeholder='Choose Image' disabled='disabled' class='form-control'/></div>";
+                html_tmp    += "<div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'><div class='fileUpload btn btn-primary'><span>Browse</span><input id='uploadBtn-"+count+"' type='file' class='upload'/> </div></div>";
                 html_tmp    += "<div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'><input type='button' value='ADD' name='btn-add' class='btn-add'></div>";
                 html_tmp    += "<div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'><input type='button' value='Remove' name='btn-remove' class='btn-remove'></div>";
                 html_tmp    += "</div>";
 
-                $('#multi-image:last').after(html_tmp);
+                //$('#multi-image:last').after(html_tmp);
+                $("#added-image:last").after(html_tmp);
 
             });
 
