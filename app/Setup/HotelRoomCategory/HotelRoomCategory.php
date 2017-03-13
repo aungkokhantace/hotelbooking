@@ -21,6 +21,7 @@ class HotelRoomCategory extends Model
         'bed_type',
         'description',
         'price',
+        'remark',
         'updated_at','created_at','deleted_at','updated_by','created_by','deleted_by'
     ];
 

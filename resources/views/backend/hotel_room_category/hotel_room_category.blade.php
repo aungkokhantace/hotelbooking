@@ -1,7 +1,29 @@
 @extends('layouts.master')
 @section('title','Hotel Room Category')
 @section('content')
+<style>
+    .fileUpload {
+        position: relative;
+        overflow: hidden;
+        /*margin: 10px;*/
+        margin: 0;
+    }
+    .fileUpload input.upload {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+        cursor: pointer;
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
 
+    .btn-height{
+        margin-bottom: 7px;
+    }
+</style>
         <!-- begin #content -->
 <div id="content" class="content">
 
@@ -172,6 +194,40 @@
     </div>
 
     <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="remark">Remark</label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <textarea rows="5" cols="50" class="form-control" id="remark" name="remark" placeholder="Enter Remark For Booking CutOff Day">{{ isset($hotel_room_category)? $hotel_room_category->remark:Request::old('remark') }}</textarea>
+            <p class="text-danger">{{$errors->first('remark')}}</p>
+        </div>
+    </div>
+
+    <div id="multi-image">
+        <div class="row multi">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <label for="image">Image</label>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                <input id="uploadFile" placeholder="Choose Image" disabled="disabled" class="form-control"/>
+                <p class="text-danger">{{$errors->first('remark')}}</p>
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                <div class="fileUpload btn btn-primary">
+                    <span>Browse</span>
+                    <input id="uploadBtn" type="file" class="upload" />
+                </div>
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                <input type="button" value="ADD" name="btn-add" class="btn-add">
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                <input type="button" value="Remove" name="btn-remove" class="btn-remove">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
@@ -181,6 +237,7 @@
             <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('hotel_room_category')">
         </div>
     </div>
+
     {!! Form::close() !!}
 </div>
 @stop
@@ -188,8 +245,32 @@
 @section('page_script')
     <script type="text/javascript">
         $(document).ready(function(){
+
+            document.getElementById("uploadBtn").onchange = function () {
+                document.getElementById("uploadFile").value = this.value;
+            };
+
+            $('.btn-add').live('click', function() {
+                var test = $('#multi-image:first');
+                //var clone = test.html();
+                var html_tmp = "<div class='row multi btn-height'>";
+                html_tmp    += "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'><label for='image'>Image</label> </div>";
+                html_tmp    += "<div class='col-lg-3 col-md-3 col-sm-3 col-xs-3'><input id='uploadFile' placeholder='Choose Image' disabled='disabled' class='form-control'/></div>";
+                html_tmp    += "<div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'><div class='fileUpload btn btn-primary'><span>Browse</span><input id='uploadBtn' type='file' class='upload'/> </div></div>";
+                html_tmp    += "<div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'><input type='button' value='ADD' name='btn-add' class='btn-add'></div>";
+                html_tmp    += "<div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'><input type='button' value='Remove' name='btn-remove' class='btn-remove'></div>";
+                html_tmp    += "</div>";
+
+                $('#multi-image:last').after(html_tmp);
+
+            });
+
+            $('.btn-remove').live('click', function() {
+                $(this).closest('.multi').remove();
+
+            });
+
             $('#hotel_id').change(function(e){
-                console.log('success');
                 loadHotelRoomType($(this).val());
             });
 
@@ -258,5 +339,10 @@
                 })
             });
         }
+        /*
+        function ChangeText(oFileInput, sTargetID) {
+
+            document.getElementById(sTargetID).value = oFileInput.value;
+        }*/
     </script>
 @stop

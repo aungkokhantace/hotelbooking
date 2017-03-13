@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHRoomCategoryTable extends Migration
+class CreateRCutoffDateHistoryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,21 +12,12 @@ class CreateHRoomCategoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('h_room_category', function (Blueprint $table) {
+        Schema::create('r_cutoff_date_history', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
             $table->unsignedInteger('hotel_id');
-            $table->double('square_metre');
-            $table->integer('capacity');
-            $table->integer('booking_cutoff_day');
-            $table->boolean('extra_bed_allowed');
-            $table->decimal('extra_bed_price');
-            $table->unsignedInteger('h_room_type_id');
-            $table->string('bed_type');
-            $table->text('description')->nullable();
-            $table->decimal('price');
-            $table->text('remark')->nullable();
-
+            $table->unsignedInteger('h_room_category_id');
+            $table->text('remark');
+            $table->integer('cutoff_date_count');
             //-------common to all tables--------
             $table->integer('created_by')->default(1);
             $table->integer('updated_by')->default(1);
@@ -38,8 +29,8 @@ class CreateHRoomCategoryTable extends Migration
                 ->references('id')->on('hotels')
                 ->onDelete('restrict');
 
-            $table->foreign('h_room_type_id')
-                ->references('id')->on('h_room_type')
+            $table->foreign('h_room_category_id')
+                ->references('id')->on('h_room_category')
                 ->onDelete('restrict');
         });
     }
@@ -51,6 +42,6 @@ class CreateHRoomCategoryTable extends Migration
      */
     public function down()
     {
-        Schema::drop('h_room_category');
+        Schema::drop('r_cutoff_date_history');
     }
 }

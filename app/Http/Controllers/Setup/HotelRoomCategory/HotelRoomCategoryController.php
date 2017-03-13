@@ -10,6 +10,8 @@ use App\Setup\Hotel\HotelRepository;
 use App\Setup\HotelRoomCategory\HotelRoomCategory;
 use App\Setup\HotelRoomCategory\HotelRoomCategoryRepositoryInterface;
 use App\Setup\HotelRoomType\HotelRoomTypeRepository;
+use App\Setup\RoomCutOffDateHistory\RoomCutOffDateHistory;
+use App\Setup\RoomCutOffDateHistory\RoomCutOffDateHistoryRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -59,6 +61,7 @@ class HotelRoomCategoryController extends Controller
         $bed_type           = Input::get('bed_type');
         $description        = Input::get('description');
         $price              = Input::get('price');
+        $remark             = Input::get('remark');
 
         $paramObj                       = new HotelRoomCategory();
         $paramObj->hotel_id             = $hotel_id;
@@ -72,8 +75,19 @@ class HotelRoomCategoryController extends Controller
         $paramObj->bed_type             = $bed_type;
         $paramObj->description          = $description;
         $paramObj->price                = $price;
+        $paramObj->remark               = $remark;
 
-        $result = $this->repo->create($paramObj);
+        $result                         = $this->repo->create($paramObj);
+        $lastRoomCategoryId             = $result['lastId'];
+
+        $cutoffHistoryObj                           = new RoomCutOffDateHistory();
+        $cutoffHistoryObj->hotel_id                 = $hotel_id;
+        $cutoffHistoryObj->h_room_category_id       = $lastRoomCategoryId;
+        $cutoffHistoryObj->remark                   = $remark;
+        $cutoffHistoryObj->cutoff_date_count        = $booking_cutoff_day;
+
+        $cutoffHistoryRepo                          = new RoomCutOffDateHistoryRepository();
+        $cutoffHistoryResult                        = $cutoffHistoryRepo->create($cutoffHistoryObj);
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
@@ -116,6 +130,7 @@ class HotelRoomCategoryController extends Controller
         $bed_type           = Input::get('bed_type');
         $description        = Input::get('description');
         $price              = Input::get('price');
+        $remark             = Input::get('remark');
 
         $paramObj                       = $this->repo->getObjByID($id);
         $paramObj->hotel_id             = $hotel_id;
@@ -131,6 +146,15 @@ class HotelRoomCategoryController extends Controller
         $paramObj->price                = $price;
 
         $result = $this->repo->update($paramObj);
+
+        $cutoffHistoryObj                           = new RoomCutOffDateHistory();
+        $cutoffHistoryObj->hotel_id                 = $hotel_id;
+        $cutoffHistoryObj->h_room_category_id       = $id;
+        $cutoffHistoryObj->remark                   = $remark;
+        $cutoffHistoryObj->cutoff_date_count        = $booking_cutoff_day;
+
+        $cutoffHistoryRepo                          = new RoomCutOffDateHistoryRepository();
+        $cutoffHistoryResult                        = $cutoffHistoryRepo->create($cutoffHistoryObj);
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')

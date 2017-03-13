@@ -54,6 +54,7 @@ class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterfac
 
 
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
+            $returnedObj['lastId']            = $tempObj->id;
             return $returnedObj;
         }
         catch(\Exception $e){
