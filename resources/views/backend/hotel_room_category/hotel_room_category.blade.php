@@ -2,26 +2,59 @@
 @section('title','Hotel Room Category')
 @section('content')
 <style>
-    .fileUpload {
-        position: relative;
-        overflow: hidden;
-        /*margin: 10px;*/
-        margin: 0;
+    .upload{
+        /*background-color:#ff0000;*/
+        border:1px solid #2a72b5;
+        color:#000;
+        border-radius:5px;
+        padding:10px;
+        /*text-shadow:1px 1px 0px green;*/
+        box-shadow: 2px 2px 15px rgba(0,0,0, .75);
     }
-    .fileUpload input.upload {
-        position: absolute;
-        top: 0;
-        right: 0;
-        margin: 0;
-        padding: 0;
-        font-size: 20px;
-        cursor: pointer;
-        opacity: 0;
-        filter: alpha(opacity=0);
+    .upload:hover{
+        cursor:pointer;
+        background:#2a72b5;
+        color: #fff;
+        border:1px solid #2a72b5;
+        box-shadow: 0px 0px 5px rgba(0,0,0, .75);
+    }
+    #file{
+        color:green;
+        padding:5px; border:1px dashed #123456;
+        background-color: #f9ffe5;
+    }
+    #upload{
+        margin-left: 45px;
     }
 
-    .btn-height{
-        margin-bottom: 7px;
+    #noerror{
+        color:green;
+        text-align: left;
+    }
+    #error{
+        color:red;
+        text-align: left;
+    }
+    #img{
+        width: 25px;
+        border: none;
+        height:25px;
+        margin-left: -24px;
+        margin-bottom: 165px;
+    }
+
+    .abcd{
+        text-align: center;
+    }
+
+    .abcd img{
+        height:200px;
+        width:200px;
+        padding: 5px;
+        border: 1px solid rgb(232, 222, 189);
+    }
+    b{
+        color:red;
     }
 </style>
         <!-- begin #content -->
@@ -30,10 +63,10 @@
     <h1 class="page-header">{{isset($hotel_room_category) ?  'Hotel Room Category Edit' : 'Hotel Room Category Entry' }}</h1>
 
     @if(isset($hotel_room_category))
-        {!! Form::open(array('url' => '/backend/hotel_room_category/update','id'=>'hotel_room_category', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend/hotel_room_category/update','id'=>'hotel_room_category', 'class'=> 'form-horizontal user-form-border','files' => true)) !!}
 
     @else
-        {!! Form::open(array('url' => '/backend/hotel_room_category/store','id'=>'hotel_room_category', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend/hotel_room_category/store','id'=>'hotel_room_category', 'class'=> 'form-horizontal user-form-border','files' => true)) !!}
     @endif
     <input type="hidden" name="id" value="{{isset($hotel_room_category)? $hotel_room_category->id:''}}"/>
     <br/>
@@ -203,31 +236,36 @@
         </div>
     </div>
 
-    <div id="multi-image">
-        <div class="row multi">
+    {{-- Start Image --}}
+    @if(isset($images) && count($images) > 0)
+
+        <div class="row">
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                 <label for="image">Image</label>
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                <input id="uploadFile" placeholder="Choose Image" disabled="disabled" class="form-control"/>
-                <p class="text-danger">{{$errors->first('remark')}}</p>
-            </div>
-            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-                <div class="fileUpload btn btn-primary">
-                    <span>Browse</span>
-                    <input id="uploadBtn" type="file" class="upload" />
-                </div>
-            </div>
-            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-                <input type="button" value="ADD" name="btn-add" class="btn-add">
-            </div>
-            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-                <input type="button" value="Remove" name="btn-remove" class="btn-remove">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                @foreach($images as $image)
+                    <div id="filediv"><div id='abcd' class='abcd'><img id='previewimg' src='{{$image->img_path}}'/></div></div>
+                @endforeach
+                <div id="filediv"><input name="file[]" type="file" id="file"/></div><br/>
+
+                <input type="button" id="add_more" class="upload" value="Add Image"/>
             </div>
         </div>
-    </div>
+    @else
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <label for="image">Image</label>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 
-    <div id="added-image"></div>
+                <div id="filediv"><input name="file[]" type="file" id="file"/></div><br/>
+
+                <input type="button" id="add_more" class="upload" value="Add Image"/>
+            </div>
+        </div>
+    @endif
+    {{-- End Image --}}
 
     <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -246,48 +284,8 @@
 
 @section('page_script')
     <script type="text/javascript">
+        var count = 0;      // Declaring and defining global increment variable.
         $(document).ready(function(){
-            var count = 0;  //to add count in class name
-
-            //for uploadBtn
-            document.getElementById("uploadBtn").onchange = function () {
-                document.getElementById("uploadFile").value = this.value;
-            };
-
-            //for added uploadBtn-i
-            $('.upload').live('click',function(){
-                console.log($(this).attr('id'));
-                var btn_id = $(this).attr('id');
-                var i = btn_id.split('-');
-                var file_id = 'uploadFile-'+i[1];
-                $('#'+btn_id).change(function() {
-                    var value = $('#'+btn_id).val();
-                    console.log('success - '+ value);
-                    $('#'+file_id).val(value);
-                });
-            });
-
-            $('.btn-add').live('click', function() {
-                //var test = $('#multi-image:first');
-                count = count + 1;
-                //var clone = test.html();
-                var html_tmp = "<div class='row multi btn-height'>";
-                html_tmp    += "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'><label for='image'>Image</label> </div>";
-                html_tmp    += "<div class='col-lg-3 col-md-3 col-sm-3 col-xs-3'><input id='uploadFile-"+count+"' placeholder='Choose Image' disabled='disabled' class='form-control'/></div>";
-                html_tmp    += "<div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'><div class='fileUpload btn btn-primary'><span>Browse</span><input id='uploadBtn-"+count+"' type='file' class='upload'/> </div></div>";
-                html_tmp    += "<div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'><input type='button' value='ADD' name='btn-add' class='btn-add'></div>";
-                html_tmp    += "<div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'><input type='button' value='Remove' name='btn-remove' class='btn-remove'></div>";
-                html_tmp    += "</div>";
-
-                //$('#multi-image:last').after(html_tmp);
-                $("#added-image:last").after(html_tmp);
-
-            });
-
-            $('.btn-remove').live('click', function() {
-                $(this).closest('.multi').remove();
-
-            });
 
             $('#hotel_id').change(function(e){
                 loadHotelRoomType($(this).val());
@@ -342,6 +340,52 @@
                 }
             });
             //End Validation for Entry and Edit Form
+
+
+            /* Start multi image */
+            //  To add new input file field dynamically, on click of "Add More Files" button below function will be executed.
+            $('#add_more').click(function() {
+                $(this).before($("<div/>", {
+                    id: 'filediv'
+                }).fadeIn('slow').append($("<input/>", {
+                    name: 'file[]',
+                    type: 'file',
+                    id: 'file'
+                }), $("<br/>")));
+            });
+// Following function will executes on change event of file input to select different file.
+            $('body').on('change', '#file', function() {
+                if (this.files && this.files[0]) {
+                    count += 1; // Incrementing global variable by 1.
+                    var z = count - 1;
+                    var x = $(this).parent().find('#previewimg' + z).remove();
+                    $(this).before("<div id='abcd" + count + "' class='abcd'><img id='previewimg" + count + "' src=''/></div>");
+                    var reader = new FileReader();
+                    reader.onload = imageIsLoaded;
+                    reader.readAsDataURL(this.files[0]);
+                    $(this).hide();
+                    $("#abcd" + count).append($("<img/>", {
+                        id: 'img',
+                        src: '/images/x.png',
+                        alt: 'delete'
+                    }).click(function() {
+                        $(this).parent().parent().remove();
+                    }));
+                }
+            });
+// To Preview Image
+            function imageIsLoaded(e) {
+                $('#previewimg' + count).attr('src', e.target.result);
+            };
+            $('#upload').click(function(e) {
+                var name = $(":file").val();
+                if (!name) {
+                    alert("First Image Must Be Selected");
+                    e.preventDefault();
+                }
+            });
+
+            /* End multi image */
         });
         function loadHotelRoomType(hotelId){
             $.ajax({
@@ -358,10 +402,6 @@
                 })
             });
         }
-        /*
-        function ChangeText(oFileInput, sTargetID) {
 
-            document.getElementById(sTargetID).value = oFileInput.value;
-        }*/
     </script>
 @stop
