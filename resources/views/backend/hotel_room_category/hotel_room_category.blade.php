@@ -43,10 +43,6 @@
         margin-bottom: 165px;
     }
 
-    .abcd{
-        text-align: center;
-    }
-
     .abcd img{
         height:200px;
         width:200px;
@@ -245,7 +241,15 @@
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                 @foreach($images as $image)
-                    <div id="filediv"><div id='abcd' class='abcd'><img id='previewimg' src='{{$image->img_path}}'/></div></div>
+                    <div id="filediv">
+                        <div id='abcd' class='abcd'>
+                            <input type="hidden" name="file_id[]" value="{{$image->id}}"/>
+                            <input name="file[]" type="file" id="file" value="{{$image->img_path}}" class="file-hide"/>
+                            <img id='previewimg' src='{{$image->img_path}}'/>
+                            <input type="button" id="remove-img{{$image->id}}" value="Remove" class="btn btn-default remove-img">
+                        </div>
+                    </div>
+                    <br/>
                 @endforeach
                 <div id="filediv"><input name="file[]" type="file" id="file"/></div><br/>
 
@@ -363,11 +367,13 @@
                     var reader = new FileReader();
                     reader.onload = imageIsLoaded;
                     reader.readAsDataURL(this.files[0]);
-                    $(this).hide();
-                    $("#abcd" + count).append($("<img/>", {
-                        id: 'img',
-                        src: '/images/x.png',
-                        alt: 'delete'
+                    $(this).hide(); //Hide chose file button
+                    //Remove Button
+                    $("#abcd" + count).append($("<input/>", {
+                        type: 'button',
+                        id: 'remove',
+                        value: 'Remove',
+                        class: 'btn btn-default'
                     }).click(function() {
                         $(this).parent().parent().remove();
                     }));
@@ -383,6 +389,13 @@
                     alert("First Image Must Be Selected");
                     e.preventDefault();
                 }
+            });
+            $('.file-hide').hide();
+            //Remove Button For Edit Button
+            $('.remove-img').live('click',function(){
+                var id = $(this).attr('id');
+                $('#'+id).parent().parent().remove();
+
             });
 
             /* End multi image */

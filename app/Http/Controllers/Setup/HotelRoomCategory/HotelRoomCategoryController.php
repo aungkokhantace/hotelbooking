@@ -90,7 +90,6 @@ class HotelRoomCategoryController extends Controller
             $lastRoomCategoryId             = $result['lastId'];    //get last h_room_category id
 
             //RoomCategoryImage
-
             $roomCategoryImageResult        = "";
             if(Input::hasFile('file'))
             {
@@ -188,36 +187,96 @@ class HotelRoomCategoryController extends Controller
         $price              = Input::get('price');
         $remark             = Input::get('remark');
 
-        $paramObj                       = $this->repo->getObjByID($id);
-        $paramObj->hotel_id             = $hotel_id;
-        $paramObj->h_room_type_id       = $h_room_type_id;
-        $paramObj->name                 = $name;
-        $paramObj->square_metre         = $square_metre;
-        $paramObj->capacity             = $capacity;
-        $paramObj->booking_cutoff_day   = $booking_cutoff_day;
-        $paramObj->extra_bed_allowed    = $extra_bed_allowed;
-        $paramObj->extra_bed_price      = $extra_bed_price;
-        $paramObj->bed_type             = $bed_type;
-        $paramObj->description          = $description;
-        $paramObj->price                = $price;
-        $paramObj->remark               = $remark;
+        try{
+            DB::beginTransaction();
+            $paramObj                       = $this->repo->getObjByID($id);
+            $paramObj->hotel_id             = $hotel_id;
+            $paramObj->h_room_type_id       = $h_room_type_id;
+            $paramObj->name                 = $name;
+            $paramObj->square_metre         = $square_metre;
+            $paramObj->capacity             = $capacity;
+            $paramObj->booking_cutoff_day   = $booking_cutoff_day;
+            $paramObj->extra_bed_allowed    = $extra_bed_allowed;
+            $paramObj->extra_bed_price      = $extra_bed_price;
+            $paramObj->bed_type             = $bed_type;
+            $paramObj->description          = $description;
+            $paramObj->price                = $price;
+            $paramObj->remark               = $remark;
 
-        $result = $this->repo->update($paramObj);
+            $result = $this->repo->update($paramObj);
 
-        $cutoffHistoryObj                           = new RoomCutOffDateHistory();
-        $cutoffHistoryObj->hotel_id                 = $hotel_id;
-        $cutoffHistoryObj->h_room_category_id       = $id;
-        $cutoffHistoryObj->remark                   = $remark;
-        $cutoffHistoryObj->cutoff_date_count        = $booking_cutoff_day;
+            //RoomCategoryImage
+            //Delete RoomCategoryImage
+            $file_id                        = Input::get('file_id');
+            $roomCategoryImageRepo          = new RoomCategoryImageRepository();
+            $roomCategoryImages             = $roomCategoryImageRepo->getRoomCategoryImageByHotelRoomCategoryId($id);
+            $r_category_image_id            = array();
+            if(isset($roomCategoryImages) && count($roomCategoryImages) > 0){
+                foreach($roomCategoryImages as $cImage){
+                    if(!in_array($cImage->id,$file_id)){
+                        array_push($r_category_image_id,$cImage->id);
+                    }
+                }
+            }
 
-        $cutoffHistoryRepo                          = new RoomCutOffDateHistoryRepository();
-        $cutoffHistoryResult                        = $cutoffHistoryRepo->create($cutoffHistoryObj);
+            $roomCategoryImageRepo->deleteRoomCategoryImageByHotelRoomCateogryId($id,$r_category_image_id);
+            $roomCategoryImageResult['aceplusStatusCode']  = ReturnMessage::OK;
+            if(Input::hasFile('file'))
+            {
+                $images                         = Input::file('file');
+                foreach($images as $image) {
+                    if($image != null){
+                        $path = base_path() . '/public/images/upload/';
+                        if (!file_exists($path)) {
+                            mkdir($path, 0777, true);
+                        }
+                        $photo_name_original = Utility::getImage($image);
+                        $photo_ext = Utility::getImageExt($image);
+                        $photo_name = uniqid() . "." . $photo_ext;
+                        $image_path = "/images/upload/" . $photo_name;
+                        $photo = Utility::resizeImage($image, $photo_name, $path);
 
-        if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
-            return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Room Category updated ...'));
+                        $imageObj                       = new RoomCategoryImage();
+                        $imageObj->h_room_category_id   = $id;
+                        $imageObj->img_path             = $image_path;
+                        $imageObj->description          = $description;
+
+                        $roomCategoryImageResult        = $roomCategoryImageRepo->create($imageObj);
+                    }
+
+                }
+            }
+
+            $cutoffHistoryObj                           = new RoomCutOffDateHistory();
+            $cutoffHistoryObj->hotel_id                 = $hotel_id;
+            $cutoffHistoryObj->h_room_category_id       = $id;
+            $cutoffHistoryObj->remark                   = $remark;
+            $cutoffHistoryObj->cutoff_date_count        = $booking_cutoff_day;
+
+            $cutoffHistoryRepo                          = new RoomCutOffDateHistoryRepository();
+            $cutoffHistoryResult                        = $cutoffHistoryRepo->create($cutoffHistoryObj);
+
+            if($result['aceplusStatusCode'] ==  ReturnMessage::OK &&
+                $roomCategoryImageResult['aceplusStatusCode'] == ReturnMessage::OK &&
+                $cutoffHistoryResult['aceplusStatusCode'] == ReturnMessage::OK)
+            {
+
+                DB::commit();
+
+                return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
+                    ->withMessage(FormatGenerator::message('Success', 'Hotel Room Category updated ...'));
+            }
+            else{
+                DB::rollback();
+
+                return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
+                    ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category did not update ...'));
+            }
+
         }
-        else{
+        catch(\Exception $e){
+            DB::rollback();
+
             return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
                 ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category did not update ...'));
         }

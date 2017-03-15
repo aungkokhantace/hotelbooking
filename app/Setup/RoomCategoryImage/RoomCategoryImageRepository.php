@@ -71,4 +71,25 @@ class RoomCategoryImageRepository implements RoomCategoryImageRepositoryInterfac
 
         return $objs;
     }
+
+    public function deleteRoomCategoryImageByHotelRoomCateogryId($h_room_category_id,$r_category_image_id){
+
+        $currentUser = Utility::getCurrentUserID(); //get currently logged in user
+        $date    = date("Y-m-d H:i:s");
+
+        try{
+            $result = DB::table('r_category_image')
+                          ->where('h_room_category_id','=',$h_room_category_id)
+                          ->whereIn('id',$r_category_image_id)
+                          ->delete();
+
+            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' deleted r_category_image by h_room_category_id = '.$h_room_category_id . PHP_EOL;
+            LogCustom::create($date,$message);
+        }
+        catch(\Exception $e){
+            //delete error log
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' deleted  r_category_image by h_room_category_id = ' .$h_room_category_id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            LogCustom::create($date,$message);
+        }
+    }
 }
