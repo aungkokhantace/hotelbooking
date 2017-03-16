@@ -2,37 +2,36 @@
 /**
  * Created by PhpStorm.
  * User: User
- * Date: 3/8/2017
- * Time: 5:28 PM
+ * Date: 3/15/2017
+ * Time: 9:57 PM
  */
 
-namespace App\Setup\HotelRoomCategory;
+namespace App\Setup\Room;
 
 
 use App\Core\ReturnMessage;
 use App\Core\Utility;
 use App\Log\LogCustom;
-use App\Setup\HotelRoomCategory\HotelRoomCategory;
 use Illuminate\Support\Facades\DB;
 
-class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterface
+class RoomRepository implements RoomRepositoryInterface
 {
     public function getObjs()
     {
-        $objs = HotelRoomCategory::whereNull('deleted_at')->get();
+        $objs = Room::whereNull('deleted_at')->get();
         return $objs;
     }
 
     public function getArrays()
     {
-        $tbName = (new HotelRoomCategory())->getTable();
+        $tbName = (new Room())->getTable();
         $arr = DB::select("SELECT * FROM $tbName WHERE deleted_at IS NULL");
         return $arr;
     }
 
     public function getObjByID($id)
     {
-        $obj = HotelRoomCategory::find($id);
+        $obj = Room::find($id);
         return $obj;
     }
 
@@ -49,18 +48,17 @@ class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterfac
 
             //create info log
             $date = $tempObj->created_at;
-            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' created hotel_room_category_id = '.$tempObj->id . PHP_EOL;
+            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' created room_id = '.$tempObj->id . PHP_EOL;
             LogCustom::create($date,$message);
 
 
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
-            $returnedObj['lastId']            = $tempObj->id;
             return $returnedObj;
         }
         catch(\Exception $e){
             //create error log
             $date    = date("Y-m-d H:i:s");
-            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a hotel_room_category and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a room and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusMessage'] = $e->getMessage();
@@ -81,7 +79,7 @@ class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterfac
 
             //update info log
             $date = $tempObj->updated_at;
-            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' updated hotel_room_category_id = '.$tempObj->id . PHP_EOL;
+            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' updated room_id = '.$tempObj->id . PHP_EOL;
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
@@ -90,7 +88,7 @@ class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterfac
         catch(\Exception $e){
             //update error log
             $date    = date("Y-m-d H:i:s");
-            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' updated hotel_room_category_id = ' .$tempObj->id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' updated room_id = ' .$tempObj->id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusMessage'] = $e->getMessage();
@@ -103,29 +101,21 @@ class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterfac
         $currentUser = Utility::getCurrentUserID(); //get currently logged in user
 
         try{
-            $tempObj = HotelRoomCategory::find($id);
+            $tempObj = Room::find($id);
             $tempObj = Utility::addDeletedBy($tempObj);
             $tempObj->deleted_at = date('Y-m-d H:m:i');
             $tempObj->save();
 
             //delete info log
             $date = $tempObj->deleted_at;
-            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' deleted hotel_room_category_id = '.$tempObj->id . PHP_EOL;
+            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' deleted room_id = '.$tempObj->id . PHP_EOL;
             LogCustom::create($date,$message);
         }
         catch(\Exception $e){
             //delete error log
             $date    = date("Y-m-d H:i:s");
-            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' deleted  hotel_room_category_id = ' .$tempObj->id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' deleted  room_id = ' .$tempObj->id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
         }
-    }
-
-    public function getHotelRoomCategoryWithRoomTypeId($h_room_type_id){
-        $objs   = HotelRoomCategory::select('id','h_room_type_id','name')
-                                     ->where('h_room_type_id','=',$h_room_type_id)
-                                     ->get();
-
-        return $objs;
     }
 }

@@ -94,7 +94,7 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="hotel_id">Room Type<span class="require">*</span></label>
+            <label for="h_room_type_id">Room Type<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="h_room_type_id" id="h_room_type_id">

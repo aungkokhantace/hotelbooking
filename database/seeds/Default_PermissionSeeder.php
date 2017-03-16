@@ -167,6 +167,14 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>173,'module'=>'HotelRoomCategory','name'=>'Edit','description'=>'Hotel Room Category Edit','url'=>'backend/hotel_room_category/edit'],
             ['id'=>174,'module'=>'HotelRoomCategory','name'=>'Update','description'=>'Hotel Room Category Update','url'=>'backend/hotel_room_category/update'],
             ['id'=>175,'module'=>'HotelRoomCategory','name'=>'Destroy','description'=>'Hotel Room Category Destroy','url'=>'backend/hotel_room_category/destroy'],
+
+            //Rooms
+            ['id'=>180,'module'=>'Room','name'=>'Listing','description'=>'Room Listing','url'=>'backend/room'],
+            ['id'=>181,'module'=>'Room','name'=>'New','description'=>'Room New','url'=>'backend/room/create'],
+            ['id'=>182,'module'=>'Room','name'=>'store','description'=>'Room Store','url'=>'backend/room/store'],
+            ['id'=>183,'module'=>'Room','name'=>'Edit','description'=>'Room Edit','url'=>'backend/room/edit'],
+            ['id'=>184,'module'=>'Room','name'=>'Update','description'=>'Room Update','url'=>'backend/room/update'],
+            ['id'=>185,'module'=>'Room','name'=>'Destroy','description'=>'Room Destroy','url'=>'backend/room/destroy'],
         );
 
         DB::table('core_permissions')->insert($permissions);

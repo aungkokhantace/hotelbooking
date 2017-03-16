@@ -291,4 +291,10 @@ class HotelRoomCategoryController extends Controller
         }
         return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index'); //to redirect listing page
     }
+
+    public function getHotelRoomCategory($h_room_type_id){
+        $result = $this->repo->getHotelRoomCategoryWithRoomTypeId($h_room_type_id);
+
+        return \Response::json($result);
+    }
 }
