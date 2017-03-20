@@ -168,6 +168,22 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('room/edit/{id}', array('as'=>'backend/room/edit', 'uses'=>'Setup\Room\RoomController@edit'));
             Route::post('room/update', array('as'=>'backend/room/update', 'uses'=>'Setup\Room\RoomController@update'));
             Route::post('room/destroy', array('as'=>'backend/room/destroy', 'uses'=>'Setup\Room\RoomController@destroy'));
+
+            //Room Category Facility
+            Route::get('room_category_facility', array('as'=>'backend/room_category_facility', 'uses'=>'Setup\RoomCategoryFacility\RoomCategoryFacilityController@index'));
+            Route::get('room_category_facility/create', array('as'=>'backend/room_category_facility/create', 'uses'=>'Setup\RoomCategoryFacility\RoomCategoryFacilityController@create'));
+            Route::post('room_category_facility/store', array('as'=>'backend/room_category_facility/store', 'uses'=>'Setup\RoomCategoryFacility\RoomCategoryFacilityController@store'));
+            Route::get('room_category_facility/edit/{id}', array('as'=>'backend/room_category_facility/edit', 'uses'=>'Setup\RoomCategoryFacility\RoomCategoryFacilityController@edit'));
+            Route::post('room_category_facility/update', array('as'=>'backend/room_category_facility/update', 'uses'=>'Setup\RoomCategoryFacility\RoomCategoryFacilityController@update'));
+            Route::post('room_category_facility/destroy', array('as'=>'backend/room_category_facility/destroy', 'uses'=>'Setup\RoomCategoryFacility\RoomCategoryFacilityController@destroy'));
+
+            //Hotel Feature
+            Route::get('hotel_feature', array('as'=>'backend/hotel_feature', 'uses'=>'Setup\HotelFeature\HotelFeatureController@index'));
+            Route::get('hotel_feature/create', array('as'=>'backend/hotel_feature/create', 'uses'=>'Setup\HotelFeature\HotelFeatureController@create'));
+            Route::post('hotel_feature/store', array('as'=>'backend/hotel_feature/store', 'uses'=>'Setup\HotelFeature\HotelFeatureController@store'));
+            Route::get('hotel_feature/edit/{id}', array('as'=>'backend/hotel_feature/edit', 'uses'=>'Setup\HotelFeature\HotelFeatureController@edit'));
+            Route::post('hotel_feature/update', array('as'=>'backend/hotel_feature/update', 'uses'=>'Setup\HotelFeature\HotelFeatureController@update'));
+            Route::post('hotel_feature/destroy', array('as'=>'backend/hotel_feature/destroy', 'uses'=>'Setup\HotelFeature\HotelFeatureController@destroy'));
         });
 
     });

@@ -227,6 +227,28 @@
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_view">List</a></li>
                         </ul>
                     </li>
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Room Category Facilities</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/room_category_facility/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_category_facility">List</a></li>
+                        </ul>
+                    </li>
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Hotel Feature</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/hotel_feature/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_feature">List</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
 

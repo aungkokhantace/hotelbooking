@@ -175,6 +175,23 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>183,'module'=>'Room','name'=>'Edit','description'=>'Room Edit','url'=>'backend/room/edit'],
             ['id'=>184,'module'=>'Room','name'=>'Update','description'=>'Room Update','url'=>'backend/room/update'],
             ['id'=>185,'module'=>'Room','name'=>'Destroy','description'=>'Room Destroy','url'=>'backend/room/destroy'],
+
+            //Room Category Facilities
+            ['id'=>190,'module'=>'RoomCategoryFacility','name'=>'Listing','description'=>'Room Category Facility Listing','url'=>'backend/room_category_facility'],
+            ['id'=>191,'module'=>'RoomCategoryFacility','name'=>'New','description'=>'Room Category Facility New','url'=>'backend/room_category_facility/create'],
+            ['id'=>192,'module'=>'RoomCategoryFacility','name'=>'store','description'=>'Room Category Facility Store','url'=>'backend/room_category_facility/store'],
+            ['id'=>193,'module'=>'RoomCategoryFacility','name'=>'Edit','description'=>'Room Category Facility Edit','url'=>'backend/room_category_facility/edit'],
+            ['id'=>194,'module'=>'RoomCategoryFacility','name'=>'Update','description'=>'Room Category Facility Update','url'=>'backend/room_category_facility/update'],
+            ['id'=>195,'module'=>'RoomCategoryFacility','name'=>'Destroy','description'=>'Room Category Facility Destroy','url'=>'backend/room_category_facility/destroy'],
+
+
+            //Room Category Facilities
+            ['id'=>200,'module'=>'HotelFeature','name'=>'Listing','description'=>'Hotel Feature Listing','url'=>'backend/hotel_feature'],
+            ['id'=>201,'module'=>'HotelFeature','name'=>'New','description'=>'Hotel Feature New','url'=>'backend/hotel_feature/create'],
+            ['id'=>202,'module'=>'HotelFeature','name'=>'store','description'=>'Hotel Feature Store','url'=>'backend/hotel_feature/store'],
+            ['id'=>203,'module'=>'HotelFeature','name'=>'Edit','description'=>'Hotel Feature Edit','url'=>'backend/hotel_feature/edit'],
+            ['id'=>204,'module'=>'HotelFeature','name'=>'Update','description'=>'Hotel Feature Update','url'=>'backend/hotel_feature/update'],
+            ['id'=>205,'module'=>'HotelFeature','name'=>'Destroy','description'=>'Hotel Feature Destroy','url'=>'backend/hotel_feature/destroy'],
         );
 
         DB::table('core_permissions')->insert($permissions);
