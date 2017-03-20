@@ -84,6 +84,27 @@
                     </li>
 
                 </ul>
+
+            </li>
+            <li  nav-id='modifier'  class="has-sub">
+                <a href="javascript:;">
+                    <b class="caret pull-right"></b>
+                    <i class="fa fa-gears"></i>
+                    <span>For Developer</span>
+                </a>
+                <ul class="sub-menu">
+                    <li nav-id="modifier-manage" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Reference</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="systemreference"><a href="/backend/systemreference">System Reference</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
             </li>
 
             <li  nav-id='modifier'  class="has-sub">

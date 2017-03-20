@@ -17,6 +17,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/errors/{errorId}', array('as'=>'backend//errors/{errorId}','uses'=>'Core\ErrorController@index'));
     Route::get('/unauthorize', array('as'=>'backend/unauthorize','uses'=>'Core\ErrorController@unauthorize'));
 
+    Route::get('systemreference', array('as'=>'backend/systemreference',
+            'uses'=>'Backend\SystemReferenceController@index'));
+
     // Password Reset Routes...
     Route::get('password/reset/{token?}', ['as' => 'auth.password.reset', 'uses' => 'Auth\PasswordController@showResetForm']);
     Route::post('password/email', ['as' => 'auth.password.email', 'uses' => 'Auth\PasswordController@sendResetLinkEmail']);
