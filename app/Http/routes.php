@@ -29,6 +29,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('hotel_room_type/get_room_type/{id}', ['as' => 'backend/hotel_room_type/get_room_type', 'uses' => 'Setup\HotelRoomType\HotelRoomTypeController@getHotelRoomType']);
     Route::get('hotel_room_category/get_room_category/{id}', ['as' => 'backend/hotel_room_category/get_room_category', 'uses' => 'Setup\HotelRoomCategory\HotelRoomCategoryController@getHotelRoomCategory']);
 
+        Route::get('test',function(){
+           return view('backend.room_discount.test');
+        });
+
 
     });
 
@@ -187,6 +191,14 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('hotel_feature/edit/{id}', array('as'=>'backend/hotel_feature/edit', 'uses'=>'Setup\HotelFeature\HotelFeatureController@edit'));
             Route::post('hotel_feature/update', array('as'=>'backend/hotel_feature/update', 'uses'=>'Setup\HotelFeature\HotelFeatureController@update'));
             Route::post('hotel_feature/destroy', array('as'=>'backend/hotel_feature/destroy', 'uses'=>'Setup\HotelFeature\HotelFeatureController@destroy'));
+
+            //Room Discount
+            Route::get('room_discount', array('as'=>'backend/room_discount', 'uses'=>'Setup\RoomDiscount\RoomDiscountController@index'));
+            Route::get('room_discount/create', array('as'=>'backend/room_discount/create', 'uses'=>'Setup\RoomDiscount\RoomDiscountController@create'));
+            Route::post('room_discount/store', array('as'=>'backend/room_discount/store', 'uses'=>'Setup\RoomDiscount\RoomDiscountController@store'));
+            Route::get('room_discount/edit/{id}', array('as'=>'backend/room_discount/edit', 'uses'=>'Setup\RoomDiscount\RoomDiscountController@edit'));
+            Route::post('room_discount/update', array('as'=>'backend/room_discount/update', 'uses'=>'Setup\RoomDiscount\RoomDiscountController@update'));
+            Route::post('room_discount/destroy', array('as'=>'backend/room_discount/destroy', 'uses'=>'Setup\RoomDiscount\RoomDiscountController@destroy'));
         });
 
     });
