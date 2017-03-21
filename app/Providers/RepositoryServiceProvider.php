@@ -44,6 +44,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind('App\Setup\Room\RoomRepositoryInterface','App\Setup\Room\RoomRepository');
         $this->app->bind('App\Setup\RoomCategoryFacility\RoomCategoryFacilityRepositoryInterface','App\Setup\RoomCategoryFacility\RoomCategoryFacilityRepository');
         $this->app->bind('App\Setup\HotelFeature\HotelFeatureRepositoryInterface','App\Setup\HotelFeature\HotelFeatureRepository');
+        $this->app->bind('App\Setup\RoomDiscount\RoomDiscountRepositoryInterface','App\Setup\RoomDiscount\RoomDiscountRepository');
 
 
     }

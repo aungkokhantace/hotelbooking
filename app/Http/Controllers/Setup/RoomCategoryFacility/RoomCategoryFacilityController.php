@@ -85,12 +85,14 @@ class RoomCategoryFacilityController extends Controller
     {
         if (Auth::guard('User')->check()) {
             $r_category_facility    = $this->repo->getObjByID($id);
+            $hotel_id               = $r_category_facility->hotel_id;
+            $h_room_type_id         = $r_category_facility->h_room_type_id;
             $hotelRepo              = new HotelRepository();
             $hotels                 = $hotelRepo->getObjs();
             $hotelRoomTypeRepo      = new HotelRoomTypeRepository();
-            $hotel_room_type        = $hotelRoomTypeRepo->getObjs();
+            $hotel_room_type        = $hotelRoomTypeRepo->getHotelRoomTypeWithHotelId($hotel_id);
             $hotelRoomCategoryRepo  = new HotelRoomCategoryRepository();
-            $hotel_room_category    = $hotelRoomCategoryRepo->getObjs();
+            $hotel_room_category    = $hotelRoomCategoryRepo->getHotelRoomCategoryWithRoomTypeId($h_room_type_id);
             $facilityRepo           = new FacilitiesRepository();
             $facilities             = $facilityRepo->getObjs();
             return view('backend.room_category_facilities.room_category_facility')->with('r_category_facility', $r_category_facility)

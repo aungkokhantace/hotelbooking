@@ -192,6 +192,14 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>203,'module'=>'HotelFeature','name'=>'Edit','description'=>'Hotel Feature Edit','url'=>'backend/hotel_feature/edit'],
             ['id'=>204,'module'=>'HotelFeature','name'=>'Update','description'=>'Hotel Feature Update','url'=>'backend/hotel_feature/update'],
             ['id'=>205,'module'=>'HotelFeature','name'=>'Destroy','description'=>'Hotel Feature Destroy','url'=>'backend/hotel_feature/destroy'],
+
+            //Room Discount
+            ['id'=>210,'module'=>'RoomDiscount','name'=>'Listing','description'=>'Room Discount Listing','url'=>'backend/room_discount'],
+            ['id'=>211,'module'=>'RoomDiscount','name'=>'New','description'=>'Room Discount New','url'=>'backend/room_discount/create'],
+            ['id'=>212,'module'=>'RoomDiscount','name'=>'store','description'=>'Room Discount Store','url'=>'backend/room_discount/store'],
+            ['id'=>213,'module'=>'RoomDiscount','name'=>'Edit','description'=>'Room Discount Edit','url'=>'backend/room_discount/edit'],
+            ['id'=>214,'module'=>'RoomDiscount','name'=>'Update','description'=>'Room Discount Update','url'=>'backend/room_discount/update'],
+            ['id'=>215,'module'=>'RoomDiscount','name'=>'Destroy','description'=>'Room Discount Destroy','url'=>'backend/room_discount/destroy'],
         );
 
         DB::table('core_permissions')->insert($permissions);
