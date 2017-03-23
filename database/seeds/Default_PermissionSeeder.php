@@ -200,6 +200,22 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>213,'module'=>'RoomDiscount','name'=>'Edit','description'=>'Room Discount Edit','url'=>'backend/room_discount/edit'],
             ['id'=>214,'module'=>'RoomDiscount','name'=>'Update','description'=>'Room Discount Update','url'=>'backend/room_discount/update'],
             ['id'=>215,'module'=>'RoomDiscount','name'=>'Destroy','description'=>'Room Discount Destroy','url'=>'backend/room_discount/destroy'],
+
+            //Room Blackout Period
+            ['id'=>220,'module'=>'RoomBlackoutPeriod','name'=>'Listing','description'=>'Room Blackout Period Listing','url'=>'backend/room_blackout_period'],
+            ['id'=>221,'module'=>'RoomBlackoutPeriod','name'=>'New','description'=>'Room Blackout Period New','url'=>'backend/room_blackout_period/create'],
+            ['id'=>222,'module'=>'RoomBlackoutPeriod','name'=>'store','description'=>'Room Blackout Period Store','url'=>'backend/room_blackout_period/store'],
+            ['id'=>223,'module'=>'RoomBlackoutPeriod','name'=>'Edit','description'=>'Room Blackout Period Edit','url'=>'backend/room_blackout_period/edit'],
+            ['id'=>224,'module'=>'RoomBlackoutPeriod','name'=>'Update','description'=>'Room Blackout Period Update','url'=>'backend/room_blackout_period/update'],
+            ['id'=>225,'module'=>'RoomBlackoutPeriod','name'=>'Destroy','description'=>'Room Blackout Period Destroy','url'=>'backend/room_blackout_period/destroy'],
+
+            //Room Available Period
+            ['id'=>230,'module'=>'RoomAvailablePeriod','name'=>'Listing','description'=>'Room Available Period Listing','url'=>'backend/room_available_period'],
+            ['id'=>231,'module'=>'RoomAvailablePeriod','name'=>'New','description'=>'Room Available Period New','url'=>'backend/room_available_period/create'],
+            ['id'=>232,'module'=>'RoomAvailablePeriod','name'=>'store','description'=>'Room Available Period Store','url'=>'backend/room_available_period/store'],
+            ['id'=>233,'module'=>'RoomAvailablePeriod','name'=>'Edit','description'=>'Room Available Period Edit','url'=>'backend/room_available_period/edit'],
+            ['id'=>234,'module'=>'RoomAvailablePeriod','name'=>'Update','description'=>'Room Available Period Update','url'=>'backend/room_available_period/update'],
+            ['id'=>235,'module'=>'RoomAvailablePeriod','name'=>'Destroy','description'=>'Room Available Period Destroy','url'=>'backend/room_available_period/destroy'],
         );
 
         DB::table('core_permissions')->insert($permissions);

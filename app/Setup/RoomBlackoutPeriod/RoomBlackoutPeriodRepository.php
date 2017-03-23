@@ -2,37 +2,36 @@
 /**
  * Created by PhpStorm.
  * User: User
- * Date: 3/15/2017
- * Time: 9:57 PM
+ * Date: 3/22/2017
+ * Time: 5:14 PM
  */
 
-namespace App\Setup\Room;
+namespace App\Setup\RoomBlackoutPeriod;
 
 
 use App\Core\ReturnMessage;
 use App\Core\Utility;
 use App\Log\LogCustom;
-use App\Setup\RoomBlackoutPeriod\RoomBlackoutPeriod;
 use Illuminate\Support\Facades\DB;
 
-class RoomRepository implements RoomRepositoryInterface
+class RoomBlackoutPeriodRepository implements RoomBlackoutPeriodRepositoryInterface
 {
     public function getObjs()
     {
-        $objs = Room::whereNull('deleted_at')->get();
+        $objs = RoomBlackoutPeriod::whereNull('deleted_at')->get();
         return $objs;
     }
 
     public function getArrays()
     {
-        $tbName = (new Room())->getTable();
+        $tbName = (new RoomBlackoutPeriod())->getTable();
         $arr = DB::select("SELECT * FROM $tbName WHERE deleted_at IS NULL");
         return $arr;
     }
 
     public function getObjByID($id)
     {
-        $obj = Room::find($id);
+        $obj = RoomBlackoutPeriod::find($id);
         return $obj;
     }
 
@@ -49,7 +48,7 @@ class RoomRepository implements RoomRepositoryInterface
 
             //create info log
             $date = $tempObj->created_at;
-            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' created room_id = '.$tempObj->id . PHP_EOL;
+            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' created r_blackout_period_id = '.$tempObj->id . PHP_EOL;
             LogCustom::create($date,$message);
 
 
@@ -59,7 +58,7 @@ class RoomRepository implements RoomRepositoryInterface
         catch(\Exception $e){
             //create error log
             $date    = date("Y-m-d H:i:s");
-            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a room and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a r_blackout_period and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusMessage'] = $e->getMessage();
@@ -80,7 +79,7 @@ class RoomRepository implements RoomRepositoryInterface
 
             //update info log
             $date = $tempObj->updated_at;
-            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' updated room_id = '.$tempObj->id . PHP_EOL;
+            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' updated r_blackout_period_id = '.$tempObj->id . PHP_EOL;
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
@@ -89,7 +88,7 @@ class RoomRepository implements RoomRepositoryInterface
         catch(\Exception $e){
             //update error log
             $date    = date("Y-m-d H:i:s");
-            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' updated room_id = ' .$tempObj->id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' updated r_blackout_period_id = ' .$tempObj->id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusMessage'] = $e->getMessage();
@@ -102,29 +101,22 @@ class RoomRepository implements RoomRepositoryInterface
         $currentUser = Utility::getCurrentUserID(); //get currently logged in user
 
         try{
-            $tempObj = Room::find($id);
+            $tempObj = RoomBlackoutPeriod::find($id);
             $tempObj = Utility::addDeletedBy($tempObj);
             $tempObj->deleted_at = date('Y-m-d H:m:i');
             $tempObj->save();
 
             //delete info log
             $date = $tempObj->deleted_at;
-            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' deleted room_id = '.$tempObj->id . PHP_EOL;
+            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' deleted r_blackout_period_id = '.$tempObj->id . PHP_EOL;
             LogCustom::create($date,$message);
         }
         catch(\Exception $e){
             //delete error log
             $date    = date("Y-m-d H:i:s");
-            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' deleted  room_id = ' .$tempObj->id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' deleted  r_blackout_period_id = ' .$tempObj->id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
         }
     }
 
-    public function getObjsByHotelId($hotel_id){
-        $rooms = Room::select('id','hotel_id','name')
-                                     ->where('hotel_id','=',$hotel_id)
-                                     ->get();
-
-        return $rooms;
-    }
 }

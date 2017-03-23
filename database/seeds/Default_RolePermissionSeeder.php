@@ -192,6 +192,22 @@ class Default_RolePermissionSeeder extends Seeder
             ['role_id'=>1, 'permission_id'=>214],
             ['role_id'=>1, 'permission_id'=>215],
 
+            //Room Blackout Period
+            ['role_id'=>1, 'permission_id'=>220],
+            ['role_id'=>1, 'permission_id'=>221],
+            ['role_id'=>1, 'permission_id'=>222],
+            ['role_id'=>1, 'permission_id'=>223],
+            ['role_id'=>1, 'permission_id'=>224],
+            ['role_id'=>1, 'permission_id'=>225],
+
+            //Room Available Period
+            ['role_id'=>1, 'permission_id'=>230],
+            ['role_id'=>1, 'permission_id'=>231],
+            ['role_id'=>1, 'permission_id'=>232],
+            ['role_id'=>1, 'permission_id'=>233],
+            ['role_id'=>1, 'permission_id'=>234],
+            ['role_id'=>1, 'permission_id'=>235],
+
         );
 
         DB::table('core_permission_role')->insert($roles);

@@ -1,7 +1,11 @@
 @extends('layouts.master')
 @section('title','Room Discount')
 @section('content')
-
+<style>
+    .date-value-box{
+        width: 95% !important;
+    }
+</style>
         <!-- begin #content -->
 <div id="content" class="content">
 
@@ -149,7 +153,7 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <div class="input-group date dateTimePicker" data-provide="datepicker" id="datepicker_from">
-                <input type="text" class="form-control" id="from_date" name="from_date" value="{{isset($room_discount)? \Carbon\Carbon::parse($room_discount->from_date)->format('d-m-Y') : ''}}">
+                <input type="text" class="form-control date-value-box" id="from_date" name="from_date" value="{{isset($room_discount)? \Carbon\Carbon::parse($room_discount->from_date)->format('d-m-Y') : ''}}">
                 <div class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </div>
@@ -164,7 +168,7 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <div class="input-group date dateTimePicker" data-provide="datepicker"  id="datepicker_to">
-                <input type="text" class="form-control" id="to_date" name="to_date" value="{{isset($room_discount)? \Carbon\Carbon::parse($room_discount->to_date)->format('d-m-Y') : ''}}">
+                <input type="text" class="form-control date-value-box" id="to_date" name="to_date" value="{{isset($room_discount)? \Carbon\Carbon::parse($room_discount->to_date)->format('d-m-Y') : ''}}">
                 <div class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </div>

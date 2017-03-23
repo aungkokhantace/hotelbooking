@@ -28,12 +28,7 @@ Route::group(['middleware' => 'web'], function () {
     //Ajax
     Route::get('hotel_room_type/get_room_type/{id}', ['as' => 'backend/hotel_room_type/get_room_type', 'uses' => 'Setup\HotelRoomType\HotelRoomTypeController@getHotelRoomType']);
     Route::get('hotel_room_category/get_room_category/{id}', ['as' => 'backend/hotel_room_category/get_room_category', 'uses' => 'Setup\HotelRoomCategory\HotelRoomCategoryController@getHotelRoomCategory']);
-
-        Route::get('test',function(){
-           return view('backend.room_discount.test');
-        });
-
-
+    Route::get('room/get_room/{id}', ['as' => 'backend/room/get_room', 'uses' => 'Setup\Room\RoomController@getRoom']);
     });
 
     Route::group(['middleware' => 'right'], function () {
@@ -199,6 +194,22 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('room_discount/edit/{id}', array('as'=>'backend/room_discount/edit', 'uses'=>'Setup\RoomDiscount\RoomDiscountController@edit'));
             Route::post('room_discount/update', array('as'=>'backend/room_discount/update', 'uses'=>'Setup\RoomDiscount\RoomDiscountController@update'));
             Route::post('room_discount/destroy', array('as'=>'backend/room_discount/destroy', 'uses'=>'Setup\RoomDiscount\RoomDiscountController@destroy'));
+
+            //Room Blackout Period
+            Route::get('room_blackout_period', array('as'=>'backend/room_blackout_period', 'uses'=>'Setup\RoomBlackoutPeriod\RoomBlackoutPeriodController@index'));
+            Route::get('room_blackout_period/create', array('as'=>'backend/room_blackout_period/create', 'uses'=>'Setup\RoomBlackoutPeriod\RoomBlackoutPeriodController@create'));
+            Route::post('room_blackout_period/store', array('as'=>'backend/room_blackout_period/store', 'uses'=>'Setup\RoomBlackoutPeriod\RoomBlackoutPeriodController@store'));
+            Route::get('room_blackout_period/edit/{id}', array('as'=>'backend/room_blackout_period/edit', 'uses'=>'Setup\RoomBlackoutPeriod\RoomBlackoutPeriodController@edit'));
+            Route::post('room_blackout_period/update', array('as'=>'backend/room_blackout_period/update', 'uses'=>'Setup\RoomBlackoutPeriod\RoomBlackoutPeriodController@update'));
+            Route::post('room_blackout_period/destroy', array('as'=>'backend/room_blackout_period/destroy', 'uses'=>'Setup\RoomBlackoutPeriod\RoomBlackoutPeriodController@destroy'));
+
+            //Room Available Period
+            Route::get('room_available_period', array('as'=>'backend/room_available_period', 'uses'=>'Setup\RoomAvailablePeriod\RoomAvailablePeriodController@index'));
+            Route::get('room_available_period/create', array('as'=>'backend/room_available_period/create', 'uses'=>'Setup\RoomAvailablePeriod\RoomAvailablePeriodController@create'));
+            Route::post('room_available_period/store', array('as'=>'backend/room_available_period/store', 'uses'=>'Setup\RoomAvailablePeriod\RoomAvailablePeriodController@store'));
+            Route::get('room_available_period/edit/{id}', array('as'=>'backend/room_available_period/edit', 'uses'=>'Setup\RoomAvailablePeriod\RoomAvailablePeriodController@edit'));
+            Route::post('room_available_period/update', array('as'=>'backend/room_available_period/update', 'uses'=>'Setup\RoomAvailablePeriod\RoomAvailablePeriodController@update'));
+            Route::post('room_available_period/destroy', array('as'=>'backend/room_available_period/destroy', 'uses'=>'Setup\RoomAvailablePeriod\RoomAvailablePeriodController@destroy'));
         });
 
     });

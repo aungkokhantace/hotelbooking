@@ -2,14 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: User
- * Date: 3/15/2017
- * Time: 9:57 PM
+ * Date: 3/22/2017
+ * Time: 5:13 PM
  */
 
-namespace App\Setup\Room;
+namespace App\Setup\RoomBlackoutPeriod;
 
 
-interface RoomRepositoryInterface
+interface RoomBlackoutPeriodRepositoryInterface
 {
     public function getObjs();
     public function getArrays();
@@ -17,5 +17,4 @@ interface RoomRepositoryInterface
     public function create($paramObj);
     public function update($paramObj);
     public function delete($paramObj);
-    public function getObjsByHotelId($hotel_id);
 }

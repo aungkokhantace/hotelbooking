@@ -89,12 +89,14 @@ class RoomController extends Controller
     {
         if (Auth::guard('User')->check()) {
             $room                   = $this->repo->getObjByID($id);
+            $hotel_id               = $room->hotel_id;
+            $h_room_type_id         = $room->h_room_type_id;
             $hotelRepo              = new HotelRepository();
             $hotels                 = $hotelRepo->getObjs();
             $hotelRoomTypeRepo      = new HotelRoomTypeRepository();
-            $hotel_room_type        = $hotelRoomTypeRepo->getObjs();
+            $hotel_room_type        = $hotelRoomTypeRepo->getHotelRoomTypeWithHotelId($hotel_id);
             $hotelRoomCategoryRepo  = new HotelRoomCategoryRepository();
-            $hotel_room_category    = $hotelRoomCategoryRepo->getObjs();
+            $hotel_room_category    = $hotelRoomCategoryRepo->getHotelRoomCategoryWithRoomTypeId($h_room_type_id);
             $roomViewRepo           = new RoomViewRepository();
             $room_view              = $roomViewRepo->getObjs();
             return view('backend.room.room')->with('room', $room)
@@ -149,6 +151,12 @@ class RoomController extends Controller
             $this->repo->delete($id);
         }
         return redirect()->action('Setup\Room\RoomController@index'); //to redirect listing page
+    }
+
+    public function getRoom($hotel_id){
+        $result = $this->repo->getObjsByHotelId($hotel_id);
+
+        return \Response::json($result);
     }
 
 }
