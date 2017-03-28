@@ -208,6 +208,52 @@ class Default_RolePermissionSeeder extends Seeder
             ['role_id'=>1, 'permission_id'=>234],
             ['role_id'=>1, 'permission_id'=>235],
 
+            //Hotel Nearby Airport
+            ['role_id'=>1, 'permission_id'=>240],
+            ['role_id'=>1, 'permission_id'=>241],
+            ['role_id'=>1, 'permission_id'=>242],
+            ['role_id'=>1, 'permission_id'=>243],
+            ['role_id'=>1, 'permission_id'=>244],
+            ['role_id'=>1, 'permission_id'=>245],
+
+            //Hotel Nearby Station
+            ['role_id'=>1, 'permission_id'=>250],
+            ['role_id'=>1, 'permission_id'=>251],
+            ['role_id'=>1, 'permission_id'=>252],
+            ['role_id'=>1, 'permission_id'=>253],
+            ['role_id'=>1, 'permission_id'=>254],
+            ['role_id'=>1, 'permission_id'=>255],
+
+            //Hotel Nearby Hospital
+            ['role_id'=>1, 'permission_id'=>260],
+            ['role_id'=>1, 'permission_id'=>261],
+            ['role_id'=>1, 'permission_id'=>262],
+            ['role_id'=>1, 'permission_id'=>263],
+            ['role_id'=>1, 'permission_id'=>264],
+            ['role_id'=>1, 'permission_id'=>265],
+
+            //Hotel Nearby Convenience Store
+            ['role_id'=>1, 'permission_id'=>270],
+            ['role_id'=>1, 'permission_id'=>271],
+            ['role_id'=>1, 'permission_id'=>272],
+            ['role_id'=>1, 'permission_id'=>273],
+            ['role_id'=>1, 'permission_id'=>274],
+            ['role_id'=>1, 'permission_id'=>275],
+
+            //Hotel Nearby Drug Store
+            ['role_id'=>1, 'permission_id'=>280],
+            ['role_id'=>1, 'permission_id'=>281],
+            ['role_id'=>1, 'permission_id'=>282],
+            ['role_id'=>1, 'permission_id'=>283],
+            ['role_id'=>1, 'permission_id'=>284],
+            ['role_id'=>1, 'permission_id'=>285],
+
+
+            //Backend Multi_Language
+            ['role_id'=>1, 'permission_id'=>500],
+
+
+
         );
 
         DB::table('core_permission_role')->insert($roles);

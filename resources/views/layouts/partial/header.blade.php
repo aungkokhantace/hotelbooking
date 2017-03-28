@@ -124,6 +124,18 @@ $companyLogo = \App\Core\Check::companyLogo();
                     <span class="icon-bar"></span>
                 </button>
             </div>
+
+            <!-- TEST MULTI LANGUAGE -->
+            <div class="navbar-header center">
+                <form action="/backend/language" method="post">
+                    <select name="locale">
+                        <option value="en" {{App::getLocale() == 'en'? 'selected':''}}>English</option>
+                        <option value="jp" {{App::getLocale() == 'jp'? 'selected':''}}>Japan</option>
+                    </select>
+                    {{ csrf_field() }}
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
             <!-- end mobile sidebar expand / collapse button -->
 
             <!-- begin header navigation right -->

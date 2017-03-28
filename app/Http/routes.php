@@ -1,7 +1,7 @@
 <?php
 Route::group(['middleware' => 'web'], function () {
 
-    Route::group(['middleware' => 'frontendorbackend'], function () {
+    Route::group(['middleware' => ['frontendorbackend','LanguageSwitcher']], function () {
 
     //Frontend
     Route::get('/', 'Frontend\HomeController@index');
@@ -29,6 +29,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('hotel_room_type/get_room_type/{id}', ['as' => 'backend/hotel_room_type/get_room_type', 'uses' => 'Setup\HotelRoomType\HotelRoomTypeController@getHotelRoomType']);
     Route::get('hotel_room_category/get_room_category/{id}', ['as' => 'backend/hotel_room_category/get_room_category', 'uses' => 'Setup\HotelRoomCategory\HotelRoomCategoryController@getHotelRoomCategory']);
     Route::get('room/get_room/{id}', ['as' => 'backend/room/get_room', 'uses' => 'Setup\Room\RoomController@getRoom']);
+
     });
 
     Route::group(['middleware' => 'right'], function () {
@@ -36,6 +37,7 @@ Route::group(['middleware' => 'web'], function () {
 
         //Backend
         Route::group(['prefix' => 'backend'], function () {
+
             // Site Configuration
             Route::get('config', array('as'=>'backend/config','uses'=>'Core\ConfigController@edit'));
             Route::post('config', array('as'=>'backend/config','uses'=>'Core\ConfigController@update'));
@@ -210,6 +212,50 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('room_available_period/edit/{id}', array('as'=>'backend/room_available_period/edit', 'uses'=>'Setup\RoomAvailablePeriod\RoomAvailablePeriodController@edit'));
             Route::post('room_available_period/update', array('as'=>'backend/room_available_period/update', 'uses'=>'Setup\RoomAvailablePeriod\RoomAvailablePeriodController@update'));
             Route::post('room_available_period/destroy', array('as'=>'backend/room_available_period/destroy', 'uses'=>'Setup\RoomAvailablePeriod\RoomAvailablePeriodController@destroy'));
+
+            //Hotel Nearby Airport
+            Route::get('hotel_nearby_airport', array('as'=>'backend/hotel_nearby_airport', 'uses'=>'Setup\HotelNearbyAirport\HotelNearbyAirportController@index'));
+            Route::get('hotel_nearby_airport/create', array('as'=>'backend/hotel_nearby_airport/create', 'uses'=>'Setup\HotelNearbyAirport\HotelNearbyAirportController@create'));
+            Route::post('hotel_nearby_airport/store', array('as'=>'backend/hotel_nearby_airport/store', 'uses'=>'Setup\HotelNearbyAirport\HotelNearbyAirportController@store'));
+            Route::get('hotel_nearby_airport/edit/{id}', array('as'=>'backend/hotel_nearby_airport/edit', 'uses'=>'Setup\HotelNearbyAirport\HotelNearbyAirportController@edit'));
+            Route::post('hotel_nearby_airport/update', array('as'=>'backend/hotel_nearby_airport/update', 'uses'=>'Setup\HotelNearbyAirport\HotelNearbyAirportController@update'));
+            Route::post('hotel_nearby_airport/destroy', array('as'=>'backend/hotel_nearby_airport/destroy', 'uses'=>'Setup\HotelNearbyAirport\HotelNearbyAirportController@destroy'));
+
+            //Hotel Nearby Station
+            Route::get('hotel_nearby_station', array('as'=>'backend/hotel_nearby_station', 'uses'=>'Setup\HotelNearbyStation\HotelNearbyStationController@index'));
+            Route::get('hotel_nearby_station/create', array('as'=>'backend/hotel_nearby_station/create', 'uses'=>'Setup\HotelNearbyStation\HotelNearbyStationController@create'));
+            Route::post('hotel_nearby_station/store', array('as'=>'backend/hotel_nearby_station/store', 'uses'=>'Setup\HotelNearbyStation\HotelNearbyStationController@store'));
+            Route::get('hotel_nearby_station/edit/{id}', array('as'=>'backend/hotel_nearby_station/edit', 'uses'=>'Setup\HotelNearbyStation\HotelNearbyStationController@edit'));
+            Route::post('hotel_nearby_station/update', array('as'=>'backend/hotel_nearby_station/update', 'uses'=>'Setup\HotelNearbyStation\HotelNearbyStationController@update'));
+            Route::post('hotel_nearby_station/destroy', array('as'=>'backend/hotel_nearby_station/destroy', 'uses'=>'Setup\HotelNearbyStation\HotelNearbyStationController@destroy'));
+
+            //Hotel Nearby Hospital
+            Route::get('hotel_nearby_hospital', array('as'=>'backend/hotel_nearby_hospital', 'uses'=>'Setup\HotelNearbyHospital\HotelNearbyHospitalController@index'));
+            Route::get('hotel_nearby_hospital/create', array('as'=>'backend/hotel_nearby_hospital/create', 'uses'=>'Setup\HotelNearbyHospital\HotelNearbyHospitalController@create'));
+            Route::post('hotel_nearby_hospital/store', array('as'=>'backend/hotel_nearby_hospital/store', 'uses'=>'Setup\HotelNearbyHospital\HotelNearbyHospitalController@store'));
+            Route::get('hotel_nearby_hospital/edit/{id}', array('as'=>'backend/hotel_nearby_hospital/edit', 'uses'=>'Setup\HotelNearbyHospital\HotelNearbyHospitalController@edit'));
+            Route::post('hotel_nearby_hospital/update', array('as'=>'backend/hotel_nearby_hospital/update', 'uses'=>'Setup\HotelNearbyHospital\HotelNearbyHospitalController@update'));
+            Route::post('hotel_nearby_hospital/destroy', array('as'=>'backend/hotel_nearby_hospital/destroy', 'uses'=>'Setup\HotelNearbyHospital\HotelNearbyHospitalController@destroy'));
+
+            //Hotel Nearby Convenience Store
+            Route::get('hotel_nearby_convenience_store', array('as'=>'backend/hotel_nearby_convenience_store', 'uses'=>'Setup\HotelNearbyConvenienceStore\HotelNearbyConvenienceStoreController@index'));
+            Route::get('hotel_nearby_convenience_store/create', array('as'=>'backend/hotel_nearby_convenience_store/create', 'uses'=>'Setup\HotelNearbyConvenienceStore\HotelNearbyConvenienceStoreController@create'));
+            Route::post('hotel_nearby_convenience_store/store', array('as'=>'backend/hotel_nearby_convenience_store/store', 'uses'=>'Setup\HotelNearbyConvenienceStore\HotelNearbyConvenienceStoreController@store'));
+            Route::get('hotel_nearby_convenience_store/edit/{id}', array('as'=>'backend/hotel_nearby_convenience_store/edit', 'uses'=>'Setup\HotelNearbyConvenienceStore\HotelNearbyConvenienceStoreController@edit'));
+            Route::post('hotel_nearby_convenience_store/update', array('as'=>'backend/hotel_nearby_convenience_store/update', 'uses'=>'Setup\HotelNearbyConvenienceStore\HotelNearbyConvenienceStoreController@update'));
+            Route::post('hotel_nearby_convenience_store/destroy', array('as'=>'backend/hotel_nearby_convenience_store/destroy', 'uses'=>'Setup\HotelNearbyConvenienceStore\HotelNearbyConvenienceStoreController@destroy'));
+
+            //Hotel Nearby Drug Store
+            Route::get('hotel_nearby_drug_store', array('as'=>'backend/hotel_nearby_drug_store', 'uses'=>'Setup\HotelNearbyDrugStore\HotelNearbyDrugStoreController@index'));
+            Route::get('hotel_nearby_drug_store/create', array('as'=>'backend/hotel_nearby_drug_store/create', 'uses'=>'Setup\HotelNearbyDrugStore\HotelNearbyDrugStoreController@create'));
+            Route::post('hotel_nearby_drug_store/store', array('as'=>'backend/hotel_nearby_drug_store/store', 'uses'=>'Setup\HotelNearbyDrugStore\HotelNearbyDrugStoreController@store'));
+            Route::get('hotel_nearby_drug_store/edit/{id}', array('as'=>'backend/hotel_nearby_drug_store/edit', 'uses'=>'Setup\HotelNearbyDrugStore\HotelNearbyDrugStoreController@edit'));
+            Route::post('hotel_nearby_drug_store/update', array('as'=>'backend/hotel_nearby_drug_store/update', 'uses'=>'Setup\HotelNearbyDrugStore\HotelNearbyDrugStoreController@update'));
+            Route::post('hotel_nearby_drug_store/destroy', array('as'=>'backend/hotel_nearby_drug_store/destroy', 'uses'=>'Setup\HotelNearbyDrugStore\HotelNearbyDrugStoreController@destroy'));
+
+            /** TEST MULTI LANGUAGE */
+            Route::get('test_multilanguage',['as' => 'backend/test_multilanguage', 'uses' => 'Language\LanguageController@test']);
+            Route::post('language', ['as' => 'backend/language', 'uses' => 'Language\LanguageController@changeLanguage']);
         });
 
     });

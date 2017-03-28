@@ -6,7 +6,7 @@
 <div id="content" class="content">
 
     <h1 class="page-header">
-        {{ isset($country) ?  'City Edit' : 'City Entry' }}
+        {{ isset($country) ?  trans('messages.edit') : trans('messages.entry') }}
     </h1>
 
     {{--check new or edit--}}

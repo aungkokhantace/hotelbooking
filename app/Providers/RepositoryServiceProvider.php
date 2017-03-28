@@ -47,7 +47,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind('App\Setup\RoomDiscount\RoomDiscountRepositoryInterface','App\Setup\RoomDiscount\RoomDiscountRepository');
         $this->app->bind('App\Setup\RoomBlackoutPeriod\RoomBlackoutPeriodRepositoryInterface','App\Setup\RoomBlackoutPeriod\RoomBlackoutPeriodRepository');
         $this->app->bind('App\Setup\RoomAvailablePeriod\RoomAvailablePeriodRepositoryInterface','App\Setup\RoomAvailablePeriod\RoomAvailablePeriodRepository');
-
+        $this->app->bind('App\Setup\HotelNearbyAirport\HotelNearbyAirportRepositoryInterface','App\Setup\HotelNearbyAirport\HotelNearbyAirportRepository');
+        $this->app->bind('App\Setup\HotelNearbyStation\HotelNearbyStationRepositoryInterface','App\Setup\HotelNearbyStation\HotelNearbyStationRepository');
+        $this->app->bind('App\Setup\HotelNearbyHospital\HotelNearbyHospitalRepositoryInterface','App\Setup\HotelNearbyHospital\HotelNearbyHospitalRepository');
+        $this->app->bind('App\Setup\HotelNearbyConvenienceStore\HotelNearbyConvenienceStoreRepositoryInterface','App\Setup\HotelNearbyConvenienceStore\HotelNearbyConvenienceStoreRepository');
+        $this->app->bind('App\Setup\HotelNearbyDrugStore\HotelNearbyDrugStoreRepositoryInterface','App\Setup\HotelNearbyDrugStore\HotelNearbyDrugStoreRepository');
 
     }
 }

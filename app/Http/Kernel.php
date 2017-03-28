@@ -30,6 +30,8 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \App\Http\Middleware\FrontendOrBackend::class,
+            \App\Http\Middleware\LanguageSwitcher::class,
+
         ],
 
         'api' => [
@@ -51,5 +53,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'right' => \App\Http\Middleware\RightMiddleware::class,
         'frontendorbackend' => \App\Http\Middleware\FrontendOrBackend::class,
+        'LanguageSwitcher'  => \App\Http\Middleware\LanguageSwitcher::class,
     ];
 }

@@ -352,6 +352,72 @@
                 </ul>
             </li>
 
+            <li  nav-id='modifier'  class="has-sub">
+                <a href="javascript:;">
+                    <b class="caret pull-right"></b>
+                    <i class="fa fa-users"></i>
+                    <span>Hotel Nearby</span>
+                </a>
+                <ul class="sub-menu">
+                    <li nav-id="modifier-manage" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Airport</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-manage-modifier"><a href="/backend/hotel_nearby_airport/create">Entry</a></li>
+                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend/hotel_nearby_airport">List</a></li>
+                        </ul>
+                    </li>
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Station</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/hotel_nearby_station/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/hotel_nearby_station/city">List</a></li>
+                        </ul>
+                    </li>
+                    <li nav-id="modifier-manage" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Hospital</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-manage-modifier"><a href="/backend/hotel_nearby_hospital/create">Entry</a></li>
+                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend/hotel_nearby_hospital">List</a></li>
+                        </ul>
+                    </li>
+                    <li nav-id="modifier-manage" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Convenience Store</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-manage-modifier"><a href="/backend/hotel_nearby_convenience_store/create">Entry</a></li>
+                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend/hotel_nearby_convenience_store">List</a></li>
+                        </ul>
+                    </li>
+                    <li nav-id="modifier-manage" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Drug Store</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-manage-modifier"><a href="/backend/hotel_nearby_drug_store/create">Entry</a></li>
+                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend/hotel_nearby_drug_store">List</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </li>
+
         </ul>
         <!-- end sidebar nav -->
     </div>

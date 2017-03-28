@@ -5,7 +5,9 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">Dashboard</h1>
+{{--    <h1 class="page-header">{{ trans('messa ges.heading') }}</h1>--}}
+
+    <h1 class="page-header">{{ trans('messages.dashboard') }}</h1>
 
     <div class="row">
             <div class="col-md-3">
