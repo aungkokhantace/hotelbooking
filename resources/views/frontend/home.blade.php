@@ -8,3 +8,4 @@
 
 echo "THIS IS HOME INDEX PAGE";
 ?>
+<p>{{trans('messages.home')}}</p>

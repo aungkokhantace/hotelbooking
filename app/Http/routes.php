@@ -5,6 +5,8 @@ Route::group(['middleware' => 'web'], function () {
 
     //Frontend
     Route::get('/', 'Frontend\HomeController@index');
+    Route::get('test','Frontend\HomeController@test');
+    Route::get('lang/{lang}','Language\LanguageController@getLanguage');
 
     //Backend
     Route::group(['prefix' => 'backend'], function () {
@@ -256,6 +258,14 @@ Route::group(['middleware' => 'web'], function () {
             /** TEST MULTI LANGUAGE */
             Route::get('test_multilanguage',['as' => 'backend/test_multilanguage', 'uses' => 'Language\LanguageController@test']);
             Route::post('language', ['as' => 'backend/language', 'uses' => 'Language\LanguageController@changeLanguage']);
+
+            //Facility Group
+            Route::get('facility_group', array('as'=>'backend/facility_group', 'uses'=>'Setup\FacilityGroup\FacilityGroupController@index'));
+            Route::get('facility_group/create', array('as'=>'backend/facility_group/create', 'uses'=>'Setup\FacilityGroup\FacilityGroupController@create'));
+            Route::post('facility_group/store', array('as'=>'backend/facility_group/store', 'uses'=>'Setup\FacilityGroup\FacilityGroupController@store'));
+            Route::get('facility_group/edit/{id}', array('as'=>'backend/facility_group/edit', 'uses'=>'Setup\FacilityGroup\FacilityGroupController@edit'));
+            Route::post('facility_group/update', array('as'=>'backend/facility_group/update', 'uses'=>'Setup\FacilityGroup\FacilityGroupController@update'));
+            Route::post('facility_group/destroy', array('as'=>'backend/facility_group/destroy', 'uses'=>'Setup\FacilityGroup\FacilityGroupController@destroy'));
         });
 
     });

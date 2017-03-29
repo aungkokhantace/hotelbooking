@@ -12,10 +12,6 @@ use Redirect;
 
 class LanguageController extends Controller
 {
-    public function test(){
-        return view('test.test_multi_language');
-    }
-
     public function changeLanguage(){
         if(Session::has('locale')){
             Session::put('locale',Input::get('locale'));
@@ -26,4 +22,17 @@ class LanguageController extends Controller
 
         return Redirect::back();
     }
+
+    public function getLanguage($lang){
+        if(Session::has('locale')){
+            Session::put('locale',$lang);
+        }
+        else{
+            Session::set('locale',$lang);
+        }
+
+        return Redirect::back();
+    }
+
+
 }

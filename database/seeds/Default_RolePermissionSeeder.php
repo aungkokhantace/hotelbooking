@@ -248,6 +248,14 @@ class Default_RolePermissionSeeder extends Seeder
             ['role_id'=>1, 'permission_id'=>284],
             ['role_id'=>1, 'permission_id'=>285],
 
+            //Facility Group
+            ['role_id'=>1, 'permission_id'=>290],
+            ['role_id'=>1, 'permission_id'=>291],
+            ['role_id'=>1, 'permission_id'=>292],
+            ['role_id'=>1, 'permission_id'=>293],
+            ['role_id'=>1, 'permission_id'=>294],
+            ['role_id'=>1, 'permission_id'=>295],
+
 
             //Backend Multi_Language
             ['role_id'=>1, 'permission_id'=>500],

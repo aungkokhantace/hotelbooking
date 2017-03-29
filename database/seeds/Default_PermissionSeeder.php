@@ -258,6 +258,15 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>285,'module'=>'HotelNearbyDrugStore','name'=>'Destroy','description'=>'Hotel Nearby Drug Store Destroy','url'=>'backend/hotel_nearby_drug_store/destroy'],
 
 
+            //Facility Group
+            ['id'=>290,'module'=>'FacilityGroup','name'=>'Listing','description'=>'Facility Group Listing','url'=>'backend/facility_group'],
+            ['id'=>291,'module'=>'FacilityGroup','name'=>'New','description'=>'Facility Group New','url'=>'backend/facility_group/create'],
+            ['id'=>292,'module'=>'FacilityGroup','name'=>'store','description'=>'Facility Group Store','url'=>'backend/facility_group/store'],
+            ['id'=>293,'module'=>'FacilityGroup','name'=>'Edit','description'=>'Facility Group Edit','url'=>'backend/facility_group/edit'],
+            ['id'=>294,'module'=>'FacilityGroup','name'=>'Update','description'=>'Facility Group Update','url'=>'backend/facility_group/update'],
+            ['id'=>295,'module'=>'FacilityGroup','name'=>'Destroy','description'=>'Facility Group Destroy','url'=>'backend/facility_group/destroy'],
+
+
 
             //Backend Multi_Language
             ['id'=>500,'module'=>'Backend','name'=>'Multi_Language','description'=>'Backend Multi_Language','url'=>'backend/language'],
