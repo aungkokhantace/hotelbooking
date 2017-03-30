@@ -2,14 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: User
- * Date: 3/8/2017
- * Time: 5:28 PM
+ * Date: 3/29/2017
+ * Time: 1:53 PM
  */
 
-namespace App\Setup\HotelRoomType;
+namespace App\Setup\HotelRestaurant;
 
 
-interface HotelRoomTypeRepositoryInterface
+interface HotelRestaurantRepositoryInterface
 {
     public function getObjs();
     public function getArrays();
@@ -17,5 +17,4 @@ interface HotelRoomTypeRepositoryInterface
     public function create($paramObj);
     public function update($paramObj);
     public function delete($paramObj);
-    public function getHotelRoomTypeWithHotelId($hotel_id);
 }

@@ -266,6 +266,14 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('facility_group/edit/{id}', array('as'=>'backend/facility_group/edit', 'uses'=>'Setup\FacilityGroup\FacilityGroupController@edit'));
             Route::post('facility_group/update', array('as'=>'backend/facility_group/update', 'uses'=>'Setup\FacilityGroup\FacilityGroupController@update'));
             Route::post('facility_group/destroy', array('as'=>'backend/facility_group/destroy', 'uses'=>'Setup\FacilityGroup\FacilityGroupController@destroy'));
+
+            //Hotel Restaurant
+            Route::get('hotel_restaurant', array('as'=>'backend/hotel_restaurant', 'uses'=>'Setup\HotelRestaurant\HotelRestaurantController@index'));
+            Route::get('hotel_restaurant/create', array('as'=>'backend/hotel_restaurant/create', 'uses'=>'Setup\HotelRestaurant\HotelRestaurantController@create'));
+            Route::post('hotel_restaurant/store', array('as'=>'backend/hotel_restaurant/store', 'uses'=>'Setup\HotelRestaurant\HotelRestaurantController@store'));
+            Route::get('hotel_restaurant/edit/{id}', array('as'=>'backend/hotel_restaurant/edit', 'uses'=>'Setup\HotelRestaurant\HotelRestaurantController@edit'));
+            Route::post('hotel_restaurant/update', array('as'=>'backend/hotel_restaurant/update', 'uses'=>'Setup\HotelRestaurant\HotelRestaurantController@update'));
+            Route::post('hotel_restaurant/destroy', array('as'=>'backend/hotel_restaurant/destroy', 'uses'=>'Setup\HotelRestaurant\HotelRestaurantController@destroy'));
         });
 
     });

@@ -266,6 +266,14 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>294,'module'=>'FacilityGroup','name'=>'Update','description'=>'Facility Group Update','url'=>'backend/facility_group/update'],
             ['id'=>295,'module'=>'FacilityGroup','name'=>'Destroy','description'=>'Facility Group Destroy','url'=>'backend/facility_group/destroy'],
 
+            //Hotel Restaurant
+            ['id'=>300,'module'=>'HotelRestaurant','name'=>'Listing','description'=>'Hotel Restaurant Listing','url'=>'backend/hotel_restaurant'],
+            ['id'=>301,'module'=>'HotelRestaurant','name'=>'New','description'=>'Hotel Restaurant New','url'=>'backend/hotel_restaurant/create'],
+            ['id'=>302,'module'=>'HotelRestaurant','name'=>'store','description'=>'Hotel Restaurant Store','url'=>'backend/hotel_restaurant/store'],
+            ['id'=>303,'module'=>'HotelRestaurant','name'=>'Edit','description'=>'Hotel Restaurant Edit','url'=>'backend/hotel_restaurant/edit'],
+            ['id'=>304,'module'=>'HotelRestaurant','name'=>'Update','description'=>'Hotel Restaurant Update','url'=>'backend/hotel_restaurant/update'],
+            ['id'=>305,'module'=>'HotelRestaurant','name'=>'Destroy','description'=>'Hotel Restaurant Destroy','url'=>'backend/hotel_restaurant/destroy'],
+
 
 
             //Backend Multi_Language
