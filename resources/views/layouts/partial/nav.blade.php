@@ -152,11 +152,12 @@
                 </ul>
             </li>
 
+
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="fa fa-users"></i>
-                    <span>Hotel Basic Config</span>
+                    <span>General</span>
                 </a>
                 <ul class="sub-menu">
                     <li nav-id="modifier-manage" class="has-sub">
@@ -196,6 +197,17 @@
                     <li nav-id="modifier-create" class="has-sub">
                         <a href="javascript:;">
                             <b class="caret pull-right"></b>
+                            <span>Facility Group</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/facility_group/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/facility_group">List</a></li>
+                        </ul>
+                    </li>
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
                             <span>Facilities</span>
                         </a>
 
@@ -207,12 +219,45 @@
                     <li nav-id="modifier-create" class="has-sub">
                         <a href="javascript:;">
                             <b class="caret pull-right"></b>
-                            <span>Facility Group</span>
+                            <span>Landmark</span>
                         </a>
 
                         <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/facility_group/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/facility_group">List</a></li>
+                            <li nav-id="modifier-create-modifier"><a href="/backend/landmark/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/landmark/landmark">List</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li  nav-id='modifier'  class="has-sub">
+                <a href="javascript:;">
+                    <b class="caret pull-right"></b>
+                    <i class="fa fa-users"></i>
+                    <span>Hotel Management</span>
+                </a>
+                <ul class="sub-menu">
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Hotel</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/hotel/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel">List</a></li>
+                        </ul>
+                    </li>
+
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Hotel Facility</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/hotel_facility/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_facility">List</a></li>
                         </ul>
                     </li>
                     <li nav-id="modifier-create" class="has-sub">
@@ -259,28 +304,7 @@
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_room_category">List</a></li>
                         </ul>
                     </li>
-                    <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
-                            <b class="caret pull-right"></b>
-                            <span>Room View</span>
-                        </a>
 
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/room_view/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_view">List</a></li>
-                        </ul>
-                    </li>
-                    <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
-                            <b class="caret pull-right"></b>
-                            <span>Room Category Facilities</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/room_category_facility/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_category_facility">List</a></li>
-                        </ul>
-                    </li>
                     <li nav-id="modifier-create" class="has-sub">
                         <a href="javascript:;">
                             <b class="caret pull-right"></b>
@@ -290,84 +314,6 @@
                         <ul class="sub-menu">
                             <li nav-id="modifier-create-modifier"><a href="/backend/hotel_feature/create">Entry</a></li>
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_feature">List</a></li>
-                        </ul>
-                    </li>
-
-                    <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
-                            <b class="caret pull-right"></b>
-                            <span>Room Discount</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/room_discount/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_discount">List</a></li>
-                        </ul>
-                    </li>
-
-                    <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
-                            <b class="caret pull-right"></b>
-                            <span>Room Blackout Period</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/room_blackout_period/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_blackout_period">List</a></li>
-                        </ul>
-                    </li>
-                    <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
-                            <b class="caret pull-right"></b>
-                            <span>Room Available Period</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/room_available_period/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_available_period">List</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-
-            <li  nav-id='modifier'  class="has-sub">
-                <a href="javascript:;">
-                    <b class="caret pull-right"></b>
-                    <i class="fa fa-users"></i>
-                    <span>Hotel</span>
-                </a>
-                <ul class="sub-menu">
-                    <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
-                            <b class="caret pull-right"></b>
-                            <span>Hotel</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/hotel/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel">List</a></li>
-                        </ul>
-                    </li>
-
-                </ul>
-            </li>
-
-            <li  nav-id='modifier'  class="has-sub">
-                <a href="javascript:;">
-                    <b class="caret pull-right"></b>
-                    <i class="fa fa-users"></i>
-                    <span>Room</span>
-                </a>
-                <ul class="sub-menu">
-                    <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
-                            <b class="caret pull-right"></b>
-                            <span>Room</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/room/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room">List</a></li>
                         </ul>
                     </li>
 
@@ -437,6 +383,95 @@
                         </ul>
                     </li>
 
+                </ul>
+            </li>
+
+            <li  nav-id='modifier'  class="has-sub">
+                <a href="javascript:;">
+                    <b class="caret pull-right"></b>
+                    <i class="fa fa-users"></i>
+                    <span>Room Management</span>
+                </a>
+                <ul class="sub-menu">
+
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Room View</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/room_view/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_view">List</a></li>
+                        </ul>
+                    </li>
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Room</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/room/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room">List</a></li>
+                        </ul>
+                    </li>
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Room Category Facilities</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/room_category_facility/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_category_facility">List</a></li>
+                        </ul>
+                    </li>
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Room Discount</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/room_discount/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_discount">List</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li  nav-id='modifier'  class="has-sub">
+                <a href="javascript:;">
+                    <b class="caret pull-right"></b>
+                    <i class="fa fa-users"></i>
+                    <span>Room Availability Management</span>
+                </a>
+                <ul class="sub-menu">
+
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Room Available Period</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/room_available_period/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_available_period">List</a></li>
+                        </ul>
+                    </li>
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Room Blackout Period</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/room_blackout_period/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_blackout_period">List</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
 

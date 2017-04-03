@@ -54,6 +54,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind('App\Setup\HotelNearbyDrugStore\HotelNearbyDrugStoreRepositoryInterface','App\Setup\HotelNearbyDrugStore\HotelNearbyDrugStoreRepository');
         $this->app->bind('App\Setup\FacilityGroup\FacilityGroupRepositoryInterface','App\Setup\FacilityGroup\FacilityGroupRepository');
         $this->app->bind('App\Setup\HotelRestaurant\HotelRestaurantRepositoryInterface','App\Setup\HotelRestaurant\HotelRestaurantRepository');
+        $this->app->bind('App\Setup\HotelFacility\HotelFacilityRepositoryInterface','App\Setup\HotelFacility\HotelFacilityRepository');
+        $this->app->bind('App\Setup\Landmark\LandmarkRepositoryInterface','App\Setup\Landmark\LandmarkRepository');
 
 
     }

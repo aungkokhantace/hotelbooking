@@ -274,6 +274,22 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('hotel_restaurant/edit/{id}', array('as'=>'backend/hotel_restaurant/edit', 'uses'=>'Setup\HotelRestaurant\HotelRestaurantController@edit'));
             Route::post('hotel_restaurant/update', array('as'=>'backend/hotel_restaurant/update', 'uses'=>'Setup\HotelRestaurant\HotelRestaurantController@update'));
             Route::post('hotel_restaurant/destroy', array('as'=>'backend/hotel_restaurant/destroy', 'uses'=>'Setup\HotelRestaurant\HotelRestaurantController@destroy'));
+
+            //Hotel Facility
+            Route::get('hotel_facility', array('as'=>'backend/hotel_facility', 'uses'=>'Setup\HotelFacility\HotelFacilityController@index'));
+            Route::get('hotel_facility/create', array('as'=>'backend/hotel_facility/create', 'uses'=>'Setup\HotelFacility\HotelFacilityController@create'));
+            Route::post('hotel_facility/store', array('as'=>'backend/hotel_facility/store', 'uses'=>'Setup\HotelFacility\HotelFacilityController@store'));
+            Route::get('hotel_facility/edit/{id}', array('as'=>'backend/hotel_facility/edit', 'uses'=>'Setup\HotelFacility\HotelFacilityController@edit'));
+            Route::post('hotel_facility/update', array('as'=>'backend/hotel_facility/update', 'uses'=>'Setup\HotelFacility\HotelFacilityController@update'));
+            Route::post('hotel_facility/destroy', array('as'=>'backend/hotel_facility/destroy', 'uses'=>'Setup\HotelFacility\HotelFacilityController@destroy'));
+
+            //Landmark
+            Route::get('landmark', array('as'=>'backend/landmark', 'uses'=>'Setup\Landmark\LandmarkController@index'));
+            Route::get('landmark/create', array('as'=>'backend/landmark/create', 'uses'=>'Setup\Landmark\LandmarkController@create'));
+            Route::post('landmark/store', array('as'=>'backend/landmark/store', 'uses'=>'Setup\Landmark\LandmarkController@store'));
+            Route::get('landmark/edit/{id}', array('as'=>'backend/landmark/edit', 'uses'=>'Setup\Landmark\LandmarkController@edit'));
+            Route::post('landmark/update', array('as'=>'backend/landmark/update', 'uses'=>'Setup\Landmark\LandmarkController@update'));
+            Route::post('landmark/destroy', array('as'=>'backend/landmark/destroy', 'uses'=>'Setup\Landmark\LandmarkController@destroy'));
         });
 
     });

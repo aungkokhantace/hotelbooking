@@ -2,14 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: User
- * Date: 3/19/2017
- * Time: 10:27 PM
+ * Date: 3/31/2017
+ * Time: 2:55 PM
  */
 
-namespace App\Setup\HotelFeature;
+namespace App\Setup\HotelFacility;
 
 
-interface HotelFeatureRepositoryInterface
+interface HotelFacilityRepositoryInterface
 {
     public function getObjs();
     public function getArrays();

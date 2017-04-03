@@ -274,6 +274,23 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>304,'module'=>'HotelRestaurant','name'=>'Update','description'=>'Hotel Restaurant Update','url'=>'backend/hotel_restaurant/update'],
             ['id'=>305,'module'=>'HotelRestaurant','name'=>'Destroy','description'=>'Hotel Restaurant Destroy','url'=>'backend/hotel_restaurant/destroy'],
 
+            //Hotel Facility
+            ['id'=>310,'module'=>'HotelFacility','name'=>'Listing','description'=>'Hotel Facility Listing','url'=>'backend/hotel_facility'],
+            ['id'=>311,'module'=>'HotelFacility','name'=>'New','description'=>'Hotel Facility New','url'=>'backend/hotel_facility/create'],
+            ['id'=>312,'module'=>'HotelFacility','name'=>'store','description'=>'Hotel Facility Store','url'=>'backend/hotel_facility/store'],
+            ['id'=>313,'module'=>'HotelFacility','name'=>'Edit','description'=>'Hotel Facility Edit','url'=>'backend/hotel_facility/edit'],
+            ['id'=>314,'module'=>'HotelFacility','name'=>'Update','description'=>'Hotel Facility Update','url'=>'backend/hotel_facility/update'],
+            ['id'=>315,'module'=>'HotelFacility','name'=>'Destroy','description'=>'Hotel Facility Destroy','url'=>'backend/hotel_facility/destroy'],
+
+            //LandMarks
+            ['id'=>320,'module'=>'Landmark','name'=>'Listing','description'=>'Landmark Listing','url'=>'backend/landmark'],
+            ['id'=>321,'module'=>'Landmark','name'=>'New','description'=>'Landmark New','url'=>'backend/landmark/create'],
+            ['id'=>322,'module'=>'Landmark','name'=>'store','description'=>'Landmark Store','url'=>'backend/landmark/store'],
+            ['id'=>323,'module'=>'Landmark','name'=>'Edit','description'=>'Landmark Edit','url'=>'backend/landmark/edit'],
+            ['id'=>324,'module'=>'Landmark','name'=>'Update','description'=>'Landmark Update','url'=>'backend/landmark/update'],
+            ['id'=>325,'module'=>'Landmark','name'=>'Destroy','description'=>'Landmark Destroy','url'=>'backend/landmark/destroy'],
+
+
 
 
             //Backend Multi_Language
