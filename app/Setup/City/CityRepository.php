@@ -117,4 +117,9 @@ class CityRepository implements CityRepositoryInterface
         $role = City::find($id);
         return $role;
     }
+
+    public function getCityByCountryId($country_id){
+        $result = DB::table('cities')->where('country_id', $country_id)->whereNull('deleted_at')->get();
+        return $result;
+    }
 }

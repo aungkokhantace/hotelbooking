@@ -31,6 +31,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('hotel_room_type/get_room_type/{id}', ['as' => 'backend/hotel_room_type/get_room_type', 'uses' => 'Setup\HotelRoomType\HotelRoomTypeController@getHotelRoomType']);
     Route::get('hotel_room_category/get_room_category/{id}', ['as' => 'backend/hotel_room_category/get_room_category', 'uses' => 'Setup\HotelRoomCategory\HotelRoomCategoryController@getHotelRoomCategory']);
     Route::get('room/get_room/{id}', ['as' => 'backend/room/get_room', 'uses' => 'Setup\Room\RoomController@getRoom']);
+    Route::get('hotel/get_cities/{country_id}', ['as' => 'backend/hotel/get_cities', 'uses' => 'Setup\Hotel\HotelController@getCities']);
+    Route::get('hotel/get_townships/{city_id}', ['as' => 'backend/hotel/get_townships', 'uses' => 'Setup\Hotel\HotelController@getTownships']);
 
     });
 
