@@ -143,14 +143,18 @@ class HotelController extends Controller
         if (Auth::guard('User')->check()) {
             $hotel = $this->repo->getObjByID($id);
 
+            $country_id = $hotel->country_id;
+            $city_id = $hotel->city_id;
+            $township_id = $hotel->township_id;
+
             $countryRepo = new CountryRepository();
             $countries = $countryRepo->getObjs();
 
             $cityRepo = new CityRepository();
-            $cities = $cityRepo->getObjs();
+            $cities = $cityRepo->getCityByCountryId($country_id);
 
             $townshipRepo = new TownshipRepository();
-            $townships = $townshipRepo->getObjs();
+            $townships = $townshipRepo->getTownshipByCityId($city_id);
 
             return view('backend.hotel.hotel')->with('hotel', $hotel)->with('countries',$countries)->with('cities',$cities)->with('townships',$townships);
         }
@@ -257,5 +261,15 @@ class HotelController extends Controller
             $this->repo->delete($id);
         }
         return redirect()->action('Setup\Hotel\HotelController@index'); //to redirect listing page
+    }
+
+    public function getCities($country_id){
+        $cities = DB::table('cities')->where('country_id', $country_id)->whereNull('deleted_at')->get();
+        return \Response::json($cities);
+    }
+
+    public function getTownships($city_id){
+        $townships = DB::table('townships')->where('city_id', $city_id)->whereNull('deleted_at')->get();
+        return \Response::json($townships);
     }
 }

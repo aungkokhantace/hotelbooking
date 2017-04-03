@@ -471,6 +471,7 @@
                     township_id             : 'required',
                     number_of_floors        : 'required',
                     hotel_class             : 'required',
+                    website                 : 'url',
                     check_in_time           : 'required',
                     check_out_time          : 'required',
                     breakfast_start_time    : 'required',
@@ -490,6 +491,7 @@
                     township_id             : 'Township is required',
                     number_of_floors        : 'Number of Floors is required',
                     hotel_class             : 'Class is required',
+                    website                 : 'Webite URL is not valid',
                     check_in_time           : 'Check-in Time is required',
                     check_out_time          : 'Check-out Time is required',
                     breakfast_start_time    : 'Breakfast Start Time is required',
@@ -546,6 +548,14 @@
             $('#check_out_time').timepicker();
             $('#breakfast_start_time').timepicker();
             $('#breakfast_end_time').timepicker();
+
+            $('#country_id').change(function(e){
+                load_city($(this).val());
+            });
+
+            $('#city_id').change(function(e){
+                load_township($(this).val());
+            });
         });
 
         //start js function for fileupload
@@ -565,5 +575,44 @@
             $('#removeImageFlag').val(1);
         }
         //end js function for fileupload
+
+        //start new functions
+        function load_city(countryId){
+            $.ajax({
+                type: "GET",
+                url: "/backend/hotel/get_cities/"+countryId
+            }).done(function( result ) {
+                $("#city_id").empty();//To reset cities
+                $("#city_id").append("<option selected disabled>Select City</option>");
+
+                $("#township_id").empty();//To reset townships
+                $("#township_id").append("<option selected disabled>Select Township</option>");
+
+                $(result).each(function(){
+                    $("#city_id").append($('<option>', {
+                        value: this.id,
+                        text: this.name,
+                    }));
+                })
+            });
+        }
+
+        function load_township(cityId){
+            $.ajax({
+                type: "GET",
+                url: "/backend/hotel/get_townships/"+cityId
+            }).done(function( result ) {
+                $("#township_id").empty();//To reset townships
+                $("#township_id").append("<option selected disabled>Select Township</option>");
+
+                $(result).each(function(){
+                    $("#township_id").append($('<option>', {
+                        value: this.id,
+                        text: this.name,
+                    }));
+                })
+            });
+        }
+        //end new functions
     </script>
 @stop

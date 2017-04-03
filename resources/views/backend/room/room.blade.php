@@ -211,6 +211,10 @@
             }).done(function( result ) {
                 $("#h_room_type_id").empty();//To reset states
                 $("#h_room_type_id").append("<option selected disabled>Select Room Type</option>");
+
+                $("#h_room_category_id").empty();//To reset states
+                $("#h_room_category_id").append("<option selected disabled>Select Room Category</option>");
+
                 $(result).each(function(){
                     $("#h_room_type_id").append($('<option>', {
                         value: this.id,

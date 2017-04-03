@@ -117,4 +117,11 @@ class TownshipRepository implements TownshipRepositoryInterface
         $role = Township::find($id);
         return $role;
     }
+
+    public function getTownshipByCityId($city_id){
+        $result = DB::table('townships')->where('city_id', $city_id)->whereNull('deleted_at')->get();
+        return $result;
+    }
+
+
 }
