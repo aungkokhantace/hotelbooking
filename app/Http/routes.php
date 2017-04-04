@@ -290,6 +290,14 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('landmark/edit/{id}', array('as'=>'backend/landmark/edit', 'uses'=>'Setup\Landmark\LandmarkController@edit'));
             Route::post('landmark/update', array('as'=>'backend/landmark/update', 'uses'=>'Setup\Landmark\LandmarkController@update'));
             Route::post('landmark/destroy', array('as'=>'backend/landmark/destroy', 'uses'=>'Setup\Landmark\LandmarkController@destroy'));
+
+            //Hotel Landmark
+            Route::get('hotel_landmark', array('as'=>'backend/hotel_landmark', 'uses'=>'Setup\HotelLandmark\HotelLandmarkController@index'));
+            Route::get('hotel_landmark/create', array('as'=>'backend/hotel_landmark/create', 'uses'=>'Setup\HotelLandmark\HotelLandmarkController@create'));
+            Route::post('hotel_landmark/store', array('as'=>'backend/hotel_landmark/store', 'uses'=>'Setup\HotelLandmark\HotelLandmarkController@store'));
+            Route::get('hotel_landmark/edit/{id}', array('as'=>'backend/hotel_landmark/edit', 'uses'=>'Setup\HotelLandmark\HotelLandmarkController@edit'));
+            Route::post('hotel_landmark/update', array('as'=>'backend/hotel_landmark/update', 'uses'=>'Setup\HotelLandmark\HotelLandmarkController@update'));
+            Route::post('hotel_landmark/destroy', array('as'=>'backend/hotel_landmark/destroy', 'uses'=>'Setup\HotelLandmark\HotelLandmarkController@destroy'));
         });
 
     });

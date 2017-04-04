@@ -290,7 +290,13 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>324,'module'=>'Landmark','name'=>'Update','description'=>'Landmark Update','url'=>'backend/landmark/update'],
             ['id'=>325,'module'=>'Landmark','name'=>'Destroy','description'=>'Landmark Destroy','url'=>'backend/landmark/destroy'],
 
-
+            //Hotel LandMark
+            ['id'=>330,'module'=>'HotelLandmark','name'=>'Listing','description'=>'Hotel Landmark Listing','url'=>'backend/hotel_landmark'],
+            ['id'=>331,'module'=>'HotelLandmark','name'=>'New','description'=>'Hotel Landmark New','url'=>'backend/hotel_landmark/create'],
+            ['id'=>332,'module'=>'HotelLandmark','name'=>'store','description'=>'Hotel Landmark Store','url'=>'backend/hotel_landmark/store'],
+            ['id'=>333,'module'=>'HotelLandmark','name'=>'Edit','description'=>'Hotel Landmark Edit','url'=>'backend/hotel_landmark/edit'],
+            ['id'=>334,'module'=>'HotelLandmark','name'=>'Update','description'=>'Hotel Landmark Update','url'=>'backend/hotel_landmark/update'],
+            ['id'=>335,'module'=>'HotelLandmark','name'=>'Destroy','description'=>'Hotel Landmark Destroy','url'=>'backend/hotel_landmark/destroy'],
 
 
             //Backend Multi_Language
