@@ -280,6 +280,14 @@ class Default_RolePermissionSeeder extends Seeder
             ['role_id'=>1, 'permission_id'=>324],
             ['role_id'=>1, 'permission_id'=>325],
 
+            //Hotel Landmark
+            ['role_id'=>1, 'permission_id'=>330],
+            ['role_id'=>1, 'permission_id'=>331],
+            ['role_id'=>1, 'permission_id'=>332],
+            ['role_id'=>1, 'permission_id'=>333],
+            ['role_id'=>1, 'permission_id'=>334],
+            ['role_id'=>1, 'permission_id'=>335],
+
 
             //Backend Multi_Language
             ['role_id'=>1, 'permission_id'=>500],

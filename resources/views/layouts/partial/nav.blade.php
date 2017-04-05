@@ -248,7 +248,6 @@
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel">List</a></li>
                         </ul>
                     </li>
-
                     <li nav-id="modifier-create" class="has-sub">
                         <a href="javascript:;">
                             <b class="caret pull-right"></b>
@@ -304,7 +303,6 @@
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_room_category">List</a></li>
                         </ul>
                     </li>
-
                     <li nav-id="modifier-create" class="has-sub">
                         <a href="javascript:;">
                             <b class="caret pull-right"></b>
@@ -314,6 +312,17 @@
                         <ul class="sub-menu">
                             <li nav-id="modifier-create-modifier"><a href="/backend/hotel_feature/create">Entry</a></li>
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_feature">List</a></li>
+                        </ul>
+                    </li>
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Hotel Landmark</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/hotel_landmark/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_landmark">List</a></li>
                         </ul>
                     </li>
 
