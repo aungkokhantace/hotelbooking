@@ -83,6 +83,9 @@ class Default_RolePermissionSeeder extends Seeder
             ['role_id'=>1, 'permission_id'=>73],
             ['role_id'=>1, 'permission_id'=>74],
             ['role_id'=>1, 'permission_id'=>75],
+            //Popular City
+            ['role_id'=>1, 'permission_id'=>76],
+            ['role_id'=>1, 'permission_id'=>77],
 
             //Features
             ['role_id'=>1, 'permission_id'=>80],

@@ -117,4 +117,9 @@ class CountryRepository implements CountryRepositoryInterface
         $role = Country::find($id);
         return $role;
     }
+
+    public function checkToDelete($id){
+        $result = DB::select("SELECT * FROM cities WHERE country_id = $id AND deleted_at IS NULL");
+        return $result;
+    }
 }

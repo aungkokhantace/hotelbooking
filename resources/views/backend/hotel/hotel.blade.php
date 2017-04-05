@@ -29,6 +29,51 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="h_type_id">Type<span class="require">*</span></label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <select class="form-control" name="h_type_id" id="h_type_id">
+                @if(isset($hotel))
+                    @if($hotel->h_type_id == 1)
+                        <option value="1" selected>Hotel</option>
+                    @else
+                        <option value="1">Hotel</option>
+                    @endif
+                    @if($hotel->h_type_id == 2)
+                        <option value="2" selected>Motel</option>
+                    @else
+                        <option value="2">Motel</option>
+                    @endif
+                    @if($hotel->h_type_id == 3)
+                        <option value="3" selected>Guest House</option>
+                    @else
+                        <option value="3">Guest House</option>
+                    @endif
+                    @if($hotel->h_type_id == 4)
+                        <option value="4" selected>Inn</option>
+                    @else
+                        <option value="4">Inn</option>
+                    @endif
+                    @if($hotel->h_type_id == 5)
+                        <option value="5" selected>Hostel</option>
+                    @else
+                        <option value="5">Hostel</option>
+                    @endif
+                @else
+                    <option value="" disabled selected>Select Type</option>
+                    <option value="1">Hotel</option>
+                    <option value="2">Motel</option>
+                    <option value="3">Guest House</option>
+                    <option value="4">Inn</option>
+                    <option value="5">Hostel</option>
+                @endif
+            </select>
+            <p class="text-danger">{{$errors->first('country_id')}}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="address">Address<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -460,6 +505,7 @@
                 rules: {
                     name                    : 'required',
                     address                 : 'required',
+                    h_type_id               : 'required',
                     phone                   : 'required',
                     star                    : 'required',
                     email: {
@@ -479,6 +525,7 @@
                 },
                 messages: {
                     name                    : 'Name is required',
+                    h_type_id               : 'Type is required',
                     address                 : 'Address is required',
                     phone                   : 'Phone is required',
                     star                    : 'Star is required',
@@ -576,7 +623,7 @@
         }
         //end js function for fileupload
 
-        //start new functions
+        //start ajax functions
         function load_city(countryId){
             $.ajax({
                 type: "GET",
@@ -613,6 +660,6 @@
                 })
             });
         }
-        //end new functions
+        //end ajax functions
     </script>
 @stop

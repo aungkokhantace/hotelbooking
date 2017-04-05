@@ -91,6 +91,8 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>73,'module'=>'City','name'=>'Edit','description'=>'City Edit','url'=>'backend/city/edit'],
             ['id'=>74,'module'=>'City','name'=>'Update','description'=>'City Update','url'=>'backend/city/update'],
             ['id'=>75,'module'=>'City','name'=>'Destroy','description'=>'City Destroy','url'=>'backend/city/destroy'],
+            ['id'=>76,'module'=>'Popular City','name'=>'New','description'=>'Popular City New','url'=>'backend/popular_city/create'],
+            ['id'=>77,'module'=>'Popular City','name'=>'Store','description'=>'Popular City Store','url'=>'backend/popular_city/store'],
 
             //Features
             ['id'=>80,'module'=>'Features','name'=>'Listing','description'=>'Features Listing','url'=>'backend/feature'],

@@ -52,6 +52,7 @@ $companyLogo = \App\Core\Check::companyLogo();
     <link media="all" type="text/css" rel="stylesheet" href="/assets/plugins/bootstrap-datepicker/css/datepicker3.css">
     <link media="all" type="text/css" rel="stylesheet" href="/assets/plugins/bootstrap-timepicker/css/bootstrap-timepicker.css">
 
+
     <script src="/assets/js/jquery.js"></script>
     <script src="/assets/js/apps.min.js"></script>
     <script src="/assets/plugins/jquery/jquery-1.9.1.min.js"></script>

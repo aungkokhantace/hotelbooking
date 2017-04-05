@@ -102,7 +102,14 @@ class CountryController extends Controller
         $new_string = explode(',', $id);
         $delete_flag = true;
         foreach($new_string as $id){
-            $this->repo->delete($id);
+            $check = $this->repo->checkToDelete($id);
+            if(isset($check) && count($check)>0){
+                alert()->warning('There are cities under this country!')->persistent('OK');
+                $delete_flag = false;
+            }
+            else{
+                $this->repo->delete($id);
+            }
         }
         if($delete_flag){
             return redirect()->action('Setup\Country\CountryController@index')

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Setup\City;
 
+use App\Core\Utility;
 use App\Setup\Country\CountryRepository;
 use Illuminate\Http\Request;
 
@@ -51,9 +52,31 @@ class CityController extends Controller
         $city_name       = Input::get('name');
         $country_id      = Input::get('country_id');
 
+        //Start Saving Image
+        $removeImageFlag          = (Input::has('removeImageFlag')) ? Input::get('removeImageFlag') : 0;
+        $path         = base_path().'/public/images/upload/';
+
+        if(Input::hasFile('photo'))
+        {
+            $photo        = Input::file('photo');
+            $photo_name_original    = Utility::getImage($photo);
+            $photo_ext      = Utility::getImageExt($photo);
+            $photo_name     = uniqid() . "." . $photo_ext;
+            $image          = Utility::resizeImage($photo,$photo_name,$path);
+        }
+        else{
+            $photo_name = "";
+        }
+
+        if($removeImageFlag == 1){
+            $photo_name = "";
+        }
+        //End Saving Image
+
         $paramObj = new City();
-        $paramObj->name     = $city_name;
-        $paramObj->country_id    = $country_id;
+        $paramObj->name         = $city_name;
+        $paramObj->country_id   = $country_id;
+        $paramObj->image        = $photo_name;
 
         $result = $this->repo->create($paramObj);
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
@@ -87,9 +110,38 @@ class CityController extends Controller
         $id                         = Input::get('id');
         $city_name                  = Input::get('name');
         $country_id                 = Input::get('country_id');
+        //Start Saving Image
+        $removeImageFlag          = (Input::has('removeImageFlag')) ? Input::get('removeImageFlag') : 0;
+        $path         = base_path().'/public/images/upload/';
+
+        if(Input::hasFile('photo'))
+        {
+            $photo        = Input::file('photo');
+            $photo_name_original    = Utility::getImage($photo);
+            $photo_ext      = Utility::getImageExt($photo);
+            $photo_name     = uniqid() . "." . $photo_ext;
+            $image          = Utility::resizeImage($photo,$photo_name,$path);
+        }
+        else{
+            $photo_name = "";
+        }
+
+        if($removeImageFlag == 1){
+            $photo_name = "";
+        }
+        //End Saving Image
+
         $paramObj                   = City::find($id);
-        $paramObj->name        = $city_name;
+        $paramObj->name             = $city_name;
         $paramObj->country_id       = $country_id;
+        if(Input::hasFile('photo')){
+            $paramObj->image                 = $photo_name;
+        }
+        else{
+            if($removeImageFlag == 1){
+                $paramObj->image             = "";
+            }
+        }
 
         $result = $this->repo->update($paramObj);
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
@@ -105,12 +157,28 @@ class CityController extends Controller
     }
 
     public function destroy(){
+
         $id         = Input::get('selected_checkboxes');
         $new_string = explode(',', $id);
+        $delete_flag = true;
         foreach($new_string as $id){
-            $this->repo->delete($id);
+            $check = $this->repo->checkToDelete($id);
+            if(isset($check) && count($check)>0){
+                alert()->warning('There are townships under this city!')->persistent('OK');
+                $delete_flag = false;
+            }
+            else{
+                $this->repo->delete($id);
+            }
         }
-        return redirect()->action('Setup\City\CityController@index'); //to redirect listing page
+        if($delete_flag){
+            return redirect()->action('Setup\City\CityController@index') //to redirect listing page
+                ->withMessage(FormatGenerator::message('Success', 'Country deleted ...'));
+        }
+        else{
+            return redirect()->action('Setup\City\CityController@index') //to redirect listing page
+                ->withMessage(FormatGenerator::message('Fail', 'Country did not delete ...'));
+        }
     }
 
     public function check_city_name(){

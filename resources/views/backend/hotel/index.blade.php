@@ -39,6 +39,7 @@
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
                         <th>Name</th>
+                        <th>Type</th>
                         <th>Address</th>
                         <th>Phone</th>
                         <th>Fax</th>
@@ -64,6 +65,7 @@
                     <tr>
                         <th></th>
                         <th class="search-col" con-id="name">Name</th>
+                        <th class="search-col" con-id="type">Type</th>
                         <th class="search-col" con-id="address">Address</th>
                         <th class="search-col" con-id="phone">Phone</th>
                         <th class="search-col" con-id="fax">Fax</th>
@@ -90,6 +92,7 @@
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $hotel->id }}" id="all"></td>
                             <td><a href="/backend/hotel/edit/{{$hotel->id}}">{{$hotel->name}}</a></td>
+                            <td>{{$hotel->h_type_id}}</td>
                             <td>{{$hotel->address}}</td>
                             <td>{{$hotel->phone}}</td>
                             <td>{{$hotel->fax}}</td>

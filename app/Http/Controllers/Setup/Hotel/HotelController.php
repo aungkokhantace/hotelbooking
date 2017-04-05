@@ -34,6 +34,25 @@ class HotelController extends Controller
     {
         if (Auth::guard('User')->check()) {
             $hotels = $this->repo->getObjs();
+
+            foreach($hotels as $hotel){
+                if($hotel->h_type_id == 1){
+                    $hotel->h_type_id = "Hotel";
+                }
+                elseif($hotel->h_type_id == 2){
+                    $hotel->h_type_id = "Motel";
+                }
+                elseif($hotel->h_type_id == 3){
+                    $hotel->h_type_id = "Guest House";
+                }
+                elseif($hotel->h_type_id == 4){
+                    $hotel->h_type_id = "Inn";
+                }
+                else{
+                    $hotel->h_type_id = "Hostel";
+                }
+            }
+
             return view('backend.hotel.index')->with('hotels',$hotels);
         }
         return redirect('/');
@@ -61,6 +80,7 @@ class HotelController extends Controller
         $request->validate();
 
         $name               = (Input::has('name')) ? Input::get('name') : "";
+        $type               = (Input::has('h_type_id')) ? Input::get('h_type_id') : "";
         $address            = (Input::has('address')) ? Input::get('address') : "";
         $phone              = (Input::has('phone')) ? Input::get('phone') : "";
         $fax                = (Input::has('fax')) ? Input::get('fax') : "";
@@ -106,6 +126,7 @@ class HotelController extends Controller
 
         $paramObj                           = new Hotel();
         $paramObj->name                     = $name;
+        $paramObj->h_type_id                = $type;
         $paramObj->address                  = $address;
         $paramObj->phone                    = $phone;
         $paramObj->fax                      = $fax;
@@ -167,6 +188,7 @@ class HotelController extends Controller
         $id                 = (Input::has('id')) ? Input::get('id') : "";
 
         $name               = (Input::has('name')) ? Input::get('name') : "";
+        $type               = (Input::has('h_type_id')) ? Input::get('h_type_id') : "";
         $address            = (Input::has('address')) ? Input::get('address') : "";
         $phone              = (Input::has('phone')) ? Input::get('phone') : "";
         $fax                = (Input::has('fax')) ? Input::get('fax') : "";
@@ -212,6 +234,7 @@ class HotelController extends Controller
 
         $paramObj                           = $this->repo->getObjByID($id);
         $paramObj->name                     = $name;
+        $paramObj->h_type_id                = $type;
         $paramObj->address                  = $address;
         $paramObj->phone                    = $phone;
         $paramObj->fax                      = $fax;
