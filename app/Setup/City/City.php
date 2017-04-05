@@ -12,6 +12,7 @@ class City extends Model
         'id',
         'name',
         'country_id',
+        'image',
         'updated_at','created_at','deleted_at','updated_by','created_by','deleted_by'
         ,
     ];

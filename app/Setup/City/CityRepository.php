@@ -45,7 +45,6 @@ class CityRepository implements CityRepositoryInterface
             $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' created city_id = '.$tempObj->id . PHP_EOL;
             LogCustom::create($date,$message);
 
-
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
             return $returnedObj;
         }
@@ -120,6 +119,11 @@ class CityRepository implements CityRepositoryInterface
 
     public function getCityByCountryId($country_id){
         $result = DB::table('cities')->where('country_id', $country_id)->whereNull('deleted_at')->get();
+        return $result;
+    }
+
+    public function checkToDelete($id){
+        $result = DB::select("SELECT * FROM townships WHERE city_id = $id AND deleted_at IS NULL");
         return $result;
     }
 }

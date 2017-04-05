@@ -98,12 +98,15 @@ Route::group(['middleware' => 'web'], function () {
 
             //City
             Route::get('city', array('as'=>'backend/city', 'uses'=>'Setup\City\CityController@index'));
-            Route::get('city/create', array('as'=>'backend/create','uses'=>'Setup\City\CityController@create'));
-            Route::post('city/store', array('as'=>'backend/store', 'uses'=>'Setup\City\CityController@store'));
+            Route::get('city/create', array('as'=>'backend/city/create','uses'=>'Setup\City\CityController@create'));
+            Route::post('city/store', array('as'=>'backend/city/store', 'uses'=>'Setup\City\CityController@store'));
             Route::get('city/edit/{id}', array('as'=>'backend/city/edit', 'uses'=>'Setup\City\CityController@edit'));
             Route::post('city/update', array('as'=>'backend/city/update', 'uses'=>'Setup\City\CityController@update'));
             Route::post('city/destroy', array('as'=>'backend/city/destroy', 'uses'=>'Setup\City\CityController@destroy'));
             Route::get('city/check_city_name',array('as'=>'backend/city/check_city_name','uses'=>'Setup\City\CityController@check_city_name'));
+
+            Route::get('popular_city/create', array('as'=>'backend/popular_city/create','uses'=>'Setup\City\PopularCityController@create'));
+            Route::post('popular_city/store', array('as'=>'backend/popular_city/store','uses'=>'Setup\City\PopularCityController@store'));
 
             //Feature
             Route::get('feature', array('as'=>'backend/feature', 'uses'=>'Setup\Feature\FeatureController@index'));

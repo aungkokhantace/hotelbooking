@@ -134,6 +134,7 @@
                         <ul class="sub-menu">
                             <li nav-id="modifier-create-modifier"><a href="/backend/city/create">Entry</a></li>
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend/city">List</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/popular_city/create">Set Popular City</a></li>
                         </ul>
                     </li>
                     <li nav-id="modifier-manage" class="has-sub">
@@ -347,6 +348,7 @@
                         <ul class="sub-menu">
                             <li nav-id="modifier-create-modifier"><a href="/backend/hotel_nearby_station/create">Entry</a></li>
                             <li nav-id="modifier-create-modifierpanel"><a href="/hotel_nearby_station/city">List</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/hotel_nearby_station/city">Popular Cities</a></li>
                         </ul>
                     </li>
                     <li nav-id="modifier-manage" class="has-sub">
