@@ -48,7 +48,7 @@
             <label for="name">City Name<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <input required type="text" class="form-control" id="name" name="name" placeholder="Enter City Name" value="{{ isset($city)? $city->name:Request::old('name') }}"/>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter City Name" value="{{ isset($city)? $city->name:Request::old('name') }}"/>
             <p class="text-danger">{{$errors->first('name')}}</p>
         </div>
     </div>
@@ -77,6 +77,7 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="button" class="form-control image_remove_btn" value="Remove Image" id="removeImage" name="removeImage">
+            <p class="text-danger">{{$errors->first('photo')}}</p>
         </div>
     </div>
     <br/>
@@ -226,7 +227,7 @@
                 messages: {
                     name                  : 'City Name is required',
                     country_id            : 'Country is required',
-                    photo                 : 'Image is required',
+                    photo                 : 'Photo is required',
                 },
                 submitHandler: function(form) {
                     $('input[type="submit"]').attr('disabled','disabled');

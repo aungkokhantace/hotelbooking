@@ -23,7 +23,8 @@ class CityEntryRequest extends Request
     {
         return [
             'country_id'         => 'required',
-            'name'               => 'required|string|unique:cities'
+            'name'               => 'required|string|unique:cities',
+            'photo'              => 'required'
         ];
     }
     public function messages()
@@ -31,8 +32,8 @@ class CityEntryRequest extends Request
         return [
             'country_id'         => 'Country is required',
             'name.required'      => 'City Name is required!',
-            'name.unique'        => 'City Name is already occupied!'
-
+            'name.unique'        => 'City Name is already occupied!',
+            'photo.required'     => 'Photo is required!'
         ];
     }
 }
