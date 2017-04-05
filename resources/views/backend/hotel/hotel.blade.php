@@ -150,6 +150,7 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="button" class="form-control image_remove_btn" value="Remove Image" id="removeImage" name="removeImage">
+            <p class="text-danger">{{$errors->first('photo')}}</p>
         </div>
     </div>
     <br/>
@@ -507,6 +508,7 @@
                     address                 : 'required',
                     h_type_id               : 'required',
                     phone                   : 'required',
+                    photo                   : 'required',
                     star                    : 'required',
                     email: {
                         required: true,
@@ -528,6 +530,7 @@
                     h_type_id               : 'Type is required',
                     address                 : 'Address is required',
                     phone                   : 'Phone is required',
+                    photo                   : 'Photo is required',
                     star                    : 'Star is required',
                     email: {
                         required:'Email is required',

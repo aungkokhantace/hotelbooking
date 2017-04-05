@@ -247,6 +247,7 @@
                         <ul class="sub-menu">
                             <li nav-id="modifier-create-modifier"><a href="/backend/hotel/create">Entry</a></li>
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel">List</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/recommend_hotel/create">Set Recommend Hotel</a></li>
                         </ul>
                     </li>
                     <li nav-id="modifier-create" class="has-sub">

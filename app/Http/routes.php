@@ -155,6 +155,9 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('hotel/edit/{id}', array('as'=>'backend/hotel/edit', 'uses'=>'Setup\Hotel\HotelController@edit'));
             Route::post('hotel/update', array('as'=>'backend/hotel/update', 'uses'=>'Setup\Hotel\HotelController@update'));
             Route::post('hotel/destroy', array('as'=>'backend/hotel/destroy', 'uses'=>'Setup\Hotel\HotelController@destroy'));
+            //Recommended Hotels
+            Route::get('recommend_hotel/create', array('as'=>'backend/recommend_hotel/create', 'uses'=>'Setup\Hotel\RecommendHotelController@create'));
+            Route::post('recommend_hotel/store', array('as'=>'backend/recommend_hotel/store', 'uses'=>'Setup\Hotel\RecommendHotelController@store'));
 
             //Hotel Room Type
             Route::get('hotel_room_type', array('as'=>'backend/hotel_room_type', 'uses'=>'Setup\HotelRoomType\HotelRoomTypeController@index'));
