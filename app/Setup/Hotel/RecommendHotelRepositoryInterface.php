@@ -13,4 +13,5 @@ interface RecommendHotelRepositoryInterface
 {
     public function create($paramObj);
     public function getOrderByHotelId($hotel_id);
+    public function getObjs();
 }

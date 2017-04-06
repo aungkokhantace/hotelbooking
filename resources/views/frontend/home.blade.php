@@ -94,19 +94,21 @@
     <section id="popular">
         <div class="container">
             <div class="row destination">
-                <h1>Popular Destination</h1>
+                <h1>Popular Destinations</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                     tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
             </div>
         </div>
 
         <div class="container">
-
+            {{--Start dynamic popular destination content--}}
+                {{--$counter is to create a row for every three elements--}}
                 <?php $counter = 0; ?>
-                {{--Start dynamic popular destination content--}}
                 <div class="row">
                 @foreach($popular_cities as $popular_city)
+                {{--If elements are up to 3, they will be in the same row--}}
                 @if($counter <3)
+                    {{--Plus 1 to counter for each element rendered--}}
                     <?php $counter++; ?>
                     <div class="col-md-4 img-portfolio">
                         <a href="portfolio-item.html">
@@ -118,9 +120,12 @@
                         </a>
                     </div>
                 @else
+                    {{--For the fourth element, reset the counter to 0 and close the current row--}}
                     </div>
                     <?php $counter = 0; ?>
+                    {{--And open another row--}}
                     <div class="row">
+                        {{--Plus 1 to counter for each element rendered--}}
                         <?php $counter++; ?>
                         <div class="col-md-4 img-portfolio">
                             <a href="portfolio-item.html">
@@ -133,9 +138,9 @@
                         </div>
                 @endif
                 @endforeach
-                {{--render close tag for row--}}
+                {{--render close tag for the last row--}}
                 </div>
-                {{--End dynamic popular destination content--}}
+            {{--End dynamic popular destination content--}}
 
             <div class="pagination">
                 <a href="#">1</a>
@@ -157,48 +162,45 @@
             </div>
         </div>
         <div class="container">
+            {{--Start dynamic recommended hotels content--}}
+            {{--$counter is to create a row for every three elements--}}
+            <?php $counter = 0; ?>
             <div class="row">
-                <div class="col-md-6 img-portfolio">
-                    <a href="portfolio-item.html">
-                        <img class="img-responsive img-hover" src="shared/images/Img-7.jpg" alt="">
-                        <div class="portfolio-caption2">
-                            <h5><strong>NayPyiTaw Hotel</strong><small> > NayPyiTaw</small></h5>
+                @foreach($recommended_hotels as $recommended_hotel)
+                    {{--If elements are up to 3, they will be in the same row--}}
+                    @if($counter <3)
+                        {{--Plus 1 to counter for each element rendered--}}
+                        <?php $counter++; ?>
+                        <div class="col-md-4 img-portfolio">
+                            <a href="portfolio-item.html">
+                                <img class="img-responsive img-hover" src="/images/upload/{{$recommended_hotel->logo}}" alt="">
+                                <div class="portfolio-caption2">
+                                    <h5><strong>{{$recommended_hotel->name}}</strong><small> > {{$recommended_hotel->city->name}}</small></h5>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
-                <div class="col-md-6 img-portfolio">
-                    <a href="portfolio-item.html">
-                        <img class="img-responsive img-hover" src="shared/images/Img-8.jpg" alt="">
-                        <div class="portfolio-caption2">
-                            <h5><strong>NayPyiTaw Hotel</strong><small> > NayPyiTaw</small></h5>
+                    @else
+                        {{--For the fourth element, reset the counter to 0 and close the current row--}}
+                    </div>
+                    <?php $counter = 0; ?>
+                    {{--And open another row--}}
+                    <div class="row">
+                        {{--Plus 1 to counter for each element rendered--}}
+                        <?php $counter++; ?>
+                        <div class="col-md-4 img-portfolio">
+                            <a href="portfolio-item.html">
+                                <img class="img-responsive img-hover" src="/images/upload/{{$recommended_hotel->logo}}" alt="">
+                                <div class="portfolio-caption2">
+                                    <h5><strong>{{$recommended_hotel->name}}</strong><small> > {{$recommended_hotel->city->name}}</small></h5>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
-                <div class="col-md-4 img-portfolio">
-                    <a href="portfolio-item.html">
-                        <img class="img-responsive img-hover" src="shared/images/Img-9.jpg" alt="">
-                        <div class="portfolio-caption2">
-                            <h5><strong>NayPyiTaw Hotel</strong><small> > NayPyiTaw</small></h5>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-4 img-portfolio">
-                    <a href="portfolio-item.html">
-                        <img class="img-responsive img-hover" src="shared/images/Img-10.jpg" alt="">
-                        <div class="portfolio-caption2">
-                            <h5><strong>NayPyiTaw Hotel</strong><small> > NayPyiTaw</small></h5>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-4 img-portfolio">
-                    <a href="portfolio-item.html">
-                        <img class="img-responsive img-hover" src="shared/images/Img-11.jpg" alt="">
-                        <div class="portfolio-caption2">
-                            <h5><strong>NayPyiTaw Hotel</strong><small> > NayPyiTaw</small></h5>
-                        </div>
-                    </a>
-                </div>
-            </div><!-- /.row -->
+                @endif
+                @endforeach
+                {{--render close tag for the last row--}}
+            </div>
+            {{--End dynamic recommended hotels content--}}
+
             <a href="#" class="link">more >> </a>
         </div><!-- /.container -->
     </section><!-- /.section -->
@@ -206,54 +208,110 @@
     <section>
         <div class="container">
             <div class="row destination">
-                <h1>Promotion for this month</h1>
+                <h1>Promotions for this month</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                     tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
             </div>
         </div>
         <div class="container">
-            <!-- Projects Row -->
+            {{--Start dynamic promotion hotels content--}}
+            {{--$counter is to create a row for every three elements--}}
+            <?php $counter = 0; ?>
             <div class="row">
-                <div class="col-sm-4">
-                    <div class="thumbnail">
-                        <img class="img-responsive" src="shared/images/Img-12.jpg" alt="">
-                        <div class="caption">
-                            <h5>Paradise Bay Resort<samp>25%</samp><br>
-                                <small>Yangon, Myanmar</small><br>
-                                <small><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span><i class="fa fa-wifi" aria-hidden="true"></i><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></small>
-                            </h5>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste saepe et quisquam nesciunt maxime.</p>
-                            <a href="#" class="caption_link">.......</a>
+                @foreach($percent_promotions as $percent_promotion)
+                    {{--If elements are up to 3, they will be in the same row--}}
+                    @if($counter <3)
+                        {{--Plus 1 to counter for each element rendered--}}
+                        <?php $counter++; ?>
+                        <div class="col-sm-4">
+                            <div class="thumbnail">
+                                <img class="img-responsive" src="/images/upload/{{$percent_promotion->logo}}" alt="">
+                                <div class="caption">
+                                    <h5>{{$percent_promotion->name}}<samp>{{$percent_promotion->discount_percent}}%</samp><br>
+                                        <small>{{$percent_promotion->city->name}}, {{$percent_promotion->country->name}}</small><br>
+                                        <small><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span><i class="fa fa-wifi" aria-hidden="true"></i><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></small>
+                                    </h5>
+                                    <p>{{$percent_promotion->address}}</p>
+                                    <a href="#" class="caption_link">.......</a>
+                                </div>
+                            </div>
                         </div>
+                    @else
+                    {{--For the fourth element, reset the counter to 0 and close the current row--}}
                     </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="thumbnail">
-                        <img class="img-responsive" src="shared/images/Img-13.jpg" alt="">
-                        <div class="caption">
-                            <h5>Paradise Bay Resort<samp>15%</samp><br>
-                                <small>Yangon, Myanmar</small><br>
-                                <small><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span><i class="fa fa-wifi" aria-hidden="true"></i><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></small>
-                            </h5>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste saepe et quisquam nesciunt maxime.</p>
-                            <a href="#" class="caption_link">.......</a>
+                    <?php $counter = 0; ?>
+                    {{--And open another row--}}
+                    <div class="row">
+                        {{--Plus 1 to counter for each element rendered--}}
+                        <?php $counter++; ?>
+                        <div class="col-sm-4">
+                            <div class="thumbnail">
+                                <img class="img-responsive" src="/images/upload/{{$percent_promotion->logo}}" alt="">
+                                <div class="caption">
+                                    <h5>{{$percent_promotion->name}}<samp>{{$percent_promotion->discount_percent}}%</samp><br>
+                                        <small>{{$percent_promotion->city->name}}, {{$percent_promotion->country->name}}</small><br>
+                                        <small><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span><i class="fa fa-wifi" aria-hidden="true"></i><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></small>
+                                    </h5>
+                                    <p>{{$percent_promotion->address}}</p>
+                                    <a href="#" class="caption_link">.......</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="thumbnail">
-                        <img class="img-responsive" src="shared/images/Img-14.jpg" alt="">
-                        <div class="caption">
-                            <h5>Paradise Bay Resort<samp>10%</samp><br>
-                                <small>Yangon, Myanmar</small><br>
-                                <small><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"><i class="fa fa-wifi" aria-hidden="true"></i></span><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></small>
-                            </h5>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste saepe et quisquam nesciunt maxime.</p>
-                            <a href="#" class="caption_link">.......</a>
+                @endif
+                @endforeach
+                {{--render close tag for the last row--}}
+            {{--</div>--}}
+            {{--End dynamic promotion hotels content--}}
+
+            {{--Start dynamic promotion hotels content--}}
+            {{--$counter is to create a row for every three elements--}}
+            <?php //$counter = 0; ?>
+            {{--<div class="row">--}}
+                @foreach($amount_promotions as $amount_promotion)
+                    {{--If elements are up to 3, they will be in the same row--}}
+                    @if($counter <3)
+                        {{--Plus 1 to counter for each element rendered--}}
+                        <?php $counter++; ?>
+                        <div class="col-sm-4">
+                            <div class="thumbnail">
+                                <img class="img-responsive" src="/images/upload/{{$amount_promotion->logo}}" alt="">
+                                <div class="caption">
+                                    <h5>{{$amount_promotion->name}}<samp class="amount_promotion">{{$amount_promotion->discount_amount}}</samp><br>
+                                        <small>{{$amount_promotion->city->name}}, {{$amount_promotion->country->name}}</small><br>
+                                        <small><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span><i class="fa fa-wifi" aria-hidden="true"></i><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></small>
+                                    </h5>
+                                    <p>{{$amount_promotion->address}}</p>
+                                    <a href="#" class="caption_link">.......</a>
+                                </div>
+                            </div>
                         </div>
+                    @else
+                        {{--For the fourth element, reset the counter to 0 and close the current row--}}
                     </div>
-                </div>
-            </div><!-- /.row -->
+                    <?php $counter = 0; ?>
+                    {{--And open another row--}}
+                    <div class="row">
+                        {{--Plus 1 to counter for each element rendered--}}
+                        <?php $counter++; ?>
+                        <div class="col-sm-4">
+                            <div class="thumbnail">
+                                <img class="img-responsive" src="/images/upload/{{$amount_promotion->logo}}" alt="">
+                                <div class="caption">
+                                    <h5>{{$amount_promotion->name}}<samp class="amount_promotion">{{$amount_promotion->discount_amount}}</samp><br>
+                                        <small>{{$amount_promotion->city->name}}, {{$amount_promotion->country->name}}</small><br>
+                                        <small><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span><i class="fa fa-wifi" aria-hidden="true"></i><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></small>
+                                    </h5>
+                                    <p>{{$amount_promotion->address}}</p>
+                                    <a href="#" class="caption_link">.......</a>
+                                </div>
+                            </div>
+                        </div>
+                @endif
+                @endforeach
+                {{--render close tag for the last row--}}
+            </div>
+            {{--End dynamic promotion hotels content--}}
+
         </div><!-- /.container -->
     </section><!-- /.section -->
 

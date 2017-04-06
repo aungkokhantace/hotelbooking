@@ -14,4 +14,6 @@ interface RoomDiscountRepositoryInterface
     public function create($paramObj);
     public function update($paramObj);
     public function delete($paramObj);
+    public function getDiscountPercentByUniqueHotel();
+    public function getDiscountAmountByUniqueHotel($percentHotelIDs);
 }

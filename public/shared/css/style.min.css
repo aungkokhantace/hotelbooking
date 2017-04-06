@@ -611,3 +611,7 @@ label.control-label {
     float: right;
     padding: 13px 15px;
 }
+
+.amount_promotion{
+    width:30% !important;
+}

@@ -15,6 +15,8 @@ use App\Http\Requests;
 use App\Setup\City\CityRepository;
 use App\Setup\City\PopularCityRepository;
 use App\Setup\Hotel\HotelRepository;
+use App\Setup\Hotel\RecommendHotelRepository;
+use App\Setup\RoomDiscount\RoomDiscountRepository;
 use Illuminate\Http\Request;
 use Redirect;
 
@@ -27,10 +29,9 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-        $popularCityArray = array();
-
-        $cityRepo    = new CityRepository();
-
+        //start popular cities
+        $popularCityArray   = array();
+        $cityRepo           = new CityRepository();
         $popularCityRepo    = new PopularCityRepository();
         $popular_cities     = $popularCityRepo->getObjs();
         foreach($popular_cities as $popular_city){
@@ -39,10 +40,62 @@ class HomeController extends Controller
             //add city obj to city array
             array_push($popularCityArray, $cityObj);
         }
+        //end popular cities
 
-        $recommendHotelRepo = new HotelRepository();
-        $recommend_hotels   = $recommendHotelRepo->getObjs();
-        return view('frontend.home')->with('popular_cities',$popularCityArray)->with('recommend_hotels',$recommend_hotels);
+        //start recommended hotels
+        $recommendedHotelArray  = array();
+        $hotelRepo              = new HotelRepository();
+        $recommendHotelRepo     = new RecommendHotelRepository();
+        $recommend_hotels       = $recommendHotelRepo->getObjs();
+        foreach($recommend_hotels as $recommend_hotel){
+            $hotelObj = $hotelRepo->getObjByID($recommend_hotel->hotel_id);
+            $hotelObj->order = $recommend_hotel->order; //bind order to hotel obj
+            //add hotel obj to hotel array
+            array_push($recommendedHotelArray, $hotelObj);
+        }
+        //end recommended hotels
+
+    //start hotel promotions
+        //start percentage promotions
+        $percentPromotionArray = array();
+        $promotionRepo  = new RoomDiscountRepository();
+        $percent_promotions     = $promotionRepo->getDiscountPercentByUniqueHotel();
+
+        foreach($percent_promotions as $percent_promotion){
+            $percentPromotionHotelObj = $hotelRepo->getObjByID($percent_promotion->hotel_id);
+            //bind discount percent to $promotionHotelObj
+            $percentPromotionHotelObj->discount_percent = $percent_promotion->discount_percent;
+
+            array_push($percentPromotionArray, $percentPromotionHotelObj);
+        }
+        //end percentage promotions
+
+        //for assurance that hotel_ids that are already taken in percent_promotion not to be included in amount_promotion again
+        $percentHotelIDs = array();
+        foreach($percentPromotionArray as $percentPromo){
+            array_push($percentHotelIDs,$percentPromo->id);
+        }
+        //for assurance that hotel_ids that are already taken in percent_promotion not to be included in amount_promotion again
+
+        //start amount promotions
+        $amountPromotionArray = array();
+        $amount_promotions     = $promotionRepo->getDiscountAmountByUniqueHotel($percentHotelIDs);
+
+        foreach($amount_promotions as $amount_promotion){
+            $amountPromotionHotelObj = $hotelRepo->getObjByID($amount_promotion->hotel_id);
+            //bind discount percent to $promotionHotelObj
+            $amountPromotionHotelObj->discount_amount = $amount_promotion->discount_amount;
+
+            array_push($amountPromotionArray, $amountPromotionHotelObj);
+        }
+        //end amount promotions
+    //end hotel promotions
+
+        return view('frontend.home')
+            ->with('popular_cities',$popularCityArray)
+            ->with('recommended_hotels',$recommendedHotelArray)
+            ->with('percent_promotions',$percentPromotionArray)
+            ->with('amount_promotions',$amountPromotionArray);
     }
 
     public function test(){

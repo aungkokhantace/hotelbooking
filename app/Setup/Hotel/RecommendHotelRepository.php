@@ -70,4 +70,10 @@ class RecommendHotelRepository implements RecommendHotelRepositoryInterface
         $result = DB::table('recommend_hotels')->where('hotel_id','=',$hotel_id)->first();
         return $result;
     }
+
+    public function getObjs()
+    {
+        $objs = DB::table('recommend_hotels')->orderBy('order','asc')->get();
+        return $objs;
+    }
 }

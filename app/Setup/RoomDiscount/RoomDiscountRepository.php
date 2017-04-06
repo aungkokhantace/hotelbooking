@@ -3,6 +3,7 @@ namespace App\Setup\RoomDiscount;
 use App\Core\ReturnMessage;
 use App\Core\Utility;
 use App\Log\LogCustom;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -114,5 +115,40 @@ class RoomDiscountRepository implements RoomDiscountRepositoryInterface
             $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' deleted  room_category_facility_id = ' .$tempObj->id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
         }
+    }
+
+    public function getDiscountPercentByUniqueHotel()
+    {
+        //get current date to check between from_date and to_date
+        $today = Carbon::today()->toDateString();
+        $objs = DB::table('room_discount')
+            ->select(DB::raw('hotel_id, max(discount_percent) as discount_percent'))
+            ->whereNull('deleted_at')
+            ->where('from_date','<=', $today)
+            ->where('to_date','>=', $today)
+            ->where('type','=','%')
+            ->where('discount_percent','!=',0)
+            ->groupBy('hotel_id')
+            ->orderBy('discount_percent','desc')
+            ->get();
+        return $objs;
+    }
+
+    public function getDiscountAmountByUniqueHotel($percentHotelIDs)
+    {
+        //get current date to check between from_date and to_date
+        $today = Carbon::today()->toDateString();
+        $objs = DB::table('room_discount')
+            ->select(DB::raw('hotel_id, max(discount_amount) as discount_amount'))
+            ->whereNull('deleted_at')
+            ->where('from_date','<=', $today)
+            ->where('to_date','>=', $today)
+            ->where('type','=','amount')
+            ->where('discount_amount','!=',0.00)
+            ->whereNotIn('hotel_id', $percentHotelIDs) //for assurance that selected hotels are not already included in percentage_promotion
+            ->groupBy('hotel_id')
+            ->orderBy('discount_amount','desc')
+            ->get();
+        return $objs;
     }
 }

@@ -149,7 +149,7 @@ class RoomDiscountController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\RoomDiscount\RoomDiscountController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Room Discountupdated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Room Discount updated ...'));
         }
         else{
             return redirect()->action('Setup\RoomDiscount\RoomDiscountController@index')
