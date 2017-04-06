@@ -49,9 +49,7 @@
         padding: 5px;
         border: 1px solid rgb(232, 222, 189);
     }
-    b{
-        color:red;
-    }
+
 </style>
         <!-- begin #content -->
 <div id="content" class="content">
@@ -357,26 +355,39 @@
                     id: 'file'
                 }), $("<br/>")));
             });
-// Following function will executes on change event of file input to select different file.
+            // Following function will executes on change event of file input to select different file.
             $('body').on('change', '#file', function() {
                 if (this.files && this.files[0]) {
-                    count += 1; // Incrementing global variable by 1.
-                    var z = count - 1;
-                    var x = $(this).parent().find('#previewimg' + z).remove();
-                    $(this).before("<div id='abcd" + count + "' class='abcd'><img id='previewimg" + count + "' src=''/></div>");
-                    var reader = new FileReader();
-                    reader.onload = imageIsLoaded;
-                    reader.readAsDataURL(this.files[0]);
-                    $(this).hide(); //Hide chose file button
-                    //Remove Button
-                    $("#abcd" + count).append($("<input/>", {
-                        type: 'button',
-                        id: 'remove',
-                        value: 'Remove',
-                        class: 'btn btn-default'
-                    }).click(function() {
-                        $(this).parent().parent().remove();
-                    }));
+                    //Start File type validation
+                    var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+                    if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                        alert("Only '.jpeg','.jpg', '.png', '.gif', '.bmp' formats are allowed.");
+                        $(this).next().remove();
+                        $(this).parent().append("<p class='error'>Only '.jpeg','.jpg', '.png', '.gif', '.bmp' formats are allowed.</p><br>");
+                        $('input[type="submit"]').attr('disabled','disabled');
+                    }
+                    //End File type validation
+                    else{
+                        count += 1; // Incrementing global variable by 1.
+                        var z = count - 1;
+                        var x = $(this).parent().find('#previewimg' + z).remove();
+                        $(this).before("<div id='abcd" + count + "' class='abcd'><img id='previewimg" + count + "' src=''/></div>");
+                        var reader = new FileReader();
+                        reader.onload = imageIsLoaded;
+                        reader.readAsDataURL(this.files[0]);
+                        $(this).hide(); //Hide choose file button
+                        //Remove Button
+                        $("#abcd" + count).append($("<input/>", {
+                            type: 'button',
+                            id: 'remove',
+                            value: 'Remove',
+                            class: 'btn btn-default'
+                        }).click(function() {
+                            $(this).parent().parent().remove();
+                        }));
+                        $(this).next().remove();
+                        $("input[type=submit]").removeAttr('disabled');
+                    }
                 }
             });
 // To Preview Image
