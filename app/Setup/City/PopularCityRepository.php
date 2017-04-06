@@ -70,4 +70,10 @@ class PopularCityRepository implements PopularCityRepositoryInterface
         $result = DB::table('popular_cities')->where('city_id','=',$city_id)->first();
         return $result;
     }
+
+    public function getObjs()
+    {
+        $objs = DB::table('popular_cities')->orderBy('order','asc')->get();
+        return $objs;
+    }
 }

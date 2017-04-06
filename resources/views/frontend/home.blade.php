@@ -99,63 +99,44 @@
                     tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
             </div>
         </div>
+
         <div class="container">
-            <div class="row">
-                <div class="col-md-4 img-portfolio">
-                    <a href="portfolio-item.html">
-                        <img class="img-responsive img-hover" src="shared/images/Img-1.jpg" alt="">
-                        <div class="portfolio-caption">
-                            <h4>HOT</h4>
-                            <h3><strong>Yangon</strong><small>,Myanmar</small></h3>
+
+                <?php $counter = 0; ?>
+                {{--Start dynamic popular destination content--}}
+                <div class="row">
+                @foreach($popular_cities as $popular_city)
+                @if($counter <3)
+                    <?php $counter++; ?>
+                    <div class="col-md-4 img-portfolio">
+                        <a href="portfolio-item.html">
+                            <img class="img-responsive img-hover" src="/images/upload/{{$popular_city->image}}" alt="">
+                            <div class="portfolio-caption">
+                                {{--<h4>HOT</h4>--}}
+                                <h3><strong>{{$popular_city->name}}</strong><small>, {{$popular_city->country->name}}</small></h3>
+                            </div>
+                        </a>
+                    </div>
+                @else
+                    </div>
+                    <?php $counter = 0; ?>
+                    <div class="row">
+                        <?php $counter++; ?>
+                        <div class="col-md-4 img-portfolio">
+                            <a href="portfolio-item.html">
+                                <img class="img-responsive img-hover" src="/images/upload/{{$popular_city->image}}" alt="">
+                                <div class="portfolio-caption">
+                                    {{--<h4>HOT</h4>--}}
+                                    <h3><strong>{{$popular_city->name}}</strong><small>, {{$popular_city->country->name}}</small></h3>
+                                </div>
+                            </a>
                         </div>
-                    </a>
+                @endif
+                @endforeach
+                {{--render close tag for row--}}
                 </div>
-                <div class="col-md-4 img-portfolio">
-                    <a href="portfolio-item.html">
-                        <img class="img-responsive img-hover" src="shared/images/Img-2.jpg" alt="">
-                        <div class="portfolio-caption">
-                            <!-- <h4>HOT</h4> -->
-                            <h3><strong>Yangon</strong><small>,Myanmar</small></h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-4 img-portfolio">
-                    <a href="portfolio-item.html">
-                        <img class="img-responsive img-hover" src="shared/images/Img-3.jpg" alt="">
-                        <div class="portfolio-caption">
-                            <!-- <h4>HOT</h4> -->
-                            <h3><strong>Yangon</strong><small>,Myanmar</small></h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-4 img-portfolio">
-                    <a href="portfolio-item.html">
-                        <img class="img-responsive img-hover" src="shared/images/Img-4.jpg" alt="">
-                        <div class="portfolio-caption">
-                            <!-- <h4>HOT</h4> -->
-                            <h3><strong>Yangon</strong><small>,Myanmar</small></h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-4 img-portfolio">
-                    <a href="portfolio-item.html">
-                        <img class="img-responsive img-hover" src="shared/images/Img-5.jpg" alt="">
-                        <div class="portfolio-caption">
-                            <!-- <h4>HOT</h4> -->
-                            <h3><strong>Yangon</strong><small>,Myanmar</small></h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-4 img-portfolio">
-                    <a href="portfolio-item.html">
-                        <img class="img-responsive img-hover" src="shared/images/Img-6.jpg" alt="">
-                        <div class="portfolio-caption">
-                            <h4>HOT</h4>
-                            <h3><strong>Yangon</strong><small>,Myanmar</small></h3>
-                        </div>
-                    </a>
-                </div>
-            </div>
+                {{--End dynamic popular destination content--}}
+
             <div class="pagination">
                 <a href="#">1</a>
                 <a class="active" href="#">2</a>
@@ -165,11 +146,12 @@
                 <a href="#">6</a>
             </div>
         </div>
+
     </section>
     <section>
         <div class="container">
             <div class="row destination">
-                <h1>Remonmended Hotels</h1>
+                <h1>Recommended Hotels</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                     tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
             </div>

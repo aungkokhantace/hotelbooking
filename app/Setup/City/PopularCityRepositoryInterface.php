@@ -13,4 +13,5 @@ interface PopularCityRepositoryInterface
 {
     public function create($paramObj);
     public function getOrderByCityId($city_id);
+    public function getObjs();
 }
