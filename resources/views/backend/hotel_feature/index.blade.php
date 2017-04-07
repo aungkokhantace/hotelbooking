@@ -40,6 +40,10 @@
                         <th><input type='checkbox' name='check' id='check_all'/></th>
                         <th>Hotel</th>
                         <th>Feature</th>
+                        <th>Quantity</th>
+                        <th>Capacity</th>
+                        <th>Open Hour</th>
+                        <th>Close Hour</th>
                     </tr>
                     </thead>
                     <tfoot>
@@ -47,7 +51,10 @@
                         <th></th>
                         <th class="search-col" con-id="hotel">Hotel</th>
                         <th class="search-col" con-id="name">Feature</th>
-
+                        <th class="search-col" con-id="quantity">Quantity</th>
+                        <th class="search-col" con-id="capacity">Capacity</th>
+                        <th class="search-col" con-id="open_hour">Open Hour</th>
+                        <th class="search-col" con-id="close_hour">Close Hour</th>
                     </tr>
                     </tfoot>
                     <tbody>
@@ -56,6 +63,11 @@
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $h_feature->id }}" id="all"></td>
                             <td>{{$h_feature->hotel->name}}</td>
                             <td><a href="/backend/hotel_feature/edit/{{$h_feature->id}}">{{$h_feature->feature->name}}</a></td>
+                            <td>{{$h_feature->qty}}</td>
+                            <td>{{$h_feature->capacity}}</td>
+                            <td>{{$h_feature->open_hour}}</td>
+                            <td>{{$h_feature->close_hour}}</td>
+
                         </tr>
                     @endforeach
                     </tbody>

@@ -8,6 +8,8 @@ use App\Core\FormatGenerator;
 use App\Core\ReturnMessage;
 use App\Setup\Facilities\Facilities;
 use App\Setup\Facilities\FacilitiesRepository;
+use App\Setup\FacilityGroup\FacilityGroup;
+use App\Setup\FacilityGroup\FacilityGroupRepository;
 use App\Setup\Hotel\HotelRepository;
 use App\Setup\HotelRoomCategory\HotelRoomCategoryRepository;
 use App\Setup\HotelRoomType\HotelRoomTypeRepository;
@@ -44,9 +46,13 @@ class RoomCategoryFacilityController extends Controller
             $hotelRepo          = new HotelRepository();
             $hotels             = $hotelRepo->getObjs();
             $facilityRepo       = new FacilitiesRepository();
-            $facilities         = $facilityRepo->getObjs();
+            $facilities         = $facilityRepo->getObjsForRoom();
+            $facility_groupRepo = new FacilityGroupRepository();
+            $facility_group     = $facility_groupRepo->getObjs();
+
             return view('backend.room_category_facilities.room_category_facility')->with('hotels',$hotels)
-                                                                                  ->with('facilities',$facilities);
+                                                                                  ->with('facilities',$facilities)
+                                                                                  ->with('facility_group',$facility_group);
         }
         return redirect('/');
     }
@@ -54,12 +60,13 @@ class RoomCategoryFacilityController extends Controller
     public function store(RoomCategoryFacilityEntryRequest $request)
     {
         $request->validate();
-        $facility_id        = Input::get('facility');
-        $hotel_id           = Input::get('hotel_id');
-        $h_room_type_id     = Input::get('h_room_type_id');
-        $h_room_category_id = Input::get('h_room_category_id');
-        $value              = Input::get('value');
-        $description        = Input::get('description');
+        $facility_id                    = Input::get('facility');
+        $hotel_id                       = Input::get('hotel_id');
+        $h_room_type_id                 = Input::get('h_room_type_id');
+        $h_room_category_id             = Input::get('h_room_category_id');
+        $value                          = Input::get('value');
+        $description                    = Input::get('description');
+        $facility_group_id              = Input::get('facility_group');
 
         $paramObj                       = new RoomCategoryFacility();
         $paramObj->facility_id          = $facility_id;
@@ -68,6 +75,7 @@ class RoomCategoryFacilityController extends Controller
         $paramObj->h_room_type_id       = $h_room_type_id;
         $paramObj->h_room_category_id   = $h_room_category_id;
         $paramObj->description          = $description;
+        $paramObj->facility_group_id    = $facility_group_id;
 
         $result = $this->repo->create($paramObj);
 
@@ -94,12 +102,17 @@ class RoomCategoryFacilityController extends Controller
             $hotelRoomCategoryRepo  = new HotelRoomCategoryRepository();
             $hotel_room_category    = $hotelRoomCategoryRepo->getHotelRoomCategoryWithRoomTypeId($h_room_type_id);
             $facilityRepo           = new FacilitiesRepository();
-            $facilities             = $facilityRepo->getObjs();
-            return view('backend.room_category_facilities.room_category_facility')->with('r_category_facility', $r_category_facility)
+            $facilities             = $facilityRepo->getObjsForRoom();
+            $facility_groupRepo     = new FacilityGroupRepository();
+            $facility_group         = $facility_groupRepo->getObjs();
+
+            return view('backend.room_category_facilities.room_category_facility')
+                ->with('r_category_facility', $r_category_facility)
                 ->with('hotels',$hotels)
                 ->with('facilities',$facilities)
                 ->with('hotel_room_type',$hotel_room_type)
-                ->with('hotel_room_category',$hotel_room_category);
+                ->with('hotel_room_category',$hotel_room_category)
+                ->with('facility_group',$facility_group);
         }
         return redirect('/backend/login');
     }
@@ -107,13 +120,14 @@ class RoomCategoryFacilityController extends Controller
     public function update(RoomCategoryFacilityEditRequest $request){
 
         $request->validate();
-        $id                 = Input::get('id');
-        $facility_id        = Input::get('facility');
-        $hotel_id           = Input::get('hotel_id');
-        $h_room_type_id     = Input::get('h_room_type_id');
-        $h_room_category_id = Input::get('h_room_category_id');
-        $value              = Input::get('value');
-        $description        = Input::get('description');
+        $id                             = Input::get('id');
+        $facility_id                    = Input::get('facility');
+        $hotel_id                       = Input::get('hotel_id');
+        $h_room_type_id                 = Input::get('h_room_type_id');
+        $h_room_category_id             = Input::get('h_room_category_id');
+        $value                          = Input::get('value');
+        $description                    = Input::get('description');
+        $facility_group_id              = Input::get('facility_group');
 
         $paramObj                       = $this->repo->getObjByID($id);
         $paramObj->facility_id          = $facility_id;
@@ -122,6 +136,7 @@ class RoomCategoryFacilityController extends Controller
         $paramObj->h_room_type_id       = $h_room_type_id;
         $paramObj->h_room_category_id   = $h_room_category_id;
         $paramObj->description          = $description;
+        $paramObj->facility_group_id    = $facility_group_id;
 
         $result = $this->repo->update($paramObj);
 

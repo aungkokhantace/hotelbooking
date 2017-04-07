@@ -17,4 +17,6 @@ interface FacilitiesRepositoryInterface
     public function getObjByID($id);
     public function delete($id);
     public function getArrays();
+    public function getObjsForHotel();
+    public function getObjsForRoom();
 }

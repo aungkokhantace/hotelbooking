@@ -44,7 +44,7 @@ class HotelFacilityController extends Controller
             $facilityGroupRepo  = new FacilityGroupRepository();
             $facility_group     = $facilityGroupRepo->getObjs();
             $facilityRepo       = new FacilitiesRepository();
-            $facilities         = $facilityRepo->getObjs();
+            $facilities         = $facilityRepo->getObjsForHotel();
             return view('backend.hotel_facility.hotel_facility')->with('hotels',$hotels)
                                                                 ->with('facility_group',$facility_group)
                                                                 ->with('facilities',$facilities);

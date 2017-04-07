@@ -16,6 +16,12 @@ class CreateHFeatureTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('hotel_id');
             $table->unsignedInteger('feature_id');
+            $table->integer('qty');
+            $table->integer('capacity');
+            $table->string('area');
+            $table->string('open_hour');
+            $table->string('close_hour');
+            $table->text('remark');
             //-------common to all tables--------
             $table->integer('created_by')->default(1);
             $table->integer('updated_by')->default(1);

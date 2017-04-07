@@ -13,6 +13,7 @@ class CreateFacilitiesTables extends Migration
             $table->string('name');
             $table->string('icon');
             $table->text('description')->nullable();
+            $table->integer('type');
 
             $table->integer('created_by')->default(1);
             $table->integer('updated_by')->default(1);

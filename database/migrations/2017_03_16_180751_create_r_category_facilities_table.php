@@ -20,6 +20,7 @@ class CreateRCategoryFacilitiesTable extends Migration
             $table->unsignedInteger('h_room_type_id');
             $table->string('value');
             $table->string('description');
+            $table->unsignedInteger('facility_group_id');
             //-------common to all tables--------
             $table->integer('created_by')->default(1);
             $table->integer('updated_by')->default(1);
@@ -41,6 +42,10 @@ class CreateRCategoryFacilitiesTable extends Migration
 
             $table->foreign('facility_id')
                 ->references('id')->on('facilities')
+                ->onDelete('restrict');
+
+            $table->foreign('facility_group_id')
+                ->references('id')->on('facility_group')
                 ->onDelete('restrict');
         });
     }

@@ -47,12 +47,13 @@ class FacilitiesController extends Controller
     public function store(FacilitiesEntryRequest $request)
     {
         $request->validate();
-        $name    = Input::get('name');
-        $description    = Input::get('description');
+        $name            = Input::get('name');
+        $description     = Input::get('description');
+        $type            = Input::get('type');
 
         //Start Saving Image
-        $removeImageFlag          = (Input::has('removeImageFlag')) ? Input::get('removeImageFlag') : 0;
-        $path         = base_path().'/public/images/upload/';
+        $removeImageFlag = (Input::has('removeImageFlag')) ? Input::get('removeImageFlag') : 0;
+        $path            = base_path().'/public/images/upload/';
 
         if(Input::hasFile('photo'))
         {
@@ -72,10 +73,11 @@ class FacilitiesController extends Controller
         }
         //End Saving Image
 
-        $paramObj = new Facilities();
-        $paramObj->name = $name;
-        $paramObj->description = $description;
-        $paramObj->icon = $photo_name;
+        $paramObj               = new Facilities();
+        $paramObj->name         = $name;
+        $paramObj->description  = $description;
+        $paramObj->icon         = $photo_name;
+        $paramObj->type         = $type;
 
         $result = $this->repo->create($paramObj);
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
@@ -106,6 +108,7 @@ class FacilitiesController extends Controller
         $id                         = Input::get('id');
         $name                       = Input::get('name');
         $description                = Input::get('description');
+        $type                       = Input::get('type');
 
         $removeImageFlag          = (Input::has('removeImageFlag')) ? Input::get('removeImageFlag') : 0;
         $path         = base_path().'/public/images/upload/';
@@ -125,9 +128,10 @@ class FacilitiesController extends Controller
 
             $result = $this->repo->update($paramObj);
         }else{
-            $paramObj = Facilities::find($id);
-            $paramObj->name = $name;
-            $paramObj->description = $description;
+            $paramObj               = Facilities::find($id);
+            $paramObj->name         = $name;
+            $paramObj->description  = $description;
+            $paramObj->type         = $type;
 
             //without this condition, when image is removed in update, it won't be removed in DB
             if($removeImageFlag == 1){

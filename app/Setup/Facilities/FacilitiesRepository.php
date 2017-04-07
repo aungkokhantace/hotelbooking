@@ -117,4 +117,16 @@ class FacilitiesRepository implements FacilitiesRepositoryInterface
         $role = Facilities::find($id);
         return $role;
     }
+
+    public function getObjsForHotel(){
+        $objs   = Facilities::where('type','=',1)->get();
+        return $objs;
+    }
+
+    public function getObjsForRoom(){
+        $objs   = Facilities::where('type','=',2)->get();
+        return $objs;
+    }
+
+
 }

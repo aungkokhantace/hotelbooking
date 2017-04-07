@@ -18,7 +18,7 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="room_view_id">Facility <span class="require">*</span></label>
+            <label for="facility">Facility <span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="facility" id="facility">
@@ -38,6 +38,31 @@
                 @endif
             </select>
             <p class="text-danger">{{$errors->first('facility')}}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="facility_group">Facility Group<span class="require">*</span></label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <select class="form-control" name="facility_group" id="facility_group">
+                @if(isset($r_category_facility))
+                    @foreach($facility_group as $group)
+                        @if($group->id == $group->facility_group_id)
+                            <option value="{{$group->id}}" selected>{{$group->name}}</option>
+                        @else
+                            <option value="{{$group->id}}">{{$group->name}}</option>
+                        @endif
+                    @endforeach
+                @else
+                    <option value="" disabled selected>Select Facility Group</option>
+                    @foreach($facility_group as $group)
+                        <option value="{{$group->id}}">{{$group->name}}</option>
+                    @endforeach
+                @endif
+            </select>
+            <p class="text-danger">{{$errors->first('facility_group')}}
         </div>
     </div>
 
