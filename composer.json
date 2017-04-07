@@ -11,7 +11,8 @@
         "laravelcollective/html": "~5.2",
         "uxweb/sweet-alert": "~1.1",
         "maatwebsite/excel": "~2.1.0",
-        "intervention/image": "dev-master"
+        "intervention/image": "dev-master",
+        "doctrine/dbal": "v2.4.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

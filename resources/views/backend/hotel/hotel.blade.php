@@ -161,8 +161,56 @@
             <label for="star">Star<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <input type="text" class="form-control" id="star" name="star"
-                   placeholder="Enter Hotel Star" value="{{ isset($hotel)? $hotel->star:Request::old('star') }}"/>
+            {{--<input type="text" class="form-control" id="star" name="star"--}}
+                   {{--placeholder="Enter Hotel Star" value="{{ isset($hotel)? $hotel->star:Request::old('star') }}"/>--}}
+            <select class="form-control" name="star" id="star">
+                @if(isset($hotel))
+                    @if($hotel->star == 1)
+                        <option value="1" selected>1</option>
+                    @else
+                        <option value="1">1</option>
+                    @endif
+                    @if($hotel->star == 2)
+                        <option value="2" selected>2</option>
+                    @else
+                        <option value="2">2</option>
+                    @endif
+                    @if($hotel->star == 3)
+                        <option value="3" selected>3</option>
+                    @else
+                        <option value="3">3</option>
+                    @endif
+                    @if($hotel->star == 4)
+                        <option value="4" selected>4</option>
+                    @else
+                        <option value="4">4</option>
+                    @endif
+                    @if($hotel->star == 5)
+                        <option value="5" selected>5</option>
+                    @else
+                        <option value="5">5</option>
+                    @endif
+                    @if($hotel->star == 6)
+                        <option value="6" selected>6</option>
+                    @else
+                        <option value="6">6</option>
+                    @endif
+                    @if($hotel->star == 7)
+                        <option value="7" selected>7</option>
+                    @else
+                        <option value="7">7</option>
+                    @endif
+                @else
+                    <option value="" disabled selected>Select Star</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                @endif
+            </select>
             <p class="text-danger">{{$errors->first('star')}}</p>
         </div>
     </div>
