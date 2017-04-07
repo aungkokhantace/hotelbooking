@@ -1,0 +1,22 @@
+.amount_promotion{
+    width:30% !important;
+}
+
+.pagination > li > a,
+.pagination > li > span {
+    color: #D63090; // use your own color here
+}
+
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
+    background-color: #D63090;
+    border-color: #D63090;
+}
+
+.pagination {
+    margin: 20px 15px auto;
+}
