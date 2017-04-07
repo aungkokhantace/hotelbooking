@@ -53,12 +53,24 @@ class HotelFeatureController extends Controller
         $request->validate();
         $hotel_id           = Input::get('hotel_id');
         $feature_id         = Input::get('feature_id');
+        $qty                = Input::get('qty');
+        $capacity           = Input::get('capacity');
+        $area               = Input::get('area');
+        $open_hour          = Input::get('open_hour');
+        $close_hour         = Input::get('close_hour');
+        $remark             = Input::get('remark');
 
         $paramObj               = new HotelFeature();
         $paramObj->hotel_id     = $hotel_id;
         $paramObj->feature_id   = $feature_id;
+        $paramObj->qty          = $qty;
+        $paramObj->capacity     = $capacity;
+        $paramObj->area         = $area;
+        $paramObj->open_hour    = $open_hour;
+        $paramObj->close_hour   = $close_hour;
+        $paramObj->remark       = $remark;
 
-        $result = $this->repo->create($paramObj);
+        $result                 = $this->repo->create($paramObj);
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelFeature\HotelFeatureController@index')
@@ -88,13 +100,25 @@ class HotelFeatureController extends Controller
     public function update(HotelFeatureEditRequest $request){
 
         $request->validate();
-        $id                                         = Input::get('id');
-        $hotel_id                                   = Input::get('hotel_id');
-        $feature_id                                 = Input::get('feature_id');
+        $id                                 = Input::get('id');
+        $hotel_id                           = Input::get('hotel_id');
+        $feature_id                         = Input::get('feature_id');
+        $qty                                = Input::get('qty');
+        $capacity                           = Input::get('capacity');
+        $area                               = Input::get('area');
+        $open_hour                          = Input::get('open_hour');
+        $close_hour                         = Input::get('close_hour');
+        $remark                             = Input::get('remark');
 
-        $paramObj                                   = $this->repo->getObjByID($id);
-        $paramObj->hotel_id                         = $hotel_id;
-        $paramObj->feature_id                       = $feature_id;
+        $paramObj                           = $this->repo->getObjByID($id);
+        $paramObj->hotel_id                 = $hotel_id;
+        $paramObj->feature_id               = $feature_id;
+        $paramObj->qty                      = $qty;
+        $paramObj->capacity                 = $capacity;
+        $paramObj->area                     = $area;
+        $paramObj->open_hour                = $open_hour;
+        $paramObj->close_hour               = $close_hour;
+        $paramObj->remark                   = $remark;
 
         $result = $this->repo->update($paramObj);
 

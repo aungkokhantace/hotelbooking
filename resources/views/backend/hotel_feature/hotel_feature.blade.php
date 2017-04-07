@@ -66,6 +66,59 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="qty">Quantity<span class="require">*</span></label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <input type="text" class="form-control" id="qty" name="qty"
+                   placeholder="Enter Quantity" value="{{ isset($hotel_feature)? $hotel_feature->qty:Request::old('qty') }}"/>
+            <p class="text-danger">{{$errors->first('qty')}}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="capacity">Capacity<span class="require">*</span></label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <input type="text" class="form-control" id="capacity" name="capacity"
+                   placeholder="Enter Capacity" value="{{ isset($hotel_feature)? $hotel_feature->capacity:Request::old('capacity') }}"/>
+            <p class="text-danger">{{$errors->first('capacity')}}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="open_hour">Open Hour<span class="require">*</span></label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <input type="text" class="form-control" id="open_hour" name="open_hour"
+                   placeholder="Enter Open Hour" value="{{ isset($hotel_feature)? $hotel_feature->open_hour:Request::old('open_hour')}}"/>
+            <p class="text-danger">{{$errors->first('open_hour')}}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="close_hour">Close Hour<span class="require">*</span></label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <input type="text" class="form-control" id="close_hour" name="close_hour"
+                   placeholder="Enter Close Hour" value="{{ isset($hotel_feature)?$hotel_feature->close_hour:Request::old('close_hour')}}"/>
+            <p class="text-danger">{{$errors->first('close_hour')}}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="remark">Remark</label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <textarea rows="5" cols="50" class="form-control" id="remark" name="remark" placeholder="Enter Remark">{{ isset($hotel_feature)? $hotel_feature->remark:Request::old('remark') }}</textarea>
+            <p class="text-danger">{{$errors->first('remark')}}</p>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">

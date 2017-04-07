@@ -32,6 +32,17 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="type">Type <span class="require">*</span></label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <input type="radio" name="type" value="1" {{isset($facilities)&&$facilities->type==1?'checked':''}}>Hotel &nbsp;
+            <input type="radio" name="type" value="2" {{isset($facilities)&&$facilities->type==2?'checked':''}}>Room
+            <p class="text-danger">{{$errors->first('type')}}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="description">Description</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -39,26 +50,6 @@
             <p class="text-danger">{{$errors->first('description')}}</p>
         </div>
     </div>
-
-    {{--<div class="row">--}}
-        {{--<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">--}}
-            {{--<label for="user_name">Facilities Icon<span class="require">*</span></label>--}}
-        {{--</div>--}}
-        {{--<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">--}}
-            {{--<div class="fileinput fileinput-new" data-provides="fileinput">--}}
-                {{--<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 355px; height: 220px;">--}}
-                    {{--<img id='site_logoPopUp' src="" alt="Load Image"/>--}}
-                {{--</div>--}}
-                {{--<div data-provides="fileinput">--}}
-	                        {{--<span class="btn btn-default btn-file" style="background-color: #259299;border-color: #22868d;">--}}
-	                            {{--<span class="fileinput-new" data-trigger="fileinput">Select</span>--}}
-	                            {{--<span class="fileinput-exists">Image</span>--}}
-	                            {{--<input id="site_logo2" type="file" class="facilities_icon" name="facilities_icon" accept="image.*" style="width: 330px;"/>--}}
-	                        {{--</span>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
 
     {{--Start File Upload--}}
     <div class="row">

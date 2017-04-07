@@ -12,6 +12,12 @@ class HotelFeature extends Model
         'id',
         'hotel_id',
         'feature_id',
+        'qty',
+        'capacity',
+        'area',
+        'open_hour',
+        'close_hour',
+        'remark',
         'updated_at','created_at','deleted_at','updated_by','created_by','deleted_by'
     ];
 
