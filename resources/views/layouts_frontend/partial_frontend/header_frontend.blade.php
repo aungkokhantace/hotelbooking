@@ -24,6 +24,7 @@ $companyLogo = \App\Core\Check::companyLogo();
 
     <!-- Custom CSS -->
     <link href="shared/css/style.min.css" rel="stylesheet">
+    <link href="shared/css/custom.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="shared/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">

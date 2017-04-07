@@ -18,6 +18,8 @@ use App\Setup\Hotel\HotelRepository;
 use App\Setup\Hotel\RecommendHotelRepository;
 use App\Setup\RoomDiscount\RoomDiscountRepository;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Redirect;
 
 class HomeController extends Controller
@@ -34,6 +36,7 @@ class HomeController extends Controller
         $cityRepo           = new CityRepository();
         $popularCityRepo    = new PopularCityRepository();
         $popular_cities     = $popularCityRepo->getObjs();
+
         foreach($popular_cities as $popular_city){
             $cityObj = $cityRepo->getObjByID($popular_city->city_id);
             $cityObj->order = $popular_city->order; //bind order to city obj
@@ -41,6 +44,17 @@ class HomeController extends Controller
             array_push($popularCityArray, $cityObj);
         }
         //end popular cities
+
+        //start paginating popular cities array
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $col = new Collection($popularCityArray);
+        $perPage = 3;
+        $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $popularCityEntries = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage);
+
+        $popularCityEntries->setPath($request->url());
+        $popularCityEntries->appends($request->except(['page']));
+        //end paginating popular cities array
 
         //start recommended hotels
         $recommendedHotelArray  = array();
@@ -92,7 +106,8 @@ class HomeController extends Controller
     //end hotel promotions
 
         return view('frontend.home')
-            ->with('popular_cities',$popularCityArray)
+//            ->with('popular_cities',$popularCityArray)
+            ->with('popular_cities',$popularCityEntries)
             ->with('recommended_hotels',$recommendedHotelArray)
             ->with('percent_promotions',$percentPromotionArray)
             ->with('amount_promotions',$amountPromotionArray);

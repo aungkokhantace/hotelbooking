@@ -138,18 +138,17 @@
                         </div>
                 @endif
                 @endforeach
+
                 {{--render close tag for the last row--}}
                 </div>
-            {{--End dynamic popular destination content--}}
 
-            <div class="pagination">
-                <a href="#">1</a>
-                <a class="active" href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#">5</a>
-                <a href="#">6</a>
-            </div>
+            {{--start rendering paginator--}}
+                <div class="row">
+                    {!! $popular_cities->render() !!}
+                </div>
+            {{--end rendering paginator--}}
+
+            {{--End dynamic popular destination content--}}
         </div>
 
     </section>
