@@ -146,6 +146,9 @@ class Default_RolePermissionSeeder extends Seeder
             ['role_id'=>1, 'permission_id'=>153],
             ['role_id'=>1, 'permission_id'=>154],
             ['role_id'=>1, 'permission_id'=>155],
+            //Recommend Hotel
+            ['role_id'=>1, 'permission_id'=>156],
+            ['role_id'=>1, 'permission_id'=>157],
 
             //Hotel Room Type
             ['role_id'=>1, 'permission_id'=>160],
