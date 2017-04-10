@@ -37,7 +37,7 @@
         <div class="container">
             <div class="col-md-4 form">
                 <h2>Search Hotel</h2>
-                <form>
+                {!! Form::open(array('url' => '/search','files'=>true, 'id'=>'search', 'class'=> 'form-horizontal user-form-border')) !!}
                     <div class="form-group row">
                         <label class="control-label" for="destination">Destination</label>
                         <div class="col-10 input-group">
@@ -84,7 +84,7 @@
                     <div class="form-group row">
                         <button type="submit" class="btn btn-default">Search Hotel Now</button>
                     </div>
-                </form>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>

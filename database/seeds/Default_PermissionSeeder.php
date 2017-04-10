@@ -153,6 +153,9 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>153,'module'=>'Hotel','name'=>'Edit','description'=>'Hotel Edit','url'=>'backend/hotel/edit'],
             ['id'=>154,'module'=>'Hotel','name'=>'Update','description'=>'Hotel Update','url'=>'backend/hotel/update'],
             ['id'=>155,'module'=>'Hotel','name'=>'Destroy','description'=>'Hotel Destroy','url'=>'backend/hotel/destroy'],
+            //Recommend Hotel
+            ['id'=>156,'module'=>'Recommend Hotel','name'=>'New','description'=>'Recommend Hotel New','url'=>'backend/recommend_hotel/create'],
+            ['id'=>157,'module'=>'Recommend Hotel','name'=>'Store','description'=>'Recommend Hotel Store','url'=>'backend/recommend_hotel/store'],
 
             //Hotel Room Type
             ['id'=>160,'module'=>'HotelRoomType','name'=>'Listing','description'=>'Hotel Room Type Listing','url'=>'backend/hotel_room_type'],
