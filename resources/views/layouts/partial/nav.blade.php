@@ -7,12 +7,12 @@
             <!-- begin sidebar minify button -->
             <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
             <!-- end sidebar minify button -->
-            <li class="nav-header">AcePlus Reports</li>
+            <li class="nav-header">{{trans('menu.title-report')}}</li>
             <li nav-id='report'  class="has-sub" >
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="fa fa-calendar"></i>
-                    <span>Reports</span>
+                    <span>{{trans('menu.group-report')}}</span>
                 </a>
 
                 <ul class="sub-menu">
@@ -20,13 +20,12 @@
                 </ul>
             </li>
 
-
-            <li class="nav-header">AcePlus Backend</li>
+            <li class="nav-header">{{trans('menu.title-backend')}}</li>
 
             <li nav-id="menu-manage" class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
-                    <span>Menu</span>
+                    <span>{{trans('menu.title-menu')}}</span>
                 </a>
 
                 <ul class="sub-menu">
@@ -39,7 +38,7 @@
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="fa fa-users"></i>
-                    <span>Site Setup</span>
+                    <span>{{trans('menu.group-setup')}}</span>
                 </a>
                 <ul class="sub-menu">
                     <li nav-id="modifier-manage" class="has-sub">
@@ -90,7 +89,7 @@
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="fa fa-gears"></i>
-                    <span>For Developer</span>
+                    <span>{{trans('menu.group-developer')}}</span>
                 </a>
                 <ul class="sub-menu">
                     <li nav-id="modifier-manage" class="has-sub">
@@ -111,7 +110,7 @@
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="fa fa-users"></i>
-                    <span>Address</span>
+                    <span>{{trans('menu.group-address')}}</span>
                 </a>
                 <ul class="sub-menu">
                     <li nav-id="modifier-manage" class="has-sub">
