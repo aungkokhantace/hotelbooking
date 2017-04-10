@@ -28,25 +28,25 @@ class CreateRCategoryFacilitiesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('hotel_id')
-                ->references('id')->on('hotels')
-                ->onDelete('restrict');
-
-            $table->foreign('h_room_type_id')
-                ->references('id')->on('h_room_type')
-                ->onDelete('restrict');
-
-            $table->foreign('h_room_category_id')
-                ->references('id')->on('h_room_category')
-                ->onDelete('restrict');
-
-            $table->foreign('facility_id')
-                ->references('id')->on('facilities')
-                ->onDelete('restrict');
-
-            $table->foreign('facility_group_id')
-                ->references('id')->on('facility_group')
-                ->onDelete('restrict');
+//            $table->foreign('hotel_id')
+//                ->references('id')->on('hotels')
+//                ->onDelete('restrict');
+//
+//            $table->foreign('h_room_type_id')
+//                ->references('id')->on('h_room_type')
+//                ->onDelete('restrict');
+//
+//            $table->foreign('h_room_category_id')
+//                ->references('id')->on('h_room_category')
+//                ->onDelete('restrict');
+//
+//            $table->foreign('facility_id')
+//                ->references('id')->on('facilities')
+//                ->onDelete('restrict');
+//
+//            $table->foreign('facility_group_id')
+//                ->references('id')->on('facility_group')
+//                ->onDelete('restrict');
         });
     }
 
