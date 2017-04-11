@@ -6,7 +6,7 @@
 <div id="content" class="content">
 
     <h1 class="page-header">
-        {{ isset($city) ?  trans('messages.edit') : trans('messages.entry') }}
+        {{ isset($city) ?  trans('setup_city.title-edit') : trans('setup_city.title-entry') }}
     </h1>
 
     {{--check new or edit--}}
@@ -21,7 +21,7 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="country_id">Country Name<span class="require">*</span></label>
+            <label for="country_id">{{trans('setup_city.country')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="country_id" id="country_id">
@@ -34,7 +34,7 @@
                     @endif
                 @endforeach
             @else
-                <option value="" disabled selected>Select Country</option>
+                <option value="" disabled selected>{{trans('setup_city.select-country')}}</option>
                 @foreach($countries as $country)
                     <option value="{{$country->id}}">{{$country->name}}</option>
                 @endforeach
@@ -45,10 +45,10 @@
     </div>
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="name">City Name<span class="require">*</span></label>
+            <label for="name">{{trans('setup_city.city')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <input type="text" class="form-control" id="name" name="name" placeholder="Enter City Name" value="{{ isset($city)? $city->name:Request::old('name') }}"/>
+            <input type="text" class="form-control" id="name" name="name" placeholder="{{trans('setup_city.place-name')}}" value="{{ isset($city)? $city->name:Request::old('name') }}"/>
             <p class="text-danger">{{$errors->first('name')}}</p>
         </div>
     </div>
@@ -56,7 +56,7 @@
     {{--Start File Upload--}}
     <div class="row">
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <label for="photo" class="text_bold_black">Photo</label>
+            <label for="photo" class="text_bold_black">{{trans('setup_city.photo')}}</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
             @if(isset($city))
@@ -87,10 +87,10 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="submit" name="submit" value="{{isset($city)? 'UPDATE' : 'ADD'}}" class="form-control btn-primary">
+            <input type="submit" name="submit" value="{{isset($city)? trans('setup_city.btn-update') : trans('setup_city.btn-add')}}" class="form-control btn-primary">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('city')">
+            <input type="button" value="{{trans('setup_city.btn-cancel')}}" class="form-control cancel_btn" onclick="cancel_setup('city')">
         </div>
     </div>
 

@@ -5,7 +5,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">Feature Listing</h1>
+    <h1 class="page-header">{{trans('setup_feature.title-list')}}</h1>
     @if(count(Session::get('message')) != 0)
         <div>
         </div>
@@ -41,9 +41,9 @@
                     <thead>
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
-                        <th>Name</th>
-                        <th>Icon</th>
-                        <th>Description</th>
+                        <th>{{trans('setup_feature.tb-col-name')}}</th>
+                        <th>{{trans('setup_feature.tb-col-icon')}}</th>
+                        <th>{{trans('setup_feature.tb-col-description')}}</th>
                     </tr>
                     </thead>
                     <tfoot>

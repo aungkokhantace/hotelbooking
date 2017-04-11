@@ -6,7 +6,7 @@
 <div id="content" class="content">
 
     <h1 class="page-header">
-        {{ isset($amenities) ?  'Amenity Edit' : 'Amenity Entry' }}
+        {{ isset($amenities) ?  trans('setup_amenity.title-edit') : trans('setup_amenity.title-entry') }}
     </h1>
 
     {{--check new or edit--}}
@@ -21,21 +21,21 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="name">Name<span class="require">*</span></label>
+            <label for="name">{{trans('setup_amenity.name')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" class="form-control" id="name" name="name"
-                   placeholder="Enter Amenity Name" value="{{ isset($amenities)? $amenities->name:Request::old('name') }}"/>
+                   placeholder="{{trans('setup_amenity.place-name')}}" value="{{ isset($amenities)? $amenities->name:Request::old('name') }}"/>
             <p class="text-danger">{{$errors->first('name')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="description">Description</label>
+            <label for="description">{{trans('setup_amenity.description')}}</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <textarea rows="5" cols="50" class="form-control" id="description" name="description" placeholder="Enter Amenity Description">{{ isset($amenities)? $amenities->description:Request::old('description') }}</textarea>
+            <textarea rows="5" cols="50" class="form-control" id="description" name="description" placeholder="{{trans('setup_amenity.place-description')}}">{{ isset($amenities)? $amenities->description:Request::old('description') }}</textarea>
             <p class="text-danger">{{$errors->first('description')}}</p>
         </div>
     </div>
@@ -63,7 +63,7 @@
     {{--Start File Upload--}}
     <div class="row">
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <label for="photo" class="text_bold_black">Icon</label>
+            <label for="photo" class="text_bold_black">{{trans('setup_amenity.icon')}}</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
             @if(isset($amenities))
@@ -93,10 +93,10 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="submit" name="submit" value="{{isset($amenities)? 'UPDATE' : 'ADD'}}" class="form-control btn-primary">
+            <input type="submit" name="submit" value="{{isset($amenities)? trans('setup_amenity.btn-update') : trans('setup_amenity.btn-add')}}" class="form-control btn-primary">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('amenities')">
+            <input type="button" value="{{trans('setup_amenity.btn-cancel')}}" class="form-control cancel_btn" onclick="cancel_setup('amenities')">
         </div>
     </div>
 
