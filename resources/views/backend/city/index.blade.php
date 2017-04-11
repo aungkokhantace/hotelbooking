@@ -5,7 +5,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">City Listing</h1>
+    <h1 class="page-header">{{trans('setup_city.title-list')}}</h1>
     @if(count(Session::get('message')) != 0)
         <div>
         </div>
@@ -41,9 +41,9 @@
                     <thead>
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
-                        <th>City Name</th>
-                        <th>Country Name</th>
-                        <th>Image</th>
+                        <th>{{trans('setup_city.tb-col-city')}}</th>
+                        <th>{{trans('setup_city.tb-col-country')}}</th>
+                        <th>{{trans('setup_city.tb-col-image')}}</th>
                     </tr>
                     </thead>
                     <tfoot>

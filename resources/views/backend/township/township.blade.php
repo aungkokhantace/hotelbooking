@@ -6,7 +6,7 @@
 <div id="content" class="content">
 
     <h1 class="page-header">
-        {{ isset($township) ?  'Township Edit' : 'Township Entry' }}
+        {{ isset($township) ?  trans('setup_township.title-edit') : trans('setup_township.title-entry') }}
     </h1>
 
     {{--check new or edit--}}
@@ -21,7 +21,7 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="country_id">City Name <span class="require">*</span></label>
+            <label for="city_id">{{trans('setup_township.city')}} <span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="city_id" id="city_id">
@@ -34,7 +34,7 @@
                         @endif
                     @endforeach
                 @else
-                    <option value="" disabled selected>Select City</option>
+                    <option value="" disabled selected>{{trans('setup_township.select-city')}}</option>
                     @foreach($cities as $city)
                         <option value="{{$city->id}}">{{$city->name}}</option>
                     @endforeach
@@ -45,10 +45,10 @@
     </div>
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="user_name">Township Name<span class="require">*</span></label>
+            <label for="name">{{trans('setup_township.township')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <input required type="text" class="form-control" id="name" name="name" placeholder="Enter Township Name" value="{{ isset($township)? $township->name:Request::old('name') }}"/>
+            <input required type="text" class="form-control" id="name" name="name" placeholder="{{trans('setup_township.place-name')}}" value="{{ isset($township)? $township->name:Request::old('name') }}"/>
             <p class="text-danger">{{$errors->first('name')}}</p>
         </div>
     </div>
@@ -57,10 +57,10 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="submit" name="submit" value="{{isset($township)? 'UPDATE' : 'ADD'}}" class="form-control btn-primary">
+            <input type="submit" name="submit" value="{{isset($township)? trans('setup_township.btn-update') : trans('setup_township.btn-add')}}" class="form-control btn-primary">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('township')">
+            <input type="button" value="{{trans('setup_township.btn-cancel')}}" class="form-control cancel_btn" onclick="cancel_setup('township')">
         </div>
     </div>
     {!! Form::close() !!}
