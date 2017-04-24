@@ -41,7 +41,7 @@
                     <div class="form-group row">
                         <label class="control-label" for="destination">Destination</label>
                         <div class="col-10 input-group">
-                            <input class="form-control font_sz_11" type="text" value="" id="destination">
+                            <input class="form-control font_sz_11" type="text" value="" id="destination" name="destination">
                             <div class="input-group-addon">
                                 <i class="fa fa-plane" aria-hidden="true"></i>
                             </div>
@@ -49,8 +49,8 @@
                     </div>
                     <div class="form-group row">
                         <label class="control-label" for="check_in">Check In</label>
-                        <div class="col-10 input-group date" data-provide="datepicker">
-                            <input type="text" class="form-control">
+                        <div class="col-10 input-group date" data-provide="datepicker" id="check_in">
+                            <input type="text" class="form-control" name="check_in">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </div>
@@ -58,8 +58,8 @@
                     </div>
                     <div class="form-group row">
                         <label class="control-label" for="check_out">Check Out</label>
-                        <div class="col-10 input-group date" data-provide="datepicker">
-                            <input type="text" class="form-control">
+                        <div class="col-10 input-group date" data-provide="datepicker" id="check_out">
+                            <input type="text" class="form-control" name="check_out">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </div>
@@ -69,15 +69,15 @@
                         <div class="col-10">
                             <div class="col-3">
                                 <label for="street-number" class="control-label">Room</label>
-                                <input type="number" id="street-number" class="floatLabel form-control" name="street-number">
+                                <input type="number" id="room" class="floatLabel form-control" name="room">
                             </div>
                             <div class="col-3">
                                 <label class="control-label" for="check_out">Adults</label>
-                                <input type="number" id="street-number" class="floatLabel form-control" name="street-number">
+                                <input type="number" id="adults" class="floatLabel form-control" name="adults">
                             </div>
                             <div class="col-3">
                                 <label class="control-label" for="check_out">Children</label>
-                                <input type="number" id="street-number" class="floatLabel form-control" name="street-number">
+                                <input type="number" id="children" class="floatLabel form-control" name="children">
                             </div>
                         </div>
                     </div>
@@ -330,6 +330,23 @@
 @section('page_script')
     <script type="text/javascript" language="javascript" class="init">
         $(document).ready(function() {
+            $('#check_in').datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                defaultDate: "+1w",
+                changeMonth: true,
+                numberOfMonths: 1,
+                allowInputToggle: true,
+            });
+
+            $('#check_out').datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                defaultDate: "+1w",
+                changeMonth: true,
+                numberOfMonths: 1,
+                allowInputToggle: true,
+            });
         });
     </script>
 @stop

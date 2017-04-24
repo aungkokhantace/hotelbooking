@@ -128,4 +128,18 @@ class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterfac
 
         return $objs;
     }
+
+    public function getMinPriceByHotelId($hotel_id){
+        $price = HotelRoomCategory::whereNull('deleted_at')->where('hotel_id','=',$hotel_id)->min('price');
+        return $price;
+    }
+
+    public function getRoomTypeByHotelIdAndPrice($hotel_id,$price){
+        $room_type = HotelRoomCategory::whereNull('deleted_at')
+                    ->where('hotel_id','=',$hotel_id)
+                    ->where('price','=',$price)
+                    ->first();
+        $room_type_name = $room_type->h_room_type->name;
+        return $room_type_name;
+    }
 }
