@@ -5,7 +5,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">Room Listing</h1>
+    <h1 class="page-header">{{trans('setup_room.title-list')}}</h1>
 
     <div class="row">
         <div class="col-md-10"></div>
@@ -38,12 +38,12 @@
                     <thead>
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
-                        <th>Hotel</th>
-                        <th>Room Type</th>
-                        <th>Room Category</th>
-                        <th>Room View</th>
-                        <th>Name</th>
-                        <th>Description</th>
+                        <th>{{trans('setup_room.tb-col-hotel')}}</th>
+                        <th>{{trans('setup_room.tb-col-room-type')}}</th>
+                        <th>{{trans('setup_room.tb-col-room-category')}}</th>
+                        <th>{{trans('setup_room.tb-col-room-view')}}</th>
+                        <th>{{trans('setup_room.tb-col-name')}}</th>
+                        <th>{{trans('setup_room.tb-col-description')}}</th>
                     </tr>
                     </thead>
                     <tfoot>

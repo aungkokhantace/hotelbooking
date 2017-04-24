@@ -5,7 +5,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">Hotel Nearby Hospital Listing</h1>
+    <h1 class="page-header">{{trans('setup_nearbyhospital.title-list')}}</h1>
 
     <div class="row">
         <div class="col-md-10"></div>
@@ -38,9 +38,9 @@
                     <thead>
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
-                        <th>Hotel</th>
-                        <th>Name</th>
-                        <th>Distance</th>
+                        <th>{{trans('setup_nearbyhospital.tb-col-hotel')}}</th>
+                        <th>{{trans('setup_nearbyhospital.tb-col-name')}}</th>
+                        <th>{{trans('setup_nearbyhospital.tb-col-distance')}}</th>
                     </tr>
                     </thead>
                     <tfoot>

@@ -5,7 +5,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">Hotel Facility Listing</h1>
+    <h1 class="page-header">{{trans('setup_hotelfacility.title-list')}}</h1>
     @if(count(Session::get('message')) != 0)
         <div>
         </div>
@@ -41,9 +41,9 @@
                     <thead>
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
-                        <th>Hotel</th>
-                        <th>Facility Group</th>
-                        <th>Facility</th>
+                        <th>{{trans('setup_hotelfacility.tb-col-hotel')}}</th>
+                        <th>{{trans('setup_hotelfacility.tb-col-facility-gp')}}</th>
+                        <th>{{trans('setup_hotelfacility.tb-col-facility')}}</th>
                     </tr>
                     </thead>
                     <tfoot>

@@ -5,7 +5,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">Landmark Listing</h1>
+    <h1 class="page-header">{{trans('setup_landmark.title-list')}}</h1>
 
     <div class="row">
         <div class="col-md-10"></div>
@@ -38,12 +38,12 @@
                     <thead>
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
-                        <th>Name</th>
-                        <th>Township</th>
-                        <th>Popular</th>
-                        <th>Latitude</th>
-                        <th>Longitude</th>
-                        <th>Description</th>
+                        <th>{{trans('setup_landmark.tb-col-name')}}</th>
+                        <th>{{trans('setup_landmark.tb-col-township')}}</th>
+                        <th>{{trans('setup_landmark.tb-col-popular')}}</th>
+                        <th>{{trans('setup_landmark.tb-col-latitude')}}</th>
+                        <th>{{trans('setup_landmark.tb-col-longitude')}}</th>
+                        <th>{{trans('setup_landmark.tb-col-description')}}</th>
                     </tr>
                     </thead>
                     <tfoot>

@@ -5,7 +5,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">Hotel Room Category Listing</h1>
+    <h1 class="page-header">{{trans('setup_hotelroomcategory.title-list')}}</h1>
 
     <div class="row">
         <div class="col-md-10"></div>
@@ -38,14 +38,16 @@
                     <thead>
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
-                        <th>Hotel</th>
-                        <th>Room Type</th>
-                        <th>Name</th>
-                        <th>Square Metre</th>
-                        <th>Capacity</th>
-                        <th>Booking CutOff Day</th>
-                        <th>Price</th>
-                        <th>Description</th>
+                        <th>{{trans('setup_hotelroomcategory.tb-col-hotel')}}</th>
+                        <th>{{trans('setup_hotelroomcategory.tb-col-room-type')}}</th>
+                        <th>{{trans('setup_hotelroomcategory.tb-col-name')}}</th>
+                        <th>{{trans('setup_hotelroomcategory.tb-col-sqm')}}</th>
+                        <th>{{trans('setup_hotelroomcategory.tb-col-capacity')}}</th>
+                        <th>{{trans('setup_hotelroomcategory.tb-col-booking')}}</th>
+                        <th>{{trans('setup_hotelroomcategory.tb-col-price')}}</th>
+                        <th>{{trans('setup_hotelroomcategory.tb-col-extra-allow')}}</th>
+                        <th>{{trans('setup_hotelroomcategory.tb-col-extra-price')}}</th>
+                        <th>{{trans('setup_hotelroomcategory.tb-col-description')}}</th>
                     </tr>
                     </thead>
                     <tfoot>
@@ -58,6 +60,8 @@
                         <th class="search-col" con-id="Capacity">Capacity</th>
                         <th class="search-col" con-id="booking_cutoff_day">Booking CutOff Day</th>
                         <th class="search-col" con-id="price">Price</th>
+                        <th class="search-col" con-id="extra_bed">Extra Bed Allowed</th>
+                        <th class="search-col" con-id="extra_price">Extra Bed Price</th>
                         <th class="search-col" con-id="description">Description</th>
 
                     </tr>
@@ -73,6 +77,8 @@
                             <td>{{$category->capacity}}</td>
                             <td>{{$category->booking_cutoff_day}}</td>
                             <td>{{$category->price}}</td>
+                            <td>{{$category->extra_bed_allowed == 1? 'Yes':'No'}}</td>
+                            <td>{{$category->extra_bed_price}}</td>
                             <td>{{$category->description}}</td>
                         </tr>
                     @endforeach

@@ -5,7 +5,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">{{isset($hotel_nearby_station) ?  'Hotel Nearby Station Edit' : 'Hotel Nearby Station Entry' }}</h1>
+    <h1 class="page-header">{{isset($hotel_nearby_station) ? trans('setup_nearbystation.title-edit') : trans('setup_nearbystation.title-entry') }}</h1>
 
     @if(isset($hotel_nearby_station))
         {!! Form::open(array('url' => '/backend/hotel_nearby_station/update','id'=>'hotel_nearby_station', 'class'=> 'form-horizontal user-form-border')) !!}
@@ -18,7 +18,10 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="hotel_id">Hotel <span class="require">*</span></label>
+            <label for="hotel_id">
+                {{trans('setup_nearbystation.hotel')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="hotel_id" id="hotel_id">
@@ -31,7 +34,9 @@
                         @endif
                     @endforeach
                 @else
-                    <option value="" disabled selected>Select Hotel</option>
+                    <option value="" disabled selected>
+                        {{trans('setup_nearbystation.place-hotel')}}
+                    </option>
                     @foreach($hotels as $hotel)
                         <option value="{{$hotel->id}}">{{$hotel->name}}</option>
                     @endforeach
@@ -43,32 +48,40 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="name">Name<span class="require">*</span></label>
+            <label for="name">
+                {{trans('setup_nearbystation.name')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" required class="form-control" id="name" name="name"
-                   placeholder="Enter Station Name" value="{{ isset($hotel_nearby_station)? $hotel_nearby_station->name:Request::old('name') }}"/>
+                   placeholder="{{trans('setup_nearbystation.place-name')}}"
+                   value="{{ isset($hotel_nearby_station)? $hotel_nearby_station->name:Request::old('name') }}"/>
             <p class="text-danger">{{$errors->first('name')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="distance">Distance<span class="require">*</span></label>
+            <label for="distance">
+                {{trans('setup_nearbystation.distance')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" required class="form-control" id="distance" name="distance"
-                   placeholder="Enter Distance" value="{{ isset($hotel_nearby_station)? $hotel_nearby_station->distance:Request::old('distance') }}"/>
+                   placeholder="{{trans('setup_nearbystation.place-distance')}}"
+                   value="{{ isset($hotel_nearby_station)? $hotel_nearby_station->distance:Request::old('distance') }}"/>
             <p class="text-danger">{{$errors->first('distance')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="remark">Remark</label>
+            <label for="remark">{{trans('setup_nearbystation.remark')}}</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <textarea rows="5" cols="50" class="form-control" id="remark" name="remark" placeholder="Enter Remark">{{ isset($hotel_nearby_station)? $hotel_nearby_station->remark:Request::old('remark') }}</textarea>
+            <textarea rows="5" cols="50" class="form-control" id="remark" name="remark" placeholder="{{trans('setup_nearbystation.place-remark')}}">{{ isset($hotel_nearby_station)? $hotel_nearby_station->remark:Request::old('remark') }}</textarea>
             <p class="text-danger">{{$errors->first('remark')}}</p>
         </div>
     </div>
@@ -77,10 +90,10 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="submit" name="submit" value="{{isset($hotel_nearby_station)? 'UPDATE' : 'ADD'}}" class="form-control btn-primary">
+            <input type="submit" name="submit" value="{{isset($hotel_nearby_station)? trans('setup_nearbystation.btn-update'): trans('setup_nearbystation.btn-add')}}" class="form-control btn-primary">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('hotel_nearby_station')">
+            <input type="button" value="{{trans('setup_nearbystation.btn-cancel')}}" class="form-control cancel_btn" onclick="cancel_setup('hotel_nearby_station')">
         </div>
     </div>
     {!! Form::close() !!}

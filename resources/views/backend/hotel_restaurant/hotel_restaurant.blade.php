@@ -5,7 +5,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">{{isset($hotel_restaurant) ?  'Hotel Restaurant Edit' : 'Hotel Restaurant Entry' }}</h1>
+    <h1 class="page-header">{{isset($hotel_restaurant) ? trans('setup_hotelrestaurant.title-edit') : trans('setup_hotelrestaurant.title-entry') }}</h1>
 
     @if(isset($hotel_restaurant))
         {!! Form::open(array('url' => '/backend/hotel_restaurant/update','id'=>'hotel_restaurant', 'class'=> 'form-horizontal user-form-border','files' => true)) !!}
@@ -18,7 +18,7 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="hotel_id">Hotel <span class="require">*</span></label>
+            <label for="hotel_id">{{trans('setup_hotelrestaurant.hotel')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="hotel_id" id="hotel_id">
@@ -31,7 +31,9 @@
                         @endif
                     @endforeach
                 @else
-                    <option value="" disabled selected>Select Hotel</option>
+                    <option value="" disabled selected>
+                        {{trans('setup_hotelrestaurant.place-hotel')}}
+                    </option>
                     @foreach($hotels as $hotel)
                         <option value="{{$hotel->id}}">{{$hotel->name}}</option>
                     @endforeach
@@ -43,7 +45,10 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="hotel_restaurant_category">Hotel Restaurant Category<span class="require">*</span></label>
+            <label for="hotel_restaurant_category">
+                {{trans('setup_hotelrestaurant.category')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="hotel_restaurant_category" id="hotel_restaurant_category">
@@ -56,7 +61,9 @@
                         @endif
                     @endforeach
                 @else
-                    <option value="" disabled selected>Select Hotel Restaurant Category</option>
+                    <option value="" disabled selected>
+                        {{trans('setup_hotelrestaurant.place-category')}}
+                    </option>
                     @foreach($hotel_restaurant_category as $category)
                         <option value="{{$category->id}}">{{$category->name}}</option>
                     @endforeach
@@ -68,44 +75,54 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="name">Name<span class="require">*</span></label>
+            <label for="name">
+                {{trans('setup_hotelrestaurant.name')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" required class="form-control" id="name" name="name"
-                   placeholder="Enter Restaurant Name" value="{{ isset($hotel_restaurant)? $hotel_restaurant->name:Request::old('name') }}"/>
+                   placeholder="{{trans('setup_hotelrestaurant.place-name')}}"
+                   value="{{ isset($hotel_restaurant)? $hotel_restaurant->name:Request::old('name') }}"/>
             <p class="text-danger">{{$errors->first('name')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="opening_hours">Opening Hours<span class="require">*</span></label>
+            <label for="opening_hours">
+                {{trans('setup_hotelrestaurant.open-hr')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" required class="form-control" id="opening_hours" name="opening_hours"
-                   placeholder="Enter Opening Hours" value="{{ isset($hotel_restaurant)? $hotel_restaurant->opening_hours:Request::old('opening_hours') }}"/>
+                   placeholder="{{trans('setup_hotelrestaurant.place-open-hr')}}" value="{{ isset($hotel_restaurant)? $hotel_restaurant->opening_hours:Request::old('opening_hours') }}"/>
             <p class="text-danger">{{$errors->first('opening_hours')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="opening_days">Opening Days<span class="require">*</span></label>
+            <label for="opening_days">
+                {{trans('setup_hotelrestaurant.open-day')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" required class="form-control" id="opening_days" name="opening_days"
-                   placeholder="Enter Opening Days" value="{{ isset($hotel_restaurant)? $hotel_restaurant->opening_days:Request::old('opening_days') }}"/>
+                   placeholder="{{trans('setup_hotelrestaurant.place-open-day')}}" value="{{ isset($hotel_restaurant)? $hotel_restaurant->opening_days:Request::old('opening_days') }}"/>
             <p class="text-danger">{{$errors->first('opening_days')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="capacity">Capacity<span class="require">*</span></label>
+            <label for="capacity">{{trans('setup_hotelrestaurant.capacity')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" required class="form-control" id="capacity" name="capacity"
-                   placeholder="Enter Capacity"
+                   placeholder="{{trans('setup_hotelrestaurant.open-capacity')}}"
                    value="{{ isset($hotel_restaurant)? $hotel_restaurant->capacity:Request::old('capacity') }}"/>
             <p class="text-danger">{{$errors->first('capacity')}}</p>
         </div>
@@ -113,29 +130,38 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="area">Area(A.Q.M)<span class="require">*</span></label>
+            <label for="area">
+                {{trans('setup_hotelrestaurant.area')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" required class="form-control" id="area" name="area"
-                   placeholder="Enter Area" value="{{ isset($hotel_restaurant)? $hotel_restaurant->area:Request::old('area') }}"/>
+                   placeholder="{{trans('setup_hotelrestaurant.place-area')}}" value="{{ isset($hotel_restaurant)? $hotel_restaurant->area:Request::old('area') }}"/>
             <p class="text-danger">{{$errors->first('area')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="floor">Floor<span class="require">*</span></label>
+            <label for="floor">
+                {{trans('setup_hotelrestaurant.floor')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" required class="form-control" id="floor" name="floor"
-                   placeholder="Enter Floor" value="{{ isset($hotel_restaurant)? $hotel_restaurant->floor:Request::old('floor') }}"/>
+                   placeholder="{{trans('setup_hotelrestaurant.place-floor')}}"
+                   value="{{ isset($hotel_restaurant)? $hotel_restaurant->floor:Request::old('floor') }}"/>
             <p class="text-danger">{{$errors->first('floor')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="private_room">Private Room(Included Room)</label>
+            <label for="private_room">
+                {{trans('setup_hotelrestaurant.private')}}
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             @if(isset($hotel_restaurant))
@@ -150,20 +176,22 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="description">Description</label>
+            <label for="description">
+                {{trans('setup_hotelrestaurant.description')}}
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <textarea rows="5" cols="50" class="form-control" id="description" name="description" placeholder="Enter Room Category Description">{{ isset($hotel_restaurant)? $hotel_restaurant->description:Request::old('description') }}</textarea>
+            <textarea rows="5" cols="50" class="form-control" id="description" name="description" placeholder="{{trans('setup_hotelrestaurant.place-description')}}">{{ isset($hotel_restaurant)? $hotel_restaurant->description:Request::old('description') }}</textarea>
             <p class="text-danger">{{$errors->first('description')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="remark">Remark</label>
+            <label for="remark">{{trans('setup_hotelrestaurant.remark')}}</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <textarea rows="5" cols="50" class="form-control" id="remark" name="remark" placeholder="Enter Remark">{{ isset($hotel_restaurant)? $hotel_restaurant->remark:Request::old('remark') }}</textarea>
+            <textarea rows="5" cols="50" class="form-control" id="remark" name="remark" placeholder="{{trans('setup_hotelrestaurant.place-remark')}}">{{ isset($hotel_restaurant)? $hotel_restaurant->remark:Request::old('remark') }}</textarea>
             <p class="text-danger">{{$errors->first('remark')}}</p>
         </div>
     </div>
@@ -172,10 +200,10 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="submit" name="submit" value="{{isset($hotel_restaurant)? 'UPDATE' : 'ADD'}}" class="form-control btn-primary">
+            <input type="submit" name="submit" value="{{isset($hotel_restaurant)? trans('setup_hotelrestaurant.btn-update') : trans('setup_hotelrestaurant.btn-add')}}" class="form-control btn-primary">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('hotel_restaurant')">
+            <input type="button" value="{{trans('setup_hotelrestaurant.btn-cancel')}}" class="form-control cancel_btn" onclick="cancel_setup('hotel_restaurant')">
         </div>
     </div>
 

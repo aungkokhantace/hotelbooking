@@ -5,7 +5,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">{{isset($hotel_feature) ?  'Hotel Feature Edit' : 'Hotel Feature Entry' }}</h1>
+    <h1 class="page-header">{{isset($hotel_feature) ? trans('setup_hotelfeature.title-edit') : trans('setup_hotelfeature.title-entry') }}</h1>
 
     @if(isset($hotel_feature))
         {!! Form::open(array('url' => '/backend/hotel_feature/update','id'=>'hotel_feature', 'class'=> 'form-horizontal user-form-border')) !!}
@@ -18,7 +18,7 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="hotel_id">Hotel <span class="require">*</span></label>
+            <label for="hotel_id">{{trans('setup_hotelfeature.hotel')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="hotel_id" id="hotel_id">
@@ -31,7 +31,7 @@
                         @endif
                     @endforeach
                 @else
-                    <option value="" disabled selected>Select Hotel</option>
+                    <option value="" disabled selected>{{trans('setup_hotelfeature.place-hotel')}}</option>
                     @foreach($hotels as $hotel)
                         <option value="{{$hotel->id}}">{{$hotel->name}}</option>
                     @endforeach
@@ -43,7 +43,7 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="hotel_id">Feature<span class="require">*</span></label>
+            <label for="hotel_id">{{trans('setup_hotelfeature.feature')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="feature_id" id="feature_id">
@@ -56,7 +56,9 @@
                         @endif
                     @endforeach
                 @else
-                    <option value="" disabled selected>Select Feature</option>
+                    <option value="" disabled selected>
+                        {{trans('setup_hotelfeature.place-feature')}}
+                    </option>
                     @foreach($features as $feature)
                         <option value="{{$feature->id}}">{{$feature->name}}</option>
                     @endforeach
@@ -68,29 +70,31 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="qty">Quantity<span class="require">*</span></label>
+            <label for="qty">{{trans('setup_hotelfeature.qty')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" class="form-control" id="qty" name="qty"
-                   placeholder="Enter Quantity" value="{{ isset($hotel_feature)? $hotel_feature->qty:Request::old('qty') }}"/>
+                   placeholder="{{trans('setup_hotelfeature.place-qty')}}"
+                   value="{{ isset($hotel_feature)? $hotel_feature->qty:Request::old('qty') }}"/>
             <p class="text-danger">{{$errors->first('qty')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="capacity">Capacity<span class="require">*</span></label>
+            <label for="capacity">{{trans('setup_hotelfeature.capacity')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" class="form-control" id="capacity" name="capacity"
-                   placeholder="Enter Capacity" value="{{ isset($hotel_feature)? $hotel_feature->capacity:Request::old('capacity') }}"/>
+                   placeholder="{{trans('setup_hotelfeature.place-capacity')}}"
+                   value="{{ isset($hotel_feature)? $hotel_feature->capacity:Request::old('capacity') }}"/>
             <p class="text-danger">{{$errors->first('capacity')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="open_hour">Open Hour<span class="require">*</span></label>
+            <label for="open_hour">{{trans('setup_hotelfeature.open')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" class="form-control" id="open_hour" name="open_hour"
@@ -101,7 +105,7 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="close_hour">Close Hour<span class="require">*</span></label>
+            <label for="close_hour">{{trans('setup_hotelfeature.close')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" class="form-control" id="close_hour" name="close_hour"
@@ -112,10 +116,10 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="remark">Remark</label>
+            <label for="remark">{{trans('setup_hotelfeature.remark')}}</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <textarea rows="5" cols="50" class="form-control" id="remark" name="remark" placeholder="Enter Remark">{{ isset($hotel_feature)? $hotel_feature->remark:Request::old('remark') }}</textarea>
+            <textarea rows="5" cols="50" class="form-control" id="remark" name="remark" placeholder="{{trans('setup_hotelfeature.place-remark')}}">{{ isset($hotel_feature)? $hotel_feature->remark:Request::old('remark') }}</textarea>
             <p class="text-danger">{{$errors->first('remark')}}</p>
         </div>
     </div>
@@ -124,10 +128,10 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="submit" name="submit" value="{{isset($hotel_feature)? 'UPDATE' : 'ADD'}}" class="form-control btn-primary">
+            <input type="submit" name="submit" value="{{isset($hotel_feature)? trans('setup_hotelfeature.btn-update') : trans('setup_hotelfeature.btn-add')}}" class="form-control btn-primary">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('hotel_feature')">
+            <input type="button" value="{{trans('setup_hotelfeature.btn-cancel')}}" class="form-control cancel_btn" onclick="cancel_setup('hotel_feature')">
         </div>
     </div>
     {!! Form::close() !!}

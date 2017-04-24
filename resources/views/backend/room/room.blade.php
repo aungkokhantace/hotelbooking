@@ -5,7 +5,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">{{isset($hotel_room_type) ?  'Room Edit' : 'Room Entry' }}</h1>
+    <h1 class="page-header">{{isset($hotel_room_type) ? trans('setup_room.title-edit') : trans('setup_room.title-entry') }}</h1>
 
     @if(isset($room))
         {!! Form::open(array('url' => '/backend/room/update','id'=>'room', 'class'=> 'form-horizontal user-form-border')) !!}
@@ -18,7 +18,10 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="hotel_id">Hotel <span class="require">*</span></label>
+            <label for="hotel_id">
+                {{trans('setup_room.hotel')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="hotel_id" id="hotel_id">
@@ -31,7 +34,9 @@
                         @endif
                     @endforeach
                 @else
-                    <option value="" disabled selected>Select Hotel</option>
+                    <option value="" disabled selected>
+                        {{trans('setup_room.place-hotel')}}
+                    </option>
                     @foreach($hotels as $hotel)
                         <option value="{{$hotel->id}}">{{$hotel->name}}</option>
                     @endforeach
@@ -43,7 +48,10 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="h_room_type_id">Room Type<span class="require">*</span></label>
+            <label for="h_room_type_id">
+                {{trans('setup_room.room-type')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="h_room_type_id" id="h_room_type_id">
@@ -56,7 +64,9 @@
                         @endif
                     @endforeach
                 @else
-                    <option value="" disabled selected>Select Room Type</option>
+                    <option value="" disabled selected>
+                        {{trans('setup_room.place-room-type')}}
+                    </option>
                 @endif
             </select>
             <p class="text-danger">{{$errors->first('h_room_type_id')}}
@@ -65,7 +75,10 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="h_room_category_id">Room Category<span class="require">*</span></label>
+            <label for="h_room_category_id">
+                {{trans('setup_room.room-category')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="h_room_category_id" id="h_room_category_id">
@@ -78,7 +91,9 @@
                         @endif
                     @endforeach
                 @else
-                    <option value="" disabled selected>Select Room Category</option>
+                    <option value="" disabled selected>
+                        {{trans('setup_room.place-room-category')}}
+                    </option>
                 @endif
             </select>
             <p class="text-danger">{{$errors->first('h_room_category_id')}}
@@ -87,7 +102,10 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="room_view_id">Room View <span class="require">*</span></label>
+            <label for="room_view_id">
+                {{trans('setup_room.room-view')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="room_view_id" id="room_view_id">
@@ -100,7 +118,9 @@
                         @endif
                     @endforeach
                 @else
-                    <option value="" disabled selected>Select Room View</option>
+                    <option value="" disabled selected>
+                        {{trans('setup_room.room-view')}}
+                    </option>
                     @foreach($room_view as $view)
                         <option value="{{$view->id}}">{{$view->name}}</option>
                     @endforeach
@@ -112,42 +132,56 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="name">Name<span class="require">*</span></label>
+            <label for="name">
+                {{trans('setup_room.name')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" class="form-control" id="name" name="name"
-                   placeholder="Enter Room Name" value="{{ isset($room)? $room->name:Request::old('name') }}"/>
+                   placeholder="{{trans('setup_room.place-name')}}"
+                   value="{{ isset($room)? $room->name:Request::old('name') }}"/>
             <p class="text-danger">{{$errors->first('name')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="status">Status<span class="require">*</span></label>
+            <label for="status">
+                {{trans('setup_room.status')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <input type="text" class="form-control" id="status" name="status"
-                   placeholder="Enter Room Status" value="{{ isset($room)? $room->status:Request::old('status') }}"/>
+            <select class="form-control" name="status" id="status">
+                @if(isset($room))
+                    <option value="1" {{$room->status == 1? 'selected':''}}>Available</option>
+                    <option value="0" {{$room->status == 0? 'selected':''}}>Not Available</option>
+                @else
+                    <option value="1" selected>Available</option>
+                    <option value="0">Not Available</option>
+                @endif
+            </select>
             <p class="text-danger">{{$errors->first('status')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="description">Description</label>
+            <label for="description">{{trans('setup_room.description')}}</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <textarea rows="5" cols="50" class="form-control" id="description" name="description" placeholder="Enter Room Description">{{ isset($room)? $room->description:Request::old('description') }}</textarea>
+            <textarea rows="5" cols="50" class="form-control" id="description" name="description" placeholder="{{trans('setup_room.place-description')}}">{{ isset($room)? $room->description:Request::old('description') }}</textarea>
             <p class="text-danger">{{$errors->first('description')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="remark">Remark</label>
+            <label for="remark">{{trans('setup_room.remark')}}</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <textarea rows="5" cols="50" class="form-control" id="remark" name="remark" placeholder="Enter Room Remark">{{ isset($room)? $room->remark:Request::old('remark') }}</textarea>
+            <textarea rows="5" cols="50" class="form-control" id="remark" name="remark" placeholder="{{trans('setup_room.place-remark')}}">{{ isset($room)? $room->remark:Request::old('remark') }}</textarea>
             <p class="text-danger">{{$errors->first('remark')}}</p>
         </div>
     </div>
@@ -156,10 +190,10 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="submit" name="submit" value="{{isset($room)? 'UPDATE' : 'ADD'}}" class="form-control btn-primary">
+            <input type="submit" name="submit" value="{{isset($room)? trans('setup_room.btn-update') : trans('setup_room.btn-add')}}" class="form-control btn-primary">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('room')">
+            <input type="button" value="{{trans('setup_room.btn-cancel')}}" class="form-control cancel_btn" onclick="cancel_setup('room')">
         </div>
     </div>
     {!! Form::close() !!}

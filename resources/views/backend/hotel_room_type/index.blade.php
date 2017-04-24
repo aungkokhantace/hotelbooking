@@ -5,7 +5,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">Hotel Room Type Listing</h1>
+    <h1 class="page-header">{{trans('setup_hotelroomtype.title-list')}}</h1>
 
     <div class="row">
         <div class="col-md-10"></div>
@@ -38,9 +38,9 @@
                     <thead>
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
-                        <th>Hotel</th>
-                        <th>Name</th>
-                        <th>Description</th>
+                        <th>{{trans('setup_hotelroomtype.tb-col-hotel')}}</th>
+                        <th>{{trans('setup_hotelroomtype.tb-col-name')}}</th>
+                        <th>{{trans('setup_hotelroomtype.tb-col-description')}}</th>
                     </tr>
                     </thead>
                     <tfoot>

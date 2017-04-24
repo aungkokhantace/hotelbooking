@@ -5,7 +5,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">Room Available Period Listing</h1>
+    <h1 class="page-header">{{trans('setup_roomavailableperiod.title-list')}}</h1>
 
     <div class="row">
         <div class="col-md-10"></div>
@@ -38,11 +38,11 @@
                     <thead>
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
-                        <th>Hotel</th>
-                        <th>Room</th>
-                        <th>Available From Date</th>
-                        <th>Available To Date</th>
-                        <th>Remark</th>
+                        <th>{{trans('setup_roomavailableperiod.tb-col-hotel')}}</th>
+                        <th>{{trans('setup_roomavailableperiod.tb-col-room')}}</th>
+                        <th>{{trans('setup_roomavailableperiod.tb-col-from')}}</th>
+                        <th>{{trans('setup_roomavailableperiod.tb-col-to')}}</th>
+                        <th>{{trans('setup_roomavailableperiod.tb-col-remark')}}</th>
                     </tr>
                     </thead>
                     <tfoot>

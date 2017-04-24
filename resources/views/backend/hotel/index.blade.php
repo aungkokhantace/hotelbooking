@@ -5,7 +5,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">Hotel Listing</h1>
+    <h1 class="page-header">{{trans('setup_hotel.title-list')}}</h1>
 
     <div class="row">
         <div class="col-md-10"></div>
@@ -38,27 +38,27 @@
                     <thead>
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Address</th>
-                        <th>Phone</th>
-                        <th>Fax</th>
-                        <th>Latitude</th>
-                        <th>Longitude</th>
-                        <th>Logo</th>
-                        <th>Star</th>
-                        <th>Email</th>
-                        <th>Country</th>
-                        <th>City</th>
-                        <th>Township</th>
-                        <th>Description</th>
-                        <th>Number of Floors</th>
-                        <th>Class</th>
-                        <th>Website</th>
-                        <th>Check-in Time</th>
-                        <th>Check-out Time</th>
-                        <th>Breakfast Start Time</th>
-                        <th>Breakfast End Time</th>
+                        <th>{{trans('setup_hotel.tb-col-name')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-type')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-address')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-phone')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-fax')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-latitude')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-longitude')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-logo')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-star')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-email')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-country')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-city')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-township')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-description')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-floor')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-class')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-website')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-check-in')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-check-out')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-breakfast-start')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-breakfast-end')}}</th>
                     </tr>
                     </thead>
                     <tfoot>

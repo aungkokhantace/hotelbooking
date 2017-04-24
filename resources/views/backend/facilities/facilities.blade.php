@@ -6,7 +6,7 @@
 <div id="content" class="content">
 
     <h1 class="page-header">
-        {{ isset($facilities) ?  'Facilities Edit' : 'Facilities Entry' }}
+        {{ isset($facilities) ? trans('setup_facilitygroup.title-edit') : trans('setup_facility.title-entry') }}
     </h1>
 
     {{--check new or edit--}}
@@ -21,32 +21,32 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="name">Facilities Name <span class="require">*</span></label>
+            <label for="name">{{trans('setup_facility.name')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input required type="text" class="form-control" id="name" name="name"
-                   placeholder="Enter Facilities Name" value="{{ isset($facilities)? $facilities->name:Request::old('name') }}"/>
+                   placeholder="{{trans('setup_facility.place-name')}}" value="{{ isset($facilities)? $facilities->name:Request::old('name') }}"/>
             <p class="text-danger">{{$errors->first('name')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="type">Type <span class="require">*</span></label>
+            <label for="type">{{trans('setup_facility.type')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <input type="radio" name="type" value="1" {{isset($facilities)&&$facilities->type==1?'checked':''}}>Hotel &nbsp;
-            <input type="radio" name="type" value="2" {{isset($facilities)&&$facilities->type==2?'checked':''}}>Room
+            <input type="radio" name="type" value="1" {{isset($facilities)&&$facilities->type==1?'checked':''}}>{{trans('setup_facility.type-hotel')}} &nbsp;
+            <input type="radio" name="type" value="2" {{isset($facilities)&&$facilities->type==2?'checked':''}}>{{trans('setup_facility.type-room')}}
             <p class="text-danger">{{$errors->first('type')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="description">Description</label>
+            <label for="description">{{trans('setup_facility.description')}}</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <textarea rows="5" cols="50" class="form-control" id="description" name="description" placeholder="Enter Facility Description">{{ isset($facilities)? $facilities->description:Request::old('description') }}</textarea>
+            <textarea rows="5" cols="50" class="form-control" id="description" name="description" placeholder="{{trans('setup_facility.place-description')}}">{{ isset($facilities)? $facilities->description:Request::old('description') }}</textarea>
             <p class="text-danger">{{$errors->first('description')}}</p>
         </div>
     </div>
@@ -54,7 +54,7 @@
     {{--Start File Upload--}}
     <div class="row">
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <label for="photo" class="text_bold_black">Icon</label>
+            <label for="photo" class="text_bold_black">{{trans('setup_facility.icon')}}</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
             @if(isset($facilities))
@@ -84,10 +84,10 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="submit" name="submit" value="{{isset($facilities)? 'UPDATE' : 'ADD'}}" class="form-control btn-primary">
+            <input type="submit" name="submit" value="{{isset($facilities)? trans('setup_facility.btn-update') : trans('setup_facility.btn-add')}}" class="form-control btn-primary">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('facilities')">
+            <input type="button" value="{{trans('setup_facility.btn-cancel')}}" class="form-control cancel_btn" onclick="cancel_setup('facilities')">
         </div>
     </div>
 

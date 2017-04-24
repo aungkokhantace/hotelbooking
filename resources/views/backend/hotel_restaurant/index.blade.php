@@ -5,7 +5,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">Hotel Restaurant Listing</h1>
+    <h1 class="page-header">{{trans('setup_hotelrestaurant.title-list')}}</h1>
 
     <div class="row">
         <div class="col-md-10"></div>
@@ -38,17 +38,17 @@
                     <thead>
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
-                        <th>Hotel</th>
-                        <th>Hotel Restaurant Category</th>
-                        <th>Name</th>
-                        <th>Opening Hours</th>
-                        <th>Opening Days</th>
-                        <th>Capacity</th>
-                        <th>Area</th>
-                        <th>Floor</th>
-                        <th>Private Room</th>
-                        <th>Description</th>
-                        <th>Remark</th>
+                        <th>{{trans('setup_hotelrestaurant.tb-col-hotel')}}</th>
+                        <th>{{trans('setup_hotelrestaurant.tb-col-category')}}</th>
+                        <th>{{trans('setup_hotelrestaurant.tb-col-name')}}</th>
+                        <th>{{trans('setup_hotelrestaurant.tb-col-open-hr')}}</th>
+                        <th>{{trans('setup_hotelrestaurant.tb-col-open-day')}}</th>
+                        <th>{{trans('setup_hotelrestaurant.tb-col-capacity')}}</th>
+                        <th>{{trans('setup_hotelrestaurant.tb-col-area')}}</th>
+                        <th>{{trans('setup_hotelrestaurant.tb-col-floor')}}</th>
+                        <th>{{trans('setup_hotelrestaurant.tb-col-private')}}</th>
+                        <th>{{trans('setup_hotelrestaurant.tb-col-description')}}</th>
+                        <th>{{trans('setup_hotelrestaurant.tb-col-remark')}}</th>
                     </tr>
                     </thead>
                     <tfoot>

@@ -37,4 +37,9 @@ class RoomCategoryFacility extends Model
     {
         return $this->belongsTo('App\Setup\Facilities\Facilities','facility_id','id');
     }
+
+    public function facility_group()
+    {
+        return $this->belongsTo('App\Setup\FacilityGroup\FacilityGroup','facility_group_id','id');
+    }
 }

@@ -5,7 +5,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">{{isset($hotel_landmark) ?  'Hotel Landmark Edit' : 'Hotel Landmark Entry' }}</h1>
+    <h1 class="page-header">{{isset($hotel_landmark) ? trans('setup_hotellandmark.title-edit') : trans('setup_hotellandmark.title-entry')}}</h1>
 
     @if(isset($hotel_landmark))
         {!! Form::open(array('url' => '/backend/hotel_landmark/update','id'=>'hotel_landmark', 'class'=> 'form-horizontal user-form-border')) !!}
@@ -18,7 +18,7 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="hotel_id">Hotel <span class="require">*</span></label>
+            <label for="hotel_id">{{trans('setup_hotellandmark.hotel')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="hotel_id" id="hotel_id">
@@ -31,7 +31,7 @@
                         @endif
                     @endforeach
                 @else
-                    <option value="" disabled selected>Select Hotel</option>
+                    <option value="" disabled selected>{{trans('setup_hotellandmark.place-hotel')}}</option>
                     @foreach($hotels as $hotel)
                         <option value="{{$hotel->id}}">{{$hotel->name}}</option>
                     @endforeach
@@ -43,7 +43,7 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="landmark">Landmark<span class="require">*</span></label>
+            <label for="landmark">{{trans('setup_hotellandmark.landmark')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="landmark" id="landmark">
@@ -56,7 +56,9 @@
                         @endif
                     @endforeach
                 @else
-                    <option value="" disabled selected>Select Landmark</option>
+                    <option value="" disabled selected>
+                        {{trans('setup_hotellandmark.place-landmark')}}
+                    </option>
                     @foreach($landmarks as $landmark)
                         <option value="{{$landmark->id}}">{{$landmark->name}}</option>
                     @endforeach
@@ -71,10 +73,10 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="submit" name="submit" value="{{isset($hotel_landmark)? 'UPDATE' : 'ADD'}}" class="form-control btn-primary">
+            <input type="submit" name="submit" value="{{isset($hotel_landmark)? trans('setup_hotellandmark.btn-update') : trans('setup_hotellandmark.btn-add')}}" class="form-control btn-primary">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('hotel_landmark')">
+            <input type="button" value="{{trans('setup_hotellandmark.btn-cancel')}}" class="form-control cancel_btn" onclick="cancel_setup('hotel_landmark')">
         </div>
     </div>
     {!! Form::close() !!}

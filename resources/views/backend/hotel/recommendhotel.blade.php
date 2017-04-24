@@ -6,7 +6,7 @@
 <div id="content" class="content">
 
     <h1 class="page-header">
-        Set Recommend Hotel
+        {{trans('setup_hotel.title-recommend')}}
     </h1>
 
     {!! Form::open(array('url' => '/backend/recommend_hotel/store', 'class'=> 'form-horizontal user-form-border', 'id'=>'recommend_hotel','files'=>true)) !!}
@@ -28,7 +28,7 @@
                         @endif
                     @endfor
                 @else
-                    <option value="" disabled selected>Select Order</option>
+                    <option value="" disabled selected>{{trans('setup_hotel.place-order')}}</option>
                     @for ($i = 1; $i <= $hotel_count; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
                     @endfor
@@ -43,10 +43,10 @@
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="submit" name="submit" value="SET" class="form-control btn-primary">
+            <input type="submit" name="submit" value="trans('setup_hotel.btn-set')" class="form-control btn-primary">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('hotel')">
+            <input type="button" value="{{trans('setup_hotel.btn-cancel')}}" class="form-control cancel_btn" onclick="cancel_setup('hotel')">
         </div>
     </div>
 

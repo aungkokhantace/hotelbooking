@@ -54,7 +54,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">{{isset($hotel_room_category) ?  'Hotel Room Category Edit' : 'Hotel Room Category Entry' }}</h1>
+    <h1 class="page-header">{{isset($hotel_room_category) ? trans('setup_hotelroomcategory.title-edit') : trans('setup_hotelroomcategory.title-entry')}}</h1>
 
     @if(isset($hotel_room_category))
         {!! Form::open(array('url' => '/backend/hotel_room_category/update','id'=>'hotel_room_category', 'class'=> 'form-horizontal user-form-border','files' => true)) !!}
@@ -67,7 +67,9 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="hotel_id">Hotel <span class="require">*</span></label>
+            <label for="hotel_id">{{trans('setup_hotelroomcategory.hotel')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="hotel_id" id="hotel_id">
@@ -80,7 +82,9 @@
                         @endif
                     @endforeach
                 @else
-                    <option value="" disabled selected>Select Hotel</option>
+                    <option value="" disabled selected>
+                        {{trans('setup_hotelroomcategory.place-hotel')}}
+                    </option>
                     @foreach($hotels as $hotel)
                         <option value="{{$hotel->id}}">{{$hotel->name}}</option>
                     @endforeach
@@ -92,7 +96,9 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="h_room_type_id">Room Type<span class="require">*</span></label>
+            <label for="h_room_type_id">
+                {{trans('setup_hotelroomcategory.room-type')}}
+                <span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="h_room_type_id" id="h_room_type_id">
@@ -105,7 +111,9 @@
                         @endif
                     @endforeach
                 @else
-                    <option value="" disabled selected>Select Room Type</option>
+                    <option value="" disabled selected>
+                        {{trans('setup_hotelroomcategory.place-room-type')}}
+                    </option>
                 @endif
             </select>
             <p class="text-danger">{{$errors->first('h_room_type_id')}}
@@ -114,51 +122,67 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="name">Name<span class="require">*</span></label>
+            <label for="name">
+                {{trans('setup_hotelroomcategory.name')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" required class="form-control" id="name" name="name"
-                   placeholder="Enter Room Category Name" value="{{ isset($hotel_room_category)? $hotel_room_category->name:Request::old('name') }}"/>
+                   placeholder="{{trans('setup_hotelroomcategory.place-name')}}"
+                   value="{{ isset($hotel_room_category)? $hotel_room_category->name:Request::old('name') }}"/>
             <p class="text-danger">{{$errors->first('name')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="price">Price<span class="require">*</span></label>
+            <label for="price">
+                {{trans('setup_hotelroomcategory.price')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" required class="form-control" id="price" name="price"
-                   placeholder="Enter Price" value="{{ isset($hotel_room_category)? $hotel_room_category->price:Request::old('price') }}"/>
+                   placeholder="{{trans('setup_hotelroomcategory.place-price')}}"
+                   value="{{ isset($hotel_room_category)? $hotel_room_category->price:Request::old('price') }}"/>
             <p class="text-danger">{{$errors->first('price')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="square_metre">S.Q.M<span class="require">*</span></label>
+            <label for="square_metre">
+                {{trans('setup_hotelroomcategory.sqm')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" required class="form-control" id="square_metre" name="square_metre"
-                   placeholder="Enter Square Metre" value="{{ isset($hotel_room_category)? $hotel_room_category->square_metre:Request::old('square_metre') }}"/>
+                   placeholder="{{trans('setup_hotelroomcategory.place-sqm')}}"
+                   value="{{ isset($hotel_room_category)? $hotel_room_category->square_metre:Request::old('square_metre') }}"/>
             <p class="text-danger">{{$errors->first('square_metre')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="booking_cutoff_day">Booking CutOff Day<span class="require">*</span></label>
+            <label for="booking_cutoff_day">
+                {{trans('setup_hotelroomcategory.booking')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" required class="form-control" id="booking_cutoff_day" name="booking_cutoff_day"
-                   placeholder="Enter Booking CutOff Day" value="{{ isset($hotel_room_category)? $hotel_room_category->booking_cutoff_day:Request::old('booking_cutoff_day') }}"/>
+                   placeholder="{{trans('setup_hotelroomcategory.place-booking')}}"
+                   value="{{ isset($hotel_room_category)? $hotel_room_category->booking_cutoff_day:Request::old('booking_cutoff_day') }}"/>
             <p class="text-danger">{{$errors->first('booking_cutoff_day')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="extra_bed_allowed">Extra Bed Allowed</label>
+            <label for="extra_bed_allowed">{{trans('setup_hotelroomcategory.extra-allow')}}</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             @if(isset($hotel_room_category))
@@ -176,11 +200,11 @@
 
     <div class="row extra_bed_price">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="extra_bed_price">Extra Bed Price</label>
+            <label for="extra_bed_price">{{trans('setup_hotelroomcategory.extra-price')}}</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" class="form-control" id="extra_bed_price" name="extra_bed_price"
-                   placeholder="Enter Extra Bed Price"
+                   placeholder="{{trans('setup_hotelroomcategory.place-extra-price')}}"
                    value="{{ isset($hotel_room_category)? $hotel_room_category->extra_bed_price:Request::old('extra_bed_price') }}"/>
             <p class="text-danger">{{$errors->first('extra_bed_price')}}</p>
         </div>
@@ -188,11 +212,14 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="capacity">Capacity<span class="require">*</span></label>
+            <label for="capacity">
+                {{trans('setup_hotelroomcategory.capacity')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" required class="form-control" id="capacity" name="capacity"
-                   placeholder="Enter Capacity"
+                   placeholder="{{trans('setup_hotelroomcategory.place-capacity')}}"
                    value="{{ isset($hotel_room_category)? $hotel_room_category->capacity:Request::old('capacity') }}"/>
             <p class="text-danger">{{$errors->first('capacity')}}</p>
         </div>
@@ -200,11 +227,14 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="bed_type">Bed Type<span class="require">*</span></label>
+            <label for="bed_type">
+                {{trans('setup_hotelroomcategory.bed-type')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" required class="form-control" id="bed_type" name="bed_type"
-                   placeholder="Enter Bed Type"
+                   placeholder="{{trans('setup_hotelroomcategory.bed-type')}}"
                    value="{{ isset($hotel_room_category)? $hotel_room_category->bed_type:Request::old('bed_type') }}"/>
             <p class="text-danger">{{$errors->first('bed_type')}}</p>
         </div>
@@ -212,20 +242,20 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="description">Description</label>
+            <label for="description">{{trans('setup_hotelroomcategory.description')}}</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <textarea rows="5" cols="50" class="form-control" id="description" name="description" placeholder="Enter Room Category Description">{{ isset($hotel_room_category)? $hotel_room_category->description:Request::old('description') }}</textarea>
+            <textarea rows="5" cols="50" class="form-control" id="description" name="description" placeholder="{{trans('setup_hotelroomcategory.place-description')}}">{{ isset($hotel_room_category)? $hotel_room_category->description:Request::old('description') }}</textarea>
             <p class="text-danger">{{$errors->first('description')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="remark">Remark</label>
+            <label for="remark">{{trans('setup_hotelroomcategory.remark')}}</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <textarea rows="5" cols="50" class="form-control" id="remark" name="remark" placeholder="Enter Remark For Booking CutOff Day">{{ isset($hotel_room_category)? $hotel_room_category->remark:Request::old('remark') }}</textarea>
+            <textarea rows="5" cols="50" class="form-control" id="remark" name="remark" placeholder="{{trans('setup_hotelroomcategory.place-remark')}}">{{ isset($hotel_room_category)? $hotel_room_category->remark:Request::old('remark') }}</textarea>
             <p class="text-danger">{{$errors->first('remark')}}</p>
         </div>
     </div>
@@ -235,7 +265,7 @@
 
         <div class="row">
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                <label for="image">Image</label>
+                <label for="image">{{trans('setup_hotelroomcategory.image')}}</label>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                 @foreach($images as $image)
@@ -251,19 +281,19 @@
                 @endforeach
                 <div id="filediv"><input name="file[]" type="file" id="file"/></div><br/>
 
-                <input type="button" id="add_more" class="upload" value="Add Image"/>
+                <input type="button" id="add_more" class="upload" value="{{trans('setup_hotelroomcategory.btn-image')}}"/>
             </div>
         </div>
     @else
         <div class="row">
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                <label for="image">Image</label>
+                <label for="image">{{trans('setup_hotelroomcategory.image')}}</label>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 
                 <div id="filediv"><input name="file[]" type="file" id="file"/></div><br/>
 
-                <input type="button" id="add_more" class="upload" value="Add Image"/>
+                <input type="button" id="add_more" class="upload" value="{{trans('setup_hotelroomcategory.btn-image')}}"/>
             </div>
         </div>
     @endif
@@ -273,10 +303,10 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="submit" name="submit" value="{{isset($hotel_room_category)? 'UPDATE' : 'ADD'}}" class="form-control btn-primary">
+            <input type="submit" name="submit" value="{{isset($hotel_room_category)? trans('setup_hotelroomcategory.btn-update') : trans('setup_hotelroomcategory.btn-add')}}" class="form-control btn-primary">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('hotel_room_category')">
+            <input type="button" value="{{trans('setup_hotelroomcategory.btn-cancel')}}" class="form-control cancel_btn" onclick="cancel_setup('hotel_room_category')">
         </div>
     </div>
 

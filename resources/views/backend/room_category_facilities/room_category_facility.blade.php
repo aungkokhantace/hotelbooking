@@ -5,7 +5,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">{{isset($r_category_facility) ?  'Room Category Facility Edit' : 'Room Category Facility Entry' }}</h1>
+    <h1 class="page-header">{{isset($r_category_facility) ? trans('setup_roomcategoryfacility.title-edit') : trans('setup_roomcategoryfacility.title-entry') }}</h1>
 
     @if(isset($r_category_facility))
         {!! Form::open(array('url' => '/backend/room_category_facility/update','id'=>'r_category_facility', 'class'=> 'form-horizontal user-form-border')) !!}
@@ -18,7 +18,10 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="facility">Facility <span class="require">*</span></label>
+            <label for="facility">
+                {{trans('setup_roomcategoryfacility.facility')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="facility" id="facility">
@@ -31,7 +34,9 @@
                         @endif
                     @endforeach
                 @else
-                    <option value="" disabled selected>Select Facility</option>
+                    <option value="" disabled selected>
+                        {{trans('setup_roomcategoryfacility.place-facility')}}
+                    </option>
                     @foreach($facilities as $facility)
                         <option value="{{$facility->id}}">{{$facility->name}}</option>
                     @endforeach
@@ -43,7 +48,10 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="facility_group">Facility Group<span class="require">*</span></label>
+            <label for="facility_group">
+                {{trans('setup_roomcategoryfacility.facility-gp')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="facility_group" id="facility_group">
@@ -56,7 +64,9 @@
                         @endif
                     @endforeach
                 @else
-                    <option value="" disabled selected>Select Facility Group</option>
+                    <option value="" disabled selected>
+                        {{trans('setup_roomcategoryfacility.place-facility-gp')}}
+                    </option>
                     @foreach($facility_group as $group)
                         <option value="{{$group->id}}">{{$group->name}}</option>
                     @endforeach
@@ -68,7 +78,10 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="hotel_id">Hotel <span class="require">*</span></label>
+            <label for="hotel_id">
+                {{trans('setup_roomcategoryfacility.hotel')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="hotel_id" id="hotel_id">
@@ -81,7 +94,9 @@
                         @endif
                     @endforeach
                 @else
-                    <option value="" disabled selected>Select Hotel</option>
+                    <option value="" disabled selected>
+                        {{trans('setup_roomcategoryfacility.place-hotel')}}
+                    </option>
                     @foreach($hotels as $hotel)
                         <option value="{{$hotel->id}}">{{$hotel->name}}</option>
                     @endforeach
@@ -93,7 +108,10 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="h_room_type_id">Room Type<span class="require">*</span></label>
+            <label for="h_room_type_id">
+                {{trans('setup_roomcategoryfacility.room-type')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="h_room_type_id" id="h_room_type_id">
@@ -106,7 +124,9 @@
                         @endif
                     @endforeach
                 @else
-                    <option value="" disabled selected>Select Room Type</option>
+                    <option value="" disabled selected>
+                        {{trans('setup_roomcategoryfacility.room-type')}}
+                    </option>
                 @endif
             </select>
             <p class="text-danger">{{$errors->first('h_room_type_id')}}
@@ -115,7 +135,10 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="h_room_category_id">Room Category<span class="require">*</span></label>
+            <label for="h_room_category_id">
+                {{trans('setup_roomcategoryfacility.room-category')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="h_room_category_id" id="h_room_category_id">
@@ -128,7 +151,9 @@
                         @endif
                     @endforeach
                 @else
-                    <option value="" disabled selected>Select Room Category</option>
+                    <option value="" disabled selected>
+                        {{trans('setup_roomcategoryfacility.place-room-category')}}
+                    </option>
                 @endif
             </select>
             <p class="text-danger">{{$errors->first('h_room_category_id')}}
@@ -137,21 +162,25 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="name">Value<span class="require">*</span></label>
+            <label for="value">
+                {{trans('setup_roomcategoryfacility.value')}}
+                <span class="require">*</span>
+            </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" class="form-control" id="value" name="value"
-                   placeholder="Enter Value" value="{{ isset($r_category_facility)? $r_category_facility->value:Request::old('value') }}"/>
+                   placeholder="{{trans('setup_roomcategoryfacility.place-value')}}"
+                   value="{{ isset($r_category_facility)? $r_category_facility->value:Request::old('value') }}"/>
             <p class="text-danger">{{$errors->first('value')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="description">Description</label>
+            <label for="description">{{trans('setup_roomcategoryfacility.description')}}</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <textarea rows="5" cols="50" class="form-control" id="description" name="description" placeholder="Enter Description">{{ isset($r_category_facility)? $r_category_facility->description:Request::old('description') }}</textarea>
+            <textarea rows="5" cols="50" class="form-control" id="description" name="description" placeholder="{{trans('setup_roomcategoryfacility.place-description')}}">{{ isset($r_category_facility)? $r_category_facility->description:Request::old('description') }}</textarea>
             <p class="text-danger">{{$errors->first('description')}}</p>
         </div>
     </div>
@@ -160,10 +189,10 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="submit" name="submit" value="{{isset($r_category_facility)? 'UPDATE' : 'ADD'}}" class="form-control btn-primary">
+            <input type="submit" name="submit" value="{{isset($r_category_facility)? trans('setup_roomcategoryfacility.btn-update') : trans('setup_roomcategoryfacility.btn-add')}}" class="form-control btn-primary">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('room_category_facility')">
+            <input type="button" value="{{trans('setup_roomcategoryfacility.btn-cancel')}}" class="form-control cancel_btn" onclick="cancel_setup('room_category_facility')">
         </div>
     </div>
     {!! Form::close() !!}
