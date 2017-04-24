@@ -5,6 +5,8 @@ Route::group(['middleware' => 'web'], function () {
 
     //Frontend
     Route::get('/', 'Frontend\HomeController@index');
+    Route::post('/search', 'Frontend\SearchController@search');
+    Route::get('/search_result', 'Frontend\SearchController@index');
     Route::get('test','Frontend\HomeController@test');
     Route::get('lang/{lang}','Language\LanguageController@getLanguage');
 

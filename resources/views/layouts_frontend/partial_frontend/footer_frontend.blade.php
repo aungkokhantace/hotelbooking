@@ -69,8 +69,6 @@
     </div>
 </footer>
 
-<!-- jQuery -->
-<script src="shared/js/jquery.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
 <script src="shared/js/bootstrap.min.js"></script>
@@ -80,15 +78,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#datePicker')
-                .datepicker({
-                    autoclose: true,
-                    format: 'mm/dd/yyyy'
-                })
-                .on('changeDate', function(e) {
-                    // Revalidate the date field
-                    $('#eventForm').formValidation('revalidateField', 'date');
-                });
+
     });
 </script>
 

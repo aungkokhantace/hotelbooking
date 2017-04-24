@@ -117,4 +117,22 @@ class HotelRepository implements HotelRepositoryInterface
         $role = Hotel::find($id);
         return $role;
     }
+
+    public function getHotelsByDestination($name){
+//        $objs = Hotel::whereNull('deleted_at')->where('name', 'LIKE', "%$name%")->get();
+
+         $objs  = Hotel::whereHas('country', function($query) use($name) {
+                        $query->where('countries.name', 'LIKE', '%'.$name.'%');
+                    })
+                    ->orWhereHas('city', function($query) use($name) {
+                        $query->where('cities.name', 'LIKE', '%'.$name.'%');
+                    })
+                    ->orWhereHas('township', function($query) use($name) {
+                         $query->where('townships.name', 'LIKE', '%'.$name.'%');
+                    })
+                    ->orWhere('name','LIKE','%'.$name.'%')
+                    ->get();
+
+        return $objs;
+    }
 }
