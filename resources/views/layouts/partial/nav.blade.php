@@ -103,6 +103,16 @@
                         </ul>
                     </li>
 
+                    <li nav-id="modifier-manage" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Samples</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="samples_googlemap"><a href="/samples/googlemap">Google Map Sample</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
 

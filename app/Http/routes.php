@@ -322,3 +322,8 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('activate', array('as'=>'activate','uses'=>'ApiController@Activate'));
         Route::post('check', array('as'=>'check','uses'=>'ApiController@check'));
     });
+
+// Samples For Developers
+//Google Map Api
+Route::get('samples/googlemap', array('as'=>'samples/googlemap', 'uses'=>'Sample\SamplesController@index'));
+Route::get('samples/getlocations', array('as'=>'samples/getlocations', 'uses'=>'Sample\SamplesController@getLocations'));
