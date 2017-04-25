@@ -118,7 +118,7 @@ class ChangedColumnVarcharLengthToAppropriate extends Migration
 
         Schema::table('facilities', function (Blueprint $table) {
             $table->string('name', 50)->nullable()->change();
-            $table->string('remark', 255)->nullable()->change();
+//            $table->string('remark', 255)->nullable()->change();
         });
 
         Schema::table('core_users', function (Blueprint $table) {

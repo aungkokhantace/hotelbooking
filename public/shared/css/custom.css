@@ -20,3 +20,7 @@
 .pagination {
     margin: 20px 15px auto;
 }
+
+.ui-autocomplete {
+    z-index:600 !important;
+}

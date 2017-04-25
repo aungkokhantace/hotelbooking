@@ -165,7 +165,13 @@
                 <!-- Blog Entries Column -->
                 <div class="col-md-9 search_list">
                     <!-- First Blog Post -->
-                    <h2>Yangon: 278 properties found</h2>
+                    @if(count($hotels)>1)
+                        <h2>Yangon: {{count($hotels)}} properties found</h2>
+                    @else
+                        <h2>Yangon: {{count($hotels)}} property found</h2>
+                    @endif
+
+                    {{ isset($hotel)? $hotel->name:Request::old('name') }}
                     <p class="lead">
                         3 Reasons to Visit: people watching, local food & shopping
                     </p>
@@ -235,6 +241,64 @@
                                             </div>
                                         </div>
                                     @endforeach
+
+                                    <!--Suggested Hotels are shown if search result count is less than 10 -->
+                                    @if(isset($suggestedHotels) && count($suggestedHotels)>0 && count($hotels)<10)
+                                    <br><br>
+                                    <h2>Suggested Hotels</h2>
+                                    <!--Suggested Hotels-->
+                                    @foreach($suggestedHotels as $suggestedHotelhotel)
+                                        <div class="blog">
+                                            <div class="left_img">
+                                                <img class="img-responsive img-hover" src="/images/upload/{{$suggestedHotelhotel->logo}}" alt="">
+                                            </div>
+                                            <div class="left_blog">
+                                                <div class="lead_left">
+                                                    <h4>{{$suggestedHotelhotel->name}}</h4>
+                                                    <p class="lead">
+                                                        <i class="fa fa-map-marker" aria-hidden="true"></i>   {{$suggestedHotelhotel->township->name}}, {{$suggestedHotelhotel->city->name}}
+                                                    </p>
+                                                </div>
+                                                <div class="lead_right pull-right">
+                                                    @for ($i = 1; $i <= $suggestedHotelhotel->star; $i++)
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                    @endfor
+                                                </div>
+                                            </div>
+                                            <div class="right_blog">
+                                                <div class="lead-left">
+                                                    <ul>
+                                                        <li> {{ isset($suggestedHotelhotel->room_type)? $suggestedHotelhotel->room_type:'' }} </li>
+                                                        <li>
+                                                            <table border="1">
+                                                                <tr>
+                                                                    <td>
+                                                                        <i class="fa fa-wifi" aria-hidden="true"></i>
+                                                                    </td>
+                                                                    <td>&nbsp;</td>
+                                                                    <td>
+                                                                        <i class="fa fa-wifi" aria-hidden="true"></i>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="lead-right">
+                                                    <ul>
+                                                        {{--<li><small style="text-decoration: line-through;">MMK 140000</small></li>--}}
+                                                        {{--<li>MMK {{$suggestedHotelhotel->min_price}}</li>--}}
+                                                        <li>{{ isset($suggestedHotelhotel->min_price)? 'MMK '.$suggestedHotelhotel->min_price:'' }}</li>
+                                                        <li>
+                                                            <a class="btn btn-primary" href="#">BOOKING NOW</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    <!--Suggested Hotels-->
+                                    @endif
                                 </div>
                                 <!--Map-->
                                 <div class="tab-pane fade" id="service-two">

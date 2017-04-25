@@ -135,4 +135,23 @@ class HotelRepository implements HotelRepositoryInterface
 
         return $objs;
     }
+
+    public function getSuggestedHotelsByDestination($hotelIdArr,$countryIdArr,$cityIdArr,$townshipIdArr){
+
+        $objs  = Hotel::whereHas('country', function($query) use($hotelIdArr,$countryIdArr) {
+                        $query->whereIn('countries.id', $countryIdArr);
+                        $query->whereNotIn('hotels.id', $hotelIdArr);
+                    })
+                    ->orWhereHas('city', function($query) use($hotelIdArr,$cityIdArr) {
+                        $query->whereIn('cities.id', $cityIdArr);
+                        $query->whereNotIn('hotels.id', $hotelIdArr);
+                    })
+                    ->orWhereHas('township', function($query) use($hotelIdArr,$townshipIdArr) {
+                        $query->whereIn('townships.id', $townshipIdArr);
+                        $query->whereNotIn('hotels.id', $hotelIdArr);
+                    })
+                    ->get();
+
+        return $objs;
+    }
 }

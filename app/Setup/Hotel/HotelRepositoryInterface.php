@@ -18,4 +18,5 @@ interface HotelRepositoryInterface
     public function delete($id);
     public function getArrays();
     public function getHotelsByDestination($name);
+    public function getSuggestedHotelsByDestination($hotelIdArr,$countryIdArr,$cityIdArr,$townshipIdArr);
 }

@@ -47,6 +47,7 @@ class SearchController extends Controller
         $adults         = (Input::has('adults')) ? Input::get('adults') : "";
         $children       = (Input::has('children')) ? Input::get('children') : "";
 
+        //start hotel search result
         $hotelRepo  = new HotelRepository();
         $hotels     = $hotelRepo->getHotelsByDestination($destination); //search hotel by destination keyword
 
@@ -63,8 +64,52 @@ class SearchController extends Controller
                 $hotel->room_type = null;
             }
         }
+        //end hotel search result
 
-//        return redirect()->action('Frontend\SearchController@index');
-        return view('frontend.searchresult')->with('hotels', $hotels);
+        //start suggested hotels
+
+        //create hotel_id array
+        $hotelIdArr = array();
+        $countryIdArr = array();
+        $cityIdArr = array();
+        $townshipIdArr = array();
+
+        foreach($hotels as $suggested_hotel){
+            array_push($hotelIdArr,$suggested_hotel->id);
+            array_push($countryIdArr,$suggested_hotel->country_id);
+            array_push($cityIdArr,$suggested_hotel->city_id);
+            array_push($townshipIdArr,$suggested_hotel->township_id);
+        }
+
+        $hotelIdArr = array_unique($hotelIdArr); //remove duplicate indexes
+        $hotelIdArr = array_values($hotelIdArr); //re-index array after using array_unique function
+
+        $countryIdArr = array_unique($countryIdArr);  //remove duplicate indexes
+        $countryIdArr = array_values($countryIdArr); //re-index array after using array_unique function
+
+        $cityIdArr = array_unique($cityIdArr);  //remove duplicate indexes
+        $cityIdArr = array_values($cityIdArr); //re-index array after using array_unique function
+
+        $townshipIdArr = array_unique($townshipIdArr);  //remove duplicate indexes
+        $townshipIdArr = array_values($townshipIdArr); //re-index array after using array_unique function
+
+        $suggestedHotels= $hotelRepo->getSuggestedHotelsByDestination($hotelIdArr,$countryIdArr,$cityIdArr,$townshipIdArr); //get suggested hotels
+
+        foreach($suggestedHotels  as $sugg_hotel){
+            $minRoomCategoryPrice = $hRoomCategoryRepo->getMinPriceByHotelId($sugg_hotel->id);
+            $sugg_hotel->min_price = $minRoomCategoryPrice; //get mininum price to show in search result
+
+            if(isset($minRoomCategoryPrice) && $minRoomCategoryPrice != null){
+                $minRoomCategoryPrice = $hRoomCategoryRepo->getRoomTypeByHotelIdAndPrice($sugg_hotel->id,$minRoomCategoryPrice);
+                $sugg_hotel->room_type = $minRoomCategoryPrice; //get room type with minimum price to show in search result
+            }
+            else{
+                $sugg_hotel->room_type = null;
+            }
+        }
+
+        //end suggested hotels
+
+        return view('frontend.searchresult')->with('hotels', $hotels)->with('suggestedHotels', $suggestedHotels);
     }
 }
