@@ -12,12 +12,14 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
+use App\Setup\Autocomplete\AutocompleteRepository;
 use App\Setup\City\CityRepository;
 use App\Setup\City\PopularCityRepository;
 use App\Setup\Hotel\HotelRepository;
 use App\Setup\Hotel\RecommendHotelRepository;
 use App\Setup\RoomDiscount\RoomDiscountRepository;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Redirect;
@@ -111,6 +113,12 @@ class HomeController extends Controller
             ->with('recommended_hotels',$recommendedHotelArray)
             ->with('percent_promotions',$percentPromotionArray)
             ->with('amount_promotions',$amountPromotionArray);
+    }
+
+    public function autocompleteDestination(){
+        $autocompleteRepo = new AutocompleteRepository();
+        $results = $autocompleteRepo->getDestinations();
+        return \Response::json($results);
     }
 
     public function test(){

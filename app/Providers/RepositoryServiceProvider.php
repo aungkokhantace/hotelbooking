@@ -59,6 +59,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind('App\Setup\HotelLandmark\HotelLandmarkRepositoryInterface','App\Setup\HotelLandmark\HotelLandmarkRepository');
         $this->app->bind('App\Setup\City\PopularCityRepositoryInterface','App\Setup\City\PopularCityRepository');
         $this->app->bind('App\Setup\Hotel\RecommendHotelRepositoryInterface','App\Setup\Hotel\RecommendHotelRepository');
+        $this->app->bind('App\Setup\Autocomplete\AutocompleteRepositoryInterface','App\Setup\Autocomplete\AutocompleteRepository');
 
     }
 }

@@ -41,7 +41,7 @@
                     <div class="form-group row">
                         <label class="control-label" for="destination">Destination</label>
                         <div class="col-10 input-group">
-                            <input class="form-control font_sz_11" type="text" value="" id="destination" name="destination">
+                            <input class="form-control font_sz_11" type="text" value="" id="destination" name="destination" autocomplete="off">
                             <div class="input-group-addon">
                                 <i class="fa fa-plane" aria-hidden="true"></i>
                             </div>
@@ -346,6 +346,10 @@
                 changeMonth: true,
                 numberOfMonths: 1,
                 allowInputToggle: true,
+            });
+
+            $("#destination").autocomplete({
+                source: "/autocompletedestination"
             });
         });
     </script>
