@@ -8,7 +8,7 @@
 
 return [
     'title-report'      => 'Reports - JP',
-    'title-backend'     => 'Backend - JP',
+    'title-backend'     => 'Backend Menu - JP',
     'title-menu'        => 'Menu - JP',
     'group-report'      => 'Reports - JP',
     'group-setup'       => 'Site Setup - JP',
