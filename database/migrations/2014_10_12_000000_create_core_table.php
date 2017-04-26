@@ -57,15 +57,15 @@ class CreateCoreTable extends Migration
         Schema::create('core_users', function(Blueprint $table) {
             $table->increments('id');
             $table->string('user_name', 255);
-            $table->string('staff_id')->unique();
+            $table->string('staff_id')->unique()->nullable();
             $table->string('password', 64);
             $table->string('email')->unique();
             $table->string('description')->nullable();
             $table->string('display_name')->nullable();
             $table->string('display_image')->nullable()->default('/assets/images/generals/image_user_dp_default.png');
             $table->unsignedInteger('role_id');
-            $table->text('about_me');
-            $table->text('address');
+            $table->text('about_me')->nullable();
+            $table->text('address')->nullable();
 
             $table->string('country',2)->default('');
             $table->string('language',10)->default('en');

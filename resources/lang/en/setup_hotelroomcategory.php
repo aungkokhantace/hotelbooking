@@ -37,7 +37,7 @@ return [
     'btn-update'            => 'UPDATE',
     'btn-cancel'            => 'CANCEL',
     'btn-image'             => 'Add Image',
-    'title-list'            => 'Hotel Restaurant Listing',
+    'title-list'            => 'Hotel Room Category Listing',
     'tb-col-hotel'          => 'Hotel',
     'tb-col-room-type'      => 'Room Type',
     'tb-col-name'           => 'Name',

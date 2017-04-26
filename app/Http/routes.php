@@ -8,6 +8,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/autocompletedestination', 'Frontend\HomeController@autocompleteDestination');
     Route::post('/search', 'Frontend\SearchController@search');
     Route::get('/search_result', 'Frontend\SearchController@index');
+    Route::get('create','Frontend\UserRegistrationController@create');
+    Route::post('store','Frontend\UserRegistrationController@store');
     Route::get('test','Frontend\HomeController@test');
     Route::get('lang/{lang}','Language\LanguageController@getLanguage');
 
