@@ -60,4 +60,28 @@
 /*To generate a horizontal scrollbar for listing pages that are wider than browser window*/
 .content{
     overflow: auto !important;
+    /*margin-left: 20% !important;*/
 }
+body{
+    background: #fff;
+}
+
+.sidebar{
+    /*padding-top: 18% !important;*/
+    /*width: 20% !important;*/
+    padding-bottom: 3%;
+}
+
+.page-header-fixed{
+    /*padding-top: 18% !important;*/
+}
+
+.sidebar-bg {
+    background: #AE3D8D !important;
+}
+
+.footer{
+    /*margin-left: 20% !important;*/
+}
+
+
