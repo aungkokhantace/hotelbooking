@@ -7,114 +7,7 @@
             <!-- begin sidebar minify button -->
             <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
             <!-- end sidebar minify button -->
-            <li class="nav-header">{{trans('menu.title-report')}}</li>
-            <li nav-id='report'  class="has-sub" >
-                <a href="javascript:;">
-                    <b class="caret pull-right"></b>
-                    <i class="fa fa-calendar"></i>
-                    <span>{{trans('menu.group-report')}}</span>
-                </a>
 
-                <ul class="sub-menu">
-                    <li nav-id="report-sale-summary"><a href="/backend/">Sale Summary Report</a></li>
-                </ul>
-            </li>
-
-            <li class="nav-header">{{trans('menu.title-backend')}}</li>
-
-            <li nav-id="menu-manage" class="has-sub">
-                <a href="javascript:;">
-                    <b class="caret pull-right"></b>
-                    <span>{{trans('menu.title-menu')}}</span>
-                </a>
-
-                <ul class="sub-menu">
-                    <li nav-id="menu-entry"><a href="/menu/create">Entry</a></li>
-                    <li nav-id="menu-list"><a href="/menu">List</a></li>
-                </ul>
-            </li>
-
-            <li  nav-id='modifier'  class="has-sub">
-                <a href="javascript:;">
-                    <b class="caret pull-right"></b>
-                    <i class="fa fa-users"></i>
-                    <span>{{trans('menu.group-setup')}}</span>
-                </a>
-                <ul class="sub-menu">
-                    <li nav-id="modifier-manage" class="has-sub">
-                        <a href="javascript:;">
-                            <b class="caret pull-right"></b>
-                            <span>Role</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-manage-modifier"><a href="/backend/role/create">Entry</a></li>
-                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend/role">List</a></li>
-                        </ul>
-                    </li>
-                    <li nav-id="modifier-manage" class="has-sub">
-                        <a href="javascript:;">
-                            <b class="caret pull-right"></b>
-                            <span>Permission</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-manage-modifier"><a href="/backend/permission/create">Entry</a></li>
-                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend/permission">List</a></li>
-
-                        </ul>
-                    </li>
-                    <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
-                            <b class="caret pull-right"></b>
-                            <span>Staff</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/user/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/user">List</a></li>
-                        </ul>
-                    </li>
-                    <li nav-id="">
-                        <a href="/backend/config">
-                            <b class="caret pull-right"></b>
-                            <span>Site Config</span>
-                        </a>
-                    </li>
-
-                </ul>
-
-            </li>
-            <li  nav-id='modifier'  class="has-sub">
-                <a href="javascript:;">
-                    <b class="caret pull-right"></b>
-                    <i class="fa fa-gears"></i>
-                    <span>{{trans('menu.group-developer')}}</span>
-                </a>
-                <ul class="sub-menu">
-                    <li nav-id="modifier-manage" class="has-sub">
-                        <a href="javascript:;">
-                            <b class="caret pull-right"></b>
-                            <span>Reference</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="systemreference"><a href="/backend/systemreference">System Reference</a></li>
-                        </ul>
-                    </li>
-
-                    <li nav-id="modifier-manage" class="has-sub">
-                        <a href="javascript:;">
-                            <b class="caret pull-right"></b>
-                            <span>Samples</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="samples_googlemap"><a href="/samples/googlemap">Google Map Sample</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
 
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
@@ -170,17 +63,17 @@
                     <span>General</span>
                 </a>
                 <ul class="sub-menu">
-                    <li nav-id="modifier-manage" class="has-sub">
-                        <a href="javascript:;">
-                            <b class="caret pull-right"></b>
-                            <span>Site Config</span>
-                        </a>
+                    {{--<li nav-id="modifier-manage" class="has-sub">--}}
+                        {{--<a href="javascript:;">--}}
+                            {{--<b class="caret pull-right"></b>--}}
+                            {{--<span>Site Config</span>--}}
+                        {{--</a>--}}
 
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-manage-modifier"><a href="/backend/site_config">Edit Config</a></li>
+                        {{--<ul class="sub-menu">--}}
+                            {{--<li nav-id="modifier-manage-modifier"><a href="/backend/site_config">Edit Config</a></li>--}}
 
-                        </ul>
-                    </li>
+                        {{--</ul>--}}
+                    {{--</li>--}}
                     <li nav-id="modifier-manage" class="has-sub">
                         <a href="javascript:;">
                             <b class="caret pull-right"></b>
@@ -234,7 +127,7 @@
 
                         <ul class="sub-menu">
                             <li nav-id="modifier-create-modifier"><a href="/backend/landmark/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/landmark/landmark">List</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/landmark">List</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -491,6 +384,100 @@
                         <ul class="sub-menu">
                             <li nav-id="modifier-create-modifier"><a href="/backend/room_blackout_period/create">Entry</a></li>
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_blackout_period">List</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li nav-id='report'  class="has-sub" >
+                <a href="javascript:;">
+                    <b class="caret pull-right"></b>
+                    <i class="fa fa-calendar"></i>
+                    <span>{{trans('menu.group-report')}}</span>
+                </a>
+
+                <ul class="sub-menu">
+                    <li nav-id="report-sale-summary"><a href="/backend/">Sale Summary Report</a></li>
+                </ul>
+            </li>
+
+            <li  nav-id='modifier'  class="has-sub">
+                <a href="javascript:;">
+                    <b class="caret pull-right"></b>
+                    <i class="fa fa-users"></i>
+                    <span>{{trans('menu.group-setup')}}</span>
+                </a>
+                <ul class="sub-menu">
+                    <li nav-id="modifier-manage" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Role</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-manage-modifier"><a href="/backend/role/create">Entry</a></li>
+                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend/role">List</a></li>
+                        </ul>
+                    </li>
+                    <li nav-id="modifier-manage" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Permission</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-manage-modifier"><a href="/backend/permission/create">Entry</a></li>
+                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend/permission">List</a></li>
+
+                        </ul>
+                    </li>
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Staff</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/user/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/user">List</a></li>
+                        </ul>
+                    </li>
+                    <li nav-id="">
+                        <a href="/backend/config">
+                            <b class="caret pull-right"></b>
+                            <span>Site Config</span>
+                        </a>
+                    </li>
+
+                </ul>
+
+            </li>
+            <li  nav-id='modifier'  class="has-sub">
+                <a href="javascript:;">
+                    <b class="caret pull-right"></b>
+                    <i class="fa fa-gears"></i>
+                    <span>{{trans('menu.group-developer')}}</span>
+                </a>
+                <ul class="sub-menu">
+                    <li nav-id="modifier-manage" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Reference</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="systemreference"><a href="/backend/systemreference">System Reference</a></li>
+                        </ul>
+                    </li>
+
+                    <li nav-id="modifier-manage" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Samples</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="samples_googlemap"><a href="/samples/googlemap">Google Map Sample</a></li>
                         </ul>
                     </li>
                 </ul>
