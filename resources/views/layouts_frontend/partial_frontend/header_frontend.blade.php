@@ -51,6 +51,8 @@ $companyLogo = \App\Core\Check::companyLogo();
     <script src="shared/js/jquery.js"></script>
     <script src="/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
 
+    {{--<script src="http://maps.google.com/maps/api/js?key=AIzaSyAJLUg2IEbAOp4gMqRoXpSnjV0w1FDfYNk&sensor=false" type="text/javascript"></script>--}}
+
 </head>
 
 <body>

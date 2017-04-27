@@ -10,6 +10,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/search_result', 'Frontend\SearchController@index');
     Route::get('test','Frontend\HomeController@test');
     Route::get('lang/{lang}','Language\LanguageController@getLanguage');
+    Route::get('/getlocations/{destination}', array('as'=>'/getlocations', 'uses'=>'Frontend\SearchController@getLocations'));
 
     //Backend
     Route::group(['prefix' => 'backend'], function () {
