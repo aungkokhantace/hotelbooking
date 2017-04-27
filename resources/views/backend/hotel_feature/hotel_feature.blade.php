@@ -94,6 +94,17 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="open_hour">{{trans('setup_hotelfeature.area')}}<span class="require">*</span></label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <input type="text" class="form-control" id="area" name="area"
+                   placeholder="Enter Area" value="{{ isset($hotel_feature)? $hotel_feature->area:Request::old('area')}}"/>
+            <p class="text-danger">{{$errors->first('area')}}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="open_hour">{{trans('setup_hotelfeature.open')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -146,10 +157,20 @@
                 rules: {
                     hotel_id      : 'required',
                     feature_id    : 'required',
+                    qty           : 'required',
+                    capacity      : 'required',
+                    area          : 'required',
+                    open_hour     : 'required',
+                    close_hour    : 'required',
                 },
                 messages: {
                     hotel_id      : 'Hotel is required',
                     feature_id    : 'Feature is required',
+                    qty           : 'Quantity is required',
+                    capacity      : 'Capacity is required',
+                    area          : 'Area is required',
+                    open_hour     : 'Open Hour is required',
+                    close_hour    : 'Close Hour is required',
                 },
                 submitHandler: function(form) {
                     $('input[type="submit"]').attr('disabled','disabled');

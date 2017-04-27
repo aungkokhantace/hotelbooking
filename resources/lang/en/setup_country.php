@@ -16,5 +16,6 @@ return [
     'btn-cancel'            => 'CANCEL',
     'title-list'            => 'Country Listing',
     'tb-col-name'           => 'Country Name',
+    'tb-col-description'    => 'Country Description',
 
 ];

@@ -37,21 +37,18 @@
             <div class="listing">
                 <input type="hidden" id="pageSearchedValue" name="pageSearchedValue" value="">
                 <table class="table table-striped list-table" id="list-table">
-
                     <thead>
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
-
                         <th>{{trans('setup_country.tb-col-name')}}</th>
-
+                        <th>{{trans('setup_country.tb-col-description')}}</th>
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
                         <th></th>
-
                         <th class="search-col" con-id="display_name">{{trans('setup_country.tb-col-name')}}</th>
-
+                        <th class="search-col" con-id="display_name">{{trans('setup_country.tb-col-description')}}</th>
                     </tr>
                     </tfoot>
                     <tbody>
@@ -59,7 +56,7 @@
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $country->id }}" id="all"></td>
                             <td><a href="/backend/country/edit/{{$country->id}}">{{$country->name}}</a></td>
-
+                            <td>{{$country->description}}</td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -87,7 +84,7 @@
                     [5,25, 50, 100, 200, "All"]
                 ],
                 iDisplayLength: 5,
-                "order": [[ 2, "desc" ]],
+                "order": [[ 1, "desc" ]],
                 stateSave: false,
                 "pagingType": "full",
                 "dom": '<"pull-right m-t-20"i>rt<"bottom"lp><"clear">',

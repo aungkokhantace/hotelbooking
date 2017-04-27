@@ -26,14 +26,24 @@ class HotelFeatureEditRequest extends Request
         return [
             'hotel_id'      => 'required',
             'feature_id'    => 'required',
+            'qty'           => 'required',
+            'capacity'      => 'required',
+            'area'          => 'required',
+            'open_hour'     => 'required',
+            'close_hour'    => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-            'hotel_id.required'      => 'Hotel is required!',
-            'feature_id.required'    => 'Feature is required!',
+            'hotel_id.required'     => 'Hotel is required!',
+            'feature_id.required'   => 'Feature is required!',
+            'qty'                   => 'Quantity is required',
+            'capacity'              => 'Capacity is required',
+            'area'                  => 'Area is required',
+            'open_hour'             => 'Open hour is required',
+            'close_hour'            => 'Close hour is required',
         ];
     }
 }

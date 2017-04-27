@@ -31,5 +31,5 @@ return [
     'tb-col-capacity'       => 'Capacity - JP',
     'tb-col-open'           => 'Open Hour - JP',
     'tb-col-close'          => 'Close Hour - JP',
-
+    'area'                  => 'Area - JP',
 ];

@@ -16,5 +16,6 @@ return [
     'btn-cancel'            => '取消',
     'title-list'            => 'Country Listing - JP',
     'tb-col-name'           => 'Country Name - JP',
+    'tb-col-description'    => 'Country Description - JP',
 
 ];

@@ -31,5 +31,6 @@ return [
     'tb-col-capacity'       => 'Capacity',
     'tb-col-open'           => 'Open Hour',
     'tb-col-close'          => 'Close Hour',
+    'area'                  => 'Area',
 
 ];
