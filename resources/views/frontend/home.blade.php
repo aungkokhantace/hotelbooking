@@ -45,6 +45,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-plane" aria-hidden="true"></i>
                             </div>
+                            <p class="text-danger">{{$errors->first('destination')}}</p>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -330,6 +331,19 @@
 @section('page_script')
     <script type="text/javascript" language="javascript" class="init">
         $(document).ready(function() {
+            $('#search').validate({
+                rules: {
+                    destination                    : 'required',
+                },
+                messages: {
+                    destination                    : 'Destination is required',
+                },
+                submitHandler: function(form) {
+                    $('input[type="submit"]').attr('disabled','disabled');
+                    form.submit();
+                }
+            });
+
             $('#check_in').datepicker({
                 format: 'dd-mm-yyyy',
                 autoclose: true,

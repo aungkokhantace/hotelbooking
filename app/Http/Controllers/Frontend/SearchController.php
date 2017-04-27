@@ -110,6 +110,28 @@ class SearchController extends Controller
 
         //end suggested hotels
 
-        return view('frontend.searchresult')->with('hotels', $hotels)->with('suggestedHotels', $suggestedHotels);
+        return view('frontend.searchresult')
+            ->with('hotels', $hotels)
+            ->with('suggestedHotels', $suggestedHotels)
+            ->with('destination', $destination);
+    }
+
+    public function getLocations($destination)
+    {
+        //start hotel search result
+        $hotelRepo  = new HotelRepository();
+        $hotels     = $hotelRepo->getHotelsByDestination($destination); //search hotel by destination keyword
+
+        $result     = array();
+        $index      = 0;
+        foreach($hotels as $hotel){
+            $result[$index][0] = '<b>'.$hotel->name.'</b>'.'<a href="/"><img src="/images/upload/'.$hotel->logo.'" style="width:300px;height:180px;"></a>';
+            $result[$index][1] = $hotel->latitude;
+            $result[$index][2] = $hotel->longitude;
+            $index++;
+        }
+        //end hotel search result
+
+        return response()->json($result);
     }
 }

@@ -162,16 +162,17 @@
                     </div>
                 </div>
 
+                <input type="hidden" id="searched_destination" name="searched_destination" value="{{isset($destination)? $destination:''}}"/>
+
                 <!-- Blog Entries Column -->
                 <div class="col-md-9 search_list">
                     <!-- First Blog Post -->
                     @if(count($hotels)>1)
-                        <h2>Yangon: {{count($hotels)}} properties found</h2>
+                        <h2>{{isset($destination) && $destination != "" ? $destination:'Destination'}} : {{count($hotels)}} properties found</h2>
                     @else
-                        <h2>Yangon: {{count($hotels)}} property found</h2>
+                        <h2>{{isset($destination) && $destination != "" ? $destination:'Destination'}} : {{count($hotels)}} property found</h2>
                     @endif
 
-                    {{ isset($hotel)? $hotel->name:Request::old('name') }}
                     <p class="lead">
                         3 Reasons to Visit: people watching, local food & shopping
                     </p>
@@ -302,9 +303,14 @@
                                 </div>
                                 <!--Map-->
                                 <div class="tab-pane fade" id="service-two">
-                                    <div class="blog">
-                                        <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d244315.84058469086!2d96.1695098!3d16.903821!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2smm!4v1490344960699" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                                    {{--<div class="blog">--}}
+                                        {{--<iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d244315.84058469086!2d96.1695098!3d16.903821!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2smm!4v1490344960699" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>--}}
+                                    {{--</div>--}}
+                                    <br>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div id="map" style="width: 100%; height: 450px;"></div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -318,8 +324,61 @@
 @stop
 
 @section('page_script')
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyAJLUg2IEbAOp4gMqRoXpSnjV0w1FDfYNk&sensor=false" type="text/javascript"></script>
     <script type="text/javascript" language="javascript" class="init">
         $(document).ready(function() {
+            //to display google map after changing bootstrap tab
+            $("a[href='#service-two']").on('shown.bs.tab', function(){
+                google.maps.event.trigger(map, 'resize');
+
+                //init function after tab opens
+                var destination = $("#searched_destination").val();
+                setTimeout(executeQuery(destination), 3000);
+            });
+
+//            //init function
+//            google.maps.event.trigger(map, 'resize');
+//            var destination = $("#searched_destination").val();
+//            setTimeout(executeQuery(destination), 3000);
         });
+
+        function executeQuery(destination) {
+            $.ajax({
+                url: 'getlocations/'+destination,
+                success: function(data) {
+                    console.log(data);
+                    locations = data;
+                    renderMap(locations);
+                }
+            });
+        }
+
+        function renderMap(locations) {
+//            google.maps.event.trigger(map, 'resize');
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 10,
+//                center: new google.maps.LatLng(16.8978811, 96.17212638),
+                center: new google.maps.LatLng(locations[0][1], locations[0][2]), //dynamic center point
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+
+            var infowindow = new google.maps.InfoWindow();
+
+            var marker, i;
+
+            for (i = 0; i < locations.length; i++) {
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                    map: map
+                });
+
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    return function () {
+                        infowindow.setContent(locations[i][0]);
+                        infowindow.open(map, marker);
+                    }
+                })(marker, i));
+            }
+        }
     </script>
 @stop
