@@ -76,7 +76,9 @@
 <!-- Bootstrap Date-Picker Plugin -->
 <script type="text/javascript" src="shared/js/bootstrap-datepicker.min.js"></script>
 
-<script src="/assets/js/validation/jquery.validate.js"></script>
+<!-- Jquery Validation -->
+<script src="shared/js/validation/jquery.validate.js"></script>
+<script src="shared/js/validation/additional-methods.js"></script>
 
 <script>
     $(document).ready(function() {

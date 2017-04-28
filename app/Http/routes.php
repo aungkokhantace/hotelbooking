@@ -8,6 +8,15 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/autocompletedestination', 'Frontend\HomeController@autocompleteDestination');
     Route::post('/search', 'Frontend\SearchController@search');
     Route::get('/search_result', 'Frontend\SearchController@index');
+
+    //User(Customer Registration)
+    Route::get('register','Frontend\UserRegistrationController@create');
+    Route::post('register','Frontend\UserRegistrationController@store');
+    Route::get('register/check_email', ['as' => 'register/check_email', 'uses' => 'Frontend\UserRegistrationController@check_email']);
+    //Authentication
+    Route::get('login','Frontend\LoginController@showLogin');
+    Route::post('login','Frontend\LoginController@doLogin');
+    Route::get('logout','Frontend\LoginController@logout');
     Route::get('test','Frontend\HomeController@test');
     Route::get('lang/{lang}','Language\LanguageController@getLanguage');
     Route::get('/getlocations/{destination}', array('as'=>'/getlocations', 'uses'=>'Frontend\SearchController@getLocations'));

@@ -37,7 +37,7 @@ return [
     'btn-update'            => 'UPDATE - JP',
     'btn-cancel'            => 'CANCEL - JP',
     'btn-image'             => 'Add Image - JP',
-    'title-list'            => 'Hotel Restaurant Listing - JP',
+    'title-list'            => 'Hotel Room Category Listing - JP',
     'tb-col-hotel'          => 'Hotel - JP',
     'tb-col-room-type'      => 'Room Type - JP',
     'tb-col-name'           => 'Name - JP',
