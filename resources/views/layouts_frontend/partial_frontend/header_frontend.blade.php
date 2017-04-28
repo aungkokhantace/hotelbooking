@@ -92,7 +92,10 @@ $companyLogo = \App\Core\Check::companyLogo();
                             <div class="login">
                                 <ul>
                                     <li style="text-decoration:underline;">
-                                        <a href="contact.html">Login<span class="glyphicon glyphicon-arrow-right"></span></a>
+                                        <a href="{{\Illuminate\Support\Facades\Session::has('customer')?'\logout':'\login'}}">
+                                            {{\Illuminate\Support\Facades\Session::has('customer')?'Logout':'Login'}}
+                                            <span class="glyphicon glyphicon-arrow-right"></span>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>

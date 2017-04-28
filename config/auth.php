@@ -54,6 +54,10 @@ return [
             'driver' => 'session',
             'provider'=> 'users',
         ],
+        'Customer' =>[
+            'driver' => 'session',
+            'provider' => 'customer',
+        ]
 
 
     ],
@@ -83,6 +87,10 @@ return [
         'roles' => [
             'driver' => 'eloquent',
             'model' => App\Core\Role\Role::class,
+        ],
+        'customer' =>[
+            'driver' =>'eloquent',
+            'model' => App\User::class,
         ],
 
 

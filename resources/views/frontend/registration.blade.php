@@ -16,14 +16,11 @@
                     </div>
                     <h2>Create Account</h2>
 
-                    {!! Form::open(array('url' => '/store', 'class'=> 'form-horizontal', 'id'=>'customer')) !!}
+                    {!! Form::open(array('url' => '/register', 'class'=> 'form-horizontal', 'id'=>'registration')) !!}
 
                         <div class="formgroup">
                             <div class="col-sm-6 pd_rg_10">
-                                <input type="text" class="formcontrols" id="first_name" placeholder="First Name"
-                                       name="first_name"
-                                       data-validation-required-message=
-                                       "You must agree to the terms and conditions>
+                                <input type="text" class="formcontrols" id="first_name" placeholder="First Name" name="first_name">
                             </div>
                             <div class="col-sm-6 pd_lf_5">
                                 <input type="text" class="formcontrols" id="last_name" placeholder="Last Name" name="last_name">
@@ -74,20 +71,59 @@
 @section('page_script')
 
     <script>
-        $(function () { $("input,select,textarea").not("[type=submit]").jqBootstrapValidation(); } );
-    </script>
-
-    <script>
         $(document).ready(function() {
-            $('#datePicker')
-                    .datepicker({
-                        autoclose: true,
-                        format: 'mm/dd/yyyy'
-                    })
-                    .on('changeDate', function(e) {
-                        // Revalidate the date field
-                        $('#eventForm').formValidation('revalidateField', 'date');
-                    });
+            $('#registration').validate({
+                rules: {
+                    first_name          : 'required',
+                    last_name           : 'required',
+                    email   	        : {
+                        required 	: true,
+                        email	 	: true,
+                        remote: {
+                            url: "{{route('register/check_email')}}",
+                            type: "get",
+                            data:
+                            {
+                                email: function()
+                                {
+                                    return $('#email').val();
+                                }
+                            }
+                        }
+                    },
+                    password            : {
+                        required  : true,
+                        minlength : 6
+                    },
+                    confirm_password    : {
+                        required  : true,
+                        minlength : 6,
+                        equalTo   : "#password"
+                    }
+                },
+                messages: {
+                    first_name          : 'Require!',
+                    last_name           : 'Require!',
+                    email     	        : {
+                        required 	: 'Require!',
+                        email 	 	: 'Email is invalid format',
+                        remote		: jQuery.validator.format("{0} is already taken.")
+                    },
+                    password            : {
+                        required  : 'Require!',
+                        minlength : 'Password must be at least 6 characters'
+                    },
+                    confirm_password    : {
+                        required  : 'Please retype your password!',
+                        minlength : 'Retyped Password must be at least 6 characters',
+                        equalTo   : "Password and Retyped Password must match"
+                    }
+                },
+                submitHandler: function(form) {
+                    $('input[type="submit"]').attr('disabled','disabled');
+                    form.submit();
+                }
+            });
         });
     </script>
 

@@ -115,4 +115,11 @@ class Check
         session(['permissions' => $permissions]);
     }
 
+    public static function createSessionCustomer($id){
+        $repo         = new UserRepository();
+        $tempCustomer = $repo->getObjByID($id);
+        session(['customer' =>$tempCustomer->toArray()]);
+    }
+
+
 }

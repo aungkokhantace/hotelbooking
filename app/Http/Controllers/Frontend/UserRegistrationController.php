@@ -39,4 +39,15 @@ class UserRegistrationController extends Controller
         return redirect('/');
 
     }
+
+    public function check_email(){
+        $email      = Input::get('email');
+        $customer   = User::where('email','=',$email)->whereNull('deleted_at')->get();
+        $result     = false;
+        if(count($customer) == 0 ){
+            $result = true;
+        }
+
+        return \Response::json($result);
+    }
 }
