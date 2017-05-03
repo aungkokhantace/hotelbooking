@@ -96,6 +96,8 @@
                     <!-- Blog Search Well -->
                     <div class="bg_block_sm pd_10">
 
+                        <input type="hidden" id="token" name="token" value="{{ csrf_token() }}">
+
                         <div class="side_title">
                             <h5>Search Hotel</h5>
                         </div>
@@ -141,7 +143,8 @@
                         </div>
                         <div class="list_style">
                             @foreach($facilities as $facility)
-                                <input type="checkbox" class="filter_checkbox" name="facility_filter[{{$facility->id}}]" value="{{$facility->id}}" @if(Session::has('facility_filter') && in_array($facility->id,session('facility_filter'))) checked @endif> <span> {{$facility->name}}</span><br>
+                                {{--<input type="checkbox" class="filter_checkbox" name="facility_filter[{{$facility->id}}]" value="{{$facility->id}}" @if(Session::has('facility_filter') && in_array($facility->id,session('facility_filter'))) checked @endif> <span> {{$facility->name}}</span><br>--}}
+                                <input type="checkbox" class="filter_checkbox" name="facility_filter[]" value="{{$facility->id}}" @if(Session::has('facility_filter') && in_array($facility->id,session('facility_filter'))) checked @endif> <span> {{$facility->name}}</span><br>
                             @endforeach
                         </div>
                     </div>
@@ -325,13 +328,39 @@
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyAJLUg2IEbAOp4gMqRoXpSnjV0w1FDfYNk&sensor=false" type="text/javascript"></script>
     <script type="text/javascript" language="javascript" class="init">
         $(document).ready(function() {
+
             //to display google map after changing bootstrap tab
             $("a[href='#service-two']").on('shown.bs.tab', function(){
                 google.maps.event.trigger(map, 'resize');
 
                 //init function after tab opens
-                var destination = $("#searched_destination").val();
-                setTimeout(executeQuery(destination), 3000);
+                var destination = $("#searched_destination").val(); //get destination
+
+                //get price filter
+                var price_filter = [];
+                $("input:checkbox[name='price_filter[]']:checked").each(function(){
+                    price_filter.push($(this).val());
+                });
+
+                //get star filter
+                var star_filter = [];
+                $("input:checkbox[name='star_filter[]']:checked").each(function(){
+                    star_filter.push($(this).val());
+                });
+
+                //get facility filter
+                var facility_filter = [];
+                $("input:checkbox[name='facility_filter[]']:checked").each(function(){
+                    facility_filter.push($(this).val());
+                });
+
+                //get landmark filter
+                var landmark_filter = [];
+                $("input:checkbox[name='landmark_filter[]']:checked").each(function(){
+                    landmark_filter.push($(this).val());
+                });
+
+                setTimeout(executeQuery(destination,price_filter,star_filter,facility_filter,landmark_filter), 3000);
             });
 
 //            //init function
@@ -401,9 +430,30 @@
 
         });
 
-        function executeQuery(destination) {
+        function executeQuery(destination,price_filter,star_filter,facility_filter,landmark_filter) {
+            var parameters = $(this).serializeArray();
+//            var destination_string = JSON.stringify(a);
+            parameters.push({name: '_token', value: $('#token').val()});
+
+            parameters.push({name: 'destination', value: destination});
+
+            var price_filter_string = JSON.stringify(price_filter);
+            parameters.push({name: 'price_filter', value: price_filter_string});
+
+            var star_filter_string = JSON.stringify(star_filter);
+            parameters.push({name: 'star_filter', value: star_filter_string});
+
+            var facility_filter_string = JSON.stringify(facility_filter);
+            parameters.push({name: 'facility_filter', value: facility_filter_string});
+
+            var landmark_filter_string = JSON.stringify(landmark_filter);
+            parameters.push({name: 'landmark_filter', value: landmark_filter_string});
+
             $.ajax({
-                url: 'getlocations/'+destination,
+//                url: 'getlocations/'+destination,
+                url: '/getlocations',
+                data: parameters,
+                type: "post",
                 success: function(data) {
                     locations = data;
                     renderMap(locations);

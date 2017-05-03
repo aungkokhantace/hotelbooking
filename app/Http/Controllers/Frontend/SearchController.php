@@ -181,11 +181,26 @@ class SearchController extends Controller
             ->with('landmarks', $landmarks);
     }
 
-    public function getLocations($destination)
+    public function getLocations()
     {
+        //get parameters
+        $destination     = (Input::has('destination')) ? Input::get('destination') : "";
+        $price_filter    = (Input::has('price_filter')) ? Input::get('price_filter') : "";
+        $star_filter     = (Input::has('star_filter')) ? Input::get('star_filter') : "";
+        $facility_filter = (Input::has('facility_filter')) ? Input::get('facility_filter') : "";
+        $landmark_filter = (Input::has('landmark_filter')) ? Input::get('landmark_filter') : "";
+
+        //convert string parameters from ajax call back to array format (only parameters that are JSON.stringify)
+        $price_filter = json_decode($price_filter, true);
+        $star_filter  = json_decode($star_filter, true);
+        $facility_filter = json_decode($facility_filter, true);
+        $landmark_filter = json_decode($landmark_filter, true);
+
         //start hotel search result
         $hotelRepo  = new HotelRepository();
-        $hotels     = $hotelRepo->getHotelsByDestination($destination); //search hotel by destination keyword
+//        $hotels     = $hotelRepo->getHotelsByDestination($destination); //search hotel by destination keyword
+
+        $hotels     = $hotelRepo->getHotelsByFilters($destination,$price_filter,$star_filter,$facility_filter,$landmark_filter); //search hotel by filters
 
         $result     = array();
         $index      = 0;

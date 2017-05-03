@@ -19,7 +19,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('logout','Frontend\LoginController@logout');
     Route::get('test','Frontend\HomeController@test');
     Route::get('lang/{lang}','Language\LanguageController@getLanguage');
-    Route::get('/getlocations/{destination}', array('as'=>'/getlocations', 'uses'=>'Frontend\SearchController@getLocations'));
+//    Route::get('/getlocations/{destination}', array('as'=>'/getlocations', 'uses'=>'Frontend\SearchController@getLocations'));
+    Route::post('/getlocations', array('as'=>'/getlocations', 'uses'=>'Frontend\SearchController@getLocations'));
 
     //Backend
     Route::group(['prefix' => 'backend'], function () {
