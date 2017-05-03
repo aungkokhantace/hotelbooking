@@ -24,3 +24,7 @@
 .ui-autocomplete {
     z-index:600 !important;
 }
+
+.modal-dialog {
+    margin-top: 10% !important;
+}

@@ -37,6 +37,7 @@
         <div class="container">
             <div class="col-md-4 form">
                 <h2>Search Hotel</h2>
+
                 {!! Form::open(array('url' => '/search','files'=>true, 'id'=>'search', 'class'=> 'form-horizontal user-form-border')) !!}
                     <div class="form-group row">
                         <label class="control-label" for="destination">Destination</label>
@@ -91,6 +92,28 @@
         </div>
     </div>
     </section>
+
+    <!-- Start Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Sorry but your session has expired</h4>
+                </div>
+                <div class="modal-body">
+                    <p>You can return to the previous page or search additional properties.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- End Modal -->
 
     <section id="popular">
         <div class="container">
@@ -330,8 +353,18 @@
 @stop
 
 @section('page_script')
+    @if(!empty(Session::get('session_expired')) && Session::get('session_expired') == true)
+        <script>
+            $(function() {
+                $('#myModal').modal('show');
+            });
+        </script>
+    @endif
+
     <script type="text/javascript" language="javascript" class="init">
         $(document).ready(function() {
+//            $('#myModal').modal('show');
+
             $('#search').validate({
                 rules: {
                     destination                    : 'required',

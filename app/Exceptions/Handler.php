@@ -3,6 +3,10 @@
 namespace App\Exceptions;
 
 use Exception;
+
+use Illuminate\Http\Exception\HttpResponseException;
+use Illuminate\Session\TokenMismatchException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -45,6 +49,24 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if(!($e instanceof HttpResponseException)){         //for email format validation case, if email format is not valid, redirect to create form
+            if (Auth::guard('User')->check()) {
+                return response()->view('core.error.pagenotfound', ['e'=>$e], 404);
+            }
+            else{
+                if ($e instanceof \Illuminate\Session\TokenMismatchException)
+                {
+                    return redirect()
+                        ->back()
+                        ->withInput($request->except('_token'))
+                        ->with([
+                            'session_expired' => true
+                        ]);
+                }
+                return response()->view('core.error.pagenotfound_frontend', ['e'=>$e], 404);
+            }
+        }
+
         return parent::render($request, $e);
     }
 }
