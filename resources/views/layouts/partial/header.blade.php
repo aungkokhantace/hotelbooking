@@ -85,6 +85,7 @@ $companyLogo = \App\Core\Check::companyLogo();
 
     <script src="/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="/assets/plugins/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+    <script src="/assets/plugins/bootstrap-checkbox-1.4.0/js/bootstrap-checkbox.js"></script>
 
     <script>
         $(document).ready(function() {

@@ -85,6 +85,7 @@
                     <div class="form-group row">
                         <button type="submit" class="btn btn-default">Search Hotel Now</button>
                     </div>
+{{--                @include('layouts_frontend.partial_frontend.search_form')--}}
                 {!! Form::close() !!}
             </div>
         </div>

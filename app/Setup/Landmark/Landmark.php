@@ -23,4 +23,9 @@ class Landmark extends Model
     {
         return $this->belongsTo('App\Setup\Township\Township','township_id','id');
     }
+
+    public function hotel()
+    {
+        return $this->belongsTo('App\Setup\Hotel\Hotel','hotel_id','id');
+    }
 }

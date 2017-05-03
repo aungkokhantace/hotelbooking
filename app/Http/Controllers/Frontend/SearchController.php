@@ -12,9 +12,11 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
+use App\Setup\Facilities\FacilitiesRepository;
 use App\Setup\Hotel\Hotel;
 use App\Setup\Hotel\HotelRepository;
 use App\Setup\HotelRoomCategory\HotelRoomCategoryRepository;
+use App\Setup\Landmark\LandmarkRepository;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -40,16 +42,68 @@ class SearchController extends Controller
 
     public function search(Request $request)
     {
-        $destination    = (Input::has('destination')) ? Input::get('destination') : "";
-        $check_in       = (Input::has('check_in')) ? Input::get('check_in') : "";
-        $check_out      = (Input::has('check_out')) ? Input::get('check_out') : "";
-        $room           = (Input::has('destination')) ? Input::get('room') : "";
-        $adults         = (Input::has('adults')) ? Input::get('adults') : "";
-        $children       = (Input::has('children')) ? Input::get('children') : "";
+        $destination     = (Input::has('destination')) ? Input::get('destination') : "";
+        $check_in        = (Input::has('check_in')) ? Input::get('check_in') : "";
+        $check_out       = (Input::has('check_out')) ? Input::get('check_out') : "";
+        $room            = (Input::has('room')) ? Input::get('room') : "";
+        $adults          = (Input::has('adults')) ? Input::get('adults') : "";
+        $children        = (Input::has('children')) ? Input::get('children') : "";
+
+        $price_filter    = (Input::has('price_filter')) ? Input::get('price_filter') : "";
+        $star_filter     = (Input::has('star_filter')) ? Input::get('star_filter') : "";
+        $facility_filter = (Input::has('facility_filter')) ? Input::get('facility_filter') : "";
+        $landmark_filter = (Input::has('landmark_filter')) ? Input::get('landmark_filter') : "";
+
+        Session::forget('destination');
+        Session::forget('check_in');
+        Session::forget('check_out');
+        Session::forget('room');
+        Session::forget('adults');
+        Session::forget('children');
+        Session::forget('price_filter');
+        Session::forget('star_filter');
+        Session::forget('facility_filter');
+        Session::forget('landmark_filter');
+
+        if(isset($destination) && $destination != null && $destination != ""){
+            session(['destination' => $destination]);
+        }
+        if(isset($check_in) && $check_in != null && $check_in != ""){
+            session(['check_in' => $check_in]);
+        }
+        if(isset($check_out) && $check_out != null && $check_out != ""){
+            session(['check_out' => $check_out]);
+        }
+        if(isset($room) && $room != null && $room != ""){
+            session(['room' => $room]);
+        }
+        if(isset($adults) && $adults != null && $adults != ""){
+            session(['adults' => $adults]);
+        }
+        if(isset($children) && $children != null && $children != ""){
+            session(['children' => $children]);
+        }
+        if(isset($price_filter) && $price_filter != null && $price_filter != ""){
+            session(['price_filter' => $price_filter]);
+        }
+        if(isset($star_filter) && $star_filter != null && $star_filter != ""){
+            session(['star_filter' => $star_filter]);
+        }
+        if(isset($facility_filter) && $facility_filter != null && count($facility_filter)>0){
+            foreach($facility_filter as $facility){
+                Session::push('facility_filter',$facility);
+            }
+        }
+        if(isset($landmark_filter) && $landmark_filter != null && count($landmark_filter)>0){
+            foreach($landmark_filter as $landmark){
+                Session::push('landmark_filter',$landmark);
+            }
+        }
 
         //start hotel search result
         $hotelRepo  = new HotelRepository();
-        $hotels     = $hotelRepo->getHotelsByDestination($destination); //search hotel by destination keyword
+//        $hotels     = $hotelRepo->getHotelsByDestination($destination); //search hotel by destination keyword
+        $hotels     = $hotelRepo->getHotelsByFilters($destination,$price_filter,$star_filter,$facility_filter,$landmark_filter); //search hotel by filters
 
         $hRoomCategoryRepo = new HotelRoomCategoryRepository();
         foreach($hotels  as $hotel){
@@ -107,13 +161,24 @@ class SearchController extends Controller
                 $sugg_hotel->room_type = null;
             }
         }
-
         //end suggested hotels
+
+        //start getting facilities
+        $facilityRepo = new FacilitiesRepository();
+        $facilities   = $facilityRepo->getObjs();
+        //end getting facilities
+
+        //start getting landmarks
+        $landmarkRepo = new LandmarkRepository();
+        $landmarks    = $landmarkRepo->getObjs();
+        //end getting landmarks
 
         return view('frontend.searchresult')
             ->with('hotels', $hotels)
             ->with('suggestedHotels', $suggestedHotels)
-            ->with('destination', $destination);
+            ->with('destination', $destination)
+            ->with('facilities', $facilities)
+            ->with('landmarks', $landmarks);
     }
 
     public function getLocations($destination)
@@ -124,8 +189,25 @@ class SearchController extends Controller
 
         $result     = array();
         $index      = 0;
+
+        $hRoomCategoryRepo = new HotelRoomCategoryRepository();
+
         foreach($hotels as $hotel){
-            $result[$index][0] = '<b>'.$hotel->name.'</b>'.'<a href="/"><img src="/images/upload/'.$hotel->logo.'" style="width:300px;height:180px;"></a>';
+            //start getting minimum price for each hotel
+            $minRoomCategoryPrice = $hRoomCategoryRepo->getMinPriceByHotelId($hotel->id);
+            if(isset($minRoomCategoryPrice) && $minRoomCategoryPrice != null){
+                $hotel->min_price = 'MMK '.$minRoomCategoryPrice; //get mininum price to show in search result
+            }
+            else{
+                $hotel->min_price = null; //set minimum price null
+            }
+
+            //end getting minimum price for each hotel
+
+            $result[$index][0] = '<a href="/"><img src="/images/upload/'.$hotel->logo.'" style="width:300px;height:180px;"></a>'.'<br/>'
+                                    .'<h3>'.$hotel->name.'</h3>'
+                                    .$hotel->address.'<br/>'
+                                    .'<b>'.$hotel->min_price.'</b>';
             $result[$index][1] = $hotel->latitude;
             $result[$index][2] = $hotel->longitude;
             $index++;
