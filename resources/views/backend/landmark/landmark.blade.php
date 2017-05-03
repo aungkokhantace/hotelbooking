@@ -54,7 +54,7 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="popular">{{trans('setup_landmark.Popular')}}</label>
+            <label for="popular">{{trans('setup_landmark.popular')}}</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             @if(isset($landmark))
@@ -64,7 +64,7 @@
             @endif
         </div>
     </div>
-
+    <br>
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="latitude">{{trans('setup_landmark.latitude')}}<span class="require">*</span></label>
@@ -140,6 +140,7 @@
             });
             //End Validation for Entry and Edit Form
 
+            $(':checkbox').checkboxpicker();
         });
 
 

@@ -47,4 +47,19 @@ class Hotel extends Model
     {
         return $this->belongsTo('App\Setup\Township\Township','township_id','id');
     }
+
+    public function h_room_category()
+    {
+        return $this->hasMany('App\Setup\HotelRoomCategory\HotelRoomCategory');
+    }
+
+    public function hotel_facility()
+    {
+        return $this->hasMany('App\Setup\HotelFacility\HotelFacility');
+    }
+
+    public function hotel_landmark()
+    {
+        return $this->hasMany('App\Setup\HotelLandmark\HotelLandmark');
+    }
 }
