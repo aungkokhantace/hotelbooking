@@ -13,8 +13,10 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
+//use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
+use Symfony\Component\HttpFoundation\Response;
+use Session;
 
 class LoginController extends Controller
 {
@@ -38,32 +40,34 @@ class LoginController extends Controller
     }
 
     public function doLogin(Request $request){
+        if($request->ajax()){
+            $input = Input::all();
+//            print_r($input);die();
+            if(count($input) > 0 ){
+                $auth = auth()->guard('Customer');
 
-        $input = Input::all();
-        if(count($input) > 0 ){
-            $auth = auth()->guard('Customer');
+                $credentials = [
+                    'email' => $input['email'],
+                    'password'=>$input['password'],
+                    'role_id'   => 4
+                ];
 
-            $credentials = [
-                'email' => $input['email'],
-                'password'=>$input['password'],
-                'role_id'   => 4
-            ];
-
-            if($auth->attempt($credentials)){
-                $id = Auth::guard('Customer')->id();
-                Check::createSessionCustomer($id);
-//                $url = Session::get('prev_url');
-//                dd($url);
-//                return redirect()->back();
-//                return redirect()->intended(Session::get('prev_url'));
-//                return Redirect::intended();
-                return Redirect::to(Session::get('prev_url'));
+                if($auth->attempt($credentials)){
+                    $id = Auth::guard('Customer')->id();
+                    Check::createSessionCustomer($id);
+                    $result = ['Status 200'];
+                }
+                else{
+                    $result = ['Status 401'];
+                    session(['auth-error' => 'The email address or password is incorrect!']);
+                }
+                return \Response::json($result);
 
             }else{
-                return redirect()->back()->withErrors('The email address or password is incorrect.');
+                $result = ['Status 401'];
+                return \Response::json($result);
+//                return view('frontend.login.index');
             }
-        }else{
-            return view('frontend.login.index');
         }
     }
 
