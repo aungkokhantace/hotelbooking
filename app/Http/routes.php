@@ -5,9 +5,16 @@ Route::group(['middleware' => 'web'], function () {
 
     //Frontend
     Route::get('/', 'Frontend\HomeController@index');
+
+    //for autocomplete destination in search form
     Route::get('/autocompletedestination', 'Frontend\HomeController@autocompleteDestination');
+
+    //search
     Route::post('/search', 'Frontend\SearchController@search');
     Route::get('/search_result', 'Frontend\SearchController@index');
+
+    //hotel detail
+    Route::get('/hotel_detail/{id}', 'Frontend\HotelDetailController@index');
 
     //User(Customer Registration)
     Route::get('register','Frontend\UserRegistrationController@create');

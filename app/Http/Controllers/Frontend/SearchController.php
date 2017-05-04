@@ -219,7 +219,7 @@ class SearchController extends Controller
 
             //end getting minimum price for each hotel
 
-            $result[$index][0] = '<a href="/"><img src="/images/upload/'.$hotel->logo.'" style="width:300px;height:180px;"></a>'.'<br/>'
+            $result[$index][0] = '<a href="/hotel_detail/'.$hotel->id.'"><img src="/images/upload/'.$hotel->logo.'" style="width:300px;height:180px;"></a>'.'<br/>'
                                     .'<h3>'.$hotel->name.'</h3>'
                                     .$hotel->address.'<br/>'
                                     .'<b>'.$hotel->min_price.'</b>';

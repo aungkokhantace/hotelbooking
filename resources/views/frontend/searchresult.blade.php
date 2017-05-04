@@ -2,7 +2,7 @@
 @section('title','Search Hotels')
 @section('content')
         <div id="header_id">
-            <img class="img-responsive img-hover" src="shared/images/slider1.png">
+            <img class="img-responsive img-hover" src="/assets/shared/images/slider1.png">
         </div>
     </div>
 
@@ -20,75 +20,6 @@
                             <h5>Search Hotel</h5>
                         </div>
                         <p></p>
-                        {{--{!! Form::open(array('url' => '/search','files'=>true, 'id'=>'search', 'class'=> 'form-horizontal user-form-border')) !!}--}}
-                            {{--<label class="control-label" for="destination">Destination</label>--}}
-                            {{--<div class="col-10 input-group">--}}
-                                {{--@if(Session::has('destination'))--}}
-                                    {{--<input class="form-control font_sz_11" type="text" id="destination" name="destination" value="{{session('destination')}}">--}}
-                                {{--@else--}}
-                                    {{--<input class="form-control font_sz_11" type="text" id="destination" name="destination" value="">--}}
-                                {{--@endif--}}
-                                {{--<div class="input-group-addon">--}}
-                                    {{--<i class="fa fa-plane" aria-hidden="true"></i>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<p></p>--}}
-                            {{--<label class="control-label" for="check_in">Check In</label>--}}
-                            {{--<div class="col-10 input-group date" data-provide="datepicker" id="check_in">--}}
-                                {{--@if(Session::has('check_in'))--}}
-                                    {{--<input type="text" class="form-control" name="check_in" value="{{session('check_in')}}">--}}
-                                {{--@else--}}
-                                    {{--<input type="text" class="form-control" name="check_in" value="">--}}
-                                {{--@endif--}}
-                                {{--<div class="input-group-addon">--}}
-                                    {{--<span class="glyphicon glyphicon-calendar"></span>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<label class="control-label" for="check_out">Check Out</label>--}}
-                            {{--<div class="col-10 input-group date" data-provide="datepicker" id="check_out">--}}
-                                {{--@if(Session::has('check_out'))--}}
-                                    {{--<input type="text" class="form-control" name="check_out" value="{{session('check_out')}}">--}}
-                                {{--@else--}}
-                                    {{--<input type="text" class="form-control" name="check_out" value="">--}}
-                                {{--@endif--}}
-                                {{--<div class="input-group-addon">--}}
-                                    {{--<span class="glyphicon glyphicon-calendar"></span>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<div class="row">--}}
-                                {{--<div class="col-sm-4 pd_rg_10">--}}
-                                    {{--<label class="control-label" for="check_out">Room</label>--}}
-                                    {{--@if(Session::has('room'))--}}
-                                        {{--<input type="number" id="room" class="floatLabel form-control" name="room" value="{{session('room')}}">--}}
-                                    {{--@else--}}
-                                        {{--<input type="number" id="room" class="floatLabel form-control" name="room" value="">--}}
-                                    {{--@endif--}}
-                                {{--</div>--}}
-                                {{--<div class="col-sm-4 pd_lf_5">--}}
-                                    {{--<label class="control-label" for="check_out">Adults</label>--}}
-                                    {{--@if(Session::has('adults'))--}}
-                                        {{--<input type="number" id="adults" class="floatLabel form-control" name="adults" value="{{session('adults')}}">--}}
-                                    {{--@else--}}
-                                        {{--<input type="number" id="adults" class="floatLabel form-control" name="adults" value="">--}}
-                                    {{--@endif--}}
-                                {{--</div>--}}
-                                {{--<div class="col-sm-4 pd_lf_5">--}}
-                                    {{--<label class="control-label" for="check_out">Children</label>--}}
-                                    {{--@if(Session::has('children'))--}}
-                                        {{--<input type="number" id="children" class="floatLabel form-control" name="children" value="{{session('children')}}">--}}
-                                    {{--@else--}}
-                                        {{--<input type="number" id="children" class="floatLabel form-control" name="children" value="">--}}
-                                    {{--@endif--}}
-
-                                {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<p></p>--}}
-                            {{--<div class="row">--}}
-                                {{--<div class="col-sm-12">--}}
-                                    {{--<button type="submit" class="btn btn-primary btn-xs">Search Hotel</button>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-
                         @include('layouts_frontend.partial_frontend.search_form')
                         <p></p>
                         {{--{!! Form::close() !!}--}}
@@ -196,11 +127,11 @@
                                     @foreach($hotels as $hotel)
                                         <div class="blog">
                                             <div class="left_img">
-                                                <img class="img-responsive img-hover" src="/images/upload/{{$hotel->logo}}" alt="">
+                                                <a href="/hotel_detail/{{$hotel->id}}"><img class="img-responsive img-hover" src="/images/upload/{{$hotel->logo}}" alt=""></a>
                                             </div>
                                             <div class="left_blog">
                                                 <div class="lead_left">
-                                                    <h4>{{$hotel->name}}</h4>
+                                                    <a href="/hotel_detail/{{$hotel->id}}"><h4>{{$hotel->name}}</h4></a>
                                                     <p class="lead">
                                                         <i class="fa fa-map-marker" aria-hidden="true"></i>   {{$hotel->township->name}}, {{$hotel->city->name}}
                                                     </p>
@@ -252,11 +183,11 @@
                                     @foreach($suggestedHotels as $suggestedHotelhotel)
                                         <div class="blog">
                                             <div class="left_img">
-                                                <img class="img-responsive img-hover" src="/images/upload/{{$suggestedHotelhotel->logo}}" alt="">
+                                                <a href="/hotel_detail/{{$suggestedHotelhotel->id}}"><img class="img-responsive img-hover" src="/images/upload/{{$suggestedHotelhotel->logo}}" alt=""></a>
                                             </div>
                                             <div class="left_blog">
                                                 <div class="lead_left">
-                                                    <h4>{{$suggestedHotelhotel->name}}</h4>
+                                                    <a href="/hotel_detail/{{$suggestedHotelhotel->id}}"><h4>{{$suggestedHotelhotel->name}}</h4></a>
                                                     <p class="lead">
                                                         <i class="fa fa-map-marker" aria-hidden="true"></i>   {{$suggestedHotelhotel->township->name}}, {{$suggestedHotelhotel->city->name}}
                                                     </p>

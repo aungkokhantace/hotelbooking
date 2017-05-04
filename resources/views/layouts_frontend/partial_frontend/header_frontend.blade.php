@@ -21,24 +21,24 @@ $companyLogo = \App\Core\Check::companyLogo();
     <title>Myanmar Polestar</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="shared/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/shared/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="shared/css/style.min.css" rel="stylesheet">
-    <link href="shared/css/createacc.css" rel="stylesheet">
-    <link href="shared/css/custom.css" rel="stylesheet">
+    <link href="/assets/shared/css/style.min.css" rel="stylesheet">
+    <link href="/assets/shared/css/createacc.css" rel="stylesheet">
+    <link href="/assets/shared/css/custom.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="shared/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/assets/shared/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700" rel="stylesheet">
 
     <!--Datepicker-->
-    <link rel="stylesheet" href="shared/css/bootstrap-datepicker3.css"/>
-    <link rel="stylesheet" href="shared/css/datepicker.min.css"/>
+    <link rel="stylesheet" href="/assets/shared/css/bootstrap-datepicker3.css"/>
+    <link rel="stylesheet" href="/assets/shared/css/datepicker.min.css"/>
 
     <!--font-awesome-->
-    <link rel="stylesheet" href="shared/css/font-awesome.css"/>
-    <link rel="stylesheet" href="shared/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/assets/shared/css/font-awesome.css"/>
+    <link rel="stylesheet" href="/assets/shared/css/font-awesome.min.css"/>
 
     <link media="all" type="text/css" rel="stylesheet" href="/assets/plugins/jquery-ui/themes/base/minified/jquery-ui.min.css">
 
@@ -50,7 +50,7 @@ $companyLogo = \App\Core\Check::companyLogo();
     <![endif]-->
 
 
-    <script src="shared/js/jquery.js"></script>
+    <script src="/assets/shared/js/jquery.js"></script>
     <script src="/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
 
     {{--<script src="http://maps.google.com/maps/api/js?key=AIzaSyAJLUg2IEbAOp4gMqRoXpSnjV0w1FDfYNk&sensor=false" type="text/javascript"></script>--}}
@@ -71,7 +71,7 @@ $companyLogo = \App\Core\Check::companyLogo();
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/"><img src="/shared/images/mplogo.png"></a>
+                    <a class="navbar-brand" href="/"><img src="/assets/shared/images/mplogo.png"></a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -107,10 +107,10 @@ $companyLogo = \App\Core\Check::companyLogo();
                             <div class="language">
                                 <ul>
                                     <li>
-                                        <a href="#"><img src="/shared/images/en_US.png"></a>
+                                        <a href="#"><img src="/assets/shared/images/en_US.png"></a>
                                     </li>
                                     <li style="text-decoration:underline;">
-                                        <a href="#"><img src="/shared/images/my_MM.png"></a>
+                                        <a href="#"><img src="/assets/shared/images/my_MM.png"></a>
                                     </li>
                                 </ul>
                             </div>

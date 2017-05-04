@@ -8,21 +8,21 @@
             <!-- Wrapper for slides -->
             <div class="carousel-inner">
                 <div class="item active">
-                    <div class="fill"><img src="shared/images/slider.png"></div>
+                    <div class="fill"><img src="/assets/shared/images/slider.png"></div>
                     <div class="carousel-caption">
                         <h1 class="container">Where your journey begins.</h1>
                         <p class="container">Discover your next great adventure, become an explorer to get started!</p>
                     </div>
                 </div>
                 <div class="item">
-                    <div class="fill"><img src="shared/images/slider.png"></div>
+                    <div class="fill"><img src="/assets/shared/images/slider.png"></div>
                     <div class="carousel-caption">
                         <h1 class="container">Where your journey begins.</h1>
                         <p class="container">Discover your next great adventure, become an explorer to get started!</p>
                     </div>
                 </div>
                 <div class="item">
-                    <div class="fill"><img src="shared/images/slider.png">
+                    <div class="fill"><img src="/assets/shared/images/slider.png">
                     </div>
                     <div class="carousel-caption">
                         <h1 class="container">Where your journey begins.</h1>
