@@ -16,6 +16,7 @@ $companyLogo = \App\Core\Check::companyLogo();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="_token" content="{!! csrf_token() !!}"/>
 
     <title>Myanmar Polestar</title>
 
@@ -54,6 +55,7 @@ $companyLogo = \App\Core\Check::companyLogo();
 
     {{--<script src="http://maps.google.com/maps/api/js?key=AIzaSyAJLUg2IEbAOp4gMqRoXpSnjV0w1FDfYNk&sensor=false" type="text/javascript"></script>--}}
 
+
 </head>
 
 <body>
@@ -91,13 +93,24 @@ $companyLogo = \App\Core\Check::companyLogo();
                             <a href="#">Contact Us</a>
                         </li>
                         <li>
+                            <a href="#">Register</a>
+                        </li>
+                        <li>
                             <div class="login">
                                 <ul>
                                     <li style="text-decoration:underline;">
-                                        <a href="{{\Illuminate\Support\Facades\Session::has('customer')?'\logout':'\login'}}">
-                                            {{\Illuminate\Support\Facades\Session::has('customer')?'Logout':'Login'}}
-                                            <span class="glyphicon glyphicon-arrow-right"></span>
-                                        </a>
+                                        @if(\Illuminate\Support\Facades\Session::has('customer'))
+                                            <a href="\logout">
+                                                Logout
+                                                <span class="glyphicon glyphicon-arrow-left"></span>
+                                            </a>
+                                        @else
+                                            <a href="#" data-toggle="modal" data-target="#loginModal">
+                                                Login
+                                                <span class="glyphicon glyphicon-arrow-right"></span>
+                                            </a>
+                                            @include('frontend.login')
+                                        @endif
                                     </li>
                                 </ul>
                             </div>

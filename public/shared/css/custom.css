@@ -24,3 +24,29 @@
 .ui-autocomplete {
     z-index:600 !important;
 }
+
+.close{
+    font-weight: bold;
+    opacity:2.2;
+    color: #D63090;
+}
+
+.modal-content-width{
+
+    /*background: none;*/
+    width: 66%;
+}
+
+.alert-danger {
+    color: #D63090;
+    font-size: 14px;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.alert {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}

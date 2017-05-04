@@ -14,8 +14,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('register','Frontend\UserRegistrationController@store');
     Route::get('register/check_email', ['as' => 'register/check_email', 'uses' => 'Frontend\UserRegistrationController@check_email']);
     //Authentication
-    Route::get('login','Frontend\LoginController@showLogin');
-    Route::post('login','Frontend\LoginController@doLogin');
+//    Route::get('login','Frontend\LoginController@showLogin');
+    Route::get('login','Frontend\LoginController@doLogin');
     Route::get('logout','Frontend\LoginController@logout');
     Route::get('test','Frontend\HomeController@test');
     Route::get('lang/{lang}','Language\LanguageController@getLanguage');
