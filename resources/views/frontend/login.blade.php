@@ -7,12 +7,12 @@
                             <div class="col-sm-6 col-md-4 create_form">
                                 <button type="button" class="close" data-dismiss="modal">&bigotimes;</button>
                                 <div class="imgcontainer">
-                                    <img src="shared/images/Edit.png">
+                                    <img src="/assets/shared/images/Edit.png">
                                 </div>
                                 <h2>Login</h2>
 
                                 <div id="show-error" class="col-sm-12"></div>
-                                {!! Form::open(array('url' => '/login', 'class'=> 'form-horizontal', 'id'=>'login','method'=>'get')) !!}
+                                {!! Form::open(array('url' => '/login', 'class'=> 'form-horizontal', 'id'=>'login')) !!}
 
                                 <div class="formgroup">
                                     <div class="col-sm-12 pd_lf_5">
@@ -51,21 +51,18 @@
 <script>
     $(document).ready(function(){
         $('.login-btn').click(function(){
-            var email = $('#email').val();
-            var password = $('#password').val();
+            var serializedData = $('#login').serialize();
             $.ajax({
                 url: '/login',
-                type: 'GET',
-                data: {
-                    email: email,
-                    password: password
-                },
+                type: 'POST',
+                data: serializedData,
                 success: function(data){
                     if(data == 'Status 200'){
                         location.reload(true);
                         console.log('success');
                     }
                     else{
+                        alert(data);
                         console.log('fail fail');
                         $('.alert').remove();
                         var showError    = '<p class="alert alert-danger">';

@@ -21,22 +21,27 @@ class UserRegistrationController extends Controller
         return view('frontend.registration');
     }
 
-    public function store(){
-        $f_name                 = trim(Input::get('first_name'));
-        $l_name                 = trim(Input::get('last_name'));
-        $email                  = trim(Input::get('email'));
-        $pwd                    = bcrypt(trim(Input::get('password')));
+    public function store(Request $request){
+        if($request->ajax()) {
+//            $input                  = $request::all();
+//            print_r($input);die();
+            $f_name                 = trim(Input::get('first_name'));
+            $l_name                 = trim(Input::get('last_name'));
+            $email                  = trim(Input::get('email'));
+            $pwd                    = bcrypt(trim(Input::get('password')));
 
-        $paramObj               = new User();
-        $paramObj->first_name   = $f_name;
-        $paramObj->last_name    = $l_name;
-        $paramObj->email        = $email;
-        $paramObj->password     = $pwd;
-        $paramObj->role_id      = 4;
+            $paramObj               = new User();
+            $paramObj->first_name   = $f_name;
+            $paramObj->last_name    = $l_name;
+            $paramObj->email        = $email;
+            $paramObj->password     = $pwd;
+            $paramObj->role_id      = 4;
 
-        $this->repo->create($paramObj);
-
-        return redirect('/');
+            $res = $this->repo->create($paramObj);
+            $response = ['Status 200'];
+            return \Response::json($response);
+//        return redirect('/');
+        }
 
     }
 

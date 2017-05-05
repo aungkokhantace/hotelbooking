@@ -41,16 +41,18 @@ class LoginController extends Controller
 
     public function doLogin(Request $request){
         if($request->ajax()){
-            $input = Input::all();
-//            print_r($input);die();
-            if(count($input) > 0 ){
+            $email      = trim(Input::get('email'));
+            $password   = Input::get('password');
+
+            if($email != "" && $password != ""){
                 $auth = auth()->guard('Customer');
 
                 $credentials = [
-                    'email' => $input['email'],
-                    'password'=>$input['password'],
+                    'email'     => $email,
+                    'password'  => $password,
                     'role_id'   => 4
                 ];
+
 
                 if($auth->attempt($credentials)){
                     $id = Auth::guard('Customer')->id();
@@ -66,7 +68,6 @@ class LoginController extends Controller
             }else{
                 $result = ['Status 401'];
                 return \Response::json($result);
-//                return view('frontend.login.index');
             }
         }
     }

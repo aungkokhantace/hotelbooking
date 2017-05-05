@@ -17,12 +17,12 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/hotel_detail/{id}', 'Frontend\HotelDetailController@index');
 
     //User(Customer Registration)
-    Route::get('register','Frontend\UserRegistrationController@create');
-    Route::post('register','Frontend\UserRegistrationController@store');
+//    Route::get('register','Frontend\UserRegistrationController@create');
+    Route::any('register','Frontend\UserRegistrationController@store');
     Route::get('register/check_email', ['as' => 'register/check_email', 'uses' => 'Frontend\UserRegistrationController@check_email']);
     //Authentication
 //    Route::get('login','Frontend\LoginController@showLogin');
-    Route::get('login','Frontend\LoginController@doLogin');
+    Route::any('login','Frontend\LoginController@doLogin');
     Route::get('logout','Frontend\LoginController@logout');
     Route::get('test','Frontend\HomeController@test');
     Route::get('lang/{lang}','Language\LanguageController@getLanguage');

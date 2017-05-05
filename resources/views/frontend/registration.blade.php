@@ -1,77 +1,83 @@
-@extends('layouts_frontend.master_frontend')
-@section('title','Registration')
-@section('content')
-            <div id="header_id">
-                <img class="img-responsive img-hover" src="shared/images/slider1.png">
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="col-md-offset-2 modal-content modal-content-width">
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-sm-6 col-md-4 create_form">
+                            <button type="button" class="close" data-dismiss="modal">&bigotimes;</button>
+                            <div class="imgcontainer">
+                                <img src="/assets/shared/images/Edit.png">
+                            </div>
+                            <h2>Create Account</h2>
+
+                            {!! Form::open(array('url' => '/register', 'class'=> 'form-horizontal', 'id'=>'registration')) !!}
+
+                            <div class="formgroup">
+                                <div class="col-sm-6 pd_rg_10">
+                                    <input type="text" class="formcontrols" id="first_name" placeholder="First Name" name="first_name">
+                                </div>
+                                <div class="col-sm-6 pd_lf_5">
+                                    <input type="text" class="formcontrols" id="last_name" placeholder="Last Name" name="last_name">
+                                </div>
+                            </div>
+                            <div class="formgroup">
+                                <div class="col-sm-12 pd_lf_5">
+                                    <input type="email" class="formcontrols" id="email" placeholder="Email Address" name="email">
+                                </div>
+                            </div>
+                            <div class="formgroup">
+                                <div class="col-sm-12 pd_lf_5">
+                                    <input type="password" class="formcontrols" id="password" placeholder="Password" name="password">
+                                </div>
+                            </div>
+                            <div class="formgroup">
+                                <div class="col-sm-12 pd_lf_5">
+                                    <input type="password" class="formcontrols" id="confirm_password" placeholder="Retype Password" name="confirm_password">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 pd_lf_5">
+                                <button type="submit" class="btn btn-default formcontrols register-btn">CREATE ACCOUNT</button>
+                            </div>
+                            <div class="formgroup">
+                                <div class="col-md-12 control">
+                                    <div class="form_text">
+                                        <span>By creating an account, you agree to our</span>
+                                        <a href="#"> Terms </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="formgroup text-center">
+                                <div class="col-md-12 control">
+                                    <div class="form_textone">
+                                        <span>Already a member?</span>
+                                        <a href="login.html"> Login Here </a>
+                                    </div>
+                                </div>
+                            </div>
+                            {!! Form::close() !!}
+
+                        </div>
+                    </div><!-- /.row -->
+                </div><!-- /.container -->
             </div>
         </div>
-    </section>
+    </div>
+</div>
 
-    <section>
-        <div class="container" id="aboutus">
-            <div class="row">
-                <div class="col-sm-6 col-md-4 col-md-offset-4 create_form">
-                    <div class="imgcontainer">
-                        <img src="shared/images/Edit.png">
-                    </div>
-                    <h2>Create Account</h2>
+<!-- start form validation -->
+<script>
+    $(document).ready(function() {
 
-                    {!! Form::open(array('url' => '/register', 'class'=> 'form-horizontal', 'id'=>'registration')) !!}
+    });
+</script>
+<!-- end form validation -->
 
-                        <div class="formgroup">
-                            <div class="col-sm-6 pd_rg_10">
-                                <input type="text" class="formcontrols" id="first_name" placeholder="First Name" name="first_name">
-                            </div>
-                            <div class="col-sm-6 pd_lf_5">
-                                <input type="text" class="formcontrols" id="last_name" placeholder="Last Name" name="last_name">
-                            </div>
-                        </div>
-                        <div class="formgroup">
-                            <div class="col-sm-12 pd_lf_5">
-                                <input type="email" class="formcontrols" id="email" placeholder="Email Address" name="email">
-                            </div>
-                        </div>
-                        <div class="formgroup">
-                            <div class="col-sm-12 pd_lf_5">
-                                <input type="password" class="formcontrols" id="password" placeholder="Password" name="password">
-                            </div>
-                        </div>
-                        <div class="formgroup">
-                            <div class="col-sm-12 pd_lf_5">
-                                <input type="password" class="formcontrols" id="confirm_password" placeholder="Retype Password" name="confirm_password">
-                            </div>
-                        </div>
-                        <div class="col-sm-12 pd_lf_5">
-                            <button type="submit" class="btn btn-default formcontrols">CREAT ACCOUNT</button>
-                        </div>
-                        <div class="formgroup">
-                            <div class="col-md-12 control">
-                                <div class="form_text">
-                                    <span>By creating an account, you agree to our</span>
-                                    <a href="#"> Terms </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="formgroup text-center">
-                            <div class="col-md-12 control">
-                                <div class="form_textone">
-                                    <span>Already a member?</span>
-                                    <a href="login.html"> Login Here </a>
-                                </div>
-                            </div>
-                        </div>
-                    {!! Form::close() !!}
-
-                </div>
-            </div><!-- /.row -->
-        </div><!-- /.container -->
-    </section>
-
-@stop
-@section('page_script')
-
-    <script>
-        $(document).ready(function() {
+<!-- start login ajax-->
+<script>
+    $(document).ready(function(){
+        $('.register-btn').click(function(){
             $('#registration').validate({
                 rules: {
                     first_name          : 'required',
@@ -120,18 +126,41 @@
                     }
                 },
                 submitHandler: function(form) {
-                    $('input[type="submit"]').attr('disabled','disabled');
+                    $('button[type="submit"]').attr('disabled','disabled');
                     form.submit();
+                    var serializedData = $('#registration').serialize();
+                    $.ajax({
+                        url: 'register',
+                        type: 'POST',
+                        data: serializedData,
+                        success: function(data){
+                            if(data == 'Status 200'){
+                                location.reload(true);
+                                console.log('success');
+                            }
+                            else{
+                                alert(data);
+                                console.log('fail');
+                                return;
+                            }
+
+                        },
+                        error: function(data){
+                            console.log('error');
+                            return;
+                        },
+                        complete: function (data) {
+                            console.log('complete');
+                            return;
+
+                        }
+                    });
+
                 }
             });
         });
-    </script>
+    });
+</script>
+<!-- end login ajax-->
 
 
-    <!-- Script to Activate the Carousel -->
-    <script>
-        $('.carousel').carousel({
-            interval: 5000 //changes the speed
-        })
-    </script>
-@stop

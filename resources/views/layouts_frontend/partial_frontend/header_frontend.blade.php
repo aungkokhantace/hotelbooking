@@ -92,9 +92,12 @@ $companyLogo = \App\Core\Check::companyLogo();
                         <li>
                             <a href="#">Contact Us</a>
                         </li>
+                        @if(!\Illuminate\Support\Facades\Session::has('customer'))
                         <li>
-                            <a href="#">Register</a>
+                            <a href="#" data-toggle="modal" data-target="#registerModal">Register</a>
+                            @include('frontend.registration')
                         </li>
+                        @endif
                         <li>
                             <div class="login">
                                 <ul>
