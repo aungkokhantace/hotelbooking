@@ -53,6 +53,16 @@ $companyLogo = \App\Core\Check::companyLogo();
     <script src="/assets/shared/js/jquery.js"></script>
     <script src="/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
 
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/assets/shared/js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap Date-Picker Plugin -->
+    <script type="text/javascript" src="/assets/shared/js/bootstrap-datepicker.min.js"></script>
+
+    <!-- Jquery Validation -->
+    <script src="/assets/shared/js/validation/jquery.validate.js"></script>
+    <script src="/assets/shared/js/validation/additional-methods.js"></script>
+
     {{--<script src="http://maps.google.com/maps/api/js?key=AIzaSyAJLUg2IEbAOp4gMqRoXpSnjV0w1FDfYNk&sensor=false" type="text/javascript"></script>--}}
 
 

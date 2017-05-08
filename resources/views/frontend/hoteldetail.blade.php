@@ -20,51 +20,7 @@
                             <h5>Search Hotel</h5>
                         </div>
                         <p></p>
-                        <form role="form" class="sr_news">
-                            <label class="control-label" for="destination">Destination</label>
-                            <div class="col-10 input-group">
-                                <input class="form-control font_sz_11" type="text" value="" id="destination">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-plane" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                            <p></p>
-                            <label class="control-label" for="check_in">Check In</label>
-                            <div class="col-10 input-group date" data-provide="datepicker">
-                                <input type="text" class="form-control">
-                                <div class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </div>
-                            </div>
-                            <label class="control-label" for="check_out">Check Out</label>
-                            <div class="col-10 input-group date" data-provide="datepicker">
-                                <input type="text" class="form-control">
-                                <div class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4 pd_rg_10">
-                                    <label class="control-label" for="check_out">Room</label>
-                                    <input type="number" id="street-number" class="floatLabel form-control" name="street-number">
-                                </div>
-                                <div class="col-sm-4 pd_lf_5">
-                                    <label class="control-label" for="check_out">Adults</label>
-                                    <input type="number" id="street-number" class="floatLabel form-control" name="street-number">
-                                </div>
-                                <div class="col-sm-4 pd_lf_5">
-                                    <label class="control-label" for="check_out">Children</label>
-                                    <input type="number" id="street-number" class="floatLabel form-control" name="street-number">
-                                </div>
-                            </div>
-                            <p></p>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <button type="submit" class="btn btn-primary btn-xs">Search Hotel</button>
-                                </div>
-                            </div>
-                            <p></p>
-                        </form>
+                        @include('layouts_frontend.partial_frontend.search_form')
                     </div>
                 </div>
 
@@ -72,125 +28,45 @@
                 <div class="col-md-9">
                     <!-- First Blog Post Left -->
                     <div class="search_list">
-                        <h2>Vintage Luxury Yacht Hotel</h2>
+                        <h2>{{$hotel->name}}</h2>
                         <p class="lead">
-                            Egestas dignissim a enim lorem a mus egestas risus porta? Sed. Scelerisque,
+                            {{$hotel->address}}
                         </p>
                     </div>
                     <!-- First Blog Post Right -->
-                    <div class="detail_righttwo">
+                    <!-- <div class="detail_righttwo">
                         <samp>6378 reviews</samp>
                         <samp>Excellent 8.3</samp>
-                    </div>
+                    </div> -->
                     <div class="detail_rightone">
-                        <samp>15 % off</samp>
+                        @if(isset($hotel->discount) && $hotel->discount != null)
+                            <samp>{{$hotel->discount}} off</samp>
+                        @endif
                     </div>
                     <div id="jssor_1" class="slider_one">
                         <div data-u="slides" class="slider_images">
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/01.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-01.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/02.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-02.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/03.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-03.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/04.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-04.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/05.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-05.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/06.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-06.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/07.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-07.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/08.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-08.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/09.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-09.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/10.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-10.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/11.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-11.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/12.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-12.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/01.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-01.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/02.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-02.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/03.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-03.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/04.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-04.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/05.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-05.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/06.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-06.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/07.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-07.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/08.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-08.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/09.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-09.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/10.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-10.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/11.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-11.jpg" />
-                            </div>
-                            <div>
-                                <img data-u="image" src="/assets/shared/images/img/12.jpg" />
-                                <img data-u="thumb" src="/assets/shared/images/img/thumb-12.jpg" />
-                            </div>
+                            @if(isset($roomCategoryImages) && count($roomCategoryImages)>0)
+                                @foreach($roomCategoryImages as $roomCategoryImage)
+                                    <div>
+                                        <img data-u="image" src="{{$roomCategoryImage->img_path}}" />
+                                        <img data-u="thumb" src="{{$roomCategoryImage->img_path}}" />
+                                    </div>
+                                @endforeach
+                            @else
+                                <div>
+                                    <img data-u="image" src="/images/upload/{{$hotel->logo}}" />
+                                    <img data-u="thumb" src="/images/upload/{{$hotel->logo}}" />
+                                </div>
+                            @endif
                         </div>
                         <div data-u="slides" class="slider_imagess">
                             <div>
-                                <img data-u="image" src="/assets/shared/images/UserBookingList_img.png"  width="100%" height="125px" />
+                                <img data-u="image" src="/images/upload/{{$hotel->logo}}"  width="100%" height="125px" />
                             </div>
                             <p></p>
                             <div>
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d244315.84058469086!2d96.1695098!3d16.903821!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2smm!4v1490344960699" width="100%" height="120" frameborder="0" style="border:1px solid #ccc;padding:3px;" allowfullscreen></iframe>
+                                {{--<iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d244315.84058469086!2d96.1695098!3d16.903821!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2smm!4v1490344960699" width="100%" height="120" frameborder="0" style="border:1px solid #ccc;padding:3px;" allowfullscreen></iframe>--}}
+                                <div id="map" style="width: 100%; height: 122px;"></div>
                             </div>
                         </div>
                         <!-- Thumbnail Navigator -->
@@ -208,60 +84,71 @@
                         </div>
                     </div>
                     <div class="detail_text">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim .</p>
+                        <p>{{$hotel->description}}</p>
                     </div>
+
+                    <input type="hidden" id="token" name="token" value="{{ csrf_token() }}">
+                    <input type="hidden" id="latitude" name="latitude" value="{{isset($hotel)? $hotel->latitude:''}}"/>
+                    <input type="hidden" id="longitude" name="longitude" value="{{isset($hotel)? $hotel->longitude:''}}"/>
+
                     <!-- Service Blocks -->
                     <div class="row margin-bottom-30">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="service">
                                 <img class="fa fa-university service-icon" src="/assets/shared/images/main.jpg">
                                 <div class="desc">
-                                    <h4>Fully Responsive</h4>
+                                    <h4>Main amenities</h4>
                                     <ul>
-                                        <li>Free breakfast and free wifi</li>
-                                        <li>24-hour front desk</li>
-                                        <li>Air conditioning</li>
-                                        <li>Daily housekeeping</li>
+                                        @foreach($amenities as $amenity)
+                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$amenity->amenity->name}}</li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="service">
-                                <div class="desc">
-                                    <h4>&nbsp;</h4>
-                                    <ul>
-                                        <li>Front desk safe</li>
-                                        <li>Self-server laundry</li>
-                                        <li>Luggage storage</li>
-                                        <li>Tour/ticket assistance</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
+
+                        <div class="col-md-6">
                             <div class="service">
                                 <img class="fa fa-university service-icon" src="/assets/shared/images/around.jpg">
                                 <div class="desc">
-                                    <h4>Fully Responsive</h4>
+                                    <h4>What's around</h4>
                                     <ul>
-                                        <li>Yangon General Hospital (12-minute walk)</li>
-                                        <li>Yangon General Hospital (12-minute walk)</li>
-                                        <li>Yangon General Hospital (12-minute walk)</li>
-                                        <li>Yangon General Hospital (12-minute walk)</li>
+                                        <!-- airport -->
+                                        @foreach($hotel_nearby['airport'] as $nearby_airport)
+                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$nearby_airport->name}} ( {{$nearby_airport->distance}} )</li>
+                                        @endforeach
+
+                                        <!-- station -->
+                                        @foreach($hotel_nearby['station'] as $nearby_station)
+                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$nearby_station->name}} ( {{$nearby_station->distance}} )</li>
+                                        @endforeach
+
+                                        <!-- hospital -->
+                                        @foreach($hotel_nearby['hospital'] as $nearby_hospital)
+                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$nearby_hospital->name}} ( {{$nearby_hospital->distance}} )</li>
+                                        @endforeach
+
+                                        <!-- convenience store -->
+                                        @foreach($hotel_nearby['convenience_store'] as $nearby_convenience_store)
+                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$nearby_convenience_store->name}} ( {{$nearby_convenience_store->distance}} )</li>
+                                        @endforeach
+
+                                        <!-- drug store -->
+                                        @foreach($hotel_nearby['drug_store'] as $nearby_drug_store)
+                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$nearby_drug_store->name}} ( {{$nearby_drug_store->distance}} )</li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                    </div><!-- End Service Blokcs -->
+                    </div><!-- End Service Blocks -->
                     <hr>
                     <div class="table-responsive room_table">
                         <h3>Available Rooms</h3>
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th width="150px">Booking Type</th>
+                                <th width="150px">Room Category</th>
                                 <th width="220px">Included</th>
                                 <th width="65px">Capacity</th>
                                 <th width="130px">Price Per Night</th>
@@ -270,282 +157,105 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>
-                                    <ul class="fa-ul">
-                                        <li class="title_fa">Superior Single</li>
-                                        <li><img class="fa-lis" src="/assets/shared/images/cityview.png">City View</li>
-                                        <li><img class="fa-lis" src="/assets/shared/images/16sqm.png">16 sq.m</li>
-                                        <li><img class="fa-lis" src="/assets/shared/images/signlebed.png">1 single bed</li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <ul class="fa-ul price_night">
-                                        <li><i class="fa-li fa fa-wifi" aria-hidden="true"></i>Free Wifi</li>
-                                        <li><span class="fa-li glyphicon glyphicon-cutlery" aria-hidden="true"></span>Good Breakfast</li>
-                                        <li class="text_fa">Prices are per room</li>
-                                        <li class="text_fa">Included:5% VAT.10% Property</li>
-                                        <li class="text_fa">Service Charge</li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <i class="fa-td fa fa-user" aria-hidden="true"></i>
-                                </td>
-                                <td>
-                                    <ul class="fa-ul price_night">
-                                        <li>MMK 92,000</li>
-                                        <li>Today</li>
-                                        <li>Value Deat</li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <input type="number" name="number" class="floatLabel form-control">
-                                </td>
-                                <td  rowspan="4">
-                                    <div class="table_buttom">Book Now</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <ul class="fa-ul">
-                                        <li class="title_fa">Superior Single</li>
-                                        <li><img class="fa-lis" src="/assets/shared/images/cityview.png">City View</li>
-                                        <li><img class="fa-lis" src="/assets/shared/images/16sqm.png">16 sq.m</li>
-                                        <li><img class="fa-lis" src="/assets/shared/images/signlebed.png">1 single bed</li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <ul class="fa-ul price_night">
-                                        <li><i class="fa-li fa fa-wifi" aria-hidden="true"></i>Free Wifi</li>
-                                        <li><span class="fa-li glyphicon glyphicon-cutlery" aria-hidden="true"></span>Good Breakfast</li>
-                                        <li class="text_fa">Prices are per room</li>
-                                        <li class="text_fa">Included:5% VAT.10% Property</li>
-                                        <li class="text_fa">Service Charge</li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <i class="fa-td fa fa-user" aria-hidden="true"></i>
-                                </td>
-                                <td>
-                                    <ul class="fa-ul price_night">
-                                        <li>MMK 92,000</li>
-                                        <li>Today</li>
-                                        <li>Value Deat</li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <input type="number" name="number" class="floatLabel form-control">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <ul class="fa-ul">
-                                        <li class="title_fa">Superior Single</li>
-                                        <li><img class="fa-lis" src="/assets/shared/images/cityview.png">City View</li>
-                                        <li><img class="fa-lis" src="/assets/shared/images/16sqm.png">16 sq.m</li>
-                                        <li><img class="fa-lis" src="/assets/shared/images/signlebed.png">1 single bed</li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <ul class="fa-ul price_night">
-                                        <li><i class="fa-li fa fa-wifi" aria-hidden="true"></i>Free Wifi</li>
-                                        <li><span class="fa-li glyphicon glyphicon-cutlery" aria-hidden="true"></span>Good Breakfast</li>
-                                        <li class="text_fa">Prices are per room</li>
-                                        <li class="text_fa">Included:5% VAT.10% Property</li>
-                                        <li class="text_fa">Service Charge</li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <i class="fa-td fa fa-user" aria-hidden="true"></i>
-                                </td>
-                                <td>
-                                    <ul class="fa-ul price_night">
-                                        <li>MMK 92,000</li>
-                                        <li>Today</li>
-                                        <li>Value Deat</li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <input type="number" name="number" class="floatLabel form-control">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <ul class="fa-ul">
-                                        <li class="title_fa">Superior Single</li>
-                                        <li><img class="fa-lis" src="/assets/shared/images/cityview.png">City View</li>
-                                        <li><img class="fa-lis" src="/assets/shared/images/16sqm.png">16 sq.m</li>
-                                        <li><img class="fa-lis" src="/assets/shared/images/signlebed.png">1 single bed</li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <ul class="fa-ul price_night">
-                                        <li><i class="fa-li fa fa-wifi" aria-hidden="true"></i>Free Wifi</li>
-                                        <li><span class="fa-li glyphicon glyphicon-cutlery" aria-hidden="true"></span>Good Breakfast</li>
-                                        <li class="text_fa">Prices are per room</li>
-                                        <li class="text_fa">Included:5% VAT.10% Property</li>
-                                        <li class="text_fa">Service Charge</li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <i class="fa-td fa fa-user" aria-hidden="true"></i>
-                                </td>
-                                <td>
-                                    <ul class="fa-ul price_night">
-                                        <li>MMK 92,000</li>
-                                        <li>Today</li>
-                                        <li>Value Deat</li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <input type="number" name="number" class="floatLabel form-control">
-                                </td>
-                            </tr>
+
+                            @foreach($roomCategories as $roomCategory)
+                                <tr>
+                                    <td>
+                                        <ul class="fa-ul">
+                                            <li class="title_fa">{{$roomCategory->name}}</li>
+                                            <li><img class="fa-lis" src="/assets/shared/images/cityview.png">City View</li>
+                                            <li><img class="fa-lis" src="/assets/shared/images/16sqm.png">{{$roomCategory->square_metre}} s.q.m</li>
+                                            <li><img class="fa-lis" src="/assets/shared/images/signlebed.png">{{$roomCategory->bed_type}}</li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <ul class="fa-ul price_night">
+                                            @foreach($roomCategory->room_amenities as $room_amenity)
+                                                <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$room_amenity->amenity->name}}</li>
+                                            @endforeach
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        @for ($i = 1; $i <= $roomCategory->capacity; $i++)
+                                            <i class="fa-td fa fa-user" aria-hidden="true"></i>
+                                        @endfor
+
+                                    </td>
+                                    <td>
+                                        <ul class="fa-ul price_night">
+                                            <li>MMK {{$roomCategory->price}}</li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <input type="number" name="number" class="floatLabel form-control">
+                                    </td>
+
+                                    <td>
+                                        <div class="table_buttom">Book Now</div>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
                     <div class="room_table">
-                        <h3>Facilities of Vintage Luxury Yacht Hotel</h3>
+                        <h3>Facilities of {{$hotel->name}}</h3>
                         <div class="row margin-bottom-30">
-                            <div class="col-md-4">
-                                <div class="service">
-                                    <i class="fa fa-check service-icons" aria-hidden="true"></i>
-                                    <div class="desc">
-                                        <h5>All Rooms</h5>
-                                        <ul class="fa-ul-li">
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Wardrobe Closet</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Sitting area</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Sofa</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Desk</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Minibar</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Satellite channels</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Flat-screen TV</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Telephone</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Cable channels</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Slippers</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Towels</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Toilet</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Shower</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Bathroom</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Linens</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Bathrobe</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Free toiletries</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Hairdryer</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Wake-up service</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Executive Lounge Access</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Soundproof</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Safe</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Carpeted</li>
-                                        </ul>
+                            @foreach($facilityGroupArray as $facilityGroup)
+                                @if(isset($facilityGroup->facilities) && count($facilityGroup->facilities)>0)
+                                    <div class="col-md-4">
+                                        <div class="service">
+                                            <i class="fa fa-check service-icons" aria-hidden="true"></i>
+                                            <div class="desc">
+                                                <h5>{{$facilityGroup->name}}</h5>
+                                                <ul class="fa-ul-li">
+                                                    @foreach($facilityGroup->facilities as $facility)
+                                                        <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$facility->facility->name}}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="service">
-                                    <i class="fa fa-check service-icons" aria-hidden="true"></i>
-                                    <div class="desc">
-                                        <h5>Some Rooms</h5>
-                                        <ul class="fa-ul-li">
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>View</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>River View</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Balcony</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <p>&nbsp;</p>
-                                <div class="service">
-                                    <i class="fa fa-check service-icons" aria-hidden="true"></i>
-                                    <div class="desc">
-                                        <h5>Outdoors</h5>
-                                        <ul class="fa-ul-li">
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Sun Desk</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Terrace</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <p>&nbsp;</p>
-                                <div class="service">
-                                    <i class="fa fa-check service-icons" aria-hidden="true"></i>
-                                    <div class="desc">
-                                        <h5>Internet</h5>
-                                        <ul class="fa-ul-li">
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Free ! Wifi is available in all areas and free of charge</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <p>&nbsp;</p>
-                                <div class="service">
-                                    <i class="fa fa-check service-icons" aria-hidden="true"></i>
-                                    <div class="desc">
-                                        <h5>Parking</h5>
-                                        <ul class="fa-ul-li">
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Free ! Free pirvate parking is available on site <br> ( reservation is note needed )</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="service">
-                                    <i class="fa fa-check service-icons" aria-hidden="true"></i>
-                                    <div class="desc">
-                                        <h5>General</h5>
-                                        <ul class="fa-ul-li">
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Room Service</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Airport Shuttle ( surcharge )</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Car Rental</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>VIP Room Facilities</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Airport Shuttle</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Honeymoon Suite</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Packed Lunches</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Designaed Smoking Area</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Newspapers</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Air Conditioning</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Non-smoking Rooms</li>
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>Safe</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- End Service Blokcs -->
+                                @endif
+                            @endforeach
+                        </div><!-- End Service Blocks -->
                     </div>
                     <hr>
                     <div class="room_table">
                         <h3>Area Info : </h3>
                         <!-- Service Blocks -->
                         <div class="row margin-bottom-30">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="service">
                                     <img class="service-icon" src="/assets/shared/images/closet.png">
                                     <div class="desc">
-                                        <h4> Glosest Landmarks</h4>
+                                        <h4> Closest Landmarks</h4>
                                         <ul class="fa-ul-li">
-                                            <li>Botataung Pagoda</li>
-                                            <li>British Embassy</li>
-                                            <li>Australian Embassy</li>
-                                            <li>Pansodan Jetty</li>
-                                            <li>Embassy of India</li>
+                                            @foreach($landmarks as $landmark)
+                                                <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$landmark->landmark->name}}</li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            @if(isset($popularLandmarks))
+                            <div class="col-md-6">
                                 <div class="service">
                                     <img class="service-icon" src="/assets/shared/images/popu.png">
                                     <div class="desc">
                                         <h4>Most Popular LandMarks</h4>
                                         <ul class="fa-ul-li">
-                                            <li>Yangon City Hall</li>
-                                            <li>Sule Pagoda</li>
-                                            <li>CB Bank Head Office</li>
-                                            <li>United Nations Information Center Yangon</li>
-                                            <li>Shwedagon Pagoda</li>
+                                            @foreach($popularLandmarks as $popularLandmark)
+                                                <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$popularLandmark->name}}</li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </div><!-- End Service Blokcs -->
                         <!-- Service Blocks -->
-                        <div class="row margin-bottom-30">
+                        <!--    <div class="row margin-bottom-30">
                             <div class="col-md-4">
                                 <div class="service">
                                     <img class="service-icon" src="/assets/shared/images/rest.png">
@@ -578,15 +288,11 @@
                         <h3>Good to Know</h3>
                         <div class="hc_m_content">
                             <h4>Check-in</h4>
-                            <p>From 14:00</p>
+                            <p>From {{$hotel->check_in_time}}</p>
                             <h4>Check-out</h4>
-                            <p>Until 12:00</p>
-                            <h4>Cancellation<br>Prepayment</h4>
-                            <p>Cancellation and prepayment policies vary according to room type.Please check what <a href="#">room conditions</a>may apply when selection your room above</p>
-                            <h4>Children and Extra Beds</h4>
-                            <p>All Children are welcome.<br>The maximum number of extra beds in a room is 1</p>
-                            <h4>Pets</h4>
-                            <p>Pets are not allowed</p>
+                            <p>Until {{$hotel->check_out_time}}</p>
+                            <h4>Extra Bed</h4>
+                            <p>The maximum number of extra beds in a room is 1</p>
                             <h4>Cards accepted at this property</h4>
                             <p><img src="/assets/shared/images/visa.jpg"></p>
                         </div>
@@ -601,6 +307,14 @@
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyAJLUg2IEbAOp4gMqRoXpSnjV0w1FDfYNk&sensor=false" type="text/javascript"></script>
     <script type="text/javascript" language="javascript" class="init">
         $(document).ready(function() {
+            //init function
+            google.maps.event.trigger(map, 'resize');
+            var latitude  = $("#latitude").val();
+            var longitude = $("#longitude").val();
+//            setTimeout(executeQuery(latitude,longitude), 3000);
+            setTimeout(renderMap(latitude,longitude), 3000);
+
+
             $('#check_in').datepicker({
                 format: 'dd-mm-yyyy',
                 autoclose: true,
@@ -629,24 +343,6 @@
                 });
             });
 
-            // the selector will match all input controls of class="one_check"
-            // and attach a click event handler
-            $(".one_check").on('click', function() {
-                // in the handler, 'this' refers to the box clicked on
-                var $box = $(this);
-                if ($box.is(":checked")) {
-                    // the name of the box is retrieved using the .attr() method
-                    // as it is assumed and expected to be immutable
-                    var group = "input:checkbox[name='" + $box.attr("name") + "']";
-                    // the checked state of the group/box on the other hand will change
-                    // and the current value is retrieved using .prop() method
-                    $(group).prop("checked", false);
-                    $box.prop("checked", true);
-                } else {
-                    $box.prop("checked", false);
-                }
-            });
-
             $('#search').validate({
                 rules: {
                     destination                    : 'required',
@@ -662,5 +358,23 @@
 
         });
 
+        function renderMap(latitude,longitude) {
+//            google.maps.event.trigger(map, 'resize');
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 10,
+                center: new google.maps.LatLng(latitude, longitude), //dynamic center point
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+
+            var marker, i;
+
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(latitude, longitude),
+                map: map
+            });
+        }
+
     </script>
+
+
 @stop

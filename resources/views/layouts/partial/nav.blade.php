@@ -259,8 +259,7 @@
 
                         <ul class="sub-menu">
                             <li nav-id="modifier-create-modifier"><a href="/backend/hotel_nearby_station/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/hotel_nearby_station/city">List</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/hotel_nearby_station/city">Popular Cities</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_nearby_station">List</a></li>
                         </ul>
                     </li>
                     <li nav-id="modifier-manage" class="has-sub">
@@ -339,6 +338,17 @@
                         <ul class="sub-menu">
                             <li nav-id="modifier-create-modifier"><a href="/backend/room_category_facility/create">Entry</a></li>
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_category_facility">List</a></li>
+                        </ul>
+                    </li>
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Room Category Amenities</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/room_category_amenity/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_category_amenity">List</a></li>
                         </ul>
                     </li>
                     <li nav-id="modifier-create" class="has-sub">

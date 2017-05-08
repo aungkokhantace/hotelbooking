@@ -16,4 +16,5 @@ interface RoomCategoryImageRepositoryInterface
     public function getObjByID($id);
     public function create($paramObj);
     public function getRoomCategoryImageByHotelRoomCategoryId($h_room_category_id);
+    public function getRoomCategoryImageByHotelRoomCategoryIdArray($h_room_category_id_array);
 }

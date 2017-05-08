@@ -303,6 +303,14 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>334,'module'=>'HotelLandmark','name'=>'Update','description'=>'Hotel Landmark Update','url'=>'backend/hotel_landmark/update'],
             ['id'=>335,'module'=>'HotelLandmark','name'=>'Destroy','description'=>'Hotel Landmark Destroy','url'=>'backend/hotel_landmark/destroy'],
 
+            //Room Category Amenities
+            ['id'=>340,'module'=>'RoomCategoryAmenity','name'=>'Listing','description'=>'Room Category Amenity Listing','url'=>'backend/room_category_amenity'],
+            ['id'=>341,'module'=>'RoomCategoryAmenity','name'=>'New','description'=>'Room Category Amenity New','url'=>'backend/room_category_amenity/create'],
+            ['id'=>342,'module'=>'RoomCategoryAmenity','name'=>'store','description'=>'Room Category Amenity Store','url'=>'backend/room_category_amenity/store'],
+            ['id'=>343,'module'=>'RoomCategoryAmenity','name'=>'Edit','description'=>'Room Category Amenity Edit','url'=>'backend/room_category_amenity/edit'],
+            ['id'=>344,'module'=>'RoomCategoryAmenity','name'=>'Update','description'=>'Room Category Amenity Update','url'=>'backend/room_category_amenity/update'],
+            ['id'=>345,'module'=>'RoomCategoryAmenity','name'=>'Destroy','description'=>'Room Category Amenity Destroy','url'=>'backend/room_category_amenity/destroy'],
+
 
             //Backend Multi_Language
             ['id'=>500,'module'=>'Backend','name'=>'Multi_Language','description'=>'Backend Multi_Language','url'=>'backend/language'],

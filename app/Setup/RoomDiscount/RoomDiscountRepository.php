@@ -151,4 +151,42 @@ class RoomDiscountRepository implements RoomDiscountRepositoryInterface
             ->get();
         return $objs;
     }
+
+    public function getMaximumDiscountPercentByHotelID($hotel_id)
+    {
+        //get current date to check between from_date and to_date
+        $today = Carbon::today()->toDateString();
+        $result = DB::table('room_discount')
+            ->select(DB::raw('max(discount_percent) as discount_percent'))
+            ->whereNull('deleted_at')
+            ->where('from_date','<=', $today)
+            ->where('to_date','>=', $today)
+            ->where('type','=','%')
+            ->where('discount_percent','!=',0)
+            ->where('hotel_id','=',$hotel_id)
+            ->groupBy('hotel_id')
+            ->orderBy('discount_percent','desc')
+            ->first();
+
+        return $result;
+    }
+
+    public function getMaximumDiscountAmountByHotelID($hotel_id)
+    {
+        //get current date to check between from_date and to_date
+        $today = Carbon::today()->toDateString();
+        $result = DB::table('room_discount')
+            ->select(DB::raw('max(discount_amount) as discount_amount'))
+            ->whereNull('deleted_at')
+            ->where('from_date','<=', $today)
+            ->where('to_date','>=', $today)
+            ->where('type','=','amount')
+            ->where('discount_amount','!=',0.00)
+            ->where('hotel_id','=',$hotel_id)
+            ->groupBy('hotel_id')
+            ->orderBy('discount_percent','desc')
+            ->first();
+
+        return $result;
+    }
 }

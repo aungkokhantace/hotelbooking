@@ -118,4 +118,11 @@ class HotelNearbyStationRepository implements HotelNearbyStationRepositoryInterf
             LogCustom::create($date,$message);
         }
     }
+
+    public function getObjsByHotelID($hotel_id){
+        $objs = HotelNearbyStation::whereNull('deleted_at')
+            ->where('hotel_id','=',$hotel_id)
+            ->get();
+        return $objs;
+    }
 }

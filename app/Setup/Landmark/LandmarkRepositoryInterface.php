@@ -17,4 +17,5 @@ interface LandmarkRepositoryInterface
     public function create($paramObj);
     public function update($paramObj);
     public function delete($paramObj);
+    public function getPopularLandmarks();
 }

@@ -92,4 +92,9 @@ class RoomCategoryImageRepository implements RoomCategoryImageRepositoryInterfac
             LogCustom::create($date,$message);
         }
     }
+
+    public function getRoomCategoryImageByHotelRoomCategoryIdArray($h_room_category_id_array){
+        $result   = RoomCategoryImage::whereIn('h_room_category_id', $h_room_category_id_array)->get();
+        return $result;
+    }
 }

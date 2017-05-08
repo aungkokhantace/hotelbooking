@@ -118,4 +118,11 @@ class HotelLandmarkRepository implements HotelLandmarkRepositoryInterface
             LogCustom::create($date,$message);
         }
     }
+
+    public function getObjsByHotelID($hotel_id){
+        $result = HotelLandmark::whereNull('deleted_at')
+                    ->where('hotel_id','=',$hotel_id)
+                    ->get();
+        return $result;
+    }
 }

@@ -50,7 +50,6 @@ class LandmarkRepository implements LandmarkRepositoryInterface
             $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' created landmark_id = '.$tempObj->id . PHP_EOL;
             LogCustom::create($date,$message);
 
-
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
             return $returnedObj;
         }
@@ -116,5 +115,11 @@ class LandmarkRepository implements LandmarkRepositoryInterface
             $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' deleted  landmark_id = ' .$tempObj->id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
         }
+    }
+
+    public function getPopularLandmarks()
+    {
+        $result = Landmark::whereNull('deleted_at')->where('is_popular','=',1)->get();
+        return $result;
     }
 }

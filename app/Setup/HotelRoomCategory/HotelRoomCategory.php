@@ -34,4 +34,9 @@ class HotelRoomCategory extends Model
     {
         return $this->belongsTo('App\Setup\HotelRoomType\HotelRoomType','h_room_type_id','id');
     }
+
+    public function room_category_amenity()
+    {
+        return $this->hasMany('App\Setup\RoomCategoryAmenity\RoomCategoryAmenity');
+    }
 }

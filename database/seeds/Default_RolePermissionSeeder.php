@@ -294,6 +294,14 @@ class Default_RolePermissionSeeder extends Seeder
             ['role_id'=>1, 'permission_id'=>334],
             ['role_id'=>1, 'permission_id'=>335],
 
+            //Room Category Amenities
+            ['role_id'=>1, 'permission_id'=>340],
+            ['role_id'=>1, 'permission_id'=>341],
+            ['role_id'=>1, 'permission_id'=>342],
+            ['role_id'=>1, 'permission_id'=>343],
+            ['role_id'=>1, 'permission_id'=>344],
+            ['role_id'=>1, 'permission_id'=>345],
+
 
             //Backend Multi_Language
             ['role_id'=>1, 'permission_id'=>500],
