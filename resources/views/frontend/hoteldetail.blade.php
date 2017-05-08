@@ -99,10 +99,9 @@
                                 <div class="desc">
                                     <h4>Main amenities</h4>
                                     <ul>
-                                        <li>Free breakfast and free wifi</li>
-                                        <li>24-hour front desk</li>
-                                        <li>Air conditioning</li>
-                                        <li>Daily housekeeping</li>
+                                        @foreach($amenities as $amenity)
+                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$amenity->amenity->name}}</li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
@@ -171,11 +170,9 @@
                                     </td>
                                     <td>
                                         <ul class="fa-ul price_night">
-                                            <li><i class="fa-li fa fa-wifi" aria-hidden="true"></i>Free Wifi</li>
-                                            <li><span class="fa-li glyphicon glyphicon-cutlery" aria-hidden="true"></span>Good Breakfast</li>
-                                            <li class="text_fa">Prices are per room</li>
-                                            <li class="text_fa">Included:5% VAT.10% Property</li>
-                                            <li class="text_fa">Service Charge</li>
+                                            @foreach($roomCategory->room_amenities as $room_amenity)
+                                                <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$room_amenity->amenity->name}}</li>
+                                            @endforeach
                                         </ul>
                                     </td>
                                     <td>
@@ -228,37 +225,37 @@
                         <h3>Area Info : </h3>
                         <!-- Service Blocks -->
                         <div class="row margin-bottom-30">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="service">
                                     <img class="service-icon" src="/assets/shared/images/closet.png">
                                     <div class="desc">
                                         <h4> Closest Landmarks</h4>
                                         <ul class="fa-ul-li">
                                             @foreach($landmarks as $landmark)
-                                                <li>{{$landmark->landmark->name}}</li>
+                                                <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$landmark->landmark->name}}</li>
                                             @endforeach
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            @if(isset($popularLandmarks))
+                            <div class="col-md-6">
                                 <div class="service">
                                     <img class="service-icon" src="/assets/shared/images/popu.png">
                                     <div class="desc">
                                         <h4>Most Popular LandMarks</h4>
                                         <ul class="fa-ul-li">
-                                            <li>Yangon City Hall</li>
-                                            <li>Sule Pagoda</li>
-                                            <li>CB Bank Head Office</li>
-                                            <li>United Nations Information Center Yangon</li>
-                                            <li>Shwedagon Pagoda</li>
+                                            @foreach($popularLandmarks as $popularLandmark)
+                                                <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$popularLandmark->name}}</li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </div><!-- End Service Blokcs -->
                         <!-- Service Blocks -->
-                        <div class="row margin-bottom-30">
+                        <!--    <div class="row margin-bottom-30">
                             <div class="col-md-4">
                                 <div class="service">
                                     <img class="service-icon" src="/assets/shared/images/rest.png">

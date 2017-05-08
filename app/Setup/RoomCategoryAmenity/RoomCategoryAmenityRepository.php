@@ -114,4 +114,14 @@ class RoomCategoryAmenityRepository implements RoomCategoryAmenityRepositoryInte
             LogCustom::create($date,$message);
         }
     }
+
+    public function getAmenitiesByHotelRoomCategoryIdArray($h_room_category_id_array){
+        $result   = RoomCategoryAmenity::whereIn('room_category_id', $h_room_category_id_array)->get();
+        return $result;
+    }
+
+    public function getAmenitiesByRoomCategoryId($room_category_id){
+        $result   = RoomCategoryAmenity::where('room_category_id', '=' ,$room_category_id)->get();
+        return $result;
+    }
 }

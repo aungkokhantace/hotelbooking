@@ -119,6 +119,7 @@ class LandmarkRepository implements LandmarkRepositoryInterface
 
     public function getPopularLandmarks()
     {
-        
+        $result = Landmark::whereNull('deleted_at')->where('is_popular','=',1)->get();
+        return $result;
     }
 }

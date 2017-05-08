@@ -26,6 +26,7 @@ use App\Setup\HotelNearbyStation\HotelNearbyStationRepository;
 use App\Setup\HotelRoomCategory\HotelRoomCategory;
 use App\Setup\HotelRoomCategory\HotelRoomCategoryRepository;
 use App\Setup\Landmark\LandmarkRepository;
+use App\Setup\RoomCategoryAmenity\RoomCategoryAmenityRepository;
 use App\Setup\RoomCategoryImage\RoomCategoryImageRepository;
 use App\Setup\RoomDiscount\RoomDiscountRepository;
 use Illuminate\Http\Request;
@@ -131,12 +132,25 @@ class HotelDetailController extends Controller
         $popularLandmarks = $landmarkRepo->getPopularLandmarks();
         //end popular landmarks
 
+        //start amenities
+        $roomCategoryAmenityRepo  = new RoomCategoryAmenityRepository();
+        $amenities    = $roomCategoryAmenityRepo->getAmenitiesByHotelRoomCategoryIdArray($roomCategoryIdArray);
+        //end amenities
+
+
+        foreach($roomCategories as $roomCategory){
+            $room_amenities = $roomCategoryAmenityRepo->getAmenitiesByRoomCategoryId($roomCategory->id);
+            $roomCategory->room_amenities = $room_amenities;
+        }
+
         return view('frontend.hoteldetail')
             ->with('hotel', $hotel)
             ->with('roomCategoryImages',$roomCategoryImages)
             ->with('hotel_nearby',$hotel_nearby)
             ->with('roomCategories',$roomCategories)
             ->with('facilityGroupArray',$facilityGroupArray)
-            ->with('landmarks',$landmarks);
+            ->with('landmarks',$landmarks)
+            ->with('popularLandmarks',$popularLandmarks)
+            ->with('amenities',$amenities);
     }
 }
