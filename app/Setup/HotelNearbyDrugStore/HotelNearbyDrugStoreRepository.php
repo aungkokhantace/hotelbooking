@@ -118,4 +118,11 @@ class HotelNearbyDrugStoreRepository implements HotelNearbyDrugStoreRepositoryIn
             LogCustom::create($date,$message);
         }
     }
+
+    public function getObjsByHotelID($hotel_id){
+        $objs = HotelNearbyDrugStore::whereNull('deleted_at')
+            ->where('hotel_id','=',$hotel_id)
+            ->get();
+        return $objs;
+    }
 }

@@ -16,4 +16,6 @@ interface RoomDiscountRepositoryInterface
     public function delete($paramObj);
     public function getDiscountPercentByUniqueHotel();
     public function getDiscountAmountByUniqueHotel($percentHotelIDs);
+    public function getMaximumDiscountPercentByHotelID($hotel_id);
+    public function getMaximumDiscountAmountByHotelID($hotel_id);
 }

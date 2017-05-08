@@ -17,4 +17,5 @@ interface HotelNearbyStationRepositoryInterface
     public function create($paramObj);
     public function update($paramObj);
     public function delete($id);
+    public function getObjsByHotelID($hotel_id);
 }

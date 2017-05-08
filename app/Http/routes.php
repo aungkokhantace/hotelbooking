@@ -327,6 +327,14 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('hotel_landmark/edit/{id}', array('as'=>'backend/hotel_landmark/edit', 'uses'=>'Setup\HotelLandmark\HotelLandmarkController@edit'));
             Route::post('hotel_landmark/update', array('as'=>'backend/hotel_landmark/update', 'uses'=>'Setup\HotelLandmark\HotelLandmarkController@update'));
             Route::post('hotel_landmark/destroy', array('as'=>'backend/hotel_landmark/destroy', 'uses'=>'Setup\HotelLandmark\HotelLandmarkController@destroy'));
+
+            //Room Category Amenity
+            Route::get('room_category_amenity', array('as'=>'backend/room_category_amenity', 'uses'=>'Setup\RoomCategoryAmenity\RoomCategoryAmenityController@index'));
+            Route::get('room_category_amenity/create', array('as'=>'backend/room_category_amenity/create', 'uses'=>'Setup\RoomCategoryAmenity\RoomCategoryAmenityController@create'));
+            Route::post('room_category_amenity/store', array('as'=>'backend/room_category_amenity/store', 'uses'=>'Setup\RoomCategoryAmenity\RoomCategoryAmenityController@store'));
+            Route::get('room_category_amenity/edit/{id}', array('as'=>'backend/room_category_amenity/edit', 'uses'=>'Setup\RoomCategoryAmenity\RoomCategoryAmenityController@edit'));
+            Route::post('room_category_amenity/update', array('as'=>'backend/room_category_amenity/update', 'uses'=>'Setup\RoomCategoryAmenity\RoomCategoryAmenityController@update'));
+            Route::post('room_category_amenity/destroy', array('as'=>'backend/room_category_amenity/destroy', 'uses'=>'Setup\RoomCategoryAmenity\RoomCategoryAmenityController@destroy'));
         });
 
     });

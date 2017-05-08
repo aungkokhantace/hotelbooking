@@ -22,7 +22,6 @@
                         <p></p>
                         @include('layouts_frontend.partial_frontend.search_form')
                         <p></p>
-                        {{--{!! Form::close() !!}--}}
                     </div>
                     <!-- Blog Search Well -->
                     <div class="bg_block_sm pd_10">

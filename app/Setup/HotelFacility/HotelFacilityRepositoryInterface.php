@@ -17,4 +17,5 @@ interface HotelFacilityRepositoryInterface
     public function create($paramObj);
     public function update($paramObj);
     public function delete($paramObj);
+    public function getHotelFacilitiesByHotelIDandGroupID($hotel_id,$facility_group_id);
 }

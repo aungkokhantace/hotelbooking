@@ -118,4 +118,11 @@ class HotelNearbyAirportRepository implements HotelNearbyAirportRepositoryInterf
             LogCustom::create($date,$message);
         }
     }
+
+    public function getObjsByHotelID($hotel_id){
+        $objs = HotelNearbyAirport::whereNull('deleted_at')
+                ->where('hotel_id','=',$hotel_id)
+                ->get();
+        return $objs;
+    }
 }

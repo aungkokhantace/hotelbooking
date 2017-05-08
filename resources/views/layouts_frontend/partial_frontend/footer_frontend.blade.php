@@ -70,17 +70,9 @@
 </footer>
 
 
-<!-- Bootstrap Core JavaScript -->
-<script src="/assets/shared/js/bootstrap.min.js"></script>
 
-<!-- Bootstrap Date-Picker Plugin -->
-<script type="text/javascript" src="/assets/shared/js/bootstrap-datepicker.min.js"></script>
 
-<!-- Jquery Validation -->
-<script src="/assets/shared/js/validation/jquery.validate.js"></script>
-<script src="/assets/shared/js/validation/additional-methods.js"></script>
-
-<!-- #region Jssor Slider Begin -->
+    <!-- #region Jssor Slider Begin -->
 <script src="/assets/shared/js/jssor.slider-23.1.5.min.js" type="text/javascript"></script>
 <script type="text/javascript">
     jssor_1_slider_init = function() {

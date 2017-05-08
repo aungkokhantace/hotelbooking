@@ -118,4 +118,12 @@ class HotelFacilityRepository implements HotelFacilityRepositoryInterface
             LogCustom::create($date,$message);
         }
     }
+
+    public function getHotelFacilitiesByHotelIDandGroupID($hotel_id,$facility_group_id){
+        $result = HotelFacility::whereNull('deleted_at')
+                    ->where('hotel_id','=',$hotel_id)
+                    ->where('facility_group_id','=',$facility_group_id)
+                    ->get();
+        return $result;
+    }
 }

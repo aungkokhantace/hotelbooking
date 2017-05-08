@@ -142,4 +142,13 @@ class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterfac
         $room_type_name = $room_type->h_room_type->name;
         return $room_type_name;
     }
+
+    public function getRoomCategoriesByHotelId($hotel_id){
+        $result = HotelRoomCategory::whereNull('deleted_at')
+//                    ->select('id')
+                    ->where('hotel_id','=',$hotel_id)
+                    ->get();
+
+        return $result;
+    }
 }
