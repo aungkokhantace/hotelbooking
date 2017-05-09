@@ -28,6 +28,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('lang/{lang}','Language\LanguageController@getLanguage');
 //    Route::get('/getlocations/{destination}', array('as'=>'/getlocations', 'uses'=>'Frontend\SearchController@getLocations'));
     Route::post('/getlocations', array('as'=>'/getlocations', 'uses'=>'Frontend\SearchController@getLocations'));
+    //User Profile
+    Route::get('profile',['as'=>'profile','uses'=>'Frontend\UserProfileController@showMyProfile']);
+    Route::post('profile',['as'=>'profile','uses'=>'Frontend\UserProfileController@updateProfile']);
+    Route::get('profile/check_email', ['as' => 'profile/check_email', 'uses' => 'Frontend\UserProfileController@check_email']);
+
 
     //Backend
     Route::group(['prefix' => 'backend'], function () {

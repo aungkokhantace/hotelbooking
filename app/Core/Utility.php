@@ -159,4 +159,9 @@ class Utility
         return $image;
 
     }
+
+    public static function getCurrentCustomerID(){
+        $id = Auth::guard('Customer')->user()->id;
+        return $id;
+    }
 }

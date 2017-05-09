@@ -23,8 +23,6 @@ class UserRegistrationController extends Controller
 
     public function store(Request $request){
         if($request->ajax()) {
-//            $input                  = $request::all();
-//            print_r($input);die();
             $f_name                 = trim(Input::get('first_name'));
             $l_name                 = trim(Input::get('last_name'));
             $email                  = trim(Input::get('email'));
@@ -40,7 +38,7 @@ class UserRegistrationController extends Controller
             $res = $this->repo->create($paramObj);
             $response = ['Status 200'];
             return \Response::json($response);
-//        return redirect('/');
+
         }
 
     }

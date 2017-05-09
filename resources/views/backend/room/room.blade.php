@@ -42,7 +42,7 @@
                     @endforeach
                 @endif
             </select>
-            <p class="text-danger">{{$errors->first('hotel_id')}}
+            <p class="text-danger">{{$errors->first('hotel_id')}}</p>
         </div>
     </div>
 
@@ -69,7 +69,7 @@
                     </option>
                 @endif
             </select>
-            <p class="text-danger">{{$errors->first('h_room_type_id')}}
+            <p class="text-danger">{{$errors->first('h_room_type_id')}}</p>
         </div>
     </div>
 
@@ -96,7 +96,7 @@
                     </option>
                 @endif
             </select>
-            <p class="text-danger">{{$errors->first('h_room_category_id')}}
+            <p class="text-danger">{{$errors->first('h_room_category_id')}}</p>
         </div>
     </div>
 
@@ -126,7 +126,7 @@
                     @endforeach
                 @endif
             </select>
-            <p class="text-danger">{{$errors->first('room_view_id')}}
+            <p class="text-danger">{{$errors->first('room_view_id')}}</p>
         </div>
     </div>
 

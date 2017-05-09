@@ -9,4 +9,6 @@ namespace App\Setup\Customer;
 interface CustomerRepositoryInterface
 {
     public function create($paramObj);
+    public function getObjByID($id);
+    public function update($paramObj);
 }
