@@ -165,6 +165,9 @@
     });
 </script>
 
+<!-- Sweet Alert -->
+<script src="/assets/js/sweetalert-dev.js"></script>
+
 </body>
 
 </html>

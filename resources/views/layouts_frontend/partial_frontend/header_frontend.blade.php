@@ -42,6 +42,9 @@ $companyLogo = \App\Core\Check::companyLogo();
 
     <link media="all" type="text/css" rel="stylesheet" href="/assets/plugins/jquery-ui/themes/base/minified/jquery-ui.min.css">
 
+    <!-- Sweet Alert -->
+    <link media="all" type="text/css" rel="stylesheet" href="/assets/css/sweetalert.css">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
