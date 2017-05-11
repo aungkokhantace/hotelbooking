@@ -127,4 +127,41 @@ class RoomRepository implements RoomRepositoryInterface
 
         return $rooms;
     }
+
+    public function getRoomCountByRoomCategoryId($r_category_id,$check_in,$check_out) {
+        //change date formats of check_in and check_out
+        $newCheckIn  = date("Y-m-d", strtotime($check_in));
+        $newCheckOut = date("Y-m-d", strtotime($check_out));
+
+        //check for blacked out rooms between check_in date and check_out date
+        $blackout_query = DB::select("SELECT room_id
+                                      FROM r_blackout_period
+                                      WHERE (r_blackout_period.from_date BETWEEN '$newCheckIn' AND '$newCheckOut') OR (r_blackout_period.to_date BETWEEN '$newCheckIn' AND '$newCheckOut')");
+        //push to array
+        $blackout_arr = array();
+        foreach($blackout_query as $blackout){
+            array_push($blackout_arr,$blackout->room_id);
+        }
+
+        //check for booked rooms between check_in date and check_out date
+        $booking_query = DB::select("SELECT bookings.room_id
+	                                  FROM bookings
+	                                  WHERE (bookings.check_in_date BETWEEN '$newCheckIn' AND '$newCheckOut') OR (bookings.check_out_date BETWEEN '$newCheckIn' AND '$newCheckOut')");
+        //push to array
+        $booking_arr = array();
+        foreach($booking_query as $booking){
+            array_push($booking_arr,$booking->room_id);
+        }
+
+        //get rooms that are within available_period and not within black_out period and not booked
+        $result = Room::whereNull('rooms.deleted_at')
+                    ->leftjoin('r_available_period', 'r_available_period.room_id', '=', 'rooms.id')
+                    ->where('h_room_category_id',$r_category_id)
+                    ->where('r_available_period.from_date','<=',$newCheckIn)
+                    ->where('r_available_period.to_date','>=',$newCheckOut)
+                    ->whereNotIn('rooms.id', $blackout_arr)
+                    ->whereNotIn('rooms.id', $booking_arr)
+                    ->get();
+        return $result;
+    }
 }

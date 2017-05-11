@@ -298,7 +298,8 @@
 //            var destination = $("#searched_destination").val();
 //            setTimeout(executeQuery(destination), 3000);
 
-
+            var nowDate = new Date();
+            var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
             $('#check_in').datepicker({
                 format: 'dd-mm-yyyy',
                 autoclose: true,
@@ -306,6 +307,7 @@
                 changeMonth: true,
                 numberOfMonths: 1,
                 allowInputToggle: true,
+                startDate: today
             });
 
             $('#check_out').datepicker({
@@ -315,6 +317,7 @@
                 changeMonth: true,
                 numberOfMonths: 1,
                 allowInputToggle: true,
+                startDate: today
             });
 
             $("#destination").autocomplete({
@@ -348,9 +351,13 @@
             $('#search').validate({
                 rules: {
                     destination                    : 'required',
+                    check_in                       : 'required',
+                    check_out                      : 'required',
                 },
                 messages: {
                     destination                    : 'Destination is required',
+                    check_in                       : 'Check-in Date is required',
+                    check_out                      : 'Check-out Date is required',
                 },
                 submitHandler: function(form) {
                     $('input[type="submit"]').attr('disabled','disabled');
