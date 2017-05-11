@@ -1,6 +1,6 @@
 .navbar-brand {
     float: left;
-    height: 57px;
+    height: 50px;
     padding: 0px 15px;
     font-size: 18px;
     line-height: 20px;
@@ -41,14 +41,6 @@
     border: none;
     -webkit-box-shadow: inset 0 0px 0px rgba(233, 228, 222, 0.45);
     box-shadow: inset 0 0px 0px rgba(233, 228, 222, 0.45);}
-.form-controls {
-    display: block;
-    width: 50%;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #555;
-}
 .input-group-addon {
     padding: 6px 12px;
     font-size: 14px;
@@ -87,67 +79,10 @@
     margin-bottom: 10px;
     padding: 0px 65px;
 }
-.btn-default1 {
-    color: #fff;
-    background-color: #D63090;
-    border-color: #D63090;
-    font-size: 18px !important;
-    font-family: 'Playfair Display';
-    text-align: center;
-    padding: 7px 15px;
-    text-transform: uppercase;
-    margin-top: -15px;
-    width: 23%;
-    margin-left: 9px;
-    border-radius: 0px;
-}
-.btn-default1:hover{
-    color: #fff;
-    background-color: #D63090;
-    border-color: #D63090;
-    font-size: 18px !important;
-    font-family: 'Playfair Display';
-    text-align: center;
-    padding: 7px 15px;
-    text-transform: uppercase;
-    margin-top: -15px;
-    width: 23%;
-    margin-left: 9px;
-    border-radius: 0px;
-}
-.btn-default2 {
-    color: #fff;
-    background-color: #545454;
-    border-color: #545454;
-    font-size: 18px !important;
-    font-family: 'Playfair Display';
-    text-align: center;
-    padding: 7px 15px;
-    text-transform: uppercase;
-    margin-top: -15px;
-    width: 23%;
-    margin-left: 9px;
-    border-radius: 0px;
-}
-.btn-default2:hover{
-    color: #fff;
-    background-color: #545454;
-    border-color: #545454;
-    font-size: 18px !important;
-    font-family: 'Playfair Display';
-    text-align: center;
-    padding: 7px 15px;
-    text-transform: uppercase;
-    margin-top: -15px;
-    width: 23%;
-    margin-left: 9px;
-    border-radius: 0px;
-}
-
 .btn-default {
-    color: #fff;
-    background-color: #D63090;
-    border-color: #D63090;
+    color: #fff !important;
+    background-color: #D63090 !important;
+    border-color: #D63090 !important;
     font-size: 18px !important;
     font-family: 'Playfair Display';
     text-align: center;
@@ -156,21 +91,15 @@
     margin-top: 10px;
 }
 .btn-default:hover{
-    color: #fff;
-    background-color: #D63090;
-    border-color: #D63090;
+    color: #fff !important;
+    background-color: #D63090 !important;
+    border-color: #D63090 !important;
     font-size: 18px !important;
     font-family: 'Playfair Display';
     text-align: center;
     padding: 4px 15px;
     text-transform: uppercase;
     margin-top: 10px;
-}
-.col-form-label{
-    color: #D63090;
-}
-.my_profile{
-    border-bottom: 1px solid #ccc;
 }
 
 
@@ -179,7 +108,7 @@ label {
     max-width: 100%;
     margin-bottom: 5px;
     font-family: 'Playfair Display';
-
+    color: #D63090;
 }
 .col-3{
     width: 30%;
@@ -202,7 +131,7 @@ label {
 }
 /******destination*******/
 #popular{
-    margin: 30px 0px 0px;
+    margin: 20px 0px 0px;
 }
 .destination h1{
     font-size: 34px;
@@ -450,6 +379,7 @@ span.glyphicon.glyphicon-arrow-right {
     color: #303032 !important;
     font-family: 'Playfair Display';
     font-size: 16px;
+    padding-top: 20px;
 }
 .login a{
     color: #626262;
@@ -461,11 +391,11 @@ span.glyphicon.glyphicon-arrow-right {
 .language ul li{
     list-style: none;
     float: left;
+    padding-top: 20px;
     padding-left: 15px;
 }
 .navbar-right {
     margin-right: 15px;
-    padding-top: 20px;
 }
 /*******Search********/
 .searchbox {
@@ -589,34 +519,15 @@ label.control-label {
     margin-top: 45px;
 }
 .nav-tabs.nav-justified>.active>a, .nav-tabs.nav-justified>.active>a:focus, .nav-tabs.nav-justified>.active>a:hover {
-    height: 0px;
-    width: auto;
-    border-left: 0px 0px 0px 100px solid transparent !important;
-    border-right: 30px solid transparent !important;
-    border-bottom: 35px solid #D63090 !important;
-    padding: 0px 15px;
+
     color: #fff;
-
-    /* color: #fff;
-     font-family: 'Playfair Display';
-     background-image: url(../images/1.png);
-     background-repeat: repeat-x;
-
-     padding: 6px 15px;
-     background-color: #f6f6f6;*/
+    font-family: 'Playfair Display';
+    background-image: url(../images/1.png);
+    background-repeat: repeat-x;
+    padding: 6px 15px;
+    background-color: #f6f6f6;
 }
-.nav-tabs>li>a {
-    margin-right: 2px;
-    line-height: 2;
-    border: 1px solid transparent;
-    border-radius: 4px 4px 0 0;
-}
-.nav>li>a {
-    position: relative;
-    display: block;
-    padding: 0px 15px;
-}
-.nav-tabs.nav-justified>li>a ,.nav-tabs.nav-justified>li>a:hover,.nav-tabs.nav-justified>li>a:active{
+.nav-tabs.nav-justified>li>a {
     border-bottom: none;
     border-radius: 0px 0px 0 0;
     font-family: 'Playfair Display';
@@ -626,7 +537,6 @@ label.control-label {
     background-color: #f6f6f6;
     border: none;
 }
-
 
 .left_blog h4{
     color: #D63090;
@@ -702,15 +612,6 @@ label.control-label {
     padding: 13px 15px;
 }
 
-.profile{
-    margin-bottom: 35px;
-    margin-top: 35px;
-}
-.side_profile{
-    border-bottom: 1px solid #ccc;
-    font-family: 'Playfair Display';
-    text-align: center;
-
 
 /**Slider Css Start***/
 /* jssor slider arrow navigator skin 05 css */
@@ -764,27 +665,7 @@ label.control-label {
     height:360px;
     overflow:hidden;
     visibility:hidden;
-    background-color:#fff;
-}
-.slider_two{
-    position:relative;
-    margin:0 auto;
-    top:0px;
-    left:0px;
-    width:800px;
-    height:360px;
-    overflow:hidden;
-    visibility:hidden;
-    background-color:#fff;
-}
-.slider_images_two{
-    cursor:default;
-    position:relative;
-    top:-85px;
-    left:0px;
-    width:850px;
-    height:350px;
-    overflow:hidden;
+    background-color:#fff;"
 }
 .slider_images{
     cursor:default;
@@ -793,7 +674,7 @@ label.control-label {
     left:0px;
     width:500px;
     height:300px;
-    overflow:hidden;
+    overflow:hidden;"
 }
 .slider_imagess{
     cursor:default;
@@ -805,72 +686,43 @@ label.control-label {
     float: right;
 }
 /**Slider Css End***/
-.modal-dialog {
-    width: 850px;
-    margin: 110px auto;
-}
+
 /**Detail Page Css Start***/
 .search_list {
     float: left;
 }
-.side_gmail p {
-    padding: 8px 5px 0;
-    font-family: 'Playfair Display';
+.detail_rightone, .detail_righttwo{
+    float: right;
+    padding-top: 35px;
+    margin-left: 10px;
 }
-.left_menu a {
-    font-size: 14px;
-    font-family: 'Playfair Display';
-}
-.left_menu ul {
-    list-style-type: none;
+.detail_rightone samp {
     margin: 0;
     padding: 0;
-    background-color: none;
-}
-
-.left_menu li a {
-    display: block;
-    color: #D63090;
-    padding: 12px 16px;
-    text-decoration: none;
-}
-
-.left_menu li a.active {
-    background-color: #D63090;
-    color: white;
-
-.detailmodal_text h4{
+    color: #fff;
+    background-color: red;
+    padding: 3px 8px;
     font-family: 'Playfair Display';
-    text-align: justify;
-    color: #D63090;
-    border-bottom: 1px solid #cccccc;
-    padding-bottom: 10px;
+    font-size: 16px;
 }
-.detailmodal_text p{
-    font-size: 13px;
+.detail_righttwo samp {
+    margin: 0;
+    padding: 0;
+    color: #545454;
+    background-color: #fff;
+    padding: 3px 10px;
+    font-family: 'Playfair Display';
+    border: 1px solid #545454;
+    border-radius: 4px;
+}
+/**Detail Page Css End***/
+
+/**Detail Text Css Start***/
+.detail_text {
+    font-size: 14px;
     color: #626262;
     font-family: 'Playfair Display';
     text-align: justify;
-    border-bottom: 1px solid #cccccc;
-    padding-bottom: 10px;
-}
-
-button.close {
-    -webkit-appearance: none;
-    padding: 0;
-    cursor: pointer;
-    background: 0 0;
-    border: 0;
-    font-size: 60px;
-}
-.modal-header {
-    padding: 15px;
-    border-bottom: 0px solid #e5e5e5;
-}
-.modal-footer {
-    padding: 15px;
-    text-align: right;
-    border-top: 0px solid #e5e5e5;
 }
 .service .service-icon {
     float: left;
@@ -879,43 +731,35 @@ button.close {
     font-size: 20px;
     margin-left: -8px;
 }
-
-.left_menu li a:hover:not(.active) {
-    background-color: #D63090;
-    color: white;
+.col-md-3{
+    padding-right: 0px;
+    padding-left: 0px;
 }
-
-.left_menu ul li {
-    padding: 10px 0 5px 0;
-    border-bottom: 1px solid #ccc;
-    /* width: 88%; */
+.desc h4{
+    color: #303336;
+    font-family: 'Playfair Display';
+    margin-left: 26px;
 }
-.navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover {
-    background-color: #D63090;
+.desc ul li{
+    list-style: none;
+    margin-left: -15px;
+    color: #626262;
+    font-size: 13px;
+    font-weight: 600;
 }
-.navbar-toggle {
-    position: relative;
-    float: right;
-    padding: 7px;
-    margin-top: 8px;
-    margin-right: 15px;
-    margin-bottom: 8px;
-    background-color: #D63090;
-    background-image: none;
-    border: 1px solid #D63090;
-    border-radius: 4px;
+.room_table h3 {
+    font-family: 'Playfair Display';
+    font-weight: bold;
+    color: #626262;
 }
-
-.navbar-inverse .navbar-toggle {
-    border-color: #D63090;
 
 .table thead {
     background: #D63090;
     color: #fff;
 }
-.title_fa a{
+.title_fa{
     color: #D63090;
-    left: -42px;
+    left: -22px;
     font-size: 14px;
     font-weight: bold;
     font-family: 'Playfair Display';
@@ -924,41 +768,40 @@ button.close {
 .text_fa{
     left: -22px;
 }
-.navbar-toggle .icon-bar+.icon-bar {
-    margin-top: 3px;
-}
-.blog_booking {
-    margin-top: 45px;
-}
-.booking_tableright h4{
-    color: #D63090;
-    font-size: 18px;
-    font-family: 'Playfair Display';
-    margin: 10px 0px;
-}
-.lead_left h4 {
-    color: #D63090;
-    font-size: 18px;
-    font-family: 'Playfair Display';
-    margin: 10px 0px;
-}
-.lead img {
-    width: 4%;
-    margin-top: -8px;
-}
-.booking_tableright h3 {
-    color: #545454;
-    font-size: 24px;
-    font-family: 'Playfair Display';
-    padding-left: 6px;
-}
-
-.lead_left td {
-    padding: 7px 50px 0px 0px;
-
-.room_facilities{
+.fa-ul {
+    padding-left: 0;
+    margin-left: 2.14285714em;
     list-style-type: none;
-    padding:1px;
+    padding: 0px 0px;
+    font-family: 'Playfair Display';
+}
+.fa-lis {
+    position: absolute;
+    left: -2.14285714em;
+    /* width: 2.14285714em; */
+    /* top: .14285714em; */
+    /* text-align: center; */
+}
+th {
+    text-align: center;
+    font-family: 'Playfair Display';
+}
+.table_buttom{
+    background-color: #D63090;
+    color: white;
+    padding: 3px;
+    text-align: center;
+    font-family: 'Playfair Display';
+}
+.fa-ul>li {
+    position: relative;
+    padding-bottom: 7px;
+}
+.fa-td {
+    padding-left: 25px;
+}
+.price_night{
+    padding:3px;
     font-size: 13px;
     color: #626262;
     font-family: 'Playfair Display';
@@ -968,261 +811,51 @@ button.close {
     font-family: 'Playfair Display';
     font-size: 16px;
 }
-
-#bookinglist_blog{
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 290px;
-}
-.bookinglist-primary {
-    color: #fff !important;
-    background-color: #D63090;
-    border-color: #D63090;
-    padding: 8px 25px;
-    text-decoration: none !important;
-    font-size: 20px;
-}
-.bookinglist-primary:hover,.bookinglist-primary:active {
-    color: #fff !important;
-    background-color: #D63090;
-    border-color: #D63090;
+.service .service-icons {
+    float: left;
+    margin-top: -2px;
     color: #D63090;
-    padding: 8px 25px;
-    text-decoration: none;
     font-size: 20px;
+    padding-left: 0px;
 }
-.bookinglist-manage {
-    color: #fff !important;
-    background-color: #1067ec;
-    border-color: #1067ec;
-    padding: 8px 25px;
-    text-decoration: none !important;
-    font-size: 20px;
+.fa-ul-li {
+    padding-left: 0;
+    margin-left: 0.8em;
+    list-style-type: none;
 }
-.bookinglist-manage:hover,.bookinglist-manage:active {
-    color: #fff !important;
-    background-color: #1067ec;
-    border-color: #1067ec;
-    padding: 8px 25px;
-    text-decoration: none;
-    font-size: 20px;
+i.fa.fa-check-square-o {
+    color: #D63090;
+    margin: 7px 7px 0px;
+}
+i.fa-td.fa.fa-user {
+    color: #626262;
+}
+.hc_m_content h4 {
+    display: block;
+    clear: left;
+    float: left;
+    width: 33%;
+    padding: 0.8em 2% 20px 0;
+    margin: 0;
+    border-top: 1px solid #cccccc;
+    border-bottom: none;
+    color: #626262;
+    font-size: 13px;
+    font-weight: 600;
 }
 
-@media only screen and (max-width: 350px){
-    .navbar-brand>img {
-        width: 65%;
-        margin-top: -42px;
-    }
-    #popular {
-        margin: 38px 0px 0px;
-    }
-    .navbar-brand {
-        float: left;
-        height: 3px;
-        padding: 0px 15px;
-        font-size: 18px;
-    }
-    .form-controls {
-        display: block;
-        width: 100%;
-        padding: 6px 12px;
-        font-size: 14px;
-        line-height: 1.42857143;
-        color: #555;
-    }
-    #form_id {
-        position: absolute;
-        z-index: 500;
-        top: 190px;
-        float: right;
-        right: -12px;
-    }
-    label {
-        display: inline-block;
-        max-width: 100%;
-        margin-bottom: 0px;
-        font-family: 'Playfair Display';
-    }
-    .form-control {
-        display: block;
-        width: 80%;
-        height: 28px;
-        padding: 6px 12px;
-        font-size: 14px;
-        line-height: 1.42857143;
-        color: #555;
-        background-color: rgba(233, 228, 222, 0.45);
-        background-image: none;
-        border: none;
-        -webkit-box-shadow: inset 0 0px 0px rgba(233, 228, 222, 0.45);
-        box-shadow: inset 0 0px 0px rgba(233, 228, 222, 0.45);
-    }
-    .carousel-caption h1 {
-        font-size: 25px;
-        font-family: 'Playfair Display';
-        font-style: italic;
-    }
-    .form h2 {
-        font-size: 30px;
-        font-family: 'Playfair Display';
-        font-weight: bold;
-        color: #D63090;
-        padding-left: 4px;
-        margin: 3px 0px;
-    }
-    .form {
-        border: 1px solid rgba(204, 204, 204, 0.45);
-        padding: 5px;
-        background-color: rgba(204, 204, 204, 0.60);
-    }
-    .form-group {
-        margin-bottom: 10px;
-        padding: 0px 25px;
-    }
-    .btn-default {
-        color: #fff;
-        background-color: #D63090;
-        border-color: #D63090;
-        font-size: 17px !important;
-        font-family: 'Playfair Display';
-        text-align: center;
-        padding: 4px 15px;
-        text-transform: uppercase;
-        margin: 0px;
-    }
-    .btn-default:hover{
-        color: #fff;
-        background-color: #D63090;
-        border-color: #D63090;
-        font-size: 17px !important;
-        font-family: 'Playfair Display';
-        text-align: center;
-        padding: 4px 15px;
-        text-transform: uppercase;
-        margin-top: 0px;
-    }
-    .btn-default1 {
-        color: #fff;
-        background-color: #D63090;
-        border-color: #D63090;
-        font-size: 18px !important;
-        font-family: 'Playfair Display';
-        text-align: center;
-        padding: 7px 12px;
-        text-transform: uppercase;
-        margin-top: -15px;
-        width: 44%;
-        margin-left: 9px;
-        border-radius: 0px;
-    }
-    .btn-default1:hover {
-        color: #fff;
-        background-color: #D63090;
-        border-color: #D63090;
-        font-size: 18px !important;
-        font-family: 'Playfair Display';
-        text-align: center;
-        padding: 7px 12px;
-        text-transform: uppercase;
-        margin-top: -15px;
-        width: 44%;
-        margin-left: 9px;
-        border-radius: 0px;
-    }
-    .btn-default2 {
-        color: #fff;
-        background-color: #545454;
-        border-color: #545454;
-        font-size: 18px !important;
-        font-family: 'Playfair Display';
-        text-align: center;
-        padding: 7px 12px;
-        text-transform: uppercase;
-        margin-top: -15px;
-        width: 44%;
-        margin-left: 9px;
-        border-radius: 0px;
-    }
-    .btn-default2:hover {
-        color: #fff;
-        background-color: #545454;
-        border-color: #545454;
-        font-size: 18px !important;
-        font-family: 'Playfair Display';
-        text-align: center;
-        padding: 7px 12px;
-        text-transform: uppercase;
-        margin-top: -15px;
-        width: 44%;
-        margin-left: 9px;
-        border-radius: 0px;
-    }
-    .portfolio-caption:hover {
-        position: absolute;
-        right: 16px;
-        bottom: 15px;
-        left: 15px;
-        padding: 30px 15px 15px 15px;
-        background: rgba(30, 25, 27, 0.14);
-        z-index: 500;
-    }
-    .portfolio-caption h4 {
-        color: #fff;
-        background-color: #D63090;
-        padding: 2px 17px;
-        width: 35%;
-    }
-    .caption samp {
-        margin: 0;
-        padding: 0;
-        float: right;
-        color: #fff;
-        background-color: #D63090;
-        padding: 2px 15px;
-        width: 25%;
-    }
-    .nav>li>a {
-        position: relative;
-        display: block;
-        padding: 10px 15px;
-    }
-    .nav-tabs.nav-justified {
-        width: 80%;
-        border-bottom: 0;
-    }
-    .bookinglist-primary {
-        color: #fff !important;
-        background-color: #D63090;
-        border-color: #D63090;
-        padding: 8px 3px;
-        text-decoration: none !important;
-        font-size: 14px;
-    }
-    .bookinglist-primary:hover,.bookinglist-primary:active {
-        color: #fff !important;
-        background-color: #D63090;
-        border-color: #D63090;
-        color: #D63090;
-        padding: 8px 3px;
-        text-decoration: none;
-        font-size: 14px;
-    }
-    .bookinglist-manage {
-        color: #fff !important;
-        background-color: #1067ec;
-        border-color: #1067ec;
-        padding: 8px 3px;
-        text-decoration: none !important;
-        font-size: 12px;
-    }
-    .bookinglist-manage:hover,.bookinglist-manage:active {
-        color: #fff !important;
-        background-color: #1067ec;
-        border-color: #1067ec;
-        padding: 8px 3px;
-        text-decoration: none;
-        font-size: 12px;
-    }
+.hc_m_content p {
+    display: block;
+    float: left;
+    width: 65%;
+    margin: 0;
+    padding: 1.25em 0 20px;
+    border-top: 1px solid #cccccc;
+    color: #626262;
+    font-size: 13px;
+    font-weight: 600;
 }
+
 
 /**Detail Page Css End***/
 
