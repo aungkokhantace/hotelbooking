@@ -26,6 +26,7 @@ use App\Setup\HotelNearbyStation\HotelNearbyStationRepository;
 use App\Setup\HotelRoomCategory\HotelRoomCategory;
 use App\Setup\HotelRoomCategory\HotelRoomCategoryRepository;
 use App\Setup\Landmark\LandmarkRepository;
+use App\Setup\Room\RoomRepository;
 use App\Setup\RoomCategoryAmenity\RoomCategoryAmenityRepository;
 use App\Setup\RoomCategoryImage\RoomCategoryImageRepository;
 use App\Setup\RoomDiscount\RoomDiscountRepository;
@@ -142,6 +143,21 @@ class HotelDetailController extends Controller
             $room_amenities = $roomCategoryAmenityRepo->getAmenitiesByRoomCategoryId($roomCategory->id);
             $roomCategory->room_amenities = $room_amenities;
         }
+
+        //start room count for each room category
+        //get check-in date from session
+        $check_in = session('check_in');
+
+        //get check-out date from session
+        $check_out = session('check_out');
+
+        foreach($roomCategories as $r_category){
+            $roomRepo = New RoomRepository();
+            //get rooms that are within available_period and not within black_out period and not booked
+            $rooms    = $roomRepo->getRoomCountByRoomCategoryId($r_category->id,$check_in,$check_out);
+            $r_category->available_room_count = count($rooms);
+        }
+        //end room count for each room category
 
         return view('frontend.hoteldetail')
             ->with('hotel', $hotel)

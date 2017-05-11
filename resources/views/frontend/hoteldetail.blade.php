@@ -159,6 +159,7 @@
                             <tbody>
 
                             @foreach($roomCategories as $roomCategory)
+                                @if($roomCategory->available_room_count > 0)
                                 <tr>
                                     <td>
                                         <ul class="fa-ul">
@@ -187,13 +188,14 @@
                                         </ul>
                                     </td>
                                     <td>
-                                        <input type="number" name="number" class="floatLabel form-control">
+                                        <input type="number" name="number" class="floatLabel form-control" min="0" max="{{$roomCategory->available_room_count}}">
                                     </td>
 
                                     <td>
                                         <div class="table_buttom">Book Now</div>
                                     </td>
                                 </tr>
+                                @endif
                             @endforeach
                             </tbody>
                         </table>
@@ -314,7 +316,8 @@
 //            setTimeout(executeQuery(latitude,longitude), 3000);
             setTimeout(renderMap(latitude,longitude), 3000);
 
-
+            var nowDate = new Date();
+            var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
             $('#check_in').datepicker({
                 format: 'dd-mm-yyyy',
                 autoclose: true,
@@ -322,6 +325,7 @@
                 changeMonth: true,
                 numberOfMonths: 1,
                 allowInputToggle: true,
+                startDate: today
             });
 
             $('#check_out').datepicker({
@@ -331,6 +335,7 @@
                 changeMonth: true,
                 numberOfMonths: 1,
                 allowInputToggle: true,
+                startDate: today
             });
 
             $("#destination").autocomplete({
@@ -346,9 +351,13 @@
             $('#search').validate({
                 rules: {
                     destination                    : 'required',
+                    check_in                       : 'required',
+                    check_out                      : 'required',
                 },
                 messages: {
                     destination                    : 'Destination is required',
+                    check_in                       : 'Check-in Date is required',
+                    check_out                      : 'Check-out Date is required',
                 },
                 submitHandler: function(form) {
                     $('input[type="submit"]').attr('disabled','disabled');
