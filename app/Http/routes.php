@@ -16,6 +16,9 @@ Route::group(['middleware' => 'web'], function () {
     //hotel detail
     Route::get('/hotel_detail/{id}', 'Frontend\HotelDetailController@index');
 
+    //about us
+    Route::get('/aboutus', 'Frontend\HomeController@aboutus');
+
     //User(Customer Registration)
 //    Route::get('register','Frontend\UserRegistrationController@create');
     Route::any('register','Frontend\UserRegistrationController@store');

@@ -125,4 +125,8 @@ class HomeController extends Controller
         return view('frontend.test');
     }
 
+    public function aboutus(){
+        return view('frontend.aboutus');
+    }
+
 }

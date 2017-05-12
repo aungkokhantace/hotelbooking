@@ -97,7 +97,7 @@ $companyLogo = \App\Core\Check::companyLogo();
                             <a href="searchresult.html">Destinations</a>
                         </li>
                         <li>
-                            <a href="aboutus.html">About Us</a>
+                            <a href="/aboutus">About Us</a>
                         </li>
                         <li>
                             <a href="#">FAQ</a>

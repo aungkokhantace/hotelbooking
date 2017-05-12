@@ -88,7 +88,7 @@
                     <div class="form-group row">
                         <button type="submit" class="btn btn-default">Search Hotel Now</button>
                     </div>
-{{--                @include('layouts_frontend.partial_frontend.search_form')--}}
+                <!--  @include('layouts_frontend.partial_frontend.search_form')-->
                 {!! Form::close() !!}
             </div>
         </div>
@@ -127,37 +127,37 @@
         </div>
 
         <div class="container">
-            {{--Start dynamic popular destination content--}}
-                {{--$counter is to create a row for every three elements--}}
+            <!--Start dynamic popular destination content-->
+            <!--$counter is to create a row for every three elements-->
                 <?php $counter = 0; ?>
                 <div class="row">
                 @foreach($popular_cities as $popular_city)
-                {{--If elements are up to 3, they will be in the same row--}}
+                <!--If elements are up to 3, they will be in the same row-->
                 @if($counter <3)
-                    {{--Plus 1 to counter for each element rendered--}}
+                    <!--Plus 1 to counter for each element rendered-->
                     <?php $counter++; ?>
                     <div class="col-md-4 img-portfolio">
                         <a href="portfolio-item.html">
                             <img class="img-responsive img-hover" src="/images/upload/{{$popular_city->image}}" alt="">
                             <div class="portfolio-caption">
-                                {{--<h4>HOT</h4>--}}
+                                <!--<h4>HOT</h4>-->
                                 <h3><strong>{{$popular_city->name}}</strong><small>, {{$popular_city->country->name}}</small></h3>
                             </div>
                         </a>
                     </div>
                 @else
-                    {{--For the fourth element, reset the counter to 0 and close the current row--}}
+                    <!--For the fourth element, reset the counter to 0 and close the current row-->
                     </div>
                     <?php $counter = 0; ?>
-                    {{--And open another row--}}
+                    <!--And open another row-->
                     <div class="row">
-                        {{--Plus 1 to counter for each element rendered--}}
+                        <!--Plus 1 to counter for each element rendered-->
                         <?php $counter++; ?>
                         <div class="col-md-4 img-portfolio">
                             <a href="portfolio-item.html">
                                 <img class="img-responsive img-hover" src="/images/upload/{{$popular_city->image}}" alt="">
                                 <div class="portfolio-caption">
-                                    {{--<h4>HOT</h4>--}}
+                                    <!--<h4>HOT</h4>-->
                                     <h3><strong>{{$popular_city->name}}</strong><small>, {{$popular_city->country->name}}</small></h3>
                                 </div>
                             </a>
@@ -165,16 +165,16 @@
                 @endif
                 @endforeach
 
-                {{--render close tag for the last row--}}
+                <!--render close tag for the last row-->
                 </div>
 
-            {{--start rendering paginator--}}
+            <!--start rendering paginator-->
                 <div class="row">
                     {!! $popular_cities->render() !!}
                 </div>
-            {{--end rendering paginator--}}
+            <!--end rendering paginator-->
 
-            {{--End dynamic popular destination content--}}
+            <!--End dynamic popular destination content-->
         </div>
 
     </section>
@@ -187,14 +187,14 @@
             </div>
         </div>
         <div class="container">
-            {{--Start dynamic recommended hotels content--}}
-            {{--$counter is to create a row for every three elements--}}
+            <!--Start dynamic recommended hotels content-->
+            <!--$counter is to create a row for every three elements-->
             <?php $counter = 0; ?>
             <div class="row">
                 @foreach($recommended_hotels as $recommended_hotel)
-                    {{--If elements are up to 3, they will be in the same row--}}
+                    <!--If elements are up to 3, they will be in the same row-->
                     @if($counter <3)
-                        {{--Plus 1 to counter for each element rendered--}}
+                        <!--Plus 1 to counter for each element rendered-->
                         <?php $counter++; ?>
                         <div class="col-md-4 img-portfolio">
                             <a href="portfolio-item.html">
@@ -205,12 +205,12 @@
                             </a>
                         </div>
                     @else
-                        {{--For the fourth element, reset the counter to 0 and close the current row--}}
+                    <!--For the fourth element, reset the counter to 0 and close the current row-->~
                     </div>
                     <?php $counter = 0; ?>
-                    {{--And open another row--}}
+                    <!--And open another row-->
                     <div class="row">
-                        {{--Plus 1 to counter for each element rendered--}}
+                        <!--Plus 1 to counter for each element rendered-->
                         <?php $counter++; ?>
                         <div class="col-md-4 img-portfolio">
                             <a href="portfolio-item.html">
@@ -222,9 +222,9 @@
                         </div>
                 @endif
                 @endforeach
-                {{--render close tag for the last row--}}
+            <!--render close tag for the last row-->
             </div>
-            {{--End dynamic recommended hotels content--}}
+            <!--End dynamic recommended hotels content-->
 
             <a href="#" class="link">more >> </a>
         </div><!-- /.container -->
@@ -239,14 +239,14 @@
             </div>
         </div>
         <div class="container">
-            {{--Start dynamic promotion hotels content--}}
-            {{--$counter is to create a row for every three elements--}}
+            <!--Start dynamic promotion hotels content-->
+            <!--$counter is to create a row for every three elements-->
             <?php $counter = 0; ?>
             <div class="row">
                 @foreach($percent_promotions as $percent_promotion)
-                    {{--If elements are up to 3, they will be in the same row--}}
+                        <!--If elements are up to 3, they will be in the same row-->
                     @if($counter <3)
-                        {{--Plus 1 to counter for each element rendered--}}
+                            <!--Plus 1 to counter for each element rendered-->
                         <?php $counter++; ?>
                         <div class="col-sm-4">
                             <div class="thumbnail">
@@ -254,7 +254,7 @@
                                 <div class="caption">
                                     <h5>{{$percent_promotion->name}}<samp>{{$percent_promotion->discount_percent}}%</samp><br>
                                         <small>{{$percent_promotion->city->name}}, {{$percent_promotion->country->name}}</small><br>
-                                        {{--<small><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span><i class="fa fa-wifi" aria-hidden="true"></i><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></small>--}}
+                                        <!--<small><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span><i class="fa fa-wifi" aria-hidden="true"></i><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></small>-->
                                         @for ($i = 1; $i <= $percent_promotion->star; $i++)
                                             <small><span class="glyphicon glyphicon-star" aria-hidden="true"></span></small>
                                         @endfor
@@ -265,12 +265,12 @@
                             </div>
                         </div>
                     @else
-                    {{--For the fourth element, reset the counter to 0 and close the current row--}}
+                    <!--For the fourth element, reset the counter to 0 and close the current row-->
                     </div>
                     <?php $counter = 0; ?>
-                    {{--And open another row--}}
+                    <!--And open another row-->
                     <div class="row">
-                        {{--Plus 1 to counter for each element rendered--}}
+                        <!--Plus 1 to counter for each element rendered-->
                         <?php $counter++; ?>
                         <div class="col-sm-4">
                             <div class="thumbnail">
@@ -278,7 +278,7 @@
                                 <div class="caption">
                                     <h5>{{$percent_promotion->name}}<samp>{{$percent_promotion->discount_percent}}%</samp><br>
                                         <small>{{$percent_promotion->city->name}}, {{$percent_promotion->country->name}}</small><br>
-                                        {{--<small><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span><i class="fa fa-wifi" aria-hidden="true"></i><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></small>--}}
+                                        <!--<small><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span><i class="fa fa-wifi" aria-hidden="true"></i><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></small>-->
                                         @for ($i = 1; $i <= $percent_promotion->star; $i++)
                                             <small><span class="glyphicon glyphicon-star" aria-hidden="true"></span></small>
                                         @endfor
@@ -290,18 +290,18 @@
                         </div>
                 @endif
                 @endforeach
-                {{--render close tag for the last row--}}
-            {{--</div>--}}
-            {{--End dynamic promotion hotels content--}}
+                <!--render close tag for the last row-->
+            <!--</div>-->
+            <!--End dynamic promotion hotels content-->
 
-            {{--Start dynamic promotion hotels content--}}
+            <!--Start dynamic promotion hotels content-->
             {{--$counter is to create a row for every three elements--}}
             <?php //$counter = 0; ?>
             {{--<div class="row">--}}
                 @foreach($amount_promotions as $amount_promotion)
-                    {{--If elements are up to 3, they will be in the same row--}}
+                    <!--If elements are up to 3, they will be in the same row-->
                     @if($counter <3)
-                        {{--Plus 1 to counter for each element rendered--}}
+                        <!--Plus 1 to counter for each element rendered-->
                         <?php $counter++; ?>
                         <div class="col-sm-4">
                             <div class="thumbnail">
@@ -309,7 +309,7 @@
                                 <div class="caption">
                                     <h5>{{$amount_promotion->name}}<samp class="amount_promotion">{{$amount_promotion->discount_amount}}</samp><br>
                                         <small>{{$amount_promotion->city->name}}, {{$amount_promotion->country->name}}</small><br>
-                                        {{--<small><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span><i class="fa fa-wifi" aria-hidden="true"></i><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></small>--}}
+                                        <!--<small><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span><i class="fa fa-wifi" aria-hidden="true"></i><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></small>-->
                                         @for ($i = 1; $i <= $amount_promotion->star; $i++)
                                             <small><span class="glyphicon glyphicon-star" aria-hidden="true"></span></small>
                                         @endfor
@@ -320,12 +320,12 @@
                             </div>
                         </div>
                     @else
-                        {{--For the fourth element, reset the counter to 0 and close the current row--}}
+                    <!--For the fourth element, reset the counter to 0 and close the current row-->
                     </div>
                     <?php $counter = 0; ?>
-                    {{--And open another row--}}
+                    <!--And open another row-->
                     <div class="row">
-                        {{--Plus 1 to counter for each element rendered--}}
+                        <!--Plus 1 to counter for each element rendered-->
                         <?php $counter++; ?>
                         <div class="col-sm-4">
                             <div class="thumbnail">
@@ -333,7 +333,7 @@
                                 <div class="caption">
                                     <h5>{{$amount_promotion->name}}<samp class="amount_promotion">{{$amount_promotion->discount_amount}}</samp><br>
                                         <small>{{$amount_promotion->city->name}}, {{$amount_promotion->country->name}}</small><br>
-                                        {{--<small><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span><i class="fa fa-wifi" aria-hidden="true"></i><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></small>--}}
+                                        <!--<small><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span><i class="fa fa-wifi" aria-hidden="true"></i><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></small>-->
                                         @for ($i = 1; $i <= $amount_promotion->star; $i++)
                                             <small><span class="glyphicon glyphicon-star" aria-hidden="true"></span></small>
                                         @endfor
@@ -345,9 +345,9 @@
                         </div>
                 @endif
                 @endforeach
-                {{--render close tag for the last row--}}
+                <!--render close tag for the last row-->
             </div>
-            {{--End dynamic promotion hotels content--}}
+            <!--End dynamic promotion hotels content-->
 
         </div><!-- /.container -->
     </section><!-- /.section -->
