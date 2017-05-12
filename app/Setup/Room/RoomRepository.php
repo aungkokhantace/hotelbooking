@@ -144,9 +144,14 @@ class RoomRepository implements RoomRepositoryInterface
         }
 
         //check for booked rooms between check_in date and check_out date
-        $booking_query = DB::select("SELECT bookings.room_id
+        /*$booking_query = DB::select("SELECT bookings.room_id
 	                                  FROM bookings
-	                                  WHERE (bookings.check_in_date BETWEEN '$newCheckIn' AND '$newCheckOut') OR (bookings.check_out_date BETWEEN '$newCheckIn' AND '$newCheckOut')");
+	                                  WHERE (bookings.check_in_date BETWEEN '$newCheckIn' AND '$newCheckOut') OR (bookings.check_out_date BETWEEN '$newCheckIn' AND '$newCheckOut')"); */
+
+        $booking_query = DB::select("SELECT booking_room.room_id
+	                                  FROM booking_room
+	                                  WHERE ((booking_room.check_in_date BETWEEN '$newCheckIn' AND '$newCheckOut') OR (booking_room.check_out_date BETWEEN '$newCheckIn' AND '$newCheckOut')) AND (booking_room.status <> 3)");
+
         //push to array
         $booking_arr = array();
         foreach($booking_query as $booking){

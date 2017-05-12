@@ -213,7 +213,7 @@
                                                                         @if(isset($roomCategory->facilities) && count($roomCategory->facilities) > 0)
                                                                             @foreach($roomCategory->facilities as $room_category_facility)
                                                                                     <div class="col-md-3">
-                                                                                    <li class="text_fa">{{$room_category_facility->facility->name}}</li>
+                                                                                        <li class="text_fa">{{$room_category_facility->facility->name}}</li>
                                                                                     </div>
                                                                             @endforeach
                                                                         @endif
