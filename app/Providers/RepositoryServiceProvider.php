@@ -62,6 +62,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind('App\Setup\Autocomplete\AutocompleteRepositoryInterface','App\Setup\Autocomplete\AutocompleteRepository');
         $this->app->bind('App\Setup\Customer\CustomerRepositoryInterface','App\Setup\Customer\CustomerRepository');
         $this->app->bind('App\Setup\RoomCategoryAmenity\RoomCategoryAmenityRepositoryInterface','App\Setup\RoomCategoryAmenity\RoomCategoryAmenityRepository');
+        $this->app->bind('App\Setup\Booking\BookingRepositoryInterface','App\Setup\Booking\BookingRepository');
 
     }
 }

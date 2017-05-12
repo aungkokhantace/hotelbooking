@@ -23,7 +23,7 @@
                         </div>
                         <div class="left_menu">
                             <ul>
-                                <li><a href="#">Booking List</a></li>
+                                <li><a href="/bookingList">Booking List</a></li>
                                 <li><a class="active" href="#">My Profile</a></li>
                             </ul>
                         </div>
