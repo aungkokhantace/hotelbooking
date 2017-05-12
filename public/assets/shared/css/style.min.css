@@ -613,6 +613,7 @@ label.control-label {
 }
 
 
+
 /**Slider Css Start***/
 /* jssor slider arrow navigator skin 05 css */
 /*
@@ -665,7 +666,27 @@ label.control-label {
     height:360px;
     overflow:hidden;
     visibility:hidden;
-    background-color:#fff;"
+    background-color:#fff;
+}
+.slider_two{
+    position:relative;
+    margin:0 auto;
+    top:0px;
+    left:0px;
+    width:800px;
+    height:360px;
+    overflow:hidden;
+    visibility:hidden;
+    background-color:#fff;
+}
+.slider_images_two{
+    cursor:default;
+    position:relative;
+    top:-85px;
+    left:0px;
+    width:850px;
+    height:350px;
+    overflow:hidden;
 }
 .slider_images{
     cursor:default;
@@ -674,7 +695,7 @@ label.control-label {
     left:0px;
     width:500px;
     height:300px;
-    overflow:hidden;"
+    overflow:hidden;
 }
 .slider_imagess{
     cursor:default;
@@ -686,7 +707,10 @@ label.control-label {
     float: right;
 }
 /**Slider Css End***/
-
+.modal-dialog {
+    width: 850px;
+    margin: 110px auto;
+}
 /**Detail Page Css Start***/
 .search_list {
     float: left;
@@ -724,6 +748,39 @@ label.control-label {
     font-family: 'Playfair Display';
     text-align: justify;
 }
+.detailmodal_text h4{
+    font-family: 'Playfair Display';
+    text-align: justify;
+    color: #D63090;
+    border-bottom: 1px solid #cccccc;
+    padding-bottom: 10px;
+}
+.detailmodal_text p{
+    font-size: 13px;
+    color: #626262;
+    font-family: 'Playfair Display';
+    text-align: justify;
+    border-bottom: 1px solid #cccccc;
+    padding-bottom: 10px;
+}
+
+button.close {
+    -webkit-appearance: none;
+    padding: 0;
+    cursor: pointer;
+    background: 0 0;
+    border: 0;
+    font-size: 60px;
+}
+.modal-header {
+    padding: 15px;
+    border-bottom: 0px solid #e5e5e5;
+}
+.modal-footer {
+    padding: 15px;
+    text-align: right;
+    border-top: 0px solid #e5e5e5;
+}
 .service .service-icon {
     float: left;
     margin-top: -7px;
@@ -757,9 +814,9 @@ label.control-label {
     background: #D63090;
     color: #fff;
 }
-.title_fa{
+.title_fa a{
     color: #D63090;
-    left: -22px;
+    left: -42px;
     font-size: 14px;
     font-weight: bold;
     font-family: 'Playfair Display';
@@ -802,6 +859,13 @@ th {
 }
 .price_night{
     padding:3px;
+    font-size: 13px;
+    color: #626262;
+    font-family: 'Playfair Display';
+}
+.room_facilities{
+    list-style-type: none;
+    padding:1px;
     font-size: 13px;
     color: #626262;
     font-family: 'Playfair Display';

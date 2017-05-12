@@ -13,4 +13,5 @@ interface RoomCategoryFacilityRepositoryInterface
     public function getObjByID($id);
     public function create($paramObj);
     public function update($paramObj);
+    public function getObjByRoomCategoryID($room_category_id);
 }

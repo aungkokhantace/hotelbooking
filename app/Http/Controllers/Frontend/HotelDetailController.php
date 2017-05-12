@@ -28,6 +28,7 @@ use App\Setup\HotelRoomCategory\HotelRoomCategoryRepository;
 use App\Setup\Landmark\LandmarkRepository;
 use App\Setup\Room\RoomRepository;
 use App\Setup\RoomCategoryAmenity\RoomCategoryAmenityRepository;
+use App\Setup\RoomCategoryFacility\RoomCategoryFacilityRepository;
 use App\Setup\RoomCategoryImage\RoomCategoryImageRepository;
 use App\Setup\RoomDiscount\RoomDiscountRepository;
 use Illuminate\Http\Request;
@@ -158,6 +159,21 @@ class HotelDetailController extends Controller
             $r_category->available_room_count = count($rooms);
         }
         //end room count for each room category
+
+        //start images for each room category
+        foreach($roomCategories as $r_category_img){
+            $images    = $roomCategoryImageRepo->getRoomCategoryImageByHotelRoomCategoryId($r_category_img->id);
+            $r_category_img->images = $images;
+        }
+        //end images for each room category
+
+        //start room category facilities
+        $roomCategoryFacilityRepo = New RoomCategoryFacilityRepository();
+        foreach($roomCategories as $r_category_for_facility){
+            $room_category_facilities = $roomCategoryFacilityRepo->getObjByRoomCategoryID($r_category_for_facility->id);
+            $r_category_for_facility->facilities = $room_category_facilities;
+        }
+        //end room category facilities
 
         return view('frontend.hoteldetail')
             ->with('hotel', $hotel)
