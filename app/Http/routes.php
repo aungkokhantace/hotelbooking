@@ -32,6 +32,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('profile',['as'=>'profile','uses'=>'Frontend\UserProfileController@showMyProfile']);
     Route::post('profile',['as'=>'profile','uses'=>'Frontend\UserProfileController@updateProfile']);
     Route::get('profile/check_email', ['as' => 'profile/check_email', 'uses' => 'Frontend\UserProfileController@check_email']);
+    //Booking List
+    Route::get('bookingList',['as'=>'bookingList','uses'=>'Frontend\BookingController@booking_list']);
 
 
     //Backend

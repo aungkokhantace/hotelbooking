@@ -24,8 +24,8 @@ class UserProfileController extends Controller
 
     public function showMyProfile(){
         if (Auth::guard('Customer')->check()) {
-            $id = Utility::getCurrentCustomerID();
-            $customer               = $this->repo->getObjByID($id);
+            $id             = Utility::getCurrentCustomerID();
+            $customer       = $this->repo->getObjByID($id);
             return view('frontend.userprofile')->with('customer', $customer);
         }
         return view('frontend.home');

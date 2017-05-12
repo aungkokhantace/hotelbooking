@@ -58,3 +58,7 @@
 .error{
     color: red;
 }
+
+.login-btn,.register-btn{
+    background-color: #D63090;
+}
