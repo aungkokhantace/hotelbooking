@@ -99,7 +99,7 @@
                                                     </div>
                                                     <div class="booking_tableright pull-right">
                                                         <h4>status-{{$booking->status_txt}}</h4>
-                                                        <h3>USD 0.00</h3>
+                                                        <h3>$ {{$booking->total_payable_amt}}</h3>
                                                     </div>
                                                 </div>
                                             </div>
