@@ -613,7 +613,6 @@ label.control-label {
 }
 
 
-
 /**Slider Css Start***/
 /* jssor slider arrow navigator skin 05 css */
 /*
@@ -666,8 +665,18 @@ label.control-label {
     height:360px;
     overflow:hidden;
     visibility:hidden;
-    background-color:#fff;
+    background-color:#fff;"
 }
+.slider_images{
+    cursor:default;
+    position:relative;
+    top:-44px;
+    left:0px;
+    width:500px;
+    height:300px;
+    overflow:hidden;"
+}
+
 .slider_two{
     position:relative;
     margin:0 auto;
@@ -688,15 +697,7 @@ label.control-label {
     height:350px;
     overflow:hidden;
 }
-.slider_images{
-    cursor:default;
-    position:relative;
-    top:-44px;
-    left:0px;
-    width:500px;
-    height:300px;
-    overflow:hidden;
-}
+
 .slider_imagess{
     cursor:default;
     position:relative;
@@ -707,10 +708,7 @@ label.control-label {
     float: right;
 }
 /**Slider Css End***/
-.modal-dialog {
-    width: 850px;
-    margin: 110px auto;
-}
+
 /**Detail Page Css Start***/
 .search_list {
     float: left;
@@ -748,14 +746,156 @@ label.control-label {
     font-family: 'Playfair Display';
     text-align: justify;
 }
-.detailmodal_text h4{
+.service .service-icon {
+    float: left;
+    margin-top: -7px;
+    color: #303336;
+    font-size: 20px;
+    margin-left: -8px;
+}
+.col-md-3{
+    padding-right: 0px;
+    padding-left: 0px;
+}
+.desc h4{
+    color: #303336;
+    font-family: 'Playfair Display';
+    margin-left: 26px;
+}
+.desc ul li{
+    list-style: none;
+    margin-left: -15px;
+    color: #626262;
+    font-size: 13px;
+    font-weight: 600;
+}
+.room_table h3 {
+    font-family: 'Playfair Display';
+    font-weight: bold;
+    color: #626262;
+}
+
+.table thead {
+    background: #D63090;
+    color: #fff;
+}
+.title_fa{
+    color: #D63090;
+    left: -22px;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Playfair Display';
+    text-decoration: underline;
+}
+.text_fa{
+    left: -22px;
+}
+.fa-ul {
+    padding-left: 0;
+    margin-left: 2.14285714em;
+    list-style-type: none;
+    padding: 0px 0px;
+    font-family: 'Playfair Display';
+}
+.fa-lis {
+    position: absolute;
+    left: -2.14285714em;
+    /* width: 2.14285714em; */
+    /* top: .14285714em; */
+    /* text-align: center; */
+}
+th {
+    text-align: center;
+    font-family: 'Playfair Display';
+}
+.table_buttom{
+    background-color: #D63090;
+    color: white;
+    padding: 3px;
+    text-align: center;
+    font-family: 'Playfair Display';
+}
+.fa-ul>li {
+    position: relative;
+    padding-bottom: 7px;
+}
+.fa-td {
+    padding-left: 25px;
+}
+.price_night{
+    padding:3px;
+    font-size: 13px;
+    color: #626262;
+    font-family: 'Playfair Display';
+}
+.desc h5{
+    color: #626262;
+    font-family: 'Playfair Display';
+    font-size: 16px;
+}
+.service .service-icons {
+    float: left;
+    margin-top: -2px;
+    color: #D63090;
+    font-size: 20px;
+    padding-left: 0px;
+}
+.fa-ul-li {
+    padding-left: 0;
+    margin-left: 0.8em;
+    list-style-type: none;
+}
+i.fa.fa-check-square-o {
+    color: #D63090;
+    margin: 7px 7px 0px;
+}
+i.fa-td.fa.fa-user {
+    color: #626262;
+}
+.hc_m_content h4 {
+    display: block;
+    clear: left;
+    float: left;
+    width: 33%;
+    padding: 0.8em 2% 20px 0;
+    margin: 0;
+    border-top: 1px solid #cccccc;
+    border-bottom: none;
+    color: #626262;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.hc_m_content p {
+    display: block;
+    float: left;
+    width: 65%;
+    margin: 0;
+    padding: 1.25em 0 20px;
+    border-top: 1px solid #cccccc;
+    color: #626262;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/**Detail Page Css End***/
+
+/*Modal CSS Start*/
+.md-dialog {
+    width: 850px;
+    margin: 110px auto;
+}
+
+.md-detail-text h4{
     font-family: 'Playfair Display';
     text-align: justify;
     color: #D63090;
     border-bottom: 1px solid #cccccc;
     padding-bottom: 10px;
 }
-.detailmodal_text p{
+
+.md-detail-text p{
     font-size: 13px;
     color: #626262;
     font-family: 'Playfair Display';
@@ -764,7 +904,18 @@ label.control-label {
     padding-bottom: 10px;
 }
 
-button.close {
+.md-header {
+    padding: 15px;
+    border-bottom: 0px solid #e5e5e5;
+}
+
+.md-footer {
+    padding: 15px;
+    text-align: right;
+    border-top: 0px solid #e5e5e5;
+}
+
+.close-btn {
     -webkit-appearance: none;
     padding: 0;
     cursor: pointer;
@@ -772,15 +923,16 @@ button.close {
     border: 0;
     font-size: 60px;
 }
-.modal-header {
-    padding: 15px;
-    border-bottom: 0px solid #e5e5e5;
+/*Modal CSS End*/
+
+/**Detail Text Css Start***/
+.detail_text {
+    font-size: 14px;
+    color: #626262;
+    font-family: 'Playfair Display';
+    text-align: justify;
 }
-.modal-footer {
-    padding: 15px;
-    text-align: right;
-    border-top: 0px solid #e5e5e5;
-}
+
 .service .service-icon {
     float: left;
     margin-top: -7px;
@@ -920,6 +1072,4 @@ i.fa-td.fa.fa-user {
     font-weight: 600;
 }
 
-
 /**Detail Page Css End***/
-

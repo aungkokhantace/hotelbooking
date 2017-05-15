@@ -167,12 +167,12 @@
                                                 <a href="#myModal" data-toggle="modal">{{$roomCategory->name}}</a>
                                                 <!-- Start Modal -->
                                                 <div class="modal fade" id="myModal" role="dialog">
-                                                    <div class="modal-dialog modal-lg">
+                                                    <div class="modal-dialog modal-lg md-dialog">
 
                                                         <!-- Modal content Start-->
                                                         <div class="modal-content">
                                                             <div class="modal-body">
-                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                <button type="button" class="close close-btn" data-dismiss="modal">&times;</button>
                                                                 <div id="jssor_2" class="slider_two">
                                                                     <div data-u="slides" class="slider_images_two">
                                                                         @if(isset($roomCategory->images) && count($roomCategory->images)>0)
@@ -203,11 +203,11 @@
                                                                         <!-- Thumbnail Item Skin End -->
                                                                     </div>
                                                                 </div>
-                                                                <div class="detailmodal_text">
+                                                                <div class="detailmodal_text md-detail-text">
                                                                     <h4>Room size : {{$roomCategory->square_metre}} m<sup>2</sup></h4>
                                                                     <p>{{$roomCategory->description}}</p>
                                                                 </div>
-                                                                <div class="detailmodal_text">
+                                                                <div class="detailmodal_text md-detail-text">
                                                                     <h4>Room Facilities</h4>
                                                                         <ul class="room_facilities">
                                                                         @if(isset($roomCategory->facilities) && count($roomCategory->facilities) > 0)
@@ -220,7 +220,7 @@
                                                                         </ul>
                                                                 </div>
                                                             </div>
-                                                            <div class="modal-footer">
+                                                            <div class="modal-footer md-footer">
 
                                                             </div>
                                                         </div>
