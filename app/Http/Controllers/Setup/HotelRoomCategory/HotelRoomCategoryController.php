@@ -226,10 +226,18 @@ class HotelRoomCategoryController extends Controller
             $roomCategoryImageRepo          = new RoomCategoryImageRepository();
             $roomCategoryImages             = $roomCategoryImageRepo->getRoomCategoryImageByHotelRoomCategoryId($id);
             $r_category_image_id            = array();
+
             if(isset($roomCategoryImages) && count($roomCategoryImages) > 0){
-                foreach($roomCategoryImages as $cImage){
-                    if(!in_array($cImage->id,$file_id)){
+                if(is_null($file_id)){
+                    foreach($roomCategoryImages as $cImage){
                         array_push($r_category_image_id,$cImage->id);
+                    }
+                }
+                else{
+                    foreach($roomCategoryImages as $cImage){
+                        if(!in_array($cImage->id,$file_id)){
+                            array_push($r_category_image_id,$cImage->id);
+                        }
                     }
                 }
             }
