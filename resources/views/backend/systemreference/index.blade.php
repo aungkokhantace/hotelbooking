@@ -45,11 +45,12 @@
 
     <div class="row">
         <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#hotel_type">Hotel_Type</a></li>
+            <li class="active"><a data-toggle="tab" href="#hotel_type"><b>Hotel_Type</b></a></li>
+            <li><a data-toggle="tab" href="#room_status"><b>Room Status</b></a></li>
         </ul>
 
         <div class="tab-content">
-            <div id="call_log" class="tab-pane fade in active">
+            <div id="hotel_type" class="tab-pane fade in active">
                 <h3>Hotel Type Reference Description</h3>
                 <table border="2" width="300px" style="text-align: center">
                     <tr>
@@ -76,6 +77,24 @@
                         <td>Hostel</td>
                         <td>5</td>
                     </tr>
+                </table>
+            </div>
+            <div id="room_status" class="tab-pane fade">
+                <h3>Room Status Reference Description</h3>
+                <table border="2" width="300px" style="text-align: center">
+                    <tr>
+                        <td><strong>Name</strong></td>
+                        <td><strong>Value</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Available</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>Non Available</td>
+                        <td>0</td>
+                    </tr>
+
                 </table>
             </div>
         </div>

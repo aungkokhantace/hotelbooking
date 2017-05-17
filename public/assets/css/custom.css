@@ -84,4 +84,12 @@ body{
     /*margin-left: 20% !important;*/
 }
 
+.btn-primary{
+    background-color: #AE479B!important;
+}
+
+.btn-primary:hover{
+    background-color: #7C0F58!important;
+}
+
 
