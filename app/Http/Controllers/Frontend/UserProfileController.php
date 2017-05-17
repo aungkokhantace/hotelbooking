@@ -28,7 +28,7 @@ class UserProfileController extends Controller
             $customer       = $this->repo->getObjByID($id);
             return view('frontend.userprofile')->with('customer', $customer);
         }
-        return view('frontend.home');
+        return redirect('/');
     }
 
     public function updateProfile(ProfileRequest $request){

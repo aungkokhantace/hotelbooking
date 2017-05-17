@@ -43,7 +43,7 @@
                         <th>{{trans('setup_room.tb-col-room-category')}}</th>
                         <th>{{trans('setup_room.tb-col-room-view')}}</th>
                         <th>{{trans('setup_room.tb-col-name')}}</th>
-                        <th>{{trans('setup_room.tb-col-description')}}</th>
+                        <th>{{trans('setup_room.tb-col-status')}}</th>
                     </tr>
                     </thead>
                     <tfoot>
@@ -54,7 +54,7 @@
                         <th class="search-col" con-id="h_room_category">Room Category</th>
                         <th class="search-col" con-id="room_view">Room View</th>
                         <th class="search-col" con-id="name">Name</th>
-                        <th class="search-col" con-id="description">Description</th>
+                        <th class="search-col" con-id="status">Status</th>
 
                     </tr>
                     </tfoot>
@@ -67,7 +67,7 @@
                             <td>{{$room->hotel_room_category->name}}</td>
                             <td>{{$room->room_view->name}}</td>
                             <td><a href="/backend/room/edit/{{$room->id}}">{{$room->name}}</a></td>
-                            <td>{{$room->description}}</td>
+                            <td>{{$room->status==1?'Available':'Non Available'}}</td>
                         </tr>
                     @endforeach
                     </tbody>

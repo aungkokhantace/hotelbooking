@@ -28,7 +28,7 @@ class RoomEditRequest extends Request
             'h_room_type_id'    => 'required',
             'h_room_category_id'=> 'required',
             'room_view_id'      => 'required',
-            'name'              => 'required',
+//            'name'              => 'required',
             'status'            => 'required',
         ];
     }
@@ -39,7 +39,7 @@ class RoomEditRequest extends Request
             'h_room_type_id.required'       => 'Room Type is required!',
             'h_room_category_id.required'   => 'Room Category is required!',
             'room_view_id.required'         => 'Room View is required!',
-            'name.required'                 => 'Name is required!',
+//            'name.required'                 => 'Name is required!',
             'status.required'               => 'Status is required!'
         ];
     }

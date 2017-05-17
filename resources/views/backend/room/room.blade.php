@@ -129,6 +129,21 @@
             <p class="text-danger">{{$errors->first('room_view_id')}}</p>
         </div>
     </div>
+    @if(!isset($room))
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="number_of_rooms">
+                {{trans('setup_room.number-of-rooms')}}
+                <span class="require">*</span>
+            </label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <input type="number" class="form-control" id="number_of_rooms" name="number_of_rooms"
+                   placeholder="{{trans('setup_room.place-no-of-rooms')}}"/>
+            <p class="text-danger">{{$errors->first('number_of_rooms')}}</p>
+        </div>
+    </div>
+    @endif
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -137,11 +152,15 @@
                 <span class="require">*</span>
             </label>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <input type="text" class="form-control" id="name" name="name"
-                   placeholder="{{trans('setup_room.place-name')}}"
-                   value="{{ isset($room)? $room->name:Request::old('name') }}"/>
-            <p class="text-danger">{{$errors->first('name')}}</p>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 multi_name">
+            @if(isset($room) && count($room) > 0)
+                <input type="text" class="form-control" name="room_name" class="multi" placeholder="{{trans('setup_room.place-name')}}"
+                       value="{{isset($room)?$room->name:Request::old('room_name')}}"/>
+            @else
+                <input type="text" class="form-control" name="room_name[1]" class="multi" placeholder="{{trans('setup_room.place-name')}}"
+                       value="{{isset($room)?$room->name:''}}"/>
+            @endif
+            <p class="text-danger">{{$errors->first('room_name[1]')}}</p>
         </div>
     </div>
 
@@ -212,29 +231,57 @@
                 loadHotelRoomCategory($(this).val());
             });
 
+            //Number of Rooms
+            $('#number_of_rooms').focusout(function (e){
+                $('.multi_name').empty();
+                var rows    = $('#number_of_rooms').val();
+                var count   = 1;
+                var html    = '<input type="text" class="form-control" name="room_name['+count+']" class="multi" placeholder="{{trans('setup_room.place-name')}}"/>';
+
+
+                for (i = 0; i < rows-1; i++) {
+                    count += 1;
+                    html  += '<input type="text" class="form-control" name="room_name[' + count + ']" class="multi" placeholder="{{trans('setup_room.place-name')}}"/>';
+                }
+                html       += '<p class="text-danger">{{$errors->first('room_name[]')}}</p>';
+                $('.multi_name').append(html);
+                $("[name*=room_name]").each(function() {
+                    console.log('ssss');
+                    $(this).rules('add', {
+                        required: true,
+                        messages: {
+                            required : 'Room Name is required!'
+                        }
+                    });
+                });
+
+            });
+
             //Start Validation for Entry and Edit Form
+
             $('#room').validate({
                 rules: {
-                    hotel_id            : 'required',
-                    h_room_type_id      : 'required',
-                    h_room_category_id  : 'required',
-                    room_view_id        : 'required',
-                    name                : 'required',
-                    status              : 'required',
+                    'hotel_id'            : 'required',
+                    'h_room_type_id'      : 'required',
+                    'h_room_category_id'  : 'required',
+                    'room_view_id'        : 'required',
+                    'room_name[1]'        : 'required',
+                    'status'              : 'required'
                 },
                 messages: {
-                    hotel_id            : 'Hotel is required!',
-                    h_room_type_id      : 'Room Type is required!',
-                    h_room_category_id  : 'Room Category is required!',
-                    room_view_id        : 'Room View is required!',
-                    name                : 'Name is required!',
-                    status              : 'Status is required!',
+                    'hotel_id'            : 'Hotel is required!',
+                    'h_room_type_id'      : 'Room Type is required!',
+                    'h_room_category_id'  : 'Room Category is required!',
+                    'room_view_id'        : 'Room View is required!',
+                    'room_name[1]'        : 'Room Name is required!',
+                    'status'              : 'Status is required!'
                 },
                 submitHandler: function(form) {
                     $('input[type="submit"]').attr('disabled','disabled');
                     form.submit();
                 }
             });
+
             //End Validation for Entry and Edit Form
         });
 

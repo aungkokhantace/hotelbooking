@@ -53,36 +53,47 @@ class RoomController extends Controller
 
     public function store(RoomEntryRequest $request)
     {
+
         $request->validate();
-        $name               = Input::get('name');
+        $room_name          = Input::get('room_name');
         $hotel_id           = Input::get('hotel_id');
         $h_room_type_id     = Input::get('h_room_type_id');
         $h_room_category_id = Input::get('h_room_category_id');
         $room_view_id       = Input::get('room_view_id');
         $status             = Input::get('status');
+//        $no_of_rooms        = Input::get('number_of_rooms');
         $description        = Input::get('description');
         $remark             = Input::get('remark');
 
-        $paramObj                       = new Room();
-        $paramObj->name                 = $name;
-        $paramObj->hotel_id             = $hotel_id;
-        $paramObj->h_room_type_id       = $h_room_type_id;
-        $paramObj->h_room_category_id   = $h_room_category_id;
-        $paramObj->room_view_id         = $room_view_id;
-        $paramObj->status               = $status;
-        $paramObj->description          = $description;
-        $paramObj->remark               = $remark;
+        foreach($room_name as $name){
+            $paramObj                       = new Room();
+            $paramObj->name                 = $name;
+            $paramObj->hotel_id             = $hotel_id;
+            $paramObj->h_room_type_id       = $h_room_type_id;
+            $paramObj->h_room_category_id   = $h_room_category_id;
+            $paramObj->room_view_id         = $room_view_id;
+            $paramObj->status               = $status;
+            $paramObj->description          = $description;
+            $paramObj->remark               = $remark;
 
-        $result = $this->repo->create($paramObj);
+            $result = $this->repo->create($paramObj);
+
+            if($result['aceplusStatusCode'] != ReturnMessage::OK){
+                return redirect()->action('Setup\Room\RoomController@index')
+                    ->withMessage(FormatGenerator::message('Fail', 'Room did not create ...'));
+            }
+
+        }
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\Room\RoomController@index')
                 ->withMessage(FormatGenerator::message('Success', 'Room created ...'));
         }
+        /*
         else{
             return redirect()->action('Setup\Room\RoomController@index')
                 ->withMessage(FormatGenerator::message('Fail', 'Room did not create ...'));
-        }
+        }*/
     }
 
     public function edit($id)
@@ -112,7 +123,7 @@ class RoomController extends Controller
 
         $request->validate();
         $id                 = Input::get('id');
-        $name               = Input::get('name');
+        $name               = Input::get('room_name');
         $hotel_id           = Input::get('hotel_id');
         $h_room_type_id     = Input::get('h_room_type_id');
         $h_room_category_id = Input::get('h_room_category_id');
