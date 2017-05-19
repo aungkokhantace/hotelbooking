@@ -165,7 +165,7 @@ return [
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-
+        Laravel\Cashier\CashierServiceProvider::class,
 
 
     ],

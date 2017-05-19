@@ -38,6 +38,11 @@ Route::group(['middleware' => 'web'], function () {
     //Booking List
     Route::get('bookingList',['as'=>'bookingList','uses'=>'Frontend\BookingController@booking_list']);
 
+    //Payment TESting
+    Route::get('payTest',['as'=>'payTest','uses'=>'Payment\PaymentTestController@payment_for_later']);
+    Route::post('pay',['as'=>'pay','uses'=>'Payment\PaymentTestController@paymentForLater_Payment']);
+
+
 
     //Backend
     Route::group(['prefix' => 'backend'], function () {
