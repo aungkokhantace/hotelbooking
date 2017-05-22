@@ -62,7 +62,6 @@
                         console.log('success');
                     }
                     else{
-                        alert(data);
                         console.log('fail fail');
                         $('.alert').remove();
                         var showError    = '<p class="alert alert-danger">';
