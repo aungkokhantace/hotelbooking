@@ -6,13 +6,13 @@
  * Time: 10:23 AM
  */
 
-namespace App\Setup\BookingRoom;
+namespace App\Setup\BookingRequest;
 
 
 use App\Core\ReturnMessage;
 use App\Log\LogCustom;
 
-class BookingRoomRepository implements BookingRoomRepositoryInterface
+class BookingRequestRepository implements BookingRequestRepositoryInterface
 {
 
     public function create($paramObj){
@@ -28,7 +28,7 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
 
             //create info log
             $date = $paramObj->created_at;
-            $message = '['. $date .'] '. 'info: ' . 'Customer '.$loginUserId.' created booking_room_id = '.$paramObj->id . PHP_EOL;
+            $message = '['. $date .'] '. 'info: ' . 'Customer '.$loginUserId.' created booking_request_id = '.$paramObj->id . PHP_EOL;
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
@@ -38,7 +38,7 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
         catch(\Exception $e){
             //create error log
             $date    = date("Y-m-d H:i:s");
-            $message = '['. $date .'] '. 'error: ' . 'Customer '.$loginUserId.' created a booking room and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            $message = '['. $date .'] '. 'error: ' . 'Customer '.$loginUserId.' created a booking request and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusMessage'] = $e->getMessage();

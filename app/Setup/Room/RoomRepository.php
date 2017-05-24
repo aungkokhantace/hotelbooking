@@ -136,7 +136,9 @@ class RoomRepository implements RoomRepositoryInterface
         //check for blacked out rooms between check_in date and check_out date
         $blackout_query = DB::select("SELECT room_id
                                       FROM r_blackout_period
-                                      WHERE (r_blackout_period.from_date BETWEEN '$newCheckIn' AND '$newCheckOut') OR (r_blackout_period.to_date BETWEEN '$newCheckIn' AND '$newCheckOut')");
+                                      WHERE (('$newCheckIn' BETWEEN r_blackout_period.from_date AND r_blackout_period.to_date) OR ('$newCheckOut' BETWEEN r_blackout_period.from_date AND r_blackout_period.to_date))
+                                      AND (r_blackout_period.deleted_at IS NULL)");
+
         //push to array
         $blackout_arr = array();
         foreach($blackout_query as $blackout){
@@ -150,7 +152,9 @@ class RoomRepository implements RoomRepositoryInterface
 
         $booking_query = DB::select("SELECT booking_room.room_id
 	                                  FROM booking_room
-	                                  WHERE ((booking_room.check_in_date BETWEEN '$newCheckIn' AND '$newCheckOut') OR (booking_room.check_out_date BETWEEN '$newCheckIn' AND '$newCheckOut')) AND (booking_room.status <> 3)");
+	                                  WHERE (('$newCheckIn' BETWEEN booking_room.check_in_date AND booking_room.check_out_date) OR (('$newCheckOut' BETWEEN booking_room.check_in_date AND booking_room.check_out_date)))
+	                                  AND (booking_room.status <> 3)
+	                                  AND (booking_room.deleted_at IS NULL)");
 
         //push to array
         $booking_arr = array();
@@ -166,7 +170,59 @@ class RoomRepository implements RoomRepositoryInterface
                     ->where('r_available_period.to_date','>=',$newCheckOut)
                     ->whereNotIn('rooms.id', $blackout_arr)
                     ->whereNotIn('rooms.id', $booking_arr)
+                    ->select('rooms.*')
                     ->get();
+
+        return $result;
+    }
+
+    //for getting array to use in PaymentController
+    public function getRoomArrayByRoomCategoryId($r_category_id,$check_in,$check_out) {
+        //change date formats of check_in and check_out
+        $newCheckIn  = date("Y-m-d", strtotime($check_in));
+        $newCheckOut = date("Y-m-d", strtotime($check_out));
+
+        //check for blacked out rooms between check_in date and check_out date
+        $blackout_query = DB::select("SELECT room_id
+                                      FROM r_blackout_period
+                                      WHERE (('$newCheckIn' BETWEEN r_blackout_period.from_date AND r_blackout_period.to_date) OR ('$newCheckOut' BETWEEN r_blackout_period.from_date AND r_blackout_period.to_date))
+                                      AND (r_blackout_period.deleted_at IS NULL)");
+
+        //push to array
+        $blackout_arr = array();
+        foreach($blackout_query as $blackout){
+            array_push($blackout_arr,$blackout->room_id);
+        }
+
+        //check for booked rooms between check_in date and check_out date
+        /*$booking_query = DB::select("SELECT bookings.room_id
+	                                  FROM bookings
+	                                  WHERE (bookings.check_in_date BETWEEN '$newCheckIn' AND '$newCheckOut') OR (bookings.check_out_date BETWEEN '$newCheckIn' AND '$newCheckOut')"); */
+
+        $booking_query = DB::select("SELECT booking_room.room_id
+	                                  FROM booking_room
+	                                  WHERE (('$newCheckIn' BETWEEN booking_room.check_in_date AND booking_room.check_out_date) OR (('$newCheckOut' BETWEEN booking_room.check_in_date AND booking_room.check_out_date)))
+	                                  AND (booking_room.status <> 3)
+	                                  AND (booking_room.deleted_at IS NULL)");
+
+        //push to array
+        $booking_arr = array();
+        foreach($booking_query as $booking){
+            array_push($booking_arr,$booking->room_id);
+        }
+
+        //get rooms that are within available_period and not within black_out period and not booked
+        $result = Room::whereNull('rooms.deleted_at')
+            ->leftjoin('r_available_period', 'r_available_period.room_id', '=', 'rooms.id')
+            ->where('h_room_category_id',$r_category_id)
+            ->where('r_available_period.from_date','<=',$newCheckIn)
+            ->where('r_available_period.to_date','>=',$newCheckOut)
+            ->whereNotIn('rooms.id', $blackout_arr)
+            ->whereNotIn('rooms.id', $booking_arr)
+            ->select('rooms.*')
+            ->get()
+            ->toArray();
+
         return $result;
     }
 }

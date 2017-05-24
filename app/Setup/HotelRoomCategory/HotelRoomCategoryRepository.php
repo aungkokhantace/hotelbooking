@@ -151,4 +151,6 @@ class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterfac
 
         return $result;
     }
+
+
 }

@@ -1,6 +1,6 @@
 .create_form {
     /*border: 1px solid #efefef;*/
-    background: #fff;
+    /*background: #fff;*/
 }
 /* Center the image and position the close button */
 .imgcontainer {
@@ -76,4 +76,11 @@ span.psw {
     float: right; 
     font-size: 13px;
     font-family: 'Playfair Display';
+}
+.payment_formgroup {
+    padding-bottom: 80px !important;
+}
+.payment_formgroups {
+    padding-bottom: 100px !important;
+    margin-left: -15px;
 }

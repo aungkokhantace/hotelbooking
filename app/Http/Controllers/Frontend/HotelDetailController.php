@@ -156,6 +156,7 @@ class HotelDetailController extends Controller
             $roomRepo = New RoomRepository();
             //get rooms that are within available_period and not within black_out period and not booked
             $rooms    = $roomRepo->getRoomCountByRoomCategoryId($r_category->id,$check_in,$check_out);
+
             $r_category->available_room_count = count($rooms);
         }
         //end room count for each room category
@@ -175,6 +176,16 @@ class HotelDetailController extends Controller
         }
         //end room category facilities
 
+        //for book_now flag
+        $book_now_flag = 1;
+
+        $available_category_id_array = array();
+        foreach($roomCategories as $r_cat){
+            if($r_cat->available_room_count > 0){
+                array_push($available_category_id_array,$r_cat->id);
+            }
+        }
+
         return view('frontend.hoteldetail')
             ->with('hotel', $hotel)
             ->with('roomCategoryImages',$roomCategoryImages)
@@ -183,6 +194,8 @@ class HotelDetailController extends Controller
             ->with('facilityGroupArray',$facilityGroupArray)
             ->with('landmarks',$landmarks)
             ->with('popularLandmarks',$popularLandmarks)
-            ->with('amenities',$amenities);
+            ->with('amenities',$amenities)
+            ->with('book_now_flag',$book_now_flag)
+            ->with('available_category_id_array',$available_category_id_array);
     }
 }

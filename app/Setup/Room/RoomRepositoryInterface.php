@@ -19,4 +19,5 @@ interface RoomRepositoryInterface
     public function delete($paramObj);
     public function getObjsByHotelId($hotel_id);
     public function getRoomCountByRoomCategoryId($r_category_id,$check_in,$check_out);
+    public function getRoomArrayByRoomCategoryId($r_category_id,$check_in,$check_out);
 }

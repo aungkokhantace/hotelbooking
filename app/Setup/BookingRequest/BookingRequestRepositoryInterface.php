@@ -6,10 +6,10 @@
  * Time: 10:23 AM
  */
 
-namespace App\Setup\BookingRoom;
+namespace App\Setup\BookingRequest;
 
 
-interface BookingRoomRepositoryInterface
+interface BookingRequestRepositoryInterface
 {
     public function create($paramObj);
 }
