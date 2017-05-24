@@ -63,6 +63,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind('App\Setup\Customer\CustomerRepositoryInterface','App\Setup\Customer\CustomerRepository');
         $this->app->bind('App\Setup\RoomCategoryAmenity\RoomCategoryAmenityRepositoryInterface','App\Setup\RoomCategoryAmenity\RoomCategoryAmenityRepository');
         $this->app->bind('App\Setup\Booking\BookingRepositoryInterface','App\Setup\Booking\BookingRepository');
+        $this->app->bind('App\Setup\BookingRoom\BookingRoomRepositoryInterface','App\Setup\BookingRoom\BookingRoomRepository');
+        $this->app->bind('App\Setup\BookingRequest\BookingRequestRepositoryInterface','App\Setup\BookingRequest\BookingRequestRepository');
 
     }
 }

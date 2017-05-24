@@ -30,7 +30,7 @@ return [
     'check-out'             => 'Check-out Time',
     'breakfast-start'       => 'Breakfast Start Time',
     'breakfast-end'         => 'Breakfast End Time',
-    'place-name'            => 'Enter Landmark Name',
+    'place-name'            => 'Enter Hotel Name',
     'place-type'            => 'Select Type',
     'place-address'         => 'Enter Hotel Address',
     'place-phone'           => 'Enter Hotel Phone',

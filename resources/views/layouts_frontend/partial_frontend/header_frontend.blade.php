@@ -68,6 +68,8 @@ $companyLogo = \App\Core\Check::companyLogo();
 
     {{--<script src="http://maps.google.com/maps/api/js?key=AIzaSyAJLUg2IEbAOp4gMqRoXpSnjV0w1FDfYNk&sensor=false" type="text/javascript"></script>--}}
 
+    <!-- for jssor slider -->
+    <script src="/assets/shared/js/jssor.slider-23.1.5.min.js" type="text/javascript"></script>
 
 </head>
 

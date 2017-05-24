@@ -10,26 +10,23 @@ class Booking extends Model
 
     protected $fillable = [
         'id',
-        'booking_no',
         'user_id',
         'status',
         'check_in_date',
         'check_out_date',
         'check_in_time',
         'check_out_time',
-        'for_other',
         'price_wo_tax',
         'price_w_tax',
         'total_tax_amt',
         'total_tax_percentage',
         'total_payable_amt',
-        'room_discount',
         'total_discount_amt',
         'total_discount_percentage',
-        'guest_count',
-        'room_id',
         'hotel_id',
-        'h_room_type_id',
+        'booking_no',
+        'travel_for_work',
+        'for_other',
         'updated_at','created_at','deleted_at','updated_by','created_by','deleted_by'
     ];
 

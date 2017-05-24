@@ -21,6 +21,7 @@
                         </div>
                         <p></p>
                         @include('layouts_frontend.partial_frontend.search_form')
+                        {!! Form::close() !!}
                     </div>
                 </div>
 
@@ -157,9 +158,12 @@
                             </tr>
                             </thead>
                             <tbody>
+                            {!! Form::open(array('url' => '/enter_details','files'=>true, 'id'=>'frm_booking', 'class'=> 'form-horizontal user-form-border')) !!}
+                            {{ csrf_field() }}
 
                             @foreach($roomCategories as $roomCategory)
                                 @if($roomCategory->available_room_count > 0)
+                                <input type="hidden" id="available_room_categories" name="available_room_categories[]" value="{{$roomCategory->id}}">
                                 <tr>
                                     <td>
                                         <ul class="fa-ul">
@@ -230,7 +234,7 @@
                                                 </div>
                                                 <!-- End Modal -->
                                             </li>
-                                            <li><img class="fa-lis" src="/assets/shared/images/cityview.png">City View</li>
+                                            <li><img class="fa-lis" src="/assets/shared/images/cityview.png">View</li>
                                             <li><img class="fa-lis" src="/assets/shared/images/16sqm.png">{{$roomCategory->square_metre}} s.q.m</li>
                                             <li><img class="fa-lis" src="/assets/shared/images/signlebed.png">{{$roomCategory->bed_type}}</li>
                                         </ul>
@@ -254,15 +258,20 @@
                                         </ul>
                                     </td>
                                     <td>
-                                        <input type="number" name="number" class="floatLabel form-control" min="0" max="{{$roomCategory->available_room_count}}">
+                                        <input type="number" name="number_{{$roomCategory->id}}" id="number_{{$roomCategory->id}}" class="floatLabel form-control" min="0" max="{{$roomCategory->available_room_count}}">
                                     </td>
 
-                                    <td>
-                                        <div class="table_buttom">Book Now</div>
-                                    </td>
+                                    @if(isset($book_now_flag) && $book_now_flag == 1)
+                                        <td rowspan="{{count($roomCategories)}}">
+                                            <input type="button" class="btn btn-primary" value="BOOK NOW" onclick="book();">
+                                            <?php $book_now_flag = 0; ?>
+                                        </td>
+                                    @endif
                                 </tr>
+
                                 @endif
                             @endforeach
+                            {!! Form::close() !!}
                             </tbody>
                         </table>
                     </div>
@@ -322,34 +331,7 @@
                             </div>
                             @endif
                         </div><!-- End Service Blokcs -->
-                        <!-- Service Blocks -->
-                        <!--    <div class="row margin-bottom-30">
-                            <div class="col-md-4">
-                                <div class="service">
-                                    <img class="service-icon" src="/assets/shared/images/rest.png">
-                                    <div class="desc">
-                                        <h4>Restaurants & Markets</h4>
-                                        <ul class="fa-ul-li">
-                                            <li>Monsson</li>
-                                            <li>abc supermarket</li>
-                                            <li>Bogyoke Market</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="service">
-                                    <img class="service-icon" src="/assets/shared/images/natural.png">
-                                    <div class="desc">
-                                        <h4>Natural Beauty</h4>
-                                        <ul class="fa-ul-li">
-                                            <li>Yangon River</li>
-                                            <li>Inya Lake</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- End Service Blokcs -->
+
                     </div>	 <!-- /.room-tabel -->
                     <hr>
                     <div class="room_table">
@@ -435,6 +417,10 @@
                 }
             });
 
+            //jssor slider init functions
+            jssor_1_slider_init();
+            jssor_2_slider_init();
+
         });
 
         function renderMap(latitude,longitude) {
@@ -453,9 +439,175 @@
             });
         }
 
+        function book() {
+            var null_value_flag = 0; //if 0, all fields are null; and if 1, there is at least a value
+
+            $(':input[type="number"][name^="number_"]').each(function(){
+                if(this.value > 0 && this.value != "" && this.value != null){
+                    null_value_flag = 1; //set to 1 as soon as there is a value in input type = number
+                }
+            });
+
+            //there is at least a value, and it's ok to submit
+            if(null_value_flag == 1){
+                $("#frm_booking").submit();
+            }
+            //room_counts are all null
+            else{
+                sweetAlert("Oops...", "Please select at least one room to book !", "error");
+            }
+        }
+
     </script>
 
 
+
+    <!-- #region Jssor Slider Begin -->
+    <script type="text/javascript">
+        jssor_1_slider_init = function() {
+
+            var jssor_1_SlideshowTransitions = [
+                {$Duration:1200,x:0.3,$During:{$Left:[0.3,0.7]},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,x:-0.3,$SlideOut:true,$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,x:-0.3,$During:{$Left:[0.3,0.7]},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,x:0.3,$SlideOut:true,$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,y:0.3,$During:{$Top:[0.3,0.7]},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,y:-0.3,$SlideOut:true,$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,y:-0.3,$During:{$Top:[0.3,0.7]},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,y:0.3,$SlideOut:true,$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,x:0.3,$Cols:2,$During:{$Left:[0.3,0.7]},$ChessMode:{$Column:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,x:0.3,$Cols:2,$SlideOut:true,$ChessMode:{$Column:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,y:0.3,$Rows:2,$During:{$Top:[0.3,0.7]},$ChessMode:{$Row:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,y:0.3,$Rows:2,$SlideOut:true,$ChessMode:{$Row:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,y:0.3,$Cols:2,$During:{$Top:[0.3,0.7]},$ChessMode:{$Column:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,y:-0.3,$Cols:2,$SlideOut:true,$ChessMode:{$Column:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,x:0.3,$Rows:2,$During:{$Left:[0.3,0.7]},$ChessMode:{$Row:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,x:-0.3,$Rows:2,$SlideOut:true,$ChessMode:{$Row:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,x:0.3,y:0.3,$Cols:2,$Rows:2,$During:{$Left:[0.3,0.7],$Top:[0.3,0.7]},$ChessMode:{$Column:3,$Row:12},$Easing:{$Left:$Jease$.$InCubic,$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,x:0.3,y:0.3,$Cols:2,$Rows:2,$During:{$Left:[0.3,0.7],$Top:[0.3,0.7]},$SlideOut:true,$ChessMode:{$Column:3,$Row:12},$Easing:{$Left:$Jease$.$InCubic,$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,$Delay:20,$Clip:3,$Assembly:260,$Easing:{$Clip:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,$Delay:20,$Clip:3,$SlideOut:true,$Assembly:260,$Easing:{$Clip:$Jease$.$OutCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,$Delay:20,$Clip:12,$Assembly:260,$Easing:{$Clip:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,$Delay:20,$Clip:12,$SlideOut:true,$Assembly:260,$Easing:{$Clip:$Jease$.$OutCubic,$Opacity:$Jease$.$Linear},$Opacity:2}
+            ];
+
+            var jssor_1_options = {
+                $AutoPlay: 1,
+                $SlideshowOptions: {
+                    $Class: $JssorSlideshowRunner$,
+                    $Transitions: jssor_1_SlideshowTransitions,
+                    $TransitionsOrder: 1
+                },
+                $ArrowNavigatorOptions: {
+                    $Class: $JssorArrowNavigator$
+                },
+                $ThumbnailNavigatorOptions: {
+                    $Class: $JssorThumbnailNavigator$,
+                    $Cols: 10,
+                    $SpacingX: 8,
+                    $SpacingY: 8,
+                    $Align: 360
+                }
+            };
+
+            var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
+
+            /*responsive code begin*/
+            /*remove responsive code if you don't want the slider scales while window resizing*/
+            function ScaleSlider() {
+                var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+                if (refSize) {
+                    refSize = Math.min(refSize, 800);
+                    jssor_1_slider.$ScaleWidth(refSize);
+                }
+                else {
+                    window.setTimeout(ScaleSlider, 30);
+                }
+            }
+            ScaleSlider();
+            $Jssor$.$AddEvent(window, "load", ScaleSlider);
+            $Jssor$.$AddEvent(window, "resize", ScaleSlider);
+            $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider);
+            /*responsive code end*/
+        };
+    </script>
+
+    {{--<script type="text/javascript">jssor_1_slider_init();</script>--}}
+
+    <!--Jssor 2-->
+    <script type="text/javascript">
+        jssor_2_slider_init = function() {
+
+            var jssor_2_SlideshowTransitions = [
+                {$Duration:1200,x:0.3,$During:{$Left:[0.3,0.7]},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,x:-0.3,$SlideOut:true,$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,x:-0.3,$During:{$Left:[0.3,0.7]},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,x:0.3,$SlideOut:true,$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,y:0.3,$During:{$Top:[0.3,0.7]},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,y:-0.3,$SlideOut:true,$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,y:-0.3,$During:{$Top:[0.3,0.7]},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,y:0.3,$SlideOut:true,$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,x:0.3,$Cols:2,$During:{$Left:[0.3,0.7]},$ChessMode:{$Column:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,x:0.3,$Cols:2,$SlideOut:true,$ChessMode:{$Column:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,y:0.3,$Rows:2,$During:{$Top:[0.3,0.7]},$ChessMode:{$Row:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,y:0.3,$Rows:2,$SlideOut:true,$ChessMode:{$Row:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,y:0.3,$Cols:2,$During:{$Top:[0.3,0.7]},$ChessMode:{$Column:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,y:-0.3,$Cols:2,$SlideOut:true,$ChessMode:{$Column:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,x:0.3,$Rows:2,$During:{$Left:[0.3,0.7]},$ChessMode:{$Row:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,x:-0.3,$Rows:2,$SlideOut:true,$ChessMode:{$Row:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,x:0.3,y:0.3,$Cols:2,$Rows:2,$During:{$Left:[0.3,0.7],$Top:[0.3,0.7]},$ChessMode:{$Column:3,$Row:12},$Easing:{$Left:$Jease$.$InCubic,$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,x:0.3,y:0.3,$Cols:2,$Rows:2,$During:{$Left:[0.3,0.7],$Top:[0.3,0.7]},$SlideOut:true,$ChessMode:{$Column:3,$Row:12},$Easing:{$Left:$Jease$.$InCubic,$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,$Delay:20,$Clip:3,$Assembly:260,$Easing:{$Clip:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,$Delay:20,$Clip:3,$SlideOut:true,$Assembly:260,$Easing:{$Clip:$Jease$.$OutCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,$Delay:20,$Clip:12,$Assembly:260,$Easing:{$Clip:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                {$Duration:1200,$Delay:20,$Clip:12,$SlideOut:true,$Assembly:260,$Easing:{$Clip:$Jease$.$OutCubic,$Opacity:$Jease$.$Linear},$Opacity:2}
+            ];
+
+            var jssor_2_options = {
+                $AutoPlay: 1,
+                $SlideshowOptions: {
+                    $Class: $JssorSlideshowRunner$,
+                    $Transitions: jssor_2_SlideshowTransitions,
+                    $TransitionsOrder: 1
+                },
+                $ArrowNavigatorOptions: {
+                    $Class: $JssorArrowNavigator$
+                },
+                $ThumbnailNavigatorOptions: {
+                    $Class: $JssorThumbnailNavigator$,
+                    $Cols: 10,
+                    $SpacingX: 8,
+                    $SpacingY: 8,
+                    $Align: 360
+                }
+            };
+
+            var jssor_2_slider = new $JssorSlider$("jssor_2", jssor_2_options);
+
+            /*responsive code begin*/
+            /*remove responsive code if you don't want the slider scales while window resizing*/
+            function ScaleSlider() {
+                var refSize = jssor_2_slider.$Elmt.parentNode.clientWidth;
+                if (refSize) {
+                    refSize = Math.min(refSize, 800);
+                    jssor_2_slider.$ScaleWidth(refSize);
+            }
+                else {
+                    window.setTimeout(ScaleSlider, 30);
+                }
+            }
+            ScaleSlider();
+            $Jssor$.$AddEvent(window, "load", ScaleSlider);
+            $Jssor$.$AddEvent(window, "resize", ScaleSlider);
+            $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider);
+            /*responsive code end*/
+        };
+    </script>
+
+    {{--<script type="text/javascript">jssor_2_slider_init();</script>--}}
+    <!--Jssor 2-->
+
+    <!-- #region Jssor Slider End -->
 
 
 @stop

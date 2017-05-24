@@ -38,6 +38,14 @@ Route::group(['middleware' => 'web'], function () {
     //Booking List
     Route::get('bookingList',['as'=>'bookingList','uses'=>'Frontend\BookingController@booking_list']);
 
+    //Enter Your Details for Payment
+    Route::post('/enter_details', 'Frontend\PaymentController@enterDetails');
+
+    //Confirm Reservation
+    Route::post('/confirm_reservation', 'Frontend\PaymentController@confirmReservation');
+
+    //Book and Pay
+    Route::post('/book_and_pay', 'Frontend\PaymentController@bookAndPay');
 
     //Backend
     Route::group(['prefix' => 'backend'], function () {

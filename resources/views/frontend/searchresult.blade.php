@@ -21,6 +21,7 @@
                         </div>
                         <p></p>
                         @include('layouts_frontend.partial_frontend.search_form')
+                        {!! Form::close() !!}
                         <p></p>
                     </div>
                     <!-- Blog Search Well -->

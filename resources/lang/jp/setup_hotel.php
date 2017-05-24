@@ -30,7 +30,7 @@ return [
     'check-out'             => 'Check-out Time - JP',
     'breakfast-start'       => 'Breakfast Start Time - JP',
     'breakfast-end'         => 'Breakfast End Time - JP',
-    'place-name'            => 'Enter Landmark Name - JP',
+    'place-name'            => 'Enter Hotel Name - JP',
     'place-type'            => 'Select Type - JP',
     'place-address'         => 'Enter Hotel Address - JP',
     'place-phone'           => 'Enter Hotel Phone - JP',
