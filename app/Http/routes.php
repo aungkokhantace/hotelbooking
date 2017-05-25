@@ -43,7 +43,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('pay',['as'=>'pay','uses'=>'Payment\PaymentTestController@paymentForLater_Payment']);
 
 
-
     //Backend
     Route::group(['prefix' => 'backend'], function () {
 
@@ -350,6 +349,9 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('room_category_amenity/edit/{id}', array('as'=>'backend/room_category_amenity/edit', 'uses'=>'Setup\RoomCategoryAmenity\RoomCategoryAmenityController@edit'));
             Route::post('room_category_amenity/update', array('as'=>'backend/room_category_amenity/update', 'uses'=>'Setup\RoomCategoryAmenity\RoomCategoryAmenityController@update'));
             Route::post('room_category_amenity/destroy', array('as'=>'backend/room_category_amenity/destroy', 'uses'=>'Setup\RoomCategoryAmenity\RoomCategoryAmenityController@destroy'));
+
+            //Report
+//            Route::get('incomesummaryreport',array('as'=>'backend/incomesummaryreport','uses'=>'Report\IncomeSummaryReportController@index'));
         });
 
     });

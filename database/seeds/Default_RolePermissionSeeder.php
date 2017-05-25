@@ -302,6 +302,9 @@ class Default_RolePermissionSeeder extends Seeder
             ['role_id'=>1, 'permission_id'=>344],
             ['role_id'=>1, 'permission_id'=>345],
 
+            //Report
+            ['role_id'=>1, 'permission_id'=>350],
+
 
             //Backend Multi_Language
             ['role_id'=>1, 'permission_id'=>500],

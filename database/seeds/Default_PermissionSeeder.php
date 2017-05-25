@@ -311,6 +311,9 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>344,'module'=>'RoomCategoryAmenity','name'=>'Update','description'=>'Room Category Amenity Update','url'=>'backend/room_category_amenity/update'],
             ['id'=>345,'module'=>'RoomCategoryAmenity','name'=>'Destroy','description'=>'Room Category Amenity Destroy','url'=>'backend/room_category_amenity/destroy'],
 
+            //Report
+            ['id'=>350,'module'=>'Report','name'=>'Income Summary Report','description'=>'Income Summary Report Listing','url'=>'backend/incomesummaryreport'],
+
 
             //Backend Multi_Language
             ['id'=>500,'module'=>'Backend','name'=>'Multi_Language','description'=>'Backend Multi_Language','url'=>'backend/language'],
