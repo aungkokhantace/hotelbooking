@@ -29,6 +29,7 @@
 <script src="/assets/js/moment.min.js"></script>
 <script src="/assets/js/custom.min.js"></script>
 <script src="/assets/js/fileupload.js"></script>
+<script src="/assets/js/report.js"></script>
 
 
 {{--<script src="/assets/js/downloadexcel_redirect.js"></script>--}}

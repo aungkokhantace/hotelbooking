@@ -359,7 +359,22 @@ Route::group(['middleware' => 'web'], function () {
             Route::post('room_category_amenity/destroy', array('as'=>'backend/room_category_amenity/destroy', 'uses'=>'Setup\RoomCategoryAmenity\RoomCategoryAmenityController@destroy'));
 
             //Report
-//            Route::get('incomesummaryreport',array('as'=>'backend/incomesummaryreport','uses'=>'Report\IncomeSummaryReportController@index'));
+            Route::get('salesummaryreport',array(
+                'as'=>'backend/salesummaryreport',
+                'uses'=>'Report\SaleSummaryReportController@index'
+            ));
+            Route::get('salesummaryreport/search/{type?}/{from?}/{to?}',
+                array(
+                    'as'=>'backend/salesummaryreport/search/{type?}/{from?}/{to?}',
+                    'uses'=>'Report\SaleSummaryReportController@search'
+                ));
+
+            Route::get('salesummaryreport/exportexcel/{type?}/{from?}/{to?}',
+                array(
+                    'as'=>'backend/salesummaryreport/exportexcel/{type?}/{from?}/{to?}',
+                    'uses'=>'Report\SaleSummaryReportController@excel'
+                ));
+
         });
 
     });

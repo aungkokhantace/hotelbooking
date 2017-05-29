@@ -1,11 +1,11 @@
 @extends('layouts.master')
-@section('title','Income Summary Report')
+@section('title','Sale Summary Report')
 @section('content')
 
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">Income Summary Report</h1>
+    <h1 class="page-header">Sale Summary Report</h1>
     @if(count(Session::get('message')) != 0)
         <div>
         </div>
@@ -140,15 +140,15 @@
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
 
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <button type="button" onclick="report_search_with_type('incomesummaryreport');" class="form-control btn-primary">Preview By List</button>
+            <button type="button" onclick="report_search_with_type('salesummaryreport');" class="form-control btn-primary">Preview By List</button>
         </div>
 
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <button type="button" onclick="check_to_redirect_to_graph_with_type();" class="form-control btn-primary">Preview By Graph</button>
-        </div>
+        {{--<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">--}}
+        {{--<button type="button" onclick="check_to_redirect_to_graph_with_type();" class="form-control btn-primary">Preview By Graph</button>--}}
+        {{--</div>--}}
 
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <button type="button" onclick="report_export_with_type('incomesummaryreport');" class="form-control btn-primary">Export Excel</button>
+            <button type="button" onclick="report_export_with_type('salesummaryreport');" class="form-control btn-primary">Export Excel</button>
         </div>
     </div>
 
@@ -160,46 +160,38 @@
                     <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Package Income</th>
-                        <th>Car Income</th>
-                        <th>Service Income</th>
-                        <th>Medication Income</th>
-                        <th>Investigation Income</th>
-                        <th>Total</th>
+                        <th>Booking Number</th>
+                        <th>Customer Name</th>
+                        <th>Total Amount</th>
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
                         <th class="search-col" con-id="date">Date</th>
-                        <th class="search-col" con-id="package_income">Package Income</th>
-                        <th class="search-col" con-id="car_income">Car Income</th>
-                        <th class="search-col" con-id="service_income">Service Income</th>
-                        <th class="search-col" con-id="medication_income">Medication Income</th>
-                        <th class="search-col" con-id="investigation_income">Investigation Income</th>
-                        <th class="search-col" con-id="total">Total</th>
+                        <th class="search-col" con-id="booking_number">Booking Number</th>
+                        <th class="search-col" con-id="customer_name">Customer Name</th>
+                        <th class="search-col" con-id="total">Total Amount</th>
                     </tr>
                     </tfoot>
                     <tbody>
-                    {{--@foreach($invoices as $invoice)--}}
-                        {{--<tr>--}}
-                            {{--<td>{{$invoice->date}}</td>--}}
-                            {{--<td>{{number_format($invoice->package_price,2)}}</td>--}}
-                            {{--<td>{{number_format($invoice->total_car_amount,2)}}</td>--}}
-                            {{--<td>{{number_format($invoice->total_service_amount,2)}}</td>--}}
-                            {{--<td>{{number_format($invoice->total_medication_amount,2)}}</td>--}}
-                            {{--<td>{{number_format($invoice->total_investigation_amount,2)}}</td>--}}
-                            {{--<td>{{number_format($invoice->total,2)}}</td>--}}
-                        {{--</tr>--}}
-                    {{--@endforeach--}}
+
+                    @if(isset($bookings) && count($bookings) > 0)
+                        @foreach($bookings as $booking)
+                            <tr>
+                                <td>{{$booking->date}}</td>
+                                <td>{{$booking->booking_no}}</td>
+                                <td>{{$booking->first_name.' '.$booking->last_name}}</td>
+                                <td>{{number_format($booking->total_payable_amt,2)}}</td>
+                            </tr>
+                        @endforeach
+                    @endif
+
                     </tbody>
-                    <tr bgcolor="#1976d3" style = "color:white">
-                        {{--<td></td>--}}
-                        {{--<td>{{number_format($totalArray['package'],2)}}</td>--}}
-                        {{--<td>{{number_format($totalArray['car'],2)}}</td>--}}
-                        {{--<td>{{number_format($totalArray['service'],2)}}</td>--}}
-                        {{--<td>{{number_format($totalArray['medication'],2)}}</td>--}}
-                        {{--<td>{{number_format($totalArray['investigation'],2)}}</td>--}}
-                        {{--<td>{{number_format($totalArray['total'],2)}}</td>--}}
+                    <tr bgcolor="#AE3D8D" style = "color:white">
+                        <td>Grand Total</td>
+                        <td></td>
+                        <td></td>
+                        <td>{{number_format($grandTotal,2)}}</td>
                     </tr>
                 </table>
             </div>

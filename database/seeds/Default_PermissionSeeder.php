@@ -312,7 +312,13 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>345,'module'=>'RoomCategoryAmenity','name'=>'Destroy','description'=>'Room Category Amenity Destroy','url'=>'backend/room_category_amenity/destroy'],
 
             //Report
-            ['id'=>350,'module'=>'Report','name'=>'Income Summary Report','description'=>'Income Summary Report Listing','url'=>'backend/incomesummaryreport'],
+            ['id'=>350,'module'=>'Report','name'=>'Sale Summary Report','description'=>'Sale Summary Report Listing','url'=>'backend/salesummaryreport'],
+            ['id'=>351,'module'=>'Report','name'=>'Sale Summary Report Search',
+             'description'=>'Sale Summary Report Search',
+             'url'=>'backend/salesummaryreport/search/{type?}/{from?}/{to?}'],
+            ['id'=>352,'module'=>'Report','name'=>'Sale Summary Report Excel',
+             'description'=>'Sale Summary Report Excel',
+             'url'=>'backend/salesummaryreport/exportexcel/{type?}/{from?}/{to?}'],
 
 
             //Backend Multi_Language
