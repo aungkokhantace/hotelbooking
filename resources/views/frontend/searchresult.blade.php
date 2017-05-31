@@ -21,7 +21,7 @@
                         </div>
                         <p></p>
                         @include('layouts_frontend.partial_frontend.search_form')
-                        {!! Form::close() !!}
+
                         <p></p>
                     </div>
                     <!-- Blog Search Well -->
@@ -167,7 +167,7 @@
                                                         {{--<li>MMK {{$hotel->min_price}}</li>--}}
                                                         <li>{{ isset($hotel->min_price)? 'MMK '.$hotel->min_price:'' }}</li>
                                                         <li>
-                                                            <a class="btn btn-primary" href="#">BOOKING NOW</a>
+                                                            <a class="btn btn-primary" href="/hotel_detail/{{$hotel->id}}">BOOKING NOW</a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -223,7 +223,7 @@
                                                         {{--<li>MMK {{$suggestedHotelhotel->min_price}}</li>--}}
                                                         <li>{{ isset($suggestedHotelhotel->min_price)? 'MMK '.$suggestedHotelhotel->min_price:'' }}</li>
                                                         <li>
-                                                            <a class="btn btn-primary" href="#">BOOKING NOW</a>
+                                                            <a class="btn btn-primary" href="/hotel_detail/{{$suggestedHotelhotel->id}}">BOOKING NOW</a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -299,9 +299,9 @@
 //            var destination = $("#searched_destination").val();
 //            setTimeout(executeQuery(destination), 3000);
 
-            var nowDate = new Date();
-            var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
-            $('#check_in').datepicker({
+//            var nowDate = new Date();
+//            var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
+            /* $('#check_in').datepicker({
                 format: 'dd-mm-yyyy',
                 autoclose: true,
                 defaultDate: "+1w",
@@ -319,7 +319,33 @@
                 numberOfMonths: 1,
                 allowInputToggle: true,
                 startDate: today
+            }); */
+
+            //Date Picker with controls of from date and to date
+            $("#check_in").datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                showButtonPanel: true,
+                startDate: new Date()
+            }).on('changeDate', function (selected) {
+                var startDate = new Date(selected.date.valueOf());
+                startDate.setDate(startDate.getDate() + 1);
+                $('#check_out').datepicker('setStartDate', startDate);
+            }).on('clearDate', function (selected) {
+                $('#check_out').datepicker('setStartDate',null);
             });
+
+            $("#check_out").datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                startDate: new Date()
+            }).on('changeDate', function (selected) {
+                var endDate = new Date(selected.date.valueOf());
+                $('#check_in').datepicker('setEndDate', endDate);
+            }).on('clearDate', function (selected) {
+                $('#check_in').datepicker('setEndDate',null);
+            });
+
 
             $("#destination").autocomplete({
                 source: "/autocompletedestination"

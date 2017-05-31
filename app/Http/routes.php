@@ -375,6 +375,15 @@ Route::group(['middleware' => 'web'], function () {
                     'uses'=>'Report\SaleSummaryReportController@excel'
                 ));
 
+            //Hotel Config
+            Route::get('hotel_config', array('as'=>'backend/hotel_config', 'uses'=>'Setup\HotelConfig\HotelConfigController@index'));
+            Route::get('hotel_config/create', array('as'=>'backend/hotel_config/create', 'uses'=>'Setup\HotelConfig\HotelConfigController@create'));
+            Route::post('hotel_config/store', array('as'=>'backend/hotel_config/store', 'uses'=>'Setup\HotelConfig\HotelConfigController@store'));
+            Route::get('hotel_config/edit/{id}', array('as'=>'backend/hotel_config/edit', 'uses'=>'Setup\HotelConfig\HotelConfigController@edit'));
+            Route::post('hotel_config/update', array('as'=>'backend/hotel_config/update', 'uses'=>'Setup\HotelConfig\HotelConfigController@update'));
+            Route::post('hotel_config/destroy', array('as'=>'backend/hotel_config/destroy', 'uses'=>'Setup\HotelConfig\HotelConfigController@destroy'));
+
+
         });
 
     });

@@ -9,19 +9,28 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Core\FormatGenerator;
 use App\Core\ReturnMessage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 //use App\Session;
 use App\Setup\Booking\Booking;
 use App\Setup\Booking\BookingRepository;
+use App\Setup\BookingPayment\BookingPayment;
+use App\Setup\BookingPayment\BookingPaymentRepository;
+use App\Setup\BookingPaymentStripe\BookingPaymentStripe;
+use App\Setup\BookingPaymentStripe\BookingPaymentStripeRepository;
 use App\Setup\BookingRequest\BookingRequest;
 use App\Setup\BookingRequest\BookingRequestRepository;
 use App\Setup\BookingRoom\BookingRoom;
 use App\Setup\BookingRoom\BookingRoomRepository;
 use App\Setup\Hotel\HotelRepository;
+use App\Setup\HotelConfig\HotelConfig;
+use App\Setup\HotelConfig\HotelConfigRepository;
 use App\Setup\HotelFacility\HotelFacilityRepository;
 use App\Setup\HotelRoomCategory\HotelRoomCategoryRepository;
+use App\Setup\Payment\Payment;
+use App\Setup\Payment\PaymentRepository;
 use App\Setup\Room\RoomRepository;
 use DateTime;
 use Illuminate\Http\Request;
@@ -31,6 +40,9 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Redirect;
+use Stripe\Charge;
+use Stripe\Customer;
+use Stripe\Stripe;
 
 class PaymentController extends Controller
 {
@@ -86,7 +98,7 @@ class PaymentController extends Controller
         foreach($number_array as $room_category_id=>$number_of_room){
             if($number_of_room > 0){
                 $room_category = $roomCategoryRepo->getObjByID($room_category_id);
-                $amount_per_category = $room_category->price * $number_of_room;
+                $amount_per_category = $room_category->price * $number_of_room * $nights;
                 $total_amount += $amount_per_category;
             }
         }
@@ -103,13 +115,44 @@ class PaymentController extends Controller
             $available_room_category_array = array_slice($available_room_category_array,1);
         } */
 
+        $tax = 0.0;
+        $hotelConfigRepo = new HotelConfigRepository();
+        $hotel_config = $hotelConfigRepo->getConfigByHotel($hotel_id);
+        if(isset($hotel_config) && count($hotel_config) > 0){
+            $tax = $hotel_config->tax;
+        }
+
+        $tax_amount = ($tax / 100) * $total_amount;
+        $payable_amount = $total_amount + $tax_amount;
+
+        Session::forget('total_amount');
+        Session::forget('tax');
+        Session::forget('tax_amount');
+        Session::forget('payable_amount');
+
+        if(isset($total_amount) && $total_amount != null && $total_amount != ""){
+            session(['total_amount' => $total_amount]);
+        }
+        if(isset($tax) && $tax != null && $tax != ""){
+            session(['tax' => $tax]);
+        }
+        if(isset($tax_amount) && $tax_amount != null && $tax_amount != ""){
+            session(['tax_amount' => $tax_amount]);
+        }
+        if(isset($payable_amount) && $payable_amount != null && $payable_amount != ""){
+            session(['payable_amount' => $payable_amount]);
+        }
+
         return view('frontend.enterdetails')
                     ->with('available_room_category_array',$available_room_category_array)
                     ->with('hotel',$hotel)
                     ->with('nights',$nights)
                     ->with('hotelFacilities',$hotelFacilities)
                     ->with('totalRooms',$totalRooms)
-                    ->with('total_amount',$total_amount);
+                    ->with('tax',$tax)
+                    ->with('tax_amount',$tax_amount)
+                    ->with('total_amount',$total_amount)
+                    ->with('payable_amount',$payable_amount);
     }
 
     public function confirmReservation() {
@@ -160,6 +203,7 @@ class PaymentController extends Controller
         Session::forget('special_request');
 
         Session::forget('total_amount');
+
 
         //store general data fields in session
         if(isset($hotel_id) && $hotel_id != null && $hotel_id != ""){
@@ -300,10 +344,11 @@ class PaymentController extends Controller
         $total_amount = 0.0;
         foreach($available_room_categories as $available_room_category_amount){
             if($available_room_category_amount->number > 0){
-                $amount_per_category = $available_room_category_amount->price * $available_room_category_amount->number;
+                $amount_per_category = $available_room_category_amount->price * $available_room_category_amount->number * $nights;
                 $total_amount += $amount_per_category;
             }
         }
+
         //save in session
         session(['total_amount' => $total_amount]);
 
@@ -422,7 +467,7 @@ class PaymentController extends Controller
             }
         }
         else{
-            dd('else');
+            dd('$booking_result error',$booking_result);
         }
 
         //start booking request
@@ -460,12 +505,105 @@ class PaymentController extends Controller
 
             $bookingRequestRepo = new BookingRequestRepository();
             $booking_request_result = $bookingRequestRepo->create($bookingRequestObj);
-            dd('booking_request_result');
+//            dd('booking_request_result',$booking_request_result);
         }
         else{
-            dd('else');
+            dd('booking_result error',$booking_result);
         }
-        dd('ends');
-        return view('frontend.confirm_reservation');
+
+
+
+        //Start Stripe Payment Section
+
+        //Set your secret key: remember to change this to your live secret key in production
+        //See your keys here: https://dashboard.stripe.com/account/apikeys
+        Stripe::setApiKey("sk_test_pfDJKF6zoTRgCuHdPptjcgQX");
+
+        // Token is created using Stripe.js or Checkout!
+        // Get the payment token submitted by the form:
+        $token = $_POST['stripeToken'];
+        $email = $_POST['stripeEmail'];
+//        dd(Session()->all());
+        $total_amount = session('total_amount');
+        $tax = session('tax');
+        $tax_amount = session('tax_amount');
+        $payable_amount = session('payable_amount');
+
+        // Create a Customer:
+        $customer = Customer::create(array(
+            "email" => $email,
+            "source" => $token,
+        ));
+
+        $customer_id = $customer['id'];
+
+        // Charge the Customer instead of the card:
+        $charge = Charge::create(array(
+            "amount" => $payable_amount,
+            "currency" => "usd",
+            "customer" => $customer_id
+        ));
+
+        //Insert Stripe Customer
+//        DB::table('stripe_user')->insert(['stripe_user_id'=>$customer_id,'email'=>$email,'status'=>1]);
+
+        $paymentObj = new Payment();
+        $paymentObj->name = "Payment Name";
+        $paymentObj->type = 1;
+        $paymentObj->description = "";
+
+        $paymentRepo = new PaymentRepository();
+        $payment_result = $paymentRepo->create($paymentObj);
+//        dd('payment_result',$payment_result);
+
+        if($payment_result['aceplusStatusCode'] ==  ReturnMessage::OK){
+            $payment_id = $payment_result["object"]->id;
+            $bookingPaymentObj = new BookingPayment();
+            $bookingPaymentObj->payment_amount_wo_tax = $total_amount;
+            $bookingPaymentObj->payment_amount_w_tax = $payable_amount;
+            $bookingPaymentObj->description = "";
+            $bookingPaymentObj->booking_id = $booking_id;
+            $bookingPaymentObj->payment_id = $payment_id;
+            $bookingPaymentObj->payment_gateway_tax_amt = 0.0;
+            $bookingPaymentObj->status = 1;
+            $bookingPaymentObj->payment_tax_percentage = $tax;
+            $bookingPaymentObj->payment_tax_amt = $tax_amount;
+            $bookingPaymentObj->total_payable_amt = $payable_amount;
+            $bookingPaymentObj->payment_reference_no = null;
+
+            $bookingPaymentRepo = new BookingPaymentRepository();
+            $booking_payment_result = $bookingPaymentRepo->create($bookingPaymentObj);
+//            dd('booking_payment_result',$booking_payment_result);
+            if($booking_payment_result['aceplusStatusCode'] ==  ReturnMessage::OK){
+                $booking_payment_id = $booking_payment_result["object"]->id;
+                $bookingPaymentStripeObj = new BookingPaymentStripe();
+                $bookingPaymentStripeObj->stripe_user_id = $customer_id;
+                $bookingPaymentStripeObj->email = $email;
+                $bookingPaymentStripeObj->status = 1;
+                $bookingPaymentStripeObj->booking_id = $booking_id;
+                $bookingPaymentStripeObj->booking_payment_id = $booking_payment_id;
+
+                $bookingPaymentStripeRepo = new BookingPaymentStripeRepository();
+                $booking_payment_stripe_result = $bookingPaymentStripeRepo->create($bookingPaymentStripeObj);
+
+                if($booking_payment_stripe_result['aceplusStatusCode'] ==  ReturnMessage::OK){
+                    dd('booking and payment successful');
+                }
+                else{
+                    dd('$booking_payment_stripe_result error',$booking_payment_stripe_result);
+                }
+            }
+            else{
+                dd('$booking_payment_result error',$booking_payment_result);
+            }
+        }
+        else{
+            dd('payment_result_error',$payment_result);
+            return redirect()->action('Setup\Hotel\HotelController@index')
+                ->withMessage(FormatGenerator::message('Fail', 'Payment did not create ...'));
+        }
+
+        dd('Success!!!');
+        return view('payment.payment_for_later');
     }
 }

@@ -282,4 +282,10 @@ class HotelRepository implements HotelRepositoryInterface
 
         return $objs;
     }
+
+    public function getObjsNotInConfig($hotel_config_array)
+    {
+        $objs = Hotel::whereNull('deleted_at')->whereNotIn('id', $hotel_config_array)->get();
+        return $objs;
+    }
 }

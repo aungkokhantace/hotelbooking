@@ -66,7 +66,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind('App\Setup\BookingRoom\BookingRoomRepositoryInterface','App\Setup\BookingRoom\BookingRoomRepository');
         $this->app->bind('App\Setup\BookingRequest\BookingRequestRepositoryInterface','App\Setup\BookingRequest\BookingRequestRepository');
         $this->app->bind('App\Setup\Report\ReportRepositoryInterface','App\Setup\Report\ReportRepository');
-
+        $this->app->bind('App\Setup\HotelConfig\HotelConfigRepositoryInterface','App\Setup\HotelConfig\HotelConfigRepository');
 
     }
 }

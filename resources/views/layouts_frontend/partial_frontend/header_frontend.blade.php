@@ -71,6 +71,9 @@ $companyLogo = \App\Core\Check::companyLogo();
     <!-- for jssor slider -->
     <script src="/assets/shared/js/jssor.slider-23.1.5.min.js" type="text/javascript"></script>
 
+    <!-- for stripe payment -->
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+
 </head>
 
 <body>
