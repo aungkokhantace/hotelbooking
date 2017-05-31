@@ -78,6 +78,7 @@
                                     </div>
                                     <div class="payment_form confirm-reserve-body">
                                         {!! Form::open(array('url' => '/book_and_pay','files'=>true, 'id'=>'book_and_pay_form', 'class'=> 'form-horizontal user-form-border')) !!}
+                                        <input type="hidden" id="payable" name="payable" value="{{session('payable_amount')}}">
                                             <div class="paymentformgroups">
                                                 <div class="col-sm-6 pd_rg_10">
                                                     <label>Country<span style="color:red;">*</span></label>
@@ -98,7 +99,7 @@
                                                 </div>
                                                 <div class="col-sm-12 pd_rg_10">
                                                     <div class="button_paynow">
-                                                        <button type="submit" class="btn btn-info btn-sm"><i class="fa fa-lock" aria-hidden="true"></i> &nbsp;BOOK & PAY NOW!</button>
+                                                        <button type="button" class="btn btn-info btn-sm" id="book_and_pay_button"><i class="fa fa-lock" aria-hidden="true"></i> &nbsp;BOOK & PAY NOW!</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -121,30 +122,87 @@
     <script type="text/javascript" language="javascript" class="init">
         $(document).ready(function(){
             //validate form
-            $('#book_and_pay_form').validate({
-                rules: {
-                    country          : 'required',
-                    phone: {
-                        required     : true,
-                        numeric      : true,
-                        },
-                },
-                messages: {
-                    country          : 'Country is required',
-                    phone: {
-                        required     : 'Phone number is required',
-                        numeric      : 'Phone number must be numeric',
+//            $('#book_and_pay_form').validate({
+//                rules: {
+//                    country          : 'required',
+//                    phone: {
+//                        required     : true,
+//                        numeric      : true,
+//                        },
+//                },
+//                messages: {
+//                    country          : 'Country is required',
+//                    phone: {
+//                        required     : 'Phone number is required',
+//                        numeric      : 'Phone number must be numeric',
+//                    },
+//                },
+//                submitHandler: function(form) {
+//                    $('input[type="submit"]').attr('disabled','disabled');
+//                    form.submit();
+//                }
+//            });
+
+            $("#book_and_pay_button").click(function(e){
+                //validate form
+                $('#book_and_pay_form').validate({
+                    rules: {
+                        country          : 'required',
+                        phone: {
+                            required     : true,
+                            number       : true,
+                            },
                     },
-                },
-                submitHandler: function(form) {
-                    $('input[type="submit"]').attr('disabled','disabled');
-                    form.submit();
+                    messages: {
+                        country          : 'Country is required',
+                        phone: {
+                            required     : 'Phone number is required',
+                            number       : 'Phone number must be numeric',
+                        },
+                    },
+                    submitHandler: function(form) {
+                        $('input[type="submit"]').attr('disabled','disabled');
+                        form.submit();
+                    }
+                });
+
+                //if form is valid, open Stripe checkout form
+                if($("#book_and_pay_form").valid()){
+                    var payable = document.getElementById("payable").value;
+
+                    // Open Checkout with further options:
+                    handler.open({
+                        name: 'Stripe.com',
+                        description: 'Pay with Card',
+                        //zipCode: true,
+                        amount: payable
+                    });
+                    e.preventDefault();
                 }
+
             });
         });
+    </script>
 
-        function nextTab(){
-//            alert('this is next tab!!');
-        }
+    <script>
+        var handler = StripeCheckout.configure({
+            key: 'pk_test_4T1qgSnrYT8e6btfWGS7efld',
+            image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+            locale: 'auto',
+            token: function(token) {
+                // You can access the token ID with `token.id`.
+                // Get the token ID to your server-side code for use.
+                $("#book_and_pay_form").append($('<input type="hidden" name="stripeToken" />').val(token.id));
+                $("#book_and_pay_form").append($('<input type="hidden" name="stripeEmail" />').val(token.email));
+
+                // submit the form, uncomment to make this happen
+                $("#book_and_pay_form").submit();
+            }
+        });
+
+        // Close Checkout on page navigation:
+        window.addEventListener('popstate', function() {
+            handler.close();
+        });
     </script>
 @stop

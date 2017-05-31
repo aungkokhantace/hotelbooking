@@ -20,4 +20,5 @@ interface HotelRepositoryInterface
     public function getHotelsByDestination($name);
     public function getHotelsByFilters($destination,$price_filter,$star_filter,$facility_filter,$landmark_filter);
     public function getSuggestedHotelsByDestination($hotelIdArr,$countryIdArr,$cityIdArr,$townshipIdArr);
+    public function getObjsNotInConfig($hotel_config_array);
 }

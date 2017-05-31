@@ -364,7 +364,7 @@
 //            setTimeout(executeQuery(latitude,longitude), 3000);
             setTimeout(renderMap(latitude,longitude), 3000);
 
-            var nowDate = new Date();
+            /* var nowDate = new Date();
             var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
             $('#check_in').datepicker({
                 format: 'dd-mm-yyyy',
@@ -384,6 +384,31 @@
                 numberOfMonths: 1,
                 allowInputToggle: true,
                 startDate: today
+            }); */
+
+            //Date Picker with controls of from date and to date
+            $("#check_in").datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                showButtonPanel: true,
+                startDate: new Date()
+            }).on('changeDate', function (selected) {
+                var startDate = new Date(selected.date.valueOf());
+                startDate.setDate(startDate.getDate() + 1);
+                $('#check_out').datepicker('setStartDate', startDate);
+            }).on('clearDate', function (selected) {
+                $('#check_out').datepicker('setStartDate',null);
+            });
+
+            $("#check_out").datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                startDate: new Date()
+            }).on('changeDate', function (selected) {
+                var endDate = new Date(selected.date.valueOf());
+                $('#check_in').datepicker('setEndDate', endDate);
+            }).on('clearDate', function (selected) {
+                $('#check_in').datepicker('setEndDate',null);
             });
 
             $("[type='number']").keypress(function (evt) {

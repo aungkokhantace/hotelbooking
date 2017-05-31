@@ -311,6 +311,14 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>344,'module'=>'RoomCategoryAmenity','name'=>'Update','description'=>'Room Category Amenity Update','url'=>'backend/room_category_amenity/update'],
             ['id'=>345,'module'=>'RoomCategoryAmenity','name'=>'Destroy','description'=>'Room Category Amenity Destroy','url'=>'backend/room_category_amenity/destroy'],
 
+            //Hotel LandMark
+            ['id'=>350,'module'=>'HotelConfig','name'=>'Listing','description'=>'Hotel Config Listing','url'=>'backend/hotel_config'],
+            ['id'=>351,'module'=>'HotelConfig','name'=>'New','description'=>'Hotel Config New','url'=>'backend/hotel_config/create'],
+            ['id'=>352,'module'=>'HotelConfig','name'=>'store','description'=>'Hotel Config Store','url'=>'backend/hotel_config/store'],
+            ['id'=>353,'module'=>'HotelConfig','name'=>'Edit','description'=>'Hotel Config Edit','url'=>'backend/hotel_config/edit'],
+            ['id'=>354,'module'=>'HotelConfig','name'=>'Update','description'=>'Hotel Config Update','url'=>'backend/hotel_config/update'],
+            ['id'=>355,'module'=>'HotelConfig','name'=>'Destroy','description'=>'Hotel Config Destroy','url'=>'backend/hotel_config/destroy'],
+
 
             //Backend Multi_Language
             ['id'=>500,'module'=>'Backend','name'=>'Multi_Language','description'=>'Backend Multi_Language','url'=>'backend/language'],

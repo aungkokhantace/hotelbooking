@@ -321,7 +321,7 @@
             <select class="form-control" name="number_of_floors" id="number_of_floors">
                 @if(isset($hotel))
                     @for ($i = 1; $i <= 100; $i++)
-                        <option value="{{ $i }}">{{ $i }}</option>
+                        {{--<option value="{{ $i }}">{{ $i }}</option>--}}
                         @if($i == $hotel->number_of_floors)
                             <option value="{{ $i }}" selected>{{ $i }}</option>
                         @else

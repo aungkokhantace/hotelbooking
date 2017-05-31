@@ -137,7 +137,7 @@
                     <!--Plus 1 to counter for each element rendered-->
                     <?php $counter++; ?>
                     <div class="col-md-4 img-portfolio">
-                        <a href="portfolio-item.html">
+                        <a href="#">
                             <img class="img-responsive img-hover" src="/images/upload/{{$popular_city->image}}" alt="">
                             <div class="portfolio-caption">
                                 <!--<h4>HOT</h4>-->
@@ -153,7 +153,7 @@
                     <div class="row">
                         <!--Plus 1 to counter for each element rendered-->
                         <?php $counter++; ?>
-                        <div class="col-md-4 img-portfolio">
+                        <div class="#">
                             <a href="portfolio-item.html">
                                 <img class="img-responsive img-hover" src="/images/upload/{{$popular_city->image}}" alt="">
                                 <div class="portfolio-caption">
@@ -197,7 +197,7 @@
                         <!--Plus 1 to counter for each element rendered-->
                         <?php $counter++; ?>
                         <div class="col-md-4 img-portfolio">
-                            <a href="portfolio-item.html">
+                            <a href="#">
                                 <img class="img-responsive img-hover" src="/images/upload/{{$recommended_hotel->logo}}" alt="">
                                 <div class="portfolio-caption2">
                                     <h5><strong>{{$recommended_hotel->name}}</strong><small> > {{$recommended_hotel->city->name}}</small></h5>
@@ -213,7 +213,7 @@
                         <!--Plus 1 to counter for each element rendered-->
                         <?php $counter++; ?>
                         <div class="col-md-4 img-portfolio">
-                            <a href="portfolio-item.html">
+                            <a href="#">
                                 <img class="img-responsive img-hover" src="/images/upload/{{$recommended_hotel->logo}}" alt="">
                                 <div class="portfolio-caption2">
                                     <h5><strong>{{$recommended_hotel->name}}</strong><small> > {{$recommended_hotel->city->name}}</small></h5>
@@ -384,7 +384,7 @@
                 }
             });
 
-            var nowDate = new Date();
+            /*var nowDate = new Date();
             var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
             $('#check_in').datepicker({
                 format: 'dd-mm-yyyy',
@@ -404,6 +404,31 @@
                 numberOfMonths: 1,
                 allowInputToggle: true,
                 startDate: today
+            });  */
+
+            //Date Picker with controls of from date and to date
+            $("#check_in").datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                showButtonPanel: true,
+                startDate: new Date()
+            }).on('changeDate', function (selected) {
+                var startDate = new Date(selected.date.valueOf());
+                startDate.setDate(startDate.getDate() + 1);
+                $('#check_out').datepicker('setStartDate', startDate);
+            }).on('clearDate', function (selected) {
+                $('#check_out').datepicker('setStartDate',null);
+            });
+
+            $("#check_out").datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                startDate: new Date()
+            }).on('changeDate', function (selected) {
+                var endDate = new Date(selected.date.valueOf());
+                $('#check_in').datepicker('setEndDate', endDate);
+            }).on('clearDate', function (selected) {
+                $('#check_in').datepicker('setEndDate',null);
             });
 
             $("#destination").autocomplete({

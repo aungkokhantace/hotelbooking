@@ -19,36 +19,36 @@
                 @else
                     <td width="80%">{{$totalRooms}} room</td>
                 @endif
-                <td>{{$total_amount}} MMK</td>
+                <td>{{session('total_amount')}} MMK</td>
             </tr>
             <tr>
-                <td width="80%">5% TAX</td>
-                <td>US$1.63</td>
+                <td width="80%">{{session('tax')}}% TAX</td>
+                <td>{{session('tax_amount')}} MMK</td>
             </tr>
+            {{--<tr>--}}
+                {{--<td width="80%">10% Property service charge</td>--}}
+                {{--<td>US$34.63</td>--}}
+            {{--</tr>--}}
+            {{--<tr style="color:#D63090">--}}
+                {{--<td width="80%">Today you'll pay</td>--}}
+                {{--<td>US$ 0</td>--}}
+            {{--</tr>--}}
+            {{--<tfoot>--}}
             <tr>
-                <td width="80%">10% Property service charge</td>
-                <td>US$34.63</td>
-            </tr>
-            <tr style="color:#D63090">
-                <td width="80%">Today you'll pay</td>
-                <td>US$ 0</td>
-            </tr>
-            <tfoot>
-            <tr>
-                <td width="80%">You'll pay at the property</td>
-                <td>US$ 40</td>
+                <td width="80%">You'll pay</td>
+                <td>{{session('payable_amount')}} MMK</td>
             </tr>
             </tfoot>
             </tbody>
         </table>
-        <a href="#">Change your selection</a>
+        <a href="/hotel_detail/{{$hotel->id}}">Change your selection</a>
     </div>
     <div class="table_lists">
         <table>
             <tbody>
             <tr>
-                <td width="80%"><strong style="font-size:16px;">Price</strong><br>(for 4 guests)</td>
-                <td style="font-size:16px;padding-left:5px;">US$40</td>
+                <td width="80%"><strong style="font-size:16px;">Price</strong></td>
+                <td style="font-size:16px;padding-left:5px;">{{session('payable_amount')}} MMK</td>
             </tr>
             </tbody>
         </table>
