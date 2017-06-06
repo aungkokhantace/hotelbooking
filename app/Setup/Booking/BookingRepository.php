@@ -57,4 +57,10 @@ class BookingRepository implements BookingRepositoryInterface
             return $returnedObj;
         }
     }
+
+    public function getBookingById($id){
+        $result = Booking::find($id);
+
+        return $result;
+    }
 }

@@ -358,7 +358,7 @@ Route::group(['middleware' => 'web'], function () {
             Route::post('room_category_amenity/update', array('as'=>'backend/room_category_amenity/update', 'uses'=>'Setup\RoomCategoryAmenity\RoomCategoryAmenityController@update'));
             Route::post('room_category_amenity/destroy', array('as'=>'backend/room_category_amenity/destroy', 'uses'=>'Setup\RoomCategoryAmenity\RoomCategoryAmenityController@destroy'));
 
-            //Report
+            //SaleSummary Report
             Route::get('salesummaryreport',array(
                 'as'=>'backend/salesummaryreport',
                 'uses'=>'Report\SaleSummaryReportController@index'
@@ -368,12 +368,31 @@ Route::group(['middleware' => 'web'], function () {
                     'as'=>'backend/salesummaryreport/search/{type?}/{from?}/{to?}',
                     'uses'=>'Report\SaleSummaryReportController@search'
                 ));
-
             Route::get('salesummaryreport/exportexcel/{type?}/{from?}/{to?}',
                 array(
                     'as'=>'backend/salesummaryreport/exportexcel/{type?}/{from?}/{to?}',
                     'uses'=>'Report\SaleSummaryReportController@excel'
                 ));
+
+            //Booking Report
+            Route::get('bookingreport',array(
+                'as'=>'backend/bookingreport',
+                'uses'=>'Report\BookingReportController@index'
+            ));
+            Route::get('bookingreport/search/{type?}/{from?}/{to?}/{status?}',
+                array(
+                    'as'=>'backend/bookingreport/search/{type?}/{from?}/{to?}/{status?}',
+                    'uses'=>'Report\BookingReportController@search'
+                ));
+            Route::get('bookingreport/exportexcel/{type?}/{from?}/{to?}/{status?}',
+                array(
+                    'as'=>'backend/bookingreport/exportexcel/{type?}/{from?}/{to?}/{status?}',
+                    'uses'=>'Report\BookingReportController@excel'
+                ));
+            Route::get('bookingreport/room_detail/{id}',array(
+                'as'=>'backend/bookingreport/room_detail/{id}',
+                'uses'=>'Report\BookingReportController@booking_room_detail'
+            ));
 
         });
 

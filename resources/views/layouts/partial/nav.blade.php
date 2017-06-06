@@ -407,7 +407,9 @@
                 </a>
 
                 <ul class="sub-menu">
-                    <li nav-id="report-sale-summary"><a href="/backend/">Sale Summary Report</a></li>
+                    <li nav-id="report-sale-summary"><a href="/backend/salesummaryreport">Sale Summary Report</a></li>
+                    <li nav-id="report-booking-summary"><a href="/backend/bookingreport">Booking Detail Report</a></li>
+
                 </ul>
             </li>
 

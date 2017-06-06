@@ -6,8 +6,8 @@
  * Time: 2:17 PM
  */
 return [
-    'title-entry'           => 'City Entry - JP',
-    'title-edit'            => 'City Edit - JP',
+    'title-entry'           => 'Township Entry - JP',
+    'title-edit'            => 'Township Edit - JP',
     'city'                  => 'City Name - JP',
     'township'              => 'Township Name - JP',
     'select-city'           => 'Select City - JP',

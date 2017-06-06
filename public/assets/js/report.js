@@ -43,7 +43,10 @@ function check_year(from_year, to_year){
 }
 
 function report_search_with_type(module){
-    var type = $("#type").val();
+    var type        = $("#type").val();
+    var status      = $('#status').val();
+    var form_action = "";
+
     if(type == "yearly"){           //type is yearly
         var from_year = $("#from_year").val();
         var to_year = $("#to_year").val();
@@ -64,7 +67,11 @@ function report_search_with_type(module){
             var dateComparison = check_year(from_year, to_year);
 
             if(dateComparison){
-                var form_action = "/backend/"+module+"/search/" + type + "/" + from_year + "/" + to_year;
+                form_action = "/backend/"+module+"/search/" + type + "/" + from_year + "/" + to_year;
+
+                if(status != undefined){
+                    form_action += "/"+status;
+                }
             }
             else{
                 sweetAlert("Oops...", "Please Choose the valid year !");
@@ -92,7 +99,11 @@ function report_search_with_type(module){
             var dateComparison = check_month(from_month, to_month);
 
             if(dateComparison){
-                var form_action = "/backend/"+module+"/search/" + type + "/" + from_month + "/" + to_month;
+                form_action = "/backend/"+module+"/search/" + type + "/" + from_month + "/" + to_month;
+
+                if(status != undefined){
+                    form_action += "/"+status;
+                }
             }
             else{
                 sweetAlert("Oops...", "Please Choose the valid month !");
@@ -105,17 +116,14 @@ function report_search_with_type(module){
         var to_date = $("#to_date").val();
 
         if(from_date == "" && to_date == ""){
-            alert('if');
             sweetAlert("Oops...", "Please Choose the date !");
             return;
         }
         else if(from_date == "" && to_date != "") {
-            alert('elseif 1');
             sweetAlert("Oops...", "Please Choose the date !");
             return;
         }
         else if(from_date != "" && to_date == "") {
-            alert('elseif 2');
             sweetAlert("Oops...", "Please Choose the date !");
             return;
         }
@@ -124,7 +132,11 @@ function report_search_with_type(module){
             var dateComparison = check_date(from_date, to_date);
 
             if(dateComparison){
-                var form_action = "/backend/"+module+"/search/" + type + "/" + from_date + "/" + to_date;
+                form_action = "/backend/"+module+"/search/" + type + "/" + from_date + "/" + to_date;
+
+                if(status != undefined){
+                    form_action += "/"+status;
+                }
             }
             else{
                 sweetAlert("Oops...", "Please Choose the valid date !");
@@ -137,7 +149,9 @@ function report_search_with_type(module){
 }
 
 function report_export_with_type(module){
-    var type = $("#type").val();
+    var type        = $("#type").val();
+    var status      = $('#status').val();
+    var form_action = "";
     if(type == "yearly"){           //type is yearly
         var from_year = $("#from_year").val();
         var to_year = $("#to_year").val();
@@ -158,7 +172,10 @@ function report_export_with_type(module){
             var dateComparison = check_year(from_year, to_year);
 
             if(dateComparison){
-                var form_action = "/backend/"+module+"/exportexcel/" + type + "/" + from_year + "/" + to_year;
+                form_action = "/backend/"+module+"/exportexcel/" + type + "/" + from_year + "/" + to_year;
+                if(status != undefined){
+                    form_action += "/"+status;
+                }
             }
             else{
                 sweetAlert("Oops...", "Please Choose the valid year !");
@@ -186,7 +203,10 @@ function report_export_with_type(module){
             var dateComparison = check_month(from_month, to_month);
 
             if(dateComparison){
-                var form_action = "/backend/"+module+"/exportexcel/" + type + "/" + from_month + "/" + to_month;
+                form_action = "/backend/"+module+"/exportexcel/" + type + "/" + from_month + "/" + to_month;
+                if(status != undefined){
+                    form_action += "/"+status;
+                }
             }
             else{
                 sweetAlert("Oops...", "Please Choose the valid month !");
@@ -213,7 +233,10 @@ function report_export_with_type(module){
             var dateComparison = check_date(from_date, to_date);
 
             if(dateComparison){
-                var form_action = "/backend/"+module+"/exportexcel/" + type + "/" + from_date + "/" + to_date;
+                form_action = "/backend/"+module+"/exportexcel/" + type + "/" + from_date + "/" + to_date;
+                if(status != undefined){
+                    form_action += "/"+status;
+                }
             }
             else{
                 sweetAlert("Oops...", "Please Choose the valid date !");
