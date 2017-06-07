@@ -1322,3 +1322,139 @@ button.closes {
     border-radius: 3px;
 }
 /**Payment1 Page Css End***/
+
+/**Payment4 Page Css start***/
+#paymentfour{
+    background-color: #f6f6f6;
+    padding: 15px;
+}
+.paymentfour_left h3{
+    color: #D63090;
+    font-family: 'Playfair Display';
+}
+.paymentfour_left h4 {
+    color: #fff;
+    font-size: 15px;
+    font-family: 'Playfair Display';
+    background: #D63090;
+    padding: 7px 15px;
+}
+.payment_ul li{
+    list-style-type: none;
+    margin-left: 43px;
+    padding: 10px;
+    font-family: 'Playfair Display';
+    font-size: 15px;
+}
+.payment_ul li i{
+    color: #D63090;
+    padding-right: 10px;
+}
+.paymentfour_title h3{
+    font-family: 'Playfair Display';
+    color: #5c5c5c;
+    padding-left: 15px;
+}
+.paymentform_one{
+    padding: 15px 25px;
+    border: 1px solid #cccccc;
+}
+.paymentform_one h4{
+    color: #D63090;
+    font-family: 'Playfair Display';
+}
+
+.paymentform_left h5{
+    color: #D63090;
+    font-family: 'Playfair Display';
+    font-size: 17px;
+}
+.paymentform_right{
+    background-color: #f6f6f6;
+    padding: 50px 20px 350px 20px;
+}
+.paymentform_right p{
+    padding-top: 55px;
+    font-family: 'Playfair Display';
+    font-size: 13px;
+}
+.paymentform_right a{
+    color: #D63090;
+    font-family: 'Playfair Display';
+}
+.paymentform_right a i{
+    color: #D63090;
+    padding-right: 10px;
+}
+.paymentform_right button{
+    margin-top: 15px;
+    padding: 7px 25px;
+    font-family: 'Playfair Display';
+}
+
+.paymentform_right h5{
+    color: #5c5c5c;
+    font-family: 'Playfair Display';
+    font-size: 17px;
+    float: left;
+}
+.paymentfour_table td{
+    font-family: 'Playfair Display';
+    padding: 10px 0;
+}
+.paymenttable_ul{
+    list-style-type: none;
+    padding: 10px;
+    font-family: 'Playfair Display';
+    font-size: 15px;
+}
+.paymenttable_ul li i {
+    color: #D63090;
+    padding-right: 10px;
+}
+.paymentform_left{
+    border-bottom: 2px solid #cccccc;
+}
+.btn-primary-four,.btn-primary-four:hover,.btn-primary-four:active{
+    color: #D63090;
+    background-color: #fff !important;
+    border-color: #D63090 !important;
+}
+.btn-primary-four i{
+    padding-right: 5px;
+}
+.btn-four {
+    display: inline-block;
+    padding: 3px 15px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: none;
+}
+.paymentfourtable h4{
+    color: #5c5c5c;
+    float: left;
+    padding: 5px;
+}
+.paymentfourbutton{
+    padding-top: 12px;
+    font-family: 'Playfair Display';
+}
+.payment_form p{
+    font-family: 'Playfair Display';
+    text-align: justify;
+}
+/**Payment4 Page Css End***/

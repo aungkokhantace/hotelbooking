@@ -1,5 +1,5 @@
 @extends('layouts_frontend.master_frontend')
-@section('title','About Us')
+@section('title','Confirm Reservation')
 @section('content')
         <div id="header_id">
             <img class="img-responsive img-hover" src="/assets/shared/images/slider1.png">
@@ -99,7 +99,7 @@
                                                 </div>
                                                 <div class="col-sm-12 pd_rg_10">
                                                     <div class="button_paynow">
-                                                        <button type="button" class="btn btn-info btn-sm" id="book_and_pay_button"><i class="fa fa-lock" aria-hidden="true"></i> &nbsp;BOOK & PAY NOW!</button>
+                                                        <button type="button" class="btn btn-info btn-sm" id="book_and_pay_button" name="book_and_pay_button"><i class="fa fa-lock" aria-hidden="true"></i> &nbsp;BOOK & PAY NOW!</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -196,6 +196,8 @@
                 $("#book_and_pay_form").append($('<input type="hidden" name="stripeEmail" />').val(token.email));
 
                 // submit the form, uncomment to make this happen
+                // disable 'book and pay' button while submitting form
+                $("#book_and_pay_button").attr('disabled','disabled');
                 $("#book_and_pay_form").submit();
             }
         });

@@ -37,6 +37,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Redirect;
@@ -363,8 +364,8 @@ class PaymentController extends Controller
 
     public function bookAndPay() {
         //get input fields
-        $country         = Input::get('country');
-        $phone           = Input::get('phone');
+        $country = Input::get('country');
+        $phone = Input::get('phone');
 
         //get session data
         $hotel_id = session('hotel_id');
@@ -372,238 +373,271 @@ class PaymentController extends Controller
         $hotel = $hotelRepo->getObjByID($hotel_id);
 
         $user_id = session('customer')['id'];
-        $status  = 1; //pending
+        $status = 1; //pending
         $check_in_date_session = session('check_in');
         $check_out_date_session = session('check_out');
 
         //change date formats to store in DB
-        $check_in_date = date('Y-m-d',strtotime($check_in_date_session));
-        $check_out_date = date('Y-m-d',strtotime($check_out_date_session));
+        $check_in_date = date('Y-m-d', strtotime($check_in_date_session));
+        $check_out_date = date('Y-m-d', strtotime($check_out_date_session));
 
         $check_in_time = $hotel->check_in_time;
         $check_out_time = $hotel->check_out_time;
         $total_amount = session('total_amount');
         $travel_for_work = session('travel_for_work');
 
-        $bookingObj = new Booking();
-        $bookingObj->user_id = $user_id;
-        $bookingObj->status = $status;
-        $bookingObj->check_in_date = $check_in_date;
-        $bookingObj->check_out_date = $check_out_date;
-        $bookingObj->check_in_time = $check_in_time;
-        $bookingObj->check_out_time = $check_out_time;
-        $bookingObj->price_wo_tax = $total_amount;
-        $bookingObj->price_w_tax = $total_amount;
-        $bookingObj->total_tax_amt = 0.0;
-        $bookingObj->total_tax_percentage = 0;
-        $bookingObj->total_payable_amt = $total_amount;
-        $bookingObj->total_discount_amt = 0.0;
-        $bookingObj->total_discount_percentage = 0;
-        $bookingObj->hotel_id = $hotel_id;
-        $bookingObj->travel_for_work = $travel_for_work;
+        try{
+            DB::beginTransaction();
 
-        $bookingRepo = new BookingRepository();
-        $booking_result = $bookingRepo->create($bookingObj);
+            $bookingObj = new Booking();
+            $bookingObj->user_id = $user_id;
+            $bookingObj->status = $status;
+            $bookingObj->check_in_date = $check_in_date;
+            $bookingObj->check_out_date = $check_out_date;
+            $bookingObj->check_in_time = $check_in_time;
+            $bookingObj->check_out_time = $check_out_time;
+            $bookingObj->price_wo_tax = $total_amount;
+            $bookingObj->price_w_tax = $total_amount;
+            $bookingObj->total_tax_amt = 0.0;
+            $bookingObj->total_tax_percentage = 0;
+            $bookingObj->total_payable_amt = $total_amount;
+            $bookingObj->total_discount_amt = 0.0;
+            $bookingObj->total_discount_percentage = 0;
+            $bookingObj->hotel_id = $hotel_id;
+            $bookingObj->travel_for_work = $travel_for_work;
 
-        //start booking room
-        if($booking_result['aceplusStatusCode'] ==  ReturnMessage::OK){
-//            $room_array = array();
+            $bookingRepo = new BookingRepository();
+            $booking_result = $bookingRepo->create($bookingObj);
 
-            $available_room_categories = session('available_room_categories');
-            $roomRepo = New RoomRepository();
+            //if booking creation fails, alert and redirect to homepage
+            if ($booking_result['aceplusStatusCode'] != ReturnMessage::OK){
+                DB::rollback();
+                alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                return redirect('/');
+            }
+            //if booking creation was successful, start booking room creation
+            else {
+    //            $room_array = array();
+                $available_room_categories = session('available_room_categories');
+                $roomRepo = New RoomRepository();
 
-            foreach($available_room_categories as $r_category){
-                //get available rooms for each room category
-                $rooms    = $roomRepo->getRoomArrayByRoomCategoryId($r_category->id,$check_in_date_session,$check_out_date_session);
+                foreach ($available_room_categories as $r_category) {
+                    //get available rooms for each room category
+                    $rooms = $roomRepo->getRoomArrayByRoomCategoryId($r_category->id, $check_in_date_session, $check_out_date_session);
 
-                //get only required number of rooms from available rooms
-                $booked_rooms = array_slice($rooms,0,$r_category->number);
+                    //get only required number of rooms from available rooms
+                    $booked_rooms = array_slice($rooms, 0, $r_category->number);
 
-                foreach($booked_rooms as $key=>$booked_room){
-                    $booking_id     = $booking_result["object"]->id;
-                    $room_id        = $booked_room['id'];
-                    $room_status    = 1; //pending
-                    $remark         = "";
-                    $added_extra_bed= 0;
-                    $extra_bed_price= 0.0;
+                    foreach ($booked_rooms as $key => $booked_room) {
+                        $booking_id = $booking_result["object"]->id;
+                        $room_id = $booked_room['id'];
+                        $room_status = 1; //pending
+                        $remark = "";
+                        $added_extra_bed = 0;
+                        $extra_bed_price = 0.0;
 
-                    //get username for each room from session
-                    $user_name      = session($r_category->id.'_'.($key+1).'_name');
-                    $user_email     = session($r_category->id.'_'.($key+1).'_email');
-                    $guest_count    = session($r_category->id.'_'.($key+1).'_guest');
-                    $smoking_session=session($r_category->id.'_'.($key+1).'_smoking');
-                    if($smoking_session == "yes"){
-                        $smoking = 1;
+                        //get username for each room from session
+                        $user_name = session($r_category->id . '_' . ($key + 1) . '_name');
+                        $user_email = session($r_category->id . '_' . ($key + 1) . '_email');
+                        $guest_count = session($r_category->id . '_' . ($key + 1) . '_guest');
+                        $smoking_session = session($r_category->id . '_' . ($key + 1) . '_smoking');
+                        if ($smoking_session == "yes") {
+                            $smoking = 1;
+                        } else {
+                            $smoking = 0;
+                        }
+
+                        //create booking room obj
+                        $bookingRoomObj = new BookingRoom();
+                        $bookingRoomObj->booking_id = $booking_id;
+                        $bookingRoomObj->user_id = $user_id;
+                        $bookingRoomObj->room_id = $room_id;
+                        $bookingRoomObj->hotel_id = $hotel_id;
+                        $bookingRoomObj->status = $room_status;
+                        $bookingRoomObj->check_in_date = $check_in_date;
+                        $bookingRoomObj->check_out_date = $check_out_date;
+                        $bookingRoomObj->check_in_time = $check_in_time;
+                        $bookingRoomObj->check_out_time = $check_out_time;
+                        $bookingRoomObj->remark = $remark;
+                        $bookingRoomObj->room_price = $r_category->price;
+                        $bookingRoomObj->added_extra_bed = $added_extra_bed;
+                        $bookingRoomObj->extra_bed_price = $extra_bed_price;
+                        $bookingRoomObj->user_first_name = $user_name;
+                        $bookingRoomObj->user_last_name = "";
+                        $bookingRoomObj->user_email = $user_email;
+                        $bookingRoomObj->guest_count = $guest_count;
+                        $bookingRoomObj->smoking = $smoking;
+
+                        $bookingRoomRepo = new BookingRoomRepository();
+                        $booking_room_result = $bookingRoomRepo->create($bookingRoomObj);
+
+                        //if booking room creation fails, alert and redirect to homepage
+                        if ($booking_room_result['aceplusStatusCode'] != ReturnMessage::OK){
+                            DB::rollback();
+                            alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                            return redirect('/');
+                        }
                     }
-                    else{
-                        $smoking = 0;
-                    }
-
-                    //create booking room obj
-                    $bookingRoomObj = new BookingRoom();
-                    $bookingRoomObj->booking_id = $booking_id;
-                    $bookingRoomObj->user_id    = $user_id;
-                    $bookingRoomObj->room_id    = $room_id;
-                    $bookingRoomObj->hotel_id   = $hotel_id;
-                    $bookingRoomObj->status     = $room_status;
-                    $bookingRoomObj->check_in_date  = $check_in_date;
-                    $bookingRoomObj->check_out_date = $check_out_date;
-                    $bookingRoomObj->check_in_time  = $check_in_time;
-                    $bookingRoomObj->check_out_time = $check_out_time;
-                    $bookingRoomObj->remark     = $remark;
-                    $bookingRoomObj->room_price = $r_category->price;
-                    $bookingRoomObj->added_extra_bed = $added_extra_bed;
-                    $bookingRoomObj->extra_bed_price = $extra_bed_price;
-                    $bookingRoomObj->user_first_name = $user_name;
-                    $bookingRoomObj->user_last_name  = "";
-                    $bookingRoomObj->user_email      = $user_email;
-                    $bookingRoomObj->guest_count     = $guest_count;
-                    $bookingRoomObj->smoking         = $smoking;
-
-                    $bookingRoomRepo     = new BookingRoomRepository();
-                    $booking_room_result = $bookingRoomRepo->create($bookingRoomObj);
-//                    dd('$booking_room_result',$booking_room_result);
                 }
             }
-        }
-        else{
-            dd('$booking_result error',$booking_result);
-        }
 
-        //start booking request
-        if($booking_result['aceplusStatusCode'] ==  ReturnMessage::OK){
-            $booking_id             = $booking_result["object"]->id;
-            $non_smoking_request    = session('non_smoking_request');
-            $late_check_in_request  = session('late_check_in_request');
-            $early_check_in_request = session('early_check_in_request');
-            $high_floor_request     = session('high_floor_request');
-            $large_bed_request      = session('large_bed_request');
-            $twin_bed_request       = session('twin_bed_request');
-            $quiet_room_request     = session('quiet_room_request');
-            $baby_cot_request       = session('baby_cot_request');
-            $airport_transfer_request = session('airport_transfer_request');
-            $private_parking_request= session('private_parking_request');
-            $special_request        = session('special_request');
-            $booking_taxi           = session('booking_taxi');
-            $booking_tour_guide     = session('booking_tour_guide');
+            //if booking creation fails, alert and redirect to homepage
+            if ($booking_result['aceplusStatusCode'] != ReturnMessage::OK){
+                DB::rollback();
+                alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                return redirect('/');
+            }
+            //if booking creation was successful, start booking request creation
+            else {
+                $booking_id = $booking_result["object"]->id;
+                $non_smoking_request = session('non_smoking_request');
+                $late_check_in_request = session('late_check_in_request');
+                $early_check_in_request = session('early_check_in_request');
+                $high_floor_request = session('high_floor_request');
+                $large_bed_request = session('large_bed_request');
+                $twin_bed_request = session('twin_bed_request');
+                $quiet_room_request = session('quiet_room_request');
+                $baby_cot_request = session('baby_cot_request');
+                $airport_transfer_request = session('airport_transfer_request');
+                $private_parking_request = session('private_parking_request');
+                $special_request = session('special_request');
+                $booking_taxi = session('booking_taxi');
+                $booking_tour_guide = session('booking_tour_guide');
 
-            $bookingRequestObj = new BookingRequest();
-            $bookingRequestObj->booking_id          = $booking_id;
-            $bookingRequestObj->non_smoking_room    = $non_smoking_request;
-            $bookingRequestObj->late_check_in       = $late_check_in_request;
-            $bookingRequestObj->early_check_in      = $early_check_in_request;
-            $bookingRequestObj->high_floor_room     = $high_floor_request;
-            $bookingRequestObj->large_bed           = $large_bed_request;
-            $bookingRequestObj->twin_bed            = $twin_bed_request;
-            $bookingRequestObj->quiet_room          = $quiet_room_request;
-            $bookingRequestObj->baby_cot            = $baby_cot_request;
-            $bookingRequestObj->airport_transfer    = $airport_transfer_request;
-            $bookingRequestObj->private_parking     = $private_parking_request;
-            $bookingRequestObj->special_request     = $special_request;
-            $bookingRequestObj->booking_taxi        = $booking_taxi;
-            $bookingRequestObj->booking_tour_guide  = $booking_tour_guide;
+                $bookingRequestObj = new BookingRequest();
+                $bookingRequestObj->booking_id = $booking_id;
+                $bookingRequestObj->non_smoking_room = $non_smoking_request;
+                $bookingRequestObj->late_check_in = $late_check_in_request;
+                $bookingRequestObj->early_check_in = $early_check_in_request;
+                $bookingRequestObj->high_floor_room = $high_floor_request;
+                $bookingRequestObj->large_bed = $large_bed_request;
+                $bookingRequestObj->twin_bed = $twin_bed_request;
+                $bookingRequestObj->quiet_room = $quiet_room_request;
+                $bookingRequestObj->baby_cot = $baby_cot_request;
+                $bookingRequestObj->airport_transfer = $airport_transfer_request;
+                $bookingRequestObj->private_parking = $private_parking_request;
+                $bookingRequestObj->special_request = $special_request;
+                $bookingRequestObj->booking_taxi = $booking_taxi;
+                $bookingRequestObj->booking_tour_guide = $booking_tour_guide;
 
-            $bookingRequestRepo = new BookingRequestRepository();
-            $booking_request_result = $bookingRequestRepo->create($bookingRequestObj);
-//            dd('booking_request_result',$booking_request_result);
-        }
-        else{
-            dd('booking_result error',$booking_result);
-        }
+                $bookingRequestRepo = new BookingRequestRepository();
+                $booking_request_result = $bookingRequestRepo->create($bookingRequestObj);
 
-
-
-        //Start Stripe Payment Section
-
-        //Set your secret key: remember to change this to your live secret key in production
-        //See your keys here: https://dashboard.stripe.com/account/apikeys
-        Stripe::setApiKey("sk_test_pfDJKF6zoTRgCuHdPptjcgQX");
-
-        // Token is created using Stripe.js or Checkout!
-        // Get the payment token submitted by the form:
-        $token = $_POST['stripeToken'];
-        $email = $_POST['stripeEmail'];
-//        dd(Session()->all());
-        $total_amount = session('total_amount');
-        $tax = session('tax');
-        $tax_amount = session('tax_amount');
-        $payable_amount = session('payable_amount');
-
-        // Create a Customer:
-        $customer = Customer::create(array(
-            "email" => $email,
-            "source" => $token,
-        ));
-
-        $customer_id = $customer['id'];
-
-        // Charge the Customer instead of the card:
-        $charge = Charge::create(array(
-            "amount" => $payable_amount,
-            "currency" => "usd",
-            "customer" => $customer_id
-        ));
-
-        //Insert Stripe Customer
-//        DB::table('stripe_user')->insert(['stripe_user_id'=>$customer_id,'email'=>$email,'status'=>1]);
-
-        $paymentObj = new Payment();
-        $paymentObj->name = "Payment Name";
-        $paymentObj->type = 1;
-        $paymentObj->description = "";
-
-        $paymentRepo = new PaymentRepository();
-        $payment_result = $paymentRepo->create($paymentObj);
-//        dd('payment_result',$payment_result);
-
-        if($payment_result['aceplusStatusCode'] ==  ReturnMessage::OK){
-            $payment_id = $payment_result["object"]->id;
-            $bookingPaymentObj = new BookingPayment();
-            $bookingPaymentObj->payment_amount_wo_tax = $total_amount;
-            $bookingPaymentObj->payment_amount_w_tax = $payable_amount;
-            $bookingPaymentObj->description = "";
-            $bookingPaymentObj->booking_id = $booking_id;
-            $bookingPaymentObj->payment_id = $payment_id;
-            $bookingPaymentObj->payment_gateway_tax_amt = 0.0;
-            $bookingPaymentObj->status = 1;
-            $bookingPaymentObj->payment_tax_percentage = $tax;
-            $bookingPaymentObj->payment_tax_amt = $tax_amount;
-            $bookingPaymentObj->total_payable_amt = $payable_amount;
-            $bookingPaymentObj->payment_reference_no = null;
-
-            $bookingPaymentRepo = new BookingPaymentRepository();
-            $booking_payment_result = $bookingPaymentRepo->create($bookingPaymentObj);
-//            dd('booking_payment_result',$booking_payment_result);
-            if($booking_payment_result['aceplusStatusCode'] ==  ReturnMessage::OK){
-                $booking_payment_id = $booking_payment_result["object"]->id;
-                $bookingPaymentStripeObj = new BookingPaymentStripe();
-                $bookingPaymentStripeObj->stripe_user_id = $customer_id;
-                $bookingPaymentStripeObj->email = $email;
-                $bookingPaymentStripeObj->status = 1;
-                $bookingPaymentStripeObj->booking_id = $booking_id;
-                $bookingPaymentStripeObj->booking_payment_id = $booking_payment_id;
-
-                $bookingPaymentStripeRepo = new BookingPaymentStripeRepository();
-                $booking_payment_stripe_result = $bookingPaymentStripeRepo->create($bookingPaymentStripeObj);
-
-                if($booking_payment_stripe_result['aceplusStatusCode'] ==  ReturnMessage::OK){
-                    dd('booking and payment successful');
-                }
-                else{
-                    dd('$booking_payment_stripe_result error',$booking_payment_stripe_result);
+                //if booking request creation fails, alert and redirect to homepage
+                if ($booking_request_result['aceplusStatusCode'] != ReturnMessage::OK){
+                    DB::rollback();
+                    alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                    return redirect('/');
                 }
             }
+            //Start Stripe Payment Section
+                //Set your secret key: remember to change this to your live secret key in production
+                //See your keys here: https://dashboard.stripe.com/account/apikeys
+            Stripe::setApiKey("sk_test_pfDJKF6zoTRgCuHdPptjcgQX");
+
+            // Token is created using Stripe.js or Checkout!
+            // Get the payment token submitted by the form:
+            $token = $_POST['stripeToken'];
+            $email = $_POST['stripeEmail'];
+
+
+            $total_amount = session('total_amount');
+            $tax = session('tax');
+            $tax_amount = session('tax_amount');
+            $payable_amount = session('payable_amount');
+
+            // Create a Customer:
+            $customer = Customer::create(array(
+                "email" => $email,
+                "source" => $token,
+            ));
+
+            $customer_id = $customer['id'];
+
+            // Charge the Customer instead of the card:
+            $charge = Charge::create(array(
+                "amount" => $payable_amount,
+                "currency" => "usd",
+                "customer" => $customer_id
+            ));
+
+            //Insert Stripe Customer
+    //        DB::table('stripe_user')->insert(['stripe_user_id'=>$customer_id,'email'=>$email,'status'=>1]);
+
+            $paymentObj = new Payment();
+            $paymentObj->name = "Payment Name";
+            $paymentObj->type = 1;
+            $paymentObj->description = "";
+
+            $paymentRepo = new PaymentRepository();
+            $payment_result = $paymentRepo->create($paymentObj);
+
+            //if payment creation fails, alert and redirect to homepage
+            if ($payment_result['aceplusStatusCode'] != ReturnMessage::OK){
+                DB::rollback();
+                alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                return redirect('/');
+            }
+            //if payment creation was successful, start booking payment creation
             else{
-                dd('$booking_payment_result error',$booking_payment_result);
-            }
-        }
-        else{
-            dd('payment_result_error',$payment_result);
-            return redirect()->action('Setup\Hotel\HotelController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Payment did not create ...'));
-        }
+                $payment_id = $payment_result["object"]->id;
+                $bookingPaymentObj = new BookingPayment();
+                $bookingPaymentObj->payment_amount_wo_tax = $total_amount;
+                $bookingPaymentObj->payment_amount_w_tax = $payable_amount;
+                $bookingPaymentObj->description = "";
+                $bookingPaymentObj->booking_id = $booking_id;
+                $bookingPaymentObj->payment_id = $payment_id;
+                $bookingPaymentObj->payment_gateway_tax_amt = 0.0;
+                $bookingPaymentObj->status = 1;
+                $bookingPaymentObj->payment_tax_percentage = $tax;
+                $bookingPaymentObj->payment_tax_amt = $tax_amount;
+                $bookingPaymentObj->total_payable_amt = $payable_amount;
+                $bookingPaymentObj->payment_reference_no = null;
 
-        dd('Success!!!');
-        return view('payment.payment_for_later');
+                $bookingPaymentRepo = new BookingPaymentRepository();
+                $booking_payment_result = $bookingPaymentRepo->create($bookingPaymentObj);
+
+                //if booking payment creation fails, alert and redirect to homepage
+                if ($booking_payment_result['aceplusStatusCode'] != ReturnMessage::OK){
+                    DB::rollback();
+                    alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                    return redirect('/');
+                }
+                //if booking payment creation was successful, start booking payment stripe creation
+                else {
+                    $booking_payment_id = $booking_payment_result["object"]->id;
+                    $bookingPaymentStripeObj = new BookingPaymentStripe();
+                    $bookingPaymentStripeObj->stripe_user_id = $customer_id;
+                    $bookingPaymentStripeObj->email = $email;
+                    $bookingPaymentStripeObj->status = 1;
+                    $bookingPaymentStripeObj->booking_id = $booking_id;
+                    $bookingPaymentStripeObj->booking_payment_id = $booking_payment_id;
+
+                    $bookingPaymentStripeRepo = new BookingPaymentStripeRepository();
+                    $booking_payment_stripe_result = $bookingPaymentStripeRepo->create($bookingPaymentStripeObj);
+
+                    //if booking payment stripe creation fails, alert and redirect to homepage
+                    if ($booking_payment_stripe_result['aceplusStatusCode'] != ReturnMessage::OK){
+                        DB::rollback();
+                        alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                        return redirect('/');
+                    }
+                }
+            }
+
+            //if all insertions were successful, commit DB and redirect to congratulation page
+            DB::commit();
+
+            return redirect('/congratulations');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+            return redirect('/');
+        }
+    }
+
+    public function congratulations(){
+        return view('frontend.congratulations');
     }
 }
