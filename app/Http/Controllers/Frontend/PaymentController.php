@@ -555,11 +555,11 @@ class PaymentController extends Controller
             $customer_id = $customer['id'];
 
             // Charge the Customer instead of the card:
-            $charge = Charge::create(array(
+            /*$charge = Charge::create(array(
                 "amount" => $payable_amount,
-                "currency" => "usd",
+                "currency" => "mmk",
                 "customer" => $customer_id
-            ));
+            )); */
 
             //Insert Stripe Customer
     //        DB::table('stripe_user')->insert(['stripe_user_id'=>$customer_id,'email'=>$email,'status'=>1]);
