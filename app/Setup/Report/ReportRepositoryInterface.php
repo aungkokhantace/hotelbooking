@@ -9,4 +9,5 @@ namespace App\Setup\Report;
 interface ReportRepositoryInterface
 {
     public function saleSummaryReport($type=null, $from_date=null, $to_date=null);
+    public function bookingReport($type=null, $from_date=null, $to_date=null, $status=null);
 }

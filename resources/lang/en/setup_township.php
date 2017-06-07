@@ -7,11 +7,11 @@
  */
 
 return [
-    'title-entry'           => 'City Entry',
-    'title-edit'            => 'City Edit',
+    'title-entry'           => 'Township Entry',
+    'title-edit'            => 'Township Edit',
     'city'                  => 'City Name',
     'township'              => 'Township Name',
-    'select-country'        => 'Select City',
+    'select-city'           => 'Select City',
     'place-name'            => 'Enter Township Name',
     'btn-add'               => 'ADD',
     'btn-update'            => 'UPDATE',

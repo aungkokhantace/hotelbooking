@@ -302,11 +302,6 @@ class Default_RolePermissionSeeder extends Seeder
             ['role_id'=>1, 'permission_id'=>344],
             ['role_id'=>1, 'permission_id'=>345],
 
-            //Report
-            ['role_id'=>1, 'permission_id'=>350],
-            ['role_id'=>1, 'permission_id'=>351],
-            ['role_id'=>1, 'permission_id'=>352],
-
             //Hotel Config
             ['role_id'=>1, 'permission_id'=>350],
             ['role_id'=>1, 'permission_id'=>351],
@@ -314,6 +309,18 @@ class Default_RolePermissionSeeder extends Seeder
             ['role_id'=>1, 'permission_id'=>353],
             ['role_id'=>1, 'permission_id'=>354],
             ['role_id'=>1, 'permission_id'=>355],
+
+            //SaleSummary Report
+            ['role_id'=>1, 'permission_id'=>360],
+            ['role_id'=>1, 'permission_id'=>361],
+            ['role_id'=>1, 'permission_id'=>362],
+
+            //Booking Report
+            ['role_id'=>1, 'permission_id'=>370],
+            ['role_id'=>1, 'permission_id'=>371],
+            ['role_id'=>1, 'permission_id'=>372],
+            ['role_id'=>1, 'permission_id'=>373],
+
 
 
             //Backend Multi_Language

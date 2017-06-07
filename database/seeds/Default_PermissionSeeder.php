@@ -311,15 +311,6 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>344,'module'=>'RoomCategoryAmenity','name'=>'Update','description'=>'Room Category Amenity Update','url'=>'backend/room_category_amenity/update'],
             ['id'=>345,'module'=>'RoomCategoryAmenity','name'=>'Destroy','description'=>'Room Category Amenity Destroy','url'=>'backend/room_category_amenity/destroy'],
 
-            //Report
-            ['id'=>350,'module'=>'Report','name'=>'Sale Summary Report','description'=>'Sale Summary Report Listing','url'=>'backend/salesummaryreport'],
-            ['id'=>351,'module'=>'Report','name'=>'Sale Summary Report Search',
-             'description'=>'Sale Summary Report Search',
-             'url'=>'backend/salesummaryreport/search/{type?}/{from?}/{to?}'],
-            ['id'=>352,'module'=>'Report','name'=>'Sale Summary Report Excel',
-             'description'=>'Sale Summary Report Excel',
-             'url'=>'backend/salesummaryreport/exportexcel/{type?}/{from?}/{to?}'],
-
             //Hotel Config
             ['id'=>350,'module'=>'HotelConfig','name'=>'Listing','description'=>'Hotel Config Listing','url'=>'backend/hotel_config'],
             ['id'=>351,'module'=>'HotelConfig','name'=>'New','description'=>'Hotel Config New','url'=>'backend/hotel_config/create'],
@@ -328,6 +319,29 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>354,'module'=>'HotelConfig','name'=>'Update','description'=>'Hotel Config Update','url'=>'backend/hotel_config/update'],
             ['id'=>355,'module'=>'HotelConfig','name'=>'Destroy','description'=>'Hotel Config Destroy','url'=>'backend/hotel_config/destroy'],
 
+
+            //SaleSummary Report
+            ['id'=>360,'module'=>'Report','name'=>'Sale Summary Report','description'=>'Sale Summary Report Listing','url'=>'backend/salesummaryreport'],
+            ['id'=>361,'module'=>'Report','name'=>'Sale Summary Report Search',
+                'description'=>'Sale Summary Report Search',
+                'url'=>'backend/salesummaryreport/search/{type?}/{from?}/{to?}'],
+            ['id'=>362,'module'=>'Report','name'=>'Sale Summary Report Excel',
+                'description'=>'Sale Summary Report Excel',
+                'url'=>'backend/salesummaryreport/exportexcel/{type?}/{from?}/{to?}'],
+
+
+            //Booking Report
+            ['id'=>370,'module'=>'Report','name'=>'Booking Report',
+             'description'=>'Booking Report Listing','url'=>'backend/bookingreport'],
+            ['id'=>371,'module'=>'Report','name'=>'Booking Report Search',
+                'description'=>'Booking Report Search',
+                'url'=>'backend/bookingreport/search/{type?}/{from?}/{to?}/{status?}'],
+            ['id'=>372,'module'=>'Report','name'=>'Booking Report Excel',
+                'description'=>'Booking Report Excel',
+                'url'=>'backend/bookingreport/exportexcel/{type?}/{from?}/{to?}/{status?}'],
+            ['id'=>373,'module'=>'Report','name'=>'Booking Room Detail',
+                'description'=>'Booking Room Detail Listing',
+                'url'=>'backend/bookingreport/room_detail/{id}'],
 
 
             //Backend Multi_Language

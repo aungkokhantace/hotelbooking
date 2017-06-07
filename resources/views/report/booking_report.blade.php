@@ -1,11 +1,11 @@
 @extends('layouts.master')
-@section('title','Sale Summary Report')
+@section('title','Booking Detail Report')
 @section('content')
 
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">Sale Summary Report</h1>
+    <h1 class="page-header">Booking Report</h1>
     @if(count(Session::get('message')) != 0)
         <div>
         </div>
@@ -137,10 +137,28 @@
     <br class="years">
 
     <div class="row">
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+            <label for="status" class="text_bold_black">Status</label>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <select class="form-control" id="status">
+                <option value=0>All</option>
+                <option value=1 {{isset($status)&&$status== 1?'selected':''}}>Pending</option>
+                <option value=2 {{isset($status)&&$status== 2?'selected':''}}>Confirm</option>
+                <option value=3 {{isset($status)&&$status== 3?'selected':''}}>Cancel</option>
+                <option value=4 {{isset($status)&&$status== 4?'selected':''}}>Void</option>
+            </select>
+        </div>
+    </div>
+
+    <br class="staus">
+
+    <div class="row">
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
 
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <button type="button" onclick="report_search_with_type('salesummaryreport');" class="form-control btn-primary">Preview By List</button>
+            <button type="button" onclick="report_search_with_type('bookingreport');" class="form-control btn-primary">Preview By List</button>
         </div>
 
         {{--<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">--}}
@@ -148,7 +166,7 @@
         {{--</div>--}}
 
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <button type="button" onclick="report_export_with_type('salesummaryreport');" class="form-control btn-primary">Export Excel</button>
+            <button type="button" onclick="report_export_with_type('bookingreport');" class="form-control btn-primary">Export Excel</button>
         </div>
     </div>
 
@@ -162,6 +180,8 @@
                         <th>Date</th>
                         <th>Booking Number</th>
                         <th>Customer Name</th>
+                        <th>Status</th>
+                        <th>Total Room</th>
                         <th>Total Amount</th>
                     </tr>
                     </thead>
@@ -170,7 +190,9 @@
                         <th class="search-col" con-id="date">Date</th>
                         <th class="search-col" con-id="booking_number">Booking Number</th>
                         <th class="search-col" con-id="customer_name">Customer Name</th>
-                        <th class="search-col" con-id="total">Total Amount</th>
+                        <th class="search-col" con-id="status">Status</th>
+                        <th class="search-col" con-id="total_room">Total Room</th>
+                        <th class="search-col" con-id="total_amount">Total Amount</th>
                     </tr>
                     </tfoot>
                     <tbody>
@@ -179,8 +201,16 @@
                         @foreach($bookings as $booking)
                             <tr>
                                 <td>{{$booking->date}}</td>
-                                <td>{{$booking->booking_no}}</td>
+                                <td><a href="/backend/bookingreport/room_detail/{{$booking->id}}">{{$booking->booking_no}}</a></td>
                                 <td>{{ucwords($booking->first_name.' '.$booking->last_name)}}</td>
+                                <td>
+                                    @if($booking->status == 1) {{'Pending'}}
+                                    @elseif($booking->status == 2) {{'Confirm'}}
+                                    @elseif($booking->status == 3) {{'Cancel'}}
+                                    @else {{'Void'}}
+                                    @endif
+                                </td>
+                                <td>{{$booking->total_room}}</td>
                                 <td>{{number_format($booking->total_payable_amt,2)}}</td>
                             </tr>
                         @endforeach
@@ -191,7 +221,9 @@
                         <td>Grand Total</td>
                         <td></td>
                         <td></td>
-                        <td>{{number_format($grandTotal,2)}}</td>
+                        <td></td>
+                        <td></td>
+                        <td>{{isset($grandTotal)?number_format($grandTotal,2):0.00}}</td>
                     </tr>
                 </table>
             </div>

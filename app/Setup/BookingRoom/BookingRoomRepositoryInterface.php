@@ -12,4 +12,6 @@ namespace App\Setup\BookingRoom;
 interface BookingRoomRepositoryInterface
 {
     public function create($paramObj);
+    public function getAllBookingRoom();
+    public function getBookingRoomByBookingId($id);
 }

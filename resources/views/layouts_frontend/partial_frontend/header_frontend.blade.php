@@ -121,10 +121,23 @@ $companyLogo = \App\Core\Check::companyLogo();
                                 <ul>
                                     <li style="text-decoration:underline;">
                                         @if(\Illuminate\Support\Facades\Session::has('customer'))
-                                            <a href="\logout">
-                                                Logout
-                                                <span class="glyphicon glyphicon-arrow-left"></span>
-                                            </a>
+                                            {{--<a href="\logout">--}}
+                                                {{--Logout--}}
+                                                {{--<span class="glyphicon glyphicon-arrow-left"></span>--}}
+                                            {{--</a>--}}
+                                            <div class="dropdown login">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                    <img src="/assets/shared/images/user1.png">
+                                                    <span>
+                                                        {{Auth::guard('Customer')->user()->first_name.' '.Auth::guard('Customer')->user()->last_name}}
+                                                    </span>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="\profile">Profile</a></li>
+                                                    <li><a href="\bookingList">Booking List</a></li>
+                                                    <li><a href="\logout">Logout</a></li>
+                                                </ul>
+                                            </div>
                                         @else
                                             <a href="#" data-toggle="modal" data-target="#loginModal">
                                                 Login

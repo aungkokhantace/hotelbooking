@@ -358,7 +358,15 @@ Route::group(['middleware' => 'web'], function () {
             Route::post('room_category_amenity/update', array('as'=>'backend/room_category_amenity/update', 'uses'=>'Setup\RoomCategoryAmenity\RoomCategoryAmenityController@update'));
             Route::post('room_category_amenity/destroy', array('as'=>'backend/room_category_amenity/destroy', 'uses'=>'Setup\RoomCategoryAmenity\RoomCategoryAmenityController@destroy'));
 
-            //Report
+            //Hotel Config
+            Route::get('hotel_config', array('as'=>'backend/hotel_config', 'uses'=>'Setup\HotelConfig\HotelConfigController@index'));
+            Route::get('hotel_config/create', array('as'=>'backend/hotel_config/create', 'uses'=>'Setup\HotelConfig\HotelConfigController@create'));
+            Route::post('hotel_config/store', array('as'=>'backend/hotel_config/store', 'uses'=>'Setup\HotelConfig\HotelConfigController@store'));
+            Route::get('hotel_config/edit/{id}', array('as'=>'backend/hotel_config/edit', 'uses'=>'Setup\HotelConfig\HotelConfigController@edit'));
+            Route::post('hotel_config/update', array('as'=>'backend/hotel_config/update', 'uses'=>'Setup\HotelConfig\HotelConfigController@update'));
+            Route::post('hotel_config/destroy', array('as'=>'backend/hotel_config/destroy', 'uses'=>'Setup\HotelConfig\HotelConfigController@destroy'));
+
+            //SaleSummary Report
             Route::get('salesummaryreport',array(
                 'as'=>'backend/salesummaryreport',
                 'uses'=>'Report\SaleSummaryReportController@index'
@@ -368,20 +376,31 @@ Route::group(['middleware' => 'web'], function () {
                     'as'=>'backend/salesummaryreport/search/{type?}/{from?}/{to?}',
                     'uses'=>'Report\SaleSummaryReportController@search'
                 ));
-
             Route::get('salesummaryreport/exportexcel/{type?}/{from?}/{to?}',
                 array(
                     'as'=>'backend/salesummaryreport/exportexcel/{type?}/{from?}/{to?}',
                     'uses'=>'Report\SaleSummaryReportController@excel'
                 ));
 
-            //Hotel Config
-            Route::get('hotel_config', array('as'=>'backend/hotel_config', 'uses'=>'Setup\HotelConfig\HotelConfigController@index'));
-            Route::get('hotel_config/create', array('as'=>'backend/hotel_config/create', 'uses'=>'Setup\HotelConfig\HotelConfigController@create'));
-            Route::post('hotel_config/store', array('as'=>'backend/hotel_config/store', 'uses'=>'Setup\HotelConfig\HotelConfigController@store'));
-            Route::get('hotel_config/edit/{id}', array('as'=>'backend/hotel_config/edit', 'uses'=>'Setup\HotelConfig\HotelConfigController@edit'));
-            Route::post('hotel_config/update', array('as'=>'backend/hotel_config/update', 'uses'=>'Setup\HotelConfig\HotelConfigController@update'));
-            Route::post('hotel_config/destroy', array('as'=>'backend/hotel_config/destroy', 'uses'=>'Setup\HotelConfig\HotelConfigController@destroy'));
+            //Booking Report
+            Route::get('bookingreport',array(
+                'as'=>'backend/bookingreport',
+                'uses'=>'Report\BookingReportController@index'
+            ));
+            Route::get('bookingreport/search/{type?}/{from?}/{to?}/{status?}',
+                array(
+                    'as'=>'backend/bookingreport/search/{type?}/{from?}/{to?}/{status?}',
+                    'uses'=>'Report\BookingReportController@search'
+                ));
+            Route::get('bookingreport/exportexcel/{type?}/{from?}/{to?}/{status?}',
+                array(
+                    'as'=>'backend/bookingreport/exportexcel/{type?}/{from?}/{to?}/{status?}',
+                    'uses'=>'Report\BookingReportController@excel'
+                ));
+            Route::get('bookingreport/room_detail/{id}',array(
+                'as'=>'backend/bookingreport/room_detail/{id}',
+                'uses'=>'Report\BookingReportController@booking_room_detail'
+            ));
 
 
         });

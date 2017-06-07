@@ -39,4 +39,8 @@ class Booking extends Model
     {
         return $this->belongsTo('App\Setup\HotelRoomType\HotelRoomType');
     }
+
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
 }
