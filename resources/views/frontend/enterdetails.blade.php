@@ -1,5 +1,5 @@
 @extends('layouts_frontend.master_frontend')
-@section('title','About Us')
+@section('title','Enter Details')
 @section('content')
         <div id="header_id">
             <img class="img-responsive img-hover" src="/assets/shared/images/slider1.png">
@@ -307,6 +307,8 @@
                                             <div class="continue">
                                                 @if(\Illuminate\Support\Facades\Session::has('customer'))
                                                     <button class="btn btn-primary">CONTINUE</button>
+                                                @else
+                                                    <label>Please sign in to continue!</label>
                                                 @endif
                                                 <P>Don't worry - you won't be charged yet!</P>
                                             </div>

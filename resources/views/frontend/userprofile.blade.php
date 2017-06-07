@@ -1,5 +1,5 @@
 @extends('layouts_frontend.master_frontend')
-@section('title','Search Hotels')
+@section('title','User Profile')
 @section('content')
     <div id="header_id">
         <img class="img-responsive img-hover" src="/assets/shared/images/slider1.png">
