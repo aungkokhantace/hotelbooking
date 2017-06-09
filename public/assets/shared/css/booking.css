@@ -1,0 +1,80 @@
+.blog_booking {
+    margin-top: 45px;
+}
+
+.booking_tableright h4{
+    color: #D63090;
+    font-size: 18px;
+    font-family: 'Playfair Display';
+    margin: 0 0 10px 0px;
+}
+
+.booking_tableright h3 {
+    color: #545454;
+    font-size: 24px;
+    font-family: 'Playfair Display';
+    padding-left: 6px;
+}
+
+.booking_lead_left{
+    float: left;
+    width: 50%;
+    font-family: 'Playfair Display';
+}
+
+.booking_lead_left h4 {
+    color: #D63090;
+    font-size: 18px;
+    font-family: 'Playfair Display';
+    margin: 0px 0px 10px;
+}
+
+.booking_lead_left td {
+    padding: 7px 50px 0px 0px;
+}
+
+.lead img {
+    width: 4%;
+    margin-top: -8px;
+}
+
+#bookinglist_blog {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 290px;
+}
+
+.bookinglist-primary {
+    color: #fff !important;
+    background-color: #D63090;
+    border-color: #D63090;
+    padding: 8px 25px;
+    text-decoration: none !important;
+    font-size: 20px;
+}
+.bookinglist-primary:hover,.bookinglist-primary:active {
+    color: #fff !important;
+    background-color: #D63090;
+    border-color: #D63090;
+    color: #D63090;
+    padding: 8px 25px;
+    text-decoration: none;
+    font-size: 20px;
+}
+.bookinglist-manage {
+    color: #fff !important;
+    background-color: #1067ec;
+    border-color: #1067ec;
+    padding: 8px 25px;
+    text-decoration: none !important;
+    font-size: 20px;
+}
+.bookinglist-manage:hover,.bookinglist-manage:active {
+    color: #fff !important;
+    background-color: #1067ec;
+    border-color: #1067ec;
+    padding: 8px 25px;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+

@@ -27,6 +27,8 @@ $companyLogo = \App\Core\Check::companyLogo();
     <link href="/assets/shared/css/style.min.css" rel="stylesheet">
     <link href="/assets/shared/css/createacc.css" rel="stylesheet">
     <link href="/assets/shared/css/custom.css" rel="stylesheet">
+    <link href="/assets/shared/css/profile.css" rel="stylesheet">
+    <link href="/assets/shared/css/booking.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="/assets/shared/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
