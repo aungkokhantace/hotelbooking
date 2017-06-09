@@ -47,44 +47,44 @@
                             <input type="hidden" name="id" value="{{isset($customer)? $customer->id:''}}"/>
                             <div class="my_profile">
                                 <div class="profile row">
-                                    <label for="first_name" class="col-sm-2 col-form-labels">First Name</label>
+                                    <label for="first_name" class="col-sm-2 profile-form-labels">First Name</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-controls" id="first_name" placeholder="First Name" name="first_name" value="{{isset($customer)? $customer->first_name:Request::old('first_name')}}">
+                                        <input type="text" class="profile-form-controls" id="first_name" placeholder="First Name" name="first_name" value="{{isset($customer)? $customer->first_name:Request::old('first_name')}}">
                                         <p class="text-danger">{{$errors->first('first_name')}}</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="my_profile">
                                 <div class="profile row">
-                                    <label for="last_name" class="col-sm-2 col-form-labels">Last Name</label>
+                                    <label for="last_name" class="col-sm-2 profile-form-labels">Last Name</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-controls" id="last_name" placeholder="Last Name" name="last_name" value="{{isset($customer)? $customer->last_name:Request::old('last_name')}}">
+                                        <input type="text" class="profile-form-controls" id="last_name" placeholder="Last Name" name="last_name" value="{{isset($customer)? $customer->last_name:Request::old('last_name')}}">
                                         <p class="text-danger">{{$errors->first('last_name')}}</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="my_profile">
                                 <div class="profile row">
-                                    <label for="email" class="col-sm-2 col-form-labels">Email</label>
+                                    <label for="email" class="col-sm-2 profile-form-labels">Email</label>
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-controls" id="email" placeholder="Email" name="email" value="{{isset($customer)? $customer->email:Request::old('email')}}">
+                                        <input type="email" class="profile-form-controls" id="email" placeholder="Email" name="email" value="{{isset($customer)? $customer->email:Request::old('email')}}">
                                         <p class="text-danger">{{$errors->first('email')}}</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="my_profile">
                                 <div class="profile row">
-                                    <label for="address" class="col-sm-2 col-form-labels">Address</label>
+                                    <label for="address" class="col-sm-2 profile-form-labels">Address</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-controls" rows="5" id="address" placeholder="Address" name="address">{{isset($customer)? $customer->address:Request::old('address')}}</textarea>
+                                        <textarea class="profile-form-controls" rows="5" id="address" placeholder="Address" name="address">{{isset($customer)? $customer->address:Request::old('address')}}</textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="profile row">
                                 <label for="submit" class="col-sm-2 col-form-labels"></label>
                                 <div class="col-sm-10">
-                                    <button type="submit" class="btn btn-default1">UPDATE</button>
-                                    <button type="submit" class="btn btn-default2">CANCEL</button>
+                                    <button type="submit" class="btn profile-btn-default1">UPDATE</button>
+                                    <button type="submit" class="btn profile-btn-default2">CANCEL</button>
                                 </div>
                             </div>
                         {!! Form::close() !!}

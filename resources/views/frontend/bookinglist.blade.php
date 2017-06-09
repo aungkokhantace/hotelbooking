@@ -56,7 +56,7 @@
                                                     <img class="img-responsive img-hover" src="/images/upload/{{$booking->hotel->logo}}" alt="">
                                                 </div>
                                                 <div>
-                                                    <div class="lead_left">
+                                                    <div class="booking_lead_left">
                                                         <h4>{{$booking->hotel->name}}</h4>
                                                         <p class="lead">
                                                             <img src="/assets/shared/images/map.png">{{$booking->hotel->address}}
@@ -78,10 +78,6 @@
                                                                     {{Carbon\Carbon::parse($booking->check_out_date)->format('M d, Y')}}
                                                                 </td>
                                                                 {{--<td>March 5, 2017</td>--}}
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Room Type</td>
-                                                                <td>{{$booking->h_room_type->name}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Number of Rooms</td>
@@ -119,7 +115,7 @@
                                                     <img class="img-responsive img-hover" src="/images/upload/{{$b_cancel->hotel->logo}}" alt="">
                                                 </div>
                                                 <div>
-                                                    <div class="lead_left">
+                                                    <div class="booking_lead_left">
                                                         <h4>{{$b_cancel->hotel->name}}</h4>
                                                         <p class="lead">
                                                             <img src="/assets/shared/images/map.png">{{$b_cancel->hotel->address}}
@@ -140,10 +136,6 @@
                                                                 <td>
                                                                     {{Carbon\Carbon::parse($b_cancel->check_out_date)->format('M d, Y')}}
                                                                 </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Room Type</td>
-                                                                <td>{{$b_cancel->h_room_type->name}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Number of Rooms</td>
