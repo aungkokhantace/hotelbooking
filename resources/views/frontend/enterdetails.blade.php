@@ -133,7 +133,7 @@
                                                 <div class="payment_formgroup">
                                                     <div class="col-sm-6 pd_rg_10">
                                                         <label>Email Address <span style="color:red;">*</span></label>
-                                                        <input type="email" class="formcontrols" id="email" name="email">
+                                                        <input type="email" class="formcontrols" id="email_address" name="email">
                                                     </div>
                                                 </div>
 
@@ -402,7 +402,7 @@
                     confirm_email: {
                         required        : true,
                         email           : true,
-                        equalTo         : "#email"
+                        equalTo         : "#email_address"
                         },
 
                 },

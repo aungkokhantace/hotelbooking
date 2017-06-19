@@ -19,8 +19,8 @@
                                             <h3>Congratulations! Your booking is now confirmed.</h3>
                                         </div>
                                         <ul class="payment_ul">
-                                            <li><i class="fa fa-check fa-lg" aria-hidden="true"></i>We sent your confirmation email to 20170329test@gmail.com</li>
-                                            <li><i class="fa fa-check fa-lg" aria-hidden="true"></i>Your booking at Ocean Pearl Inn - 3 is already confirmed</li>
+                                            <li><i class="fa fa-check fa-lg" aria-hidden="true"></i>We sent your confirmation email to {{session('email')}}</li>
+                                            <li><i class="fa fa-check fa-lg" aria-hidden="true"></i>Your booking at {{$hotel->name}} is already confirmed</li>
                                             <li><i class="fa fa-check fa-lg" aria-hidden="true"></i>You can <a href="#">make changes or cancel your booking</a> any time</li>
                                         </ul>
                                     </div>
