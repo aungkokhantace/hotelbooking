@@ -259,7 +259,7 @@
             <select class="form-control" name="city_id" id="city_id">
                 @if(isset($hotel))
                     @foreach($cities as $city)
-                        @if($city->id == $hotel->country_id)
+                        @if($city->id == $hotel->city_id)
                             <option value="{{$city->id}}" selected>{{$city->name}}</option>
                         @else
                             <option value="{{$city->id}}">{{$city->name}}</option>
@@ -284,7 +284,7 @@
             <select class="form-control" name="township_id" id="township_id">
                 @if(isset($hotel))
                     @foreach($townships as $township)
-                        @if($township->id == $hotel->country_id)
+                        @if($township->id == $hotel->township_id)
                             <option value="{{$township->id}}" selected>{{$township->name}}</option>
                         @else
                             <option value="{{$township->id}}">{{$township->name}}</option>

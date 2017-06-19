@@ -205,7 +205,7 @@
                             </a>
                         </div>
                     @else
-                    <!--For the fourth element, reset the counter to 0 and close the current row-->~
+                    <!--For the fourth element, reset the counter to 0 and close the current row-->
                     </div>
                     <?php $counter = 0; ?>
                     <!--And open another row-->
