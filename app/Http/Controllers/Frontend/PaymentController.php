@@ -638,6 +638,11 @@ class PaymentController extends Controller
     }
 
     public function congratulations(){
-        return view('frontend.congratulations');
+//        dd('Session Data',Session()->all());
+        $hotel_id   = session('hotel_id');
+        $hotelRepo  = new HotelRepository();
+        $hotel      = $hotelRepo->getObjByID($hotel_id);
+
+        return view('frontend.congratulations')->with('hotel',$hotel);
     }
 }

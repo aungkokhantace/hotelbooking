@@ -207,7 +207,7 @@ class HotelRepository implements HotelRepositoryInterface
             }
             elseif($price_filter[0] == "above500000"){
                 $query->whereHas('h_room_category', function($query) use($price_filter) {
-                    $query->whereBetween('h_room_category.price', '>' , 500000);
+                    $query->where('h_room_category.price', '>' , 500000);
                 });
             }
         }
