@@ -38,7 +38,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-12 pd_lf_5">
-                                <button type="submit" class="btn btn-default formcontrols register-btn">CREATE ACCOUNT</button>
+                                <button type="button" class="btn btn-default formcontrols register-btn">CREATE ACCOUNT</button>
                             </div>
                             <div class="formgroup">
                                 <div class="col-md-12 control">
@@ -78,6 +78,8 @@
 <script>
     $(document).ready(function(){
         $('.register-btn').click(function(){
+            $('#registration').submit();
+        });
             $('#registration').validate({
                 rules: {
                     first_name          : 'required',
@@ -127,7 +129,7 @@
                 },
                 submitHandler: function(form) {
                     $('button[type="submit"]').attr('disabled','disabled');
-                    form.submit();
+                    //form.submit();
                     var serializedData = $('#registration').serialize();
                     $.ajax({
                         url: 'register',
@@ -139,7 +141,6 @@
                                 console.log('success');
                             }
                             else{
-                                alert(data);
                                 console.log('fail');
                                 return;
                             }
@@ -158,7 +159,7 @@
 
                 }
             });
-        });
+        //});
     });
 </script>
 <!-- end login ajax-->

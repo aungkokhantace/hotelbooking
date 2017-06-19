@@ -32,9 +32,9 @@
                                 </div>
                                 <div class="formgroup text-center">
                                     <div class="col-md-12 control">
-                                        <div class="form_textone">
-                                            <a href="createacc.html" style="text-decoration:underline;"> Not a member? Create Account </a>
-                                        </div>
+                                        {{--<div class="form_textone">--}}
+                                            {{--<a href="createacc.html" style="text-decoration:underline;"> Not a member? Create Account </a>--}}
+                                        {{--</div>--}}
                                     </div>
                                 </div>
                                 {!! Form::close() !!}
