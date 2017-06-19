@@ -39,7 +39,7 @@
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
                         <th>Login Name</th>
-                        <th>Displaly Name</th>
+                        <th>Display Name</th>
                         <th>Email</th>
                         <th>Role</th>
                         <th>Address</th>
@@ -50,7 +50,7 @@
                     <tr>
                         <th></th>
                         <th class="search-col" con-id="user_name">Login Name</th>
-                        <th class="search-col" con-id="display_name">Disopaly Name</th>
+                        <th class="search-col" con-id="display_name">Display Name</th>
                         <th class="search-col" con-id="email">Email</th>
                         <th class="search-col" con-id="role_name">Role</th>
                         <th class="search-col" con-id="staff_id">Address</th>
