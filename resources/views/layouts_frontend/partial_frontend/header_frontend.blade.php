@@ -101,16 +101,16 @@ $companyLogo = \App\Core\Check::companyLogo();
                             <a href="/">Home</a>
                         </li>
                         <li>
-                            <a href="searchresult.html">Destinations</a>
+                            <a href="/comingsoon">Destinations</a>
                         </li>
                         <li>
                             <a href="/aboutus">About Us</a>
                         </li>
                         <li>
-                            <a href="#">FAQ</a>
+                            <a href="/comingsoon">FAQ</a>
                         </li>
                         <li>
-                            <a href="#">Contact Us</a>
+                            <a href="/comingsoon">Contact Us</a>
                         </li>
                         @if(!\Illuminate\Support\Facades\Session::has('customer'))
                         <li>

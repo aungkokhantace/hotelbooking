@@ -129,4 +129,9 @@ class HomeController extends Controller
         return view('frontend.aboutus');
     }
 
+    public function comingsoon(Request $request)
+    {
+        return view('frontend.comingsoon');
+    }
+
 }
