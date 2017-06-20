@@ -14,7 +14,7 @@
                 <div class="col-md-offset-3 col-md-6 right underconstruction">
                     <h1><strong>COMING SOON!</strong></h1>
                     <h2>Page is under construction!</h2>
-                    <img src="/images/construction.gif">
+                    {{--<img src="/images/construction.gif">--}}
                 </div>
             </div>
         </div><!-- /.container -->
