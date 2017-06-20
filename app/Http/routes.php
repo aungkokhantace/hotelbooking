@@ -6,6 +6,8 @@ Route::group(['middleware' => 'web'], function () {
     //Frontend
     Route::get('/', 'Frontend\HomeController@index');
 
+    Route::get('/comingsoon', array('as'=>'/comingsoon','uses'=>'Frontend\HomeController@comingsoon'));
+
     //for autocomplete destination in search form
     Route::get('/autocompletedestination', 'Frontend\HomeController@autocompleteDestination');
 
