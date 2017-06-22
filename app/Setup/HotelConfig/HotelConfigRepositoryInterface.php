@@ -18,4 +18,5 @@ interface HotelConfigRepositoryInterface
     public function update($paramObj);
     public function delete($paramObj);
     public function getObjsByHotelID($hotel_id);
+    public function getCancellationDayFromHotelConfig($id_arr);
 }

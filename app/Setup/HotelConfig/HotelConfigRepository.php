@@ -130,4 +130,12 @@ class HotelConfigRepository implements HotelConfigRepositoryInterface
         $result = HotelConfig::where('hotel_id','=',$hotel_id)->first();
         return $result;
     }
+
+    public function getCancellationDayFromHotelConfig($id_arr){
+        $result = HotelConfig::select('cancellation_days')->whereIn('hotel_id',$id_arr)->get()->toArray();
+
+//        $result = DB::select("SELECT cancellation_days FROM h_config WHERE IN");
+
+        return $result;
+    }
 }

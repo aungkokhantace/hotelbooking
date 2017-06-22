@@ -43,6 +43,9 @@ Route::group(['middleware' => 'web'], function () {
     //Payment TESting
     Route::get('payTest',['as'=>'payTest','uses'=>'Payment\PaymentTestController@payment_for_later']);
     Route::post('pay',['as'=>'pay','uses'=>'Payment\PaymentTestController@paymentForLater_Payment']);
+    //Cron Test
+    Route::get('cronTest',['as'=>'cronTest','uses'=>'Payment\PaymentTestController@cron_test']);
+
 
     //Booking and Payment
     Route::post('/enter_details', 'Frontend\PaymentController@enterDetails');
@@ -414,7 +417,7 @@ Route::group(['middleware' => 'web'], function () {
 
 
  Route::group(['prefix' => 'api'], function () {
-        
+
         Route::post('activate', array('as'=>'activate','uses'=>'ApiController@Activate'));
         Route::post('check', array('as'=>'check','uses'=>'ApiController@check'));
     });
