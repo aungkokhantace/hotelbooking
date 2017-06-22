@@ -13,6 +13,7 @@
 
                                 <div id="show-error" class="col-sm-12"></div>
                                 {!! Form::open(array('url' => '/login', 'class'=> 'form-horizontal', 'id'=>'login')) !!}
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                                 <div class="formgroup">
                                     <div class="col-sm-12 pd_lf_5">
@@ -57,12 +58,10 @@
                 type: 'POST',
                 data: serializedData,
                 success: function(data){
-                    if(data == 'Status 200'){
+                    if(data.aceplusStatusCode == '200'){
                         location.reload(true);
-                        console.log('success');
                     }
-                    else{
-                        console.log('fail fail');
+                    else if(data.aceplusStatusCode == '401'){
                         $('.alert').remove();
                         var showError    = '<p class="alert alert-danger">';
                         showError       += 'Email or password is incorrect!';
@@ -70,14 +69,23 @@
                         $('#show-error').append(showError);
                         return;
                     }
+                    else{
+                        swal({title: "Fail", text: "Login Fail!Please Try Again!", type: "error"},
+                                function(){
+                                    location.reload();
+                                }
+                        );
+                        return;
+                    }
 
                 },
                 error: function(data){
+                    swal({title: "Opps", text: "Sorry, Please Try Again!", type: "error"},
+                            function(){
+                                location.reload();
+                            }
+                    );
                     return;
-                },
-                complete: function () {
-                    return;
-
                 }
             });
         });
