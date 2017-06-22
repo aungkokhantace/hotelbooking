@@ -77,9 +77,9 @@
 <!-- start login ajax-->
 <script>
     $(document).ready(function(){
-        $('.register-btn').click(function(){
-            $('#registration').submit();
-        });
+            $('.register-btn').click(function(){
+                $('#registration').submit();
+            });
             $('#registration').validate({
                 rules: {
                     first_name          : 'required',
@@ -129,37 +129,59 @@
                 },
                 submitHandler: function(form) {
                     $('button[type="submit"]').attr('disabled','disabled');
-                    //form.submit();
                     var serializedData = $('#registration').serialize();
                     $.ajax({
                         url: 'register',
                         type: 'POST',
                         data: serializedData,
                         success: function(data){
-                            if(data == 'Status 200'){
-                                location.reload(true);
-                                console.log('success');
+                            if(data.aceplusStatusCode == '200'){
+                                /*location.reload(true);*/
+                                /*
+                                swal("Done!", "Register Succeed", "success");
+                                window.setTimeout(function(){location.reload()},5000)
+                                */
+                                /*
+                                localStorage.setItem("swal",
+                                        swal({
+                                            title: "Success!",
+                                            text:  "Register succeed",
+                                            type: "success",
+                                            timer: 8000,
+                                            showConfirmButton: true
+                                        })
+                                );
+                                location.reload();
+                                localStorage.getItem("swal");*/
+                                swal({title: "Success", text: "Register Succeed!", type: "success"},
+                                        function(){
+                                            location.reload();
+                                        }
+                                );
                             }
                             else{
-                                console.log('fail');
-                                return;
+                                swal({title: "Fail", text: "Register Fail!", type: "error"},
+                                        function(){
+                                            location.reload();
+                                        }
+                                );
                             }
 
                         },
                         error: function(data){
-                            console.log('error');
-                            return;
-                        },
-                        complete: function (data) {
-                            console.log('complete');
-                            return;
 
+                            swal({title: "Error", text: "Register Error!", type: "error"},
+                                    function(){
+                                        location.reload();
+                                    }
+                            );
+                            return;
                         }
                     });
 
                 }
             });
-        //});
+
     });
 </script>
 <!-- end login ajax-->
