@@ -13,6 +13,7 @@ use App\Core\ReturnMessage;
 use App\Core\Utility;
 use App\Log\LogCustom;
 use App\Setup\BookingRoom\BookingRoom;
+use Illuminate\Support\Facades\DB;
 
 class BookingRepository implements BookingRepositoryInterface
 {
@@ -60,6 +61,28 @@ class BookingRepository implements BookingRepositoryInterface
 
     public function getBookingById($id){
         $result = Booking::find($id);
+
+        return $result;
+    }
+
+    public function getConfirmBooking(){
+//        $result = DB::select("SELECT *
+//                              FROM bookings
+//                              WHERE status = 2
+//                              AND deleted_at IS NULL
+//                            ");
+        $result = DB::select("SELECT bookings.*,h_config.cancellation_days,core_users.email
+                              FROM bookings
+                              JOIN hotels
+                              ON bookings.hotel_id = hotels.id
+                              JOIN h_config
+                              ON hotels.id = h_config.hotel_id
+                              JOIN core_users
+                              ON bookings.user_id = core_users.id
+                              WHERE bookings.status = 2
+                              AND bookings.deleted_at is NULL
+
+                            ");
 
         return $result;
     }

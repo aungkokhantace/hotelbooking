@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Payment;
 
+use App\Setup\Booking\BookingRepository;
+use App\Setup\HotelConfig\HotelConfigRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -10,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Stripe\Charge;
 use Stripe\Customer;
 use Stripe\Stripe;
+use Mail;
 
 class PaymentTestController extends Controller
 {
@@ -53,5 +56,35 @@ class PaymentTestController extends Controller
 
         dd('success');
 
+    }
+
+    public function cron_test(){
+        try{
+
+            $bookingRepo        = new BookingRepository();
+            $confirmBooking     = $bookingRepo->getConfirmBooking();
+            $todayDate          = date('Y-m-d');
+            if(isset($confirmBooking) && count($confirmBooking) > 0){
+
+                foreach($confirmBooking as $cBooking){
+                    dd($cBooking);
+                    $totalDays      = $cBooking->cancellation_days+2;
+                    $sendMailDate   = date('Y-m-d',strtotime($todayDate.'+'.$totalDays.' days'));
+//                    dd($sendMailDate,$cBooking->check_in_date);
+                    if($sendMailDate == $cBooking->check_in_date){
+                        dd('send mail');
+                        Mail::send('frontend.mail.noti_mail', function($message) {
+                            $message->to(Input::get('email'),Input::get('name'))
+                                ->subject('Verify your email address');
+                        });
+                    }
+                    dd('not send mail');
+                }
+
+            }
+
+        }catch (\Exception $e){
+
+        }
     }
 }
