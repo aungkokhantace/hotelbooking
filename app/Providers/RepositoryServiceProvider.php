@@ -67,6 +67,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind('App\Setup\BookingRequest\BookingRequestRepositoryInterface','App\Setup\BookingRequest\BookingRequestRepository');
         $this->app->bind('App\Setup\Report\ReportRepositoryInterface','App\Setup\Report\ReportRepository');
         $this->app->bind('App\Setup\HotelConfig\HotelConfigRepositoryInterface','App\Setup\HotelConfig\HotelConfigRepository');
-
+        $this->app->bind('App\Setup\HotelNearbyCategory\HotelNearbyCategoryRepositoryInterface','App\Setup\HotelNearbyCategory\HotelNearbyCategoryRepository');
+        $this->app->bind('App\Setup\HotelNearby\HotelNearbyRepositoryInterface','App\Setup\HotelNearby\HotelNearbyRepository');
+        $this->app->bind('App\Setup\Slider\SliderRepositoryInterface','App\Setup\Slider\SliderRepository');
+        $this->app->bind('App\Setup\Page\PageRepositoryInterface','App\Setup\Page\PageRepository');
+        $this->app->bind('App\Setup\EventEmail\EventEmailRepositoryInterface','App\Setup\EventEmail\EventEmailRepository');
     }
 }

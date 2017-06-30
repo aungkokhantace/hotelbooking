@@ -18,6 +18,7 @@ use App\Setup\City\PopularCityRepository;
 use App\Setup\Hotel\HotelRepository;
 use App\Setup\Hotel\RecommendHotelRepository;
 use App\Setup\RoomDiscount\RoomDiscountRepository;
+use App\Setup\Slider\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -106,13 +107,16 @@ class HomeController extends Controller
         }
         //end amount promotions
     //end hotel promotions
-
+        //Get Slider For Home Page
+        $template_id        = 1; //1 For Home Page
+        $sliders            = Slider::select('image_url','title','description')->where('template_id',$template_id)->whereNull('deleted_at')->get();
         return view('frontend.home')
 //            ->with('popular_cities',$popularCityArray)
             ->with('popular_cities',$popularCityEntries)
             ->with('recommended_hotels',$recommendedHotelArray)
             ->with('percent_promotions',$percentPromotionArray)
-            ->with('amount_promotions',$amountPromotionArray);
+            ->with('amount_promotions',$amountPromotionArray)
+            ->with('sliders',$sliders);
     }
 
     public function autocompleteDestination(){

@@ -29,6 +29,16 @@
                         <p class="container">Discover your next great adventure, become an explorer to get started!</p>
                     </div>
                 </div>
+
+                @foreach($sliders as $slider)
+                    <div class="item active">
+                        <div class="fill"><img src="/assets/shared/images/{{ $slider->image_url }}"></div>
+                        <div class="carousel-caption">
+                            <h1 class="container">{{ $slider->title }}</h1>
+                            <p class="container">{{ $slider->description }}</p>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </header>
     </div>

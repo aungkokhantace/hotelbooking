@@ -13,6 +13,9 @@ use App\Session;
 use App\Core\User\UserRepository;
 use App\Setup\FrontedClient\FrontedClient;
 use App\Setup\Backend\Backend;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
+
 class Check
 {
     /**
@@ -107,7 +110,6 @@ class Check
     }
 
     public static function createSession($id) {
-
         $userRepository = new UserRepository();
         $tempUser = $userRepository->getObjByID($id);
         $permissions = $userRepository->getPermissionByUserId($id);

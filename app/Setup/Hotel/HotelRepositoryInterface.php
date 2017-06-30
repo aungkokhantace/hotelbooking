@@ -12,8 +12,8 @@ namespace App\Setup\Hotel;
 interface HotelRepositoryInterface
 {
     public function getObjs();
-    public function create($paramObj);
-    public function update($paramObj);
+    public function create($paramObj,$input);
+    public function update($paramObj,$input);
     public function getObjByID($id);
     public function delete($id);
     public function getArrays();
@@ -21,4 +21,5 @@ interface HotelRepositoryInterface
     public function getHotelsByFilters($destination,$price_filter,$star_filter,$facility_filter,$landmark_filter);
     public function getSuggestedHotelsByDestination($hotelIdArr,$countryIdArr,$cityIdArr,$townshipIdArr);
     public function getObjsNotInConfig($hotel_config_array);
+    public function getHotelByUserEmail($email);
 }

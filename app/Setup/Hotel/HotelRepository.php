@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use App\User;
 use App\Setup\Hotel\Hotel;
+use App\Setup\Hnearby\Hnearby;
 use App\Core\Utility;
 use App\Core\ReturnMessage;
 class HotelRepository implements HotelRepositoryInterface
@@ -29,7 +30,7 @@ class HotelRepository implements HotelRepositoryInterface
         return $arr;
     }
 
-    public function create($paramObj)
+    public function create($paramObj,$input)
     {
         $returnedObj = array();
         $returnedObj['aceplusStatusCode'] = ReturnMessage::INTERNAL_SERVER_ERROR;
@@ -45,6 +46,17 @@ class HotelRepository implements HotelRepositoryInterface
             $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' created hotel_id = '.$tempObj->id . PHP_EOL;
             LogCustom::create($date,$message);
 
+            //Update h_nearby table
+            $id                 = $paramObj->id;
+            $nearby_count       = $input['nearby_count'] + 1;
+            for($i=0; $i<=$nearby_count; $i++) {
+                $paramObj                       = new Hnearby();
+                $paramObj->hotel_id             = $id;
+                $paramObj->nearby_id            = $input['nearby_place'][$i];
+                $paramObj->km                   = $input['nearby_distance'][$i];
+                $tempPlace                      = Utility::addCreatedBy($paramObj);
+                $tempPlace->save();
+            }
 
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
             return $returnedObj;
@@ -60,7 +72,7 @@ class HotelRepository implements HotelRepositoryInterface
         }
     }
 
-    public function update($paramObj)
+    public function update($paramObj,$input)
     {
         $returnedObj = array();
         $returnedObj['aceplusStatusCode'] = ReturnMessage::INTERNAL_SERVER_ERROR;
@@ -75,6 +87,25 @@ class HotelRepository implements HotelRepositoryInterface
             $date = $tempObj->updated_at;
             $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' updated hotel_id = '.$tempObj->id . PHP_EOL;
             LogCustom::create($date,$message);
+
+            //Remove h_nearby id and insert
+            $id                  = $tempObj->id;
+            $nearby_places       = Hnearby::where('hotel_id',$id)->get();
+            foreach ($nearby_places as $nearby_place)
+            {
+                $n_id         = $nearby_place->id;
+                Hnearby::where('id',$n_id)->delete();
+            }
+
+            $nearby_count       = $input['nearby_count'] + 1;
+            for($i=0; $i<=$nearby_count; $i++) {
+                $paramObj                       = new Hnearby();
+                $paramObj->hotel_id             = $id;
+                $paramObj->nearby_id            = $input['nearby_place'][$i];
+                $paramObj->km                   = $input['nearby_distance'][$i];
+                $tempPlace                      = Utility::addCreatedBy($paramObj);
+                $tempPlace->save();
+            }
 
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
             return $returnedObj;
@@ -286,6 +317,11 @@ class HotelRepository implements HotelRepositoryInterface
     public function getObjsNotInConfig($hotel_config_array)
     {
         $objs = Hotel::whereNull('deleted_at')->whereNotIn('id', $hotel_config_array)->get();
+        return $objs;
+    }
+
+    public function getHotelByUserEmail($email) {
+        $objs   = Hotel::whereNull('deleted_at')->where('email',$email)->first();
         return $objs;
     }
 }

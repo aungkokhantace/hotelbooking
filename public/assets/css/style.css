@@ -5586,3 +5586,34 @@ box-shadow: rgba(0, 0, 0, 0.3) 0 2px 2px 0;
 .head-list li span {
     padding:5px 20px;
 }
+
+/* ---------- + ----------
+Info Warning Error Message box
+Create By Shwekayin
+---------- + ---------- */
+.isa_info, .isa_success, .isa_warning, .isa_error {
+    margin: 10px 0px;
+    padding:12px;
+
+}
+.isa_info {
+    color: #00529B;
+    background-color: #BDE5F8;
+}
+.isa_success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+}
+.isa_warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+}
+.isa_error {
+    color: #D8000C;
+    background-color: #FFBABA;
+}
+
+.isa_info a, .isa_success a, .isa_warning a, .isa_error a {
+    text-decoration: none;
+}
+/* End Css */

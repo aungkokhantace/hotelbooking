@@ -8,7 +8,7 @@
     <h1 class="page-header">{{isset($hotel) ? trans('setup_hotel.title-edit') : trans('setup_hotel.title-entry') }}</h1>
 
     @if(isset($hotel))
-        {!! Form::open(array('url' => '/backend/hotel/update','files'=>true, 'id'=>'hotel', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend/hotel/update','files'=>true, 'id'=>'hotel', 'onsubmit'=>'return validate()', 'class'=> 'form-horizontal user-form-border')) !!}
 
     @else
         {!! Form::open(array('url' => '/backend/hotel/store','files'=>true, 'id'=>'hotel', 'class'=> 'form-horizontal user-form-border')) !!}
@@ -416,6 +416,12 @@
         </div>
     </div>
 
+    @if(isset($hotel))
+        @include('backend.hotel.nearby_edit')
+    @else
+        @include('backend.hotel.nearby')
+    @endif
+
     <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         </div>
@@ -568,6 +574,8 @@
                     number_of_floors        : 'required',
                     hotel_class             : 'required',
                     website                 : 'url',
+                    'nearby_place[]'        : 'required',
+                    'nearby_distance[]'     : 'required',
                     check_in_time           : 'required',
                     check_out_time          : 'required',
                     breakfast_start_time    : 'required',

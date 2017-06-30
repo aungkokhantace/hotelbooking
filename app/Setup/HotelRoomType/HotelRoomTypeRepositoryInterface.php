@@ -18,4 +18,7 @@ interface HotelRoomTypeRepositoryInterface
     public function update($paramObj);
     public function delete($paramObj);
     public function getHotelRoomTypeWithHotelId($hotel_id);
+    public function getUserObjs();
+    public function getHotelRoomTypeByUserId($id);
+    public function checkHasPermission($id,$h_id);
 }

@@ -22,21 +22,25 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="hotel_id" id="hotel_id">
-                @if(isset($hotel_room_type))
-                    @foreach($hotels as $hotel)
-                        @if($hotel->id == $hotel_room_type->hotel_id)
-                            <option value="{{$hotel->id}}" selected>{{$hotel->name}}</option>
-                        @else
-                            <option value="{{$hotel->id}}">{{$hotel->name}}</option>
-                        @endif
-                    @endforeach
+                @if ($role == 3)
+                    <option value="{{$hotels->id}}" selected>{{$hotels->name}}</option>
                 @else
-                    <option value="" disabled selected>
-                        {{trans('setup_hotelroomtype.place-hotel')}}
-                    </option>
-                    @foreach($hotels as $hotel)
-                        <option value="{{$hotel->id}}">{{$hotel->name}}</option>
-                    @endforeach
+                    @if(isset($hotel_room_type))
+                        @foreach($hotels as $hotel)
+                            @if($hotel->id == $hotel_room_type->hotel_id)
+                                <option value="{{$hotel->id}}" selected>{{$hotel->name}}</option>
+                            @else
+                                <option value="{{$hotel->id}}">{{$hotel->name}}</option>
+                            @endif
+                        @endforeach
+                    @else
+                        <option value="" disabled selected>
+                            {{trans('setup_hotelroomtype.place-hotel')}}
+                        </option>
+                        @foreach($hotels as $hotel)
+                            <option value="{{$hotel->id}}">{{$hotel->name}}</option>
+                        @endforeach
+                    @endif
                 @endif
             </select>
             <p class="text-danger">{{$errors->first('hotel_id')}}
@@ -68,7 +72,7 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="submit" name="submit" value="{{isset($hotel_restaurant_category)? trans('setup_hotelroomtype.btn-update') : trans('setup_hotelroomtype.btn-add')}}" class="form-control btn-primary">
+            <input type="submit" name="submit" value="{{isset($hotel_room_type)? trans('setup_hotelroomtype.btn-update') : trans('setup_hotelroomtype.btn-add')}}" class="form-control btn-primary">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <input type="button" value="{{trans('setup_hotelroomtype.btn-cancel')}}" class="form-control cancel_btn" onclick="cancel_setup('hotel_room_type')">

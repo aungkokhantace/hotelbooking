@@ -346,6 +346,26 @@ class Default_PermissionSeeder extends Seeder
 
             //Backend Multi_Language
             ['id'=>500,'module'=>'Backend','name'=>'Multi_Language','description'=>'Backend Multi_Language','url'=>'backend/language'],
+            ['id'=>501,'module'=>'HotelNearByCategory','name'=>'New','description'=>'Hotel Nearby Store','url'=>'Hotel Nearby Store'],
+            ['id'=>502,'module'=>'HotelNearByCategory','name'=>'Store','description'=>'Hotel Nearby Store','url'=>'Hotel Nearby Store'],
+            ['id'=>503,'module'=>'HotelNearByCategory','name'=>'Listing','description'=>'Nearby Listing','url'=>'Nearby Listing'],
+            ['id'=>504,'module'=>'HotelNearByCategory','name'=>'Edit','description'=>'Nearby Edit','url'=>'Nearby Edit'],
+            ['id'=>505,'module'=>'HotelNearByCategory','name'=>'Update','description'=>'Hotel Nearby Category Update','url'=>'Hotel Nearby Category Update'],
+            ['id'=>506,'module'=>'Nearby','name'=>'Destroy','description'=>'Hotel Nearby Category Destroy','url'=>'Hotel Nearby Category Destroy'],
+            ['id'=>510,'module'=>'HotelNearby','name'=>'Store','description'=>'Hotel Nearby Store','url'=>'Hotel Nearby Store'],
+            ['id'=>511,'module'=>'HotelNearby','name'=>'Create','description'=>'Hotel Nearby Create','url'=>'Hotel Nearby Create'],
+            ['id'=>512,'module'=>'HotelNearby','name'=>'Store','description'=>'Hotel Nearby Store','url'=>'Hotel Nearby Store'],
+            ['id'=>513,'module'=>'HotelNearby','name'=>'Edit','description'=>'Hotel Nearby Edit','url'=>'Hotel Nearby Edit'],
+            ['id'=>514,'module'=>'HotelNearby','name'=>'Update','description'=>'Hotel Nearby Update','url'=>'Hotel Nearby Update'],
+            ['id'=>515,'module'=>'HotelNearby','name'=>'Destroy','description'=>'Hotel Nearby Destroy','url'=>'Hotel Nearby Destroy'],
+            ['id'=>520,'module'=>'Slider','name'=>'Create','description'=>'Slider Create','url'=>'Slider Create'],
+            ['id'=>521,'module'=>'Slider','name'=>'Store','description'=>'Slider Store','url'=>'Slider Store'],
+            ['id'=>522,'module'=>'Slider','name'=>'Edit','description'=>'Slider Edit','url'=>'Slider Edit'],
+            ['id'=>523,'module'=>'Slider','name'=>'Update','description'=>'Slider Update','url'=>'Slider Update'],
+            ['id'=>524,'module'=>'Slider','name'=>'Destroy','description'=>'Slider Destroy','url'=>'Slider Destroy'],
+            ['id'=>525,'module'=>'Slider','name'=>'Listing','description'=>'Slider Listing','url'=>'Slider Listing'],
+
+
 
         );
 

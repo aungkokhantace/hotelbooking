@@ -45,7 +45,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('pay',['as'=>'pay','uses'=>'Payment\PaymentTestController@paymentForLater_Payment']);
     //Cron Test
     Route::get('cronTest',['as'=>'cronTest','uses'=>'Payment\PaymentTestController@cron_test']);
-
+    //Static Pages
+    Route::get('transportations', 'Frontend\StaticPageController@transportations');
+    Route::get('airtickets', 'Frontend\StaticPageController@airtickets');
 
     //Booking and Payment
     Route::post('/enter_details', 'Frontend\PaymentController@enterDetails');
@@ -200,6 +202,23 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('hotel/edit/{id}', array('as'=>'backend/hotel/edit', 'uses'=>'Setup\Hotel\HotelController@edit'));
             Route::post('hotel/update', array('as'=>'backend/hotel/update', 'uses'=>'Setup\Hotel\HotelController@update'));
             Route::post('hotel/destroy', array('as'=>'backend/hotel/destroy', 'uses'=>'Setup\Hotel\HotelController@destroy'));
+
+            //Hotel Nearby Category
+            Route::get('nearby_category', array('as'=>'backend/nearby_category', 'uses'=>'Setup\HotelNearbyCategory\HotelNearbyCategoryController@index'));
+            Route::get('nearby_category/create', array('as'=>'backend/nearby_category/create', 'uses'=>'Setup\HotelNearbyCategory\HotelNearbyCategoryController@create'));
+            Route::post('nearby_category/store', array('as'=>'backend/nearby_category/store', 'uses'=>'Setup\HotelNearbyCategory\HotelNearbyCategoryController@store'));
+            Route::get('nearby_category/edit/{id}', array('as'=>'backend/nearby_category/edit', 'uses'=>'Setup\HotelNearbyCategory\HotelNearbyCategoryController@edit'));
+            Route::post('nearby_category/update', array('as'=>'backend/nearby_category/update', 'uses'=>'Setup\HotelNearbyCategory\HotelNearbyCategoryController@update'));
+            Route::post('nearby_category/destroy', array('as'=>'backend/nearby_category/destroy', 'uses'=>'Setup\HotelNearbyCategory\HotelNearbyCategoryController@destroy'));
+
+            //Hotel Nearby
+            Route::get('hotel_nearby', array('as'=>'backend/hotel_nearby', 'uses'=>'Setup\HotelNearby\HotelNearbyController@index'));
+            Route::get('hotel_nearby/create', array('as'=>'backend/hotel_nearby/create', 'uses'=>'Setup\HotelNearby\HotelNearbyController@create'));
+            Route::post('hotel_nearby/store', array('as'=>'backend/hotel_nearby/store', 'uses'=>'Setup\HotelNearby\HotelNearbyController@store'));
+            Route::get('hotel_nearby/edit/{id}', array('as'=>'backend/hotel_nearby/edit', 'uses'=>'Setup\HotelNearby\HotelNearbyController@edit'));
+            Route::post('hotel_nearby/update', array('as'=>'backend/hotel_nearby/update', 'uses'=>'Setup\HotelNearby\HotelNearbyController@update'));
+            Route::post('hotel_nearby/destroy', array('as'=>'backend/hotel_nearby/destroy', 'uses'=>'Setup\HotelNearby\HotelNearbyController@destroy'));
+
             //Recommended Hotels
             Route::get('recommend_hotel/create', array('as'=>'backend/recommend_hotel/create', 'uses'=>'Setup\Hotel\RecommendHotelController@create'));
             Route::post('recommend_hotel/store', array('as'=>'backend/recommend_hotel/store', 'uses'=>'Setup\Hotel\RecommendHotelController@store'));
@@ -360,6 +379,12 @@ Route::group(['middleware' => 'web'], function () {
             Route::post('room_category_amenity/update', array('as'=>'backend/room_category_amenity/update', 'uses'=>'Setup\RoomCategoryAmenity\RoomCategoryAmenityController@update'));
             Route::post('room_category_amenity/destroy', array('as'=>'backend/room_category_amenity/destroy', 'uses'=>'Setup\RoomCategoryAmenity\RoomCategoryAmenityController@destroy'));
 
+            //Slider
+            Route::get('slider', array('as'=>'backend/slider', 'uses'=>'Setup\Slider\SliderController@index'));
+            Route::get('slider/create', array('as'=>'backend/slider/create', 'uses'=>'Setup\Slider\SliderController@create'));
+            Route::post('slider/store', array('as'=>'backend/slider/store', 'uses'=>'Setup\Slider\SliderController@store'));
+            Route::post('slider/destroy', array('as'=>'backend/slider/destroy', 'uses'=>'Setup\Slider\SliderController@destroy'));
+
             //Hotel Config
             Route::get('hotel_config', array('as'=>'backend/hotel_config', 'uses'=>'Setup\HotelConfig\HotelConfigController@index'));
             Route::get('hotel_config/create', array('as'=>'backend/hotel_config/create', 'uses'=>'Setup\HotelConfig\HotelConfigController@create'));
@@ -368,6 +393,32 @@ Route::group(['middleware' => 'web'], function () {
             Route::post('hotel_config/update', array('as'=>'backend/hotel_config/update', 'uses'=>'Setup\HotelConfig\HotelConfigController@update'));
             Route::post('hotel_config/destroy', array('as'=>'backend/hotel_config/destroy', 'uses'=>'Setup\HotelConfig\HotelConfigController@destroy'));
 
+            //Page
+            Route::get('page', array('as'=>'backend/page', 'uses'=>'Setup\Page\PageController@index'));
+            Route::get('page/edit/{id}', array('as'=>'backend/page/edit', 'uses'=>'Setup\Page\PageController@edit'));
+            Route::post('page/update', array('as'=>'backend/page/update', 'uses'=>'Setup\Page\PageController@update'));
+            Route::post('page/upload', array('as'=>'backend/page/upload', 'uses'=>'Setup\Page\PageController@upload'));
+
+            //Event Email
+            Route::get('eventemail', array('as'=>'backend/eventemail', 'uses'=>'Setup\EventEmail\EventEmailController@index'));
+            Route::get('eventemail/create', array('as'=>'backend/eventemail/create', 'uses'=>'Setup\EventEmail\EventEmailController@create'));
+            Route::post('eventemail/store', array('as'=>'backend/eventemail/store', 'uses'=>'Setup\EventEmail\EventEmailController@store'));
+            Route::get('eventemail/edit/{id}', array('as'=>'backend/eventemail/edit', 'uses'=>'Setup\EventEmail\EventEmailController@edit'));
+            Route::post('eventemail/update', array('as'=>'backend/eventemail/update', 'uses'=>'Setup\EventEmail\EventEmailController@update'));
+            Route::post('eventemail/destroy', array('as'=>'backend/eventemail/destroy', 'uses'=>'Setup\EventEmail\EventEmailController@destroy'));
+
+            //Backend Email Sending
+            Route::get('email_template_booking_confirm', array('as'=>'backend/email_template_booking_confirm', 'uses'=>'Setup\EmailTemplate\EmailTemplateController@booking_confirm'));
+            Route::post('email_template_booking_confirm/update', array('as'=>'backend/email_template_booking_confirm/update', 'uses'=>'Setup\EmailTemplate\EmailTemplateController@update'));
+            Route::get('email_template_booking_cancel', array('as'=>'backend/email_template_booking_cancel', 'uses'=>'Setup\EmailTemplate\EmailTemplateController@booking_cancel'));
+            Route::post('email_template_booking_cancel/update', array('as'=>'backend/email_template_booking_cancel/update', 'uses'=>'Setup\EmailTemplate\EmailTemplateController@update'));
+            Route::get('email_template_booking_edit', array('as'=>'backend/email_template_booking_edit', 'uses'=>'Setup\EmailTemplate\EmailTemplateController@booking_edit'));
+            Route::post('email_template_booking_edit/update', array('as'=>'backend/email_template_booking_edit/update', 'uses'=>'Setup\EmailTemplate\EmailTemplateController@update'));
+
+
+            //Hotel Admin Group
+            Route::get('hotel_admin/dashboard', array('as'=>'backend/hotel_admin/dashboard', 'uses'=>'Setup\HotelAdmin\HotelDashboardController@dashboard'));
+            
             //SaleSummary Report
             Route::get('salesummaryreport',array(
                 'as'=>'backend/salesummaryreport',

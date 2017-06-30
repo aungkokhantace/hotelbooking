@@ -17,9 +17,11 @@
                 <button type="button" onclick='edit_setup("hotel_room_type");' class="btn btn-default btn-md second_btn">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </button>
+                @if($role !== 3)
                 <button type="button" onclick="delete_setup('hotel_room_type');" class="btn btn-default btn-md third_btn">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 </button>
+                @endif
             </div>
         </div>
 

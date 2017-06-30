@@ -152,6 +152,8 @@ class UserController extends Controller
                 return redirect('/backend');
             } else if ($role->role_id == 2) {
                 return redirect('/backend');
+            } else if ($role->role_id == 3) {
+                return redirect('/backend/hotel_admin/dashboard');
             } else {
                 return redirect('/backend');
             }

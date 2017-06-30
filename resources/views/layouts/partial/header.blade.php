@@ -61,7 +61,7 @@ $companyLogo = \App\Core\Check::companyLogo();
     <script src="/assets/js/jquery-2.1.3.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
 
-    {{--<script src="/assets/plugins/jquery/jquery-1.9.1.min.js"></script>--}}
+    <script src="/assets/plugins/jquery/jquery-1.9.1.min.js"></script>
     <script src="/assets/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
     <script src="/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
     <script src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>

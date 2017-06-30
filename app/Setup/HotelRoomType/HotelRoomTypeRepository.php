@@ -12,6 +12,8 @@ namespace App\Setup\HotelRoomType;
 use App\Core\ReturnMessage;
 use App\Core\Utility;
 use App\Log\LogCustom;
+use App\User;
+use Auth;
 use Illuminate\Support\Facades\DB;
 
 class HotelRoomTypeRepository implements HotelRoomTypeRepositoryInterface
@@ -125,5 +127,26 @@ class HotelRoomTypeRepository implements HotelRoomTypeRepositoryInterface
                                 ->get();
 
         return $objs;
+    }
+
+    public function getUserObjs() {
+        $id     = Auth::guard('User')->user()->id;
+        $objs   = User::select('id','email','role_id')->where('id',$id)->whereNull('deleted_at')->first();
+        return $objs;
+    }
+
+    public function getHotelRoomTypeByUserId($id) {
+        $objs   = HotelRoomType::whereNull('deleted_at')->where('hotel_id',$id)->get();
+        return $objs;
+    }
+
+    public function checkHasPermission($id,$h_id) {
+        $hasPermission      = DB::select("SELECT count(id) as rowCount FROM h_room_type WHERE id = '$id' AND hotel_id = '$h_id' AND deleted_at IS  NULL");
+        $count              = $hasPermission[0]->rowCount;
+        if ($count > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Setup\Hotel;
 use App\Core\Utility;
 use App\Setup\City\CityRepository;
 use App\Setup\Country\CountryRepository;
+use App\Setup\HotelNearby\HotelNearbyRepository;
 use App\Setup\Hotel\Hotel;
 use App\Setup\Township\TownshipRepository;
+use App\Setup\Hnearby\Hnearby;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -70,7 +72,12 @@ class HotelController extends Controller
             $townshipRepo = new TownshipRepository();
             $townships = $townshipRepo->getObjs();
 
-            return view('backend.hotel.hotel')->with('countries',$countries)->with('cities',$cities)->with('townships',$townships);
+            $hotel_nearbyRepo     = new HotelNearbyRepository();
+            $hotel_nearby     = $hotel_nearbyRepo->getObjs();
+
+            return view('backend.hotel.hotel')->with('countries',$countries)->with('cities',$cities)
+                ->with('townships',$townships)
+                ->with('hotel_nearby',$hotel_nearby);
         }
         return redirect('/');
     }
@@ -78,7 +85,7 @@ class HotelController extends Controller
     public function store(HotelEntryRequest $request)
     {
         $request->validate();
-
+        $input              = $request->all();
         $name               = (Input::has('name')) ? Input::get('name') : "";
         $type               = (Input::has('h_type_id')) ? Input::get('h_type_id') : "";
         $address            = (Input::has('address')) ? Input::get('address') : "";
@@ -86,7 +93,6 @@ class HotelController extends Controller
         $fax                = (Input::has('fax')) ? Input::get('fax') : "";
         $latitude           = (Input::has('latitude')) ? Input::get('latitude') : "";
         $longitude          = (Input::has('longitude')) ? Input::get('longitude') : "";
-
 
         //Start Saving Image
         $removeImageFlag          = (Input::has('removeImageFlag')) ? Input::get('removeImageFlag') : 0;
@@ -97,9 +103,9 @@ class HotelController extends Controller
             $photo        = Input::file('photo');
 
             $photo_name_original    = Utility::getImage($photo);
-            $photo_ext      = Utility::getImageExt($photo);
-            $photo_name     = uniqid() . "." . $photo_ext;
-            $image          = Utility::resizeImage($photo,$photo_name,$path);
+            $photo_ext              = Utility::getImageExt($photo);
+            $photo_name             = uniqid() . "." . $photo_ext;
+            $image                  = Utility::resizeImage($photo,$photo_name,$path);
         }
         else{
             $photo_name = "";
@@ -147,7 +153,7 @@ class HotelController extends Controller
         $paramObj->breakfast_start_time     = $breakfast_start_time;
         $paramObj->breakfast_end_time       = $breakfast_end_time;
 
-        $result = $this->repo->create($paramObj);
+        $result = $this->repo->create($paramObj,$input);
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\Hotel\HotelController@index')
@@ -177,7 +183,19 @@ class HotelController extends Controller
             $townshipRepo = new TownshipRepository();
             $townships = $townshipRepo->getTownshipByCityId($city_id);
 
-            return view('backend.hotel.hotel')->with('hotel', $hotel)->with('countries',$countries)->with('cities',$cities)->with('townships',$townships);
+            $hotel_nearbyRepo     = new HotelNearbyRepository();
+            $hotel_nearby     = $hotel_nearbyRepo->getObjs();
+
+            $h_nearby_places        = Hnearby::where('hotel_id',$id)->whereNull('deleted_at')->get();
+            $nearby_places_count    = count($h_nearby_places) - 1;
+            return view('backend.hotel.hotel')
+                ->with('hotel', $hotel)
+                ->with('countries',$countries)
+                ->with('cities',$cities)
+                ->with('townships',$townships)
+                ->with('h_nearby_places',$h_nearby_places)
+                ->with('nearby_places_count',$nearby_places_count)
+                ->with('hotel_nearby',$hotel_nearby);
         }
         return redirect('/backend/login');
     }
@@ -185,6 +203,7 @@ class HotelController extends Controller
     public function update(HotelEditRequest $request){
 
         $request->validate();
+        $input              = $request->all();
         $id                 = (Input::has('id')) ? Input::get('id') : "";
 
         $name               = (Input::has('name')) ? Input::get('name') : "";
@@ -264,7 +283,7 @@ class HotelController extends Controller
         $paramObj->breakfast_start_time     = $breakfast_start_time;
         $paramObj->breakfast_end_time       = $breakfast_end_time;
 
-        $result = $this->repo->update($paramObj);
+        $result = $this->repo->update($paramObj,$input);
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\Hotel\HotelController@index')

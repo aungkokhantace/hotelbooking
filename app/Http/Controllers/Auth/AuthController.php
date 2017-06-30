@@ -116,7 +116,6 @@ class AuthController extends Controller
             return redirect()->back()->withErrors($this->getFailedLoginMessage());
         }
         else{
-
             $id = Auth::guard('User')->id();
             Check::createSession($id);
             return redirect('/backend/userAuth');
