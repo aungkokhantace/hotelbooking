@@ -418,7 +418,11 @@ Route::group(['middleware' => 'web'], function () {
 
             //Hotel Admin Group
             Route::get('hotel_admin/dashboard', array('as'=>'backend/hotel_admin/dashboard', 'uses'=>'Setup\HotelAdmin\HotelDashboardController@dashboard'));
-            
+
+            //Hotel Booking
+            Route::get('booking', array('as'=>'backend/booking', 'uses'=>'Setup\HotelBooking\HotelBookingController@index'));
+            Route::get('booking/{id}', array('as'=>'backend/booking/{id}', 'uses'=>'Setup\HotelBooking\HotelBookingController@detail'));
+
             //SaleSummary Report
             Route::get('salesummaryreport',array(
                 'as'=>'backend/salesummaryreport',

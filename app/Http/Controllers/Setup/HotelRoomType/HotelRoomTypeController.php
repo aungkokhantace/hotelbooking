@@ -37,8 +37,8 @@ class HotelRoomTypeController extends Controller
                 //Get Hotel ID
                 $hotelRepo          = new HotelRepository();
                 $hotels             = $hotelRepo->getHotelByUserEmail($email);
-                $h_id               = $hotels->id;
-                $hotel_room_type = $this->repo->getHotelRoomTypeByUserId($h_id);
+                $hotel_id           = $hotels->id;
+                $hotel_room_type    = $this->repo->getHotelRoomTypeWithHotelId($hotel_id);;
             } else {
                 $hotel_room_type = $this->repo->getObjs();
             }
@@ -93,6 +93,7 @@ class HotelRoomTypeController extends Controller
     public function edit($id)
     {
         if (Auth::guard('User')->check()) {
+
             //Get Loggin User Info
             $user               = $this->repo->getUserObjs();
             $email              = $user->email;
@@ -111,6 +112,7 @@ class HotelRoomTypeController extends Controller
                 $checkPermission    = $this->repo->checkHasPermission($id,$h_id);
                 if ($checkPermission == false) {
                     return redirect('unauthorize');
+                    exit();
                 }
                 //Get Hotel By User Email
                 $hotels         = $hotelRepo->getHotelByUserEmail($email);

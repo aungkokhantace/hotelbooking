@@ -74,20 +74,28 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="hotel_id" id="hotel_id">
                 @if(isset($hotel_room_category))
-                    @foreach($hotels as $hotel)
-                        @if($hotel->id == $hotel_room_category->hotel_id)
-                            <option value="{{$hotel->id}}" selected>{{$hotel->name}}</option>
-                        @else
-                            <option value="{{$hotel->id}}">{{$hotel->name}}</option>
-                        @endif
-                    @endforeach
+                    @if ($role == 3)
+                        <option value="{{$hotels->id}}" selected>{{$hotels->name}}</option>
+                    @else
+                        @foreach($hotels as $hotel)
+                            @if($hotel->id == $hotel_room_category->hotel_id)
+                                <option value="{{$hotel->id}}" selected>{{$hotel->name}}</option>
+                            @else
+                                <option value="{{$hotel->id}}">{{$hotel->name}}</option>
+                            @endif
+                        @endforeach
+                    @endif
                 @else
-                    <option value="" disabled selected>
-                        {{trans('setup_hotelroomcategory.place-hotel')}}
-                    </option>
-                    @foreach($hotels as $hotel)
-                        <option value="{{$hotel->id}}">{{$hotel->name}}</option>
-                    @endforeach
+                    @if ($role == 3)
+                        <option value="{{$hotels->id}}" selected>{{$hotels->name}}</option>
+                    @else
+                        <option value="" disabled selected>
+                            {{trans('setup_hotelroomcategory.place-hotel')}}
+                        </option>
+                        @foreach($hotels as $hotel)
+                            <option value="{{$hotel->id}}">{{$hotel->name}}</option>
+                        @endforeach
+                    @endif
                 @endif
             </select>
             <p class="text-danger">{{$errors->first('hotel_id')}}
@@ -318,6 +326,12 @@
     <script type="text/javascript">
         var count = 0;      // Declaring and defining global increment variable.
         $(document).ready(function(){
+
+            var hotel_id    = document.getElementById('hotel_id').value;
+            var room       = $('#id').val();
+            if (hotel_id > 0 && room == null) {
+                loadHotelRoomType(hotel_id);
+            }
 
             $('#hotel_id').change(function(e){
                 loadHotelRoomType($(this).val());

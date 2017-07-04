@@ -14,6 +14,8 @@ use App\Core\Utility;
 use App\Log\LogCustom;
 use App\Setup\BookingRoom\BookingRoom;
 use Illuminate\Support\Facades\DB;
+use App\User;
+use Auth;
 
 class BookingRepository implements BookingRepositoryInterface
 {
@@ -85,5 +87,31 @@ class BookingRepository implements BookingRepositoryInterface
                             ");
 
         return $result;
+    }
+
+    public function getObjs() {
+        $objs       = Booking::all()->sortByDesc('id')->where('deleted_at',null);
+        return $objs;
+    }
+
+    public function getUserObjs() {
+        $id     = Auth::guard('User')->user()->id;
+        $objs   = User::select('id','email','role_id')->where('id',$id)->whereNull('deleted_at')->first();
+        return $objs;
+    }
+
+    public function getBookingByHotelId($hotel_id) {
+        $objs   = Booking::where('hotel_id',$hotel_id)->whereNull('deleted_at')->get();
+        return $objs;
+    }
+
+    public function checkHasPermission($id,$h_id) {
+        $hasPermission      = DB::select("SELECT count(id) as rowCount FROM bookings WHERE id = '$id' AND hotel_id = '$h_id' AND deleted_at IS  NULL");
+        $count              = $hasPermission[0]->rowCount;
+        if ($count > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -32,7 +32,21 @@ class RoomController extends Controller
     public function index(Request $request)
     {
         if (Auth::guard('User')->check()) {
-            $rooms = $this->repo->getObjs();
+            //Get Loggin User Info
+            $user               = $this->repo->getUserObjs();
+            $id                 = $user->id;
+            $role               = $user->role_id;
+            $email              = $user->email;
+
+            if ($role == 3) {
+                //Get Hotel ID
+                $hotelRepo          = new HotelRepository();
+                $hotels             = $hotelRepo->getHotelByUserEmail($email);
+                $hotel_id           = $hotels->id;
+                $rooms = $this->repo->getObjsByHotelId($hotel_id);
+            } else {
+                $rooms = $this->repo->getObjs();
+            }
             return view('backend.room.index')->with('rooms',$rooms);
         }
         return redirect('/');
@@ -41,11 +55,21 @@ class RoomController extends Controller
     public function create()
     {
         if(Auth::guard('User')->check()){
+            $user               = $this->repo->getUserObjs();
+            $id                 = $user->id;
+            $role               = $user->role_id;
+            $email              = $user->email;
+
             $hotelRepo          = new HotelRepository();
-            $hotels             = $hotelRepo->getObjs();
+            if ($role == 3) {
+                $hotels         = $hotelRepo->getHotelByUserEmail($email);
+            } else {
+                $hotels         = $hotelRepo->getObjs();
+            }
             $roomViewRepo       = new RoomViewRepository();
             $room_view          = $roomViewRepo->getObjs();
             return view('backend.room.room')->with('hotels',$hotels)
+                                            ->with('role',$role)
                                             ->with('room_view',$room_view);
         }
         return redirect('/');
@@ -99,21 +123,42 @@ class RoomController extends Controller
     public function edit($id)
     {
         if (Auth::guard('User')->check()) {
-            $room                   = $this->repo->getObjByID($id);
-            $hotel_id               = $room->hotel_id;
-            $h_room_type_id         = $room->h_room_type_id;
+            //Check User has permiision to edit or not
+            $user                   = $this->repo->getUserObjs();
+            $email                  = $user->email;
+            $role                   = $user->role_id;
+            $uid                    = $user->id;
+
             $hotelRepo              = new HotelRepository();
-            $hotels                 = $hotelRepo->getObjs();
-            $hotelRoomTypeRepo      = new HotelRoomTypeRepository();
-            $hotel_room_type        = $hotelRoomTypeRepo->getHotelRoomTypeWithHotelId($hotel_id);
-            $hotelRoomCategoryRepo  = new HotelRoomCategoryRepository();
-            $hotel_room_category    = $hotelRoomCategoryRepo->getHotelRoomCategoryWithRoomTypeId($h_room_type_id);
-            $roomViewRepo           = new RoomViewRepository();
-            $room_view              = $roomViewRepo->getObjs();
+
+            if ($role == 3) {
+                $room                   = $this->repo->getObjByID($id);
+                $hotel_id               = $room->hotel_id;
+                $h_room_type_id         = $room->h_room_type_id;
+                $hotels                 = $hotelRepo->getHotelByUserEmail($email);
+                $hotelRoomTypeRepo      = new HotelRoomTypeRepository();
+                $hotel_room_type        = $hotelRoomTypeRepo->getHotelRoomTypeWithHotelId($hotel_id);
+                $hotelRoomCategoryRepo  = new HotelRoomCategoryRepository();
+                $hotel_room_category    = $hotelRoomCategoryRepo->getHotelRoomCategoryWithRoomTypeId($h_room_type_id);
+                $roomViewRepo           = new RoomViewRepository();
+                $room_view              = $roomViewRepo->getObjs();
+            } else {
+                $room                   = $this->repo->getObjByID($id);
+                $hotel_id               = $room->hotel_id;
+                $h_room_type_id         = $room->h_room_type_id;
+                $hotels                 = $hotelRepo->getObjs();
+                $hotelRoomTypeRepo      = new HotelRoomTypeRepository();
+                $hotel_room_type        = $hotelRoomTypeRepo->getHotelRoomTypeWithHotelId($hotel_id);
+                $hotelRoomCategoryRepo  = new HotelRoomCategoryRepository();
+                $hotel_room_category    = $hotelRoomCategoryRepo->getHotelRoomCategoryWithRoomTypeId($h_room_type_id);
+                $roomViewRepo           = new RoomViewRepository();
+                $room_view              = $roomViewRepo->getObjs();
+            }
             return view('backend.room.room')->with('room', $room)
                                             ->with('hotels',$hotels)
                                             ->with('room_view',$room_view)
                                             ->with('hotel_room_type',$hotel_room_type)
+                                            ->with('role',$role)
                                             ->with('hotel_room_category',$hotel_room_category);
         }
         return redirect('/backend/login');

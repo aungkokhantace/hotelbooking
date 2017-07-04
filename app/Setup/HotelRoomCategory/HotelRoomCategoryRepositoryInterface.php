@@ -20,4 +20,6 @@ interface HotelRoomCategoryRepositoryInterface
     public function getMinPriceByHotelId($hotel_id);
     public function getRoomTypeByHotelIdAndPrice($hotel_id,$price);
     public function getRoomCategoriesByHotelId($hotel_id);
+    public function getUserObjs();
+    public function checkHasPermission($id,$h_id);
 }

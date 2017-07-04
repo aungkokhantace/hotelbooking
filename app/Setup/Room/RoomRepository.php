@@ -14,6 +14,9 @@ use App\Core\Utility;
 use App\Log\LogCustom;
 use App\Setup\RoomBlackoutPeriod\RoomBlackoutPeriod;
 use Illuminate\Support\Facades\DB;
+use Auth;
+use App\User;
+use App\Setup\Hotel\Hotel;
 
 class RoomRepository implements RoomRepositoryInterface
 {
@@ -121,7 +124,7 @@ class RoomRepository implements RoomRepositoryInterface
     }
 
     public function getObjsByHotelId($hotel_id){
-        $rooms = Room::select('id','hotel_id','name')
+        $rooms = Room::select('id','hotel_id','name','h_room_type_id','h_room_category_id','room_view_id','description','status','remark')
                                      ->where('hotel_id','=',$hotel_id)
                                      ->get();
 
@@ -224,5 +227,11 @@ class RoomRepository implements RoomRepositoryInterface
             ->toArray();
 
         return $result;
+    }
+
+    public function getUserObjs() {
+        $id     = Auth::guard('User')->user()->id;
+        $objs   = User::select('id','email','role_id')->where('id',$id)->whereNull('deleted_at')->first();
+        return $objs;
     }
 }

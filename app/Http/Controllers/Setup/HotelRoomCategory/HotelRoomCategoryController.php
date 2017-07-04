@@ -35,8 +35,21 @@ class HotelRoomCategoryController extends Controller
     public function index(Request $request)
     {
         if (Auth::guard('User')->check()) {
-            $hotel_room_category = $this->repo->getObjs();
-            return view('backend.hotel_room_category.index')->with('hotel_room_category',$hotel_room_category);
+            //Get Loggin User Info
+            $user               = $this->repo->getUserObjs();
+            $id                 = $user->id;
+            $role               = $user->role_id;
+            $email              = $user->email;
+            if ($role == 3) {
+                //Get Hotel ID
+                $hotelRepo          = new HotelRepository();
+                $hotels             = $hotelRepo->getHotelByUserEmail($email);
+                $h_id               = $hotels->id;
+                $hotel_room_category = $this->repo->getRoomCategoriesByHotelId($h_id);
+            } else {
+                $hotel_room_category = $this->repo->getObjs();
+            }
+            return view('backend.hotel_room_category.index')->with('hotel_room_category',$hotel_room_category)->with('role',$role);
         }
         return redirect('/');
     }
@@ -44,9 +57,18 @@ class HotelRoomCategoryController extends Controller
     public function create()
     {
         if(Auth::guard('User')->check()){
-            $hotelRepo  = new HotelRepository();
-            $hotels     = $hotelRepo->getObjs();
-            return view('backend.hotel_room_category.hotel_room_category')->with('hotels',$hotels);
+            $user               = $this->repo->getUserObjs();
+            $id                 = $user->id;
+            $role               = $user->role_id;
+            $email              = $user->email;
+
+            $hotelRepo          = new HotelRepository();
+            if ($role == 3) {
+                $hotels         = $hotelRepo->getHotelByUserEmail($email);
+            } else {
+                $hotels         = $hotelRepo->getObjs();
+            }
+            return view('backend.hotel_room_category.hotel_room_category')->with('hotels',$hotels)->with('role',$role);
         }
         return redirect('/');
     }
@@ -163,17 +185,38 @@ class HotelRoomCategoryController extends Controller
     public function edit($id)
     {
         if (Auth::guard('User')->check()) {
+            //Get Loggin User Info
+            $user                   = $this->repo->getUserObjs();
+            $email                  = $user->email;
+            $role                   = $user->role_id;
+            $uid                    = $user->id;
             $hotel_room_category    = $this->repo->getObjByID($id);
             $hotel_id               = $hotel_room_category->hotel_id;
             $hotelRepo              = new HotelRepository();
-            $hotels                 = $hotelRepo->getObjs();
-            $hotelRoomTypeRepo      = new HotelRoomTypeRepository();
-            $hotel_room_type        = $hotelRoomTypeRepo->getHotelRoomTypeWithHotelId($hotel_id);
-            $roomCategoryImageRepo  = new RoomCategoryImageRepository();
-            $images                 = $roomCategoryImageRepo->getRoomCategoryImageByHotelRoomCategoryId($id);
+
+            if ($role == 3){
+                $hotels             = $hotelRepo->getHotelByUserEmail($email);
+                $h_id               = $hotels->id;
+                $checkPermission    = $this->repo->checkHasPermission($id,$h_id);
+                if ($checkPermission == false) {
+                    return redirect('unauthorize');
+                }
+                $hotelRoomTypeRepo      = new HotelRoomTypeRepository();
+                $hotel_room_type        = $hotelRoomTypeRepo->getHotelRoomTypeWithHotelId($hotel_id);
+                $roomCategoryImageRepo  = new RoomCategoryImageRepository();
+                $images                 = $roomCategoryImageRepo->getRoomCategoryImageByHotelRoomCategoryId($id);
+
+            } else {
+                $hotels                 = $hotelRepo->getObjs();
+                $hotelRoomTypeRepo      = new HotelRoomTypeRepository();
+                $hotel_room_type        = $hotelRoomTypeRepo->getHotelRoomTypeWithHotelId($hotel_id);
+                $roomCategoryImageRepo  = new RoomCategoryImageRepository();
+                $images                 = $roomCategoryImageRepo->getRoomCategoryImageByHotelRoomCategoryId($id);
+            }
             return view('backend.hotel_room_category.hotel_room_category')->with('hotel_room_category', $hotel_room_category)
                                                                           ->with('hotels',$hotels)
                                                                           ->with('hotel_room_type',$hotel_room_type)
+                                                                          ->with('role',$role)
                                                                           ->with('images',$images);
         }
         return redirect('/backend/login');

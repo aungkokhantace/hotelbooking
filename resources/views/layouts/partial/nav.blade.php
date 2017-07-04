@@ -289,6 +289,8 @@
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend/room">List</a></li>
                         </ul>
                     </li>
+
+                    @if (Auth::guard('User')->user()->role_id == 1)
                     <li nav-id="modifier-create" class="has-sub">
                         <a href="javascript:;">
                             <b class="caret pull-right"></b>
@@ -322,12 +324,111 @@
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_discount">List</a></li>
                         </ul>
                     </li>
-
+                    @endif
                 </ul>
             </li>
 
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
+                    <b class="caret pull-right"></b>
+                    <i class="fa fa-users"></i>
+                    <span>Booking Management</span>
+                </a>
+                <ul class="sub-menu">
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Booking</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/booking">List</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            @if (Auth::guard('User')->user()->role_id == 1)
+            <li  nav-id='modifier'  class="has-sub">
+                <a hrefaa<li  nav-id='modifier'  class="has-sub">
+                <a href="javascript:;">
+                    <b class="caret pull-right"></b>
+                    <i class="fa fa-users"></i>
+                    <span>Room Management</span>
+                </a>
+                <ul class="sub-menu">
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Room Type</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/hotel_room_type/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_room_type">List</a></li>
+                        </ul>
+                    </li>
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Hotel Room Category</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/hotel_room_category/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_room_category">List</a></li>
+                        </ul>
+                    </li>
+
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Room</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/room/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room">List</a></li>
+                        </ul>
+                    </li>
+
+                    @if (Auth::guard('User')->user()->role_id == 1)
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Room Category Facilities</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/room_category_facility/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_category_facility">List</a></li>
+                        </ul>
+                    </li>
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Room Category Amenities</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/room_category_amenity/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_category_amenity">List</a></li>
+                        </ul>
+                    </li>
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Room Discount</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend/room_discount/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_discount">List</a></li>
+                        </ul>
+                    </li>
+                    @endif
+                </ul>
+            </li>="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="fa fa-users"></i>
                     <span>Room Availability Management</span>
@@ -359,7 +460,7 @@
                 </ul>
             </li>
 
-            @if (Auth::guard('User')->user()->role_id == 1)
+
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>

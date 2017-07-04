@@ -13,7 +13,7 @@
     @else
         {!! Form::open(array('url' => '/backend/room/store','id'=>'room', 'class'=> 'form-horizontal user-form-border')) !!}
     @endif
-    <input type="hidden" name="id" value="{{isset($room)? $room->id:''}}"/>
+    <input type="hidden" name="id" id="id" value="{{isset($room)? $room->id:''}}"/>
     <br/>
 
     <div class="row">
@@ -26,20 +26,28 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <select class="form-control" name="hotel_id" id="hotel_id">
                 @if(isset($room))
-                    @foreach($hotels as $hotel)
-                        @if($hotel->id == $room->hotel_id)
-                            <option value="{{$hotel->id}}" selected>{{$hotel->name}}</option>
-                        @else
-                            <option value="{{$hotel->id}}">{{$hotel->name}}</option>
-                        @endif
-                    @endforeach
+                    @if ($role == 3)
+                        <option value="{{$hotels->id}}" selected>{{$hotels->name}}</option>
+                    @else
+                        @foreach($hotels as $hotel)
+                            @if($hotel->id == $room->hotel_id)
+                                <option value="{{$hotel->id}}" selected>{{$hotel->name}}</option>
+                            @else
+                                <option value="{{$hotel->id}}">{{$hotel->name}}</option>
+                            @endif
+                        @endforeach
+                    @endif
                 @else
-                    <option value="" disabled selected>
-                        {{trans('setup_room.place-hotel')}}
-                    </option>
-                    @foreach($hotels as $hotel)
-                        <option value="{{$hotel->id}}">{{$hotel->name}}</option>
-                    @endforeach
+                    @if ($role == 3)
+                        <option value="{{$hotels->id}}">{{$hotels->name}}</option>
+                    @else
+                        <option value="" disabled selected>
+                            {{trans('setup_room.place-hotel')}}
+                        </option>
+                        @foreach($hotels as $hotel)
+                            <option value="{{$hotel->id}}">{{$hotel->name}}</option>
+                        @endforeach
+                    @endif
                 @endif
             </select>
             <p class="text-danger">{{$errors->first('hotel_id')}}</p>
@@ -196,7 +204,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <div class="col-lg-2 co                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             l-md-2 col-sm-2 col-xs-2">
             <label for="remark">{{trans('setup_room.remark')}}</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -222,6 +230,12 @@
 @section('page_script')
     <script type="text/javascript">
         $(document).ready(function(){
+            //if isset hotelId Load Room Type
+            var hotelId    = $('#hotel_id').val();
+            var room       = $('#id').val();
+            if (hotelId > 0 && room <= 0) {
+                loadHotelRoomType(hotelId);
+            }
 
             $('#hotel_id').change(function(e){
                 loadHotelRoomType($(this).val());

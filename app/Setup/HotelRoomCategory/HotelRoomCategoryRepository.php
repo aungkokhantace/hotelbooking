@@ -14,6 +14,9 @@ use App\Core\Utility;
 use App\Log\LogCustom;
 use App\Setup\HotelRoomCategory\HotelRoomCategory;
 use Illuminate\Support\Facades\DB;
+use Auth;
+use App\User;
+use App\Setup\Hotel\Hotel;
 
 class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterface
 {
@@ -152,5 +155,24 @@ class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterfac
         return $result;
     }
 
+    public function getUserObjs() {
+        $id     = Auth::guard('User')->user()->id;
+        $objs   = User::select('id','email','role_id')->where('id',$id)->whereNull('deleted_at')->first();
+        return $objs;
+    }
 
+    public function getRoomCategoriesByUserId($id) {
+        $objs   = HotelRoomCategory::whereNull('deleted_at')->where('hotel_id',$id)->get();
+        return $objs;
+    }
+
+    public function checkHasPermission($id,$h_id) {
+        $hasPermission      = DB::select("SELECT count(id) as rowCount FROM h_room_category WHERE id = '$id' AND hotel_id = '$h_id' AND deleted_at IS  NULL");
+        $count              = $hasPermission[0]->rowCount;
+        if ($count > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
