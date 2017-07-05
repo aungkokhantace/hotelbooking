@@ -22,14 +22,41 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
-                <div id="chartdiv"></div>
+            <div class="col-md-3">
+                <div class="info-box">
+                    <span class="info-box-icon bg-light-blue"><i class="ion ion-android-person"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Total Room Type</span>
+                        <span class="info-box-number">{{ $room_type_count }}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
             </div>
 
-            <div class="col-md-6">
-                <div id="daily_chart_div"></div>
+            <div class="col-md-3">
+                <div class="info-box">
+                    <span class="info-box-icon bg-light-blue"><i class="ion ion-android-person"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Total Rooms</span>
+                        <span class="info-box-number">{{ $rooms_count }}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
             </div>
 
+            <div class="col-md-3">
+                <div class="info-box">
+                    <span class="info-box-icon bg-light-blue"><i class="ion ion-android-person"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Total Booking</span>
+                        <span class="info-box-number">{{ $bookings_count }}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+            </div>
         </div>
 </div>
 @stop

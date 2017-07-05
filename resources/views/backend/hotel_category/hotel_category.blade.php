@@ -22,7 +22,7 @@
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                 <input type="text" class="form-control" id="category" name="category"
-                       placeholder="setup_hotelnearby.name"
+                       placeholder="{{ trans('setup_hotelnearby.name') }}"
                        value="{{ isset($hotel_category)? $hotel_category->name:Request::old('category') }}"/>
                 <p class="text-danger">{{$errors->first('category')}}</p>
             </div>
@@ -34,7 +34,7 @@
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                 <input type="text" class="form-control" id="description" name="description"
-                       placeholder="setup_hotelnearby.description"
+                       placeholder="{{ trans('setup_hotelnearby.description') }}"
                        value="{{ isset($hotel_category)? $hotel_category->description:Request::old('description') }}"/>
                 <p class="text-danger">{{$errors->first('description')}}</p>
             </div>
