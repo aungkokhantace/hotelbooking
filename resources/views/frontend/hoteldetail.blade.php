@@ -114,29 +114,8 @@
                                 <div class="desc">
                                     <h4>What's around</h4>
                                     <ul>
-                                        <!-- airport -->
-                                        @foreach($hotel_nearby['airport'] as $nearby_airport)
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$nearby_airport->name}} ( {{$nearby_airport->distance}} )</li>
-                                        @endforeach
-
-                                        <!-- station -->
-                                        @foreach($hotel_nearby['station'] as $nearby_station)
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$nearby_station->name}} ( {{$nearby_station->distance}} )</li>
-                                        @endforeach
-
-                                        <!-- hospital -->
-                                        @foreach($hotel_nearby['hospital'] as $nearby_hospital)
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$nearby_hospital->name}} ( {{$nearby_hospital->distance}} )</li>
-                                        @endforeach
-
-                                        <!-- convenience store -->
-                                        @foreach($hotel_nearby['convenience_store'] as $nearby_convenience_store)
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$nearby_convenience_store->name}} ( {{$nearby_convenience_store->distance}} )</li>
-                                        @endforeach
-
-                                        <!-- drug store -->
-                                        @foreach($hotel_nearby['drug_store'] as $nearby_drug_store)
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$nearby_drug_store->name}} ( {{$nearby_drug_store->distance}} )</li>
+                                        @foreach($nearby_array as $nearby)
+                                        <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$nearby["name"]}} ({{$nearby["category"]}}) - {{$nearby["distance"]}}</li>
                                         @endforeach
                                     </ul>
                                 </div>

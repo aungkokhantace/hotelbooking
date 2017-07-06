@@ -71,7 +71,7 @@
                 <input type="submit" name="submit" value="{{isset($hotel_nearby)? trans('setup_hotelnearby.btn-update') : trans('setup_hotelnearby.btn-add')}}" class="form-control btn-primary">
             </div>
             <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-                <input type="button" value="{{trans('setup_hotelfeature.btn-cancel')}}" class="form-control cancel_btn" onclick="cancel_setup('setup_hotelnearby')">
+                <input type="button" value="{{trans('setup_hotelfeature.btn-cancel')}}" class="form-control cancel_btn" onclick="cancel_setup('hotel_nearby')">
             </div>
         </div>
         {!! Form::close() !!}

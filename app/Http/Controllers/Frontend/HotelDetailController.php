@@ -14,9 +14,12 @@ use App\Http\Requests;
 
 use App\Setup\Facilities\FacilitiesRepository;
 use App\Setup\FacilityGroup\FacilityGroupRepository;
+use App\Setup\Hnearby\Hnearby;
 use App\Setup\Hotel\HotelRepository;
 use App\Setup\HotelFacility\HotelFacilityRepository;
 use App\Setup\HotelLandmark\HotelLandmarkRepository;
+use App\Setup\HotelNearby\HotelNearby;
+use App\Setup\HotelNearby\HotelNearbyRepository;
 use App\Setup\HotelNearbyAirport\HotelNearbyAirportRepository;
 use App\Setup\HotelNearbyConvenienceStore\HotelNearbyConvenienceStoreRepository;
 use App\Setup\HotelNearbyDrugStore\HotelNearbyDrugStoreRepository;
@@ -32,6 +35,7 @@ use App\Setup\RoomCategoryFacility\RoomCategoryFacilityRepository;
 use App\Setup\RoomCategoryImage\RoomCategoryImageRepository;
 use App\Setup\RoomDiscount\RoomDiscountRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 
@@ -59,7 +63,7 @@ class HotelDetailController extends Controller
         if(isset($discount_percent) && count($discount_percent)>0){
             $hotel->discount = $discount_percent->discount_percent." %";
         }
-        //else, check there is any amount discount
+        //else, check if there is any amount discount
         else{
             $discount_amount = $discountRepo->getMaximumDiscountAmountByHotelID($hotel_id);
             //if there is any amount discount, assign it to $hotel->discount
@@ -86,29 +90,20 @@ class HotelDetailController extends Controller
         $roomCategoryImages    = $roomCategoryImageRepo->getRoomCategoryImageByHotelRoomCategoryIdArray($roomCategoryIdArray);
         //end hotel images
 
-        //start hotel_nearby
-        $hotel_nearby = array();   //to store all nearby
-
-        $nearbyAirportRepo = new HotelNearbyAirportRepository();
-        $nearbyAirports    = $nearbyAirportRepo->getObjsByHotelID($hotel_id);
-        $hotel_nearby['airport'] = $nearbyAirports;
-
-        $nearbyStationRepo = new HotelNearbyStationRepository();
-        $nearbyStations    = $nearbyStationRepo->getObjsByHotelID($hotel_id);
-        $hotel_nearby['station'] = $nearbyStations;
-
-        $nearbyHospitalRepo = new HotelNearbyHospitalRepository();
-        $nearbyHospitals    = $nearbyHospitalRepo->getObjsByHotelID($hotel_id);
-        $hotel_nearby['hospital'] = $nearbyHospitals;
-
-        $nearbyConvenienceStoreRepo = new HotelNearbyConvenienceStoreRepository();
-        $nearbyConvenienceStores    = $nearbyConvenienceStoreRepo->getObjsByHotelID($hotel_id);
-        $hotel_nearby['convenience_store'] = $nearbyConvenienceStores;
-
-        $nearbyDrugStoreRepo = new HotelNearbyDrugStoreRepository();
-        $nearbyDrugStores    = $nearbyDrugStoreRepo->getObjsByHotelID($hotel_id);
-        $hotel_nearby['drug_store'] = $nearbyDrugStores;
-        //end hotel_nearby
+        //start hotel nearby
+        $nearby_array = array();
+        $hotel_nearby = DB::table('h_nearby')->where('hotel_id', $hotel_id)->where('status', 1)->get();
+        $nearbyRepo = new HotelNearbyRepository();
+        $nearby_index = 0;
+        foreach($hotel_nearby as $hnearby){
+            $nearby_obj = $nearbyRepo->getObjByID($hnearby->nearby_id);
+            $nearby_name = $nearby_obj->name;
+            $nearby_array[$nearby_index]["name"] = $nearby_name;
+            $nearby_array[$nearby_index]["category"] = $nearby_obj->nearby_category->name;
+            $nearby_array[$nearby_index]["distance"] = $hnearby->km." km";
+            $nearby_index++;
+        }
+        //end hotel nearby
 
         //start facilities
         $facilityGroupRepo = new FacilityGroupRepository();
@@ -189,7 +184,7 @@ class HotelDetailController extends Controller
         return view('frontend.hoteldetail')
             ->with('hotel', $hotel)
             ->with('roomCategoryImages',$roomCategoryImages)
-            ->with('hotel_nearby',$hotel_nearby)
+            ->with('nearby_array',$nearby_array)
             ->with('roomCategories',$roomCategories)
             ->with('facilityGroupArray',$facilityGroupArray)
             ->with('landmarks',$landmarks)

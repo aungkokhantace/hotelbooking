@@ -259,6 +259,13 @@ class PaymentController extends Controller
                         //store in session
                         session([$category->id."_".($i+1)."_smoking" => $temp_smoking]);
 
+                        //for extrabed array
+                        Session::forget($category->id."_".($i+1)."_extrabed");  //forget old session
+                        $temp_extrabed = (Input::has($category->id."_".($i+1)."_extrabed")) ? Input::get($category->id."_".($i+1)."_extrabed") : "no";
+                        $extrabed_array[$category->id."_".($i+1)] = $temp_extrabed;
+                        //store in session
+                        session([$category->id."_".($i+1)."_extrabed" => $temp_extrabed]);
+
                         //for name array
                         Session::forget($category->id."_".($i+1)."_name");  //forget old session
                         $temp_name = (Input::has($category->id."_".($i+1)."_name")) ? Input::get($category->id."_".($i+1)."_name") : "";
@@ -638,7 +645,6 @@ class PaymentController extends Controller
     }
 
     public function congratulations(){
-//        dd('Session Data',Session()->all());
         $hotel_id   = session('hotel_id');
         $hotelRepo  = new HotelRepository();
         $hotel      = $hotelRepo->getObjByID($hotel_id);

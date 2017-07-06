@@ -329,7 +329,7 @@
 
             var hotel_id    = document.getElementById('hotel_id').value;
             var room       = $('#id').val();
-            if (hotel_id > 0 && room == null) {
+            if (hotel_id > 0 && room <= 0) {
                 loadHotelRoomType(hotel_id);
             }
 
@@ -454,6 +454,8 @@
             });
 
             /* End multi image */
+
+            $(':checkbox').checkboxpicker();
         });
         function loadHotelRoomType(hotelId){
             $.ajax({

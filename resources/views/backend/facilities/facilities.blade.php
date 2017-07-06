@@ -37,8 +37,9 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="radio" name="type" value="1" {{isset($facilities)&&$facilities->type==1?'checked':''}}>{{trans('setup_facility.type-hotel')}} &nbsp;
             <input type="radio" name="type" value="2" {{isset($facilities)&&$facilities->type==2?'checked':''}}>{{trans('setup_facility.type-room')}}
-            <p class="text-danger">{{$errors->first('type')}}</p>
+
         </div>
+        <p class="text-danger">{{$errors->first('type')}}</p>
     </div>
 
     <div class="row">
@@ -278,12 +279,14 @@
 
 
             //Start Validation for Entry and Edit Form
-            $('#$facilities').validate({
+            $('#facilities').validate({
                 rules: {
                     name          : 'required',
+                    type          : 'required',
                 },
                 messages: {
                     name          : 'Name is required',
+                    type          : 'Type is required',
                 },
                 submitHandler: function(form) {
                     $('input[type="submit"]').attr('disabled','disabled');

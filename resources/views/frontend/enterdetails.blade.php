@@ -144,48 +144,6 @@
                                                     </div>
                                                 </div>
 
-                                                {{--@if(isset($first_category) && count($first_category) > 0)--}}
-                                                    {{--<div class="payment_form">--}}
-                                                        {{--<div class="formtitle_left">--}}
-                                                            {{--<span>{{$first_category->name}}</span><br>--}}
-                                                            {{--<span class="form_two"><strong>FREE cancellation</strong> before 11:59 PM on May 28,2017/ Breakfast included<br>Cancel or make changes in just a few clicks-follow the link in your confirmation email!</span>--}}
-                                                        {{--</div>--}}
-                                                        {{--<div class="payment_formgroup">--}}
-                                                            {{--<div class="col-sm-4 pd_rg_10">--}}
-                                                                {{--<label class="col-sm-4 col-form-labels">Guests</label>--}}
-                                                                {{--<div class="col-sm-8 pd_rg_10">--}}
-                                                                    {{--<select class="col-sm-12 pd_rg_12 formcontrols ">--}}
-                                                                        {{--<option value="1">1</option>--}}
-                                                                        {{--<option value="2">2</option>--}}
-                                                                        {{--<option value="3">3</option>--}}
-                                                                    {{--</select>--}}
-                                                                {{--</div>--}}
-                                                            {{--</div>--}}
-                                                            {{--<div class="col-sm-4 pd_lf_5">--}}
-                                                                {{--<label class="col-sm-4 col-form-labels">Smoking</label>--}}
-                                                                {{--<div class="col-sm-8 pd_rg_10">--}}
-                                                                    {{--<select class="col-sm-12 pd_rg_12 formcontrols ">--}}
-                                                                        {{--<option value="yes">Yes</option>--}}
-                                                                        {{--<option value="no">No</option>--}}
-                                                                    {{--</select>--}}
-                                                                {{--</div>--}}
-                                                            {{--</div>--}}
-                                                        {{--</div>--}}
-                                                        {{--<div class="payment_formgroup">--}}
-                                                            {{--<div class="col-sm-8 pd_rg_10">--}}
-                                                                {{--<label>Full Guest Name</label>--}}
-                                                                {{--<input type="text" class="formcontrols" id="email">--}}
-                                                            {{--</div>--}}
-                                                        {{--</div>--}}
-                                                        {{--<div class="checkbox">--}}
-                                                            {{--<label>--}}
-                                                                {{--<i class="fa fa-check-square-o" style="    margin-left: -18px;" aria-hidden="true"></i>  <button class="btn btn-primary">INCLUDED</button><span><strong>Breakfast</strong><br></span>--}}
-                                                                {{--<span style="padding-left: 136px;">Yes,we'd like breakfast during our stay at no additional cost.</span>                                </label>--}}
-                                                        {{--</div>--}}
-                                                    {{--</div>--}}
-                                                {{--@endif--}}
-                                                {{--&nbsp;--}}
-
                                                 @foreach($available_room_category_array as $available_room_category)
                                                     <input type="hidden" id="available_room_categories" name="available_room_categories[]" value="{{$available_room_category}}">
                                                     @if(isset($available_room_category->number) && $available_room_category->number > 0)
@@ -200,9 +158,9 @@
                                                                 <label class="col-sm-4 col-form-labels">Guests</label>
                                                                 <div class="col-sm-8 pd_rg_10">
                                                                     <select class="col-sm-12 pd_rg_12 formcontrols" name="{{$available_room_category->id."_".($i+1)."_guest"}}">
-                                                                        <option value="1">1</option>
-                                                                        <option value="2">2</option>
-                                                                        <option value="3">3</option>
+                                                                        @for($i=0; $i<$available_room_category->capacity; $i++)
+                                                                            <option value="{{$i+1}}">{{$i+1}}</option>
+                                                                        @endfor
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -215,7 +173,25 @@
                                                                     </select>
                                                                 </div>
                                                             </div>
+                                                            @if($available_room_category->extra_bed_allowed == 1)
+                                                            <div class="col-sm-4 pd_lf_5">
+                                                                <label class="col-sm-4 col-form-labels">Extrabed</label>
+                                                                <div class="col-sm-8 pd_rg_10">
+                                                                    <select class="col-sm-12 pd_rg_12 formcontrols" name="{{$available_room_category->id."_".($i+1)."_extrabed"}}">
+                                                                        <option value="yes">Yes</option>
+                                                                        <option value="no" selected>No</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            @endif
                                                         </div>
+
+                                                        {{--<div class="row">--}}
+                                                                {{--<label class="col-sm-4 col-form-labels">Extra Bed</label>--}}
+                                                                {{--<div class="col-sm-8 pd_rg_10">--}}
+                                                                {{--</div>--}}
+                                                        {{--</div>--}}
+
                                                         <div class="payment_formgroup">
                                                             <div class="col-sm-6 pd_rg_10">
                                                                 {{--<input type="text" class="formcontrols" id="name" placeholder="First name, Last name">--}}

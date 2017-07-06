@@ -48,7 +48,7 @@ class HotelNearbyCategoryRepository implements HotelNearbyCategoryRepositoryInte
 
             //create info log
             $date = $tempObj->created_at;
-            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' created hotel_category_id = '.$tempObj->id . PHP_EOL;
+            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' created hotel_nearby_category_id = '.$tempObj->id . PHP_EOL;
             LogCustom::create($date,$message);
 
 
@@ -58,7 +58,7 @@ class HotelNearbyCategoryRepository implements HotelNearbyCategoryRepositoryInte
         catch(\Exception $e){
             //create error log
             $date    = date("Y-m-d H:i:s");
-            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a hotel_feature and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a hotel_nearby_category and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusMessage'] = $e->getMessage();
@@ -88,7 +88,7 @@ class HotelNearbyCategoryRepository implements HotelNearbyCategoryRepositoryInte
         catch(\Exception $e){
             //update error log
             $date    = date("Y-m-d H:i:s");
-            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' updated hotel_feature_id = ' .$tempObj->id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' updated hotel_nearby_category_id = ' .$tempObj->id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusMessage'] = $e->getMessage();
