@@ -47,6 +47,7 @@
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#hotel_type"><b>Hotel_Type</b></a></li>
             <li><a data-toggle="tab" href="#room_status"><b>Room Status</b></a></li>
+            <li><a data-toggle="tab" href="#facility_type"><b>Facility Type</b></a></li>
         </ul>
 
         <div class="tab-content">
@@ -93,6 +94,24 @@
                     <tr>
                         <td>Non Available</td>
                         <td>0</td>
+                    </tr>
+
+                </table>
+            </div>
+            <div id="facility_type" class="tab-pane fade">
+                <h3>Facility Type Reference Description</h3>
+                <table border="2" width="300px" style="text-align: center">
+                    <tr>
+                        <td><strong>Name</strong></td>
+                        <td><strong>Value</strong></td>
+                    </tr>
+                    <tr>
+                        <td>For Hotel</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>For Room</td>
+                        <td>2</td>
                     </tr>
 
                 </table>

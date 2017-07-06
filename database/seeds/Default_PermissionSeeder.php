@@ -15,7 +15,8 @@ class Default_PermissionSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('core_permissions')->delete();
+//        DB::table('core_permissions')->delete();
+        $existingPermissions = DB::select('SELECT id FROM core_permissions');
 
         $permissions = array(
 
@@ -294,6 +295,43 @@ class Default_PermissionSeeder extends Seeder
 
         );
 
-        DB::table('core_permissions')->insert($permissions);
+//        DB::table('core_permissions')->insert($permissions);
+
+        if(isset($existingPermissions) && count($existingPermissions)>0){
+
+            $newPermissions = array();
+
+            foreach ($permissions as $defaultPermission) {
+
+                $existFlag = 0;
+                foreach($existingPermissions as $existPermission) {
+
+                    if($defaultPermission['id'] == $existPermission->id) {
+                        $existFlag++;
+                        break;
+                    }
+                }
+                if($existFlag == 0) {
+                    array_push($newPermissions, $defaultPermission);
+                }
+
+            }
+
+            if(count($newPermissions)>0){
+                DB::table('core_permissions')->insert($newPermissions);
+            }
+        }
+        else{
+            DB::table('core_permissions')->insert($permissions);
+        }
+
+        echo "\n";
+        echo "*****************************************************";
+        echo "\n";
+        echo "** Finished Running Default Core Permission Seeder **";
+        echo "\n";
+        echo "*****************************************************";
+        echo "\n";
+
     }
 }

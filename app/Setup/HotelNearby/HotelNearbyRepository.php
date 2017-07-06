@@ -49,7 +49,7 @@ class HotelNearbyRepository implements HotelNearbyRepositoryInterface
 
             //create info log
             $date = $tempObj->created_at;
-            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' created hotel_category_id = '.$tempObj->id . PHP_EOL;
+            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' created hotel_nearby_id = '.$tempObj->id . PHP_EOL;
             LogCustom::create($date,$message);
 
 
@@ -59,7 +59,7 @@ class HotelNearbyRepository implements HotelNearbyRepositoryInterface
         catch(\Exception $e){
             //create error log
             $date    = date("Y-m-d H:i:s");
-            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a hotel_feature and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a hotel_nearby_id and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusMessage'] = $e->getMessage();
@@ -80,7 +80,7 @@ class HotelNearbyRepository implements HotelNearbyRepositoryInterface
 
             //update info log
             $date = $tempObj->updated_at;
-            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' updated hotel_nearby_category_id = '.$tempObj->id . PHP_EOL;
+            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' updated hotel_nearby__id = '.$tempObj->id . PHP_EOL;
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
@@ -89,7 +89,7 @@ class HotelNearbyRepository implements HotelNearbyRepositoryInterface
         catch(\Exception $e){
             //update error log
             $date    = date("Y-m-d H:i:s");
-            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' updated hotel_feature_id = ' .$tempObj->id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' updated hotel_nearby__id = ' .$tempObj->id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusMessage'] = $e->getMessage();
@@ -109,13 +109,13 @@ class HotelNearbyRepository implements HotelNearbyRepositoryInterface
 
             //delete info log
             $date = $tempObj->deleted_at;
-            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' deleted hotel_nearby_category_id = '.$tempObj->id . PHP_EOL;
+            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' deleted hotel_nearby_id = '.$tempObj->id . PHP_EOL;
             LogCustom::create($date,$message);
         }
         catch(\Exception $e){
             //delete error log
             $date    = date("Y-m-d H:i:s");
-            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' deleted  hotel_nearby_category_id = ' .$tempObj->id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' deleted  hotel_nearby_id = ' .$tempObj->id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
         }
     }
