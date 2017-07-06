@@ -25,7 +25,8 @@ class HotelConfigEditRequest extends Request
     {
         return [
             'hotel_id'              => 'required',
-            'cancellation_days'     => 'required',
+            'first_cancellation_day' => 'required',
+            'second_cancellation_day'=> 'required',
             'breakfast_fees'        => 'required|numeric',
             'extrabed_fees'         => 'required|numeric',
             'tax'                   => 'required|numeric',
@@ -36,7 +37,8 @@ class HotelConfigEditRequest extends Request
     {
         return [
             'hotel_id.required'             => 'Hotel is required!',
-            'cancellation_days.required'    => 'Cancellation Days is required!',
+            'first_cancellation_day.required'    => 'First Cancellation Day is required!',
+            'second_cancellation_day.required'    => 'Second Cancellation Day is required!',
             'breakfast_fees.required'       => 'Breakfast Fees is required!',
             'breakfast_fees.numeric'        => 'Breakfast Fees must be numeric!',
             'extrabed_fees.required'        => 'Extrabed Fees is required!',

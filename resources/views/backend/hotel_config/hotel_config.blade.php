@@ -37,26 +37,51 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="hotel_id">{{trans('setup_hotelconfig.cancellation-days')}}<span class="require">*</span></label>
+            <label for="hotel_id">{{trans('setup_hotelconfig.first-cancellation-day')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <select class="form-control" name="cancellation_days" id="cancellation_days">
+            <select class="form-control" name="first_cancellation_day" id="first_cancellation_day">
                 @if(isset($hotel_config))
                     @for ($i = 1; $i <= 100; $i++)
-                        @if($i == $hotel_config->cancellation_days)
+                        @if($i == $hotel_config->first_cancellation_day)
                             <option value="{{ $i }}" selected>{{ $i }}</option>
                         @else
                             <option value="{{ $i }}">{{ $i }}</option>
                         @endif
                     @endfor
                 @else
-                    <option value="" disabled selected>{{trans('setup_hotelconfig.place-cancellation-days')}}</option>
+                    <option value="" disabled selected>{{trans('setup_hotelconfig.place-first-cancellation-day')}}</option>
                     @for ($i = 1; $i <= 100; $i++)
-                        <option value="{{ $i }}"  @if(Request::old('cancellation_days') == $i) {{ 'selected' }} @endif>{{ $i }}</option>
+                        <option value="{{ $i }}"  @if(Request::old('first_cancellation_day') == $i) {{ 'selected' }} @endif>{{ $i }}</option>
                     @endfor
                 @endif
             </select>
-            <p class="text-danger">{{$errors->first('cancellation_days')}}
+            <p class="text-danger">{{$errors->first('first_cancellation_day')}}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="hotel_id">{{trans('setup_hotelconfig.second-cancellation-day')}}<span class="require">*</span></label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <select class="form-control" name="second_cancellation_day" id="second_cancellation_day">
+                @if(isset($hotel_config))
+                    @for ($i = 1; $i <= 100; $i++)
+                        @if($i == $hotel_config->second_cancellation_day)
+                            <option value="{{ $i }}" selected>{{ $i }}</option>
+                        @else
+                            <option value="{{ $i }}">{{ $i }}</option>
+                        @endif
+                    @endfor
+                @else
+                    <option value="" disabled selected>{{trans('setup_hotelconfig.place-second-cancellation-day')}}</option>
+                    @for ($i = 1; $i <= 100; $i++)
+                        <option value="{{ $i }}"  @if(Request::old('second_cancellation_day') == $i) {{ 'selected' }} @endif>{{ $i }}</option>
+                    @endfor
+                @endif
+            </select>
+            <p class="text-danger">{{$errors->first('second_cancellation_day')}}
         </div>
     </div>
 
@@ -114,7 +139,8 @@
             $('#hotel_config').validate({
                 rules: {
                     hotel_id                : 'required',
-                    cancellation_days       : 'required',
+                    first_cancellation_day  : 'required',
+                    second_cancellation_day : 'required',
                     breakfast_fees          : {
                         required: true,
                         number  : true,
@@ -131,7 +157,8 @@
                 },
                 messages: {
                     hotel_id                : 'Hotel is required!',
-                    cancellation_days       : 'Cancellation Day is required!',
+                    first_cancellation_day  : 'First Cancellation Day is required',
+                    second_cancellation_day : 'Second Cancellation Day is required',
                     breakfast_fees          : {
                         required: 'Breakfast Fee is required',
                         number  : 'Breakfast Fee must be numeric',

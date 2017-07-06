@@ -60,14 +60,16 @@ class HotelConfigController extends Controller
     {
         $request->validate();
         $hotel_id                   = Input::get('hotel_id');
-        $cancellation_days          = Input::get('cancellation_days');
+        $first_cancellation_day     = Input::get('first_cancellation_day');
+        $second_cancellation_day    = Input::get('second_cancellation_day');
         $breakfast_fees             = Input::get('breakfast_fees');
         $extrabed_fees              = Input::get('extrabed_fees');
         $tax                        = Input::get('tax');
 
         $paramObj                   = new HotelConfig();
         $paramObj->hotel_id         = $hotel_id;
-        $paramObj->cancellation_days= $cancellation_days;
+        $paramObj->first_cancellation_day  = $first_cancellation_day;
+        $paramObj->second_cancellation_day = $second_cancellation_day;
         $paramObj->breakfast_fees   = $breakfast_fees;
         $paramObj->extrabed_fees    = $extrabed_fees;
         $paramObj->tax              = $tax;
@@ -94,18 +96,19 @@ class HotelConfigController extends Controller
     }
 
     public function update(HotelConfigEditRequest $request){
-
         $request->validate();
         $id                         = Input::get('id');
         $hotel_id                   = Input::get('hotel_id');
-        $cancellation_days          = Input::get('cancellation_days');
+        $first_cancellation_day     = Input::get('first_cancellation_day');
+        $second_cancellation_day    = Input::get('second_cancellation_day');
         $breakfast_fees             = Input::get('breakfast_fees');
         $extrabed_fees              = Input::get('extrabed_fees');
         $tax                        = Input::get('tax');
 
         $paramObj                   = $this->repo->getObjByID($id);
         $paramObj->hotel_id         = $hotel_id;
-        $paramObj->cancellation_days= $cancellation_days;
+        $paramObj->first_cancellation_day  = $first_cancellation_day;
+        $paramObj->second_cancellation_day = $second_cancellation_day;
         $paramObj->breakfast_fees   = $breakfast_fees;
         $paramObj->extrabed_fees    = $extrabed_fees;
         $paramObj->tax              = $tax;

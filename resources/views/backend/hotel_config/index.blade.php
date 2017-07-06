@@ -42,7 +42,8 @@
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
                         <th>{{trans('setup_hotelconfig.tb-col-hotel')}}</th>
-                        <th>{{trans('setup_hotelconfig.tb-col-cancellation-days')}}</th>
+                        <th>{{trans('setup_hotelconfig.tb-col-first-cancellation-day')}}</th>
+                        <th>{{trans('setup_hotelconfig.tb-col-second-cancellation-day')}}</th>
                         <th>{{trans('setup_hotelconfig.tb-col-breakfast-fees')}}</th>
                         <th>{{trans('setup_hotelconfig.tb-col-extrabed-fees')}}</th>
                         <th>{{trans('setup_hotelconfig.tb-col-tax')}}</th>
@@ -52,7 +53,8 @@
                     <tr>
                         <th></th>
                         <th class="search-col" con-id="hotel">Hotel</th>
-                        <th class="search-col" con-id="cancellation-days">Cancellation Days</th>
+                        <th class="search-col" con-id="first-cancellation-day">First Cancellation Day</th>
+                        <th class="search-col" con-id="second-cancellation-day">Second Cancellation Day</th>
                         <th class="search-col" con-id="breakfast-fees">Breakfast Fees</th>
                         <th class="search-col" con-id="extrabed-fees">Extrabed Fees</th>
                         <th class="search-col" con-id="tax">Tax</th>
@@ -63,7 +65,8 @@
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $h_config->id }}" id="all"></td>
                             <td><a href="/backend/hotel_config/edit/{{$h_config->id}}">{{$h_config->hotel->name}}</a></td>
-                            <td>{{$h_config->cancellation_days }}</td>
+                            <td>{{$h_config->first_cancellation_day }}</td>
+                            <td>{{$h_config->second_cancellation_day }}</td>
                             <td>{{$h_config->breakfast_fees }}</td>
                             <td>{{$h_config->extrabed_fees }}</td>
                             <td>{{$h_config->tax }}</td>
@@ -94,7 +97,7 @@
                     [5,25, 50, 100, 200, "All"]
                 ],
                 iDisplayLength: 5,
-                "order": [[ 2, "desc" ]],
+//                "order": [[ 2, "desc" ]],
                 stateSave: false,
                 "pagingType": "full",
                 "dom": '<"pull-right m-t-20"i>rt<"bottom"lp><"clear">',
