@@ -88,7 +88,9 @@
                                                         @if($booking->status == 1)
                                                             <a class="bookinglist-manage" href="#">{{$booking->button_status}}</a>
                                                         @elseif($booking->status == 2)
-                                                            <a class="bookinglist-manage" href="#">{{$booking->button_status}}</a>
+                                                            <a class="bookinglist-manage" href="#" onclick='manage("{{$booking->id}}")'>
+                                                                {{$booking->button_status}}
+                                                            </a>
                                                         @else
                                                             <a class="bookinglist-primary" href="#">{{$booking->button_status}}</a>
                                                         @endif
@@ -172,6 +174,11 @@
         $(document).ready(function(){
             //
         });
+    </script>
+    <script>
+        function manage(id) {
+            window.location ='/booking/manage/' + id;
+        }
     </script>
 
 @stop

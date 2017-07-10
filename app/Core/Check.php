@@ -6,6 +6,7 @@
  * Time: 10:42 AM
  */
 use App\Core\Config\ConfigRepository;
+use App\Setup\Booking\BookingRepository;
 use Validator;
 use Auth;
 use App\Http\Requests;
@@ -121,6 +122,17 @@ class Check
         $repo         = new UserRepository();
         $tempCustomer = $repo->getObjByID($id);
         session(['customer' =>$tempCustomer->toArray()]);
+    }
+
+    public static function checkBookingByUserId($b_id,$u_id){
+        $repo                           = new BookingRepository();
+        $bookings                       = $repo->getBookingByBookIdAndUserId($b_id,$u_id);
+        $result['aceplusStatusCode']    = ReturnMessage::UNAUTHORIZED;
+
+        if(isset($bookings) && count($bookings) > 0){
+            $result['aceplusStatusCode']    = ReturnMessage::OK;
+        }
+        return $result;
     }
 
 
