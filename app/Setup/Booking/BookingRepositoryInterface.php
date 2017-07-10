@@ -15,4 +15,5 @@ interface BookingRepositoryInterface
     public function getBookingRoomByCustomerId($id);
     public function create($paramObj);
     public function getBookingById($id);
+    public function getBookingByBookIdAndUserId($b_id,$u_id);
 }

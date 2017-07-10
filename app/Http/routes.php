@@ -53,6 +53,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/book_and_pay', 'Frontend\PaymentController@bookAndPay');
     Route::get('/congratulations', 'Frontend\PaymentController@congratulations');
 
+    //Manage Booking
+    Route::get('booking/manage/{id}',['as'=>'booking/manage','uses'=>'Frontend\BookingController@manage']);
+
     //Backend
     Route::group(['prefix' => 'backend'], function () {
 

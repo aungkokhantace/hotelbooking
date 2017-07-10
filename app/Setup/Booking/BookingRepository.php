@@ -86,4 +86,13 @@ class BookingRepository implements BookingRepositoryInterface
 
         return $result;
     }
+
+    public function getBookingByBookIdAndUserId($b_id,$u_id){
+        $result     = Booking::where('user_id',$u_id)
+                             ->where('id',$b_id)
+                             ->whereNull('deleted_at')
+                             ->get();
+
+        return $result;
+    }
 }
