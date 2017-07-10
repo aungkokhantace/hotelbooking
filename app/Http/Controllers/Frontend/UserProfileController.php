@@ -52,7 +52,7 @@ class UserProfileController extends Controller
             return redirect()->action('Frontend\UserProfileController@showMyProfile');
         }
         else{
-            alert()->error('Opppp!!!Something Wrong :(', 'Error')->persistent('CLOSE');;
+            alert()->error('Opppp!!!Something Wrong :(', 'Error')->persistent('CLOSE');
             return redirect()->action('Frontend\UserProfileController@showMyProfile');
         }
 

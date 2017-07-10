@@ -26,12 +26,14 @@ class UserRegistrationController extends Controller
         if($request->ajax()) {
             $f_name                         = trim(Input::get('first_name'));
             $l_name                         = trim(Input::get('last_name'));
+            $display_name                   = $f_name.' '.$l_name;
             $email                          = trim(Input::get('email'));
             $pwd                            = bcrypt(trim(Input::get('password')));
 
             $paramObj                       = new User();
             $paramObj->first_name           = $f_name;
             $paramObj->last_name            = $l_name;
+            $paramObj->display_name         = $display_name;
             $paramObj->email                = $email;
             $paramObj->password             = $pwd;
             $paramObj->role_id              = 4;

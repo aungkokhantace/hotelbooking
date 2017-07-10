@@ -57,19 +57,22 @@ class LoginController extends Controller
                 if($auth->attempt($credentials)){
                     $id = Auth::guard('Customer')->id();
                     Check::createSessionCustomer($id);
-                    $result = ['Status 200'];
+                    $response['aceplusStatusCode']  = '200';
                 }
                 else{
-                    $result = ['Status 401'];
+                    $response['aceplusStatusCode']  = '401';
                     session(['auth-error' => 'The email address or password is incorrect!']);
                 }
-                return \Response::json($result);
 
             }else{
-                $result = ['Status 401'];
-                return \Response::json($result);
+                $response['aceplusStatusCode']  = '401';
             }
         }
+        else{
+            $response['aceplusStatusCode']  = '202';
+        }
+        return \Response::json($response);
+
     }
 
     protected function getFailedLoginMessage()

@@ -105,13 +105,24 @@ class BookingRepository implements BookingRepositoryInterface
         return $objs;
     }
 
-    public function checkHasPermission($id,$h_id) {
-        $hasPermission      = DB::select("SELECT count(id) as rowCount FROM bookings WHERE id = '$id' AND hotel_id = '$h_id' AND deleted_at IS  NULL");
-        $count              = $hasPermission[0]->rowCount;
+    public function checkHasPermission($id,$h_id)
+    {
+        $hasPermission = DB::select("SELECT count(id) as rowCount FROM bookings WHERE id = '$id' AND hotel_id = '$h_id' AND deleted_at IS  NULL");
+        $count = $hasPermission[0]->rowCount;
         if ($count > 0) {
             return true;
         } else {
             return false;
         }
+    }
+
+    public function getBookingByBookIdAndUserId($b_id,$u_id){
+        $result     = Booking::where('user_id',$u_id)
+                             ->where('id',$b_id)
+                             ->whereNull('deleted_at')
+                             ->get();
+
+        return $result;
+
     }
 }

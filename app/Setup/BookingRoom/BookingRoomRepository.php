@@ -11,6 +11,7 @@ namespace App\Setup\BookingRoom;
 
 use App\Core\ReturnMessage;
 use App\Log\LogCustom;
+use Illuminate\Support\Facades\DB;
 
 class BookingRoomRepository implements BookingRoomRepositoryInterface
 {
@@ -55,6 +56,21 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
     public function getBookingRoomByBookingId($id){
         $result     = BookingRoom::whereNull('deleted_at')->where('booking_id','=',$id)->get();
 
+        return $result;
+    }
+
+    public function getBookingRoomAndRoomByBookingId($id){
+        $result = DB::select("SELECT booking_room.*,h_room_type.name as room_type,h_room_category.name as room_category
+                              FROM booking_room
+                              JOIN rooms
+                              ON booking_room.room_id = rooms.id
+                              JOIN h_room_type
+                              ON rooms.h_room_type_id = h_room_type.id
+                              JOIN h_room_category
+                              ON rooms.h_room_category_id = h_room_category.id
+                              WHERE booking_room.booking_id = $id
+
+                            ");
         return $result;
     }
 }
