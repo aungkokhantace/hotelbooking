@@ -81,7 +81,7 @@
                                         <div class="payment_formtitle">
                                             <!-- First Blog Post Left -->
                                             <div class="payment_list">
-                                                <h4>Enter Your Details</h4>
+                                                <h4>Enter Your Details (Please sign in to continue!!)</h4>
                                             </div>
                                             <!-- First Blog Post Right -->
                                             <div class="payment_right">
@@ -122,25 +122,41 @@
                                                 <div class="payment_formgroup">
                                                     <div class="col-sm-3 pd_rg_10">
                                                         <label>First Name <span style="color:red;">*</span></label>
-                                                        <input type="text" class="formcontrols" id="first_name" name="first_name">
+                                                        @if(\Illuminate\Support\Facades\Session::has('customer'))
+                                                            <input type="text" class="formcontrols" id="first_name" name="first_name">
+                                                        @else
+                                                            <input type="text" class="formcontrols" id="first_name" name="first_name" disabled>
+                                                        @endif
                                                     </div>
                                                     <div class="col-sm-3 pd_lf_5">
                                                         <label>Last Name <span style="color:red;">*</span></label>
-                                                        <input type="text" class="formcontrols" id="last_name" name="last_name">
+                                                        @if(\Illuminate\Support\Facades\Session::has('customer'))
+                                                            <input type="text" class="formcontrols" id="last_name" name="last_name">
+                                                        @else
+                                                            <input type="text" class="formcontrols" id="last_name" name="last_name" disabled>
+                                                        @endif
                                                     </div>
                                                 </div>
 
                                                 <div class="payment_formgroup">
                                                     <div class="col-sm-6 pd_rg_10">
                                                         <label>Email Address <span style="color:red;">*</span></label>
-                                                        <input type="email" class="formcontrols" id="email_address" name="email">
+                                                        @if(\Illuminate\Support\Facades\Session::has('customer'))
+                                                            <input type="email" class="formcontrols" id="email_address" name="email">
+                                                        @else
+                                                            <input type="email" class="formcontrols" id="email_address" name="email" disabled>
+                                                        @endif
                                                     </div>
                                                 </div>
 
                                                 <div class="payment_formgroup">
                                                     <div class="col-sm-6 pd_rg_10">
                                                         <label>Confirm Email Address <span style="color:red;">*</span></label>
-                                                        <input type="email" class="formcontrols" id="confirm_email" name="confirm_email">
+                                                        @if(\Illuminate\Support\Facades\Session::has('customer'))
+                                                            <input type="email" class="formcontrols" id="confirm_email" name="confirm_email">
+                                                        @else
+                                                            <input type="email" class="formcontrols" id="confirm_email" name="confirm_email" disabled>
+                                                        @endif
                                                     </div>
                                                 </div>
 
@@ -158,8 +174,8 @@
                                                                 <label class="col-sm-4 col-form-labels">Guests</label>
                                                                 <div class="col-sm-8 pd_rg_10">
                                                                     <select class="col-sm-12 pd_rg_12 formcontrols" name="{{$available_room_category->id."_".($i+1)."_guest"}}">
-                                                                        @for($i=0; $i<$available_room_category->capacity; $i++)
-                                                                            <option value="{{$i+1}}">{{$i+1}}</option>
+                                                                        @for($j=0; $j<$available_room_category->capacity; $j++)
+                                                                            <option value="{{$j+1}}">{{$j+1}}</option>
                                                                         @endfor
                                                                     </select>
                                                                 </div>
@@ -178,8 +194,8 @@
                                                                 <label class="col-sm-4 col-form-labels">Extrabed</label>
                                                                 <div class="col-sm-8 pd_rg_10">
                                                                     <select class="col-sm-12 pd_rg_12 formcontrols" name="{{$available_room_category->id."_".($i+1)."_extrabed"}}">
+                                                                        <option value="no">No</option>
                                                                         <option value="yes">Yes</option>
-                                                                        <option value="no" selected>No</option>
                                                                     </select>
                                                                 </div>
                                                             </div>

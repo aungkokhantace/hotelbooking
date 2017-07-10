@@ -19,8 +19,15 @@
                 @else
                     <td width="80%">{{$totalRooms}} room</td>
                 @endif
-                <td>{{session('total_amount')}} MMK</td>
+{{--                <td>{{session('total_amount')}} MMK</td>--}}
+                <td>{{session('total_payable_amount_wo_extrabed')}} MMK</td>
             </tr>
+            @if((Session::has('total_extrabed_fee')))
+            <tr>
+                <td width="80%">Extrabed Price</td>
+                <td>{{session('total_extrabed_fee')}} MMK</td>
+            </tr>
+            @endif
             <tr>
                 <td width="80%">{{session('tax')}}% TAX</td>
                 <td>{{session('tax_amount')}} MMK</td>

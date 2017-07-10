@@ -130,6 +130,17 @@ class PaymentController extends Controller
         Session::forget('tax');
         Session::forget('tax_amount');
         Session::forget('payable_amount');
+//        Session::forget('total_payable_amount_w_extrabed');
+        Session::forget('total_payable_amount_wo_extrabed');
+        Session::forget('total_extrabed_fee');
+
+        $total_payable_amount_wo_extrabed = 0.00;
+        $total_payable_amount_wo_extrabed = $total_amount;
+
+        if(isset($total_payable_amount_wo_extrabed) && $total_payable_amount_wo_extrabed != 0.00){
+            session(['total_payable_amount_wo_extrabed' => $total_payable_amount_wo_extrabed]);
+        }
+
 
         if(isset($total_amount) && $total_amount != null && $total_amount != ""){
             session(['total_amount' => $total_amount]);
@@ -204,6 +215,7 @@ class PaymentController extends Controller
         Session::forget('special_request');
 
         Session::forget('total_amount');
+        Session::forget('tax_amount');
 
 
         //store general data fields in session
@@ -240,6 +252,8 @@ class PaymentController extends Controller
         $smoking_array  = array();
         $name_array     = array();
         $email_array    = array();
+        $extrabed_array = array();
+        $extrabed_fee_array = array();
 
         if(isset($available_room_categories) && count($available_room_categories)){
             foreach($available_room_categories as $category){
@@ -265,6 +279,11 @@ class PaymentController extends Controller
                         $extrabed_array[$category->id."_".($i+1)] = $temp_extrabed;
                         //store in session
                         session([$category->id."_".($i+1)."_extrabed" => $temp_extrabed]);
+                        //if extrabed value is yes, store extrabed fee in extrabed_fee_array()
+                        if($temp_extrabed == "yes"){
+                            array_push($extrabed_fee_array,$category->extra_bed_price);
+                        }
+
 
                         //for name array
                         Session::forget($category->id."_".($i+1)."_name");  //forget old session
@@ -283,7 +302,6 @@ class PaymentController extends Controller
                 }
             }
         }
-
 
         if(isset($booking_taxi)){
             session(['booking_taxi' => $booking_taxi]);
@@ -348,6 +366,14 @@ class PaymentController extends Controller
             }
         }
 
+        //calculate total extrabed fees
+        $total_extrabed_fee = 0.0;
+        foreach($extrabed_fee_array as $extrabed_fee){
+            $total_extrabed_fee += $extrabed_fee;
+        }
+        //save in session
+        session(['total_extrabed_fee' => $total_extrabed_fee]);
+
         //calculate total amount
         $total_amount = 0.0;
         foreach($available_room_categories as $available_room_category_amount){
@@ -359,6 +385,41 @@ class PaymentController extends Controller
 
         //save in session
         session(['total_amount' => $total_amount]);
+
+        //calculate total payable amount including extrabed
+        $total_payable_amount_w_extrabed = 0.00;
+        $total_payable_amount_wo_extrabed = 0.00;
+        $total_payable_amount_wo_extrabed = $total_amount;
+        $total_payable_amount_w_extrabed = $total_amount + $total_extrabed_fee;
+
+        $tax = 0.0;
+        $hotelConfigRepo = new HotelConfigRepository();
+        $hotel_config = $hotelConfigRepo->getConfigByHotel($hotel_id);
+        if(isset($hotel_config) && count($hotel_config) > 0){
+            $tax = $hotel_config->tax;
+        }
+        $tax_amount = ($tax / 100) * $total_payable_amount_w_extrabed;
+        $payable_amount = $total_payable_amount_w_extrabed + $tax_amount;
+
+        if(isset($total_payable_amount_w_extrabed) && $total_payable_amount_w_extrabed != 0.00){
+            session(['total_payable_amount_w_extrabed' => $total_payable_amount_w_extrabed]);
+        }
+
+        if(isset($total_payable_amount_wo_extrabed) && $total_payable_amount_wo_extrabed != 0.00){
+            session(['total_payable_amount_wo_extrabed' => $total_payable_amount_wo_extrabed]);
+        }
+
+        if(isset($tax_amount) && $tax_amount != 0.00){
+            session(['tax_amount' => $tax_amount]);
+        }
+
+        if(isset($total_extrabed_fee) && $total_extrabed_fee != 0.00){
+            session(['total_extrabed_fee' => $total_extrabed_fee]);
+        }
+
+        if(isset($payable_amount) && $payable_amount != 0.00){
+            session(['payable_amount' => $payable_amount]);
+        }
 
         return view('frontend.confirm_reservation')
             ->with('available_room_category_array',$available_room_categories)
@@ -380,7 +441,7 @@ class PaymentController extends Controller
         $hotel = $hotelRepo->getObjByID($hotel_id);
 
         $user_id = session('customer')['id'];
-        $status = 1; //pending
+        $status = 2; //confirm
         $check_in_date_session = session('check_in');
         $check_out_date_session = session('check_out');
 
@@ -438,7 +499,7 @@ class PaymentController extends Controller
                     foreach ($booked_rooms as $key => $booked_room) {
                         $booking_id = $booking_result["object"]->id;
                         $room_id = $booked_room['id'];
-                        $room_status = 1; //pending
+                        $room_status = 2; //confirm
                         $remark = "";
                         $added_extra_bed = 0;
                         $extra_bed_price = 0.0;
@@ -448,10 +509,22 @@ class PaymentController extends Controller
                         $user_email = session($r_category->id . '_' . ($key + 1) . '_email');
                         $guest_count = session($r_category->id . '_' . ($key + 1) . '_guest');
                         $smoking_session = session($r_category->id . '_' . ($key + 1) . '_smoking');
+                        $extrabed_session = session($r_category->id . '_' . ($key + 1) . '_extrabed');
+
                         if ($smoking_session == "yes") {
                             $smoking = 1;
                         } else {
                             $smoking = 0;
+                        }
+
+                        if ($extrabed_session == "yes") {
+                            $added_extra_bed = 1;
+                        } else {
+                            $added_extra_bed = 0;
+                        }
+
+                        if($added_extra_bed == 1){
+                            $extra_bed_price = $r_category->extra_bed_price;
                         }
 
                         //create booking room obj
@@ -562,11 +635,11 @@ class PaymentController extends Controller
             $customer_id = $customer['id'];
 
             // Charge the Customer instead of the card:
-            /*$charge = Charge::create(array(
+            $charge = Charge::create(array(
                 "amount" => $payable_amount,
                 "currency" => "mmk",
                 "customer" => $customer_id
-            )); */
+            ));
 
             //Insert Stripe Customer
     //        DB::table('stripe_user')->insert(['stripe_user_id'=>$customer_id,'email'=>$email,'status'=>1]);
