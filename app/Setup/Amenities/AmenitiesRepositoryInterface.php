@@ -17,4 +17,5 @@ interface AmenitiesRepositoryInterface
     public function getObjByID($id);
     public function delete($id);
     public function getArrays();
+    public function getAmenitiesByRoomCategoryId($id_arr);
 }

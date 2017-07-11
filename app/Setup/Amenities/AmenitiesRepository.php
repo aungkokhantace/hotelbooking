@@ -117,4 +117,16 @@ class AmenitiesRepository implements AmenitiesRepositoryInterface
         $role = Amenity::find($id);
         return $role;
     }
+
+    public function getAmenitiesByRoomCategoryId($id_arr){
+        $id     = implode("','",$id_arr);
+        $result = DB::select("SELECT amenities.name,amenities.description, r_category_amenities.room_category_id
+                              FROM r_category_amenities
+                              JOIN amenities
+                              ON r_category_amenities.amenity_id = amenities.id
+                              WHERE r_category_amenities.room_category_id IN ('$id')
+                              AND amenities.deleted_at IS NULL");
+
+        return $result;
+    }
 }
