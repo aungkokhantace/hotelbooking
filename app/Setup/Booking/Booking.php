@@ -43,4 +43,9 @@ class Booking extends Model
     public function user(){
         return $this->belongsTo('App\User');
     }
+
+    public function booking_stripe() 
+    {
+        return $this->hasOne('App\Setup\BookingPaymentStripe\BookingPaymentStripe', 'booking_id','id');
+    }
 }

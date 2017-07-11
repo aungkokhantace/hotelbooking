@@ -349,8 +349,7 @@
             </li>
 
             @if (Auth::guard('User')->user()->role_id == 1)
-            <li  nav-id='modifier'  class="has-sub">
-                <a hrefaa<li  nav-id='modifier'  class="has-sub">
+            <li  nav-id='modifier' class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="fa fa-users"></i>
