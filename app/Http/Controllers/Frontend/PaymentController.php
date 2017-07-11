@@ -441,7 +441,7 @@ class PaymentController extends Controller
         $hotel = $hotelRepo->getObjByID($hotel_id);
 
         $user_id = session('customer')['id'];
-        $status = 2; //confirm
+
         $check_in_date_session = session('check_in');
         $check_out_date_session = session('check_out');
 
@@ -452,7 +452,44 @@ class PaymentController extends Controller
         $check_in_time = $hotel->check_in_time;
         $check_out_time = $hotel->check_out_time;
         $total_amount = session('total_amount');
+        $tax_amount = session('tax_amount');
+        $tax_percent = session('tax');
+
+        $total_payable_amount_w_extrabed  = session('total_payable_amount_w_extrabed');
+        $total_payable_amount_wo_extrabed = session('total_payable_amount_wo_extrabed');
+        $payable_amount                   = session('payable_amount');
+
         $travel_for_work = session('travel_for_work');
+
+
+        //start checking cancellation dates
+        $hotelConfigRepo = new HotelConfigRepository();
+        $h_config = $hotelConfigRepo->getConfigByHotel($hotel_id);
+        $first_cancellation_day_count = $h_config->first_cancellation_day_count;
+        $second_cancellation_day_count = $h_config->second_cancellation_day_count;
+
+        //calculate the day to be charged by subtracting first_cancellation_date
+        $today_date = date("Y-m-d");   //today's date
+//        $check_in_date = $booking_result['object']->check_in_date;
+
+        $date = strtotime(date("Y-m-d", strtotime($check_in_date)) . "-".$first_cancellation_day_count."days");   //date to be charged //after subtracting 1st cancellation date
+        $charge_date = date("Y-m-d",$date); //re-format the date
+        //end checking cancellation dates
+
+        //Compare today date with charge_date and if today is greater than charge_date(i.e. today is within first cancellation day), charge the customer
+        if($today_date > $charge_date){
+            $status = 5; //today is within cancellation date and so, user will be charged immediately and booking_status will be "complete"
+        }
+        else{
+            $status = 2; //booking_status = "confirm"
+        }
+
+        //////////////////////////////////////////////////
+//        $available_room_categories = session('available_room_categories');
+
+//        $roomRepo = New RoomRepository();
+        //get rooms that are within available_period and not within black_out period and not booked
+//        $rooms    = $roomRepo->getRoomCountByRoomCategoryId($r_category->id,$check_in,$check_out);
 
         try{
             DB::beginTransaction();
@@ -464,11 +501,11 @@ class PaymentController extends Controller
             $bookingObj->check_out_date = $check_out_date;
             $bookingObj->check_in_time = $check_in_time;
             $bookingObj->check_out_time = $check_out_time;
-            $bookingObj->price_wo_tax = $total_amount;
-            $bookingObj->price_w_tax = $total_amount;
-            $bookingObj->total_tax_amt = 0.0;
-            $bookingObj->total_tax_percentage = 0;
-            $bookingObj->total_payable_amt = $total_amount;
+            $bookingObj->price_wo_tax = $total_payable_amount_w_extrabed;
+            $bookingObj->price_w_tax = $payable_amount;
+            $bookingObj->total_tax_amt = $tax_amount;
+            $bookingObj->total_tax_percentage = $tax_percent;
+            $bookingObj->total_payable_amt = $payable_amount;
             $bookingObj->total_discount_amt = 0.0;
             $bookingObj->total_discount_percentage = 0;
             $bookingObj->hotel_id = $hotel_id;
@@ -634,18 +671,22 @@ class PaymentController extends Controller
 
             $customer_id = $customer['id'];
 
-            // Charge the Customer instead of the card:
-            $charge = Charge::create(array(
-                "amount" => $payable_amount,
-                "currency" => "mmk",
-                "customer" => $customer_id
-            ));
+            //Compare today date with charge_date and if today is greater than charge_date(i.e. today is within first cancellation day), charge the customer
+            if($today_date > $charge_date){
+                // Charge the Customer
+                $charge = Charge::create(array(
+                    "amount" => $payable_amount,
+                    "currency" => "mmk",
+                    "customer" => $customer_id
+                ));
+
+            }
 
             //Insert Stripe Customer
     //        DB::table('stripe_user')->insert(['stripe_user_id'=>$customer_id,'email'=>$email,'status'=>1]);
 
             $paymentObj = new Payment();
-            $paymentObj->name = "Payment Name";
+            $paymentObj->name = "Stripe Payment";
             $paymentObj->type = 1;
             $paymentObj->description = "";
 
@@ -662,14 +703,14 @@ class PaymentController extends Controller
             else{
                 $payment_id = $payment_result["object"]->id;
                 $bookingPaymentObj = new BookingPayment();
-                $bookingPaymentObj->payment_amount_wo_tax = $total_amount;
+                $bookingPaymentObj->payment_amount_wo_tax = $total_payable_amount_w_extrabed;
                 $bookingPaymentObj->payment_amount_w_tax = $payable_amount;
                 $bookingPaymentObj->description = "";
                 $bookingPaymentObj->booking_id = $booking_id;
                 $bookingPaymentObj->payment_id = $payment_id;
                 $bookingPaymentObj->payment_gateway_tax_amt = 0.0;
                 $bookingPaymentObj->status = 1;
-                $bookingPaymentObj->payment_tax_percentage = $tax;
+                $bookingPaymentObj->payment_tax_percentage = $tax_percent;
                 $bookingPaymentObj->payment_tax_amt = $tax_amount;
                 $bookingPaymentObj->total_payable_amt = $payable_amount;
                 $bookingPaymentObj->payment_reference_no = null;

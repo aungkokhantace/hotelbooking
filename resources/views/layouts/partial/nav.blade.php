@@ -428,7 +428,10 @@
                     </li>
                     @endif
                 </ul>
-            </li>="javascript:;">
+            </li>
+
+            <li nav-id="modifier-create" class="has-sub">
+                <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="fa fa-users"></i>
                     <span>Room Availability Management</span>

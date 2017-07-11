@@ -2,9 +2,9 @@
 <label class="control-label" for="destination">Destination</label>
 <div class="col-10 input-group">
     @if(Session::has('destination'))
-        <input class="form-control font_sz_11" type="text" id="destination" name="destination" value="{{session('destination')}}">
+        <input class="form-control font_sz_11" type="text" id="destination" name="destination" value="{{session('destination')}}" autocomplete="off">
     @else
-        <input class="form-control font_sz_11" type="text" id="destination" name="destination" value="">
+        <input class="form-control font_sz_11" type="text" id="destination" name="destination" value="" autocomplete="off">
     @endif
     <div class="input-group-addon">
         <i class="fa fa-plane" aria-hidden="true"></i>
@@ -15,9 +15,9 @@
 <label class="control-label" for="check_in">Check In</label>
 <div class="col-10 input-group date" data-provide="datepicker" id="check_in">
     @if(Session::has('check_in'))
-        <input type="text" class="form-control" name="check_in" value="{{session('check_in')}}">
+        <input type="text" class="form-control" name="check_in" value="{{session('check_in')}}" autocomplete="off">
     @else
-        <input type="text" class="form-control" name="check_in" value="">
+        <input type="text" class="form-control" name="check_in" value="" autocomplete="off">
     @endif
     <div class="input-group-addon">
         <span class="glyphicon glyphicon-calendar"></span>
@@ -26,9 +26,9 @@
 <label class="control-label" for="check_out">Check Out</label>
 <div class="col-10 input-group date" data-provide="datepicker" id="check_out">
     @if(Session::has('check_out'))
-        <input type="text" class="form-control" name="check_out" value="{{session('check_out')}}">
+        <input type="text" class="form-control" name="check_out" value="{{session('check_out')}}" autocomplete="off">
     @else
-        <input type="text" class="form-control" name="check_out" value="">
+        <input type="text" class="form-control" name="check_out" value="" autocomplete="off">
     @endif
     <div class="input-group-addon">
         <span class="glyphicon glyphicon-calendar"></span>

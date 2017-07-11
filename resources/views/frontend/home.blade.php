@@ -62,7 +62,7 @@
                     <div class="form-group row">
                         <label class="control-label" for="check_in">Check In</label>
                         <div class="col-10 input-group date" data-provide="datepicker" id="check_in">
-                            <input type="text" class="form-control" name="check_in">
+                            <input type="text" class="form-control" name="check_in" autocomplete="off">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </div>
@@ -71,7 +71,7 @@
                     </div>
                     <div class="form-group row">
                         <label class="control-label" for="check_out">Check Out</label>
-                        <div class="col-10 input-group date" data-provide="datepicker" id="check_out">
+                        <div class="col-10 input-group date" data-provide="datepicker" id="check_out" autocomplete="off">
                             <input type="text" class="form-control" name="check_out">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>

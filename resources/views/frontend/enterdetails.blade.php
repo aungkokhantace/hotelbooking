@@ -81,7 +81,11 @@
                                         <div class="payment_formtitle">
                                             <!-- First Blog Post Left -->
                                             <div class="payment_list">
-                                                <h4>Enter Your Details (Please sign in to continue!!)</h4>
+                                                @if(\Illuminate\Support\Facades\Session::has('customer'))
+                                                    <h4>Enter Your Details</h4>
+                                                @else
+                                                    <h4>Enter Your Details (Please sign in to continue!!)</h4>
+                                                @endif
                                             </div>
                                             <!-- First Blog Post Right -->
                                             <div class="payment_right">
@@ -123,7 +127,7 @@
                                                     <div class="col-sm-3 pd_rg_10">
                                                         <label>First Name <span style="color:red;">*</span></label>
                                                         @if(\Illuminate\Support\Facades\Session::has('customer'))
-                                                            <input type="text" class="formcontrols" id="first_name" name="first_name">
+                                                            <input type="text" class="formcontrols" id="first_name" name="first_name" autocomplete="off">
                                                         @else
                                                             <input type="text" class="formcontrols" id="first_name" name="first_name" disabled>
                                                         @endif
@@ -131,7 +135,7 @@
                                                     <div class="col-sm-3 pd_lf_5">
                                                         <label>Last Name <span style="color:red;">*</span></label>
                                                         @if(\Illuminate\Support\Facades\Session::has('customer'))
-                                                            <input type="text" class="formcontrols" id="last_name" name="last_name">
+                                                            <input type="text" class="formcontrols" id="last_name" name="last_name" autocomplete="off">
                                                         @else
                                                             <input type="text" class="formcontrols" id="last_name" name="last_name" disabled>
                                                         @endif
@@ -142,7 +146,7 @@
                                                     <div class="col-sm-6 pd_rg_10">
                                                         <label>Email Address <span style="color:red;">*</span></label>
                                                         @if(\Illuminate\Support\Facades\Session::has('customer'))
-                                                            <input type="email" class="formcontrols" id="email_address" name="email">
+                                                            <input type="email" class="formcontrols" id="email_address" name="email" autocomplete="off">
                                                         @else
                                                             <input type="email" class="formcontrols" id="email_address" name="email" disabled>
                                                         @endif
@@ -153,7 +157,7 @@
                                                     <div class="col-sm-6 pd_rg_10">
                                                         <label>Confirm Email Address <span style="color:red;">*</span></label>
                                                         @if(\Illuminate\Support\Facades\Session::has('customer'))
-                                                            <input type="email" class="formcontrols" id="confirm_email" name="confirm_email">
+                                                            <input type="email" class="formcontrols" id="confirm_email" name="confirm_email" autocomplete="off">
                                                         @else
                                                             <input type="email" class="formcontrols" id="confirm_email" name="confirm_email" disabled>
                                                         @endif
@@ -211,10 +215,10 @@
                                                         <div class="payment_formgroup">
                                                             <div class="col-sm-6 pd_rg_10">
                                                                 {{--<input type="text" class="formcontrols" id="name" placeholder="First name, Last name">--}}
-                                                                <input type="text" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_name"}}" name="{{$available_room_category->id."_".($i+1)."_name"}}" placeholder="First name, Last name">
+                                                                <input type="text" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_name"}}" name="{{$available_room_category->id."_".($i+1)."_name"}}" placeholder="First name, Last name" autocomplete="off">
                                                             </div>
                                                             <div class="col-sm-6 pd_lf_5">
-                                                                <input type="email" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_email"}}" name="{{$available_room_category->id."_".($i+1)."_email"}}" placeholder="Email Address" >
+                                                                <input type="email" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_email"}}" name="{{$available_room_category->id."_".($i+1)."_email"}}" placeholder="Email Address"  autocomplete="off">
                                                             </div>
                                                         </div>
                                                         <div class="checkbox">
@@ -345,7 +349,7 @@
                                             <div class="paymentformgroups">
                                                 <div class="col-sm-6 pd_rg_10">
                                                     <label>Country<span style="color:red;">*</span></label>
-                                                    <input type="text" class="formcontrols" id="country">
+                                                    <input type="text" class="formcontrols" id="country" autocomplete="off">
                                                     <span style="padding:5px;">No address needed for this reservation</span>
                                                 </div>
                                             </div>
@@ -353,7 +357,7 @@
                                                 <div class="col-sm-6 pd_rg_10">
                                                     <label>Telephone (mobile number preferred) <span style="color:red;">*</span></label>
                                                     <div class="col-10 input-group">
-                                                        <input id="phone" class="formcontrols font_sz_11" type="text" value="" id="destination">
+                                                        <input id="phone" class="formcontrols font_sz_11" type="text" value="" autocomplete="off">
                                                         <div class="input-group-addons">
                                                             <i class="fa fa-check" aria-hidden="true"></i>
                                                         </div>
