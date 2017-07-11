@@ -12,7 +12,9 @@ namespace App\Setup\HotelConfig;
 use App\Core\ReturnMessage;
 use App\Core\Utility;
 use App\Log\LogCustom;
+use App\Setup\Hotel\Hotel;
 use Illuminate\Support\Facades\DB;
+
 
 class HotelConfigRepository implements HotelConfigRepositoryInterface
 {
@@ -136,6 +138,19 @@ class HotelConfigRepository implements HotelConfigRepositoryInterface
 
 //        $result = DB::select("SELECT cancellation_days FROM h_config WHERE IN");
 
+        return $result;
+    }
+
+    public function getFirstCancellationDayCountHotelConfig($hotel_id)
+    {
+        $objs     = HotelConfig::select('first_cancellation_day')->where('hotel_id',$hotel_id)->
+                    whereNull('deleted_at')->first();
+        return $objs;
+    }
+
+    public function getEmailByHotelId($hotel_id)
+    {
+        $result   = Hotel::select('email')->where('id',$hotel_id)->whereNull('deleted_at')->first();
         return $result;
     }
 }
