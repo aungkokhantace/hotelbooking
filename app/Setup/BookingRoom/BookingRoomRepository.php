@@ -60,7 +60,11 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
     }
 
     public function getBookingRoomAndRoomByBookingId($id){
-        $result = DB::select("SELECT booking_room.*,h_room_type.name as room_type,h_room_category.name as room_category
+        $result = DB::select("SELECT booking_room.*,
+                                     h_room_type.name as room_type,
+                                     h_room_category.name as room_category,
+                                     rooms.h_room_category_id,
+                                     r_category_image.img_path as category_image
                               FROM booking_room
                               JOIN rooms
                               ON booking_room.room_id = rooms.id
@@ -68,9 +72,11 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
                               ON rooms.h_room_type_id = h_room_type.id
                               JOIN h_room_category
                               ON rooms.h_room_category_id = h_room_category.id
+                              JOIN r_category_image
+                              ON h_room_category.id = r_category_image.h_room_category_id
                               WHERE booking_room.booking_id = $id
-
                             ");
+
         return $result;
     }
 }

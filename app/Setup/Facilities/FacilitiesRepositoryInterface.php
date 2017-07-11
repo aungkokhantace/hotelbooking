@@ -19,4 +19,5 @@ interface FacilitiesRepositoryInterface
     public function getArrays();
     public function getObjsForHotel();
     public function getObjsForRoom();
+    public function getFacilitiesByRoomCategoryId($id_arr);
 }

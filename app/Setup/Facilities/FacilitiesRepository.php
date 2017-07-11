@@ -128,5 +128,17 @@ class FacilitiesRepository implements FacilitiesRepositoryInterface
         return $objs;
     }
 
+    public function getFacilitiesByRoomCategoryId($id_arr){
+        $id     = implode("','",$id_arr);
+        $result = DB::select("SELECT facilities.name,facilities.description,r_category_facilities.h_room_category_id
+                              FROM facilities
+                              JOIN r_category_facilities
+                              ON facilities.id = r_category_facilities.facility_id
+                              WHERE r_category_facilities.h_room_category_id IN ('$id')
+                              AND facilities.type = 2
+                              AND facilities.deleted_at IS NULL");
+
+        return $result;
+    }
 
 }
