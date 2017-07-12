@@ -44,6 +44,7 @@
                         <th>{{trans('setup_room.tb-col-room-view')}}</th>
                         <th>{{trans('setup_room.tb-col-name')}}</th>
                         <th>{{trans('setup_room.tb-col-status')}}</th>
+                        <th>{{trans('setup_room.tb-col-apply-cutoff-date')}}</th>
                     </tr>
                     </thead>
                     <tfoot>
@@ -55,6 +56,7 @@
                         <th class="search-col" con-id="room_view">Room View</th>
                         <th class="search-col" con-id="name">Name</th>
                         <th class="search-col" con-id="status">Status</th>
+                        <th class="search-col" con-id="status">Apply Cutoff Date</th>
 
                     </tr>
                     </tfoot>
@@ -68,6 +70,7 @@
                             <td>{{$room->room_view->name}}</td>
                             <td><a href="/backend/room/edit/{{$room->id}}">{{$room->name}}</a></td>
                             <td>{{$room->status==1?'Available':'Non Available'}}</td>
+                            <td>{{$room->apply_cutoff_date==1?'Yes':'No'}}</td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -95,7 +98,7 @@
                     [5,25, 50, 100, 200, "All"]
                 ],
                 iDisplayLength: 5,
-                "order": [[ 2, "desc" ]],
+//                "order": [[ 2, "desc" ]],
                 stateSave: false,
                 "pagingType": "full",
                 "dom": '<"pull-right m-t-20"i>rt<"bottom"lp><"clear">',

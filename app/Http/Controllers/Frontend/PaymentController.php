@@ -477,7 +477,7 @@ class PaymentController extends Controller
         //end checking cancellation dates
 
         //Compare today date with charge_date and if today is greater than charge_date(i.e. today is within first cancellation day), charge the customer
-        if($today_date > $charge_date){
+        if($today_date >= $charge_date){
             $status = 5; //today is within cancellation date and so, user will be charged immediately and booking_status will be "complete"
         }
         else{
@@ -672,7 +672,7 @@ class PaymentController extends Controller
             $customer_id = $customer['id'];
 
             //Compare today date with charge_date and if today is greater than charge_date(i.e. today is within first cancellation day), charge the customer
-            if($today_date > $charge_date){
+            if($today_date >= $charge_date){
                 // Charge the Customer
                 $charge = Charge::create(array(
                     "amount" => $payable_amount,

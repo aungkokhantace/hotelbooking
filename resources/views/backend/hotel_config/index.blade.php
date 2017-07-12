@@ -65,8 +65,8 @@
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $h_config->id }}" id="all"></td>
                             <td><a href="/backend/hotel_config/edit/{{$h_config->id}}">{{$h_config->hotel->name}}</a></td>
-                            <td>{{$h_config->first_cancellation_day }}</td>
-                            <td>{{$h_config->second_cancellation_day }}</td>
+                            <td>{{$h_config->first_cancellation_day_count }}</td>
+                            <td>{{$h_config->second_cancellation_day_count }}</td>
                             <td>{{$h_config->breakfast_fees }}</td>
                             <td>{{$h_config->extrabed_fees }}</td>
                             <td>{{$h_config->tax }}</td>

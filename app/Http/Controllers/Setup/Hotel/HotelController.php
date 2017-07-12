@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Setup\Hotel;
 
+use App\Core\User\UserRepository;
 use App\Core\Utility;
 use App\Setup\City\CityRepository;
 use App\Setup\Country\CountryRepository;
@@ -9,6 +10,7 @@ use App\Setup\HotelNearby\HotelNearbyRepository;
 use App\Setup\Hotel\Hotel;
 use App\Setup\Township\TownshipRepository;
 use App\Setup\Hnearby\Hnearby;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -130,6 +132,26 @@ class HotelController extends Controller
         $breakfast_start_time   = (Input::has('breakfast_start_time')) ? Input::get('breakfast_start_time') : "";
         $breakfast_end_time     = (Input::has('breakfast_end_time')) ? Input::get('breakfast_end_time') : "";
 
+        //start getting hotel_admin information
+        $user_name              = (Input::has('user_name')) ? trim(Input::get('user_name')) : "";
+        $display_name           = (Input::has('display_name')) ? trim(Input::get('display_name')) : "";
+        $user_email             = (Input::has('user_email')) ? Input::get('user_email') : "";
+        $password               = (Input::has('password')) ? trim(bcrypt(Input::get('password'))) : "";
+        $user_address           = (Input::has('user_address')) ? Input::get('user_address') : "";
+        $role_id                = 3; //for hotel_admin
+        //end getting hotel_admin information
+
+        $userObj                        = new User();
+        $userObj->user_name             = $user_name;
+        $userObj->display_name          = $display_name;
+        $userObj->email                 = $user_email;
+        $userObj->password              = $password;
+        $userObj->address               = $user_address;
+        $userObj->role_id               = $role_id;
+
+        $userRepo = new UserRepository();
+        $userRepo->create($userObj);
+
         $paramObj                           = new Hotel();
         $paramObj->name                     = $name;
         $paramObj->h_type_id                = $type;
@@ -152,6 +174,7 @@ class HotelController extends Controller
         $paramObj->check_out_time           = $check_out_time;
         $paramObj->breakfast_start_time     = $breakfast_start_time;
         $paramObj->breakfast_end_time       = $breakfast_end_time;
+        $paramObj->admin_id                 = $userObj->id;
 
         $result = $this->repo->create($paramObj,$input);
 
@@ -188,6 +211,11 @@ class HotelController extends Controller
 
             $h_nearby_places        = Hnearby::where('hotel_id',$id)->whereNull('deleted_at')->get();
             $nearby_places_count    = count($h_nearby_places) - 1;
+
+            $admin_id = $hotel->admin_id;
+            $userRepo = new UserRepository();
+            $hotel_admin = $userRepo->getObjByID($admin_id);
+
             return view('backend.hotel.hotel')
                 ->with('hotel', $hotel)
                 ->with('countries',$countries)
@@ -195,7 +223,8 @@ class HotelController extends Controller
                 ->with('townships',$townships)
                 ->with('h_nearby_places',$h_nearby_places)
                 ->with('nearby_places_count',$nearby_places_count)
-                ->with('hotel_nearby',$hotel_nearby);
+                ->with('hotel_nearby',$hotel_nearby)
+                ->with('hotel_admin',$hotel_admin);
         }
         return redirect('/backend/login');
     }
@@ -250,6 +279,28 @@ class HotelController extends Controller
         $check_out_time         = (Input::has('check_out_time')) ? Input::get('check_out_time') : "";
         $breakfast_start_time   = (Input::has('breakfast_start_time')) ? Input::get('breakfast_start_time') : "";
         $breakfast_end_time     = (Input::has('breakfast_end_time')) ? Input::get('breakfast_end_time') : "";
+
+        //start getting hotel_admin information
+        $user_name              = (Input::has('user_name')) ? trim(Input::get('user_name')) : "";
+        $display_name           = (Input::has('display_name')) ? trim(Input::get('display_name')) : "";
+        $user_email             = (Input::has('user_email')) ? Input::get('user_email') : "";
+        $password               = (Input::has('password')) ? trim(bcrypt(Input::get('password'))) : "";
+        $user_address           = (Input::has('user_address')) ? Input::get('user_address') : "";
+//        $role_id                = 3; //for hotel_admin
+        //end getting hotel_admin information
+
+        $hotel          = $this->repo->getObjByID($id);
+        $admin_id       = $hotel->admin_id;
+        $userRepo = new UserRepository();
+        $userObj                        = $userRepo->getObjByID($admin_id);
+        $userObj->user_name             = $user_name;
+        $userObj->display_name          = $display_name;
+        $userObj->email                 = $user_email;
+//        $userObj->password              = $password;
+        $userObj->address               = $user_address;
+//        $userObj->role_id               = $role_id;
+
+        $userRepo->update($userObj);
 
         $paramObj                           = $this->repo->getObjByID($id);
         $paramObj->name                     = $name;

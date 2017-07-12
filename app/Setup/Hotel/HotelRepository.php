@@ -49,7 +49,7 @@ class HotelRepository implements HotelRepositoryInterface
             //Update h_nearby table
             $id                 = $paramObj->id;
             $nearby_count       = $input['nearby_count'] + 1;
-            for($i=0; $i<=$nearby_count; $i++) {
+            for($i=0; $i<$nearby_count; $i++) {
                 $paramObj                       = new Hnearby();
                 $paramObj->hotel_id             = $id;
                 $paramObj->nearby_id            = $input['nearby_place'][$i];
@@ -98,7 +98,7 @@ class HotelRepository implements HotelRepositoryInterface
             }
 
             $nearby_count       = $input['nearby_count'] + 1;
-            for($i=0; $i<=$nearby_count; $i++) {
+            for($i=0; $i<$nearby_count; $i++) {
                 $paramObj                       = new Hnearby();
                 $paramObj->hotel_id             = $id;
                 $paramObj->nearby_id            = $input['nearby_place'][$i];

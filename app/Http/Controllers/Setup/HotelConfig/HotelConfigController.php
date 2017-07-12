@@ -68,8 +68,8 @@ class HotelConfigController extends Controller
 
         $paramObj                   = new HotelConfig();
         $paramObj->hotel_id         = $hotel_id;
-        $paramObj->first_cancellation_day  = $first_cancellation_day;
-        $paramObj->second_cancellation_day = $second_cancellation_day;
+        $paramObj->first_cancellation_day_count  = $first_cancellation_day;
+        $paramObj->second_cancellation_day_count = $second_cancellation_day;
         $paramObj->breakfast_fees   = $breakfast_fees;
         $paramObj->extrabed_fees    = $extrabed_fees;
         $paramObj->tax              = $tax;
@@ -107,8 +107,8 @@ class HotelConfigController extends Controller
 
         $paramObj                   = $this->repo->getObjByID($id);
         $paramObj->hotel_id         = $hotel_id;
-        $paramObj->first_cancellation_day  = $first_cancellation_day;
-        $paramObj->second_cancellation_day = $second_cancellation_day;
+        $paramObj->first_cancellation_day_count  = $first_cancellation_day;
+        $paramObj->second_cancellation_day_count = $second_cancellation_day;
         $paramObj->breakfast_fees   = $breakfast_fees;
         $paramObj->extrabed_fees    = $extrabed_fees;
         $paramObj->tax              = $tax;
