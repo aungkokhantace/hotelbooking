@@ -135,12 +135,30 @@
 @section('page_script')
     <script type="text/javascript">
         $(document).ready(function(){
+            $.validator.addMethod("greaterThan",
+                    function (value, element, param) {
+                        var $otherElement = $(param);
+                        return parseInt(value, 10) > parseInt($otherElement.val(), 10);
+                });
+
+            $.validator.addMethod("lessThan",
+                    function (value, element, param) {
+                        var $otherElement = $(param);
+                        return parseInt(value, 10) < parseInt($otherElement.val(), 10);
+                    });
+
             //Start Validation for Entry and Edit Form
             $('#hotel_config').validate({
                 rules: {
                     hotel_id                : 'required',
-                    first_cancellation_day  : 'required',
-                    second_cancellation_day : 'required',
+                    first_cancellation_day  : {
+                        required   : true,
+                        greaterThan: "#second_cancellation_day"
+                    },
+                    second_cancellation_day  : {
+                        required   : true,
+                        lessThan: "#first_cancellation_day"
+                    },
                     breakfast_fees          : {
                         required: true,
                         number  : true,
@@ -157,8 +175,14 @@
                 },
                 messages: {
                     hotel_id                : 'Hotel is required!',
-                    first_cancellation_day  : 'First Cancellation Day is required',
-                    second_cancellation_day : 'Second Cancellation Day is required',
+                    first_cancellation_day  : {
+                        required   : 'First Cancellation Day Count is required',
+                        greaterThan: "First Cancellation Day Count must be greater than Second Cancellation Day Count"
+                    },
+                    second_cancellation_day  : {
+                        required   : 'Second Cancellation Day is required',
+                        lessThan   : "Second Cancellation Day Count must be less than First Cancellation Day Count"
+                    },
                     breakfast_fees          : {
                         required: 'Breakfast Fee is required',
                         number  : 'Breakfast Fee must be numeric',
