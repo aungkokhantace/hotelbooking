@@ -422,6 +422,96 @@
         @include('backend.hotel.nearby')
     @endif
 
+    {{--Start hotel admin--}}
+    <div class="row">
+        <div class="panel panel-primary">
+        {{--Start Panel--}}
+        <div class="panel-heading">
+            <h3 class="panel-title">Hotel Admin</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <label for="user_name">Staff Name<span class="require">*</span></label>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <input required type="text" class="form-control" id="user_name" name="user_name" placeholder="Enter Staff Login User Name" value="{{ isset($hotel_admin)? $hotel_admin->user_name:Request::old('user_name') }}"/>
+                    <p class="text-danger">{{$errors->first('user_name')}}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <label for="display_name">Display Name<span class="require">*</span></label>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <input required type="text" class="form-control" id="display_name" name="display_name" placeholder="Enter Staff Display Name" value="{{ isset($hotel_admin)? $hotel_admin->display_name:Request::old('display_name') }}"/>
+                    <p class="text-danger">{{$errors->first('display_name')}}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <label for="email">Email<span class="require">*</span></label>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <input required type="email" class="form-control" id="user_email" name="user_email" placeholder="Enter Staff Email" value="{{ isset($hotel_admin)? $hotel_admin->email:Request::old('user_email') }}"/>
+                    <p class="text-danger">{{$errors->first('user_email')}}</p>
+                </div>
+            </div>
+
+            @if(!isset($hotel_admin))
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <label for="discount">Password<span class="require">*</span></label>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <input required type="password" class="form-control" id="password" name="password" placeholder="Enter Password"/>
+                        <p class="text-danger">{{$errors->first('password')}}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <label for="discount">Confirm Password<span class="require">*</span></label>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <input required type="password" class="form-control" id="conpassword" name="conpassword" placeholder="Enter Confirm Password"/>
+                        <p class="text-danger">{{$errors->first('conpassword')}}</p>
+                    </div>
+                </div>
+            @endif
+
+            {{--@if(isset($profile))--}}
+                {{--<div class="row">--}}
+                    {{--<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">--}}
+                        {{--<label for="discount">Password<span class="require">*</span></label>--}}
+                    {{--</div>--}}
+
+                    {{--<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">--}}
+                        {{--<input type="password" class="form-control" id="password" name="password" placeholder="Enter Password"/>--}}
+                        {{--<p class="text-danger">{{$errors->first('password')}}</p>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--@endif--}}
+
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <label for="address">Address</label>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <textarea rows="4" cols="50"class="form-control" id="user_address" name="user_address" placeholder="Enter Staff Address">{{ isset($hotel_admin)? $hotel_admin->address:Request::old('user_address') }}</textarea>
+                    {{--<p class="text-danger">{{$errors->first('user_address')}}</p>--}}
+                </div>
+            </div>
+        </div>
+        {{--End Panel--}}
+    </div>
+    </div>
+    {{--End hotel admin--}}
+
     <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         </div>
@@ -580,6 +670,15 @@
                     check_out_time          : 'required',
                     breakfast_start_time    : 'required',
                     breakfast_end_time      : 'required',
+
+                    user_name               : 'required',
+                    display_name            : 'required',
+                    user_email              : 'required',
+                    password                : 'required',
+                    conpassword             : {
+                        required: "true",
+                        equalTo: "#password",
+                    },
                 },
                 messages: {
                     name                    : 'Name is required',
@@ -602,6 +701,15 @@
                     check_out_time          : 'Check-out Time is required',
                     breakfast_start_time    : 'Breakfast Start Time is required',
                     breakfast_end_time      : 'Breakfast End Time is required',
+
+                    user_name               : 'User Name is required',
+                    display_name            : 'Display Name is required',
+                    user_email              : 'User Email is required',
+                    password                : 'Password is required',
+                    conpassword             : {
+                        required: "Confirm Password is required",
+                        equalTo: "Password and Confirm Password must match.",
+                    },
                 },
                 submitHandler: function(form) {
                     $('input[type="submit"]').attr('disabled','disabled');

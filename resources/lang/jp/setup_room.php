@@ -38,4 +38,6 @@ return [
     'tb-col-status'         => 'Status - JP',
     'tb-col-description'    => 'Description - JP',
     'tb-col-remark'         => 'Remark - JP',
+    'apply-cutoff-date'     => 'Apply Cutoff Date - JP',
+    'tb-col-apply-cutoff-date'=> 'Apply Cutoff Date - JP',
 ];

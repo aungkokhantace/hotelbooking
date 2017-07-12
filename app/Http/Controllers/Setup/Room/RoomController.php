@@ -84,6 +84,7 @@ class RoomController extends Controller
         $h_room_type_id     = Input::get('h_room_type_id');
         $h_room_category_id = Input::get('h_room_category_id');
         $room_view_id       = Input::get('room_view_id');
+        $apply_cutoff_date  = Input::get('apply_cutoff_date');
         $status             = Input::get('status');
 //        $no_of_rooms        = Input::get('number_of_rooms');
         $description        = Input::get('description');
@@ -96,6 +97,7 @@ class RoomController extends Controller
             $paramObj->h_room_type_id       = $h_room_type_id;
             $paramObj->h_room_category_id   = $h_room_category_id;
             $paramObj->room_view_id         = $room_view_id;
+            $paramObj->apply_cutoff_date    = $apply_cutoff_date;
             $paramObj->status               = $status;
             $paramObj->description          = $description;
             $paramObj->remark               = $remark;
@@ -173,6 +175,7 @@ class RoomController extends Controller
         $h_room_type_id     = Input::get('h_room_type_id');
         $h_room_category_id = Input::get('h_room_category_id');
         $room_view_id       = Input::get('room_view_id');
+        $apply_cutoff_date  = Input::get('apply_cutoff_date');
         $status             = Input::get('status');
         $description        = Input::get('description');
         $remark             = Input::get('remark');
@@ -183,6 +186,7 @@ class RoomController extends Controller
         $paramObj->h_room_type_id       = $h_room_type_id;
         $paramObj->h_room_category_id   = $h_room_category_id;
         $paramObj->room_view_id         = $room_view_id;
+        $paramObj->apply_cutoff_date    = $apply_cutoff_date;
         $paramObj->status               = $status;
         $paramObj->description          = $description;
         $paramObj->remark               = $remark;

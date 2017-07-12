@@ -112,7 +112,7 @@
                         <td>6</td>
                     </tr>
                     <tr>
-                        <td><Refund></Refund></td>
+                        <td>Refund</td>
                         <td>7</td>
                     </tr>
                 </table>

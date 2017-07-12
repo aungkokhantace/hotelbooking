@@ -172,6 +172,25 @@
         </div>
     </div>
 
+    {{--start apply cut-off date flag--}}
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="name">
+                {{trans('setup_room.apply-cutoff-date')}}
+                <span class="require">*</span>
+            </label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            @if(isset($room) && $room->apply_cutoff_date == 1)
+                <input type="checkbox" name="apply_cutoff_date" id="apply_cutoff_date" value="1" checked>
+            @else
+                <input type="checkbox" name="apply_cutoff_date" id="apply_cutoff_date" value="1">
+            @endif
+        </div>
+    </div>
+    {{--end apply cut-off date flag--}}
+    <br>
+
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="status">
@@ -297,6 +316,8 @@
             });
 
             //End Validation for Entry and Edit Form
+
+            $(':checkbox').checkboxpicker();
         });
 
         function loadHotelRoomType(hotelId){

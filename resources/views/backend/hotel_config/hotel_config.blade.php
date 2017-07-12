@@ -43,7 +43,7 @@
             <select class="form-control" name="first_cancellation_day" id="first_cancellation_day">
                 @if(isset($hotel_config))
                     @for ($i = 1; $i <= 100; $i++)
-                        @if($i == $hotel_config->first_cancellation_day)
+                        @if($i == $hotel_config->first_cancellation_day_count)
                             <option value="{{ $i }}" selected>{{ $i }}</option>
                         @else
                             <option value="{{ $i }}">{{ $i }}</option>
@@ -68,7 +68,7 @@
             <select class="form-control" name="second_cancellation_day" id="second_cancellation_day">
                 @if(isset($hotel_config))
                     @for ($i = 1; $i <= 100; $i++)
-                        @if($i == $hotel_config->second_cancellation_day)
+                        @if($i == $hotel_config->second_cancellation_day_count)
                             <option value="{{ $i }}" selected>{{ $i }}</option>
                         @else
                             <option value="{{ $i }}">{{ $i }}</option>
