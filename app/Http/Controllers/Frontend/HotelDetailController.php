@@ -149,7 +149,7 @@ class HotelDetailController extends Controller
 
         foreach($roomCategories as $r_category){
             $roomRepo = New RoomRepository();
-            //get rooms that are within available_period and not within black_out period and not booked
+            //get rooms that are within available_period and not within black_out period and not booked and not in cutoff date
             $rooms    = $roomRepo->getRoomCountByRoomCategoryId($r_category->id,$check_in,$check_out);
 
             $r_category->available_room_count = count($rooms);

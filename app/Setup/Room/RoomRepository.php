@@ -157,7 +157,7 @@ class RoomRepository implements RoomRepositoryInterface
 	                                  FROM booking_room
 	                                  WHERE (('$newCheckIn' BETWEEN booking_room.check_in_date AND booking_room.check_out_date) OR (('$newCheckOut' BETWEEN booking_room.check_in_date AND booking_room.check_out_date)))
 	                                  AND (booking_room.status <> 3)
-	                                  AND (booking_room.deleted_at IS NULL)");
+	                                  AND (booking_room.deleted_at IS NULL)"); //"status = 3" is cancel
 
         //push to array
         $booking_arr = array();
@@ -165,7 +165,27 @@ class RoomRepository implements RoomRepositoryInterface
             array_push($booking_arr,$booking->room_id);
         }
 
-        //get rooms that are within available_period and not within black_out period and not booked
+        //check for room cutoff date
+        $cutoff_query = DB::select("SELECT rooms.id as room_id,h_room_category.booking_cutoff_day as cutoff_day
+                                      FROM rooms
+                                      LEFT JOIN h_room_category ON rooms.h_room_category_id = h_room_category.id
+                                      WHERE (rooms.apply_cutoff_date = 1)
+                                      AND (rooms.deleted_at IS NULL) AND (h_room_category.deleted_at IS NULL)");
+
+        //push to array
+        $cutoff_arr = array();
+        $today = date("Y-m-d");
+        foreach($cutoff_query as $cutoff){
+            $cutoff_day = $cutoff->cutoff_day;
+            $tempDate = strtotime(date("Y-m-d", strtotime($newCheckIn)) . " -".$cutoff_day."days");
+            $calculatedCutoffDate = date("Y-m-d",$tempDate);
+
+            if(($today >= $calculatedCutoffDate)){
+                array_push($cutoff_arr,$cutoff->room_id);
+            }
+        }
+
+        //get rooms that are within available_period and not within black_out period and not booked and not in cutoff date
         $result = Room::whereNull('rooms.deleted_at')
                     ->leftjoin('r_available_period', 'r_available_period.room_id', '=', 'rooms.id')
                     ->where('h_room_category_id',$r_category_id)
@@ -173,6 +193,7 @@ class RoomRepository implements RoomRepositoryInterface
                     ->where('r_available_period.to_date','>=',$newCheckOut)
                     ->whereNotIn('rooms.id', $blackout_arr)
                     ->whereNotIn('rooms.id', $booking_arr)
+                    ->whereNotIn('rooms.id', $cutoff_arr)
                     ->select('rooms.*')
                     ->get();
 
