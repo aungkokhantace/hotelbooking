@@ -13,13 +13,17 @@ use Stripe\Charge;
 use Stripe\Customer;
 use Stripe\Stripe;
 use Mail;
+use App\Payment\PaymentUtility;
 
 class PaymentTestController extends Controller
 {
     public function payment_for_later(){
         $stripe = array(
-            "secret_key"      => "sk_test_Y1kf5chBWcPvsC2RBjVc1Ts9",
-            "publishable_key" => "pk_test_fJWTQndbD4G5frZV8vxtFQiv"
+//            "secret_key"      => "sk_test_Y1kf5chBWcPvsC2RBjVc1Ts9",
+//            "publishable_key" => "pk_test_fJWTQndbD4G5frZV8vxtFQiv"
+
+            "secret_key"      => "sk_test_pIwc9et6wlWYcAb2xfsz9UmY",
+            "publishable_key" => "pk_test_1bnp84rAk5y91LIN9BJ7OdYX"
         );
 
         return view('payment.payment_for_later')->with('stripe',$stripe);
@@ -86,5 +90,43 @@ class PaymentTestController extends Controller
         }catch (\Exception $e){
 
         }
+    }
+
+    public function paymentForLater_Payment2(){
+
+        $stripePaymentObj           = new PaymentUtility();
+        $stripePaymentResult        = $stripePaymentObj->createCustomer($_POST);
+
+        dd($stripePaymentResult);
+
+    }
+
+
+    public function testCapture(){
+
+        // Test Customer Id and amount that you will need to change wti
+        $customerId = "cus_B1N9CdEVcDqfte";
+        $amount     = 1000;
+
+        $stripePaymentObj           = new PaymentUtility();
+        $stripePaymentResult        = $stripePaymentObj->capturePayment($customerId, $amount);
+
+        dd($stripePaymentResult);
+
+    }
+
+
+    public function testRefund(){
+
+        // Test Customer Id and amount that you will need to change wti
+        $customerId         = "cus_B1N9CdEVcDqfte";
+        $chargeId           = "ch_1AfMBsBCQLjaAvwiPh10QjZv";
+        $amount             = 1500;
+
+        $stripePaymentObj           = new PaymentUtility();
+        $stripePaymentResult        = $stripePaymentObj->refundPayment($customerId, $amount,$chargeId);
+
+        dd($stripePaymentResult);
+
     }
 }

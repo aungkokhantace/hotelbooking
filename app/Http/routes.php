@@ -43,6 +43,9 @@ Route::group(['middleware' => 'web'], function () {
     //Payment TESting
     Route::get('payTest',['as'=>'payTest','uses'=>'Payment\PaymentTestController@payment_for_later']);
     Route::post('pay',['as'=>'pay','uses'=>'Payment\PaymentTestController@paymentForLater_Payment']);
+    Route::post('pay2',['as'=>'pay2','uses'=>'Payment\PaymentTestController@paymentForLater_Payment2']);
+    Route::get('testCapture',['as'=>'testCapture','uses'=>'Payment\PaymentTestController@testCapture']);
+    Route::get('testRefund',['as'=>'testRefund','uses'=>'Payment\PaymentTestController@testRefund']);
     //Cron Test
     Route::get('cronTest',['as'=>'cronTest','uses'=>'Payment\PaymentTestController@cron_test']);
     //Static Pages
