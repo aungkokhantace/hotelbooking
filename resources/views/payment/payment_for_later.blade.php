@@ -13,7 +13,7 @@ data-amount="1000"
 
 
 
-{!! Form::open(array('url' => '/pay')) !!}
+{!! Form::open(array('url' => '/pay2')) !!}
     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
             data-key="<?php echo $stripe['publishable_key']; ?>"
             data-description="Access for a year"
