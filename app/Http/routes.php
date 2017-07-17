@@ -60,7 +60,10 @@ Route::group(['middleware' => 'web'], function () {
 
     //Manage Booking
     Route::get('booking/manage/{id}',['as'=>'booking/manage','uses'=>'Frontend\BookingController@manage']);
-
+    Route::get('booking/manage/congratulation/{id}',['as'=>'booking/manage/congratulation',
+                                                     'uses'=>'Frontend\BookingController@say_congratulation']);
+    Route::get('booking/manage/print/{id}',['as'=>'booking/manage/print',
+                                            'uses'=>'Frontend\BookingController@print_congratulation']);
     //Backend
     Route::group(['prefix' => 'backend'], function () {
 

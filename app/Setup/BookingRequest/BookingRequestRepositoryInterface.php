@@ -12,4 +12,5 @@ namespace App\Setup\BookingRequest;
 interface BookingRequestRepositoryInterface
 {
     public function create($paramObj);
+    public function getBookingRequestByBookingId($id);
 }
