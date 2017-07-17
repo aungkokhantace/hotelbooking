@@ -189,4 +189,12 @@ class RoomDiscountRepository implements RoomDiscountRepositoryInterface
 
         return $result;
     }
+
+    public function getDiscountByRoomCategory($room_category_id)
+    {
+        $result = RoomDiscount::whereNull('deleted_at')
+                    ->where('h_room_category_id','=',$room_category_id)
+                    ->first();
+        return $result;
+    }
 }

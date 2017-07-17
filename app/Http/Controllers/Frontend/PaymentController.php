@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Core\FormatGenerator;
 use App\Core\ReturnMessage;
+use App\Core\Utility;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 //use App\Session;
@@ -31,7 +32,9 @@ use App\Setup\HotelFacility\HotelFacilityRepository;
 use App\Setup\HotelRoomCategory\HotelRoomCategoryRepository;
 use App\Setup\Payment\Payment;
 use App\Setup\Payment\PaymentRepository;
+use App\Setup\Room\Room;
 use App\Setup\Room\RoomRepository;
+use App\Setup\RoomDiscount\RoomDiscountRepository;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -94,14 +97,61 @@ class PaymentController extends Controller
             }
         }
 
+        $roomDiscountRepo = new RoomDiscountRepository();
+
         //calculate total amount
-        $total_amount = 0.0;
+//        $total_amount = 0.0;
+        $total_amount_wo_discount = 0.0;
+        $total_amount_w_discount = 0.0;
+
+        $discount_array = array();
+
         foreach($number_array as $room_category_id=>$number_of_room){
             if($number_of_room > 0){
                 $room_category = $roomCategoryRepo->getObjByID($room_category_id);
-                $amount_per_category = $room_category->price * $number_of_room * $nights;
-                $total_amount += $amount_per_category;
+//                $amount_per_category = $room_category->price * $number_of_room * $nights;
+                $amount_per_category_wo_discount = $room_category->price * $number_of_room * $nights;
+                $amount_per_category_w_discount  = $amount_per_category_wo_discount;
+                //start checking discount for each room_category
+                //get room discount by room_category_id
+                $room_discount = $roomDiscountRepo->getDiscountByRoomCategory($room_category_id);
+
+                //initialize discount_percent and discount_amt
+                $discount_percent = 0;
+                $discount_amt = 0.00;
+
+                if(isset($room_discount) && count($room_discount)>0){
+                    if(isset($room_discount->discount_percent) && $room_discount->discount_percent != 0){
+                        $discount_percent = $room_discount->discount_percent;
+                    }
+                    elseif(($room_discount->discount_amount) && $room_discount->discount_amount != 0){
+                        $discount_amt = $room_discount->discount_amount;
+                    }
+                }
+
+                //if there is discount_percent, change to amount and add to discount_array
+                if($discount_percent != 0){
+                    $discount_amount_per_category = ($discount_percent / 100) * $amount_per_category_wo_discount;
+                    $amount_per_category_w_discount = $amount_per_category_wo_discount - $discount_amount_per_category;
+                    array_push($discount_array,$discount_amount_per_category);
+                }
+                //else if there is discount_amt, add to discount_array
+                elseif($discount_amt != 0.00){
+                    $amount_per_category_w_discount = $amount_per_category_wo_discount - $discount_amt;
+                    array_push($discount_array,$discount_amt);
+                }
+                //end checking discount for each room_category
+
+//                $total_amount += $amount_per_category;
+                $total_amount_wo_discount += $amount_per_category_wo_discount;
+                $total_amount_w_discount += $amount_per_category_w_discount;
             }
+        }
+
+        $total_discount_amount = 0.00;
+        //calculate total discount amount
+        foreach($discount_array as $disc){
+            $total_discount_amount += $disc;
         }
 
         /*if(isset($available_room_category_array) && count($available_room_category_array) > 0){
@@ -116,40 +166,76 @@ class PaymentController extends Controller
             $available_room_category_array = array_slice($available_room_category_array,1);
         } */
 
-        $tax = 0.0;
-        $hotelConfigRepo = new HotelConfigRepository();
-        $hotel_config = $hotelConfigRepo->getConfigByHotel($hotel_id);
-        if(isset($hotel_config) && count($hotel_config) > 0){
-            $tax = $hotel_config->tax;
-        }
+//        $tax = 0.0;
+//        $hotelConfigRepo = new HotelConfigRepository();
+//        $hotel_config = $hotelConfigRepo->getConfigByHotel($hotel_id);
+//        if(isset($hotel_config) && count($hotel_config) > 0){
+//            $tax = $hotel_config->tax;
+//        }
 
-        $tax_amount = ($tax / 100) * $total_amount;
-        $payable_amount = $total_amount + $tax_amount;
+        //get hotel_service_tax if exists, else, get service_tax from core_configs
+        $service_tax = Utility::getServiceTax($hotel_id);
+        $service_tax_amount = ($service_tax / 100) * $total_amount_w_discount;
+
+        //get government tax
+        $gov_tax_temp = DB::select("SELECT * FROM core_configs WHERE `code` = 'GST'");
+        $gov_tax = $gov_tax_temp[0]->value;
+        $gov_tax_amount = ($gov_tax / 100) * $total_amount_w_discount;
+
+        $payable_amount = $total_amount_w_discount + $service_tax_amount + $gov_tax_amount;
 
         Session::forget('total_amount');
-        Session::forget('tax');
-        Session::forget('tax_amount');
+        Session::forget('total_amount_wo_discount');
+        Session::forget('total_amount_w_discount');
+        Session::forget('total_discount_amount');
+//        Session::forget('tax');
+//        Session::forget('tax_amount');
+        Session::forget('service_tax');
+        Session::forget('service_tax_amount');
+        Session::forget('gov_tax');
+        Session::forget('gov_tax_amount');
+
         Session::forget('payable_amount');
 //        Session::forget('total_payable_amount_w_extrabed');
         Session::forget('total_payable_amount_wo_extrabed');
         Session::forget('total_extrabed_fee');
 
+        Session::forget('total_discount_amount');
+
         $total_payable_amount_wo_extrabed = 0.00;
-        $total_payable_amount_wo_extrabed = $total_amount;
+        $total_payable_amount_wo_extrabed = $total_amount_w_discount;
 
         if(isset($total_payable_amount_wo_extrabed) && $total_payable_amount_wo_extrabed != 0.00){
             session(['total_payable_amount_wo_extrabed' => $total_payable_amount_wo_extrabed]);
         }
 
+//        if(isset($total_amount) && $total_amount != null && $total_amount != ""){
+//            session(['total_amount' => $total_amount]);
+//        }
 
-        if(isset($total_amount) && $total_amount != null && $total_amount != ""){
-            session(['total_amount' => $total_amount]);
+        if(isset($total_amount_wo_discount) && $total_amount_wo_discount != null && $total_amount_wo_discount != ""){
+            session(['total_amount_wo_discount' => $total_amount_wo_discount]);
         }
-        if(isset($tax) && $tax != null && $tax != ""){
-            session(['tax' => $tax]);
+
+        if(isset($total_amount_w_discount) && $total_amount_w_discount != null && $total_amount_w_discount != ""){
+            session(['total_amount_w_discount' => $total_amount_w_discount]);
         }
-        if(isset($tax_amount) && $tax_amount != null && $tax_amount != ""){
-            session(['tax_amount' => $tax_amount]);
+
+        if(isset($total_discount_amount) && $total_discount_amount != null && $total_discount_amount != ""){
+            session(['total_discount_amount' => $total_discount_amount]);
+        }
+
+        if(isset($service_tax) && $service_tax != null && $service_tax != ""){
+            session(['service_tax' => $service_tax]);
+        }
+        if(isset($service_tax_amount) && $service_tax_amount != null && $service_tax_amount != ""){
+            session(['service_tax_amount' => $service_tax_amount]);
+        }
+        if(isset($gov_tax) && $gov_tax != null && $gov_tax != ""){
+            session(['gov_tax' => $gov_tax]);
+        }
+        if(isset($gov_tax_amount) && $gov_tax_amount != null && $gov_tax_amount != ""){
+            session(['gov_tax_amount' => $gov_tax_amount]);
         }
         if(isset($payable_amount) && $payable_amount != null && $payable_amount != ""){
             session(['payable_amount' => $payable_amount]);
@@ -161,9 +247,9 @@ class PaymentController extends Controller
                     ->with('nights',$nights)
                     ->with('hotelFacilities',$hotelFacilities)
                     ->with('totalRooms',$totalRooms)
-                    ->with('tax',$tax)
-                    ->with('tax_amount',$tax_amount)
-                    ->with('total_amount',$total_amount)
+//                    ->with('tax',$tax)
+//                    ->with('tax_amount',$tax_amount)
+//                    ->with('total_amount',$total_amount)
                     ->with('payable_amount',$payable_amount);
     }
 
@@ -215,8 +301,15 @@ class PaymentController extends Controller
         Session::forget('special_request');
 
         Session::forget('total_amount');
-        Session::forget('tax_amount');
+        Session::forget('total_payable_amount_w_extrabed');
 
+//        Session::forget('tax_amount');
+        Session::forget('service_tax');
+        Session::forget('service_tax_amount');
+        Session::forget('gov_tax');
+        Session::forget('gov_tax_amount');
+
+        Session::forget('payable_amount');
 
         //store general data fields in session
         if(isset($hotel_id) && $hotel_id != null && $hotel_id != ""){
@@ -375,59 +468,95 @@ class PaymentController extends Controller
         session(['total_extrabed_fee' => $total_extrabed_fee]);
 
         //calculate total amount
-        $total_amount = 0.0;
-        foreach($available_room_categories as $available_room_category_amount){
-            if($available_room_category_amount->number > 0){
-                $amount_per_category = $available_room_category_amount->price * $available_room_category_amount->number * $nights;
-                $total_amount += $amount_per_category;
-            }
-        }
+//        $total_amount = 0.0;
+        $total_amount_wo_discount = 0.0;
+        $total_amount_w_discount = 0.0;
+
+//        foreach($available_room_categories as $available_room_category_amount){
+//            if($available_room_category_amount->number > 0){
+//                $amount_per_category = $available_room_category_amount->price * $available_room_category_amount->number * $nights;
+//                $total_amount += $amount_per_category;
+//            }
+//        }
 
         //save in session
-        session(['total_amount' => $total_amount]);
+//        session(['total_amount' => $total_amount]);
 
         //calculate total payable amount including extrabed
         $total_payable_amount_w_extrabed = 0.00;
         $total_payable_amount_wo_extrabed = 0.00;
-        $total_payable_amount_wo_extrabed = $total_amount;
-        $total_payable_amount_w_extrabed = $total_amount + $total_extrabed_fee;
+//        $total_payable_amount_wo_extrabed = $total_amount;
+//        $total_payable_amount_wo_extrabed = session('total_payable_amount_wo_extrabed');
+        $total_amount_w_discount = session('total_amount_w_discount');
 
-        $tax = 0.0;
-        $hotelConfigRepo = new HotelConfigRepository();
-        $hotel_config = $hotelConfigRepo->getConfigByHotel($hotel_id);
-        if(isset($hotel_config) && count($hotel_config) > 0){
-            $tax = $hotel_config->tax;
-        }
-        $tax_amount = ($tax / 100) * $total_payable_amount_w_extrabed;
-        $payable_amount = $total_payable_amount_w_extrabed + $tax_amount;
+        $total_payable_amount_w_extrabed = $total_amount_w_discount + $total_extrabed_fee;
+
+//        $tax = 0.0;
+//        $hotelConfigRepo = new HotelConfigRepository();
+//        $hotel_config = $hotelConfigRepo->getConfigByHotel($hotel_id);
+//        if(isset($hotel_config) && count($hotel_config) > 0){
+//            $tax = $hotel_config->tax;
+//        }
+//        $tax_amount = ($tax / 100) * $total_payable_amount_w_extrabed;
+//        $payable_amount = $total_payable_amount_w_extrabed + $tax_amount;
+
+        //get hotel_service_tax if exists, else, get service_tax from core_configs
+        $service_tax = Utility::getServiceTax($hotel_id);
+//        $service_tax_amount = ($service_tax / 100) * $total_amount;
+        $service_tax_amount = ($service_tax / 100) * $total_payable_amount_w_extrabed;
+
+        //get government tax
+        $gov_tax_temp = DB::select("SELECT * FROM core_configs WHERE `code` = 'GST'");
+        $gov_tax = $gov_tax_temp[0]->value;
+        $gov_tax_amount = ($gov_tax / 100) * $total_payable_amount_w_extrabed;
+
+        //calculate payable amount
+//        $payable_amount = $total_amount + $service_tax_amount + $gov_tax_amount;
+        $payable_amount = $total_payable_amount_w_extrabed + $service_tax_amount + $gov_tax_amount;
 
         if(isset($total_payable_amount_w_extrabed) && $total_payable_amount_w_extrabed != 0.00){
             session(['total_payable_amount_w_extrabed' => $total_payable_amount_w_extrabed]);
         }
 
-        if(isset($total_payable_amount_wo_extrabed) && $total_payable_amount_wo_extrabed != 0.00){
-            session(['total_payable_amount_wo_extrabed' => $total_payable_amount_wo_extrabed]);
-        }
+//        if(isset($total_payable_amount_wo_extrabed) && $total_payable_amount_wo_extrabed != 0.00){
+//            session(['total_payable_amount_wo_extrabed' => $total_payable_amount_wo_extrabed]);
+//        }
 
-        if(isset($tax_amount) && $tax_amount != 0.00){
-            session(['tax_amount' => $tax_amount]);
+//        if(isset($tax_amount) && $tax_amount != 0.00){
+//            session(['tax_amount' => $tax_amount]);
+//        }
+
+        if(isset($service_tax) && $service_tax != null && $service_tax != ""){
+            session(['service_tax' => $service_tax]);
+        }
+        if(isset($service_tax_amount) && $service_tax_amount != null && $service_tax_amount != ""){
+            session(['service_tax_amount' => $service_tax_amount]);
+        }
+        if(isset($gov_tax) && $gov_tax != null && $gov_tax != ""){
+            session(['gov_tax' => $gov_tax]);
+        }
+        if(isset($gov_tax_amount) && $gov_tax_amount != null && $gov_tax_amount != ""){
+            session(['gov_tax_amount' => $gov_tax_amount]);
+        }
+        if(isset($payable_amount) && $payable_amount != null && $payable_amount != ""){
+            session(['payable_amount' => $payable_amount]);
         }
 
         if(isset($total_extrabed_fee) && $total_extrabed_fee != 0.00){
             session(['total_extrabed_fee' => $total_extrabed_fee]);
         }
-
-        if(isset($payable_amount) && $payable_amount != 0.00){
-            session(['payable_amount' => $payable_amount]);
-        }
+//
+//        if(isset($payable_amount) && $payable_amount != 0.00){
+//            session(['payable_amount' => $payable_amount]);
+//        }
 
         return view('frontend.confirm_reservation')
             ->with('available_room_category_array',$available_room_categories)
             ->with('hotel',$hotel)
             ->with('nights',$nights)
             ->with('hotelFacilities',$hotelFacilities)
-            ->with('totalRooms',$totalRooms)
-            ->with('total_amount',$total_amount);
+            ->with('totalRooms',$totalRooms);
+//            ->with('total_amount',$total_amount);
     }
 
     public function bookAndPay() {
@@ -440,6 +569,8 @@ class PaymentController extends Controller
         $hotelRepo = new HotelRepository();
         $hotel = $hotelRepo->getObjByID($hotel_id);
 
+        $booking_number = Utility::generateBookingNumber();
+
         $user_id = session('customer')['id'];
 
         $check_in_date_session = session('check_in');
@@ -451,13 +582,21 @@ class PaymentController extends Controller
 
         $check_in_time = $hotel->check_in_time;
         $check_out_time = $hotel->check_out_time;
-        $total_amount = session('total_amount');
-        $tax_amount = session('tax_amount');
-        $tax_percent = session('tax');
+//        $total_amount = session('total_amount');
+//        $tax_amount = session('tax_amount');
+//        $tax_percent = session('tax');
 
         $total_payable_amount_w_extrabed  = session('total_payable_amount_w_extrabed');
         $total_payable_amount_wo_extrabed = session('total_payable_amount_wo_extrabed');
         $payable_amount                   = session('payable_amount');
+
+        $gov_tax_amount                   = session('gov_tax_amount');
+        $gov_tax                          = session('gov_tax');
+        $service_tax_amount               = session('service_tax_amount');
+        $service_tax                      = session('service_tax');
+
+        $total_discount_amount            = session('total_discount_amount');
+
 
         $travel_for_work = session('travel_for_work');
 
@@ -495,6 +634,7 @@ class PaymentController extends Controller
             DB::beginTransaction();
 
             $bookingObj = new Booking();
+            $bookingObj->booking_no = $booking_number;
             $bookingObj->user_id = $user_id;
             $bookingObj->status = $status;
             $bookingObj->check_in_date = $check_in_date;
@@ -503,10 +643,14 @@ class PaymentController extends Controller
             $bookingObj->check_out_time = $check_out_time;
             $bookingObj->price_wo_tax = $total_payable_amount_w_extrabed;
             $bookingObj->price_w_tax = $payable_amount;
-            $bookingObj->total_tax_amt = $tax_amount;
-            $bookingObj->total_tax_percentage = $tax_percent;
+//            $bookingObj->total_tax_amt = $tax_amount;
+//            $bookingObj->total_tax_percentage = $tax_percent;
+            $bookingObj->total_government_tax_amt = $gov_tax_amount;
+            $bookingObj->total_government_tax_percentage = $gov_tax;
+            $bookingObj->total_service_tax_amt = $service_tax_amount;
+            $bookingObj->total_service_tax_percentage = $service_tax;
             $bookingObj->total_payable_amt = $payable_amount;
-            $bookingObj->total_discount_amt = 0.0;
+            $bookingObj->total_discount_amt = $total_discount_amount;
             $bookingObj->total_discount_percentage = 0;
             $bookingObj->hotel_id = $hotel_id;
             $bookingObj->travel_for_work = $travel_for_work;
@@ -536,7 +680,14 @@ class PaymentController extends Controller
                     foreach ($booked_rooms as $key => $booked_room) {
                         $booking_id = $booking_result["object"]->id;
                         $room_id = $booked_room['id'];
-                        $room_status = 2; //confirm
+//                        $room_status = 2; //confirm
+                        if($today_date >= $charge_date){
+                            $room_status = 5; //today is within cancellation date and so, user will be charged immediately and room_status will be "complete"
+                        }
+                        else{
+                            $room_status = 2; //booking_status = "confirm"
+                        }
+
                         $remark = "";
                         $added_extra_bed = 0;
                         $extra_bed_price = 0.0;
@@ -564,6 +715,48 @@ class PaymentController extends Controller
                             $extra_bed_price = $r_category->extra_bed_price;
                         }
 
+                        //calculate the number of night stay
+                        $difference = strtotime($check_out_date) - strtotime($check_in_date);
+                        $nights     = floor($difference/(60*60*24));
+
+                        $room_price = $r_category->price;
+
+                        $room_price_total = $room_price * $nights;
+
+                        //start checking discount for each room
+                        //get room discount by room_category_id
+                        $roomDiscountRepo = new RoomDiscountRepository();
+                        $room_discount = $roomDiscountRepo->getDiscountByRoomCategory($r_category->id);
+
+                        //initialize discount_percent and discount_amt
+                        $discount_percent = 0;
+                        $discount_amt = 0.00;
+
+                        //final discount amount
+                        $discount_amount = 0.00;
+
+                        if(isset($room_discount) && count($room_discount)>0){
+                            if(isset($room_discount->discount_percent) && $room_discount->discount_percent != 0){
+                                $discount_percent = $room_discount->discount_percent;
+                            }
+                            elseif(($room_discount->discount_amount) && $room_discount->discount_amount != 0){
+                                $discount_amt = $room_discount->discount_amount;
+                            }
+                        }
+
+                        //if there is discount_percent, change to amount and add to discount_array
+                        if($discount_percent != 0){
+                            $discount_amount = ($discount_percent / 100) * $room_price_total;
+                        }
+                        //else if there is discount_amt, add to discount_array
+                        elseif($discount_amt != 0.00){
+                            $discount_amount = $discount_amt;
+                        }
+                        //end checking discount for each room
+
+                        $room_payable_amount = $room_price_total - $discount_amount + $extra_bed_price;
+
+
                         //create booking room obj
                         $bookingRoomObj = new BookingRoom();
                         $bookingRoomObj->booking_id = $booking_id;
@@ -576,7 +769,10 @@ class PaymentController extends Controller
                         $bookingRoomObj->check_in_time = $check_in_time;
                         $bookingRoomObj->check_out_time = $check_out_time;
                         $bookingRoomObj->remark = $remark;
-                        $bookingRoomObj->room_price = $r_category->price;
+                        $bookingRoomObj->number_of_night = $nights;
+                        $bookingRoomObj->room_price_per_night = $r_category->price;
+                        $bookingRoomObj->discount_amt = $discount_amount;
+                        $bookingRoomObj->room_payable_amt = $room_payable_amount;
                         $bookingRoomObj->added_extra_bed = $added_extra_bed;
                         $bookingRoomObj->extra_bed_price = $extra_bed_price;
                         $bookingRoomObj->user_first_name = $user_name;
@@ -710,8 +906,12 @@ class PaymentController extends Controller
                 $bookingPaymentObj->payment_id = $payment_id;
                 $bookingPaymentObj->payment_gateway_tax_amt = 0.0;
                 $bookingPaymentObj->status = 1;
-                $bookingPaymentObj->payment_tax_percentage = $tax_percent;
-                $bookingPaymentObj->payment_tax_amt = $tax_amount;
+//                $bookingPaymentObj->payment_tax_percentage = $tax_percent;
+//                $bookingPaymentObj->payment_tax_amt = $tax_amount;
+                $bookingPaymentObj->total_government_tax_amt = $gov_tax_amount;
+                $bookingPaymentObj->total_government_tax_percentage = $gov_tax;
+                $bookingPaymentObj->total_service_tax_amt = $service_tax_amount;
+                $bookingPaymentObj->total_service_tax_percentage = $service_tax;
                 $bookingPaymentObj->total_payable_amt = $payable_amount;
                 $bookingPaymentObj->payment_reference_no = null;
 
@@ -748,6 +948,7 @@ class PaymentController extends Controller
 
             //if all insertions were successful, commit DB and redirect to congratulation page
             DB::commit();
+            $booking_id = $bookingObj->id;
 
             return redirect('/congratulations');
         }

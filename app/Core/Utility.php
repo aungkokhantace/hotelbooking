@@ -7,6 +7,7 @@
  */
 
 use App\Core\Config\ConfigRepository;
+use App\Setup\HotelConfig\HotelConfigRepository;
 use Validator;
 use Auth;
 use DB;
@@ -163,5 +164,26 @@ class Utility
     public static function getCurrentCustomerID(){
         $id = Auth::guard('Customer')->user()->id;
         return $id;
+    }
+
+    public static function getServiceTax($hotel_id){
+        $service_tax = 0.0;
+
+        $hotelConfigRepo = new HotelConfigRepository();
+        $hotel_config = $hotelConfigRepo->getConfigByHotel($hotel_id);
+        if(isset($hotel_config) && count($hotel_config) > 0){
+            $service_tax = $hotel_config->tax;
+        }
+
+        if($service_tax == 0.0 || $service_tax == 0 || $service_tax == null){
+            $config_service_tax = DB::select("SELECT * FROM core_configs WHERE `code` = 'SERVICE_TAX'");
+            $service_tax = $config_service_tax[0]->value;
+        }
+        return $service_tax;
+    }
+
+    public static function generateBookingNumber() {
+        $booking_number = uniqid();
+        return $booking_number;
     }
 }
