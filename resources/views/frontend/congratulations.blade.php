@@ -30,17 +30,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="paymentfour_left">
-                                <h3>Congratulations! Your booking is now confirmed.</h3>
-                            </div>
-                            <div class="paymentfour_left pull-right">
-                                <h4>PRINT CONFIRMATION</h4>
-                            </div>
-                            <ul class="payment_ul">
-                                <li><i class="fa fa-check fa-lg" aria-hidden="true"></i>We sent your confirmation email to 20170329test@gmail.com</li>
-                                <li><i class="fa fa-check fa-lg" aria-hidden="true"></i>Your booking at Ocean Pearl Inn - 3 is already confirmed</li>
-                                <li><i class="fa fa-check fa-lg" aria-hidden="true"></i>You can <a href="#">make changes or cancel your booking</a> any time</li>
-                            </ul> -->
                             </div>
                         </div>
                     </div> <!-- /.col-md-12 -->
@@ -52,7 +41,7 @@
                             <div class="row">
                                 <div class="col-md-9">
                                     <div class="paymentform_left">
-                                        <h5>Chartrium Hotel Royal Lake Yangon</h5>
+                                        <h5>{{$hotel->name}}</h5>
                                         <table class="paymentfour_table">
                                             <tbody>
                                             <tr>

@@ -19,19 +19,41 @@
                 @else
                     <td width="80%">{{$totalRooms}} room</td>
                 @endif
-{{--                <td>{{session('total_amount')}} MMK</td>--}}
-                <td>{{session('total_payable_amount_wo_extrabed')}} MMK</td>
+
+{{--                <td>{{session('total_payable_amount_wo_extrabed')}} MMK</td>--}}
+                <td>{{session('total_amount_wo_discount')}} MMK</td>
             </tr>
-            @if((Session::has('total_extrabed_fee')))
+
+            <tr>
+                <td width="80%">Discount</td>
+                <td>{{session('total_discount_amount')}} MMK</td>
+            </tr>
+
+            <tr>
+                <td width="80%">Amount after Discount</td>
+                <td>{{session('total_amount_w_discount')}} MMK</td>
+            </tr>
+
+            @if((Session::has('total_extrabed_fee')) && session('total_extrabed_fee') != 0)
             <tr>
                 <td width="80%">Extrabed Price</td>
                 <td>{{session('total_extrabed_fee')}} MMK</td>
             </tr>
+            <tr>
+                <td width="80%">Amount including Extrabed Price</td>
+                <td>{{session('total_payable_amount_w_extrabed')}} MMK</td>
+            </tr>
             @endif
             <tr>
-                <td width="80%">{{session('tax')}}% TAX</td>
-                <td>{{session('tax_amount')}} MMK</td>
+                <td width="80%">{{session('service_tax')}}% SERVICE TAX</td>
+                <td>{{session('service_tax_amount')}} MMK</td>
             </tr>
+
+            <tr>
+                <td width="80%">{{session('gov_tax')}}% GOVERNMENT TAX</td>
+                <td>{{session('gov_tax_amount')}} MMK</td>
+            </tr>
+
             {{--<tr>--}}
                 {{--<td width="80%">10% Property service charge</td>--}}
                 {{--<td>US$34.63</td>--}}
