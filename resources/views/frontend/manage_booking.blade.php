@@ -65,8 +65,8 @@
                         <div class="col-lg-4 col-md-4 col-sm-4">
                             <a href="#">Change Date</a><br/>
                             <a href="#">View Policies</a><br/>
-                            <a href="#">View Confirmation</a><br/>
-                            <a href="#">Print Confirmation</a><br/>
+                            <a href="/booking/manage/congratulation/{{$hotel->id}}">View Confirmation</a><br/>
+                            <a href="/booking/manage/print/{{$booking->id}}" target="_blank">Print Confirmation</a><br/>
                             <a href="#">Cancel Booking</a><br/>
                         </div>
                     </div>

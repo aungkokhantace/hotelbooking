@@ -166,7 +166,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Laravel\Cashier\CashierServiceProvider::class,
-
+        Elibyy\TCPDF\ServiceProvider::class,
 
     ],
 
@@ -219,6 +219,8 @@ return [
         'Alert'     => UxWeb\SweetAlert\SweetAlert::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'InterventionImage' => Intervention\Image\Facades\Image::class,
+        'PDF' => Elibyy\TCPDF\Facades\TCPDF::class,
+
     ],
 
 ];
