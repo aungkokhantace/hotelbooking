@@ -9,6 +9,7 @@ use App\Setup\Amenities\AmenitiesRepository;
 use App\Setup\Booking\BookingRepositoryInterface;
 use App\Setup\BookingRequest\BookingRequestRepository;
 use App\Setup\BookingRoom\BookingRoomRepository;
+use App\Setup\CoreSettings\CoreSettingRepository;
 use App\Setup\Customer\CustomerRepository;
 use App\Setup\Facilities\FacilitiesRepository;
 use App\Setup\Hotel\HotelRepository;
@@ -21,6 +22,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
+use Illuminate\Support\Facades\Input;
 use PDF;
 
 class BookingController extends Controller
@@ -85,6 +87,7 @@ class BookingController extends Controller
                 $bRoomRepo          = new BookingRoomRepository();
                 $amenityRepo        = new AmenitiesRepository();
                 $facilityRepo       = new FacilitiesRepository();
+                $settingRepo        = new CoreSettingRepository();
 
                 $r_category_id      = array();
                 $amenity_arr        = array();
@@ -136,9 +139,13 @@ class BookingController extends Controller
                 }
                 $booking->rooms     = $bRooms; //Add Rooms Array to booking
 
+                /*get Cancel Reason */
+                $reasons            = $settingRepo->getCancelReason('REASON');
+
                 return view('frontend.manage_booking')->with('customer',$customer)
                                                       ->with('booking',$booking)
-                                                      ->with('hotel',$hotel);
+                                                      ->with('hotel',$hotel)
+                                                      ->with('reasons',$reasons);
             }
             else{
                 dd('unauthorized');
@@ -246,6 +253,24 @@ class BookingController extends Controller
         $pdf::AddPage();
         $pdf::writeHTML($html, true, false, true, false, '');
         $pdf::Output('pdf_booking_confirmation.pdf');
+
+    }
+
+    public function cancel_booking(Request $request){
+        try{
+            if($request->ajax()){
+                $reason     = Input::get('reason');
+                $id         = Input::get('id');
+                $booking    = $this->repo->changeBookingStatus($reason,$id);
+            }
+            else{
+                $response['aceplusStatusCode']  = '202';
+            }
+            return \Response::json($response);
+        }
+        catch(\Exception $e){
+            //
+        }
 
     }
 
