@@ -48,4 +48,18 @@ class Booking extends Model
     {
         return $this->hasOne('App\Setup\BookingPaymentStripe\BookingPaymentStripe', 'booking_id','id');
     }
+    public function booking_special_request()
+    {
+        return $this->hasMany('App\Setup\Booking\Communication', 'booking_id','id');
+    }
+
+    public function booking_room()
+    {
+        return $this->hasMany('App\Setup\BookingRoom\BookingRoom', 'booking_id','id');
+    }
+
+    public function booking_request()
+    {
+        return $this->hasOne('App\Setup\BookingRequest\BookingRequest', 'booking_id','id');
+    }
 }

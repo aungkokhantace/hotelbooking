@@ -431,6 +431,9 @@ Route::group(['middleware' => 'web'], function () {
             //Hotel Booking
             Route::get('booking', array('as'=>'backend/booking', 'uses'=>'Setup\HotelBooking\HotelBookingController@index'));
             Route::get('booking/{id}', array('as'=>'backend/booking/{id}', 'uses'=>'Setup\HotelBooking\HotelBookingController@detail'));
+            Route::get('communication', array('as'=>'backend/communication', 'uses'=>'Setup\HotelBooking\CommunicationController@index'));
+            Route::get('communication/reply/{id}', array('as'=>'backend/communication/reply/{id}', 'uses'=>'Setup\HotelBooking\CommunicationController@show'));
+            Route::post('communication/reply/store', array('as'=>'backend/communication/reply/store', 'uses'=>'Setup\HotelBooking\CommunicationController@store'));
 
             //SaleSummary Report
             Route::get('salesummaryreport',array(

@@ -16,6 +16,8 @@ class Kernel extends ConsoleKernel
         // Commands\Inspire::class,
         Commands\testReport::class,
         Commands\SendMail::class,
+        Commands\CancellationStartCron::class,
+        Commands\PaymentStartCron::class,
 
     ];
 
@@ -29,6 +31,6 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->command('testing')->everyFiveMinutes();
+        $schedule->command('Run Cron Job Daily')->everyMinute();
     }
 }

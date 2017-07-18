@@ -5,7 +5,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">{{trans('setup_booking.title-list')}}</h1>
+    <h1 class="page-header">{{trans('setup_communication.title-list')}}</h1>
 
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -15,54 +15,37 @@
 
                     <thead>
                     <tr>
-                        <th>{{trans('setup_booking.tb-col-booking-number')}}</th>
-                        <th>{{trans('setup_booking.tb-col-username')}}</th>
-                        <th>{{trans('setup_booking.tb-col-check-in-date')}}</th>
-                        <th>{{trans('setup_booking.tb-col-check-out-date')}}</th>
-                        <th>{{trans('setup_booking.tb-col-for-other')}}</th>
-                        <th>{{trans('setup_booking.tb-col-total-tax-amt')}}</th>
-                        <th>{{trans('setup_booking.tb-col-total-tax-percentage')}}</th>
-                        <th>{{trans('setup_booking.tb-col-hotel-name')}}</th>
-                        <th>{{trans('setup_booking.tb-col-travel-for-work')}}</th>
+                        <th>{{trans('setup_communication.tb-col-booking-number')}}</th>
+                        <th>{{trans('setup_communication.tb-col-username')}}</th>
+                        <th>{{trans('setup_communication.tb-col-hotel-name')}}</th>
+                        <th>{{trans('setup_communication.tb-col-total-request')}}</th>
+                        <th>{{trans('setup_communication.tb-col-reply')}}</th>
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
                         <th class="search-col" con-id="booking_name">Booking Number</th>
                         <th class="search-col" con-id="username">Username</th>
-                        <th class="search-col" con-id="check_in_date">Check in Date</th>
-                        <th class="search-col" con-id="check_out_date">Check Out Date</th>
-                        <th class="search-col" con-id="for_other">For Other</th>
-                        <th class="search-col" con-id="total_tax_amt">Total Tax Amount</th>
-                        <th class="search-col" con-id="total_tax_percentage">Total Tax Percentage</th>
                         <th class="search-col" con-id="hotel_name">Hotel Name</th>
-                        <th class="search-col" con-id="travel_for_work">Travel For Work</th>
+                        <th class="search-col" con-id="total_request">Total Request</th>
+                        <th class="search-col" con-id="reply">Reply</th>
                     </tr>
                     </tfoot>
                     <tbody>
                     @foreach($bookings as $booking)
                         <tr>
-                            <td><a href="booking/{{ $booking->id }}">{{ $booking->booking_no}}</a></td>
-                            <td><a href="booking/{{ $booking->id }}">{{ $booking->user->display_name}}</a></td>
-                            <td>{{ $booking->check_in_date}}</td>
-                            <td>{{ $booking->check_out_date}}</td>
-                            <td>
-                                @if($booking->for_other == 0)
-                                    {{ 'No'}}
-                                @else
-                                    {{ 'Yes'}}
-                                @endif
-                            </td>
-                            <td>{{ $booking->total_tax_amt}}</td>
-                            <td>{{ $booking->total_tax_percentage}}</td>
+                            <td>{{ $booking->booking_no}}</td>
+                            <td>{{ $booking->user->display_name}}</td>
                             <td>{{ $booking->hotel->name}}</td>
+                            
                             <td>
-                                @if($booking->travel_for_work == 0)
-                                    {{ 'No'}}
-                                @else
-                                    {{ 'Yes'}}
+                            @foreach($commuCount as $key => $Count)
+                                @if($booking->id == $key)
+                                {{ $Count }}
                                 @endif
+                            @endforeach
                             </td>
+                            <td><a href="communication/reply/{{ $booking->id}}">Reply</a></td>
                         </tr>
                     @endforeach
                     </tbody>

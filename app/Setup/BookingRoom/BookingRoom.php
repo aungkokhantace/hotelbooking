@@ -40,4 +40,8 @@ class BookingRoom extends Model
         return $this->belongsTo('App\Setup\Room\Room');
     }
 
+    public function booking()
+    {
+        return $this->belongsTo('App\Setup\Booking\Booking');
+    }
 }

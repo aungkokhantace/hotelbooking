@@ -345,6 +345,17 @@
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend/booking">List</a></li>
                         </ul>
                     </li>
+
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Communication</span>
+                        </a>
+
+                        <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/communication">List</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
 

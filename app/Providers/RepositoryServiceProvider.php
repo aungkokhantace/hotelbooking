@@ -72,5 +72,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind('App\Setup\Slider\SliderRepositoryInterface','App\Setup\Slider\SliderRepository');
         $this->app->bind('App\Setup\Page\PageRepositoryInterface','App\Setup\Page\PageRepository');
         $this->app->bind('App\Setup\EventEmail\EventEmailRepositoryInterface','App\Setup\EventEmail\EventEmailRepository');
+        $this->app->bind('App\Setup\Booking\CommunicationRepositoryInterface','App\Setup\Booking\CommunicationRepository');
     }
 }

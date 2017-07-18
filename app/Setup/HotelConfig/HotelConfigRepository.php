@@ -143,8 +143,9 @@ class HotelConfigRepository implements HotelConfigRepositoryInterface
 
     public function getFirstCancellationDayCountHotelConfig($hotel_id)
     {
-        $objs     = HotelConfig::select('first_cancellation_day')->where('hotel_id',$hotel_id)->
-                    whereNull('deleted_at')->first();
+        $objs     = HotelConfig::select('first_cancellation_day_count')
+                    ->where('hotel_id',$hotel_id)
+                    ->whereNull('deleted_at')->first();
         return $objs;
     }
 
