@@ -67,7 +67,10 @@
                             <a href="#">View Policies</a><br/>
                             <a href="/booking/manage/congratulation/{{$hotel->id}}">View Confirmation</a><br/>
                             <a href="/booking/manage/print/{{$booking->id}}" target="_blank">Print Confirmation</a><br/>
-                            <a href="#">Cancel Booking</a><br/>
+                            <a href="#" data-toggle="modal" data-target="#cancelBooking">Cancel Booking</a>
+                            <!-- Cancel Booking Modal -->
+                            @include('frontend.booking_cancel');
+                            <!-- Cancel Booking Modal -->
                         </div>
                     </div>
                     <div class="row">
