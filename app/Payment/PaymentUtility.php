@@ -24,8 +24,9 @@ class PaymentUtility
         $returnedObj = array();
         $returnedObj['aceplusStatusCode'] = ReturnMessage::INTERNAL_SERVER_ERROR;
 
-        //$currentUser = Utility::getCurrentUserID(); //get currently logged in user
-        $currentUser = "MrTesting";
+//        $currentUser = Utility::getCurrentUserID(); //get currently logged in user
+        $currentUser = Utility::getCurrentCustomerID(); //get currently logged in customer
+//        $currentUser = "MrTesting";
 
         try {
 
@@ -55,11 +56,13 @@ class PaymentUtility
     }
 
     public function createCustomer($ParamData){
+
         $returnedObj = array();
         $returnedObj['aceplusStatusCode'] = ReturnMessage::INTERNAL_SERVER_ERROR;
 
-       // $currentUser = Utility::getCurrentUserID(); //get currently logged in user
-        $currentUser  = "MrTesting";
+//        $currentUser = Utility::getCurrentUserID(); //get currently logged in user
+        $currentUser = Utility::getCurrentCustomerID(); //get currently logged in customer
+//        $currentUser  = "MrTesting";
         try {
 
             // Token is created using Stripe.js or Checkout!
@@ -68,6 +71,7 @@ class PaymentUtility
             $email = $ParamData['stripeEmail'];
 
             $tempStripeObj  = $this->createPaymentObj();
+
             if($tempStripeObj['aceplusStatusCode'] != ReturnMessage::OK){
                 throw new Exception('Error with payment token !!!!');
             }
@@ -103,8 +107,9 @@ class PaymentUtility
         $returnedObj = array();
         $returnedObj['aceplusStatusCode'] = ReturnMessage::INTERNAL_SERVER_ERROR;
 
-        //$currentUser = Utility::getCurrentUserID(); //get currently logged in user
-        $currentUser = "MrTesting";
+//        $currentUser = Utility::getCurrentUserID(); //get currently logged in user
+        $currentUser = Utility::getCurrentCustomerID(); //get currently logged in customer
+//        $currentUser = "MrTesting";
         try {
             $paymentCurrency = PaymentConstance::STIRPE_CURRENCY;
 
@@ -146,7 +151,8 @@ class PaymentUtility
         $returnedObj['aceplusStatusCode'] = ReturnMessage::INTERNAL_SERVER_ERROR;
 
 //        $currentUser = Utility::getCurrentUserID(); //get currently logged in user
-        $currentUser = "MrTesting";
+        $currentUser = Utility::getCurrentCustomerID(); //get currently logged in customer
+//        $currentUser = "MrTesting";
 
         try {
             $paymentCurrency = PaymentConstance::STIRPE_CURRENCY;
