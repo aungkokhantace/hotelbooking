@@ -84,7 +84,8 @@ class RoomController extends Controller
         $h_room_type_id     = Input::get('h_room_type_id');
         $h_room_category_id = Input::get('h_room_category_id');
         $room_view_id       = Input::get('room_view_id');
-        $apply_cutoff_date  = Input::get('apply_cutoff_date');
+//        $apply_cutoff_date  = Input::get('apply_cutoff_date');
+        $apply_cutoff_date  = (Input::has('apply_cutoff_date')) ? Input::get('apply_cutoff_date') : 0;
         $status             = Input::get('status');
 //        $no_of_rooms        = Input::get('number_of_rooms');
         $description        = Input::get('description');
