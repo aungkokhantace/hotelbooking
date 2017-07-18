@@ -12,6 +12,7 @@
             <li><a data-toggle="tab" href="#room_status"><b>Room Status</b></a></li>
             <li><a data-toggle="tab" href="#facility_type"><b>Facility Type</b></a></li>
             <li><a data-toggle="tab" href="#booking_status"><b>Booking Status</b></a></li>
+            <li><a data-toggle="tab" href="#booking_payment_stripe_status"><b>Booking Payment Stripe Status</b></a></li>
         </ul>
 
         <div class="tab-content">
@@ -114,6 +115,28 @@
                     <tr>
                         <td>Refund</td>
                         <td>7</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="booking_payment_stripe_status" class="tab-pane fade">
+                <h3>Booking Payment Stripe Status Reference Description</h3>
+                <table border="2" width="300px" style="text-align: center">
+                    <tr>
+                        <td><strong>Name</strong></td>
+                        <td><strong>Value</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Create Customer</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>Capture</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>Refund</td>
+                        <td>3</td>
                     </tr>
                 </table>
             </div>

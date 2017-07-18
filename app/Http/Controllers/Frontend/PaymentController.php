@@ -15,6 +15,7 @@ use App\Core\Utility;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 //use App\Session;
+use App\Payment\PaymentUtility;
 use App\Setup\Booking\Booking;
 use App\Setup\Booking\BookingRepository;
 use App\Setup\BookingPayment\BookingPayment;
@@ -112,6 +113,7 @@ class PaymentController extends Controller
 //                $amount_per_category = $room_category->price * $number_of_room * $nights;
                 $amount_per_category_wo_discount = $room_category->price * $number_of_room * $nights;
                 $amount_per_category_w_discount  = $amount_per_category_wo_discount;
+
                 //start checking discount for each room_category
                 //get room discount by room_category_id
                 $room_discount = $roomDiscountRepo->getDiscountByRoomCategory($room_category_id);
@@ -188,8 +190,7 @@ class PaymentController extends Controller
         Session::forget('total_amount_wo_discount');
         Session::forget('total_amount_w_discount');
         Session::forget('total_discount_amount');
-//        Session::forget('tax');
-//        Session::forget('tax_amount');
+
         Session::forget('service_tax');
         Session::forget('service_tax_amount');
         Session::forget('gov_tax');
@@ -247,9 +248,6 @@ class PaymentController extends Controller
                     ->with('nights',$nights)
                     ->with('hotelFacilities',$hotelFacilities)
                     ->with('totalRooms',$totalRooms)
-//                    ->with('tax',$tax)
-//                    ->with('tax_amount',$tax_amount)
-//                    ->with('total_amount',$total_amount)
                     ->with('payable_amount',$payable_amount);
     }
 
@@ -303,7 +301,6 @@ class PaymentController extends Controller
         Session::forget('total_amount');
         Session::forget('total_payable_amount_w_extrabed');
 
-//        Session::forget('tax_amount');
         Session::forget('service_tax');
         Session::forget('service_tax_amount');
         Session::forget('gov_tax');
@@ -522,10 +519,6 @@ class PaymentController extends Controller
 //            session(['total_payable_amount_wo_extrabed' => $total_payable_amount_wo_extrabed]);
 //        }
 
-//        if(isset($tax_amount) && $tax_amount != 0.00){
-//            session(['tax_amount' => $tax_amount]);
-//        }
-
         if(isset($service_tax) && $service_tax != null && $service_tax != ""){
             session(['service_tax' => $service_tax]);
         }
@@ -582,9 +575,6 @@ class PaymentController extends Controller
 
         $check_in_time = $hotel->check_in_time;
         $check_out_time = $hotel->check_out_time;
-//        $total_amount = session('total_amount');
-//        $tax_amount = session('tax_amount');
-//        $tax_percent = session('tax');
 
         $total_payable_amount_w_extrabed  = session('total_payable_amount_w_extrabed');
         $total_payable_amount_wo_extrabed = session('total_payable_amount_wo_extrabed');
@@ -623,13 +613,6 @@ class PaymentController extends Controller
             $status = 2; //booking_status = "confirm"
         }
 
-        //////////////////////////////////////////////////
-//        $available_room_categories = session('available_room_categories');
-
-//        $roomRepo = New RoomRepository();
-        //get rooms that are within available_period and not within black_out period and not booked
-//        $rooms    = $roomRepo->getRoomCountByRoomCategoryId($r_category->id,$check_in,$check_out);
-
         try{
             DB::beginTransaction();
 
@@ -643,8 +626,6 @@ class PaymentController extends Controller
             $bookingObj->check_out_time = $check_out_time;
             $bookingObj->price_wo_tax = $total_payable_amount_w_extrabed;
             $bookingObj->price_w_tax = $payable_amount;
-//            $bookingObj->total_tax_amt = $tax_amount;
-//            $bookingObj->total_tax_percentage = $tax_percent;
             $bookingObj->total_government_tax_amt = $gov_tax_amount;
             $bookingObj->total_government_tax_percentage = $gov_tax;
             $bookingObj->total_service_tax_amt = $service_tax_amount;
@@ -844,7 +825,7 @@ class PaymentController extends Controller
                 }
             }
             //Start Stripe Payment Section
-                //Set your secret key: remember to change this to your live secret key in production
+            /*    //Set your secret key: remember to change this to your live secret key in production
                 //See your keys here: https://dashboard.stripe.com/account/apikeys
             Stripe::setApiKey("sk_test_pfDJKF6zoTRgCuHdPptjcgQX");
 
@@ -855,8 +836,8 @@ class PaymentController extends Controller
 
 
             $total_amount = session('total_amount');
-            $tax = session('tax');
-            $tax_amount = session('tax_amount');
+//            $tax = session('tax');
+//            $tax_amount = session('tax_amount');
             $payable_amount = session('payable_amount');
 
             // Create a Customer:
@@ -865,17 +846,31 @@ class PaymentController extends Controller
                 "source" => $token,
             ));
 
-            $customer_id = $customer['id'];
+            $customer_id = $customer['id']; */
+
+            $email = $_POST['stripeEmail'];
+
+            //create a customer
+            $stripePaymentObj           = new PaymentUtility();
+            $stripeCustomerResult        = $stripePaymentObj->createCustomer($_POST);
+
+            $customer_id = $stripeCustomerResult["stripe"]["stripe_user_id"];
 
             //Compare today date with charge_date and if today is greater than charge_date(i.e. today is within first cancellation day), charge the customer
             if($today_date >= $charge_date){
                 // Charge the Customer
-                $charge = Charge::create(array(
-                    "amount" => $payable_amount,
-                    "currency" => "mmk",
-                    "customer" => $customer_id
-                ));
+//                $charge = Charge::create(array(
+//                    "amount" => $payable_amount,
+//                    "currency" => "usd",
+//                    "customer" => $customer_id
+//                ));
 
+                //capture payment
+                $stripePaymentResult        = $stripePaymentObj->capturePayment($customer_id, $payable_amount);
+
+                $stripe_user_id = $stripePaymentResult["stripe"]["stripe_user_id"];
+                $stripe_payment_id = $stripePaymentResult["stripe"]["stripe_payment_id"];
+                $stripe_payment_amt = $stripePaymentResult["stripe"]["stripe_payment_amt"];
             }
 
             //Insert Stripe Customer
@@ -929,8 +924,20 @@ class PaymentController extends Controller
                     $booking_payment_id = $booking_payment_result["object"]->id;
                     $bookingPaymentStripeObj = new BookingPaymentStripe();
                     $bookingPaymentStripeObj->stripe_user_id = $customer_id;
+                    if(isset($stripe_payment_id)){
+                        $bookingPaymentStripeObj->stripe_payment_id = $stripe_payment_id;
+                    }
+                    if(isset($stripe_payment_amt)){
+                        $bookingPaymentStripeObj->stripe_payment_amt = $stripe_payment_amt;
+                    }
                     $bookingPaymentStripeObj->email = $email;
-                    $bookingPaymentStripeObj->status = 1;
+
+                    if($today_date >= $charge_date) {
+                        $bookingPaymentStripeObj->status = 2; //2 is capture
+                    }
+                    else{
+                        $bookingPaymentStripeObj->status = 1; //1 is create_customer
+                    }
                     $bookingPaymentStripeObj->booking_id = $booking_id;
                     $bookingPaymentStripeObj->booking_payment_id = $booking_payment_id;
 

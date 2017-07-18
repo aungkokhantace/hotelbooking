@@ -127,17 +127,17 @@
                                                     <div class="col-sm-3 pd_rg_10">
                                                         <label>First Name <span style="color:red;">*</span></label>
                                                         @if(\Illuminate\Support\Facades\Session::has('customer'))
-                                                            <input type="text" class="formcontrols" id="first_name" name="first_name" autocomplete="off">
+                                                            <input type="text" class="formcontrols" id="first_name" name="first_name" autocomplete="off" value="{{session('customer')['first_name']}}" readonly>
                                                         @else
-                                                            <input type="text" class="formcontrols" id="first_name" name="first_name" disabled>
+                                                            <input type="text" class="formcontrols" id="first_name" name="first_name" readonly>
                                                         @endif
                                                     </div>
                                                     <div class="col-sm-3 pd_lf_5">
                                                         <label>Last Name <span style="color:red;">*</span></label>
                                                         @if(\Illuminate\Support\Facades\Session::has('customer'))
-                                                            <input type="text" class="formcontrols" id="last_name" name="last_name" autocomplete="off">
+                                                            <input type="text" class="formcontrols" id="last_name" name="last_name" autocomplete="off" value="{{session('customer')['last_name']}}" readonly>
                                                         @else
-                                                            <input type="text" class="formcontrols" id="last_name" name="last_name" disabled>
+                                                            <input type="text" class="formcontrols" id="last_name" name="last_name" readonly>
                                                         @endif
                                                     </div>
                                                 </div>
@@ -146,23 +146,23 @@
                                                     <div class="col-sm-6 pd_rg_10">
                                                         <label>Email Address <span style="color:red;">*</span></label>
                                                         @if(\Illuminate\Support\Facades\Session::has('customer'))
-                                                            <input type="email" class="formcontrols" id="email_address" name="email" autocomplete="off">
+                                                            <input type="email" class="formcontrols" id="email_address" name="email" autocomplete="off" value="{{session('customer')['email']}}" readonly>
                                                         @else
-                                                            <input type="email" class="formcontrols" id="email_address" name="email" disabled>
+                                                            <input type="email" class="formcontrols" id="email_address" name="email" readonly>
                                                         @endif
                                                     </div>
                                                 </div>
 
-                                                <div class="payment_formgroup">
-                                                    <div class="col-sm-6 pd_rg_10">
-                                                        <label>Confirm Email Address <span style="color:red;">*</span></label>
-                                                        @if(\Illuminate\Support\Facades\Session::has('customer'))
-                                                            <input type="email" class="formcontrols" id="confirm_email" name="confirm_email" autocomplete="off">
-                                                        @else
-                                                            <input type="email" class="formcontrols" id="confirm_email" name="confirm_email" disabled>
-                                                        @endif
-                                                    </div>
-                                                </div>
+                                                {{--<div class="payment_formgroup">--}}
+                                                    {{--<div class="col-sm-6 pd_rg_10">--}}
+                                                        {{--<label>Confirm Email Address <span style="color:red;">*</span></label>--}}
+                                                        {{--@if(\Illuminate\Support\Facades\Session::has('customer'))--}}
+                                                            {{--<input type="email" class="formcontrols" id="confirm_email" name="confirm_email" autocomplete="off">--}}
+                                                        {{--@else--}}
+                                                            {{--<input type="email" class="formcontrols" id="confirm_email" name="confirm_email" disabled>--}}
+                                                        {{--@endif--}}
+                                                    {{--</div>--}}
+                                                {{--</div>--}}
 
                                                 @foreach($available_room_category_array as $available_room_category)
                                                     <input type="hidden" id="available_room_categories" name="available_room_categories[]" value="{{$available_room_category}}">
@@ -395,11 +395,11 @@
                         required        : true,
                         email           : true,
                         },
-                    confirm_email: {
-                        required        : true,
-                        email           : true,
-                        equalTo         : "#email_address"
-                        },
+//                    confirm_email: {
+//                        required        : true,
+//                        email           : true,
+//                        equalTo         : "#email_address"
+//                        },
 
                 },
                 messages: {
@@ -409,11 +409,11 @@
                         required        : 'Email address is required',
                         email           : 'Please enter a valid email address',
                     },
-                    confirm_email: {
-                        required        : 'Confirm Email address is required',
-                        email           : 'Please enter a valid email address',
-                        equalTo         : "Email and Confirm Email do not match"
-                    },
+//                    confirm_email: {
+//                        required        : 'Confirm Email address is required',
+//                        email           : 'Please enter a valid email address',
+//                        equalTo         : "Email and Confirm Email do not match"
+//                    },
                 },
                 submitHandler: function(form) {
                     $('input[type="submit"]').attr('disabled','disabled');
