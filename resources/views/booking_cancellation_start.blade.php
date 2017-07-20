@@ -34,7 +34,7 @@
                 font-size: 18px;
             }
             .redcolor {
-                color:##DF170F;
+                color:#DF170F;
             }
         </style>
     </head>

@@ -115,7 +115,7 @@ class RoomAvailablePeriodController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\RoomAvailablePeriod\RoomAvailablePeriodController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Room Blackout Period updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Room Available Period updated ...'));
         }
         else{
             return redirect()->action('Setup\RoomAvailablePeriod\RoomAvailablePeriodController@index')
