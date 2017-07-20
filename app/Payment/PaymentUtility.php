@@ -1,4 +1,5 @@
-<?php namespace App\Payment;
+<?php 
+namespace App\Payment;
 
 /**
  * Created by PhpStorm.
@@ -102,17 +103,16 @@ class PaymentUtility
 
     }
 
+    //$flag = 1; From Web
+    //$flag = 2; From Cron
     public function capturePayment($customerId, $amount){
-
         $returnedObj = array();
         $returnedObj['aceplusStatusCode'] = ReturnMessage::INTERNAL_SERVER_ERROR;
-
 //        $currentUser = Utility::getCurrentUserID(); //get currently logged in user
-        $currentUser = Utility::getCurrentCustomerID(); //get currently logged in customer
+        $currentUser = Utility::getCurrentCustomerID();
 //        $currentUser = "MrTesting";
         try {
             $paymentCurrency = PaymentConstance::STIRPE_CURRENCY;
-
             $tempStripeObj  = $this->createPaymentObj();
             if($tempStripeObj['aceplusStatusCode'] != ReturnMessage::OK){
                 throw new Exception('Error with payment token !!!!');
@@ -123,7 +123,6 @@ class PaymentUtility
                 "currency" => $paymentCurrency,
                 "customer" => $customerId
             ));
-
             $stripeObj = array();
             $stripeObj['stripe_user_id'] = $customerId;
             $stripeObj['stripe_payment_id'] = $charge->id;

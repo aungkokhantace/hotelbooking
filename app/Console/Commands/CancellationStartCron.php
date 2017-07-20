@@ -63,9 +63,8 @@ class CancellationStartCron extends Command
             $h_id                       = $booking->hotel_id;
             $check_in_date              = $booking->check_in_date;
             $check_in_date_formatted    = date('Y-m-d', strtotime($check_in_date));
-
             $first_cancellation_day     = $HotelConfigRepo->getFirstCancellationDayCountHotelConfig($h_id);
-            $first_cancellation_day_str = $first_cancellation_day->first_cancellation_day + 1;
+            $first_cancellation_day_str = $first_cancellation_day->first_cancellation_day_count + 1;
             $first_cancellation_day_str = "-" . $first_cancellation_day_str . " days";
             $check_cron_run_day         = strtotime($first_cancellation_day_str, strtotime($check_in_date_formatted));
             $check_cron_run_day         = date('Y-m-d', $check_cron_run_day);
@@ -84,6 +83,7 @@ class CancellationStartCron extends Command
                 $message            = "Email have been sent to " . $email . " First Cancellation Start Success!";
                 $this->info($message);
             }
+            
         }
     }
 }

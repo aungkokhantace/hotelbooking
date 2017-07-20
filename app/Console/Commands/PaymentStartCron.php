@@ -14,6 +14,7 @@ use Mail;
 use Stripe\Charge;
 use Stripe\Customer;
 use Stripe\Stripe;
+use App\Payment\PaymentUtility;
 
 class PaymentStartCron extends Command
 {
@@ -73,6 +74,7 @@ class PaymentStartCron extends Command
             $first_cancellation_day_str = "-" . $first_cancellation_day_str . " days";
             $check_cron_run_day         = strtotime($first_cancellation_day_str, strtotime($check_in_date_formatted));
             $check_cron_run_day         = date('Y-m-d', $check_cron_run_day);
+            
             if ($check_cron_run_day == $cronCheckDay) {
                 $email            = $booking->user->email;
                 $hotel_email      = $HotelConfigRepo->getEmailByHotelId($h_id);
@@ -82,28 +84,21 @@ class PaymentStartCron extends Command
                 
                 //Get Customer ID
                 $paramObj         = Booking::find($booking_id);
-                $customer_id      = $paramObj->booking_stripe->stripe_user_id;
+                $customerId       = $paramObj->booking_stripe->stripe_user_id;
                 //Get Payable Amount
                 $payable_amount_formatted   = (int)($booking->total_payable_amt);
                 $payable_amount             = $payable_amount_formatted * 100;
-                $returnedObj = array();
-                $returnedObj['aceplusStatusCode'] = ReturnMessage::INTERNAL_SERVER_ERROR;
-                $status             = 5;
-                $paramObj->status   = $status;
-                $paramObj->save();
-                $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
-                
-                if ($returnedObj['aceplusStatusCode'] == 200) {
-                    Stripe::setApiKey("sk_test_pfDJKF6zoTRgCuHdPptjcgQX");
-                    $charge = Charge::create(array(
-                        "amount" => $payable_amount,
-                        "currency" => "usd",
-                        "customer" => $customer_id
-                    ));
-                    
+                //Start Payment
+                $flag                       = 2; //From Cron Job
+                $paymentObjs                = new PaymentUtility();
+                $result                     = $paymentObjs->capturePayment($customerId, $payable_amount);
+                if ($result['aceplusStatusCode'] == 200) {
+                    $status             = 5;
+                    $paramObj->status   = $status;
+                    $paramObj->save();
                     Mail::send('booking_payment_first_start', [], function($message) use ($emails)
                     {    
-                        $subject        = "Tommorow is First Cancellation Start Date";
+                        $subject        = "Your Payment is Cut Off now.";
                         $message->to($emails)
                                 ->subject($subject);    
                     });
@@ -115,6 +110,7 @@ class PaymentStartCron extends Command
                 }
                 
             }
+            
         }
     }
 }

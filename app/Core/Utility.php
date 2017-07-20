@@ -162,8 +162,14 @@ class Utility
     }
 
     public static function getCurrentCustomerID(){
-        $id = Auth::guard('Customer')->user()->id;
-        return $id;
+        try {
+            $id = Auth::guard('Customer')->user()->id;
+            return $id;
+        }
+        catch(\Exception $e){
+            $id = 0;
+            return $id;
+        }
     }
 
     public static function getServiceTax($hotel_id){
