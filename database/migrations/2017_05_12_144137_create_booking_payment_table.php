@@ -24,7 +24,7 @@ class CreateBookingPaymentTable extends Migration
             $table->integer('payment_tax_percentage');
             $table->decimal('payment_tax_amt');
             $table->decimal('total_payable_amt');
-            $table->string('payment_reference_no')->nullable();
+            $table->string('payment_reference_no');
             //-------common to all tables--------
             $table->integer('created_by')->default(1);
             $table->integer('updated_by')->default(1);
