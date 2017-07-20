@@ -43,6 +43,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Redirect;
 use Stripe\Charge;
@@ -181,7 +182,13 @@ class PaymentController extends Controller
 
         //get government tax
         $gov_tax_temp = DB::select("SELECT * FROM core_configs WHERE `code` = 'GST'");
-        $gov_tax = $gov_tax_temp[0]->value;
+        if(isset($gov_tax_temp)){
+            $gov_tax = $gov_tax_temp[0]->value;
+        }
+        else{
+            $gov_tax = 0.0;
+        }
+
         $gov_tax_amount = ($gov_tax / 100) * $total_amount_w_discount;
 
         $payable_amount = $total_amount_w_discount + $service_tax_amount + $gov_tax_amount;
@@ -504,7 +511,12 @@ class PaymentController extends Controller
 
         //get government tax
         $gov_tax_temp = DB::select("SELECT * FROM core_configs WHERE `code` = 'GST'");
-        $gov_tax = $gov_tax_temp[0]->value;
+        if(isset($gov_tax_temp)){
+            $gov_tax = $gov_tax_temp[0]->value;
+        }
+        else{
+            $gov_tax = 0.0;
+        }
         $gov_tax_amount = ($gov_tax / 100) * $total_payable_amount_w_extrabed;
 
         //calculate payable amount
@@ -590,12 +602,16 @@ class PaymentController extends Controller
 
         $travel_for_work = session('travel_for_work');
 
+        $first_cancellation_day_count = 0;
+        $second_cancellation_day_count = 0;
 
         //start checking cancellation dates
         $hotelConfigRepo = new HotelConfigRepository();
         $h_config = $hotelConfigRepo->getConfigByHotel($hotel_id);
-        $first_cancellation_day_count = $h_config->first_cancellation_day_count;
-        $second_cancellation_day_count = $h_config->second_cancellation_day_count;
+        if(isset($h_config)){
+            $first_cancellation_day_count = $h_config->first_cancellation_day_count;
+            $second_cancellation_day_count = $h_config->second_cancellation_day_count;
+        }
 
         //calculate the day to be charged by subtracting first_cancellation_date
         $today_date = date("Y-m-d");   //today's date
@@ -955,7 +971,47 @@ class PaymentController extends Controller
 
             //if all insertions were successful, commit DB and redirect to congratulation page
             DB::commit();
+
             $booking_id = $bookingObj->id;
+            if(isset($bookingRoomObj)){
+                $booking_room_id = $bookingRoomObj->id;
+            }
+            $booking_request_id = $bookingRequestObj->id;
+            $booking_payment_id = $bookingPaymentObj->id;
+            $booking_payment_stripe_id = $bookingPaymentStripeObj->id;
+
+            //Compare today date with charge_date and if today is greater than charge_date(i.e. today is within first cancellation day), send booking COMPLETE mail
+            if($today_date >= $charge_date){
+                //Start sending complete email
+                $email            = $bookingObj->user->email;
+                $hotel_email      = $hotelConfigRepo->getEmailByHotelId($hotel_id);
+                $hotel_email_str  = $hotel_email->email;
+                $system_email     = "naingsoens4321@gmail.com";
+                $emails           = array($email,$hotel_email_str,$system_email);
+                Mail::send('booking_cancellation_start', [], function($message) use ($emails)
+                {
+                    $subject        = "Booking Complete Email";
+                    $message->to($emails)
+                        ->subject($subject);
+                });
+                //End sending complete email
+            }
+            //else, send booking CONFIRM mail
+            else{
+                //Start sending confirm email
+                $email            = $bookingObj->user->email;
+                $hotel_email      = $hotelConfigRepo->getEmailByHotelId($hotel_id);
+                $hotel_email_str  = $hotel_email->email;
+                $system_email     = "naingsoens4321@gmail.com";
+                $emails           = array($email,$hotel_email_str,$system_email);
+                Mail::send('booking_cancellation_start', [], function($message) use ($emails)
+                {
+                    $subject        = "Booking Confirm Email";
+                    $message->to($emails)
+                        ->subject($subject);
+                });
+                //End sending confirm email
+            }
 
             return redirect('/congratulations');
         }
