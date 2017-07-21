@@ -5,13 +5,19 @@ namespace App\Http\Controllers\Frontend;
 use App\Core\Check;
 use App\Core\ReturnMessage;
 use App\Core\Utility;
+use App\Log\LogCustom;
+use App\Payment\PaymentUtility;
 use App\Setup\Amenities\AmenitiesRepository;
+use App\Setup\Booking\Booking;
 use App\Setup\Booking\BookingRepositoryInterface;
+use App\Setup\BookingPaymentStripe\BookingPaymentStripe;
+use App\Setup\BookingPaymentStripe\BookingPaymentStripeRepository;
 use App\Setup\BookingRequest\BookingRequestRepository;
 use App\Setup\BookingRoom\BookingRoomRepository;
 use App\Setup\CoreSettings\CoreSettingRepository;
 use App\Setup\Customer\CustomerRepository;
 use App\Setup\Facilities\FacilitiesRepository;
+use App\Setup\Hotel\Hotel;
 use App\Setup\Hotel\HotelRepository;
 use App\Setup\HotelConfig\HotelConfigRepository;
 use App\Setup\HotelFacility\HotelFacilityRepository;
@@ -24,6 +30,7 @@ use App\Http\Controllers\Controller;
 use Auth;
 use Illuminate\Support\Facades\Input;
 use PDF;
+use Mail;
 
 class BookingController extends Controller
 {
@@ -258,20 +265,198 @@ class BookingController extends Controller
 
     public function cancel_booking(Request $request){
         try{
+            $h_configRepo                           = new HotelConfigRepository();
+            $paymentStripeRepo                      = new BookingPaymentStripeRepository();
+            $response                               = array();
+            $response['aceplusStatusCode']          = '500';
+
             if($request->ajax()){
-                $reason     = Input::get('reason');
-                $id         = Input::get('id');
-                $booking    = $this->repo->changeBookingStatus($reason,$id);
-            }
-            else{
-                $response['aceplusStatusCode']  = '202';
+                $reason                             = Input::get('reason');
+                $id                                 = Input::get('id');
+                $booking                            = Booking::find($id);
+                $h_id                               = $booking->hotel_id;
+                $booking_status                     = $booking->status;
+
+                if($booking_status == 2){
+                    /*
+                     * If booking status is 2(confirm), steps must be
+                     * (1) No Charge,No Refund(Free Cancellation)
+                     * (2) Change Status
+                     * (3) Send Mail
+                     */
+
+                    /* Change Status */
+                    $booking->status                    = 3;
+                    $booking->booking_cancel_reason     = $reason;
+                    $result                             = $this->repo->changeBookingStatus($booking);
+                    if($result['aceplusStatusCode'] == ReturnMessage::OK){
+                        /* Send Mail */
+                        $user_email                     = $booking->user->email;
+                        $hotel                          = Hotel::find($h_id);
+                        $hotel_email                    = $hotel->email;
+                        $emails                         = array($user_email,$hotel_email);
+                        $system_email                   = Utility::getSystemAdminMail();
+
+                        if(isset($system_email) && count($system_email) > 0){
+                            foreach($system_email as $s_email){
+                                array_push($emails,$s_email);
+                            }
+                        }
+                        //Send Mail to Customer,SystemAdmin,HotelAdmin
+                        $mailTemplate                   = 'frontend.mail.cancel_mail';
+                        $subject                        = 'Booking Cancellation';
+                        $returnState                    = $this->repo->sendMail($mailTemplate,$emails,$subject);
+                        if($returnState['aceplusStatusCode'] == ReturnMessage::OK){
+                            $response['aceplusStatusCode'] = '200';
+                        }
+                        else{
+                            $response['aceplusStatusCode'] = '503';
+                        }
+                    }
+
+                }
+                if($booking_status == 5){
+                    /*
+                     * If booking status is 5(complete), there are two condition
+                     * (1) Within 1st Cancellation day
+                     *              or
+                     * (2) Within 2nd Cancellation day.
+                     *
+                     * For 1st condition, if cancellation date is within 1st cancellation day
+                     * (1) 50% Refund
+                     * (2) Change Status
+                     * (3) Send Mail
+                     *
+                     * For 2nd condition, if cancellation date is within 2nd cancellation day
+                     * (1) No Refund
+                     * (2) Change Status
+                     * (3) Send Mail
+                     */
+                    $h_config                       = $h_configRepo->getObjByID($booking->hotel_id);
+                    $first_cancel_days              = $h_config->first_cancellation_day_count;
+                    $second_cancel_days             = $h_config->second_cancellation_day_count;
+                    $first_cancel_date              = Carbon::parse($booking->check_in_date)->subDays($first_cancel_days);
+                    $second_cancel_date             = Carbon::parse($booking->check_in_date)->subDays($second_cancel_days);
+                    $today_date                     = Carbon::now();
+                    $stripePayment                  = $paymentStripeRepo->getStripePaymentId($id);
+                    $stripePaymentId                = '';
+                    if(isset($stripePayment) && count($stripePayment) > 0){
+                        $stripePaymentId            = $stripePayment->stripe_payment_id;
+//                        $refund_amount                     = $stripePayment->stripe_payment_amt/2;
+                        $original_amt               = $stripePayment->stripe_payment_amt;
+                        $refund_amount              = 5;
+                        $amount                     = $original_amt-$refund_amount;
+                        $stripeId                   = $stripePayment->id;
+                        $customer_id                = $stripePayment->stripe_user_id;
+                    }
+                    /* For 1st Cancellation Day */
+                    if($today_date >= $first_cancel_date && $today_date < $second_cancel_date){
+                        /* Refund */
+                        $stripePaymentObj           = new PaymentUtility();
+                        $refundResult               = $stripePaymentObj->refundPayment($customer_id,$refund_amount,$stripePaymentId);
+                        if($refundResult['aceplusStatusCode'] == ReturnMessage::OK){
+                            $stripe                     = BookingPaymentStripe::find($stripeId);
+                            $stripe->status             = 3;
+                            $stripe->stripe_payment_id  = $refundResult['stripe']['stripe_payment_id'];
+                            $stripe->stripe_payment_amt = $amount;
+                            $updateResult               = $paymentStripeRepo->update($stripe);
+                            if($updateResult['aceplusStatusCode'] == ReturnMessage::OK){
+                                /* Change Status */
+                                $booking->status                = 3;
+                                $booking->booking_cancel_reason = $reason;
+                                $result                         = $this->repo->changeBookingStatus($booking);
+                                if($result['aceplusStatusCode'] == ReturnMessage::OK){
+                                    /* Send Mail */
+                                    $user_email                     = $booking->user->email;
+                                    $hotel                          = Hotel::find($h_id);
+                                    $hotel_email                    = $hotel->email;
+                                    $emails                         = array($user_email,$hotel_email);
+                                    $system_email                   = Utility::getSystemAdminMail();
+
+                                    if(isset($system_email) && count($system_email) > 0){
+                                        foreach($system_email as $s_email){
+                                            array_push($emails,$s_email);
+                                        }
+                                    }
+                                    //Send Mail to Customer,SystemAdmin,HotelAdmin
+                                    $mailTemplate                   = 'frontend.mail.cancel_mail';
+                                    $subject                        = 'Booking Cancellation';
+                                    $returnState                    = $this->repo->sendMail($mailTemplate,$emails,$subject);
+                                    if($returnState['aceplusStatusCode'] == ReturnMessage::OK){
+                                        $response['aceplusStatusCode'] = '200';
+                                    }
+                                    else{
+                                        $response['aceplusStatusCode'] = '503';
+                                    }
+                                    /* Send Mail */
+                                }
+                                /* Change Status */
+                            }
+                        }
+                        /* Refund */
+
+                    }
+                    /* For 2nd Cancellation Day */
+                    else{
+                        /* Change Status */
+                        $booking->status                    = 3;
+                        $booking->booking_cancel_reason     = $reason;
+                        $result                             = $this->repo->changeBookingStatus($booking);
+                        /* Change Status */
+                        if($result['aceplusStatusCode'] == ReturnMessage::OK){
+                            /* Send Mail */
+                            $user_email                     = $booking->user->email;
+                            $hotel                          = Hotel::find($h_id);
+                            $hotel_email                    = $hotel->email;
+                            $emails                         = array($user_email,$hotel_email);
+                            $system_email                   = Utility::getSystemAdminMail();
+
+                            if(isset($system_email) && count($system_email) > 0){
+                                foreach($system_email as $s_email){
+                                    array_push($emails,$s_email);
+                                }
+                            }
+                            //Send Mail to Customer,SystemAdmin,HotelAdmin
+                            $mailTemplate                   = 'frontend.mail.cancel_mail';
+                            $subject                        = 'Booking Cancellation';
+                            $returnState                    = $this->repo->sendMail($mailTemplate,$emails,$subject);
+                            if($returnState['aceplusStatusCode'] == ReturnMessage::OK){
+                                $response['aceplusStatusCode'] = '200';
+                            }
+                            else{
+                                $response['aceplusStatusCode'] = '503';
+                            }
+                            /* Send Mail */
+                        }
+                    }
+
+                }
+
             }
             return \Response::json($response);
+
         }
         catch(\Exception $e){
-            //
+            $currentUser                        = Utility::getCurrentCustomerID();
+            $date                               = date("Y-m-d H:i:s");
+            $message                            = '['. $date .'] '. 'error: ' . 'Customer - '.$currentUser.
+                                                  ' cancel the booking and got error -------'.$e->getMessage(). ' ----- line ' .
+                                                  $e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+
+            LogCustom::create($date,$message);
+            $response['aceplusStatusCode']      = '500';
+
+            return \Response::json($response);
         }
 
+    }
+
+    public function test_cancel($id){
+        $booking            = Booking::find($id);
+        $settingRepo        = new CoreSettingRepository();
+        $reasons            = $settingRepo->getCancelReason('REASON');
+
+        return view('frontend.cancel_test')->with('reasons',$reasons)->with('booking',$booking);
     }
 
 

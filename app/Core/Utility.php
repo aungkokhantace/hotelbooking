@@ -186,4 +186,11 @@ class Utility
         $booking_number = uniqid();
         return $booking_number;
     }
+
+    public static function getSystemAdminMail(){
+        $mail_arr   = array('testingsystem2017@gmail.com');
+
+        return $mail_arr;
+
+    }
 }
