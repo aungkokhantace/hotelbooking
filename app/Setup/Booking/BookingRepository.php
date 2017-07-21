@@ -16,6 +16,7 @@ use App\Setup\BookingRoom\BookingRoom;
 use Illuminate\Support\Facades\DB;
 use App\User;
 use Auth;
+use Mail;
 
 class BookingRepository implements BookingRepositoryInterface
 {
@@ -124,5 +125,52 @@ class BookingRepository implements BookingRepositoryInterface
 
         return $result;
 
+    }
+
+    public function changeBookingStatus($paramObj){
+        $returnedObj = array();
+        $returnedObj['aceplusStatusCode'] = ReturnMessage::INTERNAL_SERVER_ERROR;
+
+        try{
+            $tempObj = Utility::addUpdatedBy($paramObj);
+            $tempObj->save();
+
+            $returnedObj['aceplusStatusMessage']    = "Request Success";
+            $returnedObj['aceplusStatusCode']       = ReturnMessage::OK;
+            return $returnedObj;
+
+        }
+        catch(\Exception $e){
+            $returnedObj['aceplusStatusMessage'] = $e->getMessage();
+            return $returnedObj;
+        }
+    }
+
+    public function sendMail($template,$emails,$subject){
+        $returnedObj                        = array();
+        $returnedObj['aceplusStatusCode']   = ReturnMessage::OK;
+
+        try{
+            Mail::send($template, [], function($message) use($emails,$subject)
+            {
+                $message->to($emails)
+                        ->subject($subject);
+            });
+
+            return $returnedObj;
+        }
+        catch(\Exception $e){
+
+            $currentUser                        = Utility::getCurrentCustomerID();
+            $date                               = date("Y-m-d H:i:s");
+            $message                            = '['. $date .'] '. 'error: ' . 'Mail is not sent when Customer - '.$currentUser.
+                                                  ' cancel the booking and got error -------'.$e->getMessage(). ' ----- line ' .
+                                                  $e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+
+            LogCustom::create($date,$message);
+            $returnedObj['aceplusStatusCode']   = ReturnMessage::SERVICE_UNAVAILABLE;
+
+            return $returnedObj;
+        }
     }
 }

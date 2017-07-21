@@ -11,7 +11,7 @@
                         <div class="col-sm-7 col-md-7">
                             <h5><b>Cancellation Policy</b></h5>
                             {{$booking->room_count.' Rooms  .................   free'}}
-                            {!! Form::open(array('class'=> 'form-horizontal', 'id'=>'booking_cancel')) !!}
+                            {!! Form::open(array('url'=>'/booking/cancel','class'=> 'form-horizontal', 'id'=>'booking_cancel')) !!}
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="id" value="{{$booking->id}}">
                             <div class="row">
@@ -45,24 +45,32 @@
     $(document).ready(function(){
         $('.btn-cancel').click(function(){
             var serializedData = $('#booking_cancel').serialize();
+            alert(serializedData);
             $.ajax({
                 url: '/booking/cancel',
                 type: 'POST',
                 data: serializedData,
                 success: function(data){
+                    $('#cancelBooking').modal('hide');
                     if(data.aceplusStatusCode == '200'){
-                        location.reload(true);
+                        swal({title: "Success", text: "Booking cancellation is successful.", type: "success"},
+                                function(){
+                                    location.reload();
+                                }
+                        );
+                        return;
                     }
-                    else if(data.aceplusStatusCode == '401'){
-                        $('.alert').remove();
-                        var showError    = '<p class="alert alert-danger">';
-                        showError       += 'Email or password is incorrect!';
-                        showError       += '</p>';
-                        $('#show-error').append(showError);
+                    else if(data.aceplusStatusCode == '503'){
+                        console.log('500');
+                        swal({title: "Warning", text: "Booking cancellation is successful.But email can't send for some reason.", type: "warning"},
+                                function(){
+                                    location.reload();
+                                }
+                        );
                         return;
                     }
                     else{
-                        swal({title: "Fail", text: "Login Fail!Please Try Again!", type: "error"},
+                        swal({title: "Fail", text: "Something Wrong!", type: "error"},
                                 function(){
                                     location.reload();
                                 }
@@ -72,6 +80,8 @@
 
                 },
                 error: function(data){
+                    console.log(data);
+                    alert(data);
                     swal({title: "Opps", text: "Sorry, Please Try Again!", type: "error"},
                             function(){
                                 location.reload();
