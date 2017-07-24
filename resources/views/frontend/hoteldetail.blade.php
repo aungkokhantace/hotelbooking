@@ -313,7 +313,7 @@
 
                     </div>	 <!-- /.room-tabel -->
                     <hr>
-                    <div class="room_table">
+                    <div class="room_table" id="good_to_know">
                         <h3>Good to Know</h3>
                         <div class="hc_m_content">
                             <h4>Check-in</h4>

@@ -26,6 +26,7 @@ use App\Setup\BookingRequest\BookingRequest;
 use App\Setup\BookingRequest\BookingRequestRepository;
 use App\Setup\BookingRoom\BookingRoom;
 use App\Setup\BookingRoom\BookingRoomRepository;
+use App\Setup\Country\CountryRepository;
 use App\Setup\Hotel\HotelRepository;
 use App\Setup\HotelConfig\HotelConfig;
 use App\Setup\HotelConfig\HotelConfigRepository;
@@ -35,6 +36,9 @@ use App\Setup\Payment\Payment;
 use App\Setup\Payment\PaymentRepository;
 use App\Setup\Room\Room;
 use App\Setup\Room\RoomRepository;
+use App\Setup\RoomCategoryAmenity\RoomCategoryAmenityRepository;
+use App\Setup\RoomCategoryFacility\RoomCategoryFacility;
+use App\Setup\RoomCategoryFacility\RoomCategoryFacilityRepository;
 use App\Setup\RoomDiscount\RoomDiscountRepository;
 use DateTime;
 use Illuminate\Http\Request;
@@ -382,12 +386,19 @@ class PaymentController extends Controller
                         }
 
 
-                        //for name array
-                        Session::forget($category->id."_".($i+1)."_name");  //forget old session
-                        $temp_name = (Input::has($category->id."_".($i+1)."_name")) ? Input::get($category->id."_".($i+1)."_name") : "";
-                        $name_array[$category->id."_".($i+1)] = $temp_name;
+                        //for first name array
+                        Session::forget($category->id."_".($i+1)."_firstname");  //forget old session
+                        $temp_firstname = (Input::has($category->id."_".($i+1)."_firstname")) ? Input::get($category->id."_".($i+1)."_firstname") : "";
+                        $firstname_array[$category->id."_".($i+1)] = $temp_firstname;
                         //store in session
-                        session([$category->id."_".($i+1)."_name" => $temp_name]);
+                        session([$category->id."_".($i+1)."_firstname" => $temp_firstname]);
+
+                        //for last name array
+                        Session::forget($category->id."_".($i+1)."_lastname");  //forget old session
+                        $temp_lastname = (Input::has($category->id."_".($i+1)."_lastname")) ? Input::get($category->id."_".($i+1)."_lastname") : "";
+                        $lastname_array[$category->id."_".($i+1)] = $temp_lastname;
+                        //store in session
+                        session([$category->id."_".($i+1)."_lastname" => $temp_lastname]);
 
                         //for email array
                         Session::forget($category->id."_".($i+1)."_email");  //forget old session
@@ -555,12 +566,16 @@ class PaymentController extends Controller
 //            session(['payable_amount' => $payable_amount]);
 //        }
 
+        $countryRepo = new CountryRepository();
+        $countries = $countryRepo->getObjs();
+
         return view('frontend.confirm_reservation')
             ->with('available_room_category_array',$available_room_categories)
             ->with('hotel',$hotel)
             ->with('nights',$nights)
             ->with('hotelFacilities',$hotelFacilities)
-            ->with('totalRooms',$totalRooms);
+            ->with('totalRooms',$totalRooms)
+            ->with('countries',$countries);
 //            ->with('total_amount',$total_amount);
     }
 
@@ -690,7 +705,9 @@ class PaymentController extends Controller
                         $extra_bed_price = 0.0;
 
                         //get username for each room from session
-                        $user_name = session($r_category->id . '_' . ($key + 1) . '_name');
+//                        $user_name = session($r_category->id . '_' . ($key + 1) . '_name');
+                        $user_firstname = session($r_category->id . '_' . ($key + 1) . '_firstname');
+                        $user_lastname = session($r_category->id . '_' . ($key + 1) . '_lastname');
                         $user_email = session($r_category->id . '_' . ($key + 1) . '_email');
                         $guest_count = session($r_category->id . '_' . ($key + 1) . '_guest');
                         $smoking_session = session($r_category->id . '_' . ($key + 1) . '_smoking');
@@ -772,8 +789,8 @@ class PaymentController extends Controller
                         $bookingRoomObj->room_payable_amt = $room_payable_amount;
                         $bookingRoomObj->added_extra_bed = $added_extra_bed;
                         $bookingRoomObj->extra_bed_price = $extra_bed_price;
-                        $bookingRoomObj->user_first_name = $user_name;
-                        $bookingRoomObj->user_last_name = "";
+                        $bookingRoomObj->user_first_name = $user_firstname;
+                        $bookingRoomObj->user_last_name = $user_lastname;
                         $bookingRoomObj->user_email = $user_email;
                         $bookingRoomObj->guest_count = $guest_count;
                         $bookingRoomObj->smoking = $smoking;
@@ -973,9 +990,7 @@ class PaymentController extends Controller
             DB::commit();
 
             $booking_id = $bookingObj->id;
-            if(isset($bookingRoomObj)){
-                $booking_room_id = $bookingRoomObj->id;
-            }
+            $booking_room_id = $bookingRoomObj->id;
             $booking_request_id = $bookingRequestObj->id;
             $booking_payment_id = $bookingPaymentObj->id;
             $booking_payment_stripe_id = $bookingPaymentStripeObj->id;
@@ -1013,7 +1028,7 @@ class PaymentController extends Controller
                 //End sending confirm email
             }
 
-            return redirect('/congratulations');
+            return redirect('/congratulations/'.$booking_id);
         }
         catch(\Exception $e){
             DB::rollback();
@@ -1022,11 +1037,131 @@ class PaymentController extends Controller
         }
     }
 
-    public function congratulations(){
-        $hotel_id   = session('hotel_id');
+    public function congratulations($booking_id){
+        $bookingRepo = new BookingRepository();
+        $booking     = $bookingRepo->getBookingById($booking_id);
+
+        $hotel_id   = $booking->hotel_id;
         $hotelRepo  = new HotelRepository();
         $hotel      = $hotelRepo->getObjByID($hotel_id);
 
-        return view('frontend.congratulations')->with('hotel',$hotel);
+        $bookingRoomRepo = new BookingRoomRepository();
+        $booking_rooms = $bookingRoomRepo->getBookingRoomByBookingId($booking_id);
+
+        $number_of_rooms = count($booking_rooms);
+        $number_of_nights = $booking_rooms[0]->number_of_night; //all number_of_nights for the same booking_id are the same, so take the number_of_nights of the first booking_room
+        /*
+        $r_cat_array = array();
+        foreach($booking_rooms as $booking_room){
+            $room_cat_id = $booking_room->room->h_room_category_id;
+            array_push($r_cat_array,$room_cat_id);
+        }
+
+        $temp_array = array_unique($r_cat_array);  //remove duplicate elements
+        $room_category_id_array = array_values($temp_array);
+
+        $room_category_array = array();
+
+        $roomCategoryRepo = new HotelRoomCategoryRepository();
+        foreach($room_category_id_array as $room_category_id){
+            $room_category = $roomCategoryRepo->getObjByID($room_category_id);
+            array_push($room_category_array,$room_category);
+        }  */
+
+        //for facilities and amenities
+        $roomRepo = new RoomRepository();
+        $roomCategoryFacilityRepo = new RoomCategoryFacilityRepository();
+        $roomCategoryAmenityRepo = new RoomCategoryAmenityRepository();
+        foreach($booking_rooms as $booking_room){
+            $room = $roomRepo->getObjByID($booking_room->room_id);
+            $room_category_id = $room->h_room_category_id;
+            $facilities = $roomCategoryFacilityRepo->getObjByRoomCategoryID($room_category_id);
+            $amenities  = $roomCategoryAmenityRepo->getAmenitiesByRoomCategoryId($room_category_id);
+            $booking_room->facilities = $facilities;
+            $booking_room->amenities  = $amenities;
+        }
+        //for facilities and amenities
+
+        //start cancellation section
+        //start checking cancellation dates
+        //initialize cancellation day_counts
+        $first_cancellation_day_count = 0;
+        $second_cancellation_day_count = 0;
+
+        $hotelConfigRepo = new HotelConfigRepository();
+        $h_config = $hotelConfigRepo->getConfigByHotel($hotel_id);
+        if(isset($h_config)){
+            $first_cancellation_day_count = $h_config->first_cancellation_day_count;
+            $second_cancellation_day_count = $h_config->second_cancellation_day_count;
+        }
+
+        $check_in_date = $booking->check_in_date;
+        $date = strtotime(date("Y-m-d", strtotime($check_in_date)) . "-".$first_cancellation_day_count."days");   //date to be charged //after subtracting 1st cancellation date
+        $charge_date = date("Y-m-d",$date); //re-format the date //i.e. first_cancellation_date
+
+        $second_cancellation_date_temp = strtotime(date("Y-m-d", strtotime($check_in_date)) . "-".$second_cancellation_day_count."days");   //date to be charged //after subtracting 1st cancellation date
+        $second_cancellation_date = date("Y-m-d",$second_cancellation_date_temp); //re-format the date
+
+        $today_date = date("Y-m-d");   //today's date
+
+        if($today_date < $charge_date){
+            $charge_create = date_create($charge_date);
+            $today_create  = date_create($today_date);
+            $diff=date_diff($charge_create,$today_create);
+
+            $free_cancellation_year = $diff->y;
+            $free_cancellation_month = $diff->m;
+            $free_cancellation_day = $diff->d;
+
+            //units
+            $free_cancellation_year_unit = ($free_cancellation_year>0)? "years":"year";
+            $free_cancellation_month_unit = ($free_cancellation_month>0)? "months":"month";
+            $free_cancellation_day_unit = ($free_cancellation_day>0)? "days":"day";
+            //units
+
+            //construct free cancellation
+            $free_cancellation = $free_cancellation_year." ".$free_cancellation_year_unit." ".$free_cancellation_month." ".$free_cancellation_month_unit." ".$free_cancellation_day." ".$free_cancellation_day_unit;
+            //end cancellation section
+
+            if($free_cancellation_year == 0 && $free_cancellation_month == 0 && $free_cancellation_day == 0){
+                $free_cancellation = null;
+            }
+        }
+        else{
+            $free_cancellation = null;
+        }
+
+        if($today_date < $second_cancellation_date) {
+            $half_amt = $booking->total_payable_amt / 2;
+        }
+        else{
+            $half_amt = 0.0;
+        }
+
+        if($today_date > $charge_date){
+            $charge_date = null;
+        }
+
+        if($today_date > $second_cancellation_date){
+            $second_cancellation_date = null;
+        }
+
+        return view('frontend.congratulations')
+            ->with('booking',$booking)
+            ->with('booking_rooms',$booking_rooms)
+            ->with('number_of_rooms',$number_of_rooms)
+            ->with('number_of_nights',$number_of_nights)
+            ->with('free_cancellation',$free_cancellation)
+            ->with('charge_date',$charge_date)
+            ->with('second_cancellation_date',$second_cancellation_date)
+            ->with('half_amt',$half_amt)
+//            ->with('room_category_array',$room_category_array)
+            ->with('hotel',$hotel);
+    }
+
+    public function getDirections($hotel_id) {
+        $hotelRepo  = new HotelRepository();
+        $hotel      = $hotelRepo->getObjByID($hotel_id);
+        return view('frontend.getdirections')->with('hotel',$hotel);
     }
 }

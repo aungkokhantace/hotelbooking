@@ -47,6 +47,9 @@ $companyLogo = \App\Core\Check::companyLogo();
     <!-- Sweet Alert -->
     <link media="all" type="text/css" rel="stylesheet" href="/assets/css/sweetalert.css">
 
+    <!-- for select box with search function -->
+    <link media="all" type="text/css" rel="stylesheet" href="/assets/css/select2.min.css">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -75,6 +78,9 @@ $companyLogo = \App\Core\Check::companyLogo();
 
     <!-- for stripe payment -->
     <script src="https://checkout.stripe.com/checkout.js"></script>
+
+    <!-- for select box with search function -->
+    <script src="/assets/js/select2.min.js"></script>
 
 </head>
 

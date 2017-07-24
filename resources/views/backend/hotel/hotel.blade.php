@@ -770,6 +770,9 @@
             $('#city_id').change(function(e){
                 load_township($(this).val());
             });
+
+            //For selectbox with search function
+            $("#country_id").select2();
         });
 
         //start js function for fileupload
