@@ -1413,7 +1413,7 @@ button.closes {
     padding-right: 10px;
 }
 .paymentform_left{
-    border-bottom: 2px solid #cccccc;
+    /*border-bottom: 2px solid #cccccc;*/
 }
 .btn-primary-four,.btn-primary-four:hover,.btn-primary-four:active{
     color: #D63090;
@@ -1465,3 +1465,24 @@ button.closes {
     text-align:center;
 }
 /*for under_construction page*/
+
+/*start css for get directions page*/
+.hotel_info{
+    border: solid 2px;
+    padding: 10px;
+    margin: 0px;
+}
+
+.room_facility{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    list-style-type: none;
+    margin-left: -30px;
+}
+.room_amenity{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    list-style-type: none;
+    margin-left: -30px;
+}
+/*end css for get directions page*/

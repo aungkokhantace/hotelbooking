@@ -82,7 +82,13 @@
                                             <div class="paymentformgroups">
                                                 <div class="col-sm-6 pd_rg_10">
                                                     <label>Country<span style="color:red;">*</span></label>
-                                                    <input type="text" class="formcontrols" id="country" name="country">
+                                                    {{--<input type="text" class="formcontrols" id="country" name="country">--}}
+                                                    <select class="form-control" name="country" id="country">
+                                                        <option value="" disabled selected>Select Country</option>
+                                                        @foreach($countries as $country)
+                                                            <option value="{{$country->id}}">{{$country->name}}</option>
+                                                        @endforeach
+                                                    </select>
                                                     <br>
                                                     <span style="padding:5px;">No address needed for this reservation</span>
                                                 </div>
@@ -181,6 +187,9 @@
                 }
 
             });
+
+            //For selectbox with search function
+            $("#country").select2();
         });
     </script>
 

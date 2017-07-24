@@ -37,7 +37,7 @@ class BookingRoom extends Model
     }
 
     public function room(){
-        return $this->belongsTo('App\Setup\Room\Room');
+        return $this->belongsTo('App\Setup\Room\Room','room_id','id');
     }
 
     public function booking()
