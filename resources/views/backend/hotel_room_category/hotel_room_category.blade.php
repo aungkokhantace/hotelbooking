@@ -62,7 +62,7 @@
     @else
         {!! Form::open(array('url' => '/backend/hotel_room_category/store','id'=>'hotel_room_category', 'class'=> 'form-horizontal user-form-border','files' => true)) !!}
     @endif
-    <input type="hidden" name="id" value="{{isset($hotel_room_category)? $hotel_room_category->id:''}}"/>
+    <input type="hidden" name="id" value="{{isset($hotel_room_category)? $hotel_room_category->id:0}}"/>
     <br/>
 
     <div class="row">
@@ -328,7 +328,8 @@
         $(document).ready(function(){
 
             var hotel_id    = document.getElementById('hotel_id').value;
-            var room       = $('#id').val();
+            var room        = $('input[type="hidden"][name="id"]').val();
+
             if (hotel_id > 0 && room <= 0) {
                 loadHotelRoomType(hotel_id);
             }
@@ -434,7 +435,7 @@
                     }
                 }
             });
-// To Preview Image
+    // To Preview Image
             function imageIsLoaded(e) {
                 $('#previewimg' + count).attr('src', e.target.result);
             };

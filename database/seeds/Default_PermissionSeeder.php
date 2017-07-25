@@ -289,6 +289,9 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>560,'module'=>'HotelAdmin','name'=>'Dashboard','description'=>'Hotel Admin Dashboard','url'=>'backend/hotel_admin/dashboard'],
             ['id'=>570,'module'=>'HotelBooking','name'=>'Listing','description'=>'Hotel Booking Listing','url'=>'backend/booking'],
             ['id'=>571,'module'=>'HotelBooking','name'=>'Detail','description'=>'Hotel Booking Detail','url'=>'backend/booking/{id}'],
+            ['id'=>580,'module'=>'Communication','name'=>'Listing','description'=>'Communication Listing','url'=>'backend/communication'],
+            ['id'=>581,'module'=>'Communication','name'=>'Edit','description'=>'Communication Edit','url'=>'backend/communication/reply/{id}'],
+            ['id'=>582,'module'=>'Communication','name'=>'Store','description'=>'Communication Store','url'=>'backend/communication/reply/store'],
 
 
 
