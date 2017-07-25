@@ -52,6 +52,9 @@ $companyLogo = \App\Core\Check::companyLogo();
     <link media="all" type="text/css" rel="stylesheet" href="/assets/plugins/bootstrap-datepicker/css/datepicker3.css">
     <link media="all" type="text/css" rel="stylesheet" href="/assets/plugins/bootstrap-timepicker/css/bootstrap-timepicker.css">
 
+    <!-- for select box with search function -->
+    <link media="all" type="text/css" rel="stylesheet" href="/assets/css/select2.min.css">
+
 
     <script src="/assets/js/jquery.js"></script>
     <script src="/assets/js/apps.min.js"></script>
@@ -86,6 +89,9 @@ $companyLogo = \App\Core\Check::companyLogo();
     <script src="/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="/assets/plugins/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
     <script src="/assets/plugins/bootstrap-checkbox-1.4.0/js/bootstrap-checkbox.js"></script>
+
+    <!-- for select box with search function -->
+    <script src="/assets/js/select2.min.js"></script>
 
     <script>
         $(document).ready(function() {

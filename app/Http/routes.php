@@ -56,7 +56,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/enter_details', 'Frontend\PaymentController@enterDetails');
     Route::post('/confirm_reservation', 'Frontend\PaymentController@confirmReservation');
     Route::post('/book_and_pay', 'Frontend\PaymentController@bookAndPay');
-    Route::get('/congratulations', 'Frontend\PaymentController@congratulations');
+    Route::get('/congratulations/{booking_id}', 'Frontend\PaymentController@congratulations');
+
+    //get directions (google map) for hotel
+    Route::get('/get_directions/{hotel_id}', 'Frontend\PaymentController@getDirections');
 
     //Manage Booking
     Route::get('booking/manage/{id}',['as'=>'booking/manage','uses'=>'Frontend\BookingController@manage']);
@@ -64,8 +67,9 @@ Route::group(['middleware' => 'web'], function () {
                                                      'uses'=>'Frontend\BookingController@say_congratulation']);
     Route::get('booking/manage/print/{id}',['as'=>'booking/manage/print',
                                             'uses'=>'Frontend\BookingController@print_congratulation']);
-    Route::get('booking/cancel',['as'=>'booking/cancel',
-                                            'uses'=>'Frontend\BookingController@cancel_booking']);
+    Route::get('booking/test/{id}',['as'=>'booking/test','uses'=>'Frontend\BookingController@test_cancel']);
+    Route::post('booking/cancel',['as'=>'booking/cancel', 'uses'=>'Frontend\BookingController@cancel_booking']);
+    Route::get('booking/cancel/show/{id}',['as'=>'booking/cancel/show','uses'=>'Frontend\BookingController@show_cancellation']);
     //Backend
     Route::group(['prefix' => 'backend'], function () {
 

@@ -119,7 +119,8 @@ class HotelController extends Controller
         //End Saving Image
 
         $star                   = (Input::has('star')) ? Input::get('star') : "";
-        $email                  = (Input::has('email')) ? Input::get('email') : "";
+//        $email                  = (Input::has('email')) ? Input::get('email') : "";
+        $email                  = (Input::has('user_email')) ? Input::get('user_email') : "";
         $country_id             = (Input::has('country_id')) ? Input::get('country_id') : "";
         $city_id                = (Input::has('city_id')) ? Input::get('city_id') : "";
         $township_id            = (Input::has('township_id')) ? Input::get('township_id') : "";
@@ -135,7 +136,7 @@ class HotelController extends Controller
         //start getting hotel_admin information
         $user_name              = (Input::has('user_name')) ? trim(Input::get('user_name')) : "";
         $display_name           = (Input::has('display_name')) ? trim(Input::get('display_name')) : "";
-        $user_email             = (Input::has('user_email')) ? Input::get('user_email') : "";
+//        $user_email             = (Input::has('user_email')) ? Input::get('user_email') : "";
         $password               = (Input::has('password')) ? trim(bcrypt(Input::get('password'))) : "";
         $user_address           = (Input::has('user_address')) ? Input::get('user_address') : "";
         $role_id                = 3; //for hotel_admin
@@ -144,7 +145,8 @@ class HotelController extends Controller
         $userObj                        = new User();
         $userObj->user_name             = $user_name;
         $userObj->display_name          = $display_name;
-        $userObj->email                 = $user_email;
+//        $userObj->email                 = $user_email;
+        $userObj->email                 = $email;
         $userObj->password              = $password;
         $userObj->address               = $user_address;
         $userObj->role_id               = $role_id;

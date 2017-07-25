@@ -213,11 +213,15 @@
                                                         {{--</div>--}}
 
                                                         <div class="payment_formgroup">
-                                                            <div class="col-sm-6 pd_rg_10">
+                                                            <div class="col-sm-4 pd_rg_10">
                                                                 {{--<input type="text" class="formcontrols" id="name" placeholder="First name, Last name">--}}
-                                                                <input type="text" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_name"}}" name="{{$available_room_category->id."_".($i+1)."_name"}}" placeholder="First name, Last name" autocomplete="off">
+                                                                <input type="text" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_firstname"}}" name="{{$available_room_category->id."_".($i+1)."_firstname"}}" placeholder="First name" autocomplete="off">
                                                             </div>
-                                                            <div class="col-sm-6 pd_lf_5">
+                                                            <div class="col-sm-4 pd_rg_10">
+                                                                {{--<input type="text" class="formcontrols" id="name" placeholder="First name, Last name">--}}
+                                                                <input type="text" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_lastname"}}" name="{{$available_room_category->id."_".($i+1)."_lastname"}}" placeholder="Last name" autocomplete="off">
+                                                            </div>
+                                                            <div class="col-sm-4 pd_lf_5">
                                                                 <input type="email" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_email"}}" name="{{$available_room_category->id."_".($i+1)."_email"}}" placeholder="Email Address"  autocomplete="off">
                                                             </div>
                                                         </div>

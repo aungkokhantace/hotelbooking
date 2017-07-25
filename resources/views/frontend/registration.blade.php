@@ -131,7 +131,7 @@
                     $('button[type="submit"]').attr('disabled','disabled');
                     var serializedData = $('#registration').serialize();
                     $.ajax({
-                        url: 'register',
+                        url: '/register',
                         type: 'POST',
                         data: serializedData,
                         success: function(data){

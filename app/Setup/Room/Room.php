@@ -39,4 +39,8 @@ class Room extends Model
     {
         return $this->belongsTo('App\Setup\RoomView\RoomView','room_view_id','id');
     }
+    public function booking_room()
+    {
+        return $this->hasMany('App\Setup\BookingRoom');
+    }
 }

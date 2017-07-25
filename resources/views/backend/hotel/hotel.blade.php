@@ -215,16 +215,16 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="email">{{trans('setup_hotel.email')}}<span class="require">*</span></label>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <input type="text" class="form-control" id="email" name="email"
-                   placeholder="{{trans('setup_hotel.place-email')}}" value="{{ isset($hotel)? $hotel->email:Request::old('email') }}"/>
-            <p class="text-danger">{{$errors->first('email')}}</p>
-        </div>
-    </div>
+    {{--<div class="row">--}}
+        {{--<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">--}}
+            {{--<label for="email">{{trans('setup_hotel.email')}}<span class="require">*</span></label>--}}
+        {{--</div>--}}
+        {{--<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">--}}
+            {{--<input type="text" class="form-control" id="email" name="email"--}}
+                   {{--placeholder="{{trans('setup_hotel.place-email')}}" value="{{ isset($hotel)? $hotel->email:Request::old('email') }}"/>--}}
+            {{--<p class="text-danger">{{$errors->first('email')}}</p>--}}
+        {{--</div>--}}
+    {{--</div>--}}
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -654,10 +654,10 @@
                     phone                   : 'required',
                     photo                   : 'required',
                     star                    : 'required',
-                    email: {
-                        required: true,
-                        email: true
-                    },
+//                    email: {
+//                        required: true,
+//                        email: true
+//                    },
                     country_id              : 'required',
                     city_id                 : 'required',
                     township_id             : 'required',
@@ -687,10 +687,10 @@
                     phone                   : 'Phone is required',
                     photo                   : 'Photo is required',
                     star                    : 'Star is required',
-                    email: {
-                        required:'Email is required',
-                        email   : 'Email is not valid'
-                    },
+//                    email: {
+//                        required:'Email is required',
+//                        email   : 'Email is not valid'
+//                    },
                     country_id              : 'Country is required',
                     city_id                 : 'City is required',
                     township_id             : 'Township is required',
@@ -770,6 +770,9 @@
             $('#city_id').change(function(e){
                 load_township($(this).val());
             });
+
+            //For selectbox with search function
+            $("#country_id").select2();
         });
 
         //start js function for fileupload

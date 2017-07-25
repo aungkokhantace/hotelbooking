@@ -10,8 +10,8 @@
                     <div class="row">
                         <div class="col-sm-7 col-md-7">
                             <h5><b>Cancellation Policy</b></h5>
-                            {{$booking->room_count.' Rooms  .................   free'}}
-                            {!! Form::open(array('class'=> 'form-horizontal', 'id'=>'booking_cancel')) !!}
+                            {{$booking->room_count.' Rooms  .................   '}}<b>{{$booking->charge}}</b>
+                            {!! Form::open(array('url'=>'/booking/cancel','class'=> 'form-horizontal', 'id'=>'booking_cancel')) !!}
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="id" value="{{$booking->id}}">
                             <div class="row">
@@ -25,10 +25,10 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
-                                    <button type="button" class="btn btn-success btn-cancel">Yes, Cancel this booking.</button>
+                                    <button type="button" class="btn btn-success btn-yes">Yes, Cancel this booking.</button>
                                 </div>
                                 <div class="col-md-4">
-                                    <button type="button" class="btn">No, I don't want to cancel.</button>
+                                    <button type="button" class="btn btn-no">No, I don't want to cancel.</button>
                                 </div>
                             </div>
                             {!! Form::close() !!}
@@ -43,26 +43,33 @@
 <!-- start login ajax-->
 <script>
     $(document).ready(function(){
-        $('.btn-cancel').click(function(){
+        $('.btn-yes').click(function(){
             var serializedData = $('#booking_cancel').serialize();
             $.ajax({
                 url: '/booking/cancel',
                 type: 'POST',
                 data: serializedData,
                 success: function(data){
+                    $('#cancelBooking').modal('hide');
                     if(data.aceplusStatusCode == '200'){
-                        location.reload(true);
+                        swal({title: "Success", text: "Booking cancellation is successful.Please check your email.", type: "success"},
+                                function(){
+                                    window.location = '/booking/cancel/show/'+data.param;
+                                }
+                        );
+                        return;
                     }
-                    else if(data.aceplusStatusCode == '401'){
-                        $('.alert').remove();
-                        var showError    = '<p class="alert alert-danger">';
-                        showError       += 'Email or password is incorrect!';
-                        showError       += '</p>';
-                        $('#show-error').append(showError);
+                    else if(data.aceplusStatusCode == '503'){
+                        console.log(data);
+                        swal({title: "Warning", text: "Booking cancellation is successful.But email can't send for some reason.", type: "warning"},
+                                function(){
+                                    window.location = '/booking/cancel/show/'+data.param;
+                                }
+                        );
                         return;
                     }
                     else{
-                        swal({title: "Fail", text: "Login Fail!Please Try Again!", type: "error"},
+                        swal({title: "Fail", text: "Something Wrong!", type: "error"},
                                 function(){
                                     location.reload();
                                 }
@@ -72,6 +79,8 @@
 
                 },
                 error: function(data){
+                    console.log(data);
+                    alert(data);
                     swal({title: "Opps", text: "Sorry, Please Try Again!", type: "error"},
                             function(){
                                 location.reload();
@@ -80,6 +89,10 @@
                     return;
                 }
             });
+        });
+
+        $('.btn-no').click(function(){
+            location.reload();
         });
     });
 </script>
