@@ -1104,7 +1104,7 @@ class PaymentController extends Controller
 
         $today_date = date("Y-m-d");   //today's date
 
-        if($today_date < $charge_date){
+//        if($today_date < $charge_date){
             $charge_create = date_create($charge_date);
             $today_create  = date_create($today_date);
             $diff=date_diff($charge_create,$today_create);
@@ -1114,9 +1114,9 @@ class PaymentController extends Controller
             $free_cancellation_day = $diff->d;
 
             //units
-            $free_cancellation_year_unit = ($free_cancellation_year>0)? "years":"year";
-            $free_cancellation_month_unit = ($free_cancellation_month>0)? "months":"month";
-            $free_cancellation_day_unit = ($free_cancellation_day>0)? "days":"day";
+            $free_cancellation_year_unit = ($free_cancellation_year > 1)? "years":"year";
+            $free_cancellation_month_unit = ($free_cancellation_month > 1)? "months":"month";
+            $free_cancellation_day_unit = ($free_cancellation_day > 1)? "days":"day";
             //units
 
             //construct free cancellation
@@ -1126,25 +1126,25 @@ class PaymentController extends Controller
             if($free_cancellation_year == 0 && $free_cancellation_month == 0 && $free_cancellation_day == 0){
                 $free_cancellation = null;
             }
-        }
-        else{
-            $free_cancellation = null;
-        }
+//        }
+//        else{
+//            $free_cancellation = null;
+//        }
 
-        if($today_date < $second_cancellation_date) {
+//        if($today_date < $second_cancellation_date) {
             $half_amt = $booking->total_payable_amt / 2;
-        }
-        else{
-            $half_amt = 0.0;
-        }
+//        }
+//        else{
+//            $half_amt = 0.0;
+//        }
 
-        if($today_date > $charge_date){
-            $charge_date = null;
-        }
-
-        if($today_date > $second_cancellation_date){
-            $second_cancellation_date = null;
-        }
+//        if($today_date > $charge_date){
+//            $charge_date = null;
+//        }
+//
+//        if($today_date > $second_cancellation_date){
+//            $second_cancellation_date = null;
+//        }
 
         return view('frontend.congratulations')
             ->with('booking',$booking)

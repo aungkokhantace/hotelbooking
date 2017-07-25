@@ -26,8 +26,8 @@
                 <p style="font-size: 10pt;">
                     <b>Address : </b> {{$hotel->address}}
                     <br>
-                    <b>Phone : </b> +95 1234567<br>
-                    <b>Fax: </b> 1234567
+                    <b>Phone : </b> {{$hotel->phone}}<br>
+                    <b>Fax: </b> {{$hotel->fax}}
                 </p>
             </td>
         </tr>
@@ -146,7 +146,7 @@
             <td colspan="4" width="100%" style="border-top: 2px solid black;">
                 <b>Cancellation Cost:</b><br>
                 until {{$booking->free_cancel_date}}[Yangon]: <b>Free cancellation </b><br>
-                from {{$booking->first_cancel_date}}[Yangon] : MMK {{number_format($booking->total_payable_amt/2,2)}}(50%)<br>
+                from {{$booking->first_cancel_date}}[Yangon] : MMK {{number_format($booking->total_payable_amt/2,2)}} (50%)<br>
                 from {{$booking->second_cancel_date}}[Yangon] : MMK {{number_format($booking->total_payable_amt,2)}} (100%)
             </td>
         </tr>
