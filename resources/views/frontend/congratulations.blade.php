@@ -24,12 +24,13 @@
                                         <ul class="payment_ul">
                                             <li><i class="fa fa-check fa-lg" aria-hidden="true"></i>We sent your confirmation email to {{$booking->user->email}}</li>
                                             <li><i class="fa fa-check fa-lg" aria-hidden="true"></i>Your booking at {{$hotel->name}} is already confirmed</li>
-                                            <li><i class="fa fa-check fa-lg" aria-hidden="true"></i>You can <a href="#">make changes or cancel your booking</a> any time</li>
+                                            <li><i class="fa fa-check fa-lg" aria-hidden="true"></i>You can <a href="/booking/manage/{{$booking->id}}">make changes or cancel your booking</a> any time</li>
                                         </ul>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="paymentfour_left pull-right">
-                                            <h4>PRINT CONFIRMATION</h4>
+                                            {{--<h4>PRINT CONFIRMATION</h4>--}}
+                                            <a target="_blank" href="/booking/manage/print/{{$booking->id}}"><button type="button" class="btn btn-primary">PRINT CONFIRMATION</button></a>
                                         </div>
                                     </div>
                                 </div>
@@ -104,8 +105,8 @@
                                     <h5>Is everything correct?</h5>
                                 </span>
                                     <p>You can always view or change your booking online - no registration required.</p>
-                                    <a href="#"><i class="fa fa-times" aria-hidden="true"></i>Cancel your booking</a>
-                                    <button type="submit" class="btn btn-primary">VIEW BOOKING</button>
+                                    {{--<a href="#"><i class="fa fa-times" aria-hidden="true"></i>Cancel your booking</a>--}}
+                                    <a href="/booking/manage/{{$booking->id}}"><button type="button" class="btn btn-primary">VIEW BOOKING</button></a>
                                     <p style="color:#ccc;padding-top:15px;font-size:13px;">Tip: You can make changes to this booking anytime by signing in.</p>
                                 </div>
                             </div>
@@ -150,7 +151,8 @@
                                                 <hr>
                                             </div>
                                         </div>
-                                        <div class="col-md-9">
+                                        {{--<div class="col-md-9">--}}
+                                        <div class="col-md-10">
                                             <div class="paymentfourtable">
                                                 <div class="row">
                                                     <h4>{{$booking_room->room->name}}</h4>
@@ -206,40 +208,18 @@
                                                     <td>Meal Plan</td>
                                                     <td>Breakfast is included in the room rate.</td>
                                                 </tr>
-                                                {{--<tr>--}}
-                                                    {{--<td>Prepayment</td>--}}
-                                                    {{--<td>No prepayment is needed.</td>--}}
-                                                {{--</tr>--}}
-                                                @if($free_cancellation !== null || $charge_date !== null || $second_cancellation_date !== null)
                                                 <tr>
-                                                    @if(isset($free_cancellation) && $free_cancellation !== null)
-                                                        <td>Cancellation cost</td>
-                                                        <td><span style="color:#D63090">Free cancellation within :{{$free_cancellation}}</span></td>
-                                                    @endif
+                                                    <td>Cancellation cost</td>
+                                                    <td>Until <span style="color:#D63090">{{$charge_date}}</span> : US $0 (Free)</td>
                                                 </tr>
-                                                @if(isset($charge_date) && $charge_date !== null)
                                                 <tr>
-                                                    @if(!isset($free_cancellation) && $free_cancellation == null)
-                                                        <td>Cancellation cost</td>
-                                                    @else
-                                                        <td></td>
-                                                    @endif
-                                                    <td>Until <span style="color:#D63090">{{$charge_date}}</span> : US $0</td>
+                                                    <td></td>
+                                                    <td>From <span style="color:#D63090">{{$charge_date}}</span> until <span style="color:#D63090">{{$second_cancellation_date}}</span> : US ${{number_format($half_amt,2)}} (50%)</td>
                                                 </tr>
-                                                @endif
                                                 <tr>
-                                                    @if(!isset($free_cancellation) && $free_cancellation == null && !isset($charge_date) && $charge_date == null)
-                                                        <td>Cancellation cost</td>
-                                                    @else
-                                                        <td></td>
-                                                    @endif
-                                                    @if(isset($charge_date) && $charge_date !== null && isset($second_cancellation_date) && $second_cancellation_date !== null)
-                                                    <td>From <span style="color:#D63090">{{$charge_date}}</span> until <span style="color:#D63090">{{$second_cancellation_date}}</span> : US ${{$half_amt}}</td>
-                                                    @elseif(isset($second_cancellation_date) && $second_cancellation_date !== null)
-                                                    <td>Until <span style="color:#D63090">{{$second_cancellation_date}}</span> : US ${{$half_amt}}</td>
-                                                    @endif
+                                                    <td></td>
+                                                    <td>From <span style="color:#D63090">{{$second_cancellation_date}}</span> : US ${{number_format($booking->total_payable_amt,2)}} (100%)</td>
                                                 </tr>
-                                                @endif
                                                 </tbody>
                                             </table>
                                         </div>
