@@ -66,7 +66,7 @@ Route::group(['middleware' => 'web'], function () {
                                             'uses'=>'Frontend\BookingController@print_congratulation']);
     Route::get('booking/test/{id}',['as'=>'booking/test','uses'=>'Frontend\BookingController@test_cancel']);
     Route::post('booking/cancel',['as'=>'booking/cancel', 'uses'=>'Frontend\BookingController@cancel_booking']);
-    Route::get('booking/cancel/show',['as'=>'booking/cancel/show','uses'=>'Frontend\BookingController@show_cancellation']);
+    Route::get('booking/cancel/show/{id}',['as'=>'booking/cancel/show','uses'=>'Frontend\BookingController@show_cancellation']);
     //Backend
     Route::group(['prefix' => 'backend'], function () {
 
