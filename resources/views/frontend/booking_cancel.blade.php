@@ -10,7 +10,7 @@
                     <div class="row">
                         <div class="col-sm-7 col-md-7">
                             <h5><b>Cancellation Policy</b></h5>
-                            {{$booking->room_count.' Rooms  .................   free'}}
+                            {{$booking->room_count.' Rooms  .................   '}}<b>{{$booking->charge}}</b>
                             {!! Form::open(array('url'=>'/booking/cancel','class'=> 'form-horizontal', 'id'=>'booking_cancel')) !!}
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="id" value="{{$booking->id}}">
@@ -25,10 +25,10 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
-                                    <button type="button" class="btn btn-success btn-cancel">Yes, Cancel this booking.</button>
+                                    <button type="button" class="btn btn-success btn-yes">Yes, Cancel this booking.</button>
                                 </div>
                                 <div class="col-md-4">
-                                    <button type="button" class="btn">No, I don't want to cancel.</button>
+                                    <button type="button" class="btn btn-no">No, I don't want to cancel.</button>
                                 </div>
                             </div>
                             {!! Form::close() !!}
@@ -43,9 +43,8 @@
 <!-- start login ajax-->
 <script>
     $(document).ready(function(){
-        $('.btn-cancel').click(function(){
+        $('.btn-yes').click(function(){
             var serializedData = $('#booking_cancel').serialize();
-            alert(serializedData);
             $.ajax({
                 url: '/booking/cancel',
                 type: 'POST',
@@ -53,18 +52,18 @@
                 success: function(data){
                     $('#cancelBooking').modal('hide');
                     if(data.aceplusStatusCode == '200'){
-                        swal({title: "Success", text: "Booking cancellation is successful.", type: "success"},
+                        swal({title: "Success", text: "Booking cancellation is successful.Please check your email.", type: "success"},
                                 function(){
-                                    location.reload();
+                                    window.location = '/booking/cancel/show/'+data.param;
                                 }
                         );
                         return;
                     }
                     else if(data.aceplusStatusCode == '503'){
-                        console.log('500');
+                        console.log(data);
                         swal({title: "Warning", text: "Booking cancellation is successful.But email can't send for some reason.", type: "warning"},
                                 function(){
-                                    location.reload();
+                                    window.location = '/booking/cancel/show/'+data.param;
                                 }
                         );
                         return;
@@ -90,6 +89,10 @@
                     return;
                 }
             });
+        });
+
+        $('.btn-no').click(function(){
+            location.reload();
         });
     });
 </script>
