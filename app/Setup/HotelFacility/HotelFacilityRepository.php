@@ -120,9 +120,15 @@ class HotelFacilityRepository implements HotelFacilityRepositoryInterface
     }
 
     public function getHotelFacilitiesByHotelIDandGroupID($hotel_id,$facility_group_id){
-        $result = HotelFacility::whereNull('deleted_at')
-                    ->where('hotel_id','=',$hotel_id)
-                    ->where('facility_group_id','=',$facility_group_id)
+//        $result = HotelFacility::whereNull('deleted_at')
+//                    ->where('hotel_id','=',$hotel_id)
+//                    ->where('facility_group_id','=',$facility_group_id)
+//                    ->get();
+        $result = HotelFacility::leftjoin('facilities', 'h_facility.facility_id', '=', 'facilities.id')
+                    ->where('h_facility.hotel_id','=',$hotel_id)
+                    ->where('facilities.facility_group_id','=',$facility_group_id)
+                    ->whereNull('h_facility.deleted_at')
+                    ->whereNull('facilities.deleted_at')
                     ->get();
         return $result;
     }

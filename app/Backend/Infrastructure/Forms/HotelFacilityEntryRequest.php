@@ -25,7 +25,7 @@ class HotelFacilityEntryRequest extends Request
     {
         return [
             'hotel_id'          => 'required',
-            'facility_group'    => 'required',
+//            'facility_group'    => 'required',
             'facility'          => 'required',
         ];
     }
@@ -34,7 +34,7 @@ class HotelFacilityEntryRequest extends Request
     {
         return [
             'hotel_id.required'          => 'Hotel is required!',
-            'facility_group.required'    => 'Facility Group is required!',
+//            'facility_group.required'    => 'Facility Group is required!',
             'facility.required'          => 'Facility is required!',
         ];
     }

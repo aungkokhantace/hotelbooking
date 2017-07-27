@@ -56,12 +56,12 @@ class HotelFacilityController extends Controller
     {
         $request->validate();
         $hotel_id           = Input::get('hotel_id');
-        $facility_group_id  = Input::get('facility_group');
+//        $facility_group_id  = Input::get('facility_group');
         $facility_id        = Input::get('facility');
 
         $paramObj                       = new HotelFacility();
         $paramObj->hotel_id             = $hotel_id;
-        $paramObj->facility_group_id    = $facility_group_id;
+//        $paramObj->facility_group_id    = $facility_group_id;
         $paramObj->facility_id          = $facility_id;
 
         $result = $this->repo->create($paramObj);
@@ -99,12 +99,12 @@ class HotelFacilityController extends Controller
         $request->validate();
         $id                 = Input::get('id');
         $hotel_id           = Input::get('hotel_id');
-        $facility_group_id  = Input::get('facility_group');
+//        $facility_group_id  = Input::get('facility_group');
         $facility_id        = Input::get('facility');
 
         $paramObj                       = $this->repo->getObjByID($id);
         $paramObj->hotel_id             = $hotel_id;
-        $paramObj->facility_group_id    = $facility_group_id;
+//        $paramObj->facility_group_id    = $facility_group_id;
         $paramObj->facility_id          = $facility_id;
 
         $result = $this->repo->update($paramObj);

@@ -42,7 +42,7 @@
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
                         <th>{{trans('setup_hotelfacility.tb-col-hotel')}}</th>
-                        <th>{{trans('setup_hotelfacility.tb-col-facility-gp')}}</th>
+                        {{--<th>{{trans('setup_hotelfacility.tb-col-facility-gp')}}</th>--}}
                         <th>{{trans('setup_hotelfacility.tb-col-facility')}}</th>
                     </tr>
                     </thead>
@@ -50,7 +50,7 @@
                     <tr>
                         <th></th>
                         <th class="search-col" con-id="hotel">Hotel</th>
-                        <th class="search-col" con-id="facility_group">Facility Group</th>
+                        {{--<th class="search-col" con-id="facility_group">Facility Group</th>--}}
                         <th class="search-col" con-id="facility">Facility</th>
                     </tr>
                     </tfoot>
@@ -59,7 +59,7 @@
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $h_facility->id }}" id="all"></td>
                             <td><a href="/backend/hotel_facility/edit/{{$h_facility->id}}">{{$h_facility->hotel->name}}</a></td>
-                            <td>{{$h_facility->facility_group->name }}</td>
+                            {{--<td>{{$h_facility->facility_group->name }}</td>--}}
                             <td>{{$h_facility->facility->name }}</td>
                         </tr>
                     @endforeach

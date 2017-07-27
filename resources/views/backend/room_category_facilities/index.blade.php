@@ -42,7 +42,7 @@
                         <th>{{trans('setup_roomcategoryfacility.tb-col-room-type')}}</th>
                         <th>{{trans('setup_roomcategoryfacility.tb-col-room-category')}}</th>
                         <th>{{trans('setup_roomcategoryfacility.tb-col-facility')}}</th>
-                        <th>{{trans('setup_roomcategoryfacility.tb-col-facility-gp')}}</th>
+                        {{--<th>{{trans('setup_roomcategoryfacility.tb-col-facility-gp')}}</th>--}}
                         {{--<th>{{trans('setup_roomcategoryfacility.tb-col-value')}}</th>--}}
                         <th>{{trans('setup_roomcategoryfacility.tb-col-description')}}</th>
                     </tr>
@@ -54,7 +54,7 @@
                         <th class="search-col" con-id="h_room_type">Room Type</th>
                         <th class="search-col" con-id="h_room_category">Room Category</th>
                         <th class="search-col" con-id="facility">Facility</th>
-                        <th class="search-col" con-id="facility_group">Facility Group</th>
+                        {{--<th class="search-col" con-id="facility_group">Facility Group</th>--}}
                         {{--<th class="search-col" con-id="name">Value</th>--}}
                         <th class="search-col" con-id="description">Description</th>
 
@@ -68,7 +68,7 @@
                             <td>{{$facility->hotel_room_type->name}}</td>
                             <td>{{$facility->hotel_room_category->name}}</td>
                             <td>{{$facility->facility->name}}</td>
-                            <td>{{$facility->facility_group->name}}</td>
+                            {{--<td>{{$facility->facility_group->name}}</td>--}}
 {{--                            <td><a href="/backend/room_category_facility/edit/{{$facility->id}}">{{$facility->value}}</a></td>--}}
                             <td>{{$facility->description}}</td>
                         </tr>
@@ -98,7 +98,7 @@
                     [5,25, 50, 100, 200, "All"]
                 ],
                 iDisplayLength: 5,
-                "order": [[ 2, "desc" ]],
+//                "order": [[ 2, "desc" ]],
                 stateSave: false,
                 "pagingType": "full",
                 "dom": '<"pull-right m-t-20"i>rt<"bottom"lp><"clear">',

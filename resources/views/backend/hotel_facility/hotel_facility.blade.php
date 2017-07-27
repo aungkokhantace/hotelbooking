@@ -41,30 +41,30 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="facility_group">{{trans('setup_hotelfacility.facility-gp')}}<span class="require">*</span></label>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <select class="form-control" name="facility_group" id="facility_group">
-                @if(isset($hotel_facility))
-                    @foreach($facility_group as $group)
-                        @if($group->id == $hotel_facility->facility_group_id)
-                            <option value="{{$group->id}}" selected>{{$group->name}}</option>
-                        @else
-                            <option value="{{$group->id}}">{{$group->name}}</option>
-                        @endif
-                    @endforeach
-                @else
-                    <option value="" disabled selected>{{trans('setup_hotelfacility.place-facility-gp')}}</option>
-                    @foreach($facility_group as $group)
-                        <option value="{{$group->id}}">{{$group->name}}</option>
-                    @endforeach
-                @endif
-            </select>
-            <p class="text-danger">{{$errors->first('facility_group')}}
-        </div>
-    </div>
+    {{--<div class="row">--}}
+        {{--<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">--}}
+            {{--<label for="facility_group">{{trans('setup_hotelfacility.facility-gp')}}<span class="require">*</span></label>--}}
+        {{--</div>--}}
+        {{--<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">--}}
+            {{--<select class="form-control" name="facility_group" id="facility_group">--}}
+                {{--@if(isset($hotel_facility))--}}
+                    {{--@foreach($facility_group as $group)--}}
+                        {{--@if($group->id == $hotel_facility->facility_group_id)--}}
+                            {{--<option value="{{$group->id}}" selected>{{$group->name}}</option>--}}
+                        {{--@else--}}
+                            {{--<option value="{{$group->id}}">{{$group->name}}</option>--}}
+                        {{--@endif--}}
+                    {{--@endforeach--}}
+                {{--@else--}}
+                    {{--<option value="" disabled selected>{{trans('setup_hotelfacility.place-facility-gp')}}</option>--}}
+                    {{--@foreach($facility_group as $group)--}}
+                        {{--<option value="{{$group->id}}">{{$group->name}}</option>--}}
+                    {{--@endforeach--}}
+                {{--@endif--}}
+            {{--</select>--}}
+            {{--<p class="text-danger">{{$errors->first('facility_group')}}--}}
+        {{--</div>--}}
+    {{--</div>--}}
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -114,12 +114,12 @@
                 rules: {
                     hotel_id      : 'required',
                     facility    : 'required',
-                    facility_group : 'required',
+//                    facility_group : 'required',
                 },
                 messages: {
                     hotel_id      : 'Hotel is required!',
                     facility    : 'Feature is required!',
-                    facility_group : 'Facility Group is required!',
+//                    facility_group : 'Facility Group is required!',
                 },
                 submitHandler: function(form) {
                     $('input[type="submit"]').attr('disabled','disabled');
