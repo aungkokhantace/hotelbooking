@@ -43,7 +43,7 @@
                         <th><input type='checkbox' name='check' id='check_all'/></th>
                         <th>{{trans('setup_city.tb-col-city')}}</th>
                         <th>{{trans('setup_city.tb-col-country')}}</th>
-                        <th>{{trans('setup_city.tb-col-image')}}</th>
+                        {{--<th>{{trans('setup_city.tb-col-image')}}</th>--}}
                     </tr>
                     </thead>
                     <tfoot>
@@ -51,7 +51,7 @@
                         <th></th>
                         <th class="search-col" con-id="city_name">City Name</th>
                         <th class="search-col" con-id="country_name">Country Name</th>
-                        <th class="search-col" con-id="image">Image</th>
+                        {{--<th class="search-col" con-id="image">Image</th>--}}
                     </tr>
                     </tfoot>
                     <tbody>
@@ -60,7 +60,7 @@
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $city->id }}" id="all"></td>
                             <td><a href="/backend/city/edit/{{$city->id}}">{{$city->name}}</a></td>
                             <td>{{$city->country->name}}</td>
-                            <td>{{$city->image}}</td>
+                            {{--<td>{{$city->image}}</td>--}}
                         </tr>
                     @endforeach
                     </tbody>

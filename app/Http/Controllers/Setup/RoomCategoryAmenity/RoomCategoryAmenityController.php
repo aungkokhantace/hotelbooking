@@ -58,13 +58,13 @@ class RoomCategoryAmenityController extends Controller
         $request->validate();
         $h_room_category_id             = Input::get('h_room_category_id');
         $amenity_id                     = Input::get('amenity');
-        $value                          = Input::get('value');
+//        $value                          = Input::get('value');
         $description                    = Input::get('description');
 
         $paramObj                       = new RoomCategoryAmenity();
         $paramObj->room_category_id     = $h_room_category_id;
         $paramObj->amenity_id           = $amenity_id;
-        $paramObj->value                = $value;
+//        $paramObj->value                = $value;
         $paramObj->description          = $description;
 
         $result = $this->repo->create($paramObj);
@@ -104,13 +104,13 @@ class RoomCategoryAmenityController extends Controller
         $id                             = Input::get('id');
         $h_room_category_id             = Input::get('h_room_category_id');
         $amenity_id                     = Input::get('amenity');
-        $value                          = Input::get('value');
+//        $value                          = Input::get('value');
         $description                    = Input::get('description');
 
         $paramObj                       = $this->repo->getObjByID($id);
         $paramObj->room_category_id     = $h_room_category_id;
         $paramObj->amenity_id           = $amenity_id;
-        $paramObj->value                = $value;
+//        $paramObj->value                = $value;
         $paramObj->description          = $description;
 
         $result = $this->repo->update($paramObj);

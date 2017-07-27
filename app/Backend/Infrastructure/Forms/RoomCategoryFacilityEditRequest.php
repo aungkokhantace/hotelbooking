@@ -28,7 +28,7 @@ class RoomCategoryFacilityEditRequest extends Request
             'hotel_id'          => 'required',
             'h_room_type_id'    => 'required',
             'h_room_category_id'=> 'required',
-            'value'             => 'required',
+//            'value'             => 'required',
         ];
     }
     public function messages()
@@ -38,7 +38,7 @@ class RoomCategoryFacilityEditRequest extends Request
             'hotel_id.required'             => 'Hotel is required!',
             'h_room_type_id.required'       => 'Room Type is required!',
             'h_room_category_id.required'   => 'Room Category is required!',
-            'value.required'                => 'Value is required!',
+//            'value.required'                => 'Value is required!',
         ];
     }
 }

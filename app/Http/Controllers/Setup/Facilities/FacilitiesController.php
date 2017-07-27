@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Setup\Facilities;
 
 use App\Core\Utility;
+use App\Setup\FacilityGroup\FacilityGroupRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -39,7 +40,9 @@ class FacilitiesController extends Controller
     public function create()
     {
         if(Auth::guard('User')->check()){
-            return view('backend.facilities.facilities');
+            $facilityGroupRepo  = new FacilityGroupRepository();
+            $facility_group     = $facilityGroupRepo->getObjs();
+            return view('backend.facilities.facilities')->with('facility_group',$facility_group);
         }
         return redirect('/');
     }
@@ -47,9 +50,10 @@ class FacilitiesController extends Controller
     public function store(FacilitiesEntryRequest $request)
     {
         $request->validate();
-        $name            = Input::get('name');
-        $description     = Input::get('description');
-        $type            = Input::get('type');
+        $name               = Input::get('name');
+        $facility_group_id  = Input::get('facility_group');
+        $description        = Input::get('description');
+        $type               = Input::get('type');
 
         //Start Saving Image
         $removeImageFlag = (Input::has('removeImageFlag')) ? Input::get('removeImageFlag') : 0;
@@ -73,11 +77,12 @@ class FacilitiesController extends Controller
         }
         //End Saving Image
 
-        $paramObj               = new Facilities();
-        $paramObj->name         = $name;
-        $paramObj->description  = $description;
-        $paramObj->icon         = $photo_name;
-        $paramObj->type         = $type;
+        $paramObj                       = new Facilities();
+        $paramObj->name                 = $name;
+        $paramObj->facility_group_id    = $facility_group_id;
+        $paramObj->description          = $description;
+        $paramObj->icon                 = $photo_name;
+        $paramObj->type                 = $type;
 
         $result = $this->repo->create($paramObj);
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
@@ -96,8 +101,11 @@ class FacilitiesController extends Controller
     {
         if (Auth::guard('User')->check()) {
             $facilities  = $this->repo->getObjByID($id);
-
-            return view('backend.facilities.facilities')->with('facilities', $facilities);
+            $facilityGroupRepo  = new FacilityGroupRepository();
+            $facility_group     = $facilityGroupRepo->getObjs();
+            return view('backend.facilities.facilities')
+                ->with('facilities', $facilities)
+                ->with('facility_group', $facility_group);
         }
         return redirect('/backend/login');
     }
@@ -107,6 +115,7 @@ class FacilitiesController extends Controller
         $request->validate();
         $id                         = Input::get('id');
         $name                       = Input::get('name');
+        $facility_group_id          = Input::get('facility_group');
         $description                = Input::get('description');
         $type                       = Input::get('type');
 
@@ -122,16 +131,18 @@ class FacilitiesController extends Controller
             $image          = Utility::resizeImage($photo,$photo_name,$path);
 
             $paramObj = Facilities::find($id);
-            $paramObj->name = $name;
-            $paramObj->description = $description;
-            $paramObj->icon = $photo_name;
+            $paramObj->name                 = $name;
+            $paramObj->facility_group_id    = $facility_group_id;
+            $paramObj->description          = $description;
+            $paramObj->icon                 = $photo_name;
 
             $result = $this->repo->update($paramObj);
         }else{
-            $paramObj               = Facilities::find($id);
-            $paramObj->name         = $name;
-            $paramObj->description  = $description;
-            $paramObj->type         = $type;
+            $paramObj                       = Facilities::find($id);
+            $paramObj->name                 = $name;
+            $paramObj->facility_group_id    = $facility_group_id;
+            $paramObj->description          = $description;
+            $paramObj->type                 = $type;
 
             //without this condition, when image is removed in update, it won't be removed in DB
             if($removeImageFlag == 1){

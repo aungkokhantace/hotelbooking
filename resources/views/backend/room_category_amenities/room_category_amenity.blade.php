@@ -76,20 +76,20 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="value">
-                {{trans('setup_roomcategoryamenity.value')}}
-                <span class="require">*</span>
-            </label>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <input type="text" class="form-control" id="value" name="value"
-                   placeholder="{{trans('setup_roomcategoryamenity.place-value')}}"
-                   value="{{ isset($r_category_amenity)? $r_category_amenity->value:Request::old('value') }}"/>
-            <p class="text-danger">{{$errors->first('value')}}</p>
-        </div>
-    </div>
+    {{--<div class="row">--}}
+        {{--<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">--}}
+            {{--<label for="value">--}}
+                {{--{{trans('setup_roomcategoryamenity.value')}}--}}
+                {{--<span class="require">*</span>--}}
+            {{--</label>--}}
+        {{--</div>--}}
+        {{--<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">--}}
+            {{--<input type="text" class="form-control" id="value" name="value"--}}
+                   {{--placeholder="{{trans('setup_roomcategoryamenity.place-value')}}"--}}
+                   {{--value="{{ isset($r_category_amenity)? $r_category_amenity->value:Request::old('value') }}"/>--}}
+            {{--<p class="text-danger">{{$errors->first('value')}}</p>--}}
+        {{--</div>--}}
+    {{--</div>--}}
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -132,13 +132,13 @@
                 rules: {
                     amenity             : 'required',
                     h_room_category_id  : 'required',
-                    value               : 'required',
+//                    value               : 'required',
 
                 },
                 messages: {
                     amenity             : 'Amenity is required!',
                     h_room_category_id  : 'Room Category is required!',
-                    value               : 'Value is required!',
+//                    value               : 'Value is required!',
                 },
                 submitHandler: function(form) {
                     $('input[type="submit"]').attr('disabled','disabled');

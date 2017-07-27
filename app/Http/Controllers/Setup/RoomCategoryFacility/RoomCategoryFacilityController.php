@@ -64,13 +64,13 @@ class RoomCategoryFacilityController extends Controller
         $hotel_id                       = Input::get('hotel_id');
         $h_room_type_id                 = Input::get('h_room_type_id');
         $h_room_category_id             = Input::get('h_room_category_id');
-        $value                          = Input::get('value');
+//        $value                          = Input::get('value');
         $description                    = Input::get('description');
         $facility_group_id              = Input::get('facility_group');
 
         $paramObj                       = new RoomCategoryFacility();
         $paramObj->facility_id          = $facility_id;
-        $paramObj->value                = $value;
+//        $paramObj->value                = $value;
         $paramObj->hotel_id             = $hotel_id;
         $paramObj->h_room_type_id       = $h_room_type_id;
         $paramObj->h_room_category_id   = $h_room_category_id;
@@ -125,13 +125,13 @@ class RoomCategoryFacilityController extends Controller
         $hotel_id                       = Input::get('hotel_id');
         $h_room_type_id                 = Input::get('h_room_type_id');
         $h_room_category_id             = Input::get('h_room_category_id');
-        $value                          = Input::get('value');
+//        $value                          = Input::get('value');
         $description                    = Input::get('description');
         $facility_group_id              = Input::get('facility_group');
 
         $paramObj                       = $this->repo->getObjByID($id);
         $paramObj->facility_id          = $facility_id;
-        $paramObj->value                = $value;
+//        $paramObj->value                = $value;
         $paramObj->hotel_id             = $hotel_id;
         $paramObj->h_room_type_id       = $h_room_type_id;
         $paramObj->h_room_category_id   = $h_room_category_id;

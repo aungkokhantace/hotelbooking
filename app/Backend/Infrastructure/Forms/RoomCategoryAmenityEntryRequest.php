@@ -26,7 +26,7 @@ class RoomCategoryAmenityEntryRequest extends Request
         return [
             'h_room_category_id'=> 'required',
             'amenity'           => 'required',
-            'value'             => 'required',
+//            'value'             => 'required',
         ];
     }
     public function messages()
@@ -34,7 +34,7 @@ class RoomCategoryAmenityEntryRequest extends Request
         return [
             'h_room_category_id.required'   => 'Room Category is required!',
             'amenity.required'              => 'Amenity is required!',
-            'value.required'                => 'Value is required!',
+//            'value.required'                => 'Value is required!',
         ];
     }
 }

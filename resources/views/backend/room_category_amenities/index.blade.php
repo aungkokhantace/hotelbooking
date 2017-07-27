@@ -40,7 +40,7 @@
                         <th><input type='checkbox' name='check' id='check_all'/></th>
                         <th>{{trans('setup_roomcategoryamenity.tb-col-room-category')}}</th>
                         <th>{{trans('setup_roomcategoryamenity.tb-col-amenity')}}</th>
-                        <th>{{trans('setup_roomcategoryamenity.tb-col-value')}}</th>
+                        {{--<th>{{trans('setup_roomcategoryamenity.tb-col-value')}}</th>--}}
                         <th>{{trans('setup_roomcategoryamenity.tb-col-description')}}</th>
                     </tr>
                     </thead>
@@ -49,7 +49,7 @@
                         <th></th>
                         <th class="search-col" con-id="h_room_category">Room Category</th>
                         <th class="search-col" con-id="amenity">Amenity</th>
-                        <th class="search-col" con-id="name">Value</th>
+                        {{--<th class="search-col" con-id="name">Value</th>--}}
                         <th class="search-col" con-id="description">Description</th>
 
                     </tr>
@@ -60,7 +60,7 @@
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $amenity->id }}" id="all"></td>
                             <td>{{$amenity->hotel_room_category->name}}</td>
                             <td>{{$amenity->amenity->name}}</td>
-                            <td><a href="/backend/room_category_amenity/edit/{{$amenity->id}}">{{$amenity->value}}</a></td>
+{{--                            <td><a href="/backend/room_category_amenity/edit/{{$amenity->id}}">{{$amenity->value}}</a></td>--}}
                             <td>{{$amenity->description}}</td>
                         </tr>
                     @endforeach

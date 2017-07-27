@@ -23,12 +23,16 @@ class FacilitiesEntryRequest extends Request
     {
         return [
             'name'   => 'required',
+            'type'   => 'required',
+            'facility_group'   => 'required',
         ];
     }
     public function messages()
     {
         return [
             'name.required' => 'Facilities Name is required',
+            'type.required' => 'Type is required',
+            'facility_group.required' => 'Facility Group is required',
         ];
     }
 }

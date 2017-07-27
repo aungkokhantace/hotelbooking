@@ -6,7 +6,7 @@
 <div id="content" class="content">
 
     <h1 class="page-header">
-        {{ isset($facilities) ? trans('setup_facilitygroup.title-edit') : trans('setup_facility.title-entry') }}
+        {{ isset($facilities) ? trans('setup_facility.title-edit') : trans('setup_facility.title-entry') }}
     </h1>
 
     {{--check new or edit--}}
@@ -32,6 +32,31 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="facility_group">{{trans('setup_facility.facility-gp')}}<span class="require">*</span></label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <select class="form-control" name="facility_group" id="facility_group">
+                @if(isset($facilities))
+                    @foreach($facility_group as $group)
+                        @if($group->id == $facilities->facility_group_id)
+                            <option value="{{$group->id}}" selected>{{$group->name}}</option>
+                        @else
+                            <option value="{{$group->id}}">{{$group->name}}</option>
+                        @endif
+                    @endforeach
+                @else
+                    <option value="" disabled selected>{{trans('setup_facility.place-facility-gp')}}</option>
+                    @foreach($facility_group as $group)
+                        <option value="{{$group->id}}">{{$group->name}}</option>
+                    @endforeach
+                @endif
+            </select>
+            <p class="text-danger">{{$errors->first('facility_group')}}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="type">{{trans('setup_facility.type')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -41,7 +66,7 @@
         </div>
         <p class="text-danger">{{$errors->first('type')}}</p>
     </div>
-
+    <br>
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="description">{{trans('setup_facility.description')}}</label>
@@ -283,10 +308,12 @@
                 rules: {
                     name          : 'required',
                     type          : 'required',
+                    facility_group: 'required',
                 },
                 messages: {
                     name          : 'Name is required',
                     type          : 'Type is required',
+                    facility_group: 'Facility Group is required',
                 },
                 submitHandler: function(form) {
                     $('input[type="submit"]').attr('disabled','disabled');

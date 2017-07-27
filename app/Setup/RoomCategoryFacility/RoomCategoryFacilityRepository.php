@@ -117,6 +117,7 @@ class RoomCategoryFacilityRepository implements RoomCategoryFacilityRepositoryIn
     }
 
     public function getObjByRoomCategoryID($room_category_id){
+//        $result = RoomCategoryFacility::whereNull('deleted_at')->where('h_room_category_id','=',$room_category_id)->get();
         $result = RoomCategoryFacility::whereNull('deleted_at')->where('h_room_category_id','=',$room_category_id)->get();
         return $result;
     }

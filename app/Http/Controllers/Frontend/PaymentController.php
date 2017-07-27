@@ -18,6 +18,8 @@ use App\Http\Requests;
 use App\Payment\PaymentUtility;
 use App\Setup\Booking\Booking;
 use App\Setup\Booking\BookingRepository;
+use App\Setup\Booking\Communication;
+use App\Setup\Booking\CommunicationRepository;
 use App\Setup\BookingPayment\BookingPayment;
 use App\Setup\BookingPayment\BookingPaymentRepository;
 use App\Setup\BookingPaymentStripe\BookingPaymentStripe;
@@ -26,6 +28,7 @@ use App\Setup\BookingRequest\BookingRequest;
 use App\Setup\BookingRequest\BookingRequestRepository;
 use App\Setup\BookingRoom\BookingRoom;
 use App\Setup\BookingRoom\BookingRoomRepository;
+use App\Setup\BookingSpecialRequest\BookingSpecialRequest;
 use App\Setup\Country\CountryRepository;
 use App\Setup\Hotel\HotelRepository;
 use App\Setup\HotelConfig\HotelConfig;
@@ -843,7 +846,8 @@ class PaymentController extends Controller
                 $bookingRequestObj->baby_cot = $baby_cot_request;
                 $bookingRequestObj->airport_transfer = $airport_transfer_request;
                 $bookingRequestObj->private_parking = $private_parking_request;
-                $bookingRequestObj->special_request = $special_request;
+//                $bookingRequestObj->special_request = $special_request;
+                $bookingRequestObj->special_request = "";  //special request is not stored in BookingRequest anymore
                 $bookingRequestObj->booking_taxi = $booking_taxi;
                 $bookingRequestObj->booking_tour_guide = $booking_tour_guide;
 
@@ -855,6 +859,29 @@ class PaymentController extends Controller
                     DB::rollback();
                     alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
                     return redirect('/');
+                }
+                else{
+                    $communicationObj = new Communication(); //for booking_special_request table
+                    $communicationObj->booking_id = $booking_id;
+                    $order = Communication::whereNull('deleted_at')->max('order'); //get max order from current table
+                    if($order == null){
+                        $communicationObj->order = 1;
+                    }
+                    else{
+                        $communicationObj->order = $order + 1;
+                    }
+                    $communicationObj->special_request = $special_request;
+                    $communicationObj->type = 2;  //type 1 is admin, 2 is user
+
+                    $communicationRepo = new CommunicationRepository();
+                    $communication_result = $communicationRepo->createForFrontend($communicationObj);
+
+                    //if communication creation fails, alert and redirect to homepage
+                    if ($communication_result['aceplusStatusCode'] != ReturnMessage::OK){
+                        DB::rollback();
+                        alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                        return redirect('/');
+                    }
                 }
             }
             //Start Stripe Payment Section
@@ -990,10 +1017,10 @@ class PaymentController extends Controller
             DB::commit();
 
             $booking_id = $bookingObj->id;
-            $booking_room_id = $bookingRoomObj->id;
-            $booking_request_id = $bookingRequestObj->id;
-            $booking_payment_id = $bookingPaymentObj->id;
-            $booking_payment_stripe_id = $bookingPaymentStripeObj->id;
+//            $booking_room_id = $bookingRoomObj->id;
+//            $booking_request_id = $bookingRequestObj->id;
+//            $booking_payment_id = $bookingPaymentObj->id;
+//            $booking_payment_stripe_id = $bookingPaymentStripeObj->id;
 
             //Compare today date with charge_date and if today is greater than charge_date(i.e. today is within first cancellation day), send booking COMPLETE mail
             if($today_date >= $charge_date){
@@ -1031,6 +1058,7 @@ class PaymentController extends Controller
             return redirect('/congratulations/'.$booking_id);
         }
         catch(\Exception $e){
+            dd('except',$e);
             DB::rollback();
             alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
             return redirect('/');

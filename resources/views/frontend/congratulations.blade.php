@@ -158,7 +158,7 @@
                                                     <h4>{{$booking_room->room->name}}</h4>
 
                                                     <div class="paymentfourbutton">
-                                                        <button type="button" class="btn-four btn-primary-four"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i>Change your room</button>
+                                                        <a href="/booking/manage/{{$booking->id}}"><button type="button" class="btn-four btn-primary-four"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i>Change your room</button></a>
                                                     </div>
                                                 </div>
 
@@ -194,15 +194,15 @@
                                                     </td>
                                                     <td>
                                                         @if($booking_room->user_first_name == "" && $booking_room->user_last_name == "")
-                                                        {{$booking->user->first_name}} {{$booking->user->last_name}} <button type="submit" class="btn-four btn-primary-four"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i>Edit guest name</button>
+                                                        {{$booking->user->first_name}} {{$booking->user->last_name}} <a href="/booking/manage/{{$booking->id}}"><button type="button" class="btn-four btn-primary-four"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i>Edit guest name</button></a>
                                                         @else
-                                                        {{$booking_room->user_first_name}} {{$booking_room->user_last_name}} <button type="submit" class="btn-four btn-primary-four"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i>Edit guest name</button>
+                                                        {{$booking_room->user_first_name}} {{$booking_room->user_last_name}} <a href="/booking/manage/{{$booking->id}}"><button type="button" class="btn-four btn-primary-four"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i>Edit guest name</button></a>
                                                         @endif
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td></td>
-                                                    <td>for {{$booking_room->guest_count}} {{$booking_room->guest_count > 1 ? "people" : "person"}}  <button type="submit" class="btn-four btn-primary-four"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i>Edit number of guest</button><br>({{$booking_room->smoking == 1 ? "smoking" : "non-smoking"}} preference)</td>
+                                                    <td>for {{$booking_room->guest_count}} {{$booking_room->guest_count > 1 ? "people" : "person"}}  <a href="/booking/manage/{{$booking->id}}"><button type="button" class="btn-four btn-primary-four"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i>Edit number of guest</button></a><br>({{$booking_room->smoking == 1 ? "smoking" : "non-smoking"}} preference)</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Meal Plan</td>

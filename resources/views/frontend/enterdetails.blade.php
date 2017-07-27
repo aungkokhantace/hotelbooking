@@ -281,11 +281,7 @@
                                                 <div class="formtitle_left">
                                                     <span>We'll forward these to your hotel or host immediately upon booking.</span>
                                                 </div>
-                                                <div class="payment_formgroups">
-                                                    <div class="col-sm-8 pd_rg_10">
-                                                        <textarea rows="4" cols="50" id="special_request" name="special_request"></textarea>
-                                                    </div>
-                                                </div>
+
                                                 <div>
                                                     <span>Please be aware that all requests are subject to availability.</span>
                                                 </div>
@@ -302,6 +298,15 @@
                                                     <input type="checkbox" name="airport_transfer_request" value="1"> <span>I'd like an airport transfer</span><br>
                                                     <input type="checkbox" name="private_parking_request" value="1"> <span>I'd like a private parking</span><br>
                                                     <input type="checkbox" name="baby_cot_request" value="1"> <span>I'd like to have a baby cot <br>(additional charges may apply)</span>
+                                                </div>
+                                                <br>
+                                                <div class="formtitle_left">
+                                                    <span>Special Request</span>
+                                                </div>
+                                                <div class="payment_formgroups">
+                                                    <div class="col-sm-8 pd_rg_10">
+                                                        <textarea rows="4" cols="50" id="special_request" name="special_request"></textarea>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="continue">
