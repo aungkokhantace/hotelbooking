@@ -22,4 +22,5 @@ interface HotelRoomCategoryRepositoryInterface
     public function getRoomCategoriesByHotelId($hotel_id);
     public function getUserObjs();
     public function checkHasPermission($id,$h_id);
+    public function getObjsByIdArr($id_arr);
 }

@@ -175,4 +175,15 @@ class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterfac
             return false;
         }
     }
+
+    public function getObjsByIdArr($id_arr){
+        $id     = implode("','",$id_arr);
+        $result = DB::select("SELECT id,h_room_category.name,hotel_id,capacity
+                              FROM h_room_category
+                              WHERE id IN ('$id')
+                              AND deleted_at IS NULL");
+
+        return $result;
+
+    }
 }

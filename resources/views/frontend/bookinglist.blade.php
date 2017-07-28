@@ -77,7 +77,6 @@
                                                                 <td>
                                                                     {{Carbon\Carbon::parse($booking->check_out_date)->format('M d, Y')}}
                                                                 </td>
-                                                                {{--<td>March 5, 2017</td>--}}
                                                             </tr>
                                                             <tr>
                                                                 <td>Number of Rooms</td>
@@ -87,7 +86,7 @@
                                                         <p>&nbsp;</p>
                                                         @if($booking->status == 1)
                                                             <a class="bookinglist-manage" href="#">{{$booking->button_status}}</a>
-                                                        @elseif($booking->status == 2)
+                                                        @elseif($booking->status == 2 || $booking->status == 5)
                                                             <a class="bookinglist-manage" href="#" onclick='manage("{{$booking->id}}")'>
                                                                 {{$booking->button_status}}
                                                             </a>
