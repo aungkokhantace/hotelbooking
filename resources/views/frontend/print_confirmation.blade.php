@@ -39,7 +39,7 @@
                 </span><br/>
                 <span style="font-size:8pt;">from</span><br/>
                 <span style="font-size:11pt;font-weight: bold;">
-                    {{Carbon\Carbon::parse($booking->check_in_time)->format('H:i')}}
+                    {{$booking->check_in_time}}
                 </span>
             </td>
             <td width="20%" style="border-right: 1px solid grey;" align="center">
@@ -49,7 +49,7 @@
                 </span><br/>
                 <span style="font-size:8pt;">until</span><br/>
                 <span style="font-size:11pt;font-weight: bold;">
-                    {{Carbon\Carbon::parse($booking->check_out_time)->format('H:i')}}
+                    {{$booking->check_out_time}}
                 </span>
             </td>
             <td width="20%" style="border-right: 1px solid grey;" align="center">

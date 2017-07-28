@@ -146,7 +146,7 @@ class BookingRepository implements BookingRepositoryInterface
         }
     }
 
-    public function sendMail($template,$emails,$subject){
+    public function sendMail($template,$emails,$subject,$logMessage){
         $returnedObj                        = array();
         $returnedObj['aceplusStatusCode']   = ReturnMessage::OK;
 
@@ -164,7 +164,7 @@ class BookingRepository implements BookingRepositoryInterface
             $currentUser                        = Utility::getCurrentCustomerID();
             $date                               = date("Y-m-d H:i:s");
             $message                            = '['. $date .'] '. 'error: ' . 'Mail is not sent when Customer - '.$currentUser.
-                                                  ' cancel the booking and got error -------'.$e->getMessage(). ' ----- line ' .
+                                                  ' '.$logMessage.' got error -------'.$e->getMessage(). ' ----- line ' .
                                                   $e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
 
             LogCustom::create($date,$message);

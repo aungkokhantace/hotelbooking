@@ -21,6 +21,7 @@ use App\Setup\Hotel\Hotel;
 use App\Setup\Hotel\HotelRepository;
 use App\Setup\HotelConfig\HotelConfigRepository;
 use App\Setup\HotelFacility\HotelFacilityRepository;
+use App\Setup\HotelRoomCategory\HotelRoomCategoryRepository;
 use Carbon\Carbon;
 use Elibyy\TCPDF\Facades\TCPDF;
 use Illuminate\Http\Request;
@@ -72,6 +73,10 @@ class BookingController extends Controller
                     $b->button_status   = "BOOKING AGAIN";
                     array_push($booking_cancel,$b);
                 }
+                if($b->status == 5){
+                    $b->status_txt      = "Complete";
+                    $b->button_status   = "MANAGE BOOKING";
+                }
 
             }
 
@@ -96,6 +101,7 @@ class BookingController extends Controller
                 $facilityRepo       = new FacilitiesRepository();
                 $settingRepo        = new CoreSettingRepository();
                 $h_configRepo       = new HotelConfigRepository();
+                $r_categoryRepo     = new HotelRoomCategoryRepository();
 
                 $r_category_id      = array();
                 $amenity_arr        = array();
@@ -123,6 +129,7 @@ class BookingController extends Controller
 
                 $amenities          = $amenityRepo->getAmenitiesByRoomCategoryId($r_category_id);
                 $facilities         = $facilityRepo->getFacilitiesByRoomCategoryId($r_category_id);
+                $r_categories       = $r_categoryRepo->getObjsByIdArr($r_category_id);
                 if(isset($bRooms) && count($bRooms) > 0){
                     foreach($bRooms as $bRoom){
 
@@ -132,8 +139,8 @@ class BookingController extends Controller
                                 array_push($amenity_arr,$amenity);
                             }
                         }
-                        $bRoom->amenities = $amenity_arr;
-                        $amenity_arr = array();
+                        $bRoom->amenities   = $amenity_arr;
+                        $amenity_arr        = array(); //Clear array
 
                         //Add facilities array in booking room
                         foreach($facilities as $facility){
@@ -141,8 +148,31 @@ class BookingController extends Controller
                                 array_push($facility_arr,$facility);
                             }
                         }
-                        $bRoom->facilities = $facility_arr;
-                        $facility_arr = array();
+                        $bRoom->facilities  = $facility_arr;
+                        $facility_arr       = array(); //Clear array
+
+                        /*
+                         * Check user_first_name,user_last_name in table.
+                         * If there's no data for above fields in booking_room table, add customer name as guest name
+                         * If exist, add user_first_name and user_last_name as guest_name
+                         */
+
+                        if($bRoom->user_first_name == "" && $bRoom->user_last_name == ""){
+                            $guest_name         = $customer['display_name'];
+                            $bRoom->guest_name  = $guest_name;
+                        }
+                        else{
+                            $guest_name         = $bRoom->user_first_name.' '.$bRoom->user_last_name;
+                            $bRoom->guest_name  = $guest_name;
+                        }
+
+                        //Add maximum count for one room
+                        foreach($r_categories as $r_category){
+                            if($r_category->id == $bRoom->h_room_category_id){
+                                $max_count      = $r_category->capacity;
+                                $bRoom->max_count = $max_count;
+                            }
+                        }
                     }
                 }
                 $booking->rooms     = $bRooms; //Add Rooms Array to booking
@@ -158,13 +188,12 @@ class BookingController extends Controller
                     $second_cancel_date = Carbon::parse($booking->check_in_date)->subDays($second_cancel_days);
                     $today_date         = Carbon::now();
                     if($today_date >= $first_cancel_date && $today_date < $second_cancel_date){
-                        $booking->charge = 'You must be pay 50% of total amount.';
+                        $booking->charge= 'You must be pay 50% of total amount.';
                     }
                     else{
-                        $booking->charge = 'You must be pay 100% of total amount.';
+                        $booking->charge= 'You must be pay 100% of total amount.';
                     }
                 }
-
 
                 /*get Cancel Reason */
                 $reasons            = $settingRepo->getCancelReason('REASON');
@@ -506,6 +535,65 @@ class BookingController extends Controller
                                                  ->with('customer',$customer);
 
 
+    }
+
+    public function cancel_room($id){
+        //
+    }
+
+    public function edit_room(Request $request){
+        try{
+            $response['aceplusStatusCode']              = '500';
+
+            $bRoomRepo                                  = new BookingRoomRepository();
+
+            if($request->ajax()){
+                $room_id                                = Input::get('r_id');
+                $booking_id                             = Input::get('b_id');
+                $f_name                                 = Input::get('f_name');
+                $l_name                                 = Input::get('l_name');
+                $guest_count                            = Input::get('g_count');
+                $bRoom                                  = $bRoomRepo->getObjectById($room_id);
+                $bRoom->user_first_name                 = $f_name;
+                $bRoom->user_last_name                  = $l_name;
+                $bRoom->guest_count                     = $guest_count;
+                $result                                 = $bRoomRepo->update($bRoom);
+                if($result['aceplusStatusCode'] == ReturnMessage::OK){
+                    /* Mail Send */
+                    $booking                            = Booking::find($booking_id);
+                    $user_email                         = $booking->user->email;
+                    $hotel_id                           = $booking->hotel_id;
+                    $hotel                              = Hotel::find($hotel_id);
+                    $hotel_email                        = $hotel->email;
+                    $emails                             = array($user_email,$hotel_email);
+                    $system_email                       = Utility::getSystemAdminMail();
+
+                    if(isset($system_email) && count($system_email) > 0){
+                        foreach($system_email as $s_email){
+                            array_push($emails,$s_email);
+                        }
+                    }
+                    //Send Mail to Customer,SystemAdmin,HotelAdmin
+                    $mailTemplate                       = 'frontend.mail.booking_update_mail';
+                    $subject                            = 'Booking Updating';
+                    $logMessage                         = "update the booking";
+                    $returnState                        = $this->repo->sendMail($mailTemplate,$emails,$subject,$logMessage);
+                    if($returnState['aceplusStatusCode'] == ReturnMessage::OK){
+                        $response['aceplusStatusCode']  = '200';
+                    }
+                    else{
+                        $response['aceplusStatusCode']  = '503';
+                    }
+                }
+            }
+
+            return \Response::json($response);
+
+        }
+        catch(\Exception $e){
+            $response['aceplusStatusCode']              = '500';
+            return \Response::json($response);
+        }
     }
 
     public function test_cancel($id){

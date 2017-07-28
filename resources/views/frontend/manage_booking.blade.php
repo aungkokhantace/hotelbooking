@@ -65,7 +65,7 @@
                         <div class="col-lg-4 col-md-4 col-sm-4">
                             <a href="#">Change Date</a><br/>
                             <a href="#">View Policies</a><br/>
-                            <a href="/booking/manage/congratulation/{{$hotel->id}}">View Confirmation</a><br/>
+                            <a href="/congratulations/{{$booking->id}}">View Confirmation</a><br/>
                             <a href="/booking/manage/print/{{$booking->id}}" target="_blank">Print Confirmation</a><br/>
                             <a href="#" data-toggle="modal" data-target="#cancelBooking">Cancel Booking</a>
 {{--                            <a href="/booking/test/{{$booking->id}}">Cancel Booking</a>--}}
@@ -74,42 +74,95 @@
                             <!-- Cancel Booking Modal -->
                         </div>
                     </div>
-                    <div class="row">
-                        <p>Booking Cancel</p>
-                    </div>
-                    @foreach($booking->rooms as $room)
-                    <div class="row"><!-- Booking Room Information -->
-                        <div class="col-sm-3 col-md-3 col-lg-3">
-                            <img src="{{$room->category_image}}" alt="room_image" style="width: 100%;height: auto;">
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-6">
-                            <h4>{{$room->room_category}}</h4>
-                            <p>
-                                Guest : {{$room->guest_count}} <br/>
-                                <b>Amenities</b><br/>
-
-                                @foreach($room->amenities as $amenity)
-                                    {{"* ".$amenity->name}}
-                                @endforeach
-                                <br/>
-
-                                <b>Room Facilities</b><br/>
-                                @foreach($room->facilities as $facility)
-                                    {{"* ".$facility->name}}
-                                @endforeach
-                                <br/>
-                                <b>Hotel Facilities</b><br/>
-                                @foreach($hotel->h_facilities as $h_facility)
-                                    {{"* ".$h_facility->facility->name}}
-                                @endforeach
-                            </p>
-                        </div>
-                    </div><!-- booking Room Information -->
-                    <hr/><br/>
-                    @endforeach
                 </div><!-- Manage Booking Column-->
             </div>
+            <div class="row">
+                <div class="col-md-offset-3">
+                    <p>Booking Cancel</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-3 col-md-9">
+                    @foreach($booking->rooms as $room)
+                        <div class="row"><!-- Booking Room Information -->
+                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                <img src="{{$room->category_image}}" alt="room_image" style="width: 100%;height: auto;">
+                            </div>
+                            <div class="col-sm-9 col-md-9 col-lg-9">
+                                <h4>{{$room->room_category}}</h4>
+
+                                {{--Guest : {{$room->guest_count}} <br/>--}}
+                                <div class="row" id="rowEdit{{$room->id}}">
+                                    <div class="col-md-12">
+                                        <i>for</i> <span>{{$room->guest_name}}</span>
+                                        ({{$room->guest_count>1?$room->guest_count.'guests':$room->guest_count.'guest'}})
+                                        <button type="button" class="btn btn-edit" id="{{$room->id}}">
+                                            <span class="glyphicon glyphicon-pencil"></span>Edit
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                                <div class="row formEdit" id="formEdit{{$room->id}}">
+                                    <div class="col-md-12">
+                                        {!! Form::open(array('url'=>'/booking/room/edit','class'=>'form-inline','id'=>'form'.$room->id)) !!}
+                                            <input type="hidden" name="r_id" value="{{$room->id}}">
+                                            <input type="hidden" name="b_id" value="{{$booking->id}}">
+                                            <input type="text" name="f_name" placeholder="First" class="form-control" value="{{isset($room->user_first_name)?$room->user_first_name:''}}">
+                                            <input type="text" name="l_name" placeholder="Last" class="form-control" value="{{isset($room->user_last_name)?$room->user_last_name:''}}">
+                                            <select class="form-control" name="g_count">
+                                                @for($i=1;$i<=$room->max_count;$i++){
+                                                    <option value="{{$i}}" {{$i==$room->guest_count?'selected':''}}>
+                                                        {{$i>1?$i.'guests':$i.'guest'}}
+                                                    </option>
+                                                @endfor
+                                            </select>
+                                            <button type="button" class="btn btn-success saveEdit" id="saveEdit-{{$room->id}}">
+                                                Save
+                                            </button>
+                                            <button type="button" class="btn cancelEdit" id="cancelEdit-{{$room->id}}">Cancel</button>
+                                        {!! Form::close() !!}
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p>
+                                            <b>Amenities</b><br/>
+
+                                            @foreach($room->amenities as $amenity)
+                                                {{"* ".$amenity->name}}
+                                            @endforeach
+                                            <br/>
+
+                                            <b>Room Facilities</b><br/>
+                                            @foreach($room->facilities as $facility)
+                                                {{"* ".$facility->name}}
+                                            @endforeach
+                                            <br/>
+                                            <b>Hotel Facilities</b><br/>
+                                            @foreach($hotel->h_facilities as $h_facility)
+                                                {{"* ".$h_facility->facility->name}}
+                                            @endforeach
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div><!-- booking Room Information -->
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-2">
+                                <button type="button" href="#" data-toggle="modal" data-target="#cancelRoom" class="btn btn-danger">
+                                    <span class="glyphicon glyphicon-remove-circle" style="color: #fff;"></span> Cancel this room
+                                </button>
+                            </div>
+                        </div>
+                        <hr/><br/>
+                    @endforeach
+                </div>
+            </div>
             <!-- /.row -->
+
         </div>
         <!-- /.container -->
     </section>
@@ -119,8 +172,73 @@
 
     <script>
         $(document).ready(function(){
-            //
+            $('.formEdit').hide();
+            $('.btn-edit').click(function(){
+                var id = $(this).attr('id');
+                $('#rowEdit'+id).hide();
+                $('#formEdit'+id).show();
+            });
+            $('.saveEdit').click(function(){
+                var id_str          = $(this).attr('id');
+                var id_split        = id_str.split('-');
+                var id              = id_split[1];
+                var serializedData  = $('#form'+id).serialize();
+                $.ajax({
+                    url: '/booking/room/edit',
+                    type: 'POST',
+                    data: serializedData,
+                    success: function(data){
+                        if(data.aceplusStatusCode == '200'){
+                            console.log('success');
+                            swal({title: "Success", text: "Booking is updated.Please check your email.", type: "success"},
+                                    function(){
+//                                    window.location = '/booking/cancel/show/'+data.param;
+                                        $('#formEdit'+id).hide();
+                                        $('#rowEdit'+id).show();
+                                        location.reload();
+                                    }
+                            );
+                            return;
+                        }
+                        else if(data.aceplusStatusCode = '503'){
+                            console.log('fail');
+                            swal({title: "Warning", text: "Booking is updated.But email can't send for some reason.", type: "warning"},
+                                    function(){
+                                        location.reload();
+                                    }
+                            );
+                            return;
+                        }
+                        else{
+                            console.log('error');
+                            swal({title: "Fail", text: "Something Wrong!", type: "error"},
+                                    function(){
+                                        location.reload();
+                                    }
+                            );
+                            return;
+                        }
+                    },
+                    error: function(data){
+                        console.log(data);
+                        alert(data);
+                        swal({title: "Opps", text: "Sorry, Please Try Again!", type: "error"},
+                                function(){
+                                    location.reload();
+                                }
+                        );
+                        return;
+                    }
+                });
+            });
+            $('.cancelEdit').click(function(){
+//                location.reload();
+                var id_str          = $(this).attr('id');
+                var id_split        = id_str.split('-');
+                var id              = id_split[1];
+                $('#formEdit'+id).hide();
+                $('#rowEdit'+id).show();
+            });
         });
     </script>
-
 @stop
