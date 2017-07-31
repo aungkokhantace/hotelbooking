@@ -28,7 +28,7 @@ class HotelConfigEditRequest extends Request
             'first_cancellation_day' => 'required',
             'second_cancellation_day'=> 'required',
             'breakfast_fees'        => 'required|numeric',
-            'extrabed_fees'         => 'required|numeric',
+//            'extrabed_fees'         => 'required|numeric',
             'tax'                   => 'required|numeric',
         ];
     }
@@ -41,8 +41,8 @@ class HotelConfigEditRequest extends Request
             'second_cancellation_day.required'    => 'Second Cancellation Day is required!',
             'breakfast_fees.required'       => 'Breakfast Fees is required!',
             'breakfast_fees.numeric'        => 'Breakfast Fees must be numeric!',
-            'extrabed_fees.required'        => 'Extrabed Fees is required!',
-            'extrabed_fees.numeric'         => 'Extrabed Fees must be numeric!',
+//            'extrabed_fees.required'        => 'Extrabed Fees is required!',
+//            'extrabed_fees.numeric'         => 'Extrabed Fees must be numeric!',
             'tax.required'                  => 'Tax is required!',
             'tax.numeric'                   => 'Tax must be numeric!',
         ];

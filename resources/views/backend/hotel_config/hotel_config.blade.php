@@ -96,16 +96,16 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="name">{{trans('setup_hotelconfig.extrabed-fees')}}<span class="require">*</span></label>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <input type="text" class="form-control" id="extrabed_fees" name="extrabed_fees"
-                   placeholder="{{trans('setup_hotelconfig.place-extrabed-fees')}}" value="{{ isset($hotel_config)? $hotel_config->extrabed_fees:Request::old('extrabed_fees') }}"/>
-            <p class="text-danger">{{$errors->first('extrabed_fees')}}</p>
-        </div>
-    </div>
+    {{--<div class="row">--}}
+        {{--<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">--}}
+            {{--<label for="name">{{trans('setup_hotelconfig.extrabed-fees')}}<span class="require">*</span></label>--}}
+        {{--</div>--}}
+        {{--<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">--}}
+            {{--<input type="text" class="form-control" id="extrabed_fees" name="extrabed_fees"--}}
+                   {{--placeholder="{{trans('setup_hotelconfig.place-extrabed-fees')}}" value="{{ isset($hotel_config)? $hotel_config->extrabed_fees:Request::old('extrabed_fees') }}"/>--}}
+            {{--<p class="text-danger">{{$errors->first('extrabed_fees')}}</p>--}}
+        {{--</div>--}}
+    {{--</div>--}}
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">

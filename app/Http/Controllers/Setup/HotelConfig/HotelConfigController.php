@@ -63,7 +63,7 @@ class HotelConfigController extends Controller
         $first_cancellation_day     = Input::get('first_cancellation_day');
         $second_cancellation_day    = Input::get('second_cancellation_day');
         $breakfast_fees             = Input::get('breakfast_fees');
-        $extrabed_fees              = Input::get('extrabed_fees');
+//        $extrabed_fees              = Input::get('extrabed_fees');
         $tax                        = Input::get('tax');
 
         $paramObj                   = new HotelConfig();
@@ -71,7 +71,7 @@ class HotelConfigController extends Controller
         $paramObj->first_cancellation_day_count  = $first_cancellation_day;
         $paramObj->second_cancellation_day_count = $second_cancellation_day;
         $paramObj->breakfast_fees   = $breakfast_fees;
-        $paramObj->extrabed_fees    = $extrabed_fees;
+//        $paramObj->extrabed_fees    = $extrabed_fees;
         $paramObj->tax              = $tax;
 
         $result = $this->repo->create($paramObj);
@@ -102,7 +102,7 @@ class HotelConfigController extends Controller
         $first_cancellation_day     = Input::get('first_cancellation_day');
         $second_cancellation_day    = Input::get('second_cancellation_day');
         $breakfast_fees             = Input::get('breakfast_fees');
-        $extrabed_fees              = Input::get('extrabed_fees');
+//        $extrabed_fees              = Input::get('extrabed_fees');
         $tax                        = Input::get('tax');
 
         $paramObj                   = $this->repo->getObjByID($id);
@@ -110,7 +110,7 @@ class HotelConfigController extends Controller
         $paramObj->first_cancellation_day_count  = $first_cancellation_day;
         $paramObj->second_cancellation_day_count = $second_cancellation_day;
         $paramObj->breakfast_fees   = $breakfast_fees;
-        $paramObj->extrabed_fees    = $extrabed_fees;
+//        $paramObj->extrabed_fees    = $extrabed_fees;
         $paramObj->tax              = $tax;
 
         $result = $this->repo->update($paramObj);
