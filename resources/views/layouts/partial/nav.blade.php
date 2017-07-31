@@ -144,16 +144,41 @@
                         </ul>
                     </li>
 
-                    <li nav-id="modifier-manage" class="has-sub">
-                        <a href="javascript:;">
-                            <b class="caret pull-right"></b>
-                            <span>Page</span>
-                        </a>
+                    {{--<li nav-id="modifier-manage" class="has-sub">--}}
+                        {{--<a href="javascript:;">--}}
+                            {{--<b class="caret pull-right"></b>--}}
+                            {{--<span>Transportation Information</span>--}}
+                        {{--</a>--}}
 
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend/page">List</a></li>
-                        </ul>
+                        {{--<ul class="sub-menu">--}}
+                            {{--<li nav-id="modifier-manage-modifier"><a href="backend/transportation_information">Entry</a></li>--}}
+                        {{--</ul>--}}
+                    {{--</li>--}}
+
+                    <li nav-id="">
+                        <a href="/backend/transportation_information">
+                            <b class="caret pull-right"></b>
+                            <span>Transportation Information</span>
+                        </a>
                     </li>
+
+                    <li nav-id="">
+                        <a href="/backend/tour_information">
+                            <b class="caret pull-right"></b>
+                            <span>Tour Guide Information</span>
+                        </a>
+                    </li>
+
+                    {{--<li nav-id="modifier-manage" class="has-sub">--}}
+                        {{--<a href="javascript:;">--}}
+                            {{--<b class="caret pull-right"></b>--}}
+                            {{--<span>Page</span>--}}
+                        {{--</a>--}}
+
+                        {{--<ul class="sub-menu">--}}
+                            {{--<li nav-id="modifier-manage-modifierpanel"><a href="/backend/page">List</a></li>--}}
+                        {{--</ul>--}}
+                    {{--</li>--}}
                 </ul>
             </li>
 

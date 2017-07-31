@@ -240,7 +240,7 @@
                                             <div class="payment_formtitle">
                                                 <!-- First Blog Post Left -->
                                                 <div class="payment_list">
-                                                    <h4>Book for Transporation</h4>
+                                                    <h4>Book for Transportation</h4>
                                                 </div>
                                             </div>
                                             <div class="payment_form">
@@ -248,7 +248,7 @@
                                                     <label>
                                                         <input type="checkbox" name="booking_taxi" value="1">
                                                     </label>
-                                                    <img src="/assets/shared/images/transporation.png">
+                                                    <a target="_blank" href="/transportation_information"><img src="/assets/shared/images/transporation.png"></a>
                                                     <span style="font-size:15px;">I'm interested in booking a taxi in advance</span>
                                                 </div>
                                             </div>
@@ -263,7 +263,7 @@
                                                     <label>
                                                         <input type="checkbox" name="booking_tour_guide" value="1">
                                                     </label>
-                                                    <img src="/assets/shared/images/tour.png">
+                                                    <a target="_blank" href="/tour_information"><img src="/assets/shared/images/tour.png"></a>
                                                     <span style="font-size:15px;">I'm interested in booking tour guide.</span>
                                                 </div>
                                             </div>
