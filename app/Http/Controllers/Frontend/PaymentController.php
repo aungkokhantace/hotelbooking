@@ -189,7 +189,7 @@ class PaymentController extends Controller
 
         //get government tax
         $gov_tax_temp = DB::select("SELECT * FROM core_configs WHERE `code` = 'GST'");
-        if(isset($gov_tax_temp)){
+        if(isset($gov_tax_temp) && count($gov_tax_temp)>0){
             $gov_tax = $gov_tax_temp[0]->value;
         }
         else{
@@ -525,7 +525,7 @@ class PaymentController extends Controller
 
         //get government tax
         $gov_tax_temp = DB::select("SELECT * FROM core_configs WHERE `code` = 'GST'");
-        if(isset($gov_tax_temp)){
+        if(isset($gov_tax_temp) && count($gov_tax_temp)){
             $gov_tax = $gov_tax_temp[0]->value;
         }
         else{
@@ -626,7 +626,7 @@ class PaymentController extends Controller
         //start checking cancellation dates
         $hotelConfigRepo = new HotelConfigRepository();
         $h_config = $hotelConfigRepo->getConfigByHotel($hotel_id);
-        if(isset($h_config)){
+        if(isset($h_config) && count($h_config)>0){
             $first_cancellation_day_count = $h_config->first_cancellation_day_count;
             $second_cancellation_day_count = $h_config->second_cancellation_day_count;
         }
@@ -1118,7 +1118,7 @@ class PaymentController extends Controller
 
         $hotelConfigRepo = new HotelConfigRepository();
         $h_config = $hotelConfigRepo->getConfigByHotel($hotel_id);
-        if(isset($h_config)){
+        if(isset($h_config) && count($h_config)>0){
             $first_cancellation_day_count = $h_config->first_cancellation_day_count;
             $second_cancellation_day_count = $h_config->second_cancellation_day_count;
         }
