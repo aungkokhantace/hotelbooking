@@ -16,7 +16,7 @@ return [
     'btn-add'               => 'ADD',
     'btn-update'            => 'UPDATE',
     'btn-cancel'            => 'CANCEL',
-    'title-list'            => 'City Listing',
+    'title-list'            => 'Township Listing',
     'tb-col-city'           => 'City Name',
     'tb-col-township'       => 'Township Name',
 

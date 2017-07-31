@@ -292,6 +292,8 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>580,'module'=>'Communication','name'=>'Listing','description'=>'Communication Listing','url'=>'backend/communication'],
             ['id'=>581,'module'=>'Communication','name'=>'Edit','description'=>'Communication Edit','url'=>'backend/communication/reply/{id}'],
             ['id'=>582,'module'=>'Communication','name'=>'Store','description'=>'Communication Store','url'=>'backend/communication/reply/store'],
+            ['id'=>590,'module'=>'Transportation Information','name'=>'View and Store','description'=>'Transportation Information View and  Store','url'=>'backend/transportation_information'],
+            ['id'=>591,'module'=>'Tour Information','name'=>'View and Store','description'=>'Tour Information View and  Store','url'=>'backend/tour_information'],
 
 
 

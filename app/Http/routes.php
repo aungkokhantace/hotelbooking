@@ -70,6 +70,13 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('booking/test/{id}',['as'=>'booking/test','uses'=>'Frontend\BookingController@test_cancel']);
     Route::post('booking/cancel',['as'=>'booking/cancel', 'uses'=>'Frontend\BookingController@cancel_booking']);
     Route::get('booking/cancel/show/{id}',['as'=>'booking/cancel/show','uses'=>'Frontend\BookingController@show_cancellation']);
+
+    //Display Transportation Information
+    Route::get('transportation_information', array('as'=>'/transportation_information', 'uses'=>'Frontend\TransportationInformationController@index'));
+
+    //Display Tour Information
+    Route::get('tour_information', array('as'=>'/tour_information', 'uses'=>'Frontend\TourInformationController@index'));
+
     //Backend
     Route::group(['prefix' => 'backend'], function () {
 
@@ -440,6 +447,14 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('communication', array('as'=>'backend/communication', 'uses'=>'Setup\HotelBooking\CommunicationController@index'));
             Route::get('communication/reply/{id}', array('as'=>'backend/communication/reply/{id}', 'uses'=>'Setup\HotelBooking\CommunicationController@show'));
             Route::post('communication/reply/store', array('as'=>'backend/communication/reply/store', 'uses'=>'Setup\HotelBooking\CommunicationController@store'));
+
+            //Transportation Information
+            Route::get('transportation_information', array('as'=>'backend/transportation_information', 'uses'=>'Setup\TransportationInformation\TransportationInformationController@edit'));
+            Route::post('transportation_information', array('as'=>'backend/transportation_information', 'uses'=>'Setup\TransportationInformation\TransportationInformationController@update'));
+
+            //Tour Information
+            Route::get('tour_information', array('as'=>'backend/tour_information', 'uses'=>'Setup\TourInformation\TourInformationController@edit'));
+            Route::post('tour_information', array('as'=>'backend/tour_information', 'uses'=>'Setup\TourInformation\TourInformationController@update'));
 
             //SaleSummary Report
             Route::get('salesummaryreport',array(
