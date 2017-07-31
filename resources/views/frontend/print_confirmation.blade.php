@@ -89,16 +89,17 @@
                 </span>
             </td>
         </tr>
-        <tr>
-            <td colspan="3" width="60%" align="center" style="border-right: 1px solid grey;">
-                <span style="font-size:8pt;">Total Extra Bed Price</span>
-            </td>
-            <td width="40%" align="right">
-                <span style="font-size:11pt;">
-                    {{number_format($booking->total_extra_bed_price,2)}}
-                </span>
-            </td>
-        </tr>
+
+        {{--<tr>--}}
+            {{--<td colspan="3" width="60%" align="center" style="border-right: 1px solid grey;">--}}
+                {{--<span style="font-size:8pt;">Total Extra Bed Price</span>--}}
+            {{--</td>--}}
+            {{--<td width="40%" align="right">--}}
+                {{--<span style="font-size:11pt;">--}}
+                    {{--{{number_format($booking->total_extra_bed_price,2)}}--}}
+                {{--</span>--}}
+            {{--</td>--}}
+        {{--</tr> --}}
         <tr>
             <td colspan="3" width="60%" align="center" style="border-right: 1px solid grey;border-top: 2px solid grey;border-bottom: 2px solid grey;">
                 <span style="font-size:14pt;font-weight: bold;">Total Price</span>
