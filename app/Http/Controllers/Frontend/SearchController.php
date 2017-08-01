@@ -111,8 +111,9 @@ class SearchController extends Controller
             $hotel->min_price = $minRoomCategoryPrice; //get mininum price to show in search result
 
             if(isset($minRoomCategoryPrice) && $minRoomCategoryPrice != null){
-                $minRoomCategoryPrice = $hRoomCategoryRepo->getRoomTypeByHotelIdAndPrice($hotel->id,$minRoomCategoryPrice);
-                $hotel->room_type = $minRoomCategoryPrice; //get room type with minimum price to show in search result
+//                $minRoomCategoryPrice = $hRoomCategoryRepo->getRoomTypeByHotelIdAndPrice($hotel->id,$minRoomCategoryPrice);
+                $roomCategoryWithMinPrice = $hRoomCategoryRepo->getRoomTypeByHotelIdAndPrice($hotel->id,$minRoomCategoryPrice);
+                $hotel->room_type = $roomCategoryWithMinPrice; //get room type with minimum price to show in search result
             }
             else{
                 $hotel->room_type = null;
@@ -154,8 +155,9 @@ class SearchController extends Controller
             $sugg_hotel->min_price = $minRoomCategoryPrice; //get mininum price to show in search result
 
             if(isset($minRoomCategoryPrice) && $minRoomCategoryPrice != null){
-                $minRoomCategoryPrice = $hRoomCategoryRepo->getRoomTypeByHotelIdAndPrice($sugg_hotel->id,$minRoomCategoryPrice);
-                $sugg_hotel->room_type = $minRoomCategoryPrice; //get room type with minimum price to show in search result
+//                $minRoomCategoryPrice = $hRoomCategoryRepo->getRoomTypeByHotelIdAndPrice($sugg_hotel->id,$minRoomCategoryPrice);
+                $roomCategoryWithMinPrice = $hRoomCategoryRepo->getRoomTypeByHotelIdAndPrice($sugg_hotel->id,$minRoomCategoryPrice);
+                $sugg_hotel->room_type = $roomCategoryWithMinPrice; //get room type with minimum price to show in search result
             }
             else{
                 $sugg_hotel->room_type = null;

@@ -147,13 +147,13 @@
                     <!--Plus 1 to counter for each element rendered-->
                     <?php $counter++; ?>
                     <div class="col-md-4 img-portfolio">
-                        <a href="#">
+                        {{--<a href="#">--}}
                             <img class="img-responsive img-hover" src="/images/upload/{{$popular_city->image}}" alt="">
                             <div class="portfolio-caption">
                                 <!--<h4>HOT</h4>-->
                                 <h3><strong>{{$popular_city->name}}</strong><small>, {{$popular_city->country->name}}</small></h3>
                             </div>
-                        </a>
+                        {{--</a>--}}
                     </div>
                 @else
                     <!--For the fourth element, reset the counter to 0 and close the current row-->
@@ -236,7 +236,7 @@
             </div>
             <!--End dynamic recommended hotels content-->
 
-            <a href="#" class="link">more >> </a>
+            {{--<a href="#" class="link">more >> </a>--}}
         </div><!-- /.container -->
     </section><!-- /.section -->
 

@@ -525,7 +525,7 @@ class PaymentController extends Controller
 
         //get government tax
         $gov_tax_temp = DB::select("SELECT * FROM core_configs WHERE `code` = 'GST'");
-        if(isset($gov_tax_temp) && count($gov_tax_temp)){
+        if(isset($gov_tax_temp) && count($gov_tax_temp)>0){
             $gov_tax = $gov_tax_temp[0]->value;
         }
         else{
