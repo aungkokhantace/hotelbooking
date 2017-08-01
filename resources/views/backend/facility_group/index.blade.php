@@ -42,7 +42,7 @@
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
                         <th>{{trans('setup_facilitygroup.tb-col-name')}}</th>
-                        <th>{{trans('setup_facilitygroup.tb-col-icon')}}</th>
+                        {{--<th>{{trans('setup_facilitygroup.tb-col-icon')}}</th>--}}
                         <th>{{trans('setup_facilitygroup.tb-col-remark')}}</th>
                     </tr>
                     </thead>
@@ -50,7 +50,7 @@
                     <tr>
                         <th></th>
                         <th class="search-col" con-id="name">Name</th>
-                        <th class="search-col" con-id="icon">Icon</th>
+                        {{--<th class="search-col" con-id="icon">Icon</th>--}}
                         <th class="search-col" con-id="remark">Remark</th>
                     </tr>
                     </tfoot>
@@ -59,7 +59,7 @@
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $group->id }}" id="all"></td>
                             <td><a href="/backend/facility_group/edit/{{$group->id}}">{{$group->name}}</a></td>
-                            <td>{{$group->icon }}</td>
+                            {{--<td>{{$group->icon }}</td>--}}
                             <td>{{$group->remark }}</td>
                         </tr>
                     @endforeach
@@ -88,7 +88,7 @@
                     [5,25, 50, 100, 200, "All"]
                 ],
                 iDisplayLength: 5,
-                "order": [[ 2, "desc" ]],
+//                "order": [[ 2, "desc" ]],
                 stateSave: false,
                 "pagingType": "full",
                 "dom": '<"pull-right m-t-20"i>rt<"bottom"lp><"clear">',

@@ -45,7 +45,7 @@
                         <th>{{trans('setup_hotel.tb-col-fax')}}</th>
                         <th>{{trans('setup_hotel.tb-col-latitude')}}</th>
                         <th>{{trans('setup_hotel.tb-col-longitude')}}</th>
-                        <th>{{trans('setup_hotel.tb-col-logo')}}</th>
+                        {{--<th>{{trans('setup_hotel.tb-col-logo')}}</th>--}}
                         <th>{{trans('setup_hotel.tb-col-star')}}</th>
                         <th>{{trans('setup_hotel.tb-col-email')}}</th>
                         <th>{{trans('setup_hotel.tb-col-country')}}</th>
@@ -71,7 +71,7 @@
                         <th class="search-col" con-id="fax">Fax</th>
                         <th class="search-col" con-id="latitude">Latitude</th>
                         <th class="search-col" con-id="longitude">Longitude</th>
-                        <th class="search-col" con-id="logo">Logo</th>
+                        {{--<th class="search-col" con-id="logo">Logo</th>--}}
                         <th class="search-col" con-id="star">Star</th>
                         <th class="search-col" con-id="email">Email</th>
                         <th class="search-col" con-id="country">Country</th>
@@ -98,7 +98,7 @@
                             <td>{{$hotel->fax}}</td>
                             <td>{{$hotel->latitude}}</td>
                             <td>{{$hotel->longitude}}</td>
-                            <td>{{$hotel->logo}}</td>
+                            {{--<td>{{$hotel->logo}}</td>--}}
                             <td>{{$hotel->star}}</td>
                             <td>{{$hotel->email}}</td>
                             <td>{{$hotel->country->name}}</td>
