@@ -73,7 +73,7 @@ class RecommendHotelRepository implements RecommendHotelRepositoryInterface
 
     public function getObjs()
     {
-        $objs = DB::table('recommend_hotels')->orderBy('order','asc')->get();
+        $objs = DB::table('recommend_hotels')->orderBy('order','asc')->where('order','<>',0)->get();
         return $objs;
     }
 }

@@ -21,6 +21,6 @@ interface BookingRepositoryInterface
     public function checkHasPermission($id,$h_id);
     public function getBookingByBookIdAndUserId($b_id,$u_id);
     public function changeBookingStatus($paramObj);
-    public function sendMail($template,$emails,$subject,$logMessage);
+//    public function sendMail($template,$emails,$subject,$logMessage);
 
 }

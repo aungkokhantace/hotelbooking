@@ -20,7 +20,8 @@
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <select class="form-control" name="{{$city->order_label}}">
                 @if(isset($city->order) && $city->order != "" && $city->order != null)
-                    @for ($i = 1; $i <= $city_count; $i++)
+{{--                    @for ($i = 1; $i <= $city_count; $i++)--}}
+                    @for ($i = 0; $i <= $city_count; $i++)
                         {{--<option value="{{ $i }}">{{ $i }}</option>--}}
                         @if($i == $city->order)
                             <option value="{{ $i }}" selected>{{ $i }}</option>
@@ -30,7 +31,8 @@
                     @endfor
                 @else
                     <option value="" disabled selected>Select Order</option>
-                    @for ($i = 1; $i <= $city_count; $i++)
+{{--                    @for ($i = 1; $i <= $city_count; $i++)--}}
+                    @for ($i = 0; $i <= $city_count; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
                     @endfor
                 @endif

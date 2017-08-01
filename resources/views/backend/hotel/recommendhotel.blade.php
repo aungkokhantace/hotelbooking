@@ -20,7 +20,8 @@
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <select class="form-control" name="{{$hotel->order_label}}">
                 @if(isset($hotel->order) && $hotel->order != "" && $hotel->order != null)
-                    @for ($i = 1; $i <= $hotel_count; $i++)
+{{--                    @for ($i = 1; $i <= $hotel_count; $i++)--}}
+                    @for ($i = 0; $i <= $hotel_count; $i++)
                         @if($i == $hotel->order)
                             <option value="{{ $i }}" selected>{{ $i }}</option>
                         @else
@@ -29,7 +30,8 @@
                     @endfor
                 @else
                     <option value="" disabled selected>{{trans('setup_hotel.place-order')}}</option>
-                    @for ($i = 1; $i <= $hotel_count; $i++)
+{{--                    @for ($i = 1; $i <= $hotel_count; $i++)--}}
+                    @for ($i = 0; $i <= $hotel_count; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
                     @endfor
                 @endif

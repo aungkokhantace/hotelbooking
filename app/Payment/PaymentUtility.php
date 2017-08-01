@@ -111,6 +111,10 @@ class PaymentUtility
 //        $currentUser = Utility::getCurrentUserID(); //get currently logged in user
         $currentUser = Utility::getCurrentCustomerID();
 //        $currentUser = "MrTesting";
+
+        //multiply amount with 100 for stripe
+        $actual_amount = $amount*100;
+
         try {
             $paymentCurrency = PaymentConstance::STIRPE_CURRENCY;
             $tempStripeObj  = $this->createPaymentObj();
@@ -119,7 +123,7 @@ class PaymentUtility
             }
 
             $charge = \Stripe\Charge::create(array(
-                "amount" => $amount,
+                "amount" => $actual_amount,
                 "currency" => $paymentCurrency,
                 "customer" => $customerId
             ));
@@ -153,6 +157,9 @@ class PaymentUtility
         $currentUser = Utility::getCurrentCustomerID(); //get currently logged in customer
 //        $currentUser = "MrTesting";
 
+        //multiply amount with 100 for stripe
+        $actual_amount = $amount*100;
+
         try {
             $paymentCurrency = PaymentConstance::STIRPE_CURRENCY;
             $tempStripeObj  = $this->createPaymentObj();
@@ -162,7 +169,7 @@ class PaymentUtility
 
             $refund =  \Stripe\Refund::create(array(
                 "charge" => $chargeId,
-                "amount" => $amount,
+                "amount" => $actual_amount,
             ));
 
             $stripeObj = array();

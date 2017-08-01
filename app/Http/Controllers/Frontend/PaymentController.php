@@ -246,12 +246,15 @@ class PaymentController extends Controller
         if(isset($service_tax_amount) && $service_tax_amount != null && $service_tax_amount != ""){
             session(['service_tax_amount' => $service_tax_amount]);
         }
-        if(isset($gov_tax) && $gov_tax != null && $gov_tax != ""){
+//        if(isset($gov_tax) && $gov_tax != null && $gov_tax != ""){
+        if(isset($gov_tax)){
             session(['gov_tax' => $gov_tax]);
         }
-        if(isset($gov_tax_amount) && $gov_tax_amount != null && $gov_tax_amount != ""){
+
+        if(isset($gov_tax_amount)){
             session(['gov_tax_amount' => $gov_tax_amount]);
         }
+
         if(isset($payable_amount) && $payable_amount != null && $payable_amount != ""){
             session(['payable_amount' => $payable_amount]);
         }
@@ -551,10 +554,12 @@ class PaymentController extends Controller
         if(isset($service_tax_amount) && $service_tax_amount != null && $service_tax_amount != ""){
             session(['service_tax_amount' => $service_tax_amount]);
         }
-        if(isset($gov_tax) && $gov_tax != null && $gov_tax != ""){
+//        if(isset($gov_tax) && $gov_tax != null && $gov_tax != ""){
+        if(isset($gov_tax)){
             session(['gov_tax' => $gov_tax]);
         }
-        if(isset($gov_tax_amount) && $gov_tax_amount != null && $gov_tax_amount != ""){
+//        if(isset($gov_tax_amount) && $gov_tax_amount != null && $gov_tax_amount != ""){
+        if(isset($gov_tax_amount)){
             session(['gov_tax_amount' => $gov_tax_amount]);
         }
         if(isset($payable_amount) && $payable_amount != null && $payable_amount != ""){
@@ -1030,12 +1035,22 @@ class PaymentController extends Controller
                 $hotel_email_str  = $hotel_email->email;
                 $system_email     = "naingsoens4321@gmail.com";
                 $emails           = array($email,$hotel_email_str,$system_email);
-                Mail::send('booking_cancellation_start', [], function($message) use ($emails)
-                {
-                    $subject        = "Booking Complete Email";
-                    $message->to($emails)
-                        ->subject($subject);
-                });
+//                Mail::send('booking_cancellation_start', [], function($message) use ($emails)
+//                {
+//                    $subject        = "Booking Complete Email";
+//                    $message->to($emails)
+//                        ->subject($subject);
+//                });
+                $template = "booking_cancellation_start";
+                $subject  = "Booking Complete Email";
+                $logMessage = "created a booking";
+                $mailResult = Utility::sendMail($template,$emails,$subject,$logMessage);
+                if ($mailResult['aceplusStatusCode'] != ReturnMessage::OK){
+                    alert()->success('Your Booking was successful, but there was a problem in sending email to you!')->persistent('OK');
+                }
+                else{
+                    alert()->success('Congratulations! Your Booking was successful!')->persistent('OK');
+                }
                 //End sending complete email
             }
             //else, send booking CONFIRM mail
@@ -1046,12 +1061,23 @@ class PaymentController extends Controller
                 $hotel_email_str  = $hotel_email->email;
                 $system_email     = "naingsoens4321@gmail.com";
                 $emails           = array($email,$hotel_email_str,$system_email);
-                Mail::send('booking_cancellation_start', [], function($message) use ($emails)
-                {
-                    $subject        = "Booking Confirm Email";
-                    $message->to($emails)
-                        ->subject($subject);
-                });
+//                Mail::send('booking_cancellation_start', [], function($message) use ($emails)
+//                {
+//                    $subject        = "Booking Confirm Email";
+//                    $message->to($emails)
+//                        ->subject($subject);
+//                });
+
+                $template = "booking_cancellation_start";
+                $subject  = "Booking Confirm Email";
+                $logMessage = "created a booking";
+                $mailResult = Utility::sendMail($template,$emails,$subject,$logMessage);
+                if ($mailResult['aceplusStatusCode'] != ReturnMessage::OK){
+                    alert('Your Booking was successful, but there was a problem in sending email to you!');
+                }
+                else{
+                    alert('Congratulations! Your Booking was successful!');
+                }
                 //End sending confirm email
             }
 

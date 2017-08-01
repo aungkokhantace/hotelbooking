@@ -73,7 +73,7 @@ class PopularCityRepository implements PopularCityRepositoryInterface
 
     public function getObjs()
     {
-        $objs = DB::table('popular_cities')->orderBy('order','asc')->get();
+        $objs = DB::table('popular_cities')->orderBy('order','asc')->where('order','<>',0)->get();
         return $objs;
     }
 }
