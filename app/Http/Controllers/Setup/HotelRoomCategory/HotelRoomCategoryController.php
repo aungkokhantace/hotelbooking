@@ -122,31 +122,33 @@ class HotelRoomCategoryController extends Controller
             if(Input::hasFile('file'))
             {
                 $images                     = Input::file('file');
-
                 foreach($images as $image){
                     $path = base_path().'/public/images/upload/';
                     if ( ! file_exists($path))
                     {
                         mkdir($path, 0777, true);
                     }
-                    $photo_name_original            = Utility::getImage($image);
-                    $photo_ext                      = Utility::getImageExt($image);
-                    $photo_name                     = uniqid() . "." . $photo_ext;
-                    $image_path                     = "/images/upload/".$photo_name;
-                    $photo                          = Utility::resizeImage($image,$photo_name,$path);
 
-                    $imageObj                       = new RoomCategoryImage();
-                    $imageObj->h_room_category_id   = $lastRoomCategoryId;
-                    $imageObj->img_path             = $image_path;
-                    $imageObj->description          = $description;
-                    $roomCategoryImageRepo          = new RoomCategoryImageRepository();
-                    $roomCategoryImageResult        = $roomCategoryImageRepo->create($imageObj);
+                    if (! is_null($image)) {
+                        $photo_name_original            = Utility::getImage($image);
+                        $photo_ext                      = Utility::getImageExt($image);
+                        $photo_name                     = uniqid() . "." . $photo_ext;
+                        $image_path                     = "/images/upload/".$photo_name;
+                        $photo                          = Utility::resizeImage($image,$photo_name,$path);
 
-                    if($roomCategoryImageResult['aceplusStatusCode'] !=  ReturnMessage::OK){
-                        DB::rollback();
+                        $imageObj                       = new RoomCategoryImage();
+                        $imageObj->h_room_category_id   = $lastRoomCategoryId;
+                        $imageObj->img_path             = $image_path;
+                        $imageObj->description          = $description;
+                        $roomCategoryImageRepo          = new RoomCategoryImageRepository();
+                        $roomCategoryImageResult        = $roomCategoryImageRepo->create($imageObj);
 
-                        return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
-                            ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category did not create ...'));
+                        if($roomCategoryImageResult['aceplusStatusCode'] !=  ReturnMessage::OK){
+                            DB::rollback();
+
+                            return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
+                                ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category did not create ...'));
+                        }
                     }
 
                 }
