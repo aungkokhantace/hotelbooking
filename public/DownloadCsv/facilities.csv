@@ -1,0 +1,20 @@
+Swimming Pool,Play,,This is Swimming Pool,1
+Gym,Play,,This is Gym,1
+Spa,Play,,This is Spa,1
+Restaurant,Food & Drink,,This is Restaurant,1
+Bar,Food & Drink,,This is Bar,1
+Banquet Room,Event,,This is Banquet Room,1
+Air Conditioning,General,,This is Air Conditioning,2
+Phone,General,,This is Phone,2
+LCD TV,General,,This is LCD TV,2
+,,,,
+,,,,
+,,,,
+,,,,
+Remark*,,,,
+Excel Column,Field Name,,Example Field Data,Remark
+A,facility name,,Swimming Pool,
+B,facility group name,,Play,"(must be exactly the same from ""facility group"" setup)"
+C,facility icon,,,(must be empty)
+D,facility description,,This is Swimming Pool,
+E,facility type,,"(1,2)","1 is for ""hotel"", 2 is for ""room"""

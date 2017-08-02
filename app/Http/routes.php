@@ -473,6 +473,15 @@ Route::group(['middleware' => 'web'], function () {
                 'uses'=>'Report\BookingReportController@booking_room_detail'
             ));
 
+            //Csv Import
+            Route::get('import',array(
+                'as'=>'backend/import',
+                'uses'=>'Setup\CSVImport\CSVImportController@import'
+            ));
+            Route::post('import/store',array(
+                'as'=>'backend/import/store',
+                'uses'=>'Setup\CSVImport\CSVImportController@store'
+            ));
 
         });
 

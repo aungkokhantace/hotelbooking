@@ -1,0 +1,12 @@
+Wifi,,This is Wifi,
+5 Star,,This is 5 Star Hotel,
+797 Rooms,,This is 797 Rooms,
+,,,
+,,,
+,,,
+,,,
+Remark*,,,
+Excel Column,Field Name,Example Field Data,Remark
+A,feature name,Wifi,
+B,feature icon,,(must be empty)
+C,feature  description,This is Wifi,

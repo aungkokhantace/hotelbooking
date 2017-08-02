@@ -293,6 +293,10 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>581,'module'=>'Communication','name'=>'Edit','description'=>'Communication Edit','url'=>'backend/communication/reply/{id}'],
             ['id'=>582,'module'=>'Communication','name'=>'Store','description'=>'Communication Store','url'=>'backend/communication/reply/store'],
 
+            //CSVImport
+            ['id'=>590,'module'=>'CSVImport','name'=>'Listing','description'=>'CSVImport Listing','url'=>'backend/import'],
+            ['id'=>591,'module'=>'CSVImport','name'=>'Store','description'=>'CSVImport Store','url'=>'backend/import/store'],
+
 
 
 

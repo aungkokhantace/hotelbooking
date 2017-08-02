@@ -1,0 +1,12 @@
+Play,,Play Remark,
+Food & Drink,,Food & Drink Remark,
+Event,,Event Remark,
+General,,General Remark,
+,,,
+,,,
+,,,
+Remark*,,,
+Excel Column,Field Name,Example Field Data,Remark
+A,facility group name,Play,
+B,facility group icon,-,
+C,facility group remark,Play Remark,
