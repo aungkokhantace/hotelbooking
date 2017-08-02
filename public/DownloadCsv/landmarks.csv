@@ -1,0 +1,17 @@
+Myanmar Plaza,"Include in HAGL group>>Hoang Anh Gia Lai (HAGL) Group is one of the leading real estate companies in Vietnam with 1,028,594 sqm of residential and commercial property gfa completed, and 1,1130,236 sqm gfa under construction.
+ Grand Opening Ceremony>> 5-Dec-2015
+Phone>> 01-8605669",Yankin,1,16.828589,16.828589
+Inya Kanbaung,Inya Lake is an artificial lake created by the British as a water reservoir between 1882 and 1883 in order to provide a water supply to Yangon.[1] The lake was formed by joining small hills that surrounded creeks which formed during the monsoon season.[1] A series of pipes and cables distributes water from Inya Lake to Kandawgyi Lake near downtown Yangon.,Yankin,1,16.841727,96.14074
+,,,,,
+,,,,,
+,,,,,
+,,,,,
+,,,,,
+Remark*,,,,,
+Excel Column,Field Name,Example Field Data,Remark,,
+A,landmark name,,,,
+B,landmark  description,,,,
+C,township_id,,,,
+D,whether landmark is popular,,"0 is for ""not popular"",  1 is for ""popular""",,
+E,latitude,,latitude of landmark location,,
+F,longitude,,longitude of landmark location,,

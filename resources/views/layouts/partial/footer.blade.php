@@ -11,6 +11,7 @@
 <!-- end page container -->
 
 <script src="/assets/js/validation/jquery.validate.js"></script>
+<script src="/assets/js/validation/additional-methods.js"></script>
 {{--<script src="/assets/js/validation/validation.js"></script>--}}
 {{--<script src="/assets/js/checkall.js"></script>--}}
 <script src="/assets/js/jktCuteDropdown.min.js"></script>
