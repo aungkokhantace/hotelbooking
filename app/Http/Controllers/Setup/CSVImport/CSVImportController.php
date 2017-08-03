@@ -188,7 +188,9 @@ class CSVImportController extends Controller
                             
                             $implode       = array();
                             foreach ($hotel_arr as $key => $value) {
-                                if ($key == 9) {
+                                if ($key == 8) {
+                                    $implode[$key]  = $admin_email;
+                                } elseif ($key == 9) {
                                     $implode[$key]  = $country->id;
                                 } elseif($key == 10) {
                                     $implode[$key]  = $city->id;
