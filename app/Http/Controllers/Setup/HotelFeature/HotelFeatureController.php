@@ -48,7 +48,7 @@ class HotelFeatureController extends Controller
         return redirect('/');
     }
 
-    public function store(HotelCategoryEntryRequest $request)
+    public function store(HotelFeatureEntryRequest $request)
     {
         $request->validate();
         $hotel_id           = Input::get('hotel_id');

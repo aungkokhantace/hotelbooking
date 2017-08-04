@@ -10,10 +10,13 @@ use App\Payment\PaymentUtility;
 use App\Setup\Amenities\AmenitiesRepository;
 use App\Setup\Booking\Booking;
 use App\Setup\Booking\BookingRepositoryInterface;
+use App\Setup\Booking\CommunicationRepository;
 use App\Setup\BookingPaymentStripe\BookingPaymentStripe;
 use App\Setup\BookingPaymentStripe\BookingPaymentStripeRepository;
 use App\Setup\BookingRequest\BookingRequestRepository;
 use App\Setup\BookingRoom\BookingRoomRepository;
+use App\Setup\BookingSpecialRequest\BookingSpecialRequest;
+use App\Setup\BookingSpecialRequest\BookingSpecialRequestRepository;
 use App\Setup\CoreSettings\CoreSettingRepository;
 use App\Setup\Customer\CustomerRepository;
 use App\Setup\Facilities\FacilitiesRepository;
@@ -103,6 +106,8 @@ class BookingController extends Controller
                 $settingRepo        = new CoreSettingRepository();
                 $h_configRepo       = new HotelConfigRepository();
                 $r_categoryRepo     = new HotelRoomCategoryRepository();
+                $b_requestRepo      = new BookingRequestRepository();
+                $communicationRepo  = new CommunicationRepository();
 
                 $r_category_id      = array();
                 $amenity_arr        = array();
@@ -159,30 +164,30 @@ class BookingController extends Controller
                          */
 
                         if($bRoom->user_first_name == "" && $bRoom->user_last_name == ""){
-                            $guest_name         = $customer['display_name'];
-                            $bRoom->guest_name  = $guest_name;
+                            $guest_name             = $customer['display_name'];
+                            $bRoom->guest_name      = $guest_name;
                         }
                         else{
-                            $guest_name         = $bRoom->user_first_name.' '.$bRoom->user_last_name;
-                            $bRoom->guest_name  = $guest_name;
+                            $guest_name             = $bRoom->user_first_name.' '.$bRoom->user_last_name;
+                            $bRoom->guest_name      = $guest_name;
                         }
 
                         //Add maximum count for one room
                         foreach($r_categories as $r_category){
                             if($r_category->id == $bRoom->h_room_category_id){
-                                $max_count      = $r_category->capacity;
-                                $bRoom->max_count = $max_count;
+                                $max_count          = $r_category->capacity;
+                                $bRoom->max_count   = $max_count;
                             }
                         }
                     }
                 }
-                $booking->rooms     = $bRooms; //Add Rooms Array to booking
+                $booking->rooms                     = $bRooms; //Add Rooms Array to booking
 
                 if($booking->status == 2){
-                    $booking->charge = 'free';
+                    $booking->charge                = 'free';
                 }
                 if($booking->status == 5){
-                    $h_config           = $h_configRepo->getObjByID($booking->hotel_id);
+                    $h_config           = $h_configRepo->getFirstObjByHotelID($booking->hotel_id);
                     $first_cancel_days  = $h_config->first_cancellation_day_count;
                     $second_cancel_days = $h_config->second_cancellation_day_count;
                     $first_cancel_date  = Carbon::parse($booking->check_in_date)->subDays($first_cancel_days);
@@ -196,13 +201,21 @@ class BookingController extends Controller
                     }
                 }
 
+                /* Booking Request */
+                $b_request              = $b_requestRepo->getBookingRequestByBookingId($b_id);
+
+                /* Booking Special Request */
+                $communications         = $communicationRepo->getCommunicationByBookingId($b_id);
+
                 /*get Cancel Reason */
-                $reasons            = $settingRepo->getCancelReason('REASON');
+                $reasons                = $settingRepo->getCancelReason('REASON');
 
                 return view('frontend.manage_booking')->with('customer',$customer)
                                                       ->with('booking',$booking)
                                                       ->with('hotel',$hotel)
-                                                      ->with('reasons',$reasons);
+                                                      ->with('reasons',$reasons)
+                                                      ->with('b_request',$b_request)
+                                                      ->with('communications',$communications);
             }
             else{
                 dd('unauthorized');
@@ -610,6 +623,44 @@ class BookingController extends Controller
                     else{
                         $response['aceplusStatusCode']  = '503';
                     }
+                }
+            }
+
+            return \Response::json($response);
+
+        }
+        catch(\Exception $e){
+            $response['aceplusStatusCode']              = '500';
+            return \Response::json($response);
+        }
+    }
+
+    public function  communication(Request $request){
+        try{
+            $response['aceplusStatusCode']              = '500';
+
+            $bSpRequestRepo                             = new BookingSpecialRequestRepository();
+
+            if($request->ajax()){
+                $b_id                                   = Input::get('id');
+                $special_request                        = Input::get('special_request');
+                $max_order                              = $bSpRequestRepo->getMaxOrder($b_id);
+                $order                                  = $max_order + 1;
+                $type                                   = 2;
+                DB::beginTransaction();
+                $paramObj                               = new BookingSpecialRequest();
+                $paramObj->booking_id                   = $b_id;
+                $paramObj->order                        = $order;
+                $paramObj->special_request              = $special_request;
+                $paramObj->type                         = $type;
+                $result                                 = $bSpRequestRepo->create($paramObj);
+                if($result['aceplusStatusCode'] == ReturnMessage::OK){
+                    DB::commit();
+                    $response['aceplusStatusCode']      = '200';
+                }
+                else{
+                    DB::rollback();
+                    $response['aceplusStatusCode']      = '500';
                 }
             }
 

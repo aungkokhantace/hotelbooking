@@ -70,3 +70,30 @@
 .confirm-reserve-body{
     padding-bottom: 50px;
 }
+
+/* For Booking Manage Communication */
+.span-right{
+    float: right!important;
+}
+.div-right{
+    border: 2px outset darkgrey;
+    float: right!important;
+    width: 81%;
+    padding: 3px;
+    background-color: #fff;
+}
+.div-left{
+    border: 2px inset darkgrey;
+    float: left!important;
+    width: 100%;
+    padding: 3px;
+    background-color: #fff;
+}
+.clear-div{
+    clear: both;
+}
+
+.line-height{
+    padding-bottom: 2%;
+}
+/* For Booking Manage Communication */

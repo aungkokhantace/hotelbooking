@@ -26,6 +26,7 @@ return [
     'place-capacity'        => 'Enter Capacity',
     'place-area'            => 'Enter Area',
     'place-floor'           => 'Enter Floor',
+    'place-open-hr'         => 'Enter Open Hour',
     'place-open-day'        => 'Enter Open Days',
     'place-description'     => 'Enter Description',
     'place-remark'          => 'Enter Remark',

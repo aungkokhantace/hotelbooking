@@ -161,7 +161,120 @@
                     @endforeach
                 </div>
             </div>
-            <!-- /.row -->
+            <!-- /.row -->.
+
+            <div class="row"> <!-- Transportation-->
+                <div class="col-md-offset-3 col-md-9">
+                    <!-- First Blog Post Left -->
+                    <div class="payment_list">
+                        <h4>Book for Transportation</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-3 col-md-9 payment_form">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="booking_taxi" value="1" {!! $b_request->booking_taxi==1?'checked':'' !!}>
+                        </label>
+                        <img src="/assets/shared/images/transporation.png">
+                        <span style="font-size:15px;">I'm interested in booking a taxi in advance</span>
+                    </div>
+                </div>
+            </div><!-- Transportation -->
+
+            <div class="row"><!-- Tour Guide -->
+                <div class="col-md-offset-3 col-md-9">
+                    <!-- First Blog Post Left -->
+                    <div class="payment_list">
+                        <h4>Book for Tour Guide</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-3 col-md-9 payment_form">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="booking_tour_guide" value="1" {!! $b_request->booking_tour_guide==1?'checked':'' !!}>
+                        </label>
+                        <img src="/assets/shared/images/tour.png">
+                        <span style="font-size:15px;">I'm interested in booking tour guide.</span>
+                    </div>
+                </div>
+            </div><!-- Tour Guide -->
+
+            <!-- Communication Channel -->
+            <div class="row">
+                <div class="col-md-offset-3 col-md-9">
+                    <!-- First Blog Post Left -->
+                    <div class="payment_list">
+                        <h4>Talk Here</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-3 col-md-9 last_form">
+                    <div class="formtitle_left">
+                        <span>Special Requests</span>
+                    </div>
+                    <div class="formtitle_left">
+                        <span>We'll forward these to your hotel or host immediately upon booking.</span>
+                    </div>
+
+                    <div>
+                        <span>Please be aware that all requests are subject to availability.</span>
+                    </div>
+                    <div class="list_style" style="float:left;">
+                        <input type="checkbox" name="non_smoking_request" value="1" {!! $b_request->non_smoking_room==1?'checked':'' !!} disabled>
+                        <span>I'd like a non-smoking room</span><br>
+                        <input type="checkbox" name="late_check_in_request" value="1" {!! $b_request->late_check_in==1?'checked':'' !!} disabled>
+                        <span>I'd like a late check-in</span><br>
+                        <input type="checkbox" name="high_floor_request" value="1" {!! $b_request->high_floor_room==1?'checked':'' !!} disabled>
+                        <span>I'd like a room on a high floor</span><br>
+                        <input type="checkbox" name="large_bed_request" value="1" {!! $b_request->large_bed==1?'checked':'' !!} disabled>
+                        <span>I'd like a large bed</span><br>
+                        <input type="checkbox" name="early_check_in_request" value="1" {!! $b_request->early_check_in==1?'checked':'' !!} disabled>
+                        <span>I'd like an early check-in</span><br>
+                    </div>
+                    <div class="list_style">
+                        <input type="checkbox" name="twin_bed_request" value="1" {!! $b_request->twin_bed==1?'checked':'' !!} disabled>
+                        <span>I'd like twin beds</span><br>
+                        <input type="checkbox" name="quiet_room_request" value="1" {!! $b_request->quiet_room==1?'checked':'' !!} disabled>
+                        <span>I'd like a quiet room</span><br>
+                        <input type="checkbox" name="airport_transfer_request" value="1" {!! $b_request->airport_transfer==1?'checked':'' !!} disabled>
+                        <span>I'd like an airport transfer</span><br>
+                        <input type="checkbox" name="private_parking_request" value="1" {!! $b_request->private_parking==1?'checked':'' !!} disabled>
+                        <span>I'd like a private parking</span><br>
+                        <input type="checkbox" name="baby_cot_request" value="1" {!! $b_request->baby_cot==1?'checked':'' !!} disabled>
+                        <span>I'd like to have a baby cot <br>(additional charges may apply)</span>
+                    </div>
+                    <br>
+                    <div class="formtitle_left">
+                        <span>Special Request</span>
+                    </div>
+                    <div class="payment_formgroups">
+                        <div class="col-sm-7 pd_rg_10">
+                            @foreach($communications as $comm)
+                                <span {{$comm->type == 1?'class=span-right':''}}>
+                                    <b>{{$comm->type==1?'Admin':'Me'}}</b>
+                                </span>
+                                <br>
+                                <span {{$comm->type == 1?'class=span-right':''}}>[{{$comm->created_at}}]</span>
+                                <div class="clear-div"></div>
+                                <div class="div-left">{{$comm->special_request}}</div>
+                                <div class="clear-div line-height"></div>
+                            @endforeach
+                            {!! Form::open(array('url'=>'/booking/communication','class'=>'form-inline','id'=>'communication')) !!}
+                            <input type="hidden" name="id" value="{{$booking->id}}">
+                            <textarea rows="4" style="width:100%;" id="special_request" name="special_request"></textarea>
+                            <br>
+                            <button type="button" class="btn btn-success" id="communication-btn">Say</button>
+                            {!! Form::close() !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Communication Channel -->
 
         </div>
         <!-- /.container -->
@@ -238,6 +351,39 @@
                 var id              = id_split[1];
                 $('#formEdit'+id).hide();
                 $('#rowEdit'+id).show();
+            });
+
+            $('#communication-btn').click(function(){
+                var serializedData  = $('#communication').serialize();
+                $.ajax({
+                    url: '/booking/communication',
+                    type: 'POST',
+                    data: serializedData,
+                    success: function(data){
+                        if(data.aceplusStatusCode == '200'){
+                            location.reload();
+                            return;
+                        }
+                        else{
+                            swal({title: "Fail", text: "Something Wrong!", type: "error"},
+                                    function(){
+                                        location.reload();
+                                    }
+                            );
+                            return;
+                        }
+                    },
+                    error: function(data){
+                        console.log(data);
+                        alert(data);
+                        swal({title: "Opps", text: "Sorry, Please Try Again!", type: "error"},
+                                function(){
+                                    location.reload();
+                                }
+                        );
+                        return;
+                    }
+                });
             });
         });
     </script>
