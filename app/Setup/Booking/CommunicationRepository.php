@@ -12,6 +12,7 @@ namespace App\Setup\Booking;
 use App\Core\ReturnMessage;
 use App\Core\Utility;
 use App\Log\LogCustom;
+use App\Setup\BookingSpecialRequest\BookingSpecialRequest;
 use Illuminate\Support\Facades\DB;
 use App\User;
 use Auth;
@@ -115,5 +116,14 @@ class CommunicationRepository implements CommunicationRepositoryInterface
             $returnedObj['aceplusStatusMessage'] = $e->getMessage();
             return $returnedObj;
         }
+    }
+
+    public function getCommunicationByBookingId($booking_id){
+        $result = BookingSpecialRequest::where('booking_id',$booking_id)
+                                        ->whereNull('deleted_at')
+                                        ->orderBy('order', 'asc')
+                                        ->get();
+
+        return $result;
     }
 }

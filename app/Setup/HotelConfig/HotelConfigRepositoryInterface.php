@@ -21,4 +21,5 @@ interface HotelConfigRepositoryInterface
     public function getCancellationDayFromHotelConfig($id_arr);
     public function getFirstCancellationDayCountHotelConfig($hotel_id);
     public function getEmailByHotelId($hotel_id);
+    public function getFirstObjByHotelID($hotel_id);
 }

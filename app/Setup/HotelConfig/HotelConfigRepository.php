@@ -154,4 +154,10 @@ class HotelConfigRepository implements HotelConfigRepositoryInterface
         $result   = Hotel::select('email')->where('id',$hotel_id)->whereNull('deleted_at')->first();
         return $result;
     }
+
+    public function getFirstObjByHotelID($hotel_id){
+        $result = HotelConfig::where('hotel_id',$hotel_id)->whereNull('deleted_at')->first();
+
+        return $result;
+    }
 }

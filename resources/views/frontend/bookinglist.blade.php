@@ -148,7 +148,7 @@
                                                     </div>
                                                     <div class="booking_tableright pull-right">
                                                         <h4>status-{{$b_cancel->status_txt}}</h4>
-                                                        <h3>USD 0.00</h3>
+                                                        <h3>$ {{$b_cancel->total_payable_amt}}</h3>
                                                     </div>
                                                 </div>
                                             </div>

@@ -21,4 +21,6 @@ interface CommunicationRepositoryInterface
     public function getUserObjs();
     public function checkHasPermission($id,$h_id);
 
+    public function getCommunicationByBookingId($booking_id);
+
 }

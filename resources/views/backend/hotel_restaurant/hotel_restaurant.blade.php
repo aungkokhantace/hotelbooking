@@ -122,7 +122,7 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" required class="form-control" id="capacity" name="capacity"
-                   placeholder="{{trans('setup_hotelrestaurant.open-capacity')}}"
+                   placeholder="{{trans('setup_hotelrestaurant.place-capacity')}}"
                    value="{{ isset($hotel_restaurant)? $hotel_restaurant->capacity:Request::old('capacity') }}"/>
             <p class="text-danger">{{$errors->first('capacity')}}</p>
         </div>
