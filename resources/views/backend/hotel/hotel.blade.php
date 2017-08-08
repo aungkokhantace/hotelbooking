@@ -338,7 +338,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="hotel_class">{{trans('setup_hotel.class')}}<span class="require">*</span></label>
         </div>
@@ -347,7 +347,7 @@
                    placeholder="{{trans('setup_hotel.place-class')}}" value="{{ isset($hotel)? $hotel->class:Request::old('hotel_class') }}"/>
             <p class="text-danger">{{$errors->first('hotel_class')}}</p>
         </div>
-    </div>
+    </div> -->
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">

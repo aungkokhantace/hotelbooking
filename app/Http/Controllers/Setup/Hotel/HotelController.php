@@ -126,7 +126,7 @@ class HotelController extends Controller
         $township_id            = (Input::has('township_id')) ? Input::get('township_id') : "";
         $description            = (Input::has('description')) ? Input::get('description') : "";
         $number_of_floors       = (Input::has('number_of_floors')) ? Input::get('number_of_floors') : "";
-        $hotel_class            = (Input::has('hotel_class')) ? Input::get('hotel_class') : "";
+        // $hotel_class            = (Input::has('hotel_class')) ? Input::get('hotel_class') : "";
         $website                = (Input::has('website')) ? Input::get('website') : "";
         $check_in_time          = (Input::has('check_in_time')) ? Input::get('check_in_time') : "";
         $check_out_time         = (Input::has('check_out_time')) ? Input::get('check_out_time') : "";
@@ -170,7 +170,7 @@ class HotelController extends Controller
         $paramObj->township_id              = $township_id;
         $paramObj->description              = $description;
         $paramObj->number_of_floors         = $number_of_floors;
-        $paramObj->class                    = $hotel_class;
+        // $paramObj->class                    = $hotel_class;
         $paramObj->website                  = $website;
         $paramObj->check_in_time            = $check_in_time;
         $paramObj->check_out_time           = $check_out_time;
@@ -275,7 +275,7 @@ class HotelController extends Controller
         $township_id            = (Input::has('township_id')) ? Input::get('township_id') : "";
         $description            = (Input::has('description')) ? Input::get('description') : "";
         $number_of_floors       = (Input::has('number_of_floors')) ? Input::get('number_of_floors') : "";
-        $hotel_class            = (Input::has('hotel_class')) ? Input::get('hotel_class') : "";
+        // $hotel_class            = (Input::has('hotel_class')) ? Input::get('hotel_class') : "";
         $website                = (Input::has('website')) ? Input::get('website') : "";
         $check_in_time          = (Input::has('check_in_time')) ? Input::get('check_in_time') : "";
         $check_out_time         = (Input::has('check_out_time')) ? Input::get('check_out_time') : "";
@@ -329,7 +329,7 @@ class HotelController extends Controller
         $paramObj->township_id              = $township_id;
         $paramObj->description              = $description;
         $paramObj->number_of_floors         = $number_of_floors;
-        $paramObj->class                    = $hotel_class;
+        // $paramObj->class                    = $hotel_class;
         $paramObj->website                  = $website;
         $paramObj->check_in_time            = $check_in_time;
         $paramObj->check_out_time           = $check_out_time;
