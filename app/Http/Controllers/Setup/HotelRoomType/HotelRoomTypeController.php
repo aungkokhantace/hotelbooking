@@ -38,7 +38,7 @@ class HotelRoomTypeController extends Controller
                 $hotelRepo          = new HotelRepository();
                 $hotels             = $hotelRepo->getHotelByUserEmail($email);
                 $hotel_id           = $hotels->id;
-                $hotel_room_type    = $this->repo->getHotelRoomTypeWithHotelId($hotel_id);;
+                $hotel_room_type    = $this->repo->getHotelRoomTypeWithHotelId($hotel_id);
             } else {
                 $hotel_room_type = $this->repo->getObjs();
             }

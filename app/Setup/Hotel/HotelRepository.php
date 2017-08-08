@@ -50,12 +50,15 @@ class HotelRepository implements HotelRepositoryInterface
             $id                 = $paramObj->id;
             $nearby_count       = $input['nearby_count'] + 1;
             for($i=0; $i<$nearby_count; $i++) {
-                $paramObj                       = new Hnearby();
-                $paramObj->hotel_id             = $id;
-                $paramObj->nearby_id            = $input['nearby_place'][$i];
-                $paramObj->km                   = $input['nearby_distance'][$i];
-                $tempPlace                      = Utility::addCreatedBy($paramObj);
-                $tempPlace->save();
+                //Check If user add empty value
+                if($input['nearby_place'][$i] > 0 AND $input['nearby_distance'][$i] > 0) {
+                    $paramObj                       = new Hnearby();
+                    $paramObj->hotel_id             = $id;
+                    $paramObj->nearby_id            = $input['nearby_place'][$i];
+                    $paramObj->km                   = $input['nearby_distance'][$i];
+                    $tempPlace                      = Utility::addCreatedBy($paramObj);
+                    $tempPlace->save();
+                }
             }
 
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
@@ -99,12 +102,14 @@ class HotelRepository implements HotelRepositoryInterface
 
             $nearby_count       = $input['nearby_count'] + 1;
             for($i=0; $i<$nearby_count; $i++) {
-                $paramObj                       = new Hnearby();
-                $paramObj->hotel_id             = $id;
-                $paramObj->nearby_id            = $input['nearby_place'][$i];
-                $paramObj->km                   = $input['nearby_distance'][$i];
-                $tempPlace                      = Utility::addCreatedBy($paramObj);
-                $tempPlace->save();
+                if ($input['nearby_place'][$i] > 0 AND $input['nearby_distance'][$i] > 0) {
+                    $paramObj                       = new Hnearby();
+                    $paramObj->hotel_id             = $id;
+                    $paramObj->nearby_id            = $input['nearby_place'][$i];
+                    $paramObj->km                   = $input['nearby_distance'][$i];
+                    $tempPlace                      = Utility::addCreatedBy($paramObj);
+                    $tempPlace->save();
+                }
             }
 
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
