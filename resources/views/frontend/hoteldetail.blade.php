@@ -44,7 +44,7 @@
                             <samp>{{$hotel->discount}} off</samp>
                         @endif
                     </div>
-                    <div id="jssor_1" class="slider_one">
+                    <div id="jssor_main" class="slider_one">
                         <div data-u="slides" class="slider_images">
                             @if(isset($roomCategoryImages) && count($roomCategoryImages)>0)
                                 @foreach($roomCategoryImages as $roomCategoryImage)
@@ -140,23 +140,30 @@
                             {!! Form::open(array('url' => '/enter_details','files'=>true, 'id'=>'frm_booking', 'class'=> 'form-horizontal user-form-border')) !!}
                             {{ csrf_field() }}
 
+                            <?php
+                            $default    = 0;
+                            ?>
                             @foreach($roomCategories as $roomCategory)
                                 @if($roomCategory->available_room_count > 0)
-                                <input type="hidden" id="available_room_categories" name="available_room_categories[]" value="{{$roomCategory->id}}">
+                                <input type="hidden" id="available_room_categories" name="available_room_categories[]" value="{{$roomCategory->id }}">
                                 <tr>
                                     <td>
                                         <ul class="fa-ul">
                                             <li class="title_fa">
-                                                <a href="#myModal" data-toggle="modal">{{$roomCategory->name}}</a>
+                                                <a href="#myModal-{{$roomCategory->id}}" data-toggle="modal" id="{{ $roomCategory->id }}" class="insertcolumn" onclick="myFunction({{ $roomCategory->id }})">{{$roomCategory->name}}</a>
+                                                <?php 
+                                                    $default    = $default + 1;
+                                                ?>
+                                                <input type="hidden" id="slider-{{ $default }}" name="slider-input" value="{{ $roomCategory->id }}" />
                                                 <!-- Start Modal -->
-                                                <div class="modal fade" id="myModal" role="dialog">
+                                                <div class="modal fade" id="myModal-{{$roomCategory->id}}" role="dialog">
                                                     <div class="modal-dialog modal-lg md-dialog">
 
                                                         <!-- Modal content Start-->
                                                         <div class="modal-content">
                                                             <div class="modal-body">
                                                                 <button type="button" class="close close-btn" data-dismiss="modal">&times;</button>
-                                                                <div id="jssor_2" class="slider_two">
+                                                                <div id="jssor_{{ $roomCategory->id }}" class="slider_two">
                                                                     <div data-u="slides" class="slider_images_two">
                                                                         @if(isset($roomCategory->images) && count($roomCategory->images)>0)
                                                                             @foreach($roomCategory->images as $image)
@@ -331,18 +338,17 @@
         </div>
     </section>
 @stop
-
 @section('page_script')
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyAJLUg2IEbAOp4gMqRoXpSnjV0w1FDfYNk&sensor=false" type="text/javascript"></script>
     <script type="text/javascript" language="javascript" class="init">
         $(document).ready(function() {
+            var numslider   = $('.slider_two').length;
             //init function
             google.maps.event.trigger(map, 'resize');
             var latitude  = $("#latitude").val();
             var longitude = $("#longitude").val();
 //            setTimeout(executeQuery(latitude,longitude), 3000);
             setTimeout(renderMap(latitude,longitude), 3000);
-
             /* var nowDate = new Date();
             var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
             $('#check_in').datepicker({
@@ -420,10 +426,18 @@
                     form.submit();
                 }
             });
-
             //jssor slider init functions
-            jssor_1_slider_init();
-            jssor_2_slider_init();
+            jssor_main_slider_init();
+            // var val = 2;
+            // var a = "jssor_" + val + "_slider_init";
+            // window[a]();
+                // z = 22;
+                // var postId      = $('#slider-' + z).val();
+            $('.insertcolumn').click(function(){
+                var postId      = $(this).attr('id');
+                var sliderId    = "jssor_" + postId + "_slider_init";
+                window[sliderId]();
+            });
 
         });
 
@@ -468,9 +482,9 @@
 
     <!-- #region Jssor Slider Begin -->
     <script type="text/javascript">
-        jssor_1_slider_init = function() {
+        jssor_main_slider_init = function() {
 
-            var jssor_1_SlideshowTransitions = [
+            var jssor_main_SlideshowTransitions = [
                 {$Duration:1200,x:0.3,$During:{$Left:[0.3,0.7]},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
                 {$Duration:1200,x:-0.3,$SlideOut:true,$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
                 {$Duration:1200,x:-0.3,$During:{$Left:[0.3,0.7]},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
@@ -495,11 +509,11 @@
                 {$Duration:1200,$Delay:20,$Clip:12,$SlideOut:true,$Assembly:260,$Easing:{$Clip:$Jease$.$OutCubic,$Opacity:$Jease$.$Linear},$Opacity:2}
             ];
 
-            var jssor_1_options = {
+            var jssor_main_options = {
                 $AutoPlay: 1,
                 $SlideshowOptions: {
                     $Class: $JssorSlideshowRunner$,
-                    $Transitions: jssor_1_SlideshowTransitions,
+                    $Transitions: jssor_main_SlideshowTransitions,
                     $TransitionsOrder: 1
                 },
                 $ArrowNavigatorOptions: {
@@ -514,15 +528,15 @@
                 }
             };
 
-            var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
+            var jssor_main_slider = new $JssorSlider$("jssor_main", jssor_main_options);
 
             /*responsive code begin*/
             /*remove responsive code if you don't want the slider scales while window resizing*/
             function ScaleSlider() {
-                var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+                var refSize = jssor_main_slider.$Elmt.parentNode.clientWidth;
                 if (refSize) {
                     refSize = Math.min(refSize, 800);
-                    jssor_1_slider.$ScaleWidth(refSize);
+                    jssor_main_slider.$ScaleWidth(refSize);
                 }
                 else {
                     window.setTimeout(ScaleSlider, 30);
@@ -535,80 +549,82 @@
             /*responsive code end*/
         };
     </script>
-
-    {{--<script type="text/javascript">jssor_1_slider_init();</script>--}}
 
     <!--Jssor 2-->
     <script type="text/javascript">
-        jssor_2_slider_init = function() {
+    function myFunction(id) {
+        var i               = id;
+        var jssor_num       = "jssor_" + i;
+        var jssor_function  = "jssor_" + i + "_slider_init";
+        var showTransitions = "jssor_" + i + "_SlideshowTransitions";
+        var jssorOption     = "jssor_" + i + "_options";
+        var jssorSlider     = "jssor_" + i + "_slider";
+         window[jssor_function] = function () {
+            window[showTransitions] = [
+                    {$Duration:1200,x:0.3,$During:{$Left:[0.3,0.7]},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                    {$Duration:1200,x:-0.3,$SlideOut:true,$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                    {$Duration:1200,x:-0.3,$During:{$Left:[0.3,0.7]},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                    {$Duration:1200,x:0.3,$SlideOut:true,$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                    {$Duration:1200,y:0.3,$During:{$Top:[0.3,0.7]},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                    {$Duration:1200,y:-0.3,$SlideOut:true,$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                    {$Duration:1200,y:-0.3,$During:{$Top:[0.3,0.7]},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                    {$Duration:1200,y:0.3,$SlideOut:true,$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                    {$Duration:1200,x:0.3,$Cols:2,$During:{$Left:[0.3,0.7]},$ChessMode:{$Column:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                    {$Duration:1200,x:0.3,$Cols:2,$SlideOut:true,$ChessMode:{$Column:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                    {$Duration:1200,y:0.3,$Rows:2,$During:{$Top:[0.3,0.7]},$ChessMode:{$Row:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                    {$Duration:1200,y:0.3,$Rows:2,$SlideOut:true,$ChessMode:{$Row:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                    {$Duration:1200,y:0.3,$Cols:2,$During:{$Top:[0.3,0.7]},$ChessMode:{$Column:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                    {$Duration:1200,y:-0.3,$Cols:2,$SlideOut:true,$ChessMode:{$Column:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                    {$Duration:1200,x:0.3,$Rows:2,$During:{$Left:[0.3,0.7]},$ChessMode:{$Row:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                    {$Duration:1200,x:-0.3,$Rows:2,$SlideOut:true,$ChessMode:{$Row:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                    {$Duration:1200,x:0.3,y:0.3,$Cols:2,$Rows:2,$During:{$Left:[0.3,0.7],$Top:[0.3,0.7]},$ChessMode:{$Column:3,$Row:12},$Easing:{$Left:$Jease$.$InCubic,$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                    {$Duration:1200,x:0.3,y:0.3,$Cols:2,$Rows:2,$During:{$Left:[0.3,0.7],$Top:[0.3,0.7]},$SlideOut:true,$ChessMode:{$Column:3,$Row:12},$Easing:{$Left:$Jease$.$InCubic,$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                    {$Duration:1200,$Delay:20,$Clip:3,$Assembly:260,$Easing:{$Clip:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                    {$Duration:1200,$Delay:20,$Clip:3,$SlideOut:true,$Assembly:260,$Easing:{$Clip:$Jease$.$OutCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                    {$Duration:1200,$Delay:20,$Clip:12,$Assembly:260,$Easing:{$Clip:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
+                    {$Duration:1200,$Delay:20,$Clip:12,$SlideOut:true,$Assembly:260,$Easing:{$Clip:$Jease$.$OutCubic,$Opacity:$Jease$.$Linear},$Opacity:2}
+                ];
+                window[jssorOption] = {
+                    $AutoPlay: 1,
+                    $SlideshowOptions: {
+                        $Class: $JssorSlideshowRunner$,
+                        $Transitions: window[showTransitions],
+                        $TransitionsOrder: 1
+                    },
+                    $ArrowNavigatorOptions: {
+                        $Class: $JssorArrowNavigator$
+                    },
+                    $ThumbnailNavigatorOptions: {
+                        $Class: $JssorThumbnailNavigator$,
+                        $Cols: 10,
+                        $SpacingX: 8,
+                        $SpacingY: 8,
+                        $Align: 360
+                    }
+                };
 
-            var jssor_2_SlideshowTransitions = [
-                {$Duration:1200,x:0.3,$During:{$Left:[0.3,0.7]},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-                {$Duration:1200,x:-0.3,$SlideOut:true,$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-                {$Duration:1200,x:-0.3,$During:{$Left:[0.3,0.7]},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-                {$Duration:1200,x:0.3,$SlideOut:true,$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-                {$Duration:1200,y:0.3,$During:{$Top:[0.3,0.7]},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-                {$Duration:1200,y:-0.3,$SlideOut:true,$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-                {$Duration:1200,y:-0.3,$During:{$Top:[0.3,0.7]},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-                {$Duration:1200,y:0.3,$SlideOut:true,$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-                {$Duration:1200,x:0.3,$Cols:2,$During:{$Left:[0.3,0.7]},$ChessMode:{$Column:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-                {$Duration:1200,x:0.3,$Cols:2,$SlideOut:true,$ChessMode:{$Column:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-                {$Duration:1200,y:0.3,$Rows:2,$During:{$Top:[0.3,0.7]},$ChessMode:{$Row:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-                {$Duration:1200,y:0.3,$Rows:2,$SlideOut:true,$ChessMode:{$Row:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-                {$Duration:1200,y:0.3,$Cols:2,$During:{$Top:[0.3,0.7]},$ChessMode:{$Column:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-                {$Duration:1200,y:-0.3,$Cols:2,$SlideOut:true,$ChessMode:{$Column:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-                {$Duration:1200,x:0.3,$Rows:2,$During:{$Left:[0.3,0.7]},$ChessMode:{$Row:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-                {$Duration:1200,x:-0.3,$Rows:2,$SlideOut:true,$ChessMode:{$Row:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-                {$Duration:1200,x:0.3,y:0.3,$Cols:2,$Rows:2,$During:{$Left:[0.3,0.7],$Top:[0.3,0.7]},$ChessMode:{$Column:3,$Row:12},$Easing:{$Left:$Jease$.$InCubic,$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-                {$Duration:1200,x:0.3,y:0.3,$Cols:2,$Rows:2,$During:{$Left:[0.3,0.7],$Top:[0.3,0.7]},$SlideOut:true,$ChessMode:{$Column:3,$Row:12},$Easing:{$Left:$Jease$.$InCubic,$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-                {$Duration:1200,$Delay:20,$Clip:3,$Assembly:260,$Easing:{$Clip:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-                {$Duration:1200,$Delay:20,$Clip:3,$SlideOut:true,$Assembly:260,$Easing:{$Clip:$Jease$.$OutCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-                {$Duration:1200,$Delay:20,$Clip:12,$Assembly:260,$Easing:{$Clip:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-                {$Duration:1200,$Delay:20,$Clip:12,$SlideOut:true,$Assembly:260,$Easing:{$Clip:$Jease$.$OutCubic,$Opacity:$Jease$.$Linear},$Opacity:2}
-            ];
+                window[jssorSlider]     = new $JssorSlider$(jssor_num, window[jssorOption]);
 
-            var jssor_2_options = {
-                $AutoPlay: 1,
-                $SlideshowOptions: {
-                    $Class: $JssorSlideshowRunner$,
-                    $Transitions: jssor_2_SlideshowTransitions,
-                    $TransitionsOrder: 1
-                },
-                $ArrowNavigatorOptions: {
-                    $Class: $JssorArrowNavigator$
-                },
-                $ThumbnailNavigatorOptions: {
-                    $Class: $JssorThumbnailNavigator$,
-                    $Cols: 10,
-                    $SpacingX: 8,
-                    $SpacingY: 8,
-                    $Align: 360
+                /*responsive code begin*/
+                /*remove responsive code if you don't want the slider scales while window resizing*/
+                function ScaleSlider() {
+                    var refSize = window[jssorSlider].$Elmt.parentNode.clientWidth;
+                    if (refSize) {
+                        refSize = Math.min(refSize, 800);
+                        window[jssorSlider].$ScaleWidth(refSize);
                 }
-            };
-
-            var jssor_2_slider = new $JssorSlider$("jssor_2", jssor_2_options);
-
-            /*responsive code begin*/
-            /*remove responsive code if you don't want the slider scales while window resizing*/
-            function ScaleSlider() {
-                var refSize = jssor_2_slider.$Elmt.parentNode.clientWidth;
-                if (refSize) {
-                    refSize = Math.min(refSize, 800);
-                    jssor_2_slider.$ScaleWidth(refSize);
-            }
-                else {
-                    window.setTimeout(ScaleSlider, 30);
+                    else {
+                        window.setTimeout(ScaleSlider, 30);
+                    }
                 }
-            }
-            ScaleSlider();
-            $Jssor$.$AddEvent(window, "load", ScaleSlider);
-            $Jssor$.$AddEvent(window, "resize", ScaleSlider);
-            $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider);
-            /*responsive code end*/
-        };
+                ScaleSlider();
+                $Jssor$.$AddEvent(window, "load", ScaleSlider);
+                $Jssor$.$AddEvent(window, "resize", ScaleSlider);
+                $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider);
+                /*responsive code end*/
+        }
+    }
     </script>
-
-    {{--<script type="text/javascript">jssor_2_slider_init();</script>--}}
     <!--Jssor 2-->
 
     <!-- #region Jssor Slider End -->
