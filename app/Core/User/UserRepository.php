@@ -29,7 +29,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function getUsers()
     {
-        $users = User::whereNull('deleted_at')->get();
+        $users = User::whereNull('deleted_at')->where('role_id','!=', 4)->get();
         return $users;
     }
 
