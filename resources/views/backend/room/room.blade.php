@@ -280,7 +280,6 @@
                 html       += '<p class="text-danger">{{$errors->first('room_name[]')}}</p>';
                 $('.multi_name').append(html);
                 $("[name*=room_name]").each(function() {
-                    console.log('ssss');
                     $(this).rules('add', {
                         required: true,
                         messages: {

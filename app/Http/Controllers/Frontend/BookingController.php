@@ -262,7 +262,7 @@ class BookingController extends Controller
         $booking->room_count            = $room_count; //Add Number of Room to booking
 
         /* Calculate Cancellation Cost */
-        $h_config                       = $h_configRepo->getObjByID($booking->hotel_id);
+        $h_config                       = $h_configRepo->getConfigByHotel($booking->hotel_id);
         $first_cancel_days              = $h_config->first_cancellation_day_count;
         $second_cancel_days             = $h_config->second_cancellation_day_count;
         $first_cancel_date              = Carbon::parse($booking->check_in_date)->subDays($first_cancel_days)->format('M d, Y');
