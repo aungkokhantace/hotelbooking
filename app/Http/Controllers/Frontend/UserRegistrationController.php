@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Core\Check;
 use App\Setup\Customer\CustomerRepositoryInterface;
 use App\User;
 use Illuminate\Http\Request;
@@ -9,6 +10,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Auth;
+use Session;
 
 class UserRegistrationController extends Controller
 {
@@ -39,9 +42,21 @@ class UserRegistrationController extends Controller
             $paramObj->role_id              = 4;
 
             $res                            = $this->repo->create($paramObj);
+            $auth = auth()->guard('Customer');
+            $credentials = [
+                    'email'     => $request->email,
+                    'password'  => $request->password
+                ];
 
-            $response['aceplusStatusCode']  = '200';
-
+            if($auth->attempt($credentials)){
+                $id = Auth::guard('Customer')->id();
+                Check::createSessionCustomer($id);
+                $response['aceplusStatusCode']  = '200';
+            }
+            else{
+                $response['aceplusStatusCode']  = '401';
+                session(['auth-error' => 'The email address or password is incorrect!']);
+            }
         }
         else{
             $response['aceplusStatusCode']  = '202';

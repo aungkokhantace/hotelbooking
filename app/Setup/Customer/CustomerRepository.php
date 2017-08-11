@@ -4,6 +4,7 @@ use App\Core\ReturnMessage;
 use App\Core\Utility;
 use App\Log\LogCustom;
 use App\User;
+use App\Core\Check;
 
 /**
  * Created by PhpStorm.

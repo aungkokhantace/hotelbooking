@@ -62,7 +62,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/get_directions/{hotel_id}', 'Frontend\PaymentController@getDirections');
 
     //Manage Booking
-    Route::get('booking/manage/{id}',['as'=>'booking/manage','uses'=>'Frontend\BookingController@manage']);
+    Route::get('booking/manage/{id}',['as'=>'booking/manage','uses'=>'Frontend\BookingController@manage'])->where('id','[0-9]+');
     Route::get('booking/manage/congratulation/{id}',['as'=>'booking/manage/congratulation',
                                                      'uses'=>'Frontend\BookingController@say_congratulation']);
     Route::get('booking/manage/print/{id}',['as'=>'booking/manage/print',
