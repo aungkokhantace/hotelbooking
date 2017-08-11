@@ -99,26 +99,32 @@ class AuthController extends Controller
 
     public function doLogin(LoginFormRequest $request){
         $request->validate();
-        if(filter_var($request->user_name, FILTER_VALIDATE_EMAIL)){
-            $validation = Auth::guard('User')->attempt([
-                'email'=>$request->user_name,
-                'password'=>$request->password,
-            ]);
-        }
-        else{
-            $validation = Auth::guard('User')->attempt([
-                'user_name'=>$request->user_name,
-                'password'=>$request->password,
-            ]);
-        }
+        $username       = $request->user_name;
+        $checkRole      = $this->checkRoleId($username);
+        if ($checkRole == true) {
+            if(filter_var($request->user_name, FILTER_VALIDATE_EMAIL)){
+                $validation = Auth::guard('User')->attempt([
+                    'email'=>$request->user_name,
+                    'password'=>$request->password,
+                ]);
+            }
+            else{
+                $validation = Auth::guard('User')->attempt([
+                    'user_name'=>$request->user_name,
+                    'password'=>$request->password,
+                ]);
+            }
 
-        if(!$validation){
-            return redirect()->back()->withErrors($this->getFailedLoginMessage());
-        }
-        else{
-            $id = Auth::guard('User')->id();
-            Check::createSession($id);
-            return redirect('/backend/userAuth');
+            if(!$validation){
+                return redirect()->back()->withErrors($this->getFailedLoginMessage());
+            }
+            else{
+                $id = Auth::guard('User')->id();
+                Check::createSession($id);
+                return redirect('/backend/userAuth');
+            }
+        } else {
+            return redirect()->back()->withErrors($this->getFailedLoginMessage());   
         }
     }
     protected function getFailedLoginMessage()
@@ -132,5 +138,20 @@ class AuthController extends Controller
     {
         session()->flush();
         return redirect('/backend');
+    }
+
+    protected function checkRoleId($username) {
+        $result     = false;
+        $roleAttr   = User::where('user_name','=',$username)->where('role_id','!=',4)->first();
+        if (count($roleAttr) >= 1) {
+            $result     = true;   
+        } else {
+            $roleAttr   = User::where('email','=',$username)->where('role_id','!=',4)->first();
+            if (count($roleAttr) >= 1) {
+                $result     = true;   
+            }
+        }
+
+        return $result;
     }
 }
