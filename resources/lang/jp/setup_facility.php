@@ -12,6 +12,7 @@ return [
     'name'                  => 'Facility Name - JP',
     'facility-gp'           => 'Facility Group - JP',
     'type'                  => 'Type - JP',
+    'popular'               => 'Popular - JP',
     'type-hotel'            => 'Hotel - JP',
     'type-room'             => 'Room - JP',
     'description'           => 'Description - JP',

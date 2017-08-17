@@ -69,6 +69,18 @@
     <br>
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="name">
+                {{trans('setup_facility.popular')}}<span class="require">*</span>
+            </label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <input type="checkbox" name="popular" id="popular" value="1"
+                   {!! isset($facilities)&& $facilities->popular == 1? 'checked':''!!}>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="description">{{trans('setup_facility.description')}}</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -80,7 +92,7 @@
     {{--Start File Upload--}}
     <div class="row">
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <label for="photo" class="text_bold_black">{{trans('setup_facility.icon')}}</label>
+            <label for="photo" class="text_bold_black">{{trans('setup_facility.icon')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
             @if(isset($facilities))
@@ -94,14 +106,16 @@
             @endif
         </div>
     </div>
-
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="button" class="form-control image_remove_btn" value="Remove Image" id="removeImage" name="removeImage">
+            <p class="text-danger">{{$errors->first('photo')}}</p>
         </div>
+
+
     </div>
     <br /><br />
     {{--End File Upload--}}
@@ -321,6 +335,8 @@
                 }
             });
             //End Validation for Entry and Edit Form
+
+            $(':checkbox').checkboxpicker();
         });
 
 

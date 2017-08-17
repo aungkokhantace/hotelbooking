@@ -54,6 +54,7 @@ class FacilitiesController extends Controller
         $facility_group_id  = Input::get('facility_group');
         $description        = Input::get('description');
         $type               = Input::get('type');
+        $popular            = Input::has('popular')?Input::get('popular'):0;
 
         //Start Saving Image
         $removeImageFlag = (Input::has('removeImageFlag')) ? Input::get('removeImageFlag') : 0;
@@ -83,6 +84,7 @@ class FacilitiesController extends Controller
         $paramObj->description          = $description;
         $paramObj->icon                 = $photo_name;
         $paramObj->type                 = $type;
+        $paramObj->popular              = $popular;
 
         $result = $this->repo->create($paramObj);
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
@@ -118,19 +120,20 @@ class FacilitiesController extends Controller
         $facility_group_id          = Input::get('facility_group');
         $description                = Input::get('description');
         $type                       = Input::get('type');
+        $popular                    = Input::has('popular')?Input::get('popular'):0;
 
-        $removeImageFlag          = (Input::has('removeImageFlag')) ? Input::get('removeImageFlag') : 0;
-        $path         = base_path().'/public/images/upload/';
+        $removeImageFlag            = (Input::has('removeImageFlag')) ? Input::get('removeImageFlag') : 0;
+        $path                       = base_path().'/public/images/upload/';
 
         if(Input::hasFile('photo')){
-            $photo        = Input::file('photo');
+            $photo                  = Input::file('photo');
 
             $photo_name_original    = Utility::getImage($photo);
-            $photo_ext      = Utility::getImageExt($photo);
-            $photo_name     = uniqid() . "." . $photo_ext;
-            $image          = Utility::resizeImage($photo,$photo_name,$path);
+            $photo_ext              = Utility::getImageExt($photo);
+            $photo_name             = uniqid() . "." . $photo_ext;
+            $image                  = Utility::resizeImage($photo,$photo_name,$path);
 
-            $paramObj = Facilities::find($id);
+            $paramObj                       = Facilities::find($id);
             $paramObj->name                 = $name;
             $paramObj->facility_group_id    = $facility_group_id;
             $paramObj->description          = $description;
@@ -143,6 +146,7 @@ class FacilitiesController extends Controller
             $paramObj->facility_group_id    = $facility_group_id;
             $paramObj->description          = $description;
             $paramObj->type                 = $type;
+            $paramObj->popular              = $popular;
 
             //without this condition, when image is removed in update, it won't be removed in DB
             if($removeImageFlag == 1){

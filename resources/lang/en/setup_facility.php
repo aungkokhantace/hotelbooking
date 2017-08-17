@@ -12,6 +12,7 @@ return [
     'name'                  => 'Facility Name',
     'facility-gp'           => 'Facility Group',
     'type'                  => 'Type',
+    'popular'               => 'Popular',
     'type-hotel'            => 'Hotel',
     'type-room'             => 'Room',
     'description'           => 'Description',

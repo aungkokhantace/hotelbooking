@@ -315,11 +315,11 @@ class Default_RolePermissionSeeder extends Seeder
             ['role_id'=>1, 'permission_id'=>590],
             ['role_id'=>1, 'permission_id'=>591],
 
-            ['role_id'=>1, 'permission_id'=>590],
-            ['role_id'=>1, 'permission_id'=>591],
+            ['role_id'=>1, 'permission_id'=>600],
+            ['role_id'=>1, 'permission_id'=>601],
 
-            ['role_id'=>2, 'permission_id'=>590],
-            ['role_id'=>2, 'permission_id'=>591],
+            ['role_id'=>2, 'permission_id'=>600],
+            ['role_id'=>2, 'permission_id'=>601],
 
         );
 

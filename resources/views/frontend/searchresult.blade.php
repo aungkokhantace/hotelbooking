@@ -147,15 +147,17 @@
                                                     <ul>
                                                         <li> {{ isset($hotel->room_type)? $hotel->room_type:'' }} </li>
                                                         <li>
-                                                            <table border="1">
+                                                            <table>
                                                                 <tr>
-                                                                    <td>
-                                                                        <i class="fa fa-wifi" aria-hidden="true"></i>
-                                                                    </td>
-                                                                    <td>&nbsp;</td>
-                                                                    <td>
-                                                                        <i class="fa fa-wifi" aria-hidden="true"></i>
-                                                                    </td>
+                                                                    @foreach($hotel->hotelFacilities as $hFacility)
+                                                                        @if(!empty($hFacility->facility->icon))
+                                                                            <td>
+                                                                                {{--<i class="fa fa-wifi" aria-hidden="true"></i>--}}
+                                                                                <img src="/images/upload/{{$hFacility->facility->icon}}" alt="ficon" class="facility_icon">
+                                                                            </td>
+                                                                            <td>&nbsp;</td>
+                                                                        @endif
+                                                                    @endforeach
                                                                 </tr>
                                                             </table>
                                                         </li>

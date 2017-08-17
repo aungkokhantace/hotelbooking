@@ -15,6 +15,7 @@ use App\Http\Requests;
 use App\Setup\Facilities\FacilitiesRepository;
 use App\Setup\Hotel\Hotel;
 use App\Setup\Hotel\HotelRepository;
+use App\Setup\HotelFacility\HotelFacilityRepository;
 use App\Setup\HotelRoomCategory\HotelRoomCategoryRepository;
 use App\Setup\Landmark\LandmarkRepository;
 use Illuminate\Http\Request;
@@ -128,6 +129,7 @@ class SearchController extends Controller
         $countryIdArr = array();
         $cityIdArr = array();
         $townshipIdArr = array();
+        $hotelFacilityArr = array();
 
         foreach($hotels as $suggested_hotel){
             array_push($hotelIdArr,$suggested_hotel->id);
@@ -175,6 +177,24 @@ class SearchController extends Controller
         $landmarks    = $landmarkRepo->getObjs();
         //end getting landmarks
 
+        //start getting hotel facility
+        $hotelFacilityRepo  = new HotelFacilityRepository();
+        $hotelFacilities    = $hotelFacilityRepo->getHotelFacilitiesByHotelIDArr($hotelIdArr);
+    
+
+        foreach($hotels as $hotel){
+            $count = 0;
+            foreach($hotelFacilities as $hFacility){
+                if($hotel->id == $hFacility->hotel_id && $count < 3){
+                    array_push($hotelFacilityArr,$hFacility);
+                    $count++;
+                }
+            }
+            $hotel->hotelFacilities     = $hotelFacilityArr;
+            $hotelFacilityArr           = array();
+        }
+        
+        //end getting hotel facility
         return view('frontend.searchresult')
             ->with('hotels', $hotels)
             ->with('suggestedHotels', $suggestedHotels)

@@ -139,4 +139,17 @@ class HotelFacilityRepository implements HotelFacilityRepositoryInterface
             ->get();
         return $result;
     }
+
+    public function getHotelFacilitiesByHotelIDArr($id_arr){
+        $result = HotelFacility::whereNull('deleted_at')
+                               ->whereIn('hotel_id',$id_arr)
+                               ->whereIn('facility_id',function($query){
+                                   $query->select('id')
+                                   ->from('facilities')
+                                   ->where('popular',1);
+                               })
+                               ->get();
+
+        return $result;
+    }
 }
