@@ -171,67 +171,70 @@
                                                 <a href="#myModal" data-toggle="modal">{{$roomCategory->name}}</a>
                                                 <!-- Start Modal -->
                                                 <div class="modal fade" id="myModal" role="dialog">
-                                                    <div class="modal-dialog modal-lg md-dialog">
-
-                                                        <!-- Modal content Start-->
-                                                        <div class="modal-content">
-                                                            <div class="modal-body">
-                                                                <button type="button" class="close close-btn" data-dismiss="modal">&times;</button>
-                                                                <div id="jssor_2" class="slider_two">
-                                                                    <div data-u="slides" class="slider_images_two">
-                                                                        @if(isset($roomCategory->images) && count($roomCategory->images)>0)
-                                                                            @foreach($roomCategory->images as $image)
-                                                                                <div>
-                                                                                    <img data-u="image" src="{{$image->img_path}}" />
-                                                                                    <img data-u="thumb" src="{{$image->img_path}}" />
-                                                                                </div>
-                                                                            @endforeach
-                                                                        @else
-                                                                            <div>
-                                                                                <img data-u="image" src="/images/upload/{{$hotel->logo}}" />
-                                                                                <img data-u="thumb" src="/images/upload/{{$hotel->logo}}" />
-                                                                            </div>
-                                                                        @endif
-                                                                    </div>
-                                                                    <!-- Thumbnail Navigator -->
-                                                                    <div data-u="thumbnavigator" class="jssort01" style="position:absolute;left:0px;bottom:0px;width:250px;height:100px;" data-autocenter="1">
-                                                                        <!-- Thumbnail Item Skin Begin -->
-                                                                        <div data-u="slides" >
-                                                                            <div data-u="prototype" class="p">
-                                                                                <div class="w">
-                                                                                    <div data-u="thumbnailtemplate" class="t"></div>
-                                                                                </div>
-                                                                                <div class="c"></div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <!-- Thumbnail Item Skin End -->
-                                                                    </div>
-                                                                </div>
-                                                                <div class="detailmodal_text md-detail-text">
-                                                                    <h4>Room size : {{$roomCategory->square_metre}} m<sup>2</sup></h4>
-                                                                    <p>{{$roomCategory->description}}</p>
-                                                                </div>
-                                                                <div class="detailmodal_text md-detail-text">
-                                                                    <h4>Room Facilities</h4>
-                                                                        <ul class="room_facilities">
-                                                                        @if(isset($roomCategory->facilities) && count($roomCategory->facilities) > 0)
-                                                                            @foreach($roomCategory->facilities as $room_category_facility)
-                                                                                    <div class="col-md-3">
-                                                                                        <li class="text_fa">{{$room_category_facility->facility->name}}</li>
-                                                                                    </div>
-                                                                            @endforeach
-                                                                        @endif
-                                                                        </ul>
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer md-footer">
-
-                                                            </div>
-                                                        </div>
-                                                        <!-- Modal content End-->
-
-                                                    </div>
+                                            <div class="modal-dialogs modal-lg">
+                                            
+                                              <!-- Modal content Start-->
+                                              <div class="modal-content">
+                                              <div class="modal-header">
+                                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                 </div>
+                                                <div class="modal-body">
+                                               
+                                                <div id="jssor_2" class="slider_two">     
+                                                <div data-u="slides" class="slider_images_two">
+                                                @if(isset($roomCategory->images) && count($roomCategory->images)>0)
+                                                    @foreach($roomCategory->images as $image)
+                                                        <div>
+                                                            <img data-u="image" src="{{$image->img_path}}" />
+                                                            <img data-u="thumb" src="{{$image->img_path}}" />
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div>
+                                                        <img data-u="image" src="/images/upload/{{$hotel->logo}}" />
+                                                        <img data-u="thumb" src="/images/upload/{{$hotel->logo}}" />
+                                                    </div>
+                                                @endif                                                   
+                                                </div>
+                                                <!-- Thumbnail Navigator -->
+                                                <div data-u="thumbnavigator" class="jssort01" style="position:absolute;left:0px;bottom:0px;width:250px;height:100px;" data-autocenter="1">
+                                                    <!-- Thumbnail Item Skin Begin -->
+                                                    <div data-u="slides" >
+                                                        <div data-u="prototype" class="p">
+                                                            <div class="w">
+                                                                <div data-u="thumbnailtemplate" class="t"></div>
+                                                            </div>
+                                                            <div class="c"></div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Thumbnail Item Skin End -->
+                                                </div>                                          
+                                            </div>
+                                            <div class="detailmodal_text">
+                                                <h4>Room size : {{$roomCategory->square_metre}} m<sup>2</sup></h4>
+                                                <p>{{$roomCategory->description}}</p>
+                                            </div>
+                                            <div class="detailmodal_text">
+                                                <h4>Room Facilities</h4>
+                                                <ul class="room_facilities">
+                                                    @if(isset($roomCategory->facilities) && count($roomCategory->facilities) > 0)
+                                                        @foreach($roomCategory->facilities as $room_category_facility)
+                                                            <div class="col-md-3">
+                                                                <li class="text_fa">{{$room_category_facility->facility->name}}</li>
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
+                                                </ul>
+                                            </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                              
+                                            </div>
+                                          </div>
+                                          <!-- Modal content End-->
+                                          
+                                        </div>
+                                      </div>
                                                 <!-- End Modal -->
                                             </li>
                                             <li><img class="fa-lis" src="/assets/shared/images/cityview.png">View</li>

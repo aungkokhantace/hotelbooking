@@ -38,11 +38,11 @@
     margin-top: -8px;
 }
 
-#bookinglist_blog {
+/*#bookinglist_blog {
     border-bottom: 1px solid #ccc;
     padding-bottom: 290px;
 }
-
+*/
 .bookinglist-primary {
     color: #fff !important;
     background-color: #D63090;
@@ -64,17 +64,20 @@
     color: #fff !important;
     background-color: #1067ec;
     border-color: #1067ec;
-    padding: 8px 25px;
+    padding: 7px 20px;
     text-decoration: none !important;
-    font-size: 20px;
+    font-size: 16px;
+    font-family: 'Playfair Display';
+
 }
 .bookinglist-manage:hover,.bookinglist-manage:active {
     color: #fff !important;
     background-color: #1067ec;
     border-color: #1067ec;
-    padding: 8px 25px;
+    padding: 7px 20px;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 16px;
+    font-family: 'Playfair Display';
 }
 
 

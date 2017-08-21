@@ -52,15 +52,21 @@
                                         @foreach($bookings as $booking)
                                         <div id="bookinglist_blog">
                                             <div class="blog_booking">
-                                                <div class="left_img">
+                                                <div class="col-md-4 left_list">
                                                     <img class="img-responsive img-hover" src="/images/upload/{{$booking->hotel->logo}}" alt="">
                                                 </div>
                                                 <div>
-                                                    <div class="booking_lead_left">
+                                                    <div class="col-md-8 listing_left">
+                                                        
+                                                        <div class="listing_tableright pull-right">
+                                                            <h4>status-{{$booking->status_txt}}</h4>
+                                                            <h3>$ {{$booking->total_payable_amt}}</h3>
+                                                        </div>
                                                         <h4>{{$booking->hotel->name}}</h4>
+                                                        <p>&nbsp;</p>
                                                         <p class="lead">
                                                             <img src="/assets/shared/images/map.png">{{$booking->hotel->address}}
-                                                        </p>
+                                                        </p>                                                        
                                                         <table>
                                                             <tr>
                                                                 <td>Booking</td>
@@ -93,10 +99,6 @@
                                                             <a class="bookinglist-primary" href="#">{{$booking->button_status}}</a>
                                                         @endif
                                                     </div>
-                                                    <div class="booking_tableright pull-right">
-                                                        <h4>status-{{$booking->status_txt}}</h4>
-                                                        <h3>$ {{$booking->total_payable_amt}}</h3>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -111,15 +113,21 @@
                                         @foreach($booking_cancel as $b_cancel)
                                         <div id="bookinglist_blog">
                                             <div class="blog_booking">
-                                                <div class="left_img">
-                                                    <img class="img-responsive img-hover" src="/images/upload/{{$b_cancel->hotel->logo}}" alt="">
+                                                <div class="col-md-4 left_list">
+                                                    <img class="img-responsive img-hover" src="/images/upload/{{$booking->hotel->logo}}" alt="">
                                                 </div>
                                                 <div>
-                                                    <div class="booking_lead_left">
+                                                    <div class="col-md-8 listing_left">
+                                                        
+                                                        <div class="listing_tableright pull-right">
+                                                            <h4>status-{{$b_cancel->status_txt}}</h4>
+                                                            <h3>USD 0.00</h3>
+                                                        </div>
                                                         <h4>{{$b_cancel->hotel->name}}</h4>
+                                                        <p>&nbsp;</p>
                                                         <p class="lead">
                                                             <img src="/assets/shared/images/map.png">{{$b_cancel->hotel->address}}
-                                                        </p>
+                                                        </p>                                                        
                                                         <table>
                                                             <tr>
                                                                 <td>Booking</td>
@@ -144,10 +152,6 @@
                                                         </table>
                                                         <p>&nbsp;</p>
                                                         <a class="bookinglist-primary" href="#">BOOKING AGAIN</a>
-                                                    </div>
-                                                    <div class="booking_tableright pull-right">
-                                                        <h4>status-{{$b_cancel->status_txt}}</h4>
-                                                        <h3>USD 0.00</h3>
                                                     </div>
                                                 </div>
                                             </div>
