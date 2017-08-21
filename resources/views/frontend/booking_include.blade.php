@@ -1,4 +1,4 @@
-<div class="col-md-3">
+<div class="col-md-3 enterdetail">
     <!-- Blog Search Well -->
     <div class="side_title">
         <h5>Your Booking Includes</h5>

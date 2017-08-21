@@ -42,35 +42,33 @@
                                 <div class="tab-pane fade active in" id="service-one">
                                     <div id="payment_blog">
                                         <div class="blog_booking">
-                                            <div class="left_img">
-                                                {{--<img class="img-responsive img-hover" src="/assets/shared/images/UserBookingList_img.png" alt="">--}}
-                                                <img src="/images/upload/{{$hotel->logo}}" alt="" style="width:100%; height:140px; ">
+                                            <div class="col-md-4 left_list">
+                                                {{--<img class="img-responsive img-hover" src="/assets/shared/images/UserBookingList_img.png" alt="img">--}}
+                                                <img src="/images/upload/{{$hotel->logo}}" alt="img" style="width:100%; height:140px; ">
                                             </div>
-                                            <div>
-                                                <div class="payment_left">
-                                                    <h4>{{$hotel->name}}</h4>
-                                                    <p class="payment_lead">
-                                                        <img src="/assets/shared/images/map.png"> {{$hotel->address}}
-                                                    </p>
-                                                    <table>
-                                                        <tr>
-                                                            <td>Check In</td>
-                                                            <td class="table_right">@if(Session::has('check_in')) {{session('check_in')}} (d-m-Y) @endif</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Check Out</td>
-                                                            <td class="table_right">@if(Session::has('check_out')) {{session('check_out')}} (d-m-Y) @endif</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Total Length of Stay</td>
-                                                            @if(isset($nights) && $nights > 1)
-                                                                <td class="table_right">{{$nights}} nights</td>
-                                                            @else
-                                                                <td class="table_right">{{$nights}} night</td>
-                                                            @endif
-                                                        </tr>
-                                                    </table>
-                                                </div>
+                                            <div class="col-md-8 lead_left">
+                                                <h4>{{$hotel->name}}</h4>
+                                                <p class="payment_lead">
+                                                    <img src="/assets/shared/images/map.png"> {{$hotel->address}}
+                                                </p>
+                                                <table>
+                                                    <tr>
+                                                        <td>Check In</td>
+                                                        <td class="table_right">@if(Session::has('check_in')) {{session('check_in')}} (d-m-Y) @endif</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Check Out</td>
+                                                        <td class="table_right">@if(Session::has('check_out')) {{session('check_out')}} (d-m-Y) @endif</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Total Length of Stay</td>
+                                                        @if(isset($nights) && $nights > 1)
+                                                            <td class="table_right">{{$nights}} nights</td>
+                                                        @else
+                                                            <td class="table_right">{{$nights}} night</td>
+                                                        @endif
+                                                    </tr>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
@@ -213,22 +211,20 @@
                                                         {{--</div>--}}
 
                                                         <div class="payment_formgroup">
-                                                            <div class="col-sm-4 pd_rg_10">
+                                                            <div class="col-sm-6 pd_rg_10 flast">
                                                                 {{--<input type="text" class="formcontrols" id="name" placeholder="First name, Last name">--}}
                                                                 <input type="text" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_firstname"}}" name="{{$available_room_category->id."_".($i+1)."_firstname"}}" placeholder="First name" autocomplete="off">
                                                             </div>
-                                                            <div class="col-sm-4 pd_rg_10">
-                                                                {{--<input type="text" class="formcontrols" id="name" placeholder="First name, Last name">--}}
-                                                                <input type="text" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_lastname"}}" name="{{$available_room_category->id."_".($i+1)."_lastname"}}" placeholder="Last name" autocomplete="off">
-                                                            </div>
-                                                            <div class="col-sm-4 pd_lf_5">
-                                                                <input type="email" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_email"}}" name="{{$available_room_category->id."_".($i+1)."_email"}}" placeholder="Email Address"  autocomplete="off">
+                                                            <div class="col-sm-6 pd_lf_5 flast">
+                                                                <input type="email" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_email"}}" name="{{$available_room_category->id."_".($i+1)."_email"}}" placeholder="Email Address" >
                                                             </div>
                                                         </div>
                                                         <div class="checkbox">
-                                                            <label>
-                                                                <i class="fa fa-check-square-o" style="    margin-left: -18px;" aria-hidden="true"></i> <button class="btn btn-primary">INCLUDED</button><span><strong>Breakfast</strong><br></span>
-                                                                <span style="padding-left: 136px;">Yes,we'd like breakfast during our stay at no additional cost.</span>                                </label>
+                                                            <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                                                             <span class="included">INCLUDED</span><span style="padding-left:30px;"><strong>Breakfast</strong><br></span>
+                                                            <span style="padding-left: 148px;">
+                                                            Yes,we'd like breakfast during our stay at no additional cost.
+                                                            </span> 
                                                         </div>
                                                     </div>
                                                         &nbsp;
@@ -281,8 +277,15 @@
                                                 <div class="formtitle_left">
                                                     <span>We'll forward these to your hotel or host immediately upon booking.</span>
                                                 </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> tinzar
                                                 <div>
+                                                    <textarea class="col-xs-7" id="special_request" name="special_request"></textarea>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="formtitle_text">
                                                     <span>Please be aware that all requests are subject to availability.</span>
                                                 </div>
                                                 <div class="list_style" style="float:left;">

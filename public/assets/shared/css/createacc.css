@@ -6,6 +6,7 @@
 .imgcontainer {
     text-align: center;
     padding-top: 25px;
+    padding-left: 15px;
 }
 .create_form h2 {
     text-align: center;
@@ -77,9 +78,9 @@ span.psw {
     font-size: 13px;
     font-family: 'Playfair Display';
 }
-.payment_formgroup {
+/*.payment_formgroup {
     padding-bottom: 80px !important;
-}
+}*/
 .payment_formgroups {
     padding-bottom: 100px !important;
     margin-left: -15px;
