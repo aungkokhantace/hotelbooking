@@ -40,7 +40,7 @@
                                 </div>
                                 <!--Enter Your Detail-->
                                 <div class="tab-pane fade active in" id="service-one">
-                                    <div id="payment_blog">
+                                    <div id="payment_blogs">
                                         <div class="blog_booking">
                                             <div class="col-md-4 left_list">
                                                 {{--<img class="img-responsive img-hover" src="/assets/shared/images/UserBookingList_img.png" alt="img">--}}
@@ -277,10 +277,7 @@
                                                 <div class="formtitle_left">
                                                     <span>We'll forward these to your hotel or host immediately upon booking.</span>
                                                 </div>
-<<<<<<< HEAD
 
-=======
->>>>>>> tinzar
                                                 <div>
                                                     <textarea class="col-xs-7" id="special_request" name="special_request"></textarea>
                                                 </div>
@@ -303,14 +300,7 @@
                                                     <input type="checkbox" name="baby_cot_request" value="1"> <span>I'd like to have a baby cot <br>(additional charges may apply)</span>
                                                 </div>
                                                 <br>
-                                                <div class="formtitle_left">
-                                                    <span>Special Request</span>
-                                                </div>
-                                                <div class="payment_formgroups">
-                                                    <div class="col-sm-8 pd_rg_10">
-                                                        <textarea rows="4" cols="50" id="special_request" name="special_request"></textarea>
-                                                    </div>
-                                                </div>
+                                                
                                             </div>
                                             <div class="continue">
                                                 @if(\Illuminate\Support\Facades\Session::has('customer'))

@@ -42,7 +42,7 @@
                                 </div>
                                 <!--Confirm your reservation-->
                                 <div class="tab-pane fade active in" id="service-two">
-                                    <div id="payment_blog">
+                                    <!-- <div id="payment_blog">
                                         <div class="blog_booking">
                                             <div class="left_img">
                                                 {{--<img class="img-responsive img-hover" src="/assets/shared/images/UserBookingList_img.png" alt="">--}}
@@ -73,6 +73,38 @@
                                                         </tr>
                                                     </table>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                   <div id="payment_blogs">
+                                        <div class="blog_booking">
+                                            <div class="col-md-4 left_list">
+                                                {{--<img class="img-responsive img-hover" src="/assets/shared/images/UserBookingList_img.png" alt="img">--}}
+                                                <img src="/images/upload/{{$hotel->logo}}" alt="img" style="width:100%; height:140px; ">
+                                            </div>
+                                            <div class="col-md-8 lead_left">
+                                                <h4>{{$hotel->name}}</h4>
+                                                <p class="payment_lead">
+                                                    <img src="/assets/shared/images/map.png"> {{$hotel->address}}
+                                                </p>
+                                                <table>
+                                                    <tr>
+                                                        <td>Check In</td>
+                                                        <td class="table_right">@if(Session::has('check_in')) {{session('check_in')}} (d-m-Y) @endif</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Check Out</td>
+                                                        <td class="table_right">@if(Session::has('check_out')) {{session('check_out')}} (d-m-Y) @endif</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Total Length of Stay</td>
+                                                        @if(isset($nights) && $nights > 1)
+                                                            <td class="table_right">{{$nights}} nights</td>
+                                                        @else
+                                                            <td class="table_right">{{$nights}} night</td>
+                                                        @endif
+                                                    </tr>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
