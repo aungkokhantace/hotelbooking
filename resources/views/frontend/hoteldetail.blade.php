@@ -84,6 +84,7 @@
                             <!-- Thumbnail Item Skin End -->
                         </div>
                     </div>
+                    <div class="height_space"></div>
                     <div class="detail_text">
                         <p>{{$hotel->description}}</p>
                     </div>
@@ -98,10 +99,10 @@
                             <div class="service">
                                 <img class="fa fa-university service-icon" src="/assets/shared/images/main.jpg">
                                 <div class="desc">
-                                    <h4>Main amenities</h4>
+                                    <h4>Features</h4>
                                     <ul>
-                                        @foreach($amenities as $amenity)
-                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$amenity->amenity->name}}</li>
+                                        @foreach($hFeatures as $hFeature)
+                                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$hFeature->feature->name}}</li>
                                         @endforeach
                                     </ul>
                                 </div>
@@ -327,10 +328,10 @@
                             <p>From {{$hotel->check_in_time}}</p>
                             <h4>Check-out</h4>
                             <p>Until {{$hotel->check_out_time}}</p>
-                            <h4>Extra Bed</h4>
+                            <!-- <h4>Extra Bed</h4>
                             <p>The maximum number of extra beds in a room is 1</p>
                             <h4>Cards accepted at this property</h4>
-                            <p><img src="/assets/shared/images/visa.jpg"></p>
+                            <p><img src="/assets/shared/images/visa.jpg"></p> -->
                         </div>
                     </div>	 <!-- /.room-tabel -->
                 </div><!-- /.row -->

@@ -119,4 +119,12 @@ class HotelFeatureRepository implements HotelFeatureRepositoryInterface
         }
     }
 
+    public function getObjsByHotelID($hotel_id){
+        $result = HotelFeature::where('hotel_id',$hotel_id)
+                  ->whereNull('deleted_at')
+                  ->get();
+
+        return $result;          
+    }
+
 }

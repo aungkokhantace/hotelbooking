@@ -51,17 +51,17 @@ class HotelRestaurantController extends Controller
     public function store(HotelRestaurantEntryRequest $request)
     {
         $request->validate();
-        $name                       = Input::get('name');
-        $opening_hours              = Input::get('opening_hours');
-        $opening_days               = Input::get('opening_days');
-        $capacity                   = Input::get('capacity');
-        $area                       = Input::get('area');
-        $floor                      = Input::get('floor');
-        $private_room               = Input::get('private_room') == "true"? 1: 0;
-        $hotel_id                   = Input::get('hotel_id');
-        $h_restaurant_category_id   = Input::get('hotel_restaurant_category');
-        $description                = Input::get('description');
-        $remark                     = Input::get('remark');
+        $name                               = Input::get('name');
+        $opening_hours                      = Input::get('opening_hours');
+        $opening_days                       = Input::get('opening_days');
+        $capacity                           = Input::get('capacity');
+        $area                               = Input::get('area');
+        $floor                              = Input::get('floor');
+        $private_room                       = Input::get('private_room') == "true"? 1: 0;
+        $hotel_id                           = Input::get('hotel_id');
+        $h_restaurant_category_id           = Input::get('hotel_restaurant_category');
+        $description                        = Input::get('description');
+        $remark                             = Input::get('remark');
 
         $paramObj                           = new HotelRestaurant();
         $paramObj->name                     = $name;

@@ -38,33 +38,29 @@
                     <thead>
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
+                        <th>{{trans('setup_hotelrestaurant.tb-col-name')}}</th>
                         <th>{{trans('setup_hotelrestaurant.tb-col-hotel')}}</th>
                         <th>{{trans('setup_hotelrestaurant.tb-col-category')}}</th>
-                        <th>{{trans('setup_hotelrestaurant.tb-col-name')}}</th>
                         <th>{{trans('setup_hotelrestaurant.tb-col-open-hr')}}</th>
                         <th>{{trans('setup_hotelrestaurant.tb-col-open-day')}}</th>
-                        <th>{{trans('setup_hotelrestaurant.tb-col-capacity')}}</th>
-                        <th>{{trans('setup_hotelrestaurant.tb-col-area')}}</th>
-                        <th>{{trans('setup_hotelrestaurant.tb-col-floor')}}</th>
+                        <!-- <th>{{trans('setup_hotelrestaurant.tb-col-capacity')}}</th> -->
+                        <!-- <th>{{trans('setup_hotelrestaurant.tb-col-area')}}</th>
+                        <th>{{trans('setup_hotelrestaurant.tb-col-floor')}}</th> -->
                         <th>{{trans('setup_hotelrestaurant.tb-col-private')}}</th>
-                        <th>{{trans('setup_hotelrestaurant.tb-col-description')}}</th>
-                        <th>{{trans('setup_hotelrestaurant.tb-col-remark')}}</th>
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
                         <th></th>
+                        <th class="search-col" con-id="name">Name</th>
                         <th class="search-col" con-id="hotel">Hotel</th>
                         <th class="search-col" con-id="hotel_restaurant_category">Hotel Restaurant Category</th>
-                        <th class="search-col" con-id="name">Name</th>
                         <th class="search-col" con-id="opening_hours">Opening Hours</th>
                         <th class="search-col" con-id="opening_days">Opening Days</th>
-                        <th class="search-col" con-id="Capacity">Capacity</th>
-                        <th class="search-col" con-id="area">Area</th>
-                        <th class="search-col" con-id="floor">Floor</th>
+                        <!-- <th class="search-col" con-id="Capacity">Capacity</th> -->
+                        <!-- <th class="search-col" con-id="area">Area</th>
+                        <th class="search-col" con-id="floor">Floor</th> -->
                         <th class="search-col" con-id="private_room">Private Room</th>
-                        <th class="search-col" con-id="description">Description</th>
-                        <th class="search-col" con-id="remark">Remark</th>
 
 
                     </tr>
@@ -73,17 +69,15 @@
                     @foreach($hotel_restaurant as $restaurant)
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{$restaurant->id }}" id="all"></td>
+                            <td><a href="/backend/hotel_restaurant/edit/{{$restaurant->id}}">{{$restaurant->name}}</a></td>
                             <td>{{$restaurant->hotel->name}}</td>
                             <td>{{$restaurant->h_restaurant_category->name}}</td>
-                            <td><a href="/backend/hotel_restaurant/edit/{{$restaurant->id}}">{{$restaurant->name}}</a></td>
                             <td>{{$restaurant->opening_hours}}</td>
                             <td>{{$restaurant->opening_days}}</td>
-                            <td>{{$restaurant->capacity}}</td>
-                            <td>{{$restaurant->area}}</td>
-                            <td>{{$restaurant->floor}}</td>
+                            <!-- <td>{{$restaurant->capacity}}</td> -->
+                            <!-- <td>{{$restaurant->area}}</td>
+                            <td>{{$restaurant->floor}}</td> -->
                             <td>{{$restaurant->private_room == 1 ? 'Yes' : 'No'}}</td>
-                            <td>{{$restaurant->description}}</td>
-                            <td>{{$restaurant->remark}}</td>
                         </tr>
                     @endforeach
                     </tbody>

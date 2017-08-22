@@ -38,11 +38,11 @@
                     <thead>
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
+                        <th>{{trans('setup_room.tb-col-name')}}</th>
                         <th>{{trans('setup_room.tb-col-hotel')}}</th>
                         <th>{{trans('setup_room.tb-col-room-type')}}</th>
                         <th>{{trans('setup_room.tb-col-room-category')}}</th>
                         <th>{{trans('setup_room.tb-col-room-view')}}</th>
-                        <th>{{trans('setup_room.tb-col-name')}}</th>
                         <th>{{trans('setup_room.tb-col-status')}}</th>
                         <th>{{trans('setup_room.tb-col-apply-cutoff-date')}}</th>
                     </tr>
@@ -50,11 +50,11 @@
                     <tfoot>
                     <tr>
                         <th></th>
+                        <th class="search-col" con-id="name">Name</th>
                         <th class="search-col" con-id="hotel">Hotel</th>
                         <th class="search-col" con-id="h_room_type">Room Type</th>
                         <th class="search-col" con-id="h_room_category">Room Category</th>
                         <th class="search-col" con-id="room_view">Room View</th>
-                        <th class="search-col" con-id="name">Name</th>
                         <th class="search-col" con-id="status">Status</th>
                         <th class="search-col" con-id="status">Apply Cutoff Date</th>
 
@@ -64,11 +64,11 @@
                     @foreach($rooms as $room)
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $room->id }}" id="all"></td>
+                            <td><a href="/backend/room/edit/{{$room->id}}">{{$room->name}}</a></td>
                             <td>{{$room->hotel->name}}</td>
                             <td>{{$room->hotel_room_type->name}}</td>
                             <td>{{$room->hotel_room_category->name}}</td>
                             <td>{{$room->room_view->name}}</td>
-                            <td><a href="/backend/room/edit/{{$room->id}}">{{$room->name}}</a></td>
                             <td>{{$room->status==1?'Available':'Non Available'}}</td>
                             <td>{{$room->apply_cutoff_date==1?'Yes':'No'}}</td>
                         </tr>

@@ -45,7 +45,6 @@
                         <th>{{trans('setup_hotelconfig.tb-col-first-cancellation-day')}}</th>
                         <th>{{trans('setup_hotelconfig.tb-col-second-cancellation-day')}}</th>
                         <th>{{trans('setup_hotelconfig.tb-col-breakfast-fees')}}</th>
-                        <th>{{trans('setup_hotelconfig.tb-col-extrabed-fees')}}</th>
                         <th>{{trans('setup_hotelconfig.tb-col-tax')}}</th>
                     </tr>
                     </thead>
@@ -56,8 +55,7 @@
                         <th class="search-col" con-id="first-cancellation-day">First Cancellation Day</th>
                         <th class="search-col" con-id="second-cancellation-day">Second Cancellation Day</th>
                         <th class="search-col" con-id="breakfast-fees">Breakfast Fees</th>
-                        <th class="search-col" con-id="extrabed-fees">Extrabed Fees</th>
-                        <th class="search-col" con-id="tax">Tax</th>
+                        <th class="search-col" con-id="tax">Tax(%)</th>
                     </tr>
                     </tfoot>
                     <tbody>
@@ -68,7 +66,6 @@
                             <td>{{$h_config->first_cancellation_day_count }}</td>
                             <td>{{$h_config->second_cancellation_day_count }}</td>
                             <td>{{$h_config->breakfast_fees }}</td>
-                            <td>{{$h_config->extrabed_fees }}</td>
                             <td>{{$h_config->tax }}</td>
                         </tr>
                     @endforeach

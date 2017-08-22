@@ -41,48 +41,38 @@
                     <thead>
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
+                         <th>{{trans('setup_hotelroomcategory.tb-col-name')}}</th>
                         <th>{{trans('setup_hotelroomcategory.tb-col-hotel')}}</th>
-                        <th>{{trans('setup_hotelroomcategory.tb-col-room-type')}}</th>
-                        <th>{{trans('setup_hotelroomcategory.tb-col-name')}}</th>
-                        <th>{{trans('setup_hotelroomcategory.tb-col-sqm')}}</th>
+                        <th>{{trans('setup_hotelroomcategory.tb-col-room-type')}}</th>              
                         <th>{{trans('setup_hotelroomcategory.tb-col-capacity')}}</th>
-                        <th>{{trans('setup_hotelroomcategory.tb-col-booking')}}</th>
                         <th>{{trans('setup_hotelroomcategory.tb-col-price')}}</th>
                         <th>{{trans('setup_hotelroomcategory.tb-col-extra-allow')}}</th>
-                        <th>{{trans('setup_hotelroomcategory.tb-col-extra-price')}}</th>
-                        <th>{{trans('setup_hotelroomcategory.tb-col-description')}}</th>
+                        <!-- <th>{{trans('setup_hotelroomcategory.tb-col-extra-price')}}</th> -->
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
                         <th></th>
+                        <th class="search-col" con-id="name">Name</th>
                         <th class="search-col" con-id="hotel">Hotel</th>
                         <th class="search-col" con-id="room_type">Room Type</th>
-                        <th class="search-col" con-id="name">Name</th>
-                        <th class="search-col" con-id="square_metre">Square Metre</th>
                         <th class="search-col" con-id="Capacity">Capacity</th>
-                        <th class="search-col" con-id="booking_cutoff_day">Booking CutOff Day</th>
                         <th class="search-col" con-id="price">Price</th>
                         <th class="search-col" con-id="extra_bed">Extra Bed Allowed</th>
-                        <th class="search-col" con-id="extra_price">Extra Bed Price</th>
-                        <th class="search-col" con-id="description">Description</th>
-
+                        <!-- <th class="search-col" con-id="extra_price">Extra Bed Price</th> -->
                     </tr>
                     </tfoot>
                     <tbody>
                     @foreach($hotel_room_category as $category)
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{$category->id }}" id="all"></td>
+                            <td><a href="/backend/hotel_room_category/edit/{{$category->id}}">{{$category->name}}</a></td>
                             <td>{{$category->hotel->name}}</td>
                             <td>{{$category->h_room_type->name}}</td>
-                            <td><a href="/backend/hotel_room_category/edit/{{$category->id}}">{{$category->name}}</a></td>
-                            <td>{{$category->square_metre}}</td>
                             <td>{{$category->capacity}}</td>
-                            <td>{{$category->booking_cutoff_day}}</td>
                             <td>{{$category->price}}</td>
                             <td>{{$category->extra_bed_allowed == 1? 'Yes':'No'}}</td>
-                            <td>{{$category->extra_bed_price}}</td>
-                            <td>{{$category->description}}</td>
+                            <!-- <td>{{$category->extra_bed_price}}</td> -->
                         </tr>
                     @endforeach
                     </tbody>
