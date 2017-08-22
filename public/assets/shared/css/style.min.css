@@ -12,6 +12,9 @@ body {
     font-size: 18px;
     line-height: 20px;
 }
+.formgroup {
+    padding-bottom: 60px !important;
+}
 .navbar-inverse {
     background-color: rgba(255, 255, 255, 0.70);
     border-color: #e7eaed;
@@ -34,6 +37,9 @@ body {
 .carousel-caption p{
     font-family: 'Playfair Display';
     font-style: italic;
+}
+.form_textone{
+    padding-top: 20px;
 }
 .form-control {
     display: block;
@@ -620,7 +626,7 @@ label.control-label {
     color: #626262;
     font-family: 'Playfair Display';
 }
-.lead_left{
+.lead_left, .left_list{
     float: left;
     font-family: 'Playfair Display';
 }
@@ -1117,7 +1123,7 @@ i.fa-td.fa.fa-user {
 }
 .payment_right{
     float: right;
-    width: 22%;
+    width: 26%;
     margin-top: -35px;
     font-family: 'Playfair Display';
 }
@@ -1144,6 +1150,28 @@ i.fa-td.fa.fa-user {
     font-family: 'Playfair Display';
     font-size: 14px;
     padding-left: 25px;
+}
+.blog_booking h4, p {
+    font-family: 'Playfair Display';
+}
+.left_list td {
+    padding: 7px 10px 0px 0px;
+}
+#payment_blogs{
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 170px;
+}
+.left_list h4{
+    color: #D63090;
+    font-size: 18px;
+    font-family: 'Playfair Display';
+    margin: -2px 0px 5px;
+}
+.lead_left h4 {
+    color: #D63090;
+    font-size: 18px;
+    font-family: 'Playfair Display';
+    margin: -2px 0px 5px;
 }
 .payment{
     padding-bottom: 50px;
@@ -1311,6 +1339,10 @@ button.closes {
     /* cursor: pointer; */
     background: 0 0;
     border: 0;
+}
+#payment_blogone{    
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 43px;
 }
 .closes:focus, .closes:hover {
     color: #000;
@@ -1568,12 +1600,39 @@ button.closes {
 /***sm modal css end**/
 
 /***Responsive for frontend***/
+@media only screen and (max-width: 1024px) {
+.col-3 {
+    width: 29%;
+    float: left;
+    margin: 0px 3px 0px 4px;
+}
+.payment_right {
+    float: right;
+    width: 30%;
+    margin-top: -35px;
+    font-family: 'Playfair Display';
+}
+.form h2 {
+    font-size: 30px;
+    font-family: 'Playfair Display';
+    font-weight: bold;
+    color: #D63090;
+    padding-left: 47px;
+}
+}
 @media only screen and (max-width: 768px) {
 #form_id {
     position: absolute;
     z-index: 500;
     top: 180px;
-    right: 11px;
+    right: 8px;
+}
+.paymentformgroups {
+    padding-bottom: 100px !important;
+}
+#payment_blogs {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 330px;
 }
 .modal-dialogs {
     margin: 165px auto;
@@ -1627,7 +1686,22 @@ button.closes {
     position: absolute;
     z-index: 500;
     top: 100px;
-    right: 2px;
+    right: 0px;
+}
+.paymentformgroups {
+    padding-bottom: 20px !important;
+}
+#payment_blogs {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 330px;
+}
+.profile-form-controls {
+    display: block;
+    width: 100%;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
 }
 .list_style span {
     font-size: 12px;
@@ -1666,9 +1740,29 @@ button.closes {
     padding-bottom: 50px;
 }
 .col-md-3 {
-    padding-right: 15px;
-    padding-left: 11px;
-    padding-top: 20px;
+    padding-right: 25px;
+    padding-left: 25px;
+    padding-top: 15px;
+}
+#payment_blog {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 205px;
+}
+.payment_right {
+    float: right;
+    width: 53%;
+    margin-top: -35px;
+    font-family: 'Playfair Display';
+}
+.formtitle_right {
+    float: right;
+    font-family: 'Playfair Display';
+    padding: 2px;
+    background-color: #D63090;
+    color: #fff;
+    font-size: 12px;
+    margin-top: -60px;
+    margin-right: 94px;
 }
 .navbar-toggle {
     position: relative;
@@ -1685,22 +1779,38 @@ button.closes {
 .flast{
     padding: 15px;
 }
+.formgroup {
+    padding-bottom: 25px !important;
+}
 }
 @media only screen and (max-width: 412px) {
     #form_id {
     position: absolute;
     z-index: 500;
     top: 100px;
-    right: 10px;
+    right: 0px;
+}
+.paymentformgroups {
+    padding-bottom: 20px !important;
+}
+#payment_blogs {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 330px;
+}
+.form_textone {
+    padding-top: 0px;
 }
 .payment_formgroup {
     padding-bottom: 5px !important;
 }
 .payment_right {
     float: right;
-    width: 45%;
-    margin-top: -35px;
+    width: 40%;
+    margin-top: -43px;
     font-family: 'Playfair Display';
+}
+.h4, h4 {
+    font-size: 16px;
 }
 .formtitle_right {
     float: right;
@@ -1710,6 +1820,7 @@ button.closes {
     color: #fff;
     font-size: 12px;
     margin-top: -55px;
+    margin-right: 85px;
 }
 .formtitle_left {
     font-family: 'Playfair Display';
@@ -1722,8 +1833,8 @@ button.closes {
     padding-right: 100px !important;
 }
 .col-md-3 {
-    padding-right: 11px;
-    padding-left: 11px;
+    padding-right: 25px;
+    padding-left: 25px;
     padding-top: 20px;
 }
 .container-fluid>.navbar-collapse, .container-fluid>.navbar-header, .container>.navbar-collapse, .container>.navbar-header {
@@ -1761,6 +1872,29 @@ button.closes {
     top: 100px;
     right: -4px;
 }
+.lead_left td {
+    padding: 7px 15px 0px 0px;
+}
+.payment_list {
+    width: 67%;
+    font-family: 'Playfair Display';
+}
+.payment_right {
+    float: right;
+    width: 45%;
+    margin-top: -43px;
+    font-family: 'Playfair Display';
+}
+.formtitle_right {
+    float: right;
+    font-family: 'Playfair Display';
+    padding: 2px;
+    background-color: #D63090;
+    color: #fff;
+    font-size: 12px;
+    margin-top: -56px;
+    margin-right: 45px;
+}
 .list_style span {
     font-size: 12px;
     color: #626262;
@@ -1783,8 +1917,8 @@ button.closes {
     border-radius: 4px;
 }
 .col-md-3 {
-    padding-right: 0px;
-    padding-left: 0px;
+    padding-right: 20px;
+    padding-left: 20px;
 }
 .bg_block_sm.pd_10 {
     padding: 15px 15px;
@@ -1821,6 +1955,25 @@ button.closes {
     top: 100px;
     right: -12px;
 }
+#payment_blogs {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 330px;
+}
+.paymentformgroups {
+    padding-bottom: 18px !important;
+}
+.h4, h4 {
+    font-size: 14px;
+}
+.payment_list {
+    width: 68%;
+    font-family: 'Playfair Display';
+}
+
+
+.formgroup {
+    padding-bottom: 25px !important;
+}
 .col-md-3 {
     padding-right: 11px;
     padding-left: 11px;
@@ -1845,8 +1998,8 @@ button.closes {
 }
 .payment_right {
     float: right;
-    width: 50%;
-    margin-top: -35px;
+    width: 47%;
+    margin-top: -40px;
     font-family: 'Playfair Display';
 }
 .formtitle_right {
@@ -1857,7 +2010,7 @@ button.closes {
     color: #fff;
     font-size: 12px;
     margin-top: -58px;
-    margin-right: -10px;
+    margin-right: 40px;
 }
 .formtitle_left {
     font-family: 'Playfair Display';
@@ -1878,7 +2031,7 @@ button.closes {
 }
 #payment_blog {
     border-bottom: 1px solid #ccc;
-    padding-bottom: 170px;
+    padding-bottom: 200px;
 }
 .payment_formgroup {
     padding-bottom: 5px !important;
@@ -1892,7 +2045,7 @@ button.closes {
     position: absolute;
     z-index: 500;
     top: 100px;
-    right: -12px;
+    right: -15px;
 }
 .listing_left td {
     padding: 7px 15px 0px 0px !important;
