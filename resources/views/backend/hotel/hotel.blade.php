@@ -404,7 +404,7 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="breakfast_end_time">{{trans('setup_hotel.breakfast-start')}}<span class="require">*</span></label>
+            <label for="breakfast_end_time">{{trans('setup_hotel.breakfast-end')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <div class="input-group bootstrap-timepicker timepicker">

@@ -17,6 +17,7 @@ use App\Setup\FacilityGroup\FacilityGroupRepository;
 use App\Setup\Hnearby\Hnearby;
 use App\Setup\Hotel\HotelRepository;
 use App\Setup\HotelFacility\HotelFacilityRepository;
+use App\Setup\HotelFeature\HotelFeatureRepository;
 use App\Setup\HotelLandmark\HotelLandmarkRepository;
 use App\Setup\HotelNearby\HotelNearby;
 use App\Setup\HotelNearby\HotelNearbyRepository;
@@ -181,6 +182,12 @@ class HotelDetailController extends Controller
             }
         }
 
+        /* Start Hotel Features */
+        $hFeatureRepo   = new HotelFeatureRepository();
+        $hFeatures      = $hFeatureRepo->getObjsByHotelID($hotel_id);
+    
+        /* End Hotel Features */
+
         return view('frontend.hoteldetail')
             ->with('hotel', $hotel)
             ->with('roomCategoryImages',$roomCategoryImages)
@@ -191,6 +198,7 @@ class HotelDetailController extends Controller
             ->with('popularLandmarks',$popularLandmarks)
             ->with('amenities',$amenities)
             ->with('book_now_flag',$book_now_flag)
-            ->with('available_category_id_array',$available_category_id_array);
+            ->with('available_category_id_array',$available_category_id_array)
+            ->with('hFeatures',$hFeatures);
     }
 }

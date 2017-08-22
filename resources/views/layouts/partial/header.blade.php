@@ -133,8 +133,8 @@ $companyLogo = \App\Core\Check::companyLogo();
                 </button>
             </div>
 
-            <!-- TEST MULTI LANGUAGE -->
-            <div class="navbar-header center">
+            <!-- MULTI LANGUAGE -->
+            <!-- <div class="navbar-header center">
                 <form action="/backend/language" method="post">
                     <select name="locale">
                         <option value="en" {{App::getLocale() == 'en'? 'selected':''}}>English</option>
@@ -143,7 +143,7 @@ $companyLogo = \App\Core\Check::companyLogo();
                     {{ csrf_field() }}
                     <input type="submit" value="Submit">
                 </form>
-            </div>
+            </div> -->
             <!-- end mobile sidebar expand / collapse button -->
 
             <!-- begin header navigation right -->

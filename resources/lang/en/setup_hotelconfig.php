@@ -20,7 +20,7 @@ return [
     'extrabed-fees'         => 'Extra Bed Fees',
     'place-extrabed-fees'   => 'Enter Extra Bed Fees',
     'tax'                   => 'Tax',
-    'place-tax'             => 'Enter Tax',
+    'place-tax'             => 'Enter Tax(%)',
     'btn-add'               => 'ADD',
     'btn-update'            => 'UPDATE',
     'btn-cancel'            => 'CANCEL',

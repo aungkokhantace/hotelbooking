@@ -591,7 +591,7 @@ class PaymentController extends Controller
         //get input fields
         $country = Input::get('country');
         $phone = Input::get('phone');
-
+       
         //get session data
         $hotel_id = session('hotel_id');
         $hotelRepo = new HotelRepository();
@@ -674,6 +674,8 @@ class PaymentController extends Controller
             $bookingObj->total_discount_percentage = 0;
             $bookingObj->hotel_id = $hotel_id;
             $bookingObj->travel_for_work = $travel_for_work;
+            $bookingObj->country_id = $country;
+            $bookingObj->phone      = $phone;
 
             $bookingRepo = new BookingRepository();
             $booking_result = $bookingRepo->create($bookingObj);
@@ -1084,7 +1086,6 @@ class PaymentController extends Controller
             return redirect('/congratulations/'.$booking_id);
         }
         catch(\Exception $e){
-            dd('except',$e);
             DB::rollback();
             alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
             return redirect('/');
