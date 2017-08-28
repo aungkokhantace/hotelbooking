@@ -123,6 +123,33 @@
                             </div>
                         </div>
                     </div><!-- End Service Blocks -->
+                    <!-- Start Hotel Restaurant Block -->
+                    <div class="row margin-bottom-30">
+                        <div class="col-md-6">
+                            <div class="service">
+                                <img class="fa fa-university service-icon" src="/assets/shared/images/knife_fork.png">
+                                <div class="desc">
+                                    <h4>Restaurants</h4>
+                                    <ul>
+                                        @foreach($restaurantCategoryArr as $category)
+                                            <li>
+                                                {{$category->name}}
+                                                <ul>
+                                                @foreach($category->restaurants as $res)
+                                                    <li>
+                                                        <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                                                        {{$res->name}} (Open {{$res->opening_hours}} - Close {{$res->closing_hours}})
+                                                    </li>  
+                                                @endforeach      
+                                                </ul>
+                                            </li>
+                                        @endforeach 
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Hotel Restaurant Block -->
                     <hr>
                     <div class="table-responsive room_table">
                         <h3>Available Rooms</h3>

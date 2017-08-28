@@ -50,8 +50,8 @@
                         <th>{{trans('setup_hotel.tb-col-email')}}</th>
                         <th>{{trans('setup_hotel.tb-col-country')}}</th>
                         <th>{{trans('setup_hotel.tb-col-city')}}</th>
-                        <th>{{trans('setup_hotel.tb-col-township')}}</th>
-                        <th>{{trans('setup_hotel.tb-col-description')}}</th>
+{{--                        <th>{{trans('setup_hotel.tb-col-township')}}</th>--}}
+                        {{--<th>{{trans('setup_hotel.tb-col-description')}}</th>--}}
                         <th>{{trans('setup_hotel.tb-col-floor')}}</th>
                         <th>{{trans('setup_hotel.tb-col-class')}}</th>
                         <th>{{trans('setup_hotel.tb-col-website')}}</th>
@@ -76,8 +76,8 @@
                         <th class="search-col" con-id="email">Email</th>
                         <th class="search-col" con-id="country">Country</th>
                         <th class="search-col" con-id="city">City</th>
-                        <th class="search-col" con-id="township">Township</th>
-                        <th class="search-col" con-id="description">Description</th>
+                        {{--<th class="search-col" con-id="township">Township</th>--}}
+                        {{--<th class="search-col" con-id="description">Description</th>--}}
                         <th class="search-col" con-id="number_of_floors">Number of Floors</th>
                         <th class="search-col" con-id="class">Class</th>
                         <th class="search-col" con-id="website">Website</th>
@@ -103,8 +103,8 @@
                             <td>{{$hotel->email}}</td>
                             <td>{{$hotel->country->name}}</td>
                             <td>{{$hotel->city->name}}</td>
-                            <td>{{$hotel->township->name}}</td>
-                            <td>{{$hotel->description}}</td>
+{{--                            <td>{{$hotel->township->name}}</td>--}}
+                            {{--<td>{{$hotel->description}}</td>--}}
                             <td>{{$hotel->number_of_floors}}</td>
                             <td>{{$hotel->class}}</td>
                             <td>{{$hotel->website}}</td>

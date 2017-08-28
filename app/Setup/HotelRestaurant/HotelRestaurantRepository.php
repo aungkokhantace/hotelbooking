@@ -13,6 +13,7 @@ use App\Core\ReturnMessage;
 use App\Core\Utility;
 use App\Log\LogCustom;
 use Illuminate\Support\Facades\DB;
+use App\Setup\HotelRestaurant\HotelRestaurant;
 
 class HotelRestaurantRepository implements HotelRestaurantRepositoryInterface
 {
@@ -117,6 +118,13 @@ class HotelRestaurantRepository implements HotelRestaurantRepositoryInterface
             $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' deleted  hotel_restaurant_id = ' .$tempObj->id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
         }
+    }
+
+    public function getHotelRestaurantsByHotelId($hotel_id){
+        $result = HotelRestaurant::whereNull('deleted_at')
+                                 ->where('hotel_id',$hotel_id)
+                                 ->get();
+        return $result;                           
     }
 
 }

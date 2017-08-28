@@ -44,7 +44,7 @@
                         <th>{{trans('setup_roomcategoryfacility.tb-col-facility')}}</th>
                         {{--<th>{{trans('setup_roomcategoryfacility.tb-col-facility-gp')}}</th>--}}
                         {{--<th>{{trans('setup_roomcategoryfacility.tb-col-value')}}</th>--}}
-                        <th>{{trans('setup_roomcategoryfacility.tb-col-description')}}</th>
+                        <!-- <th>{{trans('setup_roomcategoryfacility.tb-col-description')}}</th> -->
                     </tr>
                     </thead>
                     <tfoot>
@@ -56,7 +56,7 @@
                         <th class="search-col" con-id="facility">Facility</th>
                         {{--<th class="search-col" con-id="facility_group">Facility Group</th>--}}
                         {{--<th class="search-col" con-id="name">Value</th>--}}
-                        <th class="search-col" con-id="description">Description</th>
+                        <!-- <th class="search-col" con-id="description">Description</th> -->
 
                     </tr>
                     </tfoot>
@@ -70,7 +70,7 @@
                             <td>{{$facility->facility->name}}</td>
                             {{--<td>{{$facility->facility_group->name}}</td>--}}
 {{--                            <td><a href="/backend/room_category_facility/edit/{{$facility->id}}">{{$facility->value}}</a></td>--}}
-                            <td>{{$facility->description}}</td>
+                            <!-- <td>{{$facility->description}}</td> -->
                         </tr>
                     @endforeach
                     </tbody>

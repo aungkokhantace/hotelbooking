@@ -123,19 +123,22 @@ class HotelRoomCategoryController extends Controller
             {
                 $images                     = Input::file('file');
                 foreach($images as $image){
-                    $path = base_path().'/public/images/upload/';
-                    if ( ! file_exists($path))
-                    {
-                        mkdir($path, 0777, true);
-                    }
 
                     if (! is_null($image)) {
+                        $path = base_path().'/public/images/upload/';
+                        if ( ! file_exists($path))
+                        {
+                            mkdir($path, 0777, true);
+                        }
+                    
                         $photo_name_original            = Utility::getImage($image);
                         $photo_ext                      = Utility::getImageExt($image);
                         $photo_name                     = uniqid() . "." . $photo_ext;
                         $image_path                     = "/images/upload/".$photo_name;
-                        $photo                          = Utility::resizeImage($image,$photo_name,$path);
-
+                        $imgWidth                       = 500;
+                        $imgHeight                      = 300;
+                        $photo                          = Utility::resizeImageWithDefaultWidthHeight($image,$photo_name,$path,$imgWidth,$imgHeight);
+                       
                         $imageObj                       = new RoomCategoryImage();
                         $imageObj->h_room_category_id   = $lastRoomCategoryId;
                         $imageObj->img_path             = $image_path;
@@ -302,8 +305,9 @@ class HotelRoomCategoryController extends Controller
                         $photo_ext                      = Utility::getImageExt($image);
                         $photo_name                     = uniqid() . "." . $photo_ext;
                         $image_path                     = "/images/upload/" . $photo_name;
-                        $photo                          = Utility::resizeImage($image, $photo_name, $path);
-
+                        $imgWidth                       = 500;
+                        $imgHeight                      = 300;
+                        $photo                          = Utility::resizeImageWithDefaultWidthHeight($image,$photo_name,$path,$imgWidth,$imgHeight);
                         $imageObj                       = new RoomCategoryImage();
                         $imageObj->h_room_category_id   = $id;
                         $imageObj->img_path             = $image_path;

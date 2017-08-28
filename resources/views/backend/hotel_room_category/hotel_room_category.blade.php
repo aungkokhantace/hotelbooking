@@ -270,12 +270,12 @@
 
     {{-- Start Image --}}
     @if(isset($images) && count($images) > 0)
-
         <div class="row">
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                 <label for="image">{{trans('setup_hotelroomcategory.image')}}</label>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <label class="notice">(Image must be 500*300 pixels)</label>
                 @foreach($images as $image)
                     <div id="filediv">
                         <div id='abcd' class='abcd'>
@@ -287,6 +287,7 @@
                     </div>
                     <br/>
                 @endforeach
+
                 <div id="filediv"><input name="file[]" type="file" id="file"/></div><br/>
 
                 <input type="button" id="add_more" class="upload" value="{{trans('setup_hotelroomcategory.btn-image')}}"/>
@@ -298,7 +299,7 @@
                 <label for="image">{{trans('setup_hotelroomcategory.image')}}</label>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-
+                <label class="notice">(Image must be 500*300 pixels)</label>
                 <div id="filediv"><input name="file[]" type="file" id="file"/></div><br/>
 
                 <input type="button" id="add_more" class="upload" value="{{trans('setup_hotelroomcategory.btn-image')}}"/>
@@ -364,22 +365,43 @@
                     hotel_id            : 'required',
                     h_room_type_id      : 'required',
                     name                : 'required',
-                    price               : 'required',
-                    square_metre        : 'required',
+                    price               : {
+                        required    : true,
+                        number      : true
+                    },
+                    square_metre        : {
+                        required    : true,
+                        number      : true
+                    },
                     booking_cutoff_day  : 'required',
-                    capacity            : 'required',
+                    capacity            : {
+                        required  : true,
+                        number    : true  
+
+                    },
                     bed_type            : 'required',
+                    extra_bed_price     : 'required'
 
                 },
                 messages: {
                     hotel_id            : 'Hotel is required',
                     h_room_type_id      : 'Room Type is required!',
                     name                : 'Name is required!',
-                    price               : 'Price is required!',
-                    square_metre        : 'S.Q.M is required!',
+                    price               : {
+                        required    : 'Price is required!',
+                        number      : 'Please enter a valid number!'
+                    },
+                    square_metre        : {
+                        required    : 'S.Q.M is required!',
+                        number      : 'Please enter a valid number!'
+                    },
                     booking_cutoff_day  : 'Booking CutOff Day is required!',
-                    capacity            : 'Capacity is required!',
+                    capacity            : {
+                        required    : 'Capacity is required!',
+                        number      : 'Please enter a valid number!'
+                    },
                     bed_type            : 'Bed Type is required!',
+                    extra_bed_price     : 'Extra bed price is required!'
                 },
                 submitHandler: function(form) {
                     $('input[type="submit"]').attr('disabled','disabled');

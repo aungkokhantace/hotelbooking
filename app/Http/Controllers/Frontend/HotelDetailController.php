@@ -27,6 +27,8 @@ use App\Setup\HotelNearbyDrugStore\HotelNearbyDrugStoreRepository;
 use App\Setup\HotelNearbyHospital\HotelNearbyHospital;
 use App\Setup\HotelNearbyHospital\HotelNearbyHospitalRepository;
 use App\Setup\HotelNearbyStation\HotelNearbyStationRepository;
+use App\Setup\HotelRestaurant\HotelRestaurantRepository;
+use App\Setup\HotelRestaurantCategory\HotelRestaurantCategoryRepository;
 use App\Setup\HotelRoomCategory\HotelRoomCategory;
 use App\Setup\HotelRoomCategory\HotelRoomCategoryRepository;
 use App\Setup\Landmark\LandmarkRepository;
@@ -185,8 +187,31 @@ class HotelDetailController extends Controller
         /* Start Hotel Features */
         $hFeatureRepo   = new HotelFeatureRepository();
         $hFeatures      = $hFeatureRepo->getObjsByHotelID($hotel_id);
-    
         /* End Hotel Features */
+
+        /* Start Hotel Restaurant Category */
+        $hRestaurantCategoryRepo    = new HotelRestaurantCategoryRepository();
+        $hRestaurantCategories      = $hRestaurantCategoryRepo->getObjs();
+        /* End Hotel Restaurant Category */
+
+        /* Start Hotel Restaurant */
+        $hRestaurantRepo        = new HotelRestaurantRepository();
+        $hRestaurants           = $hRestaurantRepo->getHotelRestaurantsByHotelId($hotel_id);
+        $restaurantArr          = array();
+        $restaurantCategoryArr  = array();
+        foreach($hRestaurantCategories as $hRestaurantCategory){
+            foreach($hRestaurants as $hRestaurant){
+                if($hRestaurantCategory->id == $hRestaurant->h_restaurant_category_id){
+                    array_push($restaurantArr,$hRestaurant);
+                }
+            }
+            $hRestaurantCategory->restaurants = $restaurantArr;
+            $restaurantArr      = array();
+            if(!empty($hRestaurantCategory->restaurants)){
+                array_push($restaurantCategoryArr,$hRestaurantCategory);
+            }
+        } 
+        /* End Hotel Restaurant */
 
         return view('frontend.hoteldetail')
             ->with('hotel', $hotel)
@@ -199,6 +224,7 @@ class HotelDetailController extends Controller
             ->with('amenities',$amenities)
             ->with('book_now_flag',$book_now_flag)
             ->with('available_category_id_array',$available_category_id_array)
-            ->with('hFeatures',$hFeatures);
+            ->with('hFeatures',$hFeatures)
+            ->with('restaurantCategoryArr',$restaurantCategoryArr);
     }
 }

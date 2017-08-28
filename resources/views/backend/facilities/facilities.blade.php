@@ -95,6 +95,7 @@
             <label for="photo" class="text_bold_black">{{trans('setup_facility.icon')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+            <label class="notice">(Image must be 24*24 pixels)</label>
             @if(isset($facilities))
                 <div class="add_image_div add_image_div_red" style="background-image: url({{'/images/upload/'.$facilities ->icon}});background-position:center;background-size:cover">
                 </div>
