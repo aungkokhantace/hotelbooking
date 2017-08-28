@@ -17,4 +17,5 @@ interface HotelRestaurantRepositoryInterface
     public function create($paramObj);
     public function update($paramObj);
     public function delete($paramObj);
+    public function getHotelRestaurantsByHotelId($hotel_id);
 }

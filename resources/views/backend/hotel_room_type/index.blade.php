@@ -40,16 +40,16 @@
                     <thead>
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
-                        <th>{{trans('setup_hotelroomtype.tb-col-hotel')}}</th>
                         <th>{{trans('setup_hotelroomtype.tb-col-name')}}</th>
+                        <th>{{trans('setup_hotelroomtype.tb-col-hotel')}}</th>
                         <th>{{trans('setup_hotelroomtype.tb-col-description')}}</th>
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
                         <th></th>
-                        <th class="search-col" con-id="hotel">Hotel</th>
                         <th class="search-col" con-id="name">Name</th>
+                        <th class="search-col" con-id="hotel">Hotel</th>
                         <th class="search-col" con-id="description">Description</th>
 
                     </tr>
@@ -58,9 +58,16 @@
                     @foreach($hotel_room_type as $type)
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $type->id }}" id="all"></td>
-                            <td>{{$type->hotel->name}}</td>
                             <td><a href="/backend/hotel_room_type/edit/{{$type->id}}">{{$type->name}}</a></td>
-                            <td>{{$type->description}}</td>
+                            <td>{{$type->hotel->name}}</td>            
+                            <td>
+                                @if(strlen($type->description) > 50)
+                                    {{substr($type->description,0,strrpos(substr($type->description,0,50),' ')).'...'}}
+                                @else
+                                    {{$type->description}}
+                                @endif
+                            </td>
+                                                                         
                         </tr>
                     @endforeach
                     </tbody>

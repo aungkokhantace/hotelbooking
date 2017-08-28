@@ -1,6 +1,11 @@
 @extends('layouts.master')
 @section('title','Hotel Restaurant')
 @section('content')
+    <style>
+        .time-value-box{
+            width: 95% !important;
+        }
+    </style>
 
         <!-- begin #content -->
 <div id="content" class="content">
@@ -90,15 +95,39 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="opening_hours">
+            <label for="from_date">
                 {{trans('setup_hotelrestaurant.open-hr')}}
                 <span class="require">*</span>
             </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <input type="text" required class="form-control" id="opening_hours" name="opening_hours"
-                   placeholder="{{trans('setup_hotelrestaurant.place-open-hr')}}" value="{{ isset($hotel_restaurant)? $hotel_restaurant->opening_hours:Request::old('opening_hours') }}"/>
+            <div class="input-group bootstrap-timepicker timepicker">
+                <input type="text" class="form-control time-value-box" id="opening_hours" name="opening_hours"
+                       placeholder="{{trans('setup_hotelrestaurant.place-open-hr')}}" value="{{ isset($hotel_restaurant)? $hotel_restaurant->opening_hours:Request::old('opening_hours') }}"/>
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-time"></span>
+                </div>
+            </div>
             <p class="text-danger">{{$errors->first('opening_hours')}}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="from_date">
+                {{trans('setup_hotelrestaurant.close-hr')}}
+                <span class="require">*</span>
+            </label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <div class="input-group bootstrap-timepicker timepicker">
+                <input type="text" class="form-control time-value-box" id="closing_hours" name="closing_hours"
+                       placeholder="{{trans('setup_hotelrestaurant.place-close-hr')}}" value="{{ isset($hotel_restaurant)? $hotel_restaurant->closing_hours:Request::old('closing_hours') }}"/>
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-time"></span>
+                </div>
+            </div>
+            <p class="text-danger">{{$errors->first('closing_hours')}}</p>
         </div>
     </div>
 
@@ -213,31 +242,44 @@
 
 @section('page_script')
     <script type="text/javascript">
+        $(document).ready(function(){
+            $('#private_room').checkboxpicker();
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#opening_hours').timepicker();
+            $('#closing_hours').timepicker();
+        });
+    </script>
+    <script type="text/javascript">
         var count = 0;      // Declaring and defining global increment variable.
         $(document).ready(function(){
 
             //Start Validation for Entry and Edit Form
             $('#hotel_restaurant').validate({
                 rules: {
-                    hotel_id                : 'required',
-                    hotel_room_category     : 'required',
-                    name                    : 'required',
-                    opening_hours           : 'required',
-                    opening_days            : 'required',
-                    capacity                : 'required',
-                    area                    : 'required',
-                    floor                   : 'required',
+                    hotel_id                    : 'required',
+                    hotel_restaurant_category   : 'required',
+                    name                        : 'required',
+                    opening_hours               : 'required',
+                    closing_hours               : 'required',
+                    opening_days                : 'required',
+                    capacity                    : 'required',
+                    area                        : 'required',
+                    floor                       : 'required',
 
                 },
                 messages: {
-                    hotel_id                : 'Hotel is required!',
-                    hotel_room_category     : 'Hotel Room Category is required!',
-                    name                    : 'Restaurant Name is required!',
-                    opening_hours           : 'Opening Hours is required!',
-                    opening_days            : 'Opening Days is required!',
-                    capacity                : 'Capacity is required!',
-                    area                    : 'Area is required!',
-                    floor                   : 'Floor is required!',
+                    hotel_id                    : 'Hotel is required!',
+                    hotel_restaurant_category   : 'Hotel Room Category is required!',
+                    name                        : 'Restaurant Name is required!',
+                    opening_hours               : 'Opening Hours is required!',
+                    closing_hours               : 'Closing Hours is required!',
+                    opening_days                : 'Opening Days is required!',
+                    capacity                    : 'Capacity is required!',
+                    area                        : 'Area is required!',
+                    floor                       : 'Floor is required!',
                 },
                 submitHandler: function(form) {
                     $('input[type="submit"]').attr('disabled','disabled');

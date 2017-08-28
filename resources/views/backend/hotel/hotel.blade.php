@@ -132,6 +132,7 @@
             <label for="photo" class="text_bold_black">{{trans('setup_hotel.logo')}}</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+            <label class="notice">(Image must be 340*260 pixels)</label>
             @if(isset($hotel))
                 <div class="add_image_div add_image_div_red" style="background-image: url({{'/images/upload/'.$hotel->logo}});background-position:center;background-size:cover">
                 </div>

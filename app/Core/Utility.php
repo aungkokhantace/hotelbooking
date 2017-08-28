@@ -154,10 +154,30 @@ class Utility
         $height     = $imgData[1];
         $imgHeight  = $height * $rHeight;
 
+        $image      = InterventionImage::make(sprintf($path . '/%s', $photo_name))
+                      ->resize($imgWidth,$imgHeight)->save();
 
+        return $image;
+
+    }
+
+    public static function resizeImageWithDefaultWidthHeight($photo,$photo_name,$path,$width,$height){
+
+        if(! file_exists($path))
+        {
+            mkdir($path, 0777, true);
+        }
+
+        $photo->move($path,$photo_name);
+
+        $rWidth     = 1.0;
+        $rHeight    = 1.0;
+
+        $imgWidth   = $width * $rWidth;
+        $imgHeight  = $height * $rHeight;
 
         $image      = InterventionImage::make(sprintf($path . '/%s', $photo_name))
-            ->resize($imgWidth,$imgHeight)->save();
+                      ->resize($imgWidth,$imgHeight)->save();
 
         return $image;
 

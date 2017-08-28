@@ -92,4 +92,8 @@ body{
     background-color: #7C0F58!important;
 }
 
+.notice{
+    color: red;
+    font: italic 10.5pt bold;
+}
 

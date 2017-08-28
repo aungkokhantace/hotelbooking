@@ -53,6 +53,7 @@ class HotelRestaurantController extends Controller
         $request->validate();
         $name                               = Input::get('name');
         $opening_hours                      = Input::get('opening_hours');
+        $closing_hours                      = Input::get('closing_hours');
         $opening_days                       = Input::get('opening_days');
         $capacity                           = Input::get('capacity');
         $area                               = Input::get('area');
@@ -66,6 +67,7 @@ class HotelRestaurantController extends Controller
         $paramObj                           = new HotelRestaurant();
         $paramObj->name                     = $name;
         $paramObj->opening_hours            = $opening_hours;
+        $paramObj->closing_hours            = $closing_hours;
         $paramObj->opening_days             = $opening_days;
         $paramObj->capacity                 = $capacity;
         $paramObj->area                     = $area;
@@ -106,22 +108,24 @@ class HotelRestaurantController extends Controller
     public function update(HotelRestaurantEditRequest $request){
 
         $request->validate();
-        $id                         = Input::get('id');
-        $name                       = Input::get('name');
-        $opening_hours              = Input::get('opening_hours');
-        $opening_days               = Input::get('opening_days');
-        $capacity                   = Input::get('capacity');
-        $area                       = Input::get('area');
-        $floor                      = Input::get('floor');
-        $private_room               = Input::get('private_room') == "true"? 1: 0;;
-        $hotel_id                   = Input::get('hotel_id');
-        $h_restaurant_category_id   = Input::get('hotel_restaurant_category');
-        $description                = Input::get('description');
-        $remark                     = Input::get('remark');
+        $id                                 = Input::get('id');
+        $name                               = Input::get('name');
+        $opening_hours                      = Input::get('opening_hours');
+        $closing_hours                      = Input::get('closing_hours');
+        $opening_days                       = Input::get('opening_days');
+        $capacity                           = Input::get('capacity');
+        $area                               = Input::get('area');
+        $floor                              = Input::get('floor');
+        $private_room                       = Input::get('private_room') == "true"? 1: 0;;
+        $hotel_id                           = Input::get('hotel_id');
+        $h_restaurant_category_id           = Input::get('hotel_restaurant_category');
+        $description                        = Input::get('description');
+        $remark                             = Input::get('remark');
 
         $paramObj                           = $this->repo->getObjByID($id);
         $paramObj->name                     = $name;
         $paramObj->opening_hours            = $opening_hours;
+        $paramObj->closing_hours            = $closing_hours;
         $paramObj->opening_days             = $opening_days;
         $paramObj->capacity                 = $capacity;
         $paramObj->area                     = $area;
