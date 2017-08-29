@@ -74,7 +74,7 @@
             <select class="form-control" name="facility" id="facility">
                 @if(isset($hotel_facility))
                     @foreach($facilities as $facility)
-                        @if($facility->id == $hotel_facility->feature_id)
+                        @if($facility->id == $hotel_facility->facility_id)
                             <option value="{{$facility->id}}" selected>{{$facility->name}}</option>
                         @else
                             <option value="{{$facility->id}}">{{$facility->name}}</option>

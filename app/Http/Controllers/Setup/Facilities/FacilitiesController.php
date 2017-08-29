@@ -67,7 +67,10 @@ class FacilitiesController extends Controller
             $photo_name_original    = Utility::getImage($photo);
             $photo_ext      = Utility::getImageExt($photo);
             $photo_name     = uniqid() . "." . $photo_ext;
-            $image          = Utility::resizeImage($photo,$photo_name,$path);
+            // $image          = Utility::resizeImage($photo,$photo_name,$path);
+            $imgWidth       = 24;
+            $imgHeight      = 24;
+            $image          = Utility::resizeImageWithDefaultWidthHeight($photo,$photo_name,$path,$imgWidth,$imgHeight);
         }
         else{
             $photo_name = "";
@@ -131,7 +134,10 @@ class FacilitiesController extends Controller
             $photo_name_original    = Utility::getImage($photo);
             $photo_ext              = Utility::getImageExt($photo);
             $photo_name             = uniqid() . "." . $photo_ext;
-            $image                  = Utility::resizeImage($photo,$photo_name,$path);
+            // $image                  = Utility::resizeImage($photo,$photo_name,$path);
+            $imgWidth               = 24;
+            $imgHeight              = 24;
+            $image                  = Utility::resizeImageWithDefaultWidthHeight($photo,$photo_name,$path,$imgWidth,$imgHeight);
 
             $paramObj                       = Facilities::find($id);
             $paramObj->name                 = $name;
