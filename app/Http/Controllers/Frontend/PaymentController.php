@@ -64,16 +64,29 @@ class PaymentController extends Controller
 
     }
 
-    public function enterDetails(){
-        $available_room_categories             = Input::get('available_room_categories');
+    public function enterDetails(Request $request){
+        if($request->isMethod('POST')){
+            
+            $available_room_categories                  = Input::get('available_room_categories');
 
-        $number_array = array();
-        foreach($available_room_categories as $available_room_category){
-            $number_array[$available_room_category]             = Input::get('number_'.$available_room_category);
+            $number_array = array();
+            foreach($available_room_categories as $available_room_category){
+                $number_array[$available_room_category] = Input::get('number_'.$available_room_category);
+            }
+            
+            //if method is post, add available_room_categories and number_array in session
+            Session::put('available_room_categories',$available_room_categories);
+            Session::put('number_array',$number_array);
+
         }
-
-        $roomCategoryRepo   = new HotelRoomCategoryRepository();
-        $available_room_category_array = array();
+        else{
+            
+            $available_room_categories                  = Session::get('available_room_categories');
+            $number_array                               = Session::get('number_array');
+        }
+    
+        $roomCategoryRepo                               = new HotelRoomCategoryRepository();
+        $available_room_category_array                  = array();
         foreach($available_room_categories as $available){
             $room_category      = $roomCategoryRepo->getObjByID($available);
 
@@ -82,7 +95,7 @@ class PaymentController extends Controller
                 array_push($available_room_category_array,$room_category);
             }
         }
-
+        
         $hotel_id           = $available_room_category_array[0]->hotel_id;
 
         $hotelRepo          = new HotelRepository();
@@ -268,18 +281,17 @@ class PaymentController extends Controller
                     ->with('payable_amount',$payable_amount);
     }
 
-    public function confirmReservation() {
-        $hotel_id           = Input::get('hotel_id');
+    public function confirmReservation(Request $request) {
+        $hotel_id                   = Input::get('hotel_id');
+        $available_room_categories  = Input::get('available_room_categories');
 
-        $available_room_categories = Input::get('available_room_categories');
+        $travel_for_work            = (Input::has('travel_for_work')) ? 1 : 0;
+        $first_name                 = Input::get('first_name');
+        $last_name                  = Input::get('last_name');
+        $email                      = Input::get('email');
 
-        $travel_for_work    = (Input::has('travel_for_work')) ? 1 : 0;
-        $first_name         = Input::get('first_name');
-        $last_name          = Input::get('last_name');
-        $email              = Input::get('email');
-
-        $booking_taxi       = (Input::has('booking_taxi')) ? 1 : 0;
-        $booking_tour_guide = (Input::has('booking_tour_guide')) ? 1 : 0;
+        $booking_taxi               = (Input::has('booking_taxi')) ? 1 : 0;
+        $booking_tour_guide         = (Input::has('booking_tour_guide')) ? 1 : 0;
 
         $non_smoking_request        = (Input::has('non_smoking_request')) ? 1 : 0;
         $late_check_in_request      = (Input::has('late_check_in_request')) ? 1 : 0;
@@ -293,66 +305,98 @@ class PaymentController extends Controller
         $baby_cot_request           = (Input::has('baby_cot_request')) ? 1 : 0;
         $special_request            = (Input::has('special_request')) ? Input::get('special_request') : "";
 
-        Session::forget('hotel_id');
-        Session::forget('travel_for_work');
-        Session::forget('first_name');
-        Session::forget('last_name');
-        Session::forget('email');
-        Session::forget('available_room_categories');
+        if($request->isMethod('POST')){
+            Session::forget('hotel_id');
+            Session::forget('travel_for_work');
+            Session::forget('first_name');
+            Session::forget('last_name');
+            Session::forget('email');
+            Session::forget('available_room_categories');
 
-        Session::forget('booking_taxi');
-        Session::forget('booking_tour_guide');
+            Session::forget('booking_taxi');
+            Session::forget('booking_tour_guide');
 
-        Session::forget('non_smoking_request');
-        Session::forget('late_check_in_request');
-        Session::forget('high_floor_request');
-        Session::forget('large_bed_request');
-        Session::forget('early_check_in_request');
-        Session::forget('twin_bed_request');
-        Session::forget('quiet_room_request');
-        Session::forget('airport_transfer_request');
-        Session::forget('private_parking_request');
-        Session::forget('baby_cot_request');
-        Session::forget('special_request');
+            Session::forget('non_smoking_request');
+            Session::forget('late_check_in_request');
+            Session::forget('high_floor_request');
+            Session::forget('large_bed_request');
+            Session::forget('early_check_in_request');
+            Session::forget('twin_bed_request');
+            Session::forget('quiet_room_request');
+            Session::forget('airport_transfer_request');
+            Session::forget('private_parking_request');
+            Session::forget('baby_cot_request');
+            Session::forget('special_request');
 
-        Session::forget('total_amount');
-        Session::forget('total_payable_amount_w_extrabed');
+            Session::forget('total_amount');
+            Session::forget('total_payable_amount_w_extrabed');
 
-        Session::forget('service_tax');
-        Session::forget('service_tax_amount');
-        Session::forget('gov_tax');
-        Session::forget('gov_tax_amount');
+            Session::forget('service_tax');
+            Session::forget('service_tax_amount');
+            Session::forget('gov_tax');
+            Session::forget('gov_tax_amount');
 
-        Session::forget('payable_amount');
+            Session::forget('payable_amount');
 
+            foreach($available_room_categories as $key=>$temp){
+                $temp = json_decode($temp);
+                $available_room_categories[$key] = $temp;
+            }
+        
+            //push to session array
+            if(isset($available_room_categories) && $available_room_categories != null && count($available_room_categories)>0){
+                foreach($available_room_categories as $available_room_cat){
+                    Session::push('available_room_categories',$available_room_cat);
+                }
+            }
+
+        }
+        else{
+            $hotel_id                   = Session::get('hotel_id');
+            $travel_for_work            = Session::get('travel_for_work');
+            $first_name                 = Session::get('first_name');
+            $last_name                  = Session::get('last_name');
+            $email                      = Session::get('email');
+            $available_room_categories  = Session::get('available_room_categories');
+
+            $booking_taxi               = Session::get('booking_taxi');
+            $booking_tour_guide         = Session::get('booking_tour_guide');
+
+            $non_smoking_request        = Session::get('non_smoking_request');
+            $late_check_in_request      = Session::get('late_check_in_request');
+            $high_floor_request         = Session::get('high_floor_request');
+            $large_bed_request          = Session::get('large_bed_request');
+            $early_check_in_request     = Session::get('early_check_in_request');
+            $twin_bed_request           = Session::get('twin_bed_request');
+            $quiet_room_request         = Session::get('quiet_room_request');
+            $airport_transfer_request   = Session::get('airport_transfer_request');
+            $private_parking_request    = Session::get('private_parking_request');
+            $baby_cot_request           = Session::get('baby_cot_request');
+            $special_request            = Session::get('special_request');
+
+        }
+        
         //store general data fields in session
         if(isset($hotel_id) && $hotel_id != null && $hotel_id != ""){
-            session(['hotel_id' => $hotel_id]);
+            // session(['hotel_id' => $hotel_id]);
+            Session::put('hotel_id',$hotel_id);
         }
 
         if(isset($travel_for_work)){
-            session(['travel_for_work' => $travel_for_work]);
+            // session(['travel_for_work' => $travel_for_work]);
+            Session::put('travel_for_work',$travel_for_work);
         }
         if(isset($first_name) && $first_name != null && $first_name != ""){
-            session(['first_name' => $first_name]);
+            // session(['first_name' => $first_name]);
+            Session::put('first_name',$first_name);
         }
         if(isset($last_name) && $last_name != null && $last_name != ""){
-            session(['last_name' => $last_name]);
+            // session(['last_name' => $last_name]);
+            Session::put('last_name',$last_name);
         }
         if(isset($email) && $email != null && $email != ""){
-            session(['email' => $email]);
-        }
-
-        foreach($available_room_categories as $key=>$temp){
-            $temp = json_decode($temp);
-            $available_room_categories[$key] = $temp;
-        }
-
-        //push to session array
-        if(isset($available_room_categories) && $available_room_categories != null && count($available_room_categories)>0){
-            foreach($available_room_categories as $available_room_cat){
-                Session::push('available_room_categories',$available_room_cat);
-            }
+            // session(['email' => $email]);
+            Session::put('email',$email);
         }
 
         $guest_array    = array();

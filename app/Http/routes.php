@@ -55,7 +55,9 @@ Route::group(['middleware' => 'web'], function () {
 
     //Booking and Payment
     Route::post('/enter_details', 'Frontend\PaymentController@enterDetails');
+    Route::get('enter_details', 'Frontend\PaymentController@enterDetails');
     Route::post('/confirm_reservation', 'Frontend\PaymentController@confirmReservation');
+    Route::get('confirm_reservation', 'Frontend\PaymentController@confirmReservation');    
     Route::post('/book_and_pay', 'Frontend\PaymentController@bookAndPay');
     Route::get('/congratulations/{booking_id}', 'Frontend\PaymentController@congratulations');
 
