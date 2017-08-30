@@ -43,52 +43,75 @@ class SearchController extends Controller
 
     public function search(Request $request)
     {
-        $destination     = (Input::has('destination')) ? Input::get('destination') : "";
-        $check_in        = (Input::has('check_in')) ? Input::get('check_in') : "";
-        $check_out       = (Input::has('check_out')) ? Input::get('check_out') : "";
-        $room            = (Input::has('room')) ? Input::get('room') : "";
-        $adults          = (Input::has('adults')) ? Input::get('adults') : "";
-        $children        = (Input::has('children')) ? Input::get('children') : "";
+        $destination            = (Input::has('destination')) ? Input::get('destination') : "";
+        $check_in               = (Input::has('check_in')) ? Input::get('check_in') : "";
+        $check_out              = (Input::has('check_out')) ? Input::get('check_out') : "";
+        $room                   = (Input::has('room')) ? Input::get('room') : "";
+        $adults                 = (Input::has('adults')) ? Input::get('adults') : "";
+        $children               = (Input::has('children')) ? Input::get('children') : "";
 
-        $price_filter    = (Input::has('price_filter')) ? Input::get('price_filter') : "";
-        $star_filter     = (Input::has('star_filter')) ? Input::get('star_filter') : "";
-        $facility_filter = (Input::has('facility_filter')) ? Input::get('facility_filter') : "";
-        $landmark_filter = (Input::has('landmark_filter')) ? Input::get('landmark_filter') : "";
+        $price_filter           = (Input::has('price_filter')) ? Input::get('price_filter') : "";
+        $star_filter            = (Input::has('star_filter')) ? Input::get('star_filter') : "";
+        $facility_filter        = (Input::has('facility_filter')) ? Input::get('facility_filter') : "";
+        $landmark_filter        = (Input::has('landmark_filter')) ? Input::get('landmark_filter') : "";
 
-        Session::forget('destination');
-        Session::forget('check_in');
-        Session::forget('check_out');
-        Session::forget('room');
-        Session::forget('adults');
-        Session::forget('children');
-        Session::forget('price_filter');
-        Session::forget('star_filter');
-        Session::forget('facility_filter');
-        Session::forget('landmark_filter');
+        if($request->isMethod('post')){
+            Session::forget('destination');
+            Session::forget('check_in');
+            Session::forget('check_out');
+            Session::forget('room');
+            Session::forget('adults');
+            Session::forget('children');
+            Session::forget('price_filter');
+            Session::forget('star_filter');
+            Session::forget('facility_filter');
+            Session::forget('landmark_filter');
 
+        }
+        else{
+            $destination        = Session::get('destination');
+            $check_in           = Session::get('check_in');
+            $check_out          = Session::get('check_out');
+            $room               = Session::get('room');
+            $adults             = Session::get('adults');
+            $children           = Session::get('children');
+            $price_filter       = Session::get('price_filter');
+            $star_filter        = Session::get('star_filter');
+            $facility_filter    = Session::get('facility_filter'); 
+            $landmark_filter    = Session::get('landmark_filter');
+        }
+        
         if(isset($destination) && $destination != null && $destination != ""){
-            session(['destination' => $destination]);
+            // session(['destination' => $destination]);
+            Session::put('destination',$destination);
         }
         if(isset($check_in) && $check_in != null && $check_in != ""){
-            session(['check_in' => $check_in]);
+            // session(['check_in' => $check_in]);
+            Session::put('check_in',$check_in);
         }
         if(isset($check_out) && $check_out != null && $check_out != ""){
-            session(['check_out' => $check_out]);
+            // session(['check_out' => $check_out]);
+            Session::put('check_out',$check_out);
         }
         if(isset($room) && $room != null && $room != ""){
-            session(['room' => $room]);
+            // session(['room' => $room]);
+            Session::put('room',$room);
         }
         if(isset($adults) && $adults != null && $adults != ""){
-            session(['adults' => $adults]);
+            // session(['adults' => $adults]);
+            Session::put('adults',$adults);
         }
         if(isset($children) && $children != null && $children != ""){
-            session(['children' => $children]);
+            // session(['children' => $children]);
+            Session::put('children',$children);
         }
         if(isset($price_filter) && $price_filter != null && $price_filter != ""){
-            session(['price_filter' => $price_filter]);
+            // session(['price_filter' => $price_filter]);
+            Session::put('price_filter',$price_filter);
         }
         if(isset($star_filter) && $star_filter != null && $star_filter != ""){
-            session(['star_filter' => $star_filter]);
+            // session(['star_filter' => $star_filter]);
+            Session::put('star_filter',$star_filter);
         }
         if(isset($facility_filter) && $facility_filter != null && count($facility_filter)>0){
             foreach($facility_filter as $facility){
@@ -105,7 +128,7 @@ class SearchController extends Controller
         $hotelRepo  = new HotelRepository();
 //        $hotels     = $hotelRepo->getHotelsByDestination($destination); //search hotel by destination keyword
         $hotels     = $hotelRepo->getHotelsByFilters($destination,$price_filter,$star_filter,$facility_filter,$landmark_filter); //search hotel by filters
-
+      
         $hRoomCategoryRepo = new HotelRoomCategoryRepository();
         foreach($hotels  as $hotel){
             $minRoomCategoryPrice = $hRoomCategoryRepo->getMinPriceByHotelId($hotel->id);
@@ -195,6 +218,7 @@ class SearchController extends Controller
         }
         
         //end getting hotel facility
+
         return view('frontend.searchresult')
             ->with('hotels', $hotels)
             ->with('suggestedHotels', $suggestedHotels)
@@ -253,4 +277,5 @@ class SearchController extends Controller
 
         return response()->json($result);
     }
+
 }

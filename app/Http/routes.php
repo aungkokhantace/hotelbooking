@@ -13,6 +13,7 @@ Route::group(['middleware' => 'web'], function () {
 
     //search
     Route::post('/search', 'Frontend\SearchController@search');
+    Route::get('search','Frontend\SearchController@search');
     Route::get('/search_result', 'Frontend\SearchController@index');
 
     //hotel detail
