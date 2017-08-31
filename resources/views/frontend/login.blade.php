@@ -8,6 +8,7 @@
                 <button type="button" class="close" data-dismiss="modal">⨂</button>
             </div>
             <h2 style="text-align:center;">Login</h2>
+            <div id="show-error" class="col-sm-12"></div>
             <!-- <form class="form-horizontal"> -->
             {!! Form::open(array('url' => '/login', 'class'=> 'form-horizontal', 'id'=>'login')) !!}
                 <div class="formgroup">
@@ -29,9 +30,9 @@
                 </div>
                 <div class="formgroup text-center">
                     <div class="col-md-12 control">
-                        {{--<div class="form_textone">--}}
-                            {{--<a href="createacc.html" style="text-decoration:underline;"> Not a member? Create Account </a>--}}
-                        {{--</div>--}}
+                        <div class="form_textone">
+                            <a href="#" style="text-decoration:underline;" id="sign_up"> Not a member? Create Account </a>
+                        </div>
                     </div>
                 </div>
             <!-- </form> -->
@@ -43,6 +44,18 @@
     </div>
 </div>
 <!-- start login ajax-->
+<script>
+    $(document).ready(function(){
+        function showRegister(){
+            $("#loginModal").removeClass("fade").modal("hide");
+            $("#registerModal").modal("show").addClass("fade");
+        }
+        $('#sign_up').click(function(){
+            showRegister();
+        });
+    
+    });
+</script>
 <script>
     $(document).ready(function(){
         $('.login-btn').click(function(){

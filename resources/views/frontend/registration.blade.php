@@ -50,7 +50,7 @@
                     <div class="col-md-12 control">
                         <div class="form_textone">
                             <span>Already a member?</span>
-                            <a href="login.html"> Login Here </a>
+                            <a href="#" id="sign_in"> Login Here </a>
                         </div>
                     </div>
                 </div>
@@ -62,7 +62,14 @@
 <!-- start form validation -->
 <script>
     $(document).ready(function() {
-
+        function showLogin(){
+            $("#registerModal").removeClass("fade").modal("hide");
+            $("#loginModal").modal("show").addClass("fade");
+        }
+        
+        $('#sign_in').click(function(){
+            showLogin();
+        });
     });
 </script>
 <!-- end form validation -->
