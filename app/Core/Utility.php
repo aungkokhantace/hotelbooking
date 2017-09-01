@@ -249,4 +249,16 @@ class Utility
             return $returnedObj;
         }
     }
+
+    public static function getPriceFilter(){
+        $result     = DB::table('price_filter')->get();
+
+        return $result;
+    }
+
+    public static function getPriceFilterById($id){
+        $result     = DB::table('price_filter')->find($id);
+
+        return $result;
+    }
 }

@@ -1,7 +1,8 @@
 <?php
-$user_info = \App\Core\Check::getInfo();
-$companyName = \App\Core\Check::companyName();
-$companyLogo = \App\Core\Check::companyLogo();
+$user_info      = \App\Core\Check::getInfo();
+$companyName    = \App\Core\Check::companyName();
+$companyLogo    = \App\Core\Check::companyLogo();
+
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]>

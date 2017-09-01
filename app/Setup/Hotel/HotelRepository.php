@@ -191,6 +191,28 @@ class HotelRepository implements HotelRepositoryInterface
 
         //start condition group for price_filter
         if(isset($price_filter) && count($price_filter)>0 && $price_filter != ""){
+            //get price filter from price_filter table by id
+            $filter_id      = $price_filter[0];
+            $filter         = Utility::getPriceFilterById($filter_id);
+            $type           = $filter->type;
+            $from_price     = $filter->from;
+            $to_price       = $filter->to;
+            if($type == 'under'){
+                $query->whereHas('h_room_category', function($query) use($to_price) {
+                    $query->where('h_room_category.price', '<' , $to_price);
+                });
+            }
+            elseif($type == 'above'){
+                $query->whereHas('h_room_category', function($query) use($from_price) {
+                    $query->where('h_room_category.price', '>' , $from_price);
+                });
+            }
+            else{
+                $query->whereHas('h_room_category', function($query) use($from_price,$to_price) {
+                    $query->whereBetween('h_room_category.price', [$from_price, $to_price]);
+                });
+            }
+            /*
             if($price_filter[0] == "0-50000"){
                 $query->whereHas('h_room_category', function($query) use($price_filter) {
                     $query->whereBetween('h_room_category.price', [0, 50000]);
@@ -245,7 +267,7 @@ class HotelRepository implements HotelRepositoryInterface
                 $query->whereHas('h_room_category', function($query) use($price_filter) {
                     $query->where('h_room_category.price', '>' , 500000);
                 });
-            }
+            }*/
         }
         //end condition group for price_filter
 

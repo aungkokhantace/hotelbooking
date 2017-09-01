@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Payment\PaymentConstance;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+        $currency = strtoupper(PaymentConstance::STIRPE_CURRENCY);
+        view()->share('currency', $currency);
     }
 
     /**

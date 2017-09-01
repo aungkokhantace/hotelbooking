@@ -9,6 +9,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Payment\PaymentConstance;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
@@ -24,6 +25,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use App\Core\Utility;
 
 //use Redirect;
 
@@ -128,7 +130,6 @@ class SearchController extends Controller
         $hotelRepo  = new HotelRepository();
 //        $hotels     = $hotelRepo->getHotelsByDestination($destination); //search hotel by destination keyword
         $hotels     = $hotelRepo->getHotelsByFilters($destination,$price_filter,$star_filter,$facility_filter,$landmark_filter); //search hotel by filters
-      
         $hRoomCategoryRepo = new HotelRoomCategoryRepository();
         foreach($hotels  as $hotel){
             $minRoomCategoryPrice = $hRoomCategoryRepo->getMinPriceByHotelId($hotel->id);
@@ -219,12 +220,15 @@ class SearchController extends Controller
         
         //end getting hotel facility
 
+        $price_filters                  = Utility::getPriceFilter();
+
         return view('frontend.searchresult')
             ->with('hotels', $hotels)
             ->with('suggestedHotels', $suggestedHotels)
             ->with('destination', $destination)
             ->with('facilities', $facilities)
-            ->with('landmarks', $landmarks);
+            ->with('landmarks', $landmarks)
+            ->with('price_filters',$price_filters);
     }
 
     public function getLocations()

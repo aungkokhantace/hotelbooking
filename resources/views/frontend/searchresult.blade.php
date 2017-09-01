@@ -33,22 +33,34 @@
                             <h5>Search Hotel</h5>
                         </div>
                         <div class="list_style">
-                            @if(Session::has('room'))
-                                <input type="number" id="room" class="floatLabel form-control" name="room" value="{{session('room')}}">
-                            @else
-                                <input type="number" id="room" class="floatLabel form-control" name="room" value="">
-                            @endif
-                            <input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="0-50000" @if(Session::has('price_filter') && session('price_filter')[0]=="0-50000") checked @endif> <span>MMK 0 - 50,000 per night</span><br>
-                            <input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="50000-100000" @if(Session::has('price_filter') && session('price_filter')[0]=="50000-100000") checked @endif> <span>MMK 50,000 - 100,000 per night</span><br>
-                            <input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="100000-150000" @if(Session::has('price_filter') && session('price_filter')[0]=="100000-150000") checked @endif> <span>MMK 100,000 - 150,000 per night</span><br>
-                            <input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="150000-200000" @if(Session::has('price_filter') && session('price_filter')[0]=="150000-200000") checked @endif> <span>MMK 150,000 - 200,000 per night</span><br>
-                            <input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="200000-250000" @if(Session::has('price_filter') && session('price_filter')[0]=="200000-250000") checked @endif> <span>MMK 200,000 - 250,000 per night</span><br>
-                            <input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="250000-300000" @if(Session::has('price_filter') && session('price_filter')[0]=="250000-300000") checked @endif> <span>MMK 250,000 - 300,000 per night</span><br>
-                            <input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="300000-350000" @if(Session::has('price_filter') && session('price_filter')[0]=="300000-350000") checked @endif> <span>MMK 300,000 - 350,000 per night</span><br>
-                            <input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="350000-400000" @if(Session::has('price_filter') && session('price_filter')[0]=="350000-400000") checked @endif> <span>MMK 350,000 - 400,000 per night</span><br>
-                            <input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="400000-450000" @if(Session::has('price_filter') && session('price_filter')[0]=="400000-450000") checked @endif> <span>MMK 400,000 - 450,000 per night</span><br>
-                            <input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="450000-500000" @if(Session::has('price_filter') && session('price_filter')[0]=="450000-500000") checked @endif> <span>MMK 450,000 - 500,000 per night</span><br>
-                            <input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="above500000" @if(Session::has('price_filter') && session('price_filter')[0]=="above500000") checked @endif> <span>Above MMK 500,000 per night</span><br>
+                            {{--@if(Session::has('room'))--}}
+                                {{--<input type="number" id="room" class="floatLabel form-control" name="room" value="{{session('room')}}">--}}
+                            {{--@else--}}
+                                {{--<input type="number" id="room" class="floatLabel form-control" name="room" value="">--}}
+                            {{--@endif--}}
+                             {{--<input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="0-50000" @if(Session::has('price_filter') && session('price_filter')[0]=="0-50000") checked @endif> <span>{{$currency}} 0 - 50,000 per night</span><br>--}}
+                            {{--<input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="50000-100000" @if(Session::has('price_filter') && session('price_filter')[0]=="50000-100000") checked @endif> <span>{{$currency}} 50,000 - 100,000 per night</span><br>--}}
+                            {{--<input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="100000-150000" @if(Session::has('price_filter') && session('price_filter')[0]=="100000-150000") checked @endif> <span>{{$currency}} 100,000 - 150,000 per night</span><br>--}}
+                            {{--<input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="150000-200000" @if(Session::has('price_filter') && session('price_filter')[0]=="150000-200000") checked @endif> <span>{{$currency}} 150,000 - 200,000 per night</span><br>--}}
+                            {{--<input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="200000-250000" @if(Session::has('price_filter') && session('price_filter')[0]=="200000-250000") checked @endif> <span>{{$currency}} 200,000 - 250,000 per night</span><br>--}}
+                            {{--<input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="250000-300000" @if(Session::has('price_filter') && session('price_filter')[0]=="250000-300000") checked @endif> <span>{{$currency}} 250,000 - 300,000 per night</span><br>--}}
+                            {{--<input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="300000-350000" @if(Session::has('price_filter') && session('price_filter')[0]=="300000-350000") checked @endif> <span>{{$currency}} 300,000 - 350,000 per night</span><br>--}}
+                            {{--<input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="350000-400000" @if(Session::has('price_filter') && session('price_filter')[0]=="350000-400000") checked @endif> <span>{{$currency}} 350,000 - 400,000 per night</span><br>--}}
+                            {{--<input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="400000-450000" @if(Session::has('price_filter') && session('price_filter')[0]=="400000-450000") checked @endif> <span>{{$currency}} 400,000 - 450,000 per night</span><br>--}}
+                            {{--<input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="450000-500000" @if(Session::has('price_filter') && session('price_filter')[0]=="450000-500000") checked @endif> <span>{{$currency}} 450,000 - 500,000 per night</span><br>--}}
+                            {{--<input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="above500000" @if(Session::has('price_filter') && session('price_filter')[0]=="above500000") checked @endif> <span>Above {{$currency}} 500,000 per night</span><br> --}}
+                            @if(isset($price_filters) && count($price_filters) > 0)
+                                @foreach($price_filters as $filter)
+                                <input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="{{$filter->id}}" {{Session::has('price_filter') && session('price_filter')[0]==$filter->id?'checked':''}}>
+                                @if($filter->type == 'between')
+                                    <span>{{$currency.' '.number_format($filter->from).'-'.number_format($filter->to).' per night'}}</span><br>
+                                @elseif($filter->type == 'under')
+                                    <span>{{ucwords($filter->type).' '.$currency.' '.number_format($filter->to).' per night'}}</span><br>
+                                @else
+                                    <span>{{ucwords($filter->type).' '.$currency.' '.number_format($filter->from).' per night'}}</span><br>
+                                @endif
+                                @endforeach
+                            @endif    
                         </div>
                     </div>
 
@@ -167,7 +179,7 @@
                                                     <ul>
                                                         {{--<li><small style="text-decoration: line-through;">MMK 140000</small></li>--}}
                                                         {{--<li>MMK {{$hotel->min_price}}</li>--}}
-                                                        <li>{{ isset($hotel->min_price)? 'MMK '.$hotel->min_price:'' }}</li>
+                                                        <li>{{ isset($hotel->min_price)? $currency.' '.number_format($hotel->min_price,2):'' }}</li>
                                                         <li>
                                                             <a class="btn btn-primary" href="/hotel_detail/{{$hotel->id}}">BOOKING NOW</a>
                                                         </li>
@@ -205,15 +217,16 @@
                                                     <ul>
                                                         <li> {{ isset($suggestedHotelhotel->room_type)? $suggestedHotelhotel->room_type:'' }} </li>
                                                         <li>
-                                                            <table border="1">
+                                                            <table>
                                                                 <tr>
-                                                                    <td>
-                                                                        <i class="fa fa-wifi" aria-hidden="true"></i>
-                                                                    </td>
-                                                                    <td>&nbsp;</td>
-                                                                    <td>
-                                                                        <i class="fa fa-wifi" aria-hidden="true"></i>
-                                                                    </td>
+                                                                    @foreach($hotel->hotelFacilities as $hFacility)
+                                                                        @if(!empty($hFacility->facility->icon))
+                                                                            <td>
+                                                                                <img src="/images/upload/{{$hFacility->facility->icon}}" alt="ficon" class="facility_icon">
+                                                                            </td>
+                                                                            <td>&nbsp;</td>
+                                                                        @endif
+                                                                    @endforeach
                                                                 </tr>
                                                             </table>
                                                         </li>
@@ -223,7 +236,7 @@
                                                     <ul>
                                                         {{--<li><small style="text-decoration: line-through;">MMK 140000</small></li>--}}
                                                         {{--<li>MMK {{$suggestedHotelhotel->min_price}}</li>--}}
-                                                        <li>{{ isset($suggestedHotelhotel->min_price)? 'MMK '.$suggestedHotelhotel->min_price:'' }}</li>
+                                                        <li>{{ isset($suggestedHotelhotel->min_price)? $currency.' '.number_format($suggestedHotelhotel->min_price):'' }}</li>
                                                         <li>
                                                             <a class="btn btn-primary" href="/hotel_detail/{{$suggestedHotelhotel->id}}">BOOKING NOW</a>
                                                         </li>
