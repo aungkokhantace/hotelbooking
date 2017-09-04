@@ -77,7 +77,7 @@
             <tbody>
             <tr>
                 <td width="80%"><strong style="font-size:16px;">Price</strong></td>
-                <td style="font-size:16px;padding-left:5px;">{{session('payable_amount').' '.$currency}}</td>
+                <td style="font-size:16px;padding-left:5px;">{{number_format(session('payable_amount'),2).' '.$currency}}</td>
             </tr>
             </tbody>
         </table>

@@ -9,6 +9,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Core\Utility;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
@@ -19,10 +20,12 @@ use App\Setup\Hotel\HotelRepository;
 use App\Setup\Hotel\RecommendHotelRepository;
 use App\Setup\RoomDiscount\RoomDiscountRepository;
 use App\Setup\Slider\Slider;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Session;
 use Redirect;
 
 class HomeController extends Controller
@@ -109,7 +112,20 @@ class HomeController extends Controller
     //end hotel promotions
         //Get Slider For Home Page
         $template_id        = 1; //1 For Home Page
-        $sliders            = Slider::select('image_url','title','description')->where('template_id',$template_id)->whereNull('deleted_at')->get();
+        $sliders            = Slider::select('image_url','title','description')
+                                    ->where('template_id',$template_id)
+                                    ->whereNull('deleted_at')
+                                    ->get();
+        /*Create Session for check_in date and check_out date*/
+        $check_in           = Carbon::today()->format('d-m-Y');
+        $check_out          = Carbon::tomorrow()->format('d-m-Y');
+        //Firstly, delete your session
+        Utility::deleteSession('check_in');
+        Utility::deleteSession('check_out');
+        //Then, create your session
+        Utility::createSession('check_in',$check_in);
+        Utility::createSession('check_out',$check_out);
+
         return view('frontend.home')
 //            ->with('popular_cities',$popularCityArray)
             ->with('popular_cities',$popularCityEntries)

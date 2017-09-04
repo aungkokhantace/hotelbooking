@@ -9,12 +9,14 @@
 use App\Core\Config\ConfigRepository;
 use App\Log\LogCustom;
 use App\Setup\HotelConfig\HotelConfigRepository;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Validator;
 use Auth;
-use DB;
+//use DB;
 use App\Http\Requests;
-use App\Session;
+//use App\Session;
 use App\Core\User\UserRepository;
 use App\Core\SyncsTable\SyncsTable;
 use InterventionImage;
@@ -260,5 +262,13 @@ class Utility
         $result     = DB::table('price_filter')->find($id);
 
         return $result;
+    }
+
+    public static function createSession($key,$value){
+        Session::put($key,$value);
+    }
+
+    public static function deleteSession($key){
+        Session::forget($key);
     }
 }

@@ -206,8 +206,7 @@
 
                 //if form is valid, open Stripe checkout form
                 if($("#book_and_pay_form").valid()){
-                    var payable = document.getElementById("payable").value;
-
+                    var payable = parseFloat(document.getElementById("payable").value)*100;
                     // Open Checkout with further options:
                     handler.open({
                         name: 'Stripe.com',

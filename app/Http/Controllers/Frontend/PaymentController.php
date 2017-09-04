@@ -197,7 +197,7 @@ class PaymentController extends Controller
 //        }
 
         //get hotel_service_tax if exists, else, get service_tax from core_configs
-        $service_tax = Utility::getServiceTax($hotel_id);
+        $service_tax        = Utility::getServiceTax($hotel_id);
         $service_tax_amount = ($service_tax / 100) * $total_amount_w_discount;
 
         //get government tax
@@ -256,9 +256,11 @@ class PaymentController extends Controller
         if(isset($service_tax) && $service_tax != null && $service_tax != ""){
             session(['service_tax' => $service_tax]);
         }
-        if(isset($service_tax_amount) && $service_tax_amount != null && $service_tax_amount != ""){
+
+        if(isset($service_tax_amount) && !is_null($service_tax_amount)){
             session(['service_tax_amount' => $service_tax_amount]);
         }
+
 //        if(isset($gov_tax) && $gov_tax != null && $gov_tax != ""){
         if(isset($gov_tax)){
             session(['gov_tax' => $gov_tax]);
@@ -282,6 +284,7 @@ class PaymentController extends Controller
     }
 
     public function confirmReservation(Request $request) {
+
         $hotel_id                   = Input::get('hotel_id');
         $available_room_categories  = Input::get('available_room_categories');
 
@@ -595,9 +598,11 @@ class PaymentController extends Controller
         if(isset($service_tax) && $service_tax != null && $service_tax != ""){
             session(['service_tax' => $service_tax]);
         }
-        if(isset($service_tax_amount) && $service_tax_amount != null && $service_tax_amount != ""){
+
+        if(isset($service_tax_amount) && !is_null($service_tax_amount)){
             session(['service_tax_amount' => $service_tax_amount]);
         }
+
 //        if(isset($gov_tax) && $gov_tax != null && $gov_tax != ""){
         if(isset($gov_tax)){
             session(['gov_tax' => $gov_tax]);

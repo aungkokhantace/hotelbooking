@@ -207,7 +207,7 @@
                         <!--Plus 1 to counter for each element rendered-->
                         <?php $counter++; ?>
                         <div class="col-md-4 img-portfolio">
-                            <a href="#">
+                            <a href="/hotel_detail/{{$recommended_hotel->id}}">
                                 <img class="img-responsive img-hover" src="/images/upload/{{$recommended_hotel->logo}}" alt="">
                                 <div class="portfolio-caption2">
                                     <h5><strong>{{$recommended_hotel->name}}</strong><small> > {{$recommended_hotel->city->name}}</small></h5>
@@ -223,7 +223,7 @@
                         <!--Plus 1 to counter for each element rendered-->
                         <?php $counter++; ?>
                         <div class="col-md-4 img-portfolio">
-                            <a href="#">
+                            <a href="/hotel_detail/{{$recommended_hotel->id}}">
                                 <img class="img-responsive img-hover" src="/images/upload/{{$recommended_hotel->logo}}" alt="">
                                 <div class="portfolio-caption2">
                                     <h5><strong>{{$recommended_hotel->name}}</strong><small> > {{$recommended_hotel->city->name}}</small></h5>
