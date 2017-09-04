@@ -270,7 +270,7 @@
                                     </td>
                                     <td>
                                         <ul class="fa-ul price_night">
-                                            <li>MMK {{$roomCategory->price}}</li>
+                                            <li>{{$currency.' '.number_format($roomCategory->price,2)}}</li>
                                         </ul>
                                     </td>
                                     <td>

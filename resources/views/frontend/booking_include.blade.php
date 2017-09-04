@@ -20,38 +20,38 @@
                     <td width="80%">{{$totalRooms}} room</td>
                 @endif
 
-{{--                <td>{{session('total_payable_amount_wo_extrabed')}} MMK</td>--}}
-                <td>{{session('total_amount_wo_discount')}} MMK</td>
-            </tr>
+{{--
+                <td>{{session('total_amount_wo_discount').' '.$currency}}</td>
+                       <td>{{session('total_payable_amount_wo_extrabed')}} MMK</td>--}}   </tr>
 
             <tr>
                 <td width="80%">Discount</td>
-                <td>{{session('total_discount_amount')}} MMK</td>
+                <td>{{session('total_discount_amount').' '.$currency}}</td>
             </tr>
 
             <tr>
                 <td width="80%">Amount after Discount</td>
-                <td>{{session('total_amount_w_discount')}} MMK</td>
+                <td>{{session('total_amount_w_discount').' '.$currency}}</td>
             </tr>
 
             @if((Session::has('total_extrabed_fee')) && session('total_extrabed_fee') != 0)
             <tr>
                 <td width="80%">Extrabed Price</td>
-                <td>{{session('total_extrabed_fee')}} MMK</td>
+                <td>{{session('total_extrabed_fee').' '.$currency}}</td>
             </tr>
             <tr>
                 <td width="80%">Amount including Extrabed Price</td>
-                <td>{{session('total_payable_amount_w_extrabed')}} MMK</td>
+                <td>{{session('total_payable_amount_w_extrabed').' '.$currency}}</td>
             </tr>
             @endif
             <tr>
                 <td width="80%">{{session('service_tax')}}% SERVICE TAX</td>
-                <td>{{session('service_tax_amount')}} MMK</td>
+                <td>{{session('service_tax_amount').' '.$currency}}</td>
             </tr>
 
             <tr>
                 <td width="80%">{{session('gov_tax')}}% GOVERNMENT TAX</td>
-                <td>{{session('gov_tax_amount')}} MMK</td>
+                <td>{{session('gov_tax_amount').' '.$currency}}</td>
             </tr>
 
             {{--<tr>--}}
@@ -65,7 +65,7 @@
             {{--<tfoot>--}}
             <tr>
                 <td width="80%">You'll pay</td>
-                <td>{{session('payable_amount')}} MMK</td>
+                <td>{{session('payable_amount').' '.$currency}}</td>
             </tr>
             </tfoot>
             </tbody>
@@ -77,7 +77,7 @@
             <tbody>
             <tr>
                 <td width="80%"><strong style="font-size:16px;">Price</strong></td>
-                <td style="font-size:16px;padding-left:5px;">{{session('payable_amount')}} MMK</td>
+                <td style="font-size:16px;padding-left:5px;">{{session('payable_amount').' '.$currency}}</td>
             </tr>
             </tbody>
         </table>
