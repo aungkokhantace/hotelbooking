@@ -51,7 +51,7 @@ class HotelRepository implements HotelRepositoryInterface
             $nearby_count       = $input['nearby_count'] + 1;
             for($i=0; $i<$nearby_count; $i++) {
                 //Check If user add empty value
-                if($input['nearby_place'][$i] > 0 AND $input['nearby_distance'][$i] > 0) {
+                if($input['nearby_place'][$i] > 0 && $input['nearby_distance'][$i] > 0) {
                     $paramObj                       = new Hnearby();
                     $paramObj->hotel_id             = $id;
                     $paramObj->nearby_id            = $input['nearby_place'][$i];

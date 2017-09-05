@@ -122,6 +122,7 @@ class HotelRoomCategoryController extends Controller
             if(Input::hasFile('file'))
             {
                 $images                     = Input::file('file');
+                $count                      = 1;
                 foreach($images as $image){
 
                     if (! is_null($image)) {
@@ -143,6 +144,7 @@ class HotelRoomCategoryController extends Controller
                         $imageObj->h_room_category_id   = $lastRoomCategoryId;
                         $imageObj->img_path             = $image_path;
                         $imageObj->description          = $description;
+                        $imageObj->default_image        = isset($count) && $count == 1?1:0;
                         $roomCategoryImageRepo          = new RoomCategoryImageRepository();
                         $roomCategoryImageResult        = $roomCategoryImageRepo->create($imageObj);
 
@@ -152,6 +154,7 @@ class HotelRoomCategoryController extends Controller
                             return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
                                 ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category did not create ...'));
                         }
+                        $count++;
                     }
 
                 }
@@ -295,6 +298,7 @@ class HotelRoomCategoryController extends Controller
             if(Input::hasFile('file'))
             {
                 $images                         = Input::file('file');
+                $count                          = 0;
                 foreach($images as $image) {
                     if($image != null){
                         $path = base_path() . '/public/images/upload/';
@@ -312,6 +316,7 @@ class HotelRoomCategoryController extends Controller
                         $imageObj->h_room_category_id   = $id;
                         $imageObj->img_path             = $image_path;
                         $imageObj->description          = $description;
+                        $imageObj->default_image        = isset($count) && $count == 1?1:0;
 
                         $roomCategoryImageResult        = $roomCategoryImageRepo->create($imageObj);
 
@@ -321,6 +326,7 @@ class HotelRoomCategoryController extends Controller
                             return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
                                 ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category did not update ...'));
                         }
+                        $count++;
                     }
 
                 }

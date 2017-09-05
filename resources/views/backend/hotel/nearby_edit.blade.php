@@ -1,7 +1,7 @@
 @foreach($h_nearby_places as $h_nearby_place)
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="name">{{trans('setup_hotel.nearby')}}<span class="require">*</span></label>
+            <label for="name">{{trans('setup_hotel.nearby')}}</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="hidden" id="nearby_count" name="nearby_count" value="{{ $nearby_places_count }}" />
@@ -29,7 +29,7 @@
 
                         <div class="form-group">
                             <div class="col-md-12">
-                                <input type="text" id="nearby_distance" name="nearby_distance[]" placeholder="{{trans('setup_hotel.nearby-distance')}}" value="{{ isset($h_nearby_place)? $h_nearby_place->km:Request::old('nearby_distance') }}" />
+                                <input type="text" id="nearby_distance" name="nearby_distance[]" placeholder="{{trans('setup_hotel.nearby-distance')}}" value="{{ isset($h_nearby_place)? $h_nearby_place->km:'' }}" />
                                 @if (isset($disCount))
                                     @php ($disCount = $disCount + 1)
                                 @else

@@ -129,7 +129,7 @@
     {{--Start File Upload--}}
     <div class="row">
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <label for="photo" class="text_bold_black">{{trans('setup_hotel.logo')}}</label>
+            <label for="photo" class="text_bold_black">{{trans('setup_hotel.logo')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
             <label class="notice">(Image must be 340*260 pixels)</label>
@@ -665,8 +665,8 @@
                     number_of_floors        : 'required',
                     hotel_class             : 'required',
                     website                 : 'url',
-                    'nearby_place[]'        : 'required',
-                    'nearby_distance[]'     : 'required',
+//                    'nearby_place[]'        : 'required',
+//                    'nearby_distance[]'     : 'required',
                     check_in_time           : 'required',
                     check_out_time          : 'required',
                     breakfast_start_time    : 'required',
