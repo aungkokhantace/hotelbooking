@@ -188,8 +188,12 @@ class BookingController extends Controller
                 }
                 if($booking->status == 5){
                     $h_config           = $h_configRepo->getFirstObjByHotelID($booking->hotel_id);
-                    $first_cancel_days  = $h_config->first_cancellation_day_count;
-                    $second_cancel_days = $h_config->second_cancellation_day_count;
+                    $first_cancel_days  = 0;
+                    $second_cancel_days = 0;
+                    if(isset($h_config) && count($h_config) > 0){
+                        $first_cancel_days  = $h_config->first_cancellation_day_count;
+                        $second_cancel_days = $h_config->second_cancellation_day_count;
+                    }
                     $first_cancel_date  = Carbon::parse($booking->check_in_date)->subDays($first_cancel_days);
                     $second_cancel_date = Carbon::parse($booking->check_in_date)->subDays($second_cancel_days);
                     $today_date         = Carbon::now();
@@ -206,6 +210,12 @@ class BookingController extends Controller
 
                 /* Booking Special Request */
                 $communications         = $communicationRepo->getCommunicationByBookingId($b_id);
+//                foreach($communications as $c){
+//                    if(empty($c->special_request)){
+//                        dd('yes');
+//                    }
+//                    dd('no');
+//                }
 
                 /*get Cancel Reason */
                 $reasons                = $settingRepo->getCancelReason('REASON');
@@ -263,8 +273,12 @@ class BookingController extends Controller
 
         /* Calculate Cancellation Cost */
         $h_config                       = $h_configRepo->getConfigByHotel($booking->hotel_id);
-        $first_cancel_days              = $h_config->first_cancellation_day_count;
-        $second_cancel_days             = $h_config->second_cancellation_day_count;
+        $first_cancel_days              = 0;
+        $second_cancel_days             = 0;
+        if(isset($h_config) && count($h_config) > 0){
+            $first_cancel_days          = $h_config->first_cancellation_day_count;
+            $second_cancel_days         = $h_config->second_cancellation_day_count;
+        }
         $first_cancel_date              = Carbon::parse($booking->check_in_date)->subDays($first_cancel_days)->format('M d, Y');
         $second_cancel_date             = Carbon::parse($booking->check_in_date)->subDays($second_cancel_days)->format('M d, Y');
         $free_cancel_days               = Carbon::parse($first_cancel_date)->diffInDays(Carbon::now());
@@ -409,8 +423,12 @@ class BookingController extends Controller
                      * (3) Send Mail
                      */
                     $h_config                           = $h_configRepo->getObjByID($booking->hotel_id);
-                    $first_cancel_days                  = $h_config->first_cancellation_day_count;
-                    $second_cancel_days                 = $h_config->second_cancellation_day_count;
+                    $first_cancel_days                  = 0;
+                    $second_cancel_days                 = 0;
+                    if(isset($h_config) && count($h_config) > 0){
+                        $first_cancel_days              = $h_config->first_cancellation_day_count;
+                        $second_cancel_days             = $h_config->second_cancellation_day_count;
+                    }
                     $first_cancel_date                  = Carbon::parse($booking->check_in_date)->subDays($first_cancel_days);
                     $second_cancel_date                 = Carbon::parse($booking->check_in_date)->subDays($second_cancel_days);
                     $today_date                         = Carbon::now();

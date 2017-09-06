@@ -254,16 +254,20 @@
                     </div>
                     <div class="payment_formgroups">
                         <div class="col-sm-7 pd_rg_10">
+                            @if(isset($communications) && count($communications) > 0)
                             @foreach($communications as $comm)
-                                <span {{$comm->type == 1?'class=span-right':''}}>
-                                    <b>{{$comm->type==1?'Admin':'Me'}}</b>
-                                </span>
-                                <br>
-                                <span {{$comm->type == 1?'class=span-right':''}}>[{{$comm->created_at}}]</span>
-                                <div class="clear-div"></div>
-                                <div class="div-left">{{$comm->special_request}}</div>
-                                <div class="clear-div line-height"></div>
+                                @if(!empty($comm->special_request))
+                                    <span {{$comm->type == 1?'class=span-right':''}}>
+                                        <b>{{$comm->type==1?'Admin':'Me'}}</b>
+                                    </span>
+                                    <br>
+                                    <span {{$comm->type == 1?'class=span-right':''}}>[{{$comm->created_at}}]</span>
+                                    <div class="clear-div"></div>
+                                    <div class="div-left">{{$comm->special_request}}</div>
+                                    <div class="clear-div line-height"></div>
+                                @endif
                             @endforeach
+                            @endif
                             {!! Form::open(array('url'=>'/booking/communication','class'=>'form-inline','id'=>'communication')) !!}
                             <input type="hidden" name="id" value="{{$booking->id}}">
                             <textarea rows="4" style="width:100%;" id="special_request" name="special_request"></textarea>

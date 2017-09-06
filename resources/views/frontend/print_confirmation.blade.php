@@ -158,7 +158,7 @@
             <td width="50%">
                 <span style="font-size:13px;font-weight:bold;">Hotel Policies</span>
                 <div style="width: 45%">
-                    {!! $h_config->hotel_policies !!}
+                    {!! !is_null($h_config) && !is_null($h_config->hotel_policies)?$h_config->hotel_policies:'' !!}
                 </div>
             </td>
             <td width="50%">
