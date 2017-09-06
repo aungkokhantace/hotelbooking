@@ -380,7 +380,11 @@
 
                     },
                     bed_type            : 'required',
-                    extra_bed_price     : 'required'
+                    extra_bed_price     : 'required',
+//                    'file[]'            : {
+//                        required: true,
+//                        minlength: 1,
+//                    }
 
                 },
                 messages: {
