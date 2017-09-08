@@ -210,12 +210,6 @@ class BookingController extends Controller
 
                 /* Booking Special Request */
                 $communications         = $communicationRepo->getCommunicationByBookingId($b_id);
-//                foreach($communications as $c){
-//                    if(empty($c->special_request)){
-//                        dd('yes');
-//                    }
-//                    dd('no');
-//                }
 
                 /*get Cancel Reason */
                 $reasons                = $settingRepo->getCancelReason('REASON');
@@ -624,7 +618,6 @@ class BookingController extends Controller
                     $hotel_email                        = $hotel->email;
                     $emails                             = array($user_email,$hotel_email);
                     $system_email                       = Utility::getSystemAdminMail();
-
                     if(isset($system_email) && count($system_email) > 0){
                         foreach($system_email as $s_email){
                             array_push($emails,$s_email);
@@ -634,7 +627,7 @@ class BookingController extends Controller
                     $mailTemplate                       = 'frontend.mail.booking_update_mail';
                     $subject                            = 'Booking Updating';
                     $logMessage                         = "update the booking";
-                    $returnState                        = $this->repo->sendMail($mailTemplate,$emails,$subject,$logMessage);
+                    $returnState                        = Utility::sendMail($mailTemplate,$emails,$subject,$logMessage);
                     if($returnState['aceplusStatusCode'] == ReturnMessage::OK){
                         $response['aceplusStatusCode']  = '200';
                     }

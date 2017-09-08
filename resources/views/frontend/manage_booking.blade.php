@@ -7,12 +7,10 @@
     </div>
 
     <section id="popular">
-        <!-- Page Content -->
         <div class="container">
             <div class="row">
-                <!-- Blog Sidebar Widgets Column -->
+                <!-- Blog Sidebar Widget Column -->
                 <div class="col-md-3">
-                    <!-- Blog-->
                     <div>
                         <div class="side_profile">
                             <img src="/assets/shared/images/user.png">
@@ -28,260 +26,357 @@
                             </ul>
                         </div>
                     </div>
-
-                </div><!-- Blog Entries Column -->
-                <div class="col-md-9"><!-- Manage Booking Column-->
+                </div>
+                <!-- Blog Sidebar Widget Column -->
+                <!-- Manage Booking Column -->
+                <div class="col-md-9 user_list">
+                    <div class="search_list">
+                        <h2>Bookings</h2>
+                        <h4 style="margin-top: 30px;"><a href="#" style="color: #626262;">Back to all bookings</a></h4>
+                    </div>
                     <div class="row">
-                        <h3>Your confirmed booking at {{$hotel->name}}</h3>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-4">
-                            <img src="/images/upload/{{$booking->hotel->logo}}" alt="img" style="width: 100%;height: auto;">
-                            <p>{{$hotel->address}}</p>
-                            <p>{{$hotel->phone}}</p>
-                            <p>{{$hotel->email}}</p>
-                            <p>{{$hotel->fax}}</p>
-
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4">
-                            <p>Booking Number : {{$booking->booking_no}}</p>
-                            <hr>
-                            <p>
-                                Check In <br>
-                                <b>{{Carbon\Carbon::parse($booking->check_in_date)->format('M d, Y')}}</b><br/>
-                                from <b>{{$booking->check_in_time}}</b>
-                                <br/><br/>
-                                Check Out <br>
-                                <b>{{Carbon\Carbon::parse($booking->check_out_date)->format('M d, Y')}}</b><br/>
-                                until <b>{{$booking->check_out_time}}</b>
-                            </p>
-                            <hr>
-                            <p>
-                                Price <br/>
-                                <b>{{$booking->total_day}} night, {{$booking->room_count}} room</b>
-                                <h4><b><i>{{$booking->total_payable_amt}} MMK</i></b></h4>
-                            </p>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4">
-                            <a href="#">Change Date</a><br/>
-                            <a href="#">View Policies</a><br/>
-                            <a href="/congratulations/{{$booking->id}}">View Confirmation</a><br/>
-                            <a href="/booking/manage/print/{{$booking->id}}" target="_blank">Print Confirmation</a><br/>
-                            <a href="#" data-toggle="modal" data-target="#cancelBooking">Cancel Booking</a>
-{{--                            <a href="/booking/test/{{$booking->id}}">Cancel Booking</a>--}}
-                            <!-- Cancel Booking Modal -->
-                            @include('frontend.booking_cancel');
-                            <!-- Cancel Booking Modal -->
-                        </div>
-                    </div>
-                </div><!-- Manage Booking Column-->
-            </div>
-            <div class="row">
-                <div class="col-md-offset-3">
-                    <p>Booking Cancel</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-offset-3 col-md-9">
-                    @foreach($booking->rooms as $room)
-                        <div class="row"><!-- Booking Room Information -->
-                            <div class="col-sm-3 col-md-3 col-lg-3">
-                                <img src="{{$room->category_image}}" alt="room_image" style="width: 100%;height: auto;">
+                        <div class="col-md-12">
+                            <div class="table-responsive room_table">
+                                <h3 style="color:#D63090;">Your confirmed booking at
+                                    <a href="#" style="color: #626262;">{{$hotel->name}}</a>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </h3>
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <ul class="fa-ul-new price_night manage-form">
+                                                <li>
+                                                    <div class="thumbnail">
+                                                        <a href="shared/images/us.png">
+                                                            <img src="/images/upload/{{$booking->hotel->logo}}" alt="logo" style="width:100%">
+                                                        </a>
+                                                    </div>
+                                                </li>
+                                                <li style="float:right;">
+                                                    <a href="#">show map</a>
+                                                </li>
+                                                <li>
+                                                    {{$hotel->address}}
+                                                </li>
+                                            </ul>
+                                            <ul class="fa-uls price_night">
+                                                <li style="float:right;">
+                                                    {{--<a href="#">Email property</a>--}}
+                                                    {{$hotel->email}}
+                                                </li>
+                                                <li class="text_fa">{{$hotel->phone}}</li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <ul class="fa-uls price_night manage-form">
+                                                <li class="text_fa">BOOKING NUMBER: <strong>{{$booking->booking_no}}</strong> </li>
+                                                {{--<li class="text_fa">PIN code: <strong>3050</strong></li>--}}
+                                            </ul>
+                                            <ul class="fa-uls price_night">
+                                                <li class="text_fa">Check-in </li>
+                                                <li class="text_fa">
+                                                    <strong>
+                                                        {{Carbon\Carbon::parse($booking->check_in_date)->format('M d, Y')}}
+                                                    </strong>
+                                                </li>
+                                                <li class="text_fa">from {{$booking->check_in_time}}</li>
+                                            </ul>
+                                            <ul class="fa-uls price_night manage-form">
+                                                <li class="text_fa">Check-out </li>
+                                                <li class="text_fa">
+                                                    <strong>
+                                                        {{Carbon\Carbon::parse($booking->check_out_date)->format('M d, Y')}}
+                                                    </strong>
+                                                </li>
+                                                <li class="text_fa">until {{$booking->check_out_time}}</li>
+                                            </ul>
+                                            <ul class="fa-uls price_night">
+                                                <li style="float:right;">
+                                                    <a href="#">Price details</a>
+                                                </li>
+                                                <li class="text_fa">Price</li>
+                                                <li class="text_fa">
+                                                    <strong>
+                                                        {{$booking->total_day}} night, {{$booking->room_count}} room
+                                                    </strong>
+                                                </li>
+                                                {{--<li class="text_fa"><h3>MMK 45,193</h3></li>--}}
+                                                <li class="text_fa"><h4>{{$currency.' '.$booking->total_payable_amt}}</h4></li>
+                                            </ul>
+                                        </td>
+                                        <td class="manageform_right">
+                                            <ul class="fa-ul price_night">
+                                                <li class="text_fa"><a href="#">Changes Date</a></li>
+                                                <li class="text_fa">
+                                                    <a href="/congratulations/{{$booking->id}}">View Confirmation</a>
+                                                </li>
+                                                <li class="text_fa">
+                                                    <a href="/booking/manage/print/{{$booking->id}}" target="_blank">
+                                                        Print Confirmation
+                                                    </a>
+                                                </li>
+                                                <li class="text_fa">
+                                                    <a href="#" data-toggle="modal" data-target="#cancelbooking">Cancel Booking</a>
+                                                    <!-- Modal for Cancel Booking -->
+                                                    @include('frontend.booking_cancel');
+                                                    <!-- Modal for Cancel Booking -->
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <div class="col-md-5">
+                                                <ul class="fa-ul price_night">
+                                                    <li class="text_fa text-center"><h5>Cancellation is free</h5></li>
+                                                    <li class="text_fa text-center">For: 2 months 24 days 13 hours 58 minutes</li>
+                                                    <li class="text_fa tooltips">
+                                                        Cancel your reservation before 16 Sept
+                                                        at 23:59 Yangon time for a full refund. After that time, cancel for US$33.23.
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-4 manage_progress">
+                                                <div class="progress">
+                                                    <div class="progress-bar" role="progressbar" aria-valuenow=50"
+                                                         aria-valuemin="0" aria-valuemax="100" style="width:50%">
+                                                        50%
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 manage_progress">
+                                                <ul class="fa-ul price_night">
+                                                    <li class="text_fa"><a class="cancelbooking" href="#">Cancel your booking</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="col-sm-9 col-md-9 col-lg-9">
-                                <h4>{{$room->room_category}}</h4>
-
-                                {{--Guest : {{$room->guest_count}} <br/>--}}
-                                <div class="row" id="rowEdit{{$room->id}}">
-                                    <div class="col-md-12">
-                                        <i>for</i> <span>{{$room->guest_name}}</span>
-                                        ({{$room->guest_count>1?$room->guest_count.'guests':$room->guest_count.'guest'}})
-                                        <button type="button" class="btn btn-edit" id="{{$room->id}}">
-                                            <span class="glyphicon glyphicon-pencil"></span>Edit
-                                        </button>
+                            <div id="bookingmanage_blog">
+                                @foreach($booking->rooms as $room)
+                                    <div class="blog_booking">
+                                        <div class="col-md-4 left_list">
+                                            <img class="img-hover"
+                                                 src="{{$room->category_image}}"
+                                                 alt="">
+                                        </div>
+                                        <div class="col-md-8 lead_left">
+                                            <h4>Roc one</h4>
+                                            <div class="manageform-edit" id="rowEdit{{$room->id}}">
+                                                <i>for </i> <span>{{$room->guest_name}}</span>
+                                                ({{$room->guest_count>1?$room->guest_count.'guests':$room->guest_count.'guest'}})
+                                                <button type="button" class="btn-four btn-primary-four btn-edit" id="{{$room->id}}">
+                                                    <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>Edit
+                                                </button>
+                                            </div>
+                                            {!! Form::open(array('url'=>'/booking/room/edit',
+                                                                 'class'=>'form-inline',
+                                                                 'id'=>'form'.$room->id)) !!}
+                                            <div class="form-groups row formEdit" id="formEdit{{$room->id}}">
+                                                <div class="col-10">
+                                                    <input type="hidden" name="r_id" value="{{$room->id}}">
+                                                    <input type="hidden" name="b_id" value="{{$booking->id}}">
+                                                    <div class="col-2">
+                                                        <input type="text" class="floatLabel form-control"
+                                                               id="f_name" placeholder="First" name="f_name"
+                                                               value="{{isset($room->user_first_name)?$room->user_first_name:''}}">
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <input type="text" class="floatLabel form-control"
+                                                               id="l_name" placeholder="Last" name="l_name"
+                                                               value="{{isset($room->user_last_name)?$room->user_last_name:''}}">
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <select class="floatLabel form-control" name="g_count">
+                                                            @for($i=1;$i<=$room->max_count;$i++){
+                                                            <option value="{{$i}}" {{$i==$room->guest_count?'selected':''}}>
+                                                                {{$i>1?$i.'guests':$i.'guest'}}
+                                                            </option>
+                                                            @endfor
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-2 text-center">
+                                                        <button type="button" class="btn btn-primary btn-success saveEdit"
+                                                                id="saveEdit-{{$room->id}}">
+                                                            &nbsp; Save &nbsp;
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <button type="button" class="btn btn-primary cancelEdit" id="cancelEdit-{{$room->id}}">
+                                                            Cancel
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {!! Form::close() !!}
+                                            <div class="manageform">
+                                                <h4>Amenities</h4>
+                                                @foreach($room->amenities as $amenity)
+                                                    <p>{{"* ".$amenity->name}}</p>
+                                                @endforeach
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="manageform">
+                                                <h4>Room Facilities</h4>
+                                                @foreach($room->facilities as $facility)
+                                                    <p>{{"* ".$facility->name}}</p>
+                                                @endforeach
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="manageform">
+                                                <h4>Hotel Facilities</h4>
+                                                @foreach($hotel->h_facilities as $h_facility)
+                                                    <p>{{"* ".$h_facility->facility->name}}</p>
+                                                @endforeach
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <a class="cancelbooking" href="#">⨂Change your room</a>
+                                        </div>
                                     </div>
-
+                                @endforeach
+                            </div>
+                            <div class="payment_formtitle">
+                                <!-- First Blog Post Left -->
+                                <div class="payment_list">
+                                    <h4>Book for Transporation</h4>
+                                </div>
+                            </div>
+                            <div class="payment_form">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="booking_taxi"
+                                               value="1" {!! $b_request->booking_taxi==1?'checked':'' !!}
+                                        >
+                                    </label>
+                                    <img src="/assets/shared/images/transporation.png">
+                                    <span style="font-size:15px;">I'm interest in booking a taxi in advance</span>
+                                </div>
+                            </div>
+                            <div class="payment_formtitle">
+                                <!-- First Blog Post Left -->
+                                <div class="payment_list">
+                                    <h4>Book for Tour Guide</h4>
+                                </div>
+                            </div>
+                            <div class="payment_form">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="booking_tour_guide"
+                                               value="1" {!! $b_request->booking_tour_guide==1?'checked':'' !!}
+                                        >
+                                    </label>
+                                    <img src="/assets/shared/images/tour.png">
+                                    <span style="font-size:15px;">I'm interest in booking tour guide.</span>
+                                </div>
+                            </div>
+                            <div class="payment_formtitle">
+                                <!-- First Blog Post Left -->
+                                <div class="payment_list">
+                                    <h4>Talk Here</h4>
+                                </div>
+                            </div>
+                            <div class="last_form">
+                                <div class="formtitle_left">
+                                    <span>Special Requests</span>
+                                </div>
+                                <div class="formtitle_left">
+                                    <span>We'll forward these to your hotel or host immediately upon booking.</span>
+                                </div>
+                                <div class="formtitles_text">
+                                    <span>Please be aware that all requests are subject to availability.</span>
+                                </div>
+                                <div class="list_style" style="float:left;">
+                                    <input type="checkbox" name="non_smoking_request"
+                                           value="1" {!! $b_request->non_smoking_room==1?'checked':'' !!} disabled
+                                    >
+                                    <span>I'd like a non-smoking room</span><br>
+                                    <input type="checkbox" name="late_check_in_request"
+                                           value="1" {!! $b_request->late_check_in==1?'checked':'' !!} disabled
+                                    >
+                                    <span>I'd like a late check-in</span><br>
+                                    <input type="checkbox" name="high_floor_request"
+                                           value="1" {!! $b_request->high_floor_room==1?'checked':'' !!} disabled
+                                    >
+                                    <span>I'd like a room on a high floor</span><br>
+                                    <input type="checkbox" name="large_bed_request"
+                                           value="1" {!! $b_request->large_bed==1?'checked':'' !!} disabled
+                                    >
+                                    <span>I'd like a large bed</span><br>
+                                    <input type="checkbox" name="early_check_in_request"
+                                           value="1" {!! $b_request->early_check_in==1?'checked':'' !!} disabled
+                                    >
+                                    <span>I'd like an early check-in</span><br>
+                                </div>
+                                <div class="list_style">
+                                    <input type="checkbox" name="twin_bed_request"
+                                           value="1" {!! $b_request->twin_bed==1?'checked':'' !!} disabled>
+                                    <span>I'd like twin beds</span><br>
+                                    <input type="checkbox" name="quiet_room_request"
+                                           value="1" {!! $b_request->quiet_room==1?'checked':'' !!} disabled>
+                                    <span>I'd like a quiet room</span><br>
+                                    <input type="checkbox" name="airport_transfer_request"
+                                           value="1" {!! $b_request->airport_transfer==1?'checked':'' !!} disabled>
+                                    <span>I'd like an airport transfer</span><br>
+                                    <input type="checkbox" name="private_parking_request"
+                                           value="1" {!! $b_request->private_parking==1?'checked':'' !!} disabled>
+                                    <span>I'd like a private parking</span><br>
+                                    <input type="checkbox" name="baby_cot_request"
+                                           value="1" {!! $b_request->baby_cot==1?'checked':'' !!} disabled>
+                                    <span>I'd like to have a baby cot <br>(additional charges may apply)</span>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="formtitle_left">
+                                    <span>Special Requests</span>
                                 </div>
 
-                                <div class="row formEdit" id="formEdit{{$room->id}}">
-                                    <div class="col-md-12">
-                                        {!! Form::open(array('url'=>'/booking/room/edit','class'=>'form-inline','id'=>'form'.$room->id)) !!}
-                                            <input type="hidden" name="r_id" value="{{$room->id}}">
-                                            <input type="hidden" name="b_id" value="{{$booking->id}}">
-                                            <input type="text" name="f_name" placeholder="First" class="form-control" value="{{isset($room->user_first_name)?$room->user_first_name:''}}">
-                                            <input type="text" name="l_name" placeholder="Last" class="form-control" value="{{isset($room->user_last_name)?$room->user_last_name:''}}">
-                                            <select class="form-control" name="g_count">
-                                                @for($i=1;$i<=$room->max_count;$i++){
-                                                    <option value="{{$i}}" {{$i==$room->guest_count?'selected':''}}>
-                                                        {{$i>1?$i.'guests':$i.'guest'}}
-                                                    </option>
-                                                @endfor
-                                            </select>
-                                            <button type="button" class="btn btn-success saveEdit" id="saveEdit-{{$room->id}}">
-                                                Save
-                                            </button>
-                                            <button type="button" class="btn cancelEdit" id="cancelEdit-{{$room->id}}">Cancel</button>
-                                        {!! Form::close() !!}
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <p>
-                                            <b>Amenities</b><br/>
-
-                                            @foreach($room->amenities as $amenity)
-                                                {{"* ".$amenity->name}}
-                                            @endforeach
-                                            <br/>
-
-                                            <b>Room Facilities</b><br/>
-                                            @foreach($room->facilities as $facility)
-                                                {{"* ".$facility->name}}
-                                            @endforeach
-                                            <br/>
-                                            <b>Hotel Facilities</b><br/>
-                                            @foreach($hotel->h_facilities as $h_facility)
-                                                {{"* ".$h_facility->facility->name}}
-                                            @endforeach
-                                        </p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div><!-- booking Room Information -->
-                        <div class="row">
-                            <div class="col-md-offset-3 col-md-2">
-                                <button type="button" href="#" data-toggle="modal" data-target="#cancelRoom" class="btn btn-danger">
-                                    <span class="glyphicon glyphicon-remove-circle" style="color: #fff;"></span> Cancel this room
-                                </button>
-                            </div>
-                        </div>
-                        <hr/><br/>
-                    @endforeach
-                </div>
-            </div>
-            <!-- /.row -->.
-
-            <div class="row"> <!-- Transportation-->
-                <div class="col-md-offset-3 col-md-9">
-                    <!-- First Blog Post Left -->
-                    <div class="payment_list">
-                        <h4>Book for Transportation</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-offset-3 col-md-9 payment_form">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="booking_taxi" value="1" {!! $b_request->booking_taxi==1?'checked':'' !!}>
-                        </label>
-                        <img src="/assets/shared/images/transporation.png">
-                        <span style="font-size:15px;">I'm interested in booking a taxi in advance</span>
-                    </div>
-                </div>
-            </div><!-- Transportation -->
-
-            <div class="row"><!-- Tour Guide -->
-                <div class="col-md-offset-3 col-md-9">
-                    <!-- First Blog Post Left -->
-                    <div class="payment_list">
-                        <h4>Book for Tour Guide</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-offset-3 col-md-9 payment_form">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="booking_tour_guide" value="1" {!! $b_request->booking_tour_guide==1?'checked':'' !!}>
-                        </label>
-                        <img src="/assets/shared/images/tour.png">
-                        <span style="font-size:15px;">I'm interested in booking tour guide.</span>
-                    </div>
-                </div>
-            </div><!-- Tour Guide -->
-
-            <!-- Communication Channel -->
-            <div class="row">
-                <div class="col-md-offset-3 col-md-9">
-                    <!-- First Blog Post Left -->
-                    <div class="payment_list">
-                        <h4>Talk Here</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-offset-3 col-md-9 last_form">
-                    <div class="formtitle_left">
-                        <span>Special Requests</span>
-                    </div>
-                    <div class="formtitle_left">
-                        <span>We'll forward these to your hotel or host immediately upon booking.</span>
-                    </div>
-
-                    <div>
-                        <span>Please be aware that all requests are subject to availability.</span>
-                    </div>
-                    <div class="list_style" style="float:left;">
-                        <input type="checkbox" name="non_smoking_request" value="1" {!! $b_request->non_smoking_room==1?'checked':'' !!} disabled>
-                        <span>I'd like a non-smoking room</span><br>
-                        <input type="checkbox" name="late_check_in_request" value="1" {!! $b_request->late_check_in==1?'checked':'' !!} disabled>
-                        <span>I'd like a late check-in</span><br>
-                        <input type="checkbox" name="high_floor_request" value="1" {!! $b_request->high_floor_room==1?'checked':'' !!} disabled>
-                        <span>I'd like a room on a high floor</span><br>
-                        <input type="checkbox" name="large_bed_request" value="1" {!! $b_request->large_bed==1?'checked':'' !!} disabled>
-                        <span>I'd like a large bed</span><br>
-                        <input type="checkbox" name="early_check_in_request" value="1" {!! $b_request->early_check_in==1?'checked':'' !!} disabled>
-                        <span>I'd like an early check-in</span><br>
-                    </div>
-                    <div class="list_style">
-                        <input type="checkbox" name="twin_bed_request" value="1" {!! $b_request->twin_bed==1?'checked':'' !!} disabled>
-                        <span>I'd like twin beds</span><br>
-                        <input type="checkbox" name="quiet_room_request" value="1" {!! $b_request->quiet_room==1?'checked':'' !!} disabled>
-                        <span>I'd like a quiet room</span><br>
-                        <input type="checkbox" name="airport_transfer_request" value="1" {!! $b_request->airport_transfer==1?'checked':'' !!} disabled>
-                        <span>I'd like an airport transfer</span><br>
-                        <input type="checkbox" name="private_parking_request" value="1" {!! $b_request->private_parking==1?'checked':'' !!} disabled>
-                        <span>I'd like a private parking</span><br>
-                        <input type="checkbox" name="baby_cot_request" value="1" {!! $b_request->baby_cot==1?'checked':'' !!} disabled>
-                        <span>I'd like to have a baby cot <br>(additional charges may apply)</span>
-                    </div>
-                    <br>
-                    <div class="formtitle_left">
-                        <span>Special Request</span>
-                    </div>
-                    <div class="payment_formgroups">
-                        <div class="col-sm-7 pd_rg_10">
-                            @if(isset($communications) && count($communications) > 0)
-                            @foreach($communications as $comm)
-                                @if(!empty($comm->special_request))
-                                    <span {{$comm->type == 1?'class=span-right':''}}>
-                                        <b>{{$comm->type==1?'Admin':'Me'}}</b>
-                                    </span>
-                                    <br>
-                                    <span {{$comm->type == 1?'class=span-right':''}}>[{{$comm->created_at}}]</span>
-                                    <div class="clear-div"></div>
-                                    <div class="div-left">{{$comm->special_request}}</div>
-                                    <div class="clear-div line-height"></div>
+                                @if(isset($communications) && count($communications) > 0)
+                                    @foreach($communications as $comm)
+                                        @if(!empty($comm->special_request))
+                                            <div class="ptext_left" style="width: 100%;">
+                                                <h5>{{$comm->type==1?'Admin':'Me'}}</h5>
+                                                <h6>[{{$comm->created_at}}]</h6>
+                                                <div class="textarea_p">
+                                                    <p>{{$comm->special_request}}</p>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
                                 @endif
-                            @endforeach
-                            @endif
-                            {!! Form::open(array('url'=>'/booking/communication','class'=>'form-inline','id'=>'communication')) !!}
-                            <input type="hidden" name="id" value="{{$booking->id}}">
-                            <textarea rows="4" style="width:100%;" id="special_request" name="special_request"></textarea>
-                            <br>
-                            <button type="button" class="btn btn-success" id="communication-btn">Say</button>
-                            {!! Form::close() !!}
+                                {{--<h5>Me</h5>--}}
+                                {{--<h6>[2017-08-17 11:47:10]</h6>--}}
+                                {{--<div class="textarea_p">--}}
+                                {{--<p></p>--}}
+                                {{--</div>--}}
+
+                                {{--<div class="ptext_right" style="width: 100%;">--}}
+                                {{--<h5>Admin</h5>--}}
+                                {{--<h6>[2017-08-17 12:47:10]</h6>--}}
+                                {{--<div class="textarea_p">--}}
+                                {{--<p></p>--}}
+                                {{--</div>--}}
+                                {{--</div>--}}
+                                <div class="clearfix"></div>
+                                {!! Form::open(array('url'=>'/booking/communication','class'=>'form-inline','id'=>'communication')) !!}
+                                <div class="textarea">
+                                    <input type="hidden" name="id" value="{{$booking->id}}">
+                                    <textarea class="col-xs-7" id="special_request" name="special_request"></textarea>
+                                </div>
+                                <div class="clearfix"></div>
+                                <button type="button" class="btn btn-primary btn-success" id="communication-btn">Say</button>
+                                {!! Form::close() !!}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Communication Channel -->
+                <!-- Manage Booking Column -->
 
+            </div>
         </div>
-        <!-- /.container -->
     </section>
 @stop
 
@@ -295,11 +390,13 @@
                 $('#rowEdit'+id).hide();
                 $('#formEdit'+id).show();
             });
+
             $('.saveEdit').click(function(){
                 var id_str          = $(this).attr('id');
                 var id_split        = id_str.split('-');
                 var id              = id_split[1];
                 var serializedData  = $('#form'+id).serialize();
+                $('#saveEdit-'+id).attr("disabled","disabled");
                 $.ajax({
                     url: '/booking/room/edit',
                     type: 'POST',
@@ -359,6 +456,7 @@
 
             $('#communication-btn').click(function(){
                 var serializedData  = $('#communication').serialize();
+                $('#communication-btn').attr("disabled","disabled")
                 $.ajax({
                     url: '/booking/communication',
                     type: 'POST',

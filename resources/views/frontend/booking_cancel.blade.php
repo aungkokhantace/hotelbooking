@@ -1,43 +1,56 @@
-<div class="modal fade" id="cancelBooking" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="cancelbooking" role="dialog">
     <div class="modal-dialog">
-        <div class="col-md-offset-2 modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&bigotimes;</button>
-                <h4>Cancel Your Booking</h4>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-headers">
+                <button type="button" class="closed" data-dismiss="modal">⨂</button>
+                <h4 class="modal-title">Cancellation Your Booking</h4>
             </div>
-            <div class="modal-body">
-                <div class="container">
+            <div class="modalcancel-body">
+                <div class="col-md-12">
                     <div class="row">
-                        <div class="col-sm-7 col-md-7">
-                            <h5><b>Cancellation Policy</b></h5>
+                        <h5>Cancellation Policy</h5>
+                        <p style="padding: 15px 0px;">
                             {{$booking->room_count.' Rooms  .................   '}}<b>{{$booking->charge}}</b>
-                            {!! Form::open(array('url'=>'/booking/cancel','class'=> 'form-horizontal', 'id'=>'booking_cancel')) !!}
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input type="hidden" name="id" value="{{$booking->id}}">
-                            <div class="row">
-                                <div class="col-md-12" style="padding: 15px;">
-                                    @foreach($reasons as $reason)
-                                        <input type="radio" id="radio" name="reason" value="{{$reason->value}}">
-                                        {{$reason->description}}
-                                        <br>
-                                    @endforeach
-                                </div>
+                        </p>
+                        {!! Form::open(array('url'=>'/booking/cancel','id'=>'booking_cancel')) !!}
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="id" value="{{$booking->id}}">
+                        @foreach($reasons as $reason)
+                            <div class="radio">
+                                <label>
+                                    <input type="radio"
+                                           name="reason"
+                                           id="radio"
+                                           value="{{$reason->value}}"
+                                    >
+                                    {{$reason->description}}
+                                </label>
                             </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <button type="button" class="btn btn-success btn-yes">Yes, Cancel this booking.</button>
-                                </div>
-                                <div class="col-md-4">
-                                    <button type="button" class="btn btn-no">No, I don't want to cancel.</button>
-                                </div>
-                            </div>
-                            {!! Form::close() !!}
+                        @endforeach
 
-                        </div>
-                    </div><!-- /.row -->
-                </div><!-- /.container -->
+                    </div>
+                </div>
             </div>
+            <div class="modal-footer">
+                <div class="col-sm-6 pd_lf_5">
+                    <button type="button"
+                            class="btn btn-defaulted1 btn-yes"
+                            data-dismiss="modal">
+                        Yes, Cancel this booking
+                    </button>
+                </div>
+                <div class="col-sm-6 pd_lf_5">
+                    <button type="button"
+                            class="btn btn-defaulted2 btn-no"
+                            data-dismiss="modal">
+                        No,I don't want to cancel
+                    </button>
+                </div>
+            </div>
+            {!! Form::close() !!}
         </div>
+        <!-- Modal content -->
     </div>
 </div>
 <!-- start login ajax-->
