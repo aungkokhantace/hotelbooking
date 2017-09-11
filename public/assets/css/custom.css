@@ -62,9 +62,9 @@
     overflow: auto !important;
     /*margin-left: 20% !important;*/
 }
-body{
-    background: #EFBDE0;
-}
+/*body{*/
+    /*background: #EFBDE0;*/
+/*}*/
 
 .sidebar{
     /*padding-top: 18% !important;*/
@@ -76,21 +76,21 @@ body{
     /*padding-top: 18% !important;*/
 }
 
-.sidebar-bg {
-    background: #AE3D8D !important;
-}
+/*.sidebar-bg {*/
+    /*background: #AE3D8D !important;*/
+/*}*/
 
 .footer{
     /*margin-left: 20% !important;*/
 }
 
-.btn-primary{
-    background-color: #AE479B!important;
-}
+/*.btn-primary{*/
+    /*background-color: #AE479B!important;*/
+/*}*/
 
-.btn-primary:hover{
-    background-color: #7C0F58!important;
-}
+/*.btn-primary:hover{*/
+    /*background-color: #7C0F58!important;*/
+/*}*/
 
 .notice{
     color: red;

@@ -134,7 +134,7 @@ class FacilityGroupController extends Controller
 
             $result = $this->repo->update($paramObj);
         }
-
+//         dd($result);
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
 
