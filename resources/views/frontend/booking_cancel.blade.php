@@ -6,6 +6,7 @@
                 <button type="button" class="closed" data-dismiss="modal">⨂</button>
                 <h4 class="modal-title">Cancellation Your Booking</h4>
             </div>
+            {!! Form::open(array('url'=>'/booking/cancel','id'=>'booking_cancel', 'method'=>'post')) !!}
             <div class="modalcancel-body">
                 <div class="col-md-12">
                     <div class="row">
@@ -13,7 +14,6 @@
                         <p style="padding: 15px 0px;">
                             {{$booking->room_count.' Rooms  .................   '}}<b>{{$booking->charge}}</b>
                         </p>
-                        {!! Form::open(array('url'=>'/booking/cancel','id'=>'booking_cancel')) !!}
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="id" value="{{$booking->id}}">
                         @foreach($reasons as $reason)
@@ -93,7 +93,6 @@
                 },
                 error: function(data){
                     console.log(data);
-                    alert(data);
                     swal({title: "Opps", text: "Sorry, Please Try Again!", type: "error"},
                             function(){
                                 location.reload();

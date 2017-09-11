@@ -379,7 +379,7 @@ class BookingController extends Controller
                         $mailTemplate                       = 'frontend.mail.cancel_mail';
                         $subject                            = 'Booking Cancellation';
                         $logMessage                         = 'update the booking id - '.$id;
-                        $returnState                        = $this->repo->sendMail($mailTemplate,$emails,$subject,$logMessage);
+                        $returnState                        = Utility::sendMail($mailTemplate,$emails,$subject,$logMessage);
 
                         if($returnState['aceplusStatusCode'] == ReturnMessage::OK){
                             $response['aceplusStatusCode']  = '200';
@@ -471,7 +471,7 @@ class BookingController extends Controller
                                     $mailTemplate                   = 'frontend.mail.cancel_mail';
                                     $subject                        = 'Booking Cancellation';
                                     $logMessage                     = 'update the booking id - '.$id;
-                                    $returnState                    = $this->repo->sendMail($mailTemplate,$emails,$subject,$logMessage);
+                                    $returnState                    = Utility::sendMail($mailTemplate,$emails,$subject,$logMessage);
                                     if($returnState['aceplusStatusCode'] == ReturnMessage::OK){
                                         $response['aceplusStatusCode'] = '200';
                                         $response['param']             = $booking->id;
@@ -508,7 +508,6 @@ class BookingController extends Controller
                             $hotel_email                    = $hotel->email;
                             $emails                         = array($user_email,$hotel_email);
                             $system_email                   = Utility::getSystemAdminMail();
-
                             if(isset($system_email) && count($system_email) > 0){
                                 foreach($system_email as $s_email){
                                     array_push($emails,$s_email);
@@ -518,7 +517,7 @@ class BookingController extends Controller
                             $mailTemplate                   = 'frontend.mail.cancel_mail';
                             $subject                        = 'Booking Cancellation';
                             $logMessage                     = 'update the booking id - '.$id;
-                            $returnState                    = $this->repo->sendMail($mailTemplate,$emails,$subject,$logMessage);
+                            $returnState                    = Utility::sendMail($mailTemplate,$emails,$subject,$logMessage);
                             if($returnState['aceplusStatusCode'] == ReturnMessage::OK){
                                 $response['aceplusStatusCode'] = '200';
                                 $response['param']             = $booking->id;
@@ -646,7 +645,7 @@ class BookingController extends Controller
         }
     }
 
-    public function  communication(Request $request){
+    public function communication(Request $request){
         try{
             $response['aceplusStatusCode']              = '500';
 
@@ -689,7 +688,7 @@ class BookingController extends Controller
         $settingRepo        = new CoreSettingRepository();
         $reasons            = $settingRepo->getCancelReason('REASON');
 
-        return view('frontend.cancel_test')->with('reasons',$reasons)->with('booking',$booking);
+        return view('frontend.booking_cancel')->with('reasons',$reasons)->with('booking',$booking);
     }
 
 

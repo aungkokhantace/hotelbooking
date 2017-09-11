@@ -30,55 +30,59 @@
                     </div>
 
                 </div><!-- Blog Entries Column -->
-                <div class="col-md-9"><!-- Booking Cancellation Show Column-->
-                    <div class="row">
-                        <a href="/bookingList">Back to all bookings</a>
+                <div class="col-md-9 user_list"><!-- Booking Cancellation Show Column-->
+                    <div class="search_list">
+                        <h2>Bookings</h2>
+                        <h4 style="margin-top: 30px;">
+                            <a href="/bookingList" style="color: #626262;">Back to all bookings</a>
+                        </h4>
                     </div>
                     <div class="row">
-                        <div class="col-md-12" style="border: solid 2px grey;">
-                            <h4>Your reservation at {{$hotel->name}} has been cancelled.</h4>
-                            <p>
-                                We have been sent an email confirming your cancellation to {{$customer['email']}}.
-                            </p>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <img src="/images/upload/{{$hotel->logo}}" style="width: 100%;height: 50%;" alt="hotel_logo">
-                        </div>
-                        <div class="col-md-10">
-                            <div class="row">
-                                <span style="font-size: 14pt;font-weight: bold;">{{$hotel->name}}</span>
-                                <p>
-                                    {{$hotel->address}}
-                                </p>
+                        <div class="col-md-12">
+                            <div class="booking_manage">
+                                <h3>Hi {{$customer['first_name']}}, your reservation at {{$hotel->name}} has been cancelled.</h3>
+                                <p><strong>We have sent an email confirming your cancellation to {{$customer['email']}}.</strong></p>
+                                <p>We are in the process of updating your information. This change will soon be visible erverywhere.</p>
                             </div>
-                            <!-- -->
                         </div>
                     </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-md-2" style="text-align: center;">
-                            <span style="font-size:8pt;">CHECK IN</span><br/>
-                                    <span style="font-size:11pt;font-weight: bold;">
-                                        {{$booking->check_in_date_fmt}}
-                                    </span>
-                        </div>
-                        <div class="col-md-3" style="text-align: center;">
-                            <span style="font-size:8pt;">CHECK OUT</span><br>
-                                    <span style="font-size:11pt;font-weight: bold;">
-                                        {{$booking->check_out_date_fmt}}
-                                    </span>
-                        </div>
-                        <div class="col-md-6">
-                            <span style="font-size: 14pt;font-weight: bold;color: red;">Cancelled</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-offset-1 col-md-10">
-                            <span>{{$booking->total_day}} Night</span>
-                            <span>{{$booking->room_count}} Rooms</span>
+                    <div>
+                        <div class="blog_booking">
+                            <div class="col-md-4">
+                                <img class="img-hover" src="/images/upload/{{$hotel->logo}}" alt="">
+                            </div>
+                            <div class="col-md-8">
+                                <h4>{{$hotel->name}} <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></h4>
+                                <p>{{$hotel->address}} <a href="#">Show map</a></p>
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <ul class="cancel_ul price_night">
+                                            <li class="text-center">CHECK-IN</li>
+                                            <li class="text-center">{{$booking->check_in_date_fmt}}</li>
+                                            {{--<li class="text-center"><h3>2</h3></li>--}}
+                                            {{--<li class="text-center">FEB 2017</li>--}}
+                                            {{--<li class="text-center">Friday</li>--}}
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <ul class="cancel_ul1 price_night">
+                                            <li class="text-center">CHECK-IN</li>
+                                            <li class="text-center">{{$booking->check_out_date_fmt}}</li>
+                                            {{--<li class="text-center"><h3>3</h3></li>--}}
+                                            {{--<li class="text-center">FEB 2017</li>--}}
+                                            {{--<li class="text-center">Saturday</li>--}}
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4 cancelled">
+                                        <h3>Cancelled</h3>
+                                    </div>
+                                    <div class="col-md-8 text-center">
+                                        <div class="nroom">
+                                            <p>{{$booking->total_day}} night, {{$booking->room_count}} room</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div><!-- Booking Cancellation Show Column-->

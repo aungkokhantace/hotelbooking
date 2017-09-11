@@ -104,7 +104,7 @@
                                                     </strong>
                                                 </li>
                                                 {{--<li class="text_fa"><h3>MMK 45,193</h3></li>--}}
-                                                <li class="text_fa"><h4>{{$currency.' '.$booking->total_payable_amt}}</h4></li>
+                                                <li class="text_fa"><h4>{{$currency.' '.number_format($booking->total_payable_amt,2)}}</h4></li>
                                             </ul>
                                         </td>
                                         <td class="manageform_right">

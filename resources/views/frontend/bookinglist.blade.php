@@ -115,7 +115,7 @@
                                         <div id="bookinglist_blog">
                                             <div class="blog_booking">
                                                 <div class="col-md-4 left_list">
-                                                    <img class="img-responsive img-hover" src="/images/upload/{{$booking->hotel->logo}}" alt="">
+                                                    <img class="img-responsive img-hover" src="/images/upload/{{$b_cancel->hotel->logo}}" alt="">
                                                 </div>
                                                 <div>
                                                     <div class="col-md-8 listing_left">
