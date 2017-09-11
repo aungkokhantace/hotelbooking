@@ -19,7 +19,8 @@ use App\Backend\Infrastructure\Forms\HotelEntryRequest;
 use App\Backend\Infrastructure\Forms\HotelEditRequest;
 use App\Setup\Hotel\HotelRepositoryInterface;
 
-use Auth;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use App\Core\FormatGenerator As FormatGenerator;
@@ -215,7 +216,9 @@ class HotelController extends Controller
             $hotel_nearby     = $hotel_nearbyRepo->getObjs();
 
             $h_nearby_places        = Hnearby::where('hotel_id',$id)->whereNull('deleted_at')->get();
+//            dd($h_nearby_places);
             $nearby_places_count    = count($h_nearby_places) - 1;
+//            dd($nearby_places_count);
 
             $admin_id = $hotel->admin_id;
             $userRepo = new UserRepository();
@@ -343,7 +346,7 @@ class HotelController extends Controller
         $paramObj->breakfast_end_time       = $breakfast_end_time;
 
         $result = $this->repo->update($paramObj,$input);
-
+//        dd($result);
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\Hotel\HotelController@index')
                 ->withMessage(FormatGenerator::message('Success', 'Hotel updated ...'));

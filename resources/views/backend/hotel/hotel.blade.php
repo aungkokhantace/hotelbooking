@@ -418,7 +418,11 @@
     </div>
 
     @if(isset($hotel))
+        @if($h_nearby_places->count()==0)
+            @include('backend.hotel.nearby')
+            @else
         @include('backend.hotel.nearby_edit')
+        @endif
     @else
         @include('backend.hotel.nearby')
     @endif

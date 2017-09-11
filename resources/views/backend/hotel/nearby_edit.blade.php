@@ -1,3 +1,6 @@
+
+
+
 @foreach($h_nearby_places as $h_nearby_place)
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">

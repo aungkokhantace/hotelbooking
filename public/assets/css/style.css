@@ -6,7 +6,7 @@
 /* 1.1 Reset and overrides */
 
 body {
-    background: #d9e0e7;
+    /*background: #d9e0e7;*/
     font-size: 12px;
     font-family: 'Open Sans', "Helvetica Neue",Helvetica,Arial,sans-serif;
     color: #707478;
@@ -695,7 +695,7 @@ label {
     padding: 0;
     border: none;
     line-height: 28px;
-    color: #AE479B;
+    color: #016AE7;
     font-family: Helvetica;
     font-weight: bold;
 }
