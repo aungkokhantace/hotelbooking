@@ -9,6 +9,22 @@
 
     <div class="row">
         <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+            <br>
+            <div>
+                @if($booking->can_refund == 1)
+                    {!! Form::open(array('url'=>'backend/booking/refund','class'=>'form-inline')) !!}
+                    <input type="hidden" name="b_num" value="{!! $booking->id !!}">
+                    <div class="form-group">
+                        <select class="form-control" name="refund_percentage">
+                            <option value=100>100%</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-danger"><b>Refund</b></button>
+                    {!! Form::close() !!}
+                @endif
+            </div>
+            <br>
             <div class="listing">
                 <table class="table table-striped list-table" id="list-table">
                     <thead>

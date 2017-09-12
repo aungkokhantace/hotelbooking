@@ -446,9 +446,11 @@ Route::group(['middleware' => 'web'], function () {
             //Hotel Admin Group
             Route::get('hotel_admin/dashboard', array('as'=>'backend/hotel_admin/dashboard', 'uses'=>'Setup\HotelAdmin\HotelDashboardController@dashboard'));
 
-            //Hotel Booking
+            //Booking List
             Route::get('booking', array('as'=>'backend/booking', 'uses'=>'Setup\HotelBooking\HotelBookingController@index'));
             Route::get('booking/{id}', array('as'=>'backend/booking/{id}', 'uses'=>'Setup\HotelBooking\HotelBookingController@detail'));
+            Route::post('booking/refund',array('as'=>'backend/booking/refund',
+                                               'uses'=>'Setup\HotelBooking\HotelBookingController@refundByHotelAdmin'));
             Route::get('communication', array('as'=>'backend/communication', 'uses'=>'Setup\HotelBooking\CommunicationController@index'));
             Route::get('communication/reply/{id}', array('as'=>'backend/communication/reply/{id}', 'uses'=>'Setup\HotelBooking\CommunicationController@show'));
             Route::post('communication/reply/store', array('as'=>'backend/communication/reply/store', 'uses'=>'Setup\HotelBooking\CommunicationController@store'));

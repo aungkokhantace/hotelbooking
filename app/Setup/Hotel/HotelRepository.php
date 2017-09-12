@@ -352,4 +352,10 @@ class HotelRepository implements HotelRepositoryInterface
         $objs   = Hotel::whereNull('deleted_at')->where('email',$email)->first();
         return $objs;
     }
+
+    public function getHotelByAdminId($admin_id){
+        $obj = Hotel::whereNull('deleted_at')->where('admin_id',$admin_id)->first();
+
+        return $obj;
+    }
 }
