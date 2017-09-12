@@ -451,7 +451,7 @@ class BookingController extends Controller
                             $updateResult               = $paymentStripeRepo->update($stripe);
                             if($updateResult['aceplusStatusCode'] == ReturnMessage::OK){
                                 /* Change Status */
-                                $booking->status                = 3;
+                                $booking->status                = 7;
                                 $booking->booking_cancel_reason = $reason;
                                 $result                         = $this->repo->changeBookingStatus($booking);
                                 if($result['aceplusStatusCode'] == ReturnMessage::OK){

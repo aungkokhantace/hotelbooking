@@ -638,28 +638,30 @@ class PaymentController extends Controller
 
     public function bookAndPay() {
         //get input fields
-        $country = Input::get('country');
-        $phone = Input::get('phone');
+        $country                = Input::get('country');
+        $phone                  = Input::get('phone');
        
         //get session data
-        $hotel_id = session('hotel_id');
-        $hotelRepo = new HotelRepository();
-        $hotel = $hotelRepo->getObjByID($hotel_id);
+        $hotel_id               = session('hotel_id');
+        $hotelRepo              = new HotelRepository();
+        $hotel                  = $hotelRepo->getObjByID($hotel_id);
+        //Generate Booking Number
+        $booking_number         = Utility::generateBookingNumber();
 
-        $booking_number = Utility::generateBookingNumber();
+        $user_id                = session('customer')['id'];
 
-        $user_id = session('customer')['id'];
-
-        $check_in_date_session = session('check_in');
+        $check_in_date_session  = session('check_in');
         $check_out_date_session = session('check_out');
 
         //change date formats to store in DB
-        $check_in_date = date('Y-m-d', strtotime($check_in_date_session));
-        $check_out_date = date('Y-m-d', strtotime($check_out_date_session));
+        $check_in_date          = date('Y-m-d', strtotime($check_in_date_session));
+        $check_out_date         = date('Y-m-d', strtotime($check_out_date_session));
 
-        $check_in_time = $hotel->check_in_time;
-        $check_out_time = $hotel->check_out_time;
+        //Get check_in, check_out time of hotel
+        $check_in_time          = $hotel->check_in_time;
+        $check_out_time         = $hotel->check_out_time;
 
+        //Get Tax,Discount, and payable amount from session.
         $total_payable_amount_w_extrabed  = session('total_payable_amount_w_extrabed');
         $total_payable_amount_wo_extrabed = session('total_payable_amount_wo_extrabed');
         $payable_amount                   = session('payable_amount');
@@ -671,25 +673,25 @@ class PaymentController extends Controller
 
         $total_discount_amount            = session('total_discount_amount');
 
+        $travel_for_work                  = session('travel_for_work');
 
-        $travel_for_work = session('travel_for_work');
-
-        $first_cancellation_day_count = 0;
-        $second_cancellation_day_count = 0;
+        $first_cancellation_day_count     = 0;
+        $second_cancellation_day_count    = 0;
 
         //start checking cancellation dates
-        $hotelConfigRepo = new HotelConfigRepository();
-        $h_config = $hotelConfigRepo->getConfigByHotel($hotel_id);
+        $hotelConfigRepo                  = new HotelConfigRepository();
+        $h_config                         = $hotelConfigRepo->getConfigByHotel($hotel_id);
         if(isset($h_config) && count($h_config)>0){
-            $first_cancellation_day_count = $h_config->first_cancellation_day_count;
-            $second_cancellation_day_count = $h_config->second_cancellation_day_count;
+            $first_cancellation_day_count   = $h_config->first_cancellation_day_count;
+            $second_cancellation_day_count  = $h_config->second_cancellation_day_count;
         }
 
         //calculate the day to be charged by subtracting first_cancellation_date
-        $today_date = date("Y-m-d");   //today's date
+        $today_date  = date("Y-m-d");   //today's date
 //        $check_in_date = $booking_result['object']->check_in_date;
 
-        $date = strtotime(date("Y-m-d", strtotime($check_in_date)) . "-".$first_cancellation_day_count."days");   //date to be charged //after subtracting 1st cancellation date
+        $date = strtotime(date("Y-m-d", strtotime($check_in_date)) . "-".$first_cancellation_day_count."days");
+        //date to be charged //after subtracting 1st cancellation date
         $charge_date = date("Y-m-d",$date); //re-format the date
         //end checking cancellation dates
 

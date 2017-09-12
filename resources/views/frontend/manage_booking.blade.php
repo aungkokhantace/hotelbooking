@@ -32,16 +32,20 @@
                 <div class="col-md-9 user_list">
                     <div class="search_list">
                         <h2>Bookings</h2>
-                        <h4 style="margin-top: 30px;"><a href="#" style="color: #626262;">Back to all bookings</a></h4>
+                        <h4 style="margin-top: 30px;"><a href="/bookingList" style="color: #626262;">Back to all bookings</a></h4>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="table-responsive room_table">
                                 <h3 style="color:#D63090;">Your confirmed booking at
                                     <a href="#" style="color: #626262;">{{$hotel->name}}</a>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    @while($hotel->star != 0)
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <?php $hotel->star--; ?>
+                                    @endwhile
+                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
+                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
+                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
                                 </h3>
                                 <table class="table table-bordered">
                                     <tbody>
@@ -55,9 +59,9 @@
                                                         </a>
                                                     </div>
                                                 </li>
-                                                <li style="float:right;">
-                                                    <a href="#">show map</a>
-                                                </li>
+                                                {{--<li style="float:right;">--}}
+                                                    {{--<a href="#">show map</a>--}}
+                                                {{--</li>--}}
                                                 <li>
                                                     {{$hotel->address}}
                                                 </li>
@@ -94,16 +98,15 @@
                                                 <li class="text_fa">until {{$booking->check_out_time}}</li>
                                             </ul>
                                             <ul class="fa-uls price_night">
-                                                <li style="float:right;">
-                                                    <a href="#">Price details</a>
-                                                </li>
+                                                {{--<li style="float:right;">--}}
+                                                    {{--<a href="#">Price details</a>--}}
+                                                {{--</li>--}}
                                                 <li class="text_fa">Price</li>
                                                 <li class="text_fa">
                                                     <strong>
                                                         {{$booking->total_day}} night, {{$booking->room_count}} room
                                                     </strong>
                                                 </li>
-                                                {{--<li class="text_fa"><h3>MMK 45,193</h3></li>--}}
                                                 <li class="text_fa"><h4>{{$currency.' '.number_format($booking->total_payable_amt,2)}}</h4></li>
                                             </ul>
                                         </td>
@@ -127,33 +130,33 @@
                                             </ul>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td colspan="3">
-                                            <div class="col-md-5">
-                                                <ul class="fa-ul price_night">
-                                                    <li class="text_fa text-center"><h5>Cancellation is free</h5></li>
-                                                    <li class="text_fa text-center">For: 2 months 24 days 13 hours 58 minutes</li>
-                                                    <li class="text_fa tooltips">
-                                                        Cancel your reservation before 16 Sept
-                                                        at 23:59 Yangon time for a full refund. After that time, cancel for US$33.23.
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-md-4 manage_progress">
-                                                <div class="progress">
-                                                    <div class="progress-bar" role="progressbar" aria-valuenow=50"
-                                                         aria-valuemin="0" aria-valuemax="100" style="width:50%">
-                                                        50%
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 manage_progress">
-                                                <ul class="fa-ul price_night">
-                                                    <li class="text_fa"><a class="cancelbooking" href="#">Cancel your booking</a></li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    {{--<tr>--}}
+                                        {{--<td colspan="3">--}}
+                                            {{--<div class="col-md-5">--}}
+                                                {{--<ul class="fa-ul price_night">--}}
+                                                    {{--<li class="text_fa text-center"><h5>Cancellation is free</h5></li>--}}
+                                                    {{--<li class="text_fa text-center">For: 2 months 24 days 13 hours 58 minutes</li>--}}
+                                                    {{--<li class="text_fa tooltips">--}}
+                                                        {{--Cancel your reservation before 16 Sept--}}
+                                                        {{--at 23:59 Yangon time for a full refund. After that time, cancel for US$33.23.--}}
+                                                    {{--</li>--}}
+                                                {{--</ul>--}}
+                                            {{--</div>--}}
+                                            {{--<div class="col-md-4 manage_progress">--}}
+                                                {{--<div class="progress">--}}
+                                                    {{--<div class="progress-bar" role="progressbar" aria-valuenow=50"--}}
+                                                         {{--aria-valuemin="0" aria-valuemax="100" style="width:50%">--}}
+                                                        {{--50%--}}
+                                                    {{--</div>--}}
+                                                {{--</div>--}}
+                                            {{--</div>--}}
+                                            {{--<div class="col-md-3 manage_progress">--}}
+                                                {{--<ul class="fa-ul price_night">--}}
+                                                    {{--<li class="text_fa"><a class="cancelbooking" href="#">Cancel your booking</a></li>--}}
+                                                {{--</ul>--}}
+                                            {{--</div>--}}
+                                        {{--</td>--}}
+                                    {{--</tr>--}}
                                     </tbody>
                                 </table>
                             </div>

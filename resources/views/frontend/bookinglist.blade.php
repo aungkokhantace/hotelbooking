@@ -60,7 +60,7 @@
                                                         
                                                         <div class="listing_tableright pull-right">
                                                             <h4>status-{{$booking->status_txt}}</h4>
-                                                            <h3>$ {{$booking->total_payable_amt}}</h3>
+                                                            <h3>{{$currency.' '.number_format($booking->total_payable_amt)}}</h3>
                                                         </div>
                                                         <h4>{{$booking->hotel->name}}</h4>
                                                         <p>&nbsp;</p>
@@ -97,7 +97,7 @@
                                                                 {{$booking->button_status}}
                                                             </a>
                                                         @else
-                                                            <a class="bookinglist-primary" href="#">{{$booking->button_status}}</a>
+                                                            <a class="bookinglist-primary" href="/hotel_detail/{!! $booking->hotel_id!!}">{{$booking->button_status}}</a>
                                                         @endif
                                                     </div>
                                                 </div>
@@ -122,7 +122,7 @@
                                                         
                                                         <div class="listing_tableright pull-right">
                                                             <h4>status-{{$b_cancel->status_txt}}</h4>
-                                                            <h3>USD 0.00</h3>
+                                                            <h3>{{$currency.' '.number_format($b_cancel->total_payable_amt,2)}}</h3>
                                                         </div>
                                                         <h4>{{$b_cancel->hotel->name}}</h4>
                                                         <p>&nbsp;</p>
@@ -152,7 +152,7 @@
                                                             </tr>
                                                         </table>
                                                         <p>&nbsp;</p>
-                                                        <a class="bookinglist-primary" href="#">BOOKING AGAIN</a>
+                                                        <a class="bookinglist-primary" href="/hotel_detail/{!! $b_cancel->hotel_id!!}">BOOKING AGAIN</a>
                                                     </div>
                                                 </div>
                                             </div>
