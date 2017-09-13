@@ -12,7 +12,7 @@
             <br>
             <div>
                 @if($booking->can_refund == 1)
-                    {!! Form::open(array('url'=>'backend/booking/refund','class'=>'form-inline')) !!}
+                    {!! Form::open(array('url'=>'backend/booking/refund','class'=>'form-inline','id'=>'refund_form')) !!}
                     <input type="hidden" name="b_num" value="{!! $booking->id !!}">
                     <div class="form-group">
                         <select class="form-control" name="refund_percentage">
@@ -20,7 +20,7 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-danger"><b>Refund</b></button>
+                    <button type="button" class="btn btn-danger" id="refund"><b>Refund</b></button>
                     {!! Form::close() !!}
                 @endif
             </div>
@@ -133,4 +133,32 @@
     </div>
 
 </div>
+@stop
+@section('page_script')
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            $('#refund').click(function(){
+                swal({
+                    title: "Are you sure?",
+                    text: "You want to refund!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55 ",
+                    confirmButtonText: "Confirm",
+                    cancelButtonText: "Cancel",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },function(isConfirm){
+                    if(isConfirm){
+                        $("#refund_form").submit();
+                    }
+                    else{
+                        return;
+                    }
+                }
+                );
+            });
+        });
+    </script>
 @stop

@@ -34,7 +34,7 @@ class HotelBookingController extends Controller
     public function index(Request $request)
     {
         if (Auth::guard('User')->check()) {
-            //Get Loggin User Info
+            //Get Login User Info
             $user               = $this->repo->getUserObjs();
             $id                 = $user->id;
             $role               = $user->role_id;
@@ -48,6 +48,32 @@ class HotelBookingController extends Controller
             } else {
                 $bookings       = $this->repo->getObjs();
             }
+            if(isset($bookings) && !empty($bookings)){
+                foreach($bookings as $b){
+                    switch($b->status){
+                        case 2:
+                            $b->status_text = 'Confirm';
+                            break;
+                        case 3:
+                            $b->status_text = 'Cancel by Customer';
+                            break;
+                        case 4:
+                            $b->status_text = 'Cancel by Admin';
+                            break;
+                        case 5:
+                            $b->status_text = 'Complete';
+                            break;
+                        case 7:
+                            $b->status_text = 'Refund by System';
+                            break;
+                        case 8:
+                            $b->status_text = 'Refund by Admin';
+                            break;
+                        default:
+                            $b->status_text = '';
+                    }
+                }
+            }
             return view('backend.booking.index')->with('bookings',$bookings);
         }
         return redirect('/');
@@ -56,42 +82,32 @@ class HotelBookingController extends Controller
     public function detail($id)
     {
         if(Auth::guard('User')->check()){
-            $admin_id               = Auth::guard('User')->id();
-            $hotelRepo              = new HotelRepository();
-            $hotel                  = $hotelRepo->getHotelByAdminId($admin_id);
-            $h_id                   = $hotel->id;
-            $status                 = Check::checkBookingByHotelId($h_id);
-            if($status['aceplusStatusCode'] == ReturnMessage::OK){
-                //Get Login User Info
-                $user               = $this->repo->getUserObjs();
-                $email              = $user->email;
-                $role               = $user->role_id;
-                $uid                = $user->id;
-                $hotelRepo          = new HotelRepository();
-
-                if ($role == 3) {
-                    //Check User has permission to edit
-                    //Get Hotel ID
-//                    $hotels             = $hotelRepo->getHotelByUserEmail($email);
-//                    $h_id               = $hotels->id;
-                    $checkPermission    = $this->repo->checkHasPermission($id,$h_id);
-                    if ($checkPermission == false) {
-                        return redirect('unauthorize');
-                        exit();
-                    }
+            //Get Login User Info
+            $user                       = $this->repo->getUserObjs();
+            $u_id                       = $user->id;
+            $role                       = $user->role_id;
+            $email                      = $user->email;
+            if ($role == 3) {
+                //Check User has permission to edit
+                //Get Hotel ID
+                $hotelRepo              = new HotelRepository();
+                $hotel                  = $hotelRepo->getHotelByAdminId($u_id);
+                $h_id                   = $hotel->id;
+                $checkPermission        = $this->repo->checkHasPermission($id,$h_id);
+                if ($checkPermission == false) {
+                    return redirect('unauthorize');
+                    exit();
                 }
-                $booking            = $this->repo->getBookingById($id);
-                $b_check_out        = Carbon::parse($booking->check_out_date);
-                $pay_date           = Carbon::today();
-                $booking->can_refund= 0;
-                if($pay_date <= $b_check_out && $booking->status == 5){
-                    $booking->can_refund = 1;
-                }
-
-                return view('backend.booking.booking')->with('booking',$booking);
             }
-            return redirect('unauthorize');
-            exit();
+            $booking                    = $this->repo->getBookingById($id);
+            $b_check_out                = Carbon::parse($booking->check_out_date);
+            $pay_date                   = Carbon::today();
+            $booking->can_refund        = 0;
+            if($pay_date <= $b_check_out && $booking->status == 5){
+                $booking->can_refund    = 1;
+            }
+
+            return view('backend.booking.booking')->with('booking',$booking);
         }
         return redirect('/');
     }

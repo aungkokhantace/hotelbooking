@@ -19,11 +19,13 @@
                         <th>{{trans('setup_booking.tb-col-username')}}</th>
                         <th>{{trans('setup_booking.tb-col-check-in-date')}}</th>
                         <th>{{trans('setup_booking.tb-col-check-out-date')}}</th>
-                        <th>{{trans('setup_booking.tb-col-for-other')}}</th>
-                        <th>{{trans('setup_booking.tb-col-total-tax-amt')}}</th>
-                        <th>{{trans('setup_booking.tb-col-total-tax-percentage')}}</th>
-                        <th>{{trans('setup_booking.tb-col-hotel-name')}}</th>
-                        <th>{{trans('setup_booking.tb-col-travel-for-work')}}</th>
+{{--                        <th>{{trans('setup_booking.tb-col-for-other')}}</th>--}}
+                        {{--<th>{{trans('setup_booking.tb-col-total-tax-amt')}}</th>--}}
+{{--                        <th>{{trans('setup_booking.tb-col-total-tax-percentage')}}</th>--}}
+{{--                        <th>{{trans('setup_booking.tb-col-hotel-name')}}</th>--}}
+{{--                        <th>{{trans('setup_booking.tb-col-travel-for-work')}}</th>--}}
+                        <th>Total Payable Amount</th>
+                        <th>Status</th>
                     </tr>
                     </thead>
                     <tfoot>
@@ -32,11 +34,13 @@
                         <th class="search-col" con-id="username">Username</th>
                         <th class="search-col" con-id="check_in_date">Check in Date</th>
                         <th class="search-col" con-id="check_out_date">Check Out Date</th>
-                        <th class="search-col" con-id="for_other">For Other</th>
-                        <th class="search-col" con-id="total_tax_amt">Total Tax Amount</th>
-                        <th class="search-col" con-id="total_tax_percentage">Total Tax Percentage</th>
-                        <th class="search-col" con-id="hotel_name">Hotel Name</th>
-                        <th class="search-col" con-id="travel_for_work">Travel For Work</th>
+                        {{--<th class="search-col" con-id="for_other">For Other</th>--}}
+                        {{--<th class="search-col" con-id="total_tax_amt">Total Tax Amount</th>--}}
+                        {{--<th class="search-col" con-id="total_tax_percentage">Total Tax Percentage</th>--}}
+                        {{--<th class="search-col" con-id="hotel_name">Hotel Name</th>--}}
+                        {{--<th class="search-col" con-id="travel_for_work">Travel For Work</th>--}}
+                        <th class="search-col" con-id="total_payable_amount">Total Payable Amount</th>
+                        <th class="search-col" con-id="status">Status</th>
                     </tr>
                     </tfoot>
                     <tbody>
@@ -46,23 +50,25 @@
                             <td><a href="booking/{{ $booking->id }}">{{ $booking->user->display_name}}</a></td>
                             <td>{{ $booking->check_in_date}}</td>
                             <td>{{ $booking->check_out_date}}</td>
-                            <td>
-                                @if($booking->for_other == 0)
-                                    {{ 'No'}}
-                                @else
-                                    {{ 'Yes'}}
-                                @endif
-                            </td>
-                            <td>{{ $booking->total_tax_amt}}</td>
-                            <td>{{ $booking->total_tax_percentage}}</td>
-                            <td>{{ $booking->hotel->name}}</td>
-                            <td>
-                                @if($booking->travel_for_work == 0)
-                                    {{ 'No'}}
-                                @else
-                                    {{ 'Yes'}}
-                                @endif
-                            </td>
+                            {{--<td>--}}
+                                {{--@if($booking->for_other == 0)--}}
+                                    {{--{{ 'No'}}--}}
+                                {{--@else--}}
+                                    {{--{{ 'Yes'}}--}}
+                                {{--@endif--}}
+                            {{--</td>--}}
+                            {{--<td>{{ $booking->total_tax_amt}}</td>--}}
+                            {{--<td>{{ $booking->total_tax_percentage}}</td>--}}
+{{--                            <td>{{ $booking->hotel->name}}</td>--}}
+                            {{--<td>--}}
+                                {{--@if($booking->travel_for_work == 0)--}}
+                                    {{--{{ 'No'}}--}}
+                                {{--@else--}}
+                                    {{--{{ 'Yes'}}--}}
+                                {{--@endif--}}
+                            {{--</td>--}}
+                            <td>{{ $booking->total_payable_amt }}</td>
+                            <td>{{ $booking->status_text }}</td>
                         </tr>
                     @endforeach
                     </tbody>
