@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="col-sm-12 pd_lf_5">
-                    <button type="button" class="btn btn-default formcontrols register-btn">CREATE ACCOUNT</button>
+                    <button type="button" class="btn btn-default formcontrols register-btn" id="create-btn">CREATE ACCOUNT</button>
                 </div>
                 <div class="formgroup">
                     <div class="col-md-12 control">
@@ -76,9 +76,11 @@
 
 <!-- start login ajax-->
 <script>
+
     $(document).ready(function(){
             $('.register-btn').click(function(){
                 $('#registration').submit();
+                $('#create-btn').attr("disabled","disabled")
             });
             $('#registration').validate({
                 rules: {
@@ -153,7 +155,7 @@
                                 );
                                 location.reload();
                                 localStorage.getItem("swal");*/
-                                swal({title: "Success", text: "Register Succeed!", type: "success"},
+                                swal({title: "Success", text: "Please verify your email to complete your registration!", type: "success"},
                                         function(){
                                             location.reload();
                                         }

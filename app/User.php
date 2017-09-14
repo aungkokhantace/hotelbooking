@@ -13,7 +13,18 @@ class User extends Authenticatable
      */
     protected $table="core_users";
     protected $fillable = [
-        'id','user_name','email','display_name','password','role_id','status','updated_at','created_at','deleted_at'
+        'id',
+        'user_name',
+        'email',
+        'display_name',
+        'password',
+        'role_id',
+        'status',
+        'activation_code',
+        'confirm',
+        'updated_at',
+        'created_at',
+        'deleted_at'
     ];
 
     /**

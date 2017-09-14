@@ -271,4 +271,31 @@ class Utility
     public static function deleteSession($key){
         Session::forget($key);
     }
+
+    public static function sendVerificationMail($email,$name,$activation_code){
+        $returnedObj                        = array();
+        $returnedObj['aceplusStatusCode']   = ReturnMessage::OK;
+
+        try{
+
+            Mail::send('frontend.mail.verify', ['activation_code'=>$activation_code,'email'=>$email], function($message) use($email,$name) {
+                $message->to($email,$name)
+                    ->subject('Verify your email address');
+            });
+
+
+            return $returnedObj;
+        }
+        catch(\Exception $e){
+            $date                               = date("Y-m-d H:i:s");
+            $message                            = '['. $date .'] '. 'error: ' . 'Verification Mail is not sent and got error -------'.
+                                                  $e->getMessage(). ' ----- line ' .
+                                                  $e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+
+            LogCustom::create($date,$message);
+            $returnedObj['aceplusStatusCode']   = ReturnMessage::SERVICE_UNAVAILABLE;
+
+            return $returnedObj;
+        }
+    }
 }

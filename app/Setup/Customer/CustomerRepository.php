@@ -16,8 +16,24 @@ class CustomerRepository implements CustomerRepositoryInterface
 {
     public function create($userObj)
     {
-        $tempObj = Utility::addCreatedBy($userObj);
-        $tempObj->save();
+        $returnedObj['aceplusStatusCode'] = ReturnMessage::INTERNAL_SERVER_ERROR;
+        try{
+            $tempObj = Utility::addCreatedBy($userObj);
+            $tempObj->save();
+
+            //created info log
+            $date       = $tempObj->created_at;
+            $id         = $tempObj->id;
+            $message    = '['. $date .'] '. 'info: ' . 'User ID - '.$id.' created his/her information '. PHP_EOL;
+            LogCustom::create($date,$message);
+
+            $returnedObj['aceplusStatusCode']       = ReturnMessage::OK;
+            return $returnedObj;
+        }
+        catch(\Exception $e){
+            return $returnedObj;
+        }
+
     }
 
     public function getObjByID($id){

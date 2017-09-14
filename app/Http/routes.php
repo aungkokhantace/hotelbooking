@@ -26,6 +26,7 @@ Route::group(['middleware' => 'web'], function () {
 //    Route::get('register','Frontend\UserRegistrationController@create');
     Route::any('register','Frontend\UserRegistrationController@store');
     Route::get('register/check_email', ['as' => 'register/check_email', 'uses' => 'Frontend\UserRegistrationController@check_email']);
+    Route::get('register/verify/{confirmationCode}','Frontend\UserRegistrationController@verify');
     //Authentication
 //    Route::get('login','Frontend\LoginController@showLogin');
     Route::any('login','Frontend\LoginController@doLogin');

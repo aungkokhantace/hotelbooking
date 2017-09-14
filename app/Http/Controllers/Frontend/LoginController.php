@@ -50,7 +50,8 @@ class LoginController extends Controller
                 $credentials = [
                     'email'     => $email,
                     'password'  => $password,
-                    'role_id'   => 4
+                    'role_id'   => 4,
+                    'confirm'   => 1
                 ];
 
 
