@@ -13,6 +13,8 @@ use App\Core\ReturnMessage;
 use App\Core\Utility;
 use App\Log\LogCustom;
 use App\Setup\BookingRoom\BookingRoom;
+use App\Setup\Room\Room;
+use App\Setup\RoomAvailablePeriod\RoomAvailablePeriod;
 use Illuminate\Support\Facades\DB;
 use App\User;
 use Auth;
@@ -55,6 +57,38 @@ class BookingRepository implements BookingRepositoryInterface
             //create error log
             $date    = date("Y-m-d H:i:s");
             $message = '['. $date .'] '. 'error: ' . 'Customer '.$loginUserId.' created a booking and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            LogCustom::create($date,$message);
+
+            $returnedObj['aceplusStatusMessage'] = $e->getMessage();
+            return $returnedObj;
+        }
+    }
+
+    public function update($paramObj)
+    {
+        $returnedObj = array();
+        $returnedObj['aceplusStatusCode'] = ReturnMessage::INTERNAL_SERVER_ERROR;
+
+        try {
+            $userSession            = session('customer');
+            $loginUserId            = $userSession['id'];
+            $paramObj->updated_by   = $loginUserId;
+            $paramObj->save();
+
+            //create info log
+            $date = $paramObj->updated_at;
+            $message = '['. $date .'] '. 'info: ' . 'Customer '.$loginUserId.' updated booking_id = '.$paramObj->id . PHP_EOL;
+            LogCustom::create($date,$message);
+
+            $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
+            $returnedObj['object'] = $paramObj;
+            return $returnedObj;
+        }
+        catch(\Exception $e){
+            //create error log
+            $date    = date("Y-m-d H:i:s");
+            $message = '['. $date .'] '. 'error: ' . 'Customer '.$loginUserId.' created a booking and got error -------'.
+                        $e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusMessage'] = $e->getMessage();
@@ -144,5 +178,82 @@ class BookingRepository implements BookingRepositoryInterface
             $returnedObj['aceplusStatusMessage'] = $e->getMessage();
             return $returnedObj;
         }
+    }
+
+    public function checkAvailableOrNot($check_in,$check_out,$room_id_arr){
+        $id             = implode("','",$room_id_arr);
+        //check for blacked out rooms between check_in date and check_out date
+        $blackout_query = DB::select("SELECT room_id
+                                      FROM r_blackout_period
+                                      WHERE (
+                                      ('$check_in' BETWEEN r_blackout_period.from_date AND r_blackout_period.to_date)
+                                      OR
+                                      ('$check_out' BETWEEN r_blackout_period.from_date AND r_blackout_period.to_date))
+                                      AND (r_blackout_period.deleted_at IS NULL)");
+
+        //create blackout array
+        $blackout_arr = array();
+        if(isset($blackout_query) && count($blackout_query) > 0){
+            foreach($blackout_query as $blackout){
+                array_push($blackout_arr,$blackout->room_id);
+            }
+        }
+
+        //check for booked rooms between check_in date and check_out date
+        $booking_query = DB::select("SELECT booking_room.room_id
+	                                  FROM booking_room
+	                                  WHERE (
+	                                    ('$check_in' BETWEEN booking_room.check_in_date AND booking_room.check_out_date)
+	                                  OR
+	                                    ('$check_out' BETWEEN booking_room.check_in_date AND booking_room.check_out_date)
+	                                    )
+	                                  AND (booking_room.status <> 3)
+	                                  AND (booking_room.deleted_at IS NULL)
+	                                  AND  room_id NOT IN ('$id')");
+
+        //create booking array
+        $booking_arr = array();
+        if(isset($booking_query) && count($booking_query) > 0){
+            foreach($booking_query as $booking){
+                array_push($booking_arr,$booking->room_id);
+            }
+        }
+
+        //check for room cutoff date
+        $cutoff_query = DB::select("SELECT rooms.id as room_id,h_room_category.booking_cutoff_day as cutoff_day
+                                    FROM rooms
+                                    LEFT JOIN h_room_category ON rooms.h_room_category_id = h_room_category.id
+                                    WHERE (rooms.apply_cutoff_date = 1)
+                                    AND (rooms.deleted_at IS NULL) AND (h_room_category.deleted_at IS NULL)");
+
+        //create cutoff array
+        $cutoff_arr = array();
+        $today = date("Y-m-d");
+        if(isset($cutoff_query) && count($cutoff_query) > 0){
+            foreach($cutoff_query as $cutoff){
+                $cutoff_day = $cutoff->cutoff_day;
+                $tempDate = strtotime(date("Y-m-d", strtotime($check_in)) . " -".$cutoff_day."days");
+                $calculatedCutoffDate = date("Y-m-d",$tempDate);
+
+                if(($today >= $calculatedCutoffDate)){
+                    array_push($cutoff_arr,$cutoff->room_id);
+                }
+            }
+        }
+
+        //get rooms that are within available_period and not within black_out period and not booked and not in cutoff date
+        $result = Room::whereNull('rooms.deleted_at')
+                        ->leftJoin('r_available_period', 'r_available_period.room_id', '=', 'rooms.id')
+                        ->where('r_available_period.from_date','<=',$check_in)
+                        ->where('r_available_period.to_date','>=',$check_out)
+                        ->whereNotIn('rooms.id', $blackout_arr)
+                        ->whereNotIn('rooms.id', $booking_arr)
+                        ->whereNotIn('rooms.id', $cutoff_arr)
+                        ->whereIn('rooms.id',$room_id_arr)
+                        ->select('rooms.*')
+                        ->get();
+
+        return $result;
+
     }
 }

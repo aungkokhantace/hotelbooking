@@ -81,4 +81,10 @@ class BookingPaymentStripeRepository implements BookingPaymentStripeRepositoryIn
 
         return $result;
     }
+
+    public function getStripePaymentIdWithStatusOne($id){
+        $result = BookingPaymentStripe::where('booking_id',$id)->where('status',1)->first();
+
+        return $result;
+    }
 }

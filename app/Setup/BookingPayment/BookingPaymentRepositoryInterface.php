@@ -12,4 +12,5 @@ namespace App\Setup\BookingPayment;
 interface BookingPaymentRepositoryInterface
 {
     public function create($paramObj);
+    public function getObjsByBookingId($b_id);
 }

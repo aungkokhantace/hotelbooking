@@ -68,8 +68,8 @@ class PaymentUtility
 
             // Token is created using Stripe.js or Checkout!
             // Get the payment token submitted by the form:
-            $token = $ParamData['stripeToken'];
-            $email = $ParamData['stripeEmail'];
+            $token          = $ParamData['stripeToken'];
+            $email          = $ParamData['stripeEmail'];
 
             $tempStripeObj  = $this->createPaymentObj();
 
@@ -84,12 +84,12 @@ class PaymentUtility
             ));
 
             $stripeObj = array();
-            $stripeObj['stripe_user_id'] = $customer['id'];
-            $stripeObj['stripe_payment_id'] = "";
-            $stripeObj['stripe_payment_amt'] = "";
+            $stripeObj['stripe_user_id']        = $customer['id'];
+            $stripeObj['stripe_payment_id']     = "";
+            $stripeObj['stripe_payment_amt']    = "";
 
-            $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
-            $returnedObj['stripe'] = $stripeObj;
+            $returnedObj['aceplusStatusCode']   = ReturnMessage::OK;
+            $returnedObj['stripe']              = $stripeObj;
             return $returnedObj;
         }
         catch(\Exception $e){
@@ -127,6 +127,7 @@ class PaymentUtility
                 "currency" => $paymentCurrency,
                 "customer" => $customerId
             ));
+
             $stripeObj = array();
             $stripeObj['stripe_user_id'] = $customerId;
             $stripeObj['stripe_payment_id'] = $charge->id;
@@ -237,6 +238,7 @@ class PaymentUtility
         }
 
     }
+
 
 
 }

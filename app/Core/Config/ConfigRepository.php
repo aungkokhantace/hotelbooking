@@ -55,4 +55,16 @@ class ConfigRepository implements ConfigRepositoryInterface
         }
         return 30;
     }
+
+    public function getGST(){
+        $tbConfig   =  (new Config())->getTable();
+        $configs    = DB::select("SELECT * FROM $tbConfig WHERE code = 'GST'");
+        return $configs;
+    }
+
+    public function getServiceTax(){
+        $tbConfig   =  (new Config())->getTable();
+        $configs    = DB::select("SELECT * FROM $tbConfig WHERE code = 'SERVICE_TAX'");
+        return $configs;
+    }
 }
