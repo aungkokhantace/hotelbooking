@@ -34,6 +34,11 @@ class HotelLandmarkRepository implements HotelLandmarkRepositoryInterface
         $obj = HotelLandmark::find($id);
         return $obj;
     }
+    public function getObjByHotelID($id)
+    {
+        $obj = HotelLandmark::where($id);
+        return $obj;
+    }
 
     public function create($paramObj)
     {

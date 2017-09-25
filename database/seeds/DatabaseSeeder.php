@@ -19,7 +19,19 @@ class DatabaseSeeder extends Seeder
          $this->call(Default_RolePermissionSeeder::class);
          $this->call(Default_Syncs_TablesSeeder::class);
          $this->call(Default_CountriesSeeder::class);
+         $this->call(Default_CitySeeder::class);
+         $this->call(Default_TownshipSeeder::class);
          $this->call(Default_SettingSeeder::class);
          $this->call(Default_PriceFilterSeeder::class);
+
+         $this->call(Default_LandmarkSeeder::class);
+         $this->call(Default_FacilityGroupSeeder::class);
+         $this->call(Default_FacilitySeeder::class);
+         $this->call(Default_HotelSeeder::class);
+         $this->call(Default_HotelFacilitySeeder::class);
+         $this->call(Default_HotelLandmarkSeeder::class);
+         $this->call(Default_AmenitiesSeeder::class);
+         $this->call(Default_FeatureSeeder::class);
+         $this->call(Default_HotelFeatureSeeder::class);
     }
 }

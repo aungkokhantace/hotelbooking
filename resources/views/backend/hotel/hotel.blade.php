@@ -417,15 +417,15 @@
         </div>
     </div>
 
-    @if(isset($hotel))
-        @if($h_nearby_places->count()==0)
+      {{--  @if(isset($hotel))
+            @if($h_nearby_places->count()==0)
+                @include('backend.hotel.nearby')
+                @else
+            @include('backend.hotel.nearby_edit')
+            @endif
+        @else
             @include('backend.hotel.nearby')
-            @else
-        @include('backend.hotel.nearby_edit')
-        @endif
-    @else
-        @include('backend.hotel.nearby')
-    @endif
+        @endif--}}
 
     {{--Start hotel admin--}}
     <div class="row">
@@ -516,6 +516,381 @@
     </div>
     </div>
     {{--End hotel admin--}}
+
+    {{--Start Tab Panel--}}
+    <div class="row">
+        <div id="exTab2">
+            <ul class="nav nav-tabs hotel">
+                <li class="active">
+                    <a  href="#1" data-toggle="tab">Hotel Config</a>
+                </li>
+                <li><a href="#2" data-toggle="tab">Hotel Landmark</a>
+                </li>
+                <li><a href="#3" data-toggle="tab">Hotel NearBy</a>
+                </li>
+                <li><a href="#4" data-toggle="tab">Hotel Feature</a>
+                </li>
+                <li><a href="#5" data-toggle="tab">Hotel Facility</a>
+                </li>
+            </ul>
+
+            <div class="tab-content ">
+                <div class="tab-pane active" id="1">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <label for="hotel_id">{{trans('setup_hotelconfig.first-cancellation-day')}}<span class="require">*</span></label>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <select class="form-control" name="first_cancellation_day" id="first_cancellation_day">
+                                    @if(isset($hotel))
+                                        @if(!empty($h_configs))
+{{--                                        @foreach($h_configs as $h_config)--}}
+                                            @for ($i = 1; $i <= 100; $i++)
+{{--                                                    @if($i == $h_config->first_cancellation_day_count)--}}
+                                                        <option value="{{ $i }}" @foreach($h_configs as $h_con) @if($i == $h_con->first_cancellation_day_count)selected @endif @endforeach>{{ $i }}</option>
+                                                    {{--@endif--}}
+                                            @endfor
+                                        {{--@endforeach--}}
+                                            @else
+                                            <option value="" disabled selected>{{trans('setup_hotelconfig.place-first-cancellation-day')}}</option>
+                                            @for ($i = 1; $i <= 100; $i++)
+                                                <option value="{{ $i }}"  {{--@if(Request::old('first_cancellation_day') == $i) {{ 'selected' }} @endif--}}>{{ $i }}</option>
+                                            @endfor
+                                            @endif
+                                    @else
+                                        <option value="" disabled selected>{{trans('setup_hotelconfig.place-first-cancellation-day')}}</option>
+                                        @for ($i = 1; $i <= 100; $i++)
+                                            <option value="{{ $i }}"  @if(Request::old('first_cancellation_day') == $i) {{ 'selected' }} @endif>{{ $i }}</option>
+                                        @endfor
+                                    @endif
+                                </select>
+                                <p class="text-danger">{{$errors->first('first_cancellation_day')}}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <label for="hotel_id">{{trans('setup_hotelconfig.second-cancellation-day')}}<span class="require">*</span></label>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <select class="form-control" name="second_cancellation_day" id="second_cancellation_day">
+                                    @if(isset($hotel))
+                                        @if(!empty($h_configs))
+                                            @for ($i = 1; $i <= 100; $i++)
+                                                {{--@foreach($h_configs as $h_con)--}}
+{{--                                                    @if($i == $h_con->second_cancellation_day_count)--}}
+                                                        <option value="{{ $i }}" @foreach($h_configs as $h_con) @if($i == $h_con->second_cancellation_day_count)selected @endif @endforeach>{{ $i }}</option>
+                                                {{--@endif--}}
+                                               {{-- @endforeach--}}
+                                            @endfor
+                                        @else
+                                            <option value="" disabled selected>{{trans('setup_hotelconfig.place-second-cancellation-day')}}</option>
+                                            @for ($i = 1; $i <= 100; $i++)
+                                                <option value="{{ $i }}"  @if(Request::old('second_cancellation_day') == $i) {{ 'selected' }} @endif>{{ $i }}</option>
+                                            @endfor
+                                            @endif
+                                    @else
+                                        <option value="" disabled selected>{{trans('setup_hotelconfig.place-second-cancellation-day')}}</option>
+                                        @for ($i = 1; $i <= 100; $i++)
+                                            <option value="{{ $i }}"  @if(Request::old('second_cancellation_day') == $i) {{ 'selected' }} @endif>{{ $i }}</option>
+                                        @endfor
+                                    @endif
+                                </select>
+                                <p class="text-danger">{{$errors->first('second_cancellation_day')}}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <label for="name">{{trans('setup_hotelconfig.breakfast-fees')}}<span class="require">*</span></label>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                @if(isset($hotel))
+                                    @if(!empty($h_configs))
+                                    @foreach($h_configs as $h_config)
+                                            <input type="text" class="form-control" id="breakfast_fees" name="breakfast_fees"
+                                                   placeholder="{{trans('setup_hotelconfig.place-breakfast-fees')}}" @if($h_config->hotel_id == $hotel->id) value="{{$h_config->breakfast_fees}}"@endif/>
+                                            <p class="text-danger">{{$errors->first('breakfast_fees')}}</p>
+                                    @endforeach
+                                        @else
+                                        <input type="text" class="form-control" id="breakfast_fees" name="breakfast_fees"
+                                               placeholder="{{trans('setup_hotelconfig.place-breakfast-fees')}}"/>
+                                        <p class="text-danger">{{$errors->first('breakfast_fees')}}</p>
+                                        @endif
+                                    @else
+                                    <input type="text" class="form-control" id="breakfast_fees" name="breakfast_fees"
+                                           placeholder="{{trans('setup_hotelconfig.place-breakfast-fees')}}"/>
+                                    <p class="text-danger">{{$errors->first('breakfast_fees')}}</p>
+                                    @endif
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <label for="name">{{trans('setup_hotelconfig.tax')}}(%)<span class="require">*</span></label>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            @if(isset($hotel))
+                                @if(!empty($h_configs))
+                                    @foreach($h_configs as $h_config)
+                                            <input type="text" class="form-control" id="tax" name="tax"
+                                                   placeholder="{{trans('setup_hotelconfig.place-tax')}}" @if($h_config->hotel_id == $hotel->id) value="{{$h_config->tax}}" @endif/>
+                                            <p class="text-danger">{{$errors->first('tax')}}</p>
+                                            @endforeach
+                                    @else
+                                        <input type="text" class="form-control" id="tax" name="tax"
+                                               placeholder="{{trans('setup_hotelconfig.place-tax')}}"/>
+                                        <p class="text-danger">{{$errors->first('tax')}}</p>
+                                    @endif
+
+                                @else
+                                    <input type="text" class="form-control" id="tax" name="tax"
+                                           placeholder="{{trans('setup_hotelconfig.place-tax')}}"/>
+                                    <p class="text-danger">{{$errors->first('tax')}}</p>
+                                @endif
+                                </div>
+                        </div>
+                    </div>
+                <div class="tab-pane row" id="2">
+                    @if(isset($hotel))
+                        @if(isset($h_landmarks))
+                                @foreach($landmarks as $landmark)
+                                    <div class="col-md-4">
+                                        <input type="checkbox" name="landmark[]" value="{{$landmark->id}}" @foreach($landmark->landmark_id as $land ) @if($land->landmark_id == $landmark->id)checked @endif @endforeach>{{$landmark->name}}
+                                        <br><br>
+                                    </div>
+                                    @endforeach
+                            @else
+                            @foreach($landmarks as $landmark)
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="landmark[]" value="{{$landmark->id}}">{{$landmark->name}}
+                                    <br><br>
+                                </div>
+                            @endforeach
+                            @endif
+                        @else
+                        @foreach($landmarks as $landmark)
+                            <div class="col-md-4">
+                                <input type="checkbox" name="landmark[]" value="{{$landmark->id}}">{{$landmark->name}}
+                                <br><br>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+                <div class="tab-pane row" id="3">
+                    @if(isset($hotel))
+                        @if(!empty($h_nearby_places))
+{{--                            @foreach($h_nearby_places as $h_nearby_place)--}}
+                                @foreach($hotel_nearby as $nearby)
+                                    <div class="col-md-3">
+                                        <input type="checkbox" name="nearby_place[]"  value="{{$nearby->id}}" @foreach($nearby->nearby_id as $near) @if($near->nearby_id == $nearby->id)checked @endif @endforeach><strong>
+                                            &nbsp;{{$nearby->name}}</strong><br>
+                                        <input type="text" name="nearby_distance_{{$nearby->id}}"  class="form-control"
+                                               @foreach($nearby->nearby_id as $near) @if($near->nearby_id == $nearby->id)value="{{$near->km}}" @else placeholder="{{trans('setup_hotel.nearby-distance')}}" @endif @endforeach>
+                                        <br><br>
+                                    </div>
+                                @endforeach
+                            {{--@endforeach--}}
+                            @else
+                            @foreach($hotel_nearby as $nearby)
+                                <div class="col-md-3">
+                                    <input type="checkbox" name="nearby_place[]" value="{{$nearby->id}}"><strong>&nbsp;{{$nearby->name}}</strong><br>
+                                    <input type="text" name="nearby_distance_{{$nearby->id}}" class="form-control" placeholder="Enter Distance Kilometer">
+                                    <br><br>
+                                </div>
+                            @endforeach
+                            @endif
+                            @else
+                                @foreach($hotel_nearby as $nearby)
+                                    <div class="col-md-3">
+                                        <input type="checkbox" name="nearby_place[]" value="{{$nearby->id}}"><strong>&nbsp;{{$nearby->name}}</strong><br>
+                                        <input type="text" name="nearby_distance_{{$nearby->id}}" class="form-control" placeholder="Enter Distance Kilometer">
+                                        <br><br>
+                                    </div>
+                            @endforeach
+                            @endif
+                </div>
+                <div class="tab-pane row" id="4">
+                    @if(isset($hotel))
+                        @if(!empty($h_feature))
+                            @foreach($features as $feature)
+                                <div class="col-md-12">
+                                    <fieldset class="skill-border">
+                                    <div class="col-md-12">
+                                        <input type="checkbox" id="checked-box" name="feature_id[]" value="{{$feature->id}}" @foreach($feature->feature_id as $fea ) @if($fea->feature_id == $feature->id)checked  @endif @endforeach><strong>&nbsp;{{$feature->name}}</strong>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="qty">{{trans('setup_hotelfeature.qty')}}</label>
+                                        <input type="text" class="form-control" {{--id="quantity"--}} name="qty_{{$feature->id}}"
+                                               @foreach($feature->feature_id as $fea)@if($fea->feature_id == $feature->id)value="{{$fea->qty}}" @else placeholder="{{trans('setup_hotelfeature.place-qty')}}" @endif @endforeach/>
+                                        <p class="text-danger">{{$errors->first('qty')}}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="capacity">{{trans('setup_hotelfeature.capacity')}}</label>
+                                        <input type="text" class="form-control" {{--id="capacity"--}} name="capacity_{{$feature->id}}"
+                                               @foreach($feature->feature_id as $fea)@if($fea->feature_id == $feature->id)value="{{$fea->capacity}}" @else placeholder="{{trans('setup_hotelfeature.place-capacity')}}" @endif @endforeach/>
+                                        <p class="text-danger">{{$errors->first('capacity')}}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="open_hour">{{trans('setup_hotelfeature.area')}}</label>
+                                        <input type="text" class="form-control" {{--id="area"--}} name="area_{{$feature->id}}"
+                                               @foreach($feature->feature_id as $fea)@if($fea->feature_id == $feature->id)value="{{$fea->area}}" @else placeholder="Enter Area" @endif @endforeach/>
+                                        <p class="text-danger">{{$errors->first('area')}}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="open_hour">{{trans('setup_hotelfeature.open')}}</label>
+                                        <input type="text" class="form-control" {{--id="open_hour"--}} name="open_hour_{{$feature->id}}"
+                                               @foreach($feature->feature_id as $fea)@if($fea->feature_id == $feature->id)value="{{$fea->open_hour}}" @else placeholder="Enter Open Hour" @endif @endforeach/>
+                                        <p class="text-danger">{{$errors->first('open_hour')}}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="close_hour">{{trans('setup_hotelfeature.close')}}</label>
+                                        <input type="text" class="form-control" {{--id="close_hour"--}} name="close_hour_{{$feature->id}}"
+                                               @foreach($feature->feature_id as $fea)@if($fea->feature_id == $feature->id)value="{{$fea->close_hour}}" @else placeholder="Enter Close Hour" @endif @endforeach />
+                                        <p class="text-danger">{{$errors->first('close_hour')}}</p>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="remark">{{trans('setup_hotelfeature.remark')}}</label>
+                                        @foreach($feature->feature_id as $fea)
+                                            @if($fea->feature_id == $feature->id){{$fea->remark}}
+                                            <textarea rows="5" cols="50" class="form-control" id="remark" name="remark_{{$feature->id}}" placeholder="{{trans('setup_hotelfeature.place-remark')}}">{{$fea->remark}}</textarea>
+                                                @else
+                                                <textarea rows="5" cols="50" class="form-control" id="remark" name="remark_{{$feature->id}}" placeholder="{{trans('setup_hotelfeature.place-remark')}}"></textarea>
+                                            @endif
+                                            @endforeach
+                                        <p class="text-danger">{{$errors->first('remark')}}</p>
+                                    </div>
+                                    </fieldset>
+                                </div>
+
+                            @endforeach
+                            @else
+                            @foreach($features as $feature)
+                                <div class="col-md-12">
+                                    <fieldset class="skill-border">
+                                    <div class="col-md-12">
+                                        <input type="checkbox" id="checked-box" name="feature_id[]" value="{{$feature->id}}"><strong>&nbsp;{{$feature->name}}</strong>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="qty">{{trans('setup_hotelfeature.qty')}}</label>
+                                        <input type="text" class="form-control" {{--id="quantity"--}} name="qty_{{$feature->id}}"
+                                               placeholder="Enter Quantity"/>
+                                        <p class="text-danger">{{$errors->first('qty')}}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="capacity">{{trans('setup_hotelfeature.capacity')}}</label>
+                                        <input type="text" class="form-control" {{--id="capacity"--}} name="capacity_{{$feature->id}}"
+                                               placeholder="{{trans('setup_hotelfeature.place-capacity')}}"/>
+                                        <p class="text-danger">{{$errors->first('capacity')}}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="open_hour">{{trans('setup_hotelfeature.area')}}</label>
+                                        <input type="text" class="form-control" {{--id="area"--}} name="area_{{$feature->id}}"
+                                               placeholder="Enter Area"/>
+                                        <p class="text-danger">{{$errors->first('area')}}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="open_hour">{{trans('setup_hotelfeature.open')}}</label>
+                                        <input type="text" class="form-control" {{--id="open_hour"--}} name="open_hour_{{$feature->id}}"
+                                               placeholder="Enter Open Hour"/>
+                                        <p class="text-danger">{{$errors->first('open_hour')}}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="close_hour">{{trans('setup_hotelfeature.close')}}</label>
+                                        <input type="text" class="form-control" {{--id="close_hour"--}} name="close_hour_{{$feature->id}}"
+                                               placeholder="Enter Close Hour" />
+                                        <p class="text-danger">{{$errors->first('close_hour')}}</p>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="remark">{{trans('setup_hotelfeature.remark')}}</label>
+                                        <textarea rows="5" cols="50" class="form-control" id="remark" name="remark_{{$feature->id}}" placeholder="{{trans('setup_hotelfeature.place-remark')}}"></textarea>
+                                        <p class="text-danger">{{$errors->first('remark')}}</p>
+                                    </div>
+                                    </fieldset>
+                                </div>
+                            @endforeach
+                            @endif
+
+                        @else
+                        @foreach($features as $feature)
+                            <div class="col-md-12">
+                                <fieldset class="skill-border">
+                                <div class="col-md-12">
+                                    <input type="checkbox" id="checked-box" name="feature_id[]" value="{{$feature->id}}"><strong>&nbsp;{{$feature->name}}</strong>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="qty">{{trans('setup_hotelfeature.qty')}}</label>
+                                    <input type="text" class="form-control" {{--id="quantity"--}} name="qty_{{$feature->id}}"
+                                           placeholder="{{trans('setup_hotelfeature.place-qty')}}"/>
+                                    <p class="text-danger">{{$errors->first('qty')}}</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="capacity">{{trans('setup_hotelfeature.capacity')}}</label>
+                                    <input type="text" class="form-control" {{--id="capacity"--}} name="capacity_{{$feature->id}}"
+                                           placeholder="{{trans('setup_hotelfeature.place-capacity')}}"/>
+                                    <p class="text-danger">{{$errors->first('capacity')}}</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="open_hour">{{trans('setup_hotelfeature.area')}}</label>
+                                    <input type="text" class="form-control" {{--id="area"--}} name="area_{{$feature->id}}"
+                                           placeholder="Enter Area"/>
+                                    <p class="text-danger">{{$errors->first('area')}}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="open_hour">{{trans('setup_hotelfeature.open')}}</label>
+                                    <input type="text" class="form-control" {{--id="open_hour"--}} name="open_hour_{{$feature->id}}"
+                                           placeholder="Enter Open Hour"/>
+                                    <p class="text-danger">{{$errors->first('open_hour')}}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="close_hour">{{trans('setup_hotelfeature.close')}}</label>
+                                    <input type="text" class="form-control" {{--id="close_hour"--}} name="close_hour_{{$feature->id}}"
+                                           placeholder="Enter Close Hour" />
+                                    <p class="text-danger">{{$errors->first('close_hour')}}</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="remark">{{trans('setup_hotelfeature.remark')}}</label>
+                                    <textarea rows="5" cols="50" class="form-control" id="remark" name="remark_{{$feature->id}}" placeholder="{{trans('setup_hotelfeature.place-remark')}}"></textarea>
+                                    <p class="text-danger">{{$errors->first('remark')}}</p>
+                                </div>
+                                </fieldset>
+                            </div>
+                        @endforeach
+                        @endif
+
+                </div>
+                <div class="tab-pane row" id="5">
+                    @if(isset($hotel))
+                        @if(isset($h_facility))
+                            @foreach($facilities as $facility)
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="facility[]" value="{{$facility->id}}" @foreach($facility->facility_id as $fac) @if($fac->facility_id == $facility->id)checked @endif @endforeach><strong>
+                                        &nbsp;{{$facility->name}}</strong>
+                                    <br><br>
+                                </div>
+                            @endforeach
+                            @else
+                            @foreach($facilities as $facility)
+                                <div class="col-md-4">
+                                        <input type="checkbox" name="facility[]" value="{{$facility->id}}">{{$facility->name}}
+                                    <br><br>
+                                </div>
+                            @endforeach
+                            @endif
+
+                    @else
+                        @foreach($facilities as $facility)
+                            <div class="col-md-4">
+                                <input type="checkbox" name="facility[]" value="{{$facility->id}}">{{$facility->name}}
+                                <br><br>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--End Tab Panel--}}
 
     <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -649,8 +1024,21 @@
 
 @section('page_script')
     <script type="text/javascript">
+
         $(document).ready(function(){
             //Start Validation for Entry and Edit Form
+            $.validator.addMethod("greaterThan",
+                    function (value, element, param) {
+                        var $otherElement = $(param);
+                        return parseInt(value, 10) > parseInt($otherElement.val(), 10);
+                    });
+
+            $.validator.addMethod("lessThan",
+                    function (value, element, param) {
+                        var $otherElement = $(param);
+                        return parseInt(value, 10) < parseInt($otherElement.val(), 10);
+                    });
+
             $('#hotel').validate({
                 rules: {
                     name                    : 'required',
@@ -684,6 +1072,33 @@
                         required: "true",
                         equalTo: "#password",
                     },
+                    first_cancellation_day  : {
+                        required   : true,
+                        greaterThan: "#second_cancellation_day"
+                    },
+                    second_cancellation_day  : {
+                        required   : true,
+                        lessThan: "#first_cancellation_day"
+                    },
+                    breakfast_fees          : {
+                        required: true,
+                        number  : true,
+                    },
+                    extrabed_fees           : {
+                        required: true,
+                        number  : true,
+                    },
+                    tax                     : {
+                        required: true,
+                        number  : true,
+                        max     : 100,
+                    },
+                    /*'qty[]'           : 'required',
+                    'capacity[]'      : 'required',
+                    'area[]'          : 'required',
+                    'open_hour[]'     : 'required',
+                    'close_hour[]'    : 'required',*/
+
                 },
                 messages: {
                     name                    : 'Name is required',
@@ -715,13 +1130,90 @@
                         required: "Confirm Password is required",
                         equalTo: "Password and Confirm Password must match.",
                     },
+                    first_cancellation_day  : {
+                        required   : 'First Cancellation Day Count is required',
+                        greaterThan: "First Cancellation Day Count must be greater than Second Cancellation Day Count"
+                    },
+                    second_cancellation_day  : {
+                        required   : 'Second Cancellation Day is required',
+                        lessThan   : "Second Cancellation Day Count must be less than First Cancellation Day Count"
+                    },
+                    breakfast_fees          : {
+                        required: 'Breakfast Fee is required',
+                        number  : 'Breakfast Fee must be numeric',
+                    },
+                    extrabed_fees           : {
+                        required: 'Extrabed Fee is required',
+                        number  : 'Extrabed Fee must be numeric',
+                    },
+                    tax                     : {
+                        required: 'Tax is required',
+                        number  : 'Tax must be numeric',
+                        max     : 'Tax percentage should not be more than 100',
+                    },
+                   /* 'qty[]'           : 'Quantity is required',
+                    'capacity[]'      : 'Capacity is required',
+                    'area[]'          : 'Area is required',
+                    'open_hour[]'     : 'Open Hour is required',
+                    'close_hour[]'    : 'Close Hour is required',*/
                 },
                 submitHandler: function(form) {
                     $('input[type="submit"]').attr('disabled','disabled');
                     form.submit();
                 }
             });
+
+
+
+           /* $("[name *= qty]").each(function(){
+                $(this).rules('add',{
+                    required:true,
+                    messages:{
+                        required:'Quantity is required'
+                    }
+                });
+            });
+            $("[name *= capacity]").each(function(){
+                $(this).rules('add',{
+                    required:true,
+                    messages:{
+                        required:'Capacity is required'
+                    }
+                });
+            });
+            $("[name *= area]").each(function(){
+                $(this).rules('add',{
+                    required:true,
+                    messages:{
+                        required:'Area is required'
+                    }
+                });
+            });
+            $("[name *= open_hour]").each(function(){
+                $(this).rules('add',{
+                    required:true,
+                    messages:{
+                        required:'Open Hour is required'
+                    }
+                });
+            });
+            $("[name *= close_hour]").each(function(){
+                $(this).rules('add',{
+                    required:true,
+                    messages:{
+                        required:'Close Hour is required'
+                    }
+                });
+            });*/
             //End Validation for Entry and Edit Form
+            $('#nearby_place').change(function() {
+                if ($("#nearby_place").val() ){
+                    //if checkbox is checked- add the 'required' class
+                    $("#nearby_distance").addClass('required');
+                }else{
+                    $("#nearby_distance").removeClass('required');
+                }
+            });
 
             //            Start fileupload js
             $(".add_image_div").click(function(){
