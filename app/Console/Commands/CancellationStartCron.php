@@ -76,7 +76,7 @@ class CancellationStartCron extends Command
                 $emails           = array($email,$hotel_email_str,$system_email);
                 Mail::send('booking_cancellation_start', [], function($message) use ($emails)
                 {    
-                    $subject        = "Tommorow is First Cancellation Start Date";
+                    $subject        = "Tomorrow is First Cancellation Start Date";
                     $message->to($emails)
                             ->subject($subject);    
                 });

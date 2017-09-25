@@ -174,7 +174,7 @@
                                                  alt="">
                                         </div>
                                         <div class="col-md-8 lead_left">
-                                            <h4>Roc one</h4>
+                                            <h4>{{$room->room_category}}</h4>
                                             <div class="manageform-edit" id="rowEdit{{$room->id}}">
                                                 <i>for </i> <span>{{$room->guest_name}}</span>
                                                 ({{$room->guest_count>1?$room->guest_count.'guests':$room->guest_count.'guest'}})
@@ -243,7 +243,9 @@
                                                 @endforeach
                                             </div>
                                             <div class="clearfix"></div>
-                                            <a class="cancelbooking" href="#">⨂Change your room</a>
+                                            <a class="cancelbooking" href="/booking/room/cancel/{{$booking->id}}/{{$room->id}}">
+                                                ⨂Cancel your room
+                                            </a>
                                         </div>
                                     </div>
                                 @endforeach

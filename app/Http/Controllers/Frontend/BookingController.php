@@ -131,6 +131,7 @@ class BookingController extends Controller
                 $booking->total_day = $total_day; //Add total booked days to booking
 
                 $bRooms             = $bRoomRepo->getBookingRoomAndRoomByBookingId($b_id);
+
                 $room_count         = count($bRooms);
                 $booking->room_count= $room_count; //Add Number of Room to booking
 
@@ -220,6 +221,8 @@ class BookingController extends Controller
 
                 /*get Cancel Reason */
                 $reasons                = $settingRepo->getCancelReason('REASON');
+
+//                dd($booking);
 
                 return view('frontend.manage_booking')->with('customer',$customer)
                                                       ->with('booking',$booking)
@@ -437,7 +440,7 @@ class BookingController extends Controller
                     /* For 1st Cancellation Day */
                     if($today_date >= $first_cancel_date && $today_date < $second_cancel_date){
                         /* Refund */
-                        $stripePayment                  = $paymentStripeRepo->getStripePaymentIdWithStatusOne($id);
+                        $stripePayment                  = $paymentStripeRepo->getStripePaymentId($id);
                         $stripePaymentId                = '';
                         if(isset($stripePayment) && count($stripePayment) > 0){
                             $stripePaymentId            = $stripePayment->stripe_payment_id;
@@ -594,10 +597,6 @@ class BookingController extends Controller
 
     }
 
-    public function cancel_room($id){
-        //
-    }
-
     public function edit_room(Request $request){
         try{
             $response['aceplusStatusCode']              = '500';
@@ -724,6 +723,7 @@ class BookingController extends Controller
                  */
 
                 if($booking->status == 2){
+//                    dd('status 2');
                     $new_check_in               = date('Y-m-d', strtotime($check_in));
                     $new_check_out              = date('Y-m-d', strtotime($check_out));
                     /*
@@ -735,7 +735,7 @@ class BookingController extends Controller
                         array_push($room_id_arr,$room->room_id);
                     }
                     $h_id                       = $booking->hotel_id;
-                    $r_available                = $this->repo->checkAvailableOrNot($new_check_in,$new_check_out,$room_id_arr);
+                    $r_available                = $this->repo->getAvailableRoom($new_check_in,$new_check_out,$room_id_arr);
                     $r_available_arr            = array();
                     $r_category_arr             = array();
                     if(isset($r_available) && count($r_available) > 0){
@@ -744,7 +744,6 @@ class BookingController extends Controller
                             array_push($r_category_arr,$available->h_room_category_id);
                         }
                     }
-
                     if($room_id_arr != $r_available_arr){
                         /*
                          * If room_id array from booking room is not same with room_id from available room array,
@@ -764,7 +763,6 @@ class BookingController extends Controller
                     // Calculate the number of night stay
                     $difference                 = strtotime($check_out) - strtotime($check_in);
                     $nights                     = floor($difference/(60*60*24));
-
                     $room_with_discount         = $roomRepo->getRoomWithDiscount($r_category_arr,$r_available_arr);
                     foreach($b_room as $room){
                         foreach($room_with_discount as $room_discount){
@@ -775,7 +773,7 @@ class BookingController extends Controller
                     }
 
                     $total_discount_amount      = 0.00;
-                    $total_discount_percent     = 0;
+                    $total_discount_percent     = 0.00;
                     $total_room_price           = 0.00;
                     $room_discount_arr          = array();
                     $discount_temp_arr          = array();
@@ -783,9 +781,9 @@ class BookingController extends Controller
                     if(isset($room_with_discount) && count($room_with_discount) > 0){
                         foreach($room_with_discount as $r_discount){
                             $next_date                  = $new_check_in;
+                            //Calculate extra bed price
+                            $extra_bed_price            = $r_discount->added_extra_bed==1?$r_discount->extra_bed_price:0.00;
                             for($i=1;$i<=$nights;$i++){
-                                //Calculate extra bed price
-                                $extra_bed_price            = $r_discount->added_extra_bed==1?$r_discount->extra_bed_price:0.00;
 
                                 if($next_date >= $r_discount->discount_start_date && $next_date <= $r_discount->discount_end_date) {
                                     //Calculate total discount amount
@@ -924,7 +922,7 @@ class BookingController extends Controller
 
                     if($today_date >= $first_cancel_date){
 
-                        $stripe_payment         = $stripeRepo->getStripePaymentId($b_id);
+                        $stripe_payment         = $stripeRepo->getStripePaymentIdWithStatusOne($b_id);
                         $stripe_user_id         = $stripe_payment->stripe_user_id;
                         $paymentObj             = new PaymentUtility();
                         $stripe_capture_payment = $paymentObj->capturePayment($stripe_user_id,$total_payable_amount);
@@ -940,7 +938,6 @@ class BookingController extends Controller
                         $stripe_payment->stripe_payment_amt = $stripe_capture_payment['stripe']['stripe_payment_amt'];
                         $stripe_payment->status             = 2;
                         $stripe_payment_update_res          = $stripeRepo->update($stripe_payment);
-//                    dd($stripe_payment_update_res);
                         if($stripe_payment_update_res['aceplusStatusCode'] != ReturnMessage::OK){
                             DB::rollback();
                             return \Response::json($response);
@@ -1013,6 +1010,293 @@ class BookingController extends Controller
         else{
             $response['aceplusStatusCode']  = '404';
             return \Response::json($response);
+        }
+    }
+
+    public function cancel_room($b_id,$r_id){
+        try{
+            DB::beginTransaction();
+            /* Repository Declaration */
+            $bRoomRepo                          = new BookingRoomRepository();
+            $configRepo                         = new ConfigRepository();
+            $bPaymentRepo                       = new BookingPaymentRepository();
+            $h_configRepo                       = new HotelConfigRepository();
+            $paymentStripeRepo                  = new BookingPaymentStripeRepository();
+            /* Repository Declaration */
+
+            //Get booking info
+            $booking                            = $this->repo->getBookingById($b_id);
+            $bStatus                            = $booking->status;
+            $h_id                               = $booking->hotel_id;
+
+            //Get canceled booking room info
+            $bCancelRoom                        = $bRoomRepo->getObjectById($r_id);
+            $cancel_room_payable_amt            = $bCancelRoom->room_payable_amt;
+            $cancel_room_price                  = $bCancelRoom->room_price_per_night;
+            $cancel_room_discount_amt           = $bCancelRoom->discount_amt;
+            $cancel_room_discount_percent       = number_format(($cancel_room_discount_amt/$cancel_room_price)*100,2);
+
+            //Get hotel config info
+            $h_config                           = $h_configRepo->getObjByID($h_id);
+
+            //Calculate price_wo_tax
+            $price_wo_tax                       = $booking->price_wo_tax-$cancel_room_payable_amt;
+            /* Start Calculating Total Government Tax Amount and Percentage*/
+            $total_government_tax_amt           = 0.00;
+            $total_government_tax_percentage    = 0;
+            $config                             = $configRepo->getGST();
+            if(isset($config) && count($config) > 0){
+                $total_government_tax_percentage= $config[0]->value;
+                $total_government_tax_amt       = ($total_government_tax_percentage/100)*$price_wo_tax;
+            }
+            /* End Calculating Total Government Tax Amount and Percentage*/
+
+            /* Start Calculating Total Service Tax Amount and Percentage */
+            $total_service_tax_amt              = 0.00;
+            $total_service_tax_percentage       = 0;
+            if(isset($h_config) && count($h_config) > 0){
+                $total_service_tax_percentage   = $h_config->tax;
+                $total_service_tax_amt          = ($total_service_tax_percentage/100)*$price_wo_tax;
+            }
+            else{
+                $config                         = $configRepo->getServiceTax();
+                if(isset($config) && count($config) > 0){
+                    $total_service_tax_percentage   = $config[0]->value;
+                    $total_service_tax_amt          = ($total_service_tax_percentage/100)*$price_wo_tax;
+                }
+            }
+            /* End Calculating Total Service Tax Amount and Percentage */
+
+            // Calculate price_w_tax and total_payable_amount
+            $price_w_tax                            = $price_wo_tax+$total_government_tax_amt+$total_service_tax_amt;
+            $total_payable_amount                   = $price_w_tax;
+
+            /* Start Calculating Total Discount Amount */
+            $total_discount_amt                     = $booking->total_discount_amt-$cancel_room_discount_amt;
+//                $total_discount_percentage              = $booking->total_discount_percentage-$cancel_room_discount_percent;
+            $total_discount_percentage              = 0.00;
+            /* End Calculating Total Discount Amount */
+
+            if($bStatus == 2){
+                /*
+                 * Change status of cancel room.
+                 * Update the booking cancel room.
+                 */
+                $bCancelRoom->status        = 3;
+                $bRoomUpdateRes             = $bRoomRepo->update($bCancelRoom);
+                if($bRoomUpdateRes['aceplusStatusCode'] != ReturnMessage::OK){
+                    DB::rollback();
+                    alert()->error('Cancellation of room is fail.')->persistent('OK');
+                }
+                /*
+                 * Before updating booking, need to check the cancel room is last room or not
+                 * Start checking
+                 */
+                $bActiveRoom                                = $bRoomRepo->getActiveBookingRoom($b_id);
+                $bookingStatus                              = 3;
+                if(isset($bActiveRoom) && count($bActiveRoom) > 0){
+                    $bookingStatus                          = $bStatus;
+                }
+                /* End checking */
+                /* Update Booking */
+                $booking->price_wo_tax                      = $price_wo_tax;
+                $booking->price_w_tax                       = $price_w_tax;
+                $booking->total_government_tax_amt          = $total_government_tax_amt;
+                $booking->total_government_tax_percentage   = $total_government_tax_percentage;
+                $booking->total_service_tax_amt             = $total_service_tax_amt;
+                $booking->total_service_tax_percentage      = $total_service_tax_percentage;
+                $booking->total_payable_amt                 = $total_payable_amount;
+                $booking->total_discount_amt                = $total_discount_amt;
+                $booking->total_discount_percentage         = $total_discount_percentage;
+                $booking->status                            = $bookingStatus;
+                $bookingUpdateRes                           = $this->repo->update($booking);
+                if($bookingUpdateRes['aceplusStatusCode'] != ReturnMessage::OK){
+                    DB::rollback();
+                    alert()->error('Cancellation of room is fail.')->persistent('OK');
+                }
+                /* Update Booking Payment */
+                $bPayment                                   = $bPaymentRepo->getObjsByBookingId($b_id);
+                $bPayment->payment_amount_wo_tax            = $price_wo_tax;
+                $bPayment->payment_amount_w_tax             = $price_w_tax;
+                $bPayment->total_government_tax_amt         = $total_government_tax_amt;
+                $bPayment->total_government_tax_percentage  = $total_government_tax_percentage;
+                $bPayment->total_service_tax_amt            = $total_service_tax_amt;
+                $bPayment->total_service_tax_percentage     = $total_service_tax_percentage;
+                $bPayment->total_payable_amt                = $total_payable_amount;
+                $bPaymentUpdateRes                          = $bPaymentRepo->update($bPayment);
+                if($bPaymentUpdateRes['aceplusStatusCode'] != ReturnMessage::OK){
+                    DB::rollback();
+                    alert()->error('Cancellation of room is fail.')->persistent('OK');
+                }
+                // If all updating is complete,send mail
+                $email              = $booking->user->email;
+                $hotel_email        = $h_configRepo->getEmailByHotelId($h_id);
+                $hotel_email_str    = $hotel_email->email;
+                $system_email       = "testingmps2017@gmail.com";
+                $emails             = array($email,$hotel_email_str,$system_email);
+                $template           = "frontend.mail.booking_update_mail";
+                $subject            = "Updated your booking check_in and check_out date";
+                $logMessage         = "updated a booking";
+                $mailResult         = Utility::sendMail($template,$emails,$subject,$logMessage);
+//                $mailResult['aceplusStatusCode'] = ReturnMessage::OK;
+                if ($mailResult['aceplusStatusCode'] != ReturnMessage::OK){
+                    alert()->warning('Room cancellation is successful.But email could not be send for some reasons.')
+                           ->persistent('OK');
+                }
+                alert()->success('Room cancellation is successful.Please check your email.')
+                       ->persistent('OK');
+                DB::commit();
+                return redirect()->action('Frontend\BookingController@booking_list');
+            }
+            elseif($bStatus == 5){
+
+                /* Update the booking room */
+                $bCancelRoom->status                = 3;
+                $bRoomUpdateRes                     = $bRoomRepo->update($bCancelRoom);
+                if($bRoomUpdateRes['aceplusStatusCode'] != ReturnMessage::OK){
+                    DB::rollback();
+                    alert()->error('Cancellation of room is fail.')->persistent('OK');
+                }
+                /* Start checking the cancel room is last room or not */
+                $bActiveRoom                        = $bRoomRepo->getActiveBookingRoom($b_id);
+                if(isset($bActiveRoom) && count($bActiveRoom) > 0){
+                    /*
+                     * If there are active room in the booking room table,
+                     * it means that the cancel room is not the last room.
+                     * So, $active_room must be 1(One).
+                     * If not, $active_room must be 0(Zero).
+                     */
+                    $bookingStatus                  = $bStatus;
+                    $active_room                    = 1;
+                }
+                else{
+                    $bookingStatus                  = 3;
+                    $active_room                    = 0;
+                }
+                $booking->status                    = $bookingStatus;
+                $bPayment                           = $bPaymentRepo->getObjsByBookingId($b_id);
+                /*
+                 * Status 5 means that cron job charged the payment because of first cancellation day.
+                 * If canceled date is within first cancellation day, 5o% of room payable amount must be refund.
+                 */
+                $first_cancel_days                  = 0;
+                $second_cancel_days                 = 0;
+                if(isset($h_config) && count($h_config) > 0){
+                    $first_cancel_days              = $h_config->first_cancellation_day_count;
+                    $second_cancel_days             = $h_config->second_cancellation_day_count;
+                }
+
+                $first_cancel_date                  = Carbon::parse($booking->check_in_date)->subDays($first_cancel_days);
+                $second_cancel_date                 = Carbon::parse($booking->check_in_date)->subDays($second_cancel_days);
+                $today_date                         = Carbon::now();
+
+                if($today_date >= $first_cancel_date && $today_date < $second_cancel_date){
+                    /* Refund */
+                    $stripePayment                  = $paymentStripeRepo->getStripePaymentId($b_id);
+                    //Get data of stripe payment to calculate refund amount
+                    $stripeStatus                   = $stripePayment->status;
+                    $stripePaymentId                = $stripePayment->stripe_payment_id;
+                    $original_amt                   = $stripePayment->stripe_payment_amt;
+                    /*
+                     * If $active_room is 1(one), refund amount must be 50% of the canceled room payable amount.
+                     * If not, refund amount must be 50% of total payable amount of the whole booking.
+                     */
+                    $refund_amount                  = $active_room == 1? round($cancel_room_payable_amt/2,2):
+                                                                         round($original_amt/2,2);
+                    /* Recalculate after refund */
+                    $price_wo_tax                   += $refund_amount;
+                    $total_government_tax_amt       = round(($total_government_tax_percentage/100)*$price_wo_tax,2);
+                    $total_service_tax_amt          = round(($total_service_tax_percentage/100)*$price_wo_tax,2);
+                    $price_w_tax                    = round($price_wo_tax+$total_government_tax_amt+$total_service_tax_amt,2);
+                    $total_payable_amount           = $price_w_tax;
+                    /* Recalculate after refund */
+                    $stripeId                       = $stripePayment->id;
+                    $customer_id                    = $stripePayment->stripe_user_id;
+
+                    $stripePaymentObj               = new PaymentUtility();
+                    $refundResult                   = $stripePaymentObj->refundPayment($customer_id,$refund_amount,$stripePaymentId);
+//                    $refundResult['aceplusStatusCode']              = ReturnMessage::OK;
+//                    $refundResult['stripe']['stripe_user_id']       = 'cus_BRD7bma9pmDCj0';
+//                    $refundResult['stripe']['stripe_payment_id']    = 'ch_1B4Kh5Ki85kjRqY0OD9IkU3J';
+//                    $refundResult['stripe']['stripe_payment_amt']   = 137.5;
+                    if($refundResult['aceplusStatusCode'] != ReturnMessage::OK) {
+                        alert()->error('Cancellation of room is fail.')->persistent('OK');
+                    }
+                    //Update booking stripe payment
+                    $stripe                         = BookingPaymentStripe::find($stripeId);
+                    $stripe->status                 = $active_room == 1?$stripeStatus:3;
+//                    $stripe->stripe_payment_id      = $refundResult['stripe']['stripe_payment_id'];
+                    $stripe->stripe_payment_amt     = $total_payable_amount;
+                    $stripePaymentUpdateRes         = $paymentStripeRepo->update($stripe);
+                    if($stripePaymentUpdateRes['aceplusStatusCode'] != ReturnMessage::OK){
+                        DB::rollback();
+                        //To Ask
+                        alert()->warning('Cancellation of room is success.')->persistent('OK');
+                        //Write Log
+                    }
+
+                    //Prepare booking obj to update
+                    $booking->price_wo_tax                      = $price_wo_tax;
+                    $booking->price_w_tax                       = $price_w_tax;
+                    $booking->total_government_tax_amt          = $total_government_tax_amt;
+                    $booking->total_government_tax_percentage   = $total_government_tax_percentage;
+                    $booking->total_service_tax_amt             = $total_service_tax_amt;
+                    $booking->total_service_tax_percentage      = $total_service_tax_percentage;
+                    $booking->total_payable_amt                 = $total_payable_amount;
+                    $booking->total_discount_amt                = $total_discount_amt;
+                    $booking->total_discount_percentage         = $total_discount_percentage;
+
+                    //Prepare booking payment obj to update
+                    $bPayment->payment_amount_wo_tax            = $price_wo_tax;
+                    $bPayment->payment_amount_w_tax             = $price_w_tax;
+                    $bPayment->total_government_tax_amt         = $total_government_tax_amt;
+                    $bPayment->total_government_tax_percentage  = $total_government_tax_percentage;
+                    $bPayment->total_service_tax_amt            = $total_service_tax_amt;
+                    $bPayment->total_service_tax_percentage     = $total_service_tax_percentage;
+                    $bPayment->total_payable_amt                = $total_payable_amount;
+                }
+                /* Update Booking */
+                $bookingUpdateRes                           = $this->repo->update($booking);
+                if($bookingUpdateRes['aceplusStatusCode'] != ReturnMessage::OK){
+                    DB::rollback();
+                    alert()->error('Cancellation of room is fail.')->persistent('OK');
+                }
+                /* Update Booking Payment */
+                $bPaymentUpdateRes                          = $bPaymentRepo->update($bPayment);
+                if($bPaymentUpdateRes['aceplusStatusCode'] != ReturnMessage::OK){
+                    DB::rollback();
+                    alert()->error('Cancellation of room is fail.')->persistent('OK');
+                }
+                // If all updating is complete,send mail
+                $email              = $booking->user->email;
+                $hotel_email        = $h_configRepo->getEmailByHotelId($h_id);
+                $hotel_email_str    = $hotel_email->email;
+                $system_email       = "testingmps2017@gmail.com";
+                $emails             = array($email,$hotel_email_str,$system_email);
+                $template           = "frontend.mail.booking_update_mail";
+                $subject            = "Updated your booking check_in and check_out date";
+                $logMessage         = "updated a booking";
+                $mailResult         = Utility::sendMail($template,$emails,$subject,$logMessage);
+                if ($mailResult['aceplusStatusCode'] != ReturnMessage::OK){
+                    alert()->warning('Room cancellation is successful.But email could not be send for some reasons.')
+                        ->persistent('OK');
+                }
+                alert()->success('Room cancellation is successful.Please check your email.')
+                    ->persistent('OK');
+                DB::commit();
+                return redirect()->action('Frontend\BookingController@booking_list');
+
+            }
+            else{
+                //don't allow to cancel room
+                alert()->warning('You could not cancel your reserved room!')->persistent('OK');
+                return redirect()->back();
+            }
+        }
+        catch(\Exception $e){
+            //
+            alert()->warning('You could not cancel your reserved room!')->persistent('OK');
+            return redirect()->back();
         }
     }
 

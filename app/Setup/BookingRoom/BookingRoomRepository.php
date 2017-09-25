@@ -60,23 +60,39 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
     }
 
     public function getBookingRoomAndRoomByBookingId($id){
+        /*
         $result = DB::select("SELECT booking_room.*,
                                      h_room_type.name as room_type,
                                      h_room_category.name as room_category,
                                      rooms.h_room_category_id,
                                      r_category_image.img_path as category_image
                               FROM booking_room
-                              JOIN rooms
+                              LEFT JOIN rooms
                               ON booking_room.room_id = rooms.id
-                              JOIN h_room_type
+                              LEFT JOIN h_room_type
                               ON rooms.h_room_type_id = h_room_type.id
-                              JOIN h_room_category
+                              LEFT JOIN h_room_category
                               ON rooms.h_room_category_id = h_room_category.id
-                              JOIN r_category_image
+                              LEFT JOIN r_category_image
                               ON h_room_category.id = r_category_image.h_room_category_id
                               WHERE booking_room.booking_id = $id
                               AND r_category_image.default_image = 1
-                            ");
+                            ");*/
+        $statusArr  = array(2,5);
+        $result     = BookingRoom::where('booking_id',$id)
+                                 ->leftJoin('rooms','rooms.id','=','booking_room.room_id')
+                                 ->leftJoin('h_room_type','h_room_type.id','=','rooms.h_room_type_id')
+                                 ->leftJoin('h_room_category','h_room_category.id','=','rooms.h_room_category_id')
+                                 ->leftJoin('r_category_image','r_category_image.h_room_category_id','=','h_room_category.id')
+                                 ->select('booking_room.*',
+                                          'rooms.h_room_category_id',
+                                          'h_room_type.name as room_type',
+                                          'h_room_category.name as room_category',
+                                          'r_category_image.img_path as category_image'
+                                 )
+                                 ->where('r_category_image.default_image',1)
+                                 ->whereIn('booking_room.status',$statusArr)
+                                 ->get();
 
         return $result;
     }
@@ -116,5 +132,12 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
             $returnedObj['aceplusStatusMessage'] = $e->getMessage();
             return $returnedObj;
         }
+    }
+
+    public function getActiveBookingRoom($booking_id){
+        $statusArr  = array(2,5);
+        $result     = BookingRoom::whereIn('status',$statusArr)->where('booking_id',$booking_id)->get();
+
+        return $result;
     }
 }

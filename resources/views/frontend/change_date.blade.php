@@ -145,7 +145,7 @@
                     }
                 });
             });
-//            /* Change Date Ajax */
+            /* Change Date Ajax */
         });
     </script>
 @stop
