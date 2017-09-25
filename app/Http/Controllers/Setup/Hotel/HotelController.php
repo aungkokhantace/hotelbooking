@@ -528,10 +528,7 @@ class HotelController extends Controller
                 $h_configs = DB::select("SELECT * FROM h_config WHERE hotel_id = '$h_id'");
                 $hotel_config->hotel_config_id = $h_configs;
             }
-//            dd($h_configs);
-
-
-
+            
             foreach ($facilities as $facility) {
                 $h_facility = DB::select("SELECT facility_id FROM h_facility WHERE hotel_id = '$h_id'");
                 $facility->facility_id = $h_facility;
