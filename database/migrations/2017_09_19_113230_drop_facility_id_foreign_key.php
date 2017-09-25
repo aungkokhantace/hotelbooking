@@ -12,7 +12,9 @@ class DropFacilityIdForeignKey extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('h_facility', function(Blueprint $table){
+            $table->dropForeign('h_facility_facility_id_foreign');
+        });
     }
 
     /**
@@ -22,9 +24,6 @@ class DropFacilityIdForeignKey extends Migration
      */
     public function down()
     {
-        Schema::table('h_facility', function(Blueprint $table){
-            $table->dropForeign('h_facility_facility_id_foreign');
-            $table->dropColumn('facility_id');
-        });
+        //
     }
 }
