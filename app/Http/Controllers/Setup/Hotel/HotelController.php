@@ -500,6 +500,7 @@ class HotelController extends Controller
             $hotel_nearbyRepo     = new HotelNearbyRepository();
             $hotel_nearby     = $hotel_nearbyRepo->getObjs();
 
+
             $hotel_configsRepo =  new HotelConfigRepository();
             $hotel_configs = $hotel_configsRepo->getObjs();
 
@@ -516,21 +517,19 @@ class HotelController extends Controller
                 $h_landmarks = DB::select("SELECT landmark_id FROM h_landmark WHERE hotel_id = '$h_id'");
                 $landmark->landmark_id = $h_landmarks;
             }
-//            $h_nearby_places        = Hnearby::where('hotel_id',$id)->whereNull('deleted_at')->get();
-            foreach ($hotel_nearby as $nearby){
-                $h_nearby_places = DB::select("SELECT * FROM h_nearby WHERE hotel_id = '$h_id'");
-                $nearby->nearby_id = $h_nearby_places;
-//                dd($h_nearby_places);
-            }
-//            $h_configs        = HotelConfig::where('hotel_id',$id)->whereNull('deleted_at')->get();
-//            dd(count($h_configs));
-            foreach($hotel_configs as $hotel_config){
-                $h_configs = DB::select("SELECT * FROM h_config WHERE hotel_id = '$h_id'");
-                $hotel_config->hotel_config_id = $h_configs;
-            }
-//            dd($h_configs);
 
-
+            if(isset($hotel_nearby)){
+                $h_nearby_places = "";
+            }else{
+                foreach ($hotel_nearby as $nearby){
+                    $h_nearby_places = DB::select("SELECT * FROM h_nearby WHERE hotel_id = '$h_id'");
+                    $nearby->nearby_id = $h_nearby_places;
+                }
+            }
+                foreach($hotel_configs as $hotel_config){
+                  $h_configs = DB::select("SELECT * FROM h_config WHERE hotel_id = '$h_id'");
+                  $hotel_config->hotel_config_id = $h_configs;
+                }
 
             foreach ($facilities as $facility) {
                 $h_facility = DB::select("SELECT facility_id FROM h_facility WHERE hotel_id = '$h_id'");
