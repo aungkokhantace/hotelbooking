@@ -180,7 +180,7 @@ class BookingRepository implements BookingRepositoryInterface
         }
     }
 
-    public function checkAvailableOrNot($check_in,$check_out,$room_id_arr){
+    public function getAvailableRoom($check_in,$check_out,$room_id_arr){
         $id             = implode("','",$room_id_arr);
         //check for blacked out rooms between check_in date and check_out date
         $blackout_query = DB::select("SELECT room_id

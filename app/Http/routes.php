@@ -77,6 +77,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('booking/room/edit',['as'=>'booking/room/edit','uses'=>'Frontend\BookingController@edit_room']);
     Route::post('booking/communication',['as'=>'booking/communication','uses'=>'Frontend\BookingController@communication']);
     Route::post('booking/change_date',['as'=>'booking/change_date','uses'=>'Frontend\BookingController@change_date']);
+    Route::get('booking/room/cancel/{b_id}/{r_id}',['as'=>'booking/room/cancel','uses'=>'Frontend\BookingController@cancel_room']);
 
     //Display Transportation Information
     Route::get('transportation_information', array('as'=>'/transportation_information', 'uses'=>'Frontend\TransportationInformationController@index'));

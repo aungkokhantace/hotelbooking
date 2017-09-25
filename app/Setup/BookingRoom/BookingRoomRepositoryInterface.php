@@ -16,4 +16,6 @@ interface BookingRoomRepositoryInterface
     public function getBookingRoomByBookingId($id);
     public function getBookingRoomAndRoomByBookingId($id);
     public function getObjectById($id);
+    public function update($paramObj);
+    public function getActiveBookingRoom($booking_id);
 }

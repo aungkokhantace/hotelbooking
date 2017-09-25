@@ -298,7 +298,7 @@ class HotelRoomCategoryController extends Controller
             if(Input::hasFile('file'))
             {
                 $images                         = Input::file('file');
-                $count                          = 0;
+                $count                          = 1;
                 foreach($images as $image) {
                     if($image != null){
                         $path = base_path() . '/public/images/upload/';
