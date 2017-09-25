@@ -383,6 +383,11 @@ class HotelRepository implements HotelRepositoryInterface
         $landmark = Landmark::find($landmark_id);
         return $landmark;
     }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> heinkhantlin
 
     public function getHotelByAdminId($admin_id){
         $obj = Hotel::whereNull('deleted_at')->where('admin_id',$admin_id)->first();
@@ -390,3 +395,7 @@ class HotelRepository implements HotelRepositoryInterface
         return $obj;
     }
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> heinkhantlin

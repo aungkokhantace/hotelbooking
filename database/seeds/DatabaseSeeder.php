@@ -33,5 +33,7 @@ class DatabaseSeeder extends Seeder
          $this->call(Default_AmenitiesSeeder::class);
          $this->call(Default_FeatureSeeder::class);
          $this->call(Default_HotelFeatureSeeder::class);
+
+         $this->call(Default_HotelConfigSeeder::class);
     }
 }
