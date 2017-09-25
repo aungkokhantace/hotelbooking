@@ -17,7 +17,6 @@ class Default_FacilityGroupSeeder extends Seeder
             ['id'=>'2', 'name'=>'Food & Drink', 'icon' =>'default_icon.jpg', 'remark' =>'', 'created_by' =>'1', 'updated_by' =>'1', 'created_at' =>'2017-01-06 11:30:35', 'updated_at' =>'2017-01-06 11:30:35'],
             ['id'=>'3', 'name'=>'Event', 'icon' =>'default_icon.jpg', 'remark' =>'', 'created_by' =>'1', 'updated_by' =>'1', 'created_at' =>'2017-01-06 11:30:35', 'updated_at' =>'2017-01-06 11:30:35'],
             ['id'=>'4', 'name'=>'General', 'icon' =>'default_icon.jpg', 'remark' =>'', 'created_by' =>'1', 'updated_by' =>'1', 'created_at' =>'2017-01-06 11:30:35', 'updated_at' =>'2017-01-06 11:30:35'],
-            ['id'=>'5', 'name'=>'General', 'icon' =>'default_icon.jpg', 'remark' =>'', 'created_by' =>'1', 'updated_by' =>'1', 'created_at' =>'2017-01-06 11:30:35', 'updated_at' =>'2017-01-06 11:30:35'],
         );
         DB::table('facility_group')->insert($objs);
     }
