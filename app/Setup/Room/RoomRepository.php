@@ -255,4 +255,27 @@ class RoomRepository implements RoomRepositoryInterface
         $objs   = User::select('id','email','role_id')->where('id',$id)->whereNull('deleted_at')->first();
         return $objs;
     }
+
+    public function getRoomWithDiscount($category_arr,$r_available_arr){
+        $result = Room::leftJoin('h_room_category','h_room_category.id','=','rooms.h_room_category_id')
+                ->whereIn('h_room_category.id',$category_arr)
+                ->leftJoin('room_discount','h_room_category.id','=','room_discount.h_room_category_id')
+//                ->leftJoin('booking_room','booking_room.room_id','=','rooms.id')
+                ->whereNull('rooms.deleted_at')
+                ->whereNull('h_room_category.deleted_at')
+                ->whereNull('room_discount.deleted_at')
+                ->whereIn('rooms.id',$r_available_arr)
+                ->select('rooms.*',
+                         'h_room_category.extra_bed_price',
+                         'h_room_category.price',
+                         'room_discount.type as discount_type',
+                         'room_discount.from_date as discount_start_date',
+                         'room_discount.to_date as discount_end_date',
+                         'room_discount.discount_percent',
+                         'room_discount.discount_amount'
+//                         'booking_room.added_extra_bed'
+                        )
+            ->get();
+        return $result;
+    }
 }

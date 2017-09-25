@@ -14,6 +14,7 @@ interface BookingRepositoryInterface
     public function getBookingByCustomerId($id);
     public function getBookingRoomByCustomerId($id);
     public function create($paramObj);
+    public function update($paramObj);
     public function getBookingById($id);
     public function getObjs();
     public function getUserObjs();
@@ -22,5 +23,6 @@ interface BookingRepositoryInterface
     public function getBookingByBookIdAndUserId($b_id,$u_id);
     public function changeBookingStatus($paramObj);
 //    public function sendMail($template,$emails,$subject,$logMessage);
+    public function checkAvailableOrNot($check_in,$check_out,$room_id_arr);
 
 }

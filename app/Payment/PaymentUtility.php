@@ -68,8 +68,8 @@ class PaymentUtility
 
             // Token is created using Stripe.js or Checkout!
             // Get the payment token submitted by the form:
-            $token = $ParamData['stripeToken'];
-            $email = $ParamData['stripeEmail'];
+            $token          = $ParamData['stripeToken'];
+            $email          = $ParamData['stripeEmail'];
 
             $tempStripeObj  = $this->createPaymentObj();
 
@@ -84,12 +84,12 @@ class PaymentUtility
             ));
 
             $stripeObj = array();
-            $stripeObj['stripe_user_id'] = $customer['id'];
-            $stripeObj['stripe_payment_id'] = "";
-            $stripeObj['stripe_payment_amt'] = "";
+            $stripeObj['stripe_user_id']        = $customer['id'];
+            $stripeObj['stripe_payment_id']     = "";
+            $stripeObj['stripe_payment_amt']    = "";
 
-            $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
-            $returnedObj['stripe'] = $stripeObj;
+            $returnedObj['aceplusStatusCode']   = ReturnMessage::OK;
+            $returnedObj['stripe']              = $stripeObj;
             return $returnedObj;
         }
         catch(\Exception $e){
@@ -127,6 +127,7 @@ class PaymentUtility
                 "currency" => $paymentCurrency,
                 "customer" => $customerId
             ));
+
             $stripeObj = array();
             $stripeObj['stripe_user_id'] = $customerId;
             $stripeObj['stripe_payment_id'] = $charge->id;
@@ -192,6 +193,52 @@ class PaymentUtility
         }
 
     }
+
+    public function refundPaymentByHotelAdmin($customerId, $amount,$chargeId){
+
+        $returnedObj = array();
+        $returnedObj['aceplusStatusCode'] = ReturnMessage::INTERNAL_SERVER_ERROR;
+
+        $currentUser = Utility::getCurrentUserID(); //get currently logged in user
+//        $currentUser = Utility::getCurrentCustomerID(); //get currently logged in customer
+//        $currentUser = "MrTesting";
+
+        //multiply amount with 100 for stripe
+        $actual_amount = $amount*100;
+
+        try {
+            $paymentCurrency = PaymentConstance::STIRPE_CURRENCY;
+            $tempStripeObj  = $this->createPaymentObj();
+            if($tempStripeObj['aceplusStatusCode'] != ReturnMessage::OK){
+                throw new Exception('Error with payment token !!!!');
+            }
+
+            $refund =  \Stripe\Refund::create(array(
+                "charge" => $chargeId,
+                "amount" => $actual_amount,
+            ));
+
+            $stripeObj = array();
+            $stripeObj['stripe_user_id'] = $customerId;
+            $stripeObj['stripe_payment_id'] = $chargeId;
+            $stripeObj['stripe_payment_amt'] = $amount;
+
+            $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
+            $returnedObj['stripe'] = $stripeObj;
+            return $returnedObj;
+        }
+        catch(\Exception $e){
+            //create error log
+            $date    = date("Y-m-d H:i:s");
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a Payment and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            LogCustom::create($date,$message);
+
+            $returnedObj['aceplusStatusMessage'] = $e->getMessage();
+            return $returnedObj;
+        }
+
+    }
+
 
 
 }

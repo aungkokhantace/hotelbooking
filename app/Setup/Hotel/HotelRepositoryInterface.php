@@ -27,5 +27,9 @@ interface HotelRepositoryInterface
     public function getSuggestedHotelsByDestination($hotelIdArr,$countryIdArr,$cityIdArr,$townshipIdArr);
     public function getObjsNotInConfig($hotel_config_array);
     public function getHotelByUserEmail($email);
+<<<<<<< HEAD
     public function getLandMarkByHotelID($landmark_id);
+=======
+    public function getHotelByAdminId($admin_id);
+>>>>>>> fdd7932313d364a6aac0a5bd69955c8c16c585ff
 }

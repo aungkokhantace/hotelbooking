@@ -378,8 +378,18 @@ class HotelRepository implements HotelRepositoryInterface
         $objs   = Hotel::whereNull('deleted_at')->where('email',$email)->first();
         return $objs;
     }
+<<<<<<< HEAD
     public function getLandMarkByHotelID($landmark_id){
         $landmark = Landmark::find($landmark_id);
         return $landmark;
     }
 }
+=======
+
+    public function getHotelByAdminId($admin_id){
+        $obj = Hotel::whereNull('deleted_at')->where('admin_id',$admin_id)->first();
+
+        return $obj;
+    }
+}
+>>>>>>> fdd7932313d364a6aac0a5bd69955c8c16c585ff

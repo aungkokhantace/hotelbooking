@@ -12,6 +12,7 @@ namespace App\Setup\RoomAvailablePeriod;
 use App\Core\ReturnMessage;
 use App\Core\Utility;
 use App\Log\LogCustom;
+use App\Setup\RoomBlackoutPeriod\RoomBlackoutPeriod;
 use Illuminate\Support\Facades\DB;
 
 class RoomAvailablePeriodRepository implements RoomAvailablePeriodRepositoryInterface
@@ -117,5 +118,13 @@ class RoomAvailablePeriodRepository implements RoomAvailablePeriodRepositoryInte
             $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' deleted  r_available_period_id = ' .$tempObj->id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
         }
+    }
+
+    public function getObjByHotelId($hotel_id){
+        $res    = RoomBlackoutPeriod::where('hotel_id',$hotel_id)
+                                    ->whereNull('deleted_at')
+                                    ->first();
+
+        return $res;
     }
 }

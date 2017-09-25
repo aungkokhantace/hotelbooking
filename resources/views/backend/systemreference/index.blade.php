@@ -113,8 +113,12 @@
                         <td>6</td>
                     </tr>
                     <tr>
-                        <td>Refund</td>
+                        <td>Refund by Customer</td>
                         <td>7</td>
+                    </tr>
+                    <tr>
+                        <td>Refund by Admin</td>
+                        <td>8</td>
                     </tr>
                 </table>
             </div>

@@ -135,5 +135,16 @@ class Check
         return $result;
     }
 
+    public static function checkBookingByHotelId($h_id){
+        $repo                           = new BookingRepository();
+        $bookings                       = $repo->getBookingByHotelId($h_id);
+        $result['aceplusStatusCode']    = ReturnMessage::UNAUTHORIZED;
+
+        if(isset($bookings) && count($bookings) > 0){
+            $result['aceplusStatusCode']    = ReturnMessage::OK;
+        }
+        return $result;
+    }
+
 
 }

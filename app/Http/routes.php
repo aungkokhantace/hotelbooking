@@ -26,6 +26,7 @@ Route::group(['middleware' => 'web'], function () {
 //    Route::get('register','Frontend\UserRegistrationController@create');
     Route::any('register','Frontend\UserRegistrationController@store');
     Route::get('register/check_email', ['as' => 'register/check_email', 'uses' => 'Frontend\UserRegistrationController@check_email']);
+    Route::get('register/verify/{confirmationCode}','Frontend\UserRegistrationController@verify');
     //Authentication
 //    Route::get('login','Frontend\LoginController@showLogin');
     Route::any('login','Frontend\LoginController@doLogin');
@@ -75,6 +76,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('booking/cancel/show/{id}',['as'=>'booking/cancel/show','uses'=>'Frontend\BookingController@show_cancellation']);
     Route::post('booking/room/edit',['as'=>'booking/room/edit','uses'=>'Frontend\BookingController@edit_room']);
     Route::post('booking/communication',['as'=>'booking/communication','uses'=>'Frontend\BookingController@communication']);
+    Route::post('booking/change_date',['as'=>'booking/change_date','uses'=>'Frontend\BookingController@change_date']);
 
     //Display Transportation Information
     Route::get('transportation_information', array('as'=>'/transportation_information', 'uses'=>'Frontend\TransportationInformationController@index'));
@@ -446,9 +448,11 @@ Route::group(['middleware' => 'web'], function () {
             //Hotel Admin Group
             Route::get('hotel_admin/dashboard', array('as'=>'backend/hotel_admin/dashboard', 'uses'=>'Setup\HotelAdmin\HotelDashboardController@dashboard'));
 
-            //Hotel Booking
+            //Booking List
             Route::get('booking', array('as'=>'backend/booking', 'uses'=>'Setup\HotelBooking\HotelBookingController@index'));
             Route::get('booking/{id}', array('as'=>'backend/booking/{id}', 'uses'=>'Setup\HotelBooking\HotelBookingController@detail'));
+            Route::post('booking/refund',array('as'=>'backend/booking/refund',
+                                               'uses'=>'Setup\HotelBooking\HotelBookingController@refundByHotelAdmin'));
             Route::get('communication', array('as'=>'backend/communication', 'uses'=>'Setup\HotelBooking\CommunicationController@index'));
             Route::get('communication/reply/{id}', array('as'=>'backend/communication/reply/{id}', 'uses'=>'Setup\HotelBooking\CommunicationController@show'));
             Route::post('communication/reply/store', array('as'=>'backend/communication/reply/store', 'uses'=>'Setup\HotelBooking\CommunicationController@store'));
