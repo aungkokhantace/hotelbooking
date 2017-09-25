@@ -201,7 +201,7 @@
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend/recommend_hotel/create">Set Recommend Hotel</a></li>
                         </ul>
                     </li>
-                    <li nav-id="modifier-create" class="has-sub">
+                  {{--  <li nav-id="modifier-create" class="has-sub">
                         <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Hotel Config</span>
@@ -245,7 +245,7 @@
                             <li nav-id="modifier-create-modifier"><a href="/backend/hotel_facility/create">Entry</a></li>
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_facility">List</a></li>
                         </ul>
-                    </li>
+                    </li>--}}
                     <li nav-id="modifier-create" class="has-sub">
                         <a href="javascript:;">
                             <b class="caret pull-right"></b>

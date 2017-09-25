@@ -24,4 +24,5 @@ class HotelLandmark extends Model
     {
         return $this->belongsTo('App\Setup\Landmark\Landmark','landmark_id','id');
     }
+
 }

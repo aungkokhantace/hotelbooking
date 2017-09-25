@@ -8,6 +8,11 @@
 namespace App\Setup\Hotel;
 
 use App\Log\LogCustom;
+use App\Setup\HotelConfig\HotelConfig;
+use App\Setup\HotelFacility\HotelFacility;
+use App\Setup\HotelFeature\HotelFeature;
+use App\Setup\HotelLandmark\HotelLandmark;
+use App\Setup\Landmark\Landmark;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use App\User;
@@ -30,7 +35,7 @@ class HotelRepository implements HotelRepositoryInterface
         return $arr;
     }
 
-    public function create($paramObj,$input)
+    public function create($paramObj)
     {
         $returnedObj = array();
         $returnedObj['aceplusStatusCode'] = ReturnMessage::INTERNAL_SERVER_ERROR;
@@ -47,7 +52,7 @@ class HotelRepository implements HotelRepositoryInterface
             LogCustom::create($date,$message);
 
             //Update h_nearby table
-            $id                 = $paramObj->id;
+            /*$id                 = $paramObj->id;
             $nearby_count       = $input['nearby_count'] + 1;
             for($i=0; $i<$nearby_count; $i++) {
                 //Check If user add empty value
@@ -60,7 +65,7 @@ class HotelRepository implements HotelRepositoryInterface
                     $tempPlace                      = Utility::addCreatedBy($paramObj);
                     $tempPlace->save();
                 }
-            }
+            }*/
 
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
             return $returnedObj;
@@ -76,7 +81,7 @@ class HotelRepository implements HotelRepositoryInterface
         }
     }
 
-    public function update($paramObj,$input)
+    public function update($paramObj)
     {
         $returnedObj = array();
         $returnedObj['aceplusStatusCode'] = ReturnMessage::INTERNAL_SERVER_ERROR;
@@ -93,7 +98,7 @@ class HotelRepository implements HotelRepositoryInterface
             LogCustom::create($date,$message);
 
             //Remove h_nearby id and insert
-            $id                  = $tempObj->id;
+            /*$id                  = $tempObj->id;
             $nearby_places       = Hnearby::where('hotel_id',$id)->get();
             foreach ($nearby_places as $nearby_place)
             {
@@ -111,7 +116,7 @@ class HotelRepository implements HotelRepositoryInterface
                     $tempPlace                      = Utility::addCreatedBy($paramObj);
                     $tempPlace->save();
                 }
-            }
+            }*/
 
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
             return $returnedObj;
@@ -154,7 +159,28 @@ class HotelRepository implements HotelRepositoryInterface
         $role = Hotel::find($id);
         return $role;
     }
-
+    public function getHConfigByID($id){
+//        $hotel_config  =  DB::select("SELECT * FROM h_config WHERE hotel_id = '$id'");
+        $hotel_config = HotelConfig::where('hotel_id',$id)->first();
+        return $hotel_config;
+    }
+    public function getHLandmarkByID($id){
+//        $hotel_config  =  DB::select("SELECT * FROM h_config WHERE hotel_id = '$id'");
+        $hotel_landmark = HotelLandmark::where('hotel_id',$id)->get();
+        return $hotel_landmark;
+    }
+    public function getHNearbyID($id){
+        $hotel_nearby = Hnearby::where('hotel_id',$id)->get();
+        return $hotel_nearby;
+    }
+    public function getHFacilityID($id){
+        $hotel_facility = HotelFacility::where('hotel_id',$id)->get();
+        return $hotel_facility;
+    }
+    public function getHFeatureID($id){
+        $hotel_feature = HotelFeature::where('hotel_id',$id)->get();
+        return $hotel_feature;
+    }
     public function getHotelsByDestination($name){
 //        $objs = Hotel::whereNull('deleted_at')->where('name', 'LIKE', "%$name%")->get();
 
@@ -351,5 +377,9 @@ class HotelRepository implements HotelRepositoryInterface
     public function getHotelByUserEmail($email) {
         $objs   = Hotel::whereNull('deleted_at')->where('email',$email)->first();
         return $objs;
+    }
+    public function getLandMarkByHotelID($landmark_id){
+        $landmark = Landmark::find($landmark_id);
+        return $landmark;
     }
 }
