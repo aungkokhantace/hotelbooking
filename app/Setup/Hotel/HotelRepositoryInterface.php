@@ -29,8 +29,5 @@ interface HotelRepositoryInterface
     public function getHotelByUserEmail($email);
     public function getLandMarkByHotelID($landmark_id);
     public function getHotelByAdminId($admin_id);
-<<<<<<< HEAD
-=======
 
->>>>>>> heinkhantlin
 }
