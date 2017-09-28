@@ -11,7 +11,9 @@ use App\Setup\Feature\FeatureRepository;
 use App\Setup\HotelConfig\HotelConfig;
 use App\Setup\HotelConfig\HotelConfigRepository;
 use App\Setup\HotelFacility\HotelFacility;
+use App\Setup\HotelFacility\HotelFacilityRepository;
 use App\Setup\HotelFeature\HotelFeature;
+use App\Setup\HotelFeature\HotelFeatureRepository;
 use App\Setup\HotelLandmark\HotelLandmark;
 use App\Setup\HotelLandmark\HotelLandmarkRepository;
 use App\Setup\HotelNearby\HotelNearby;
@@ -117,6 +119,7 @@ class HotelController extends Controller
 
     public function store(HotelEntryRequest $request)
     {
+//        dd(Input::all());
         $request->validate();
         $input              = $request->all();
         $name               = (Input::has('name')) ? Input::get('name') : "";
@@ -195,7 +198,8 @@ class HotelController extends Controller
             }
 
         }
-        //end getting landmark
+//         dd($landmark);
+        //end getti ng landmark
 
         //start getting hotel nearby
         $nearby_place = (Input::has('nearby_place')) ? Input::get('nearby_place') : "";
@@ -317,7 +321,7 @@ class HotelController extends Controller
         //end start getting hotel feature
 
         //start getting hotel facility
-        $facility = (Input::has('facility')) ? Input::get('facility') : "";
+        $facility = (Input::has('facility_id')) ? Input::get('facility_id') : "";
         $facility_mainAry = array();
         $facility_count = count($facility);
 
@@ -329,6 +333,7 @@ class HotelController extends Controller
             }
 
         }
+        // dd($facility);
         //end getting hotel facility
 
         DB::beginTransaction();
@@ -380,7 +385,8 @@ class HotelController extends Controller
             $hotel_configObj->second_cancellation_day_count = $second_cancellation_day;
             $hotel_configObj->breakfast_fees   = $breakfast_fees;
             $hotel_configObj->tax              = $tax;
-            $hotel_configResult = $this->repo->create($hotel_configObj);
+            $hotel_configsRepo = new HotelConfigRepository;
+            $hotel_configResult = $hotel_configsRepo->create($hotel_configObj);
 
             $landmarkResult = array();
             if($hotel_configResult['aceplusStatusCode'] == ReturnMessage::OK){
@@ -390,7 +396,8 @@ class HotelController extends Controller
                         $landmarkObj = new HotelLandmark();
                         $landmarkObj->hotel_id = $paramObj->id;
                         $landmarkObj->landmark_id = $land_ary['landmark'];
-                        $landmarkResult = $this->repo->create($landmarkObj);
+                        $landmarkRepo = new LandmarkRepository;
+                        $landmarkResult = $landmarkRepo->create($landmarkObj);
                     }
                 }else{
                     $landmarkResult['aceplusStatusCode'] = ReturnMessage::OK;
@@ -404,7 +411,8 @@ class HotelController extends Controller
                             $h_nearbyObj->hotel_id = $paramObj->id;
                             $h_nearbyObj->nearby_id = $nearby_ary['nearby_place'];
                             $h_nearbyObj->km = $nearby_ary['nearby_distance'];
-                            $h_nearby_result = $this->repo->create($h_nearbyObj);
+                            $hotel_nearbyRepo = new HotelNearbyRepository;
+                            $h_nearby_result = $hotel_nearbyRepo->create($h_nearbyObj);
                         }
                     }else{
                         $h_nearby_result['aceplusStatusCode'] = ReturnMessage::OK;
@@ -423,7 +431,8 @@ class HotelController extends Controller
                                $h_featureObj->open_hour = $h_feature['open_hour'];
                                $h_featureObj->close_hour = $h_feature['close_hour'];
                                $h_featureObj->remark = $h_feature['remark'];
-                               $h_feature_result = $this->repo->create($h_featureObj);
+                               $h_featureRepo = new HotelFeatureRepository;
+                               $h_feature_result = $h_featureRepo->create($h_featureObj);
                            }
                        }else{
                            $h_feature_result['aceplusStatusCode'] = ReturnMessage::OK;
@@ -437,7 +446,8 @@ class HotelController extends Controller
                                    $h_facilityObj = new HotelFacility();
                                    $h_facilityObj->hotel_id = $paramObj->id;
                                    $h_facilityObj->facility_id = $facility_ary['facility'];
-                                   $h_facility_result = $this->repo->create($h_facilityObj);
+                                   $h_facilityRepo = new HotelFacilityRepository;
+                                   $h_facility_result = $h_facilityRepo->create($h_facilityObj);
                                }
                            }else{
                                $h_facility_result['aceplusStatusCode'] = ReturnMessage::OK;
@@ -510,6 +520,7 @@ class HotelController extends Controller
             $facilityRepo       = new FacilitiesRepository();
             $facilities         = $facilityRepo->getObjsForHotel();
 
+
             $featureRepo= new FeatureRepository();
             $features   = $featureRepo->getObjs();
 
@@ -517,6 +528,7 @@ class HotelController extends Controller
                 $h_landmarks = DB::select("SELECT landmark_id FROM h_landmark WHERE hotel_id = '$h_id'");
                 $landmark->landmark_id = $h_landmarks;
             }
+            // dd($h_landmarks);
 
 //            $h_nearby_places        = Hnearby::where('hotel_id',$id)->whereNull('deleted_at')->get();
             foreach ($hotel_nearby as $nearby){
@@ -550,12 +562,14 @@ class HotelController extends Controller
                 $h_facility = DB::select("SELECT facility_id FROM h_facility WHERE hotel_id = '$h_id'");
                 $facility->facility_id = $h_facility;
             }
+            // dd($h_facility);
 
             foreach($features as $feature){
                 $h_feature = DB::select("SELECT * FROM h_feature WHERE hotel_id = '$h_id'");
                 $feature->feature_id = $h_feature;
 
             }
+    
 
             $admin_id = $hotel->admin_id;
             $userRepo = new UserRepository();
@@ -582,6 +596,7 @@ class HotelController extends Controller
     }
 
     public function update(HotelEditRequest $request){
+
         $request->validate();
         $input              = $request->all();
         $id                 = (Input::has('id')) ? Input::get('id') : "";
@@ -671,6 +686,7 @@ class HotelController extends Controller
             }
 
         }
+        // dd($landmarkAry);
         //end getting landmark
 
         //start getting hotel nearby
@@ -806,7 +822,7 @@ class HotelController extends Controller
             $hotel_id = $hotel_facility->hotel_id;
             HotelFacility::where('hotel_id',$hotel_id)->delete();
         }
-        $facility = (Input::has('facility')) ? Input::get('facility') : "";
+        $facility = (Input::has('facility_id')) ? Input::get('facility_id') : "";
         $facility_mainAry = array();
         $facility_count = count($facility);
 
@@ -817,6 +833,8 @@ class HotelController extends Controller
                 $facility_mainAry[$f]['facility'] = "";
             }
         }
+        // dd($facility);
+    
         //end getting hotel facility
         DB::beginTransaction();
         $hotel          = $this->repo->getObjByID($id);
@@ -873,7 +891,9 @@ class HotelController extends Controller
                 $hotel_configObj->second_cancellation_day_count = $second_cancellation_day;
                 $hotel_configObj->breakfast_fees   = $breakfast_fees;
                 $hotel_configObj->tax              = $tax;
-                $hotel_configResult = $this->repo->update($hotel_configObj);
+                $hotel_configsRepo = new HotelConfigRepository;
+                $hotel_configResult = $hotel_configsRepo->update($hotel_configObj);
+
             }else{
                 $hotel_configObj = new HotelConfig();
                 $hotel_configObj->hotel_id =$paramObj->id;
@@ -881,7 +901,8 @@ class HotelController extends Controller
                 $hotel_configObj->second_cancellation_day_count = $second_cancellation_day;
                 $hotel_configObj->breakfast_fees   = $breakfast_fees;
                 $hotel_configObj->tax              = $tax;
-                $hotel_configResult = $this->repo->create($hotel_configObj);
+                $hotel_configsRepo = new HotelConfigRepository;
+                $hotel_configResult = $hotel_configsRepo->create($hotel_configObj);
             }
             $landmarkResult = array();
             if($hotel_configResult['aceplusStatusCode'] ==  ReturnMessage::OK){
@@ -890,7 +911,8 @@ class HotelController extends Controller
                         $landmarkObj = new HotelLandmark();
                         $landmarkObj->hotel_id = $paramObj->id;
                         $landmarkObj->landmark_id = $land_ary['landmark'];
-                        $landmarkResult = $this->repo->create($landmarkObj);
+                        $landmarkRepo = new LandmarkRepository;
+                        $landmarkResult = $landmarkRepo->create($landmarkObj);
                     }
                 }else{
                     $landmarkResult['aceplusStatusCode'] = ReturnMessage::OK;
@@ -903,7 +925,8 @@ class HotelController extends Controller
                             $h_nearbyObj->hotel_id = $paramObj->id;
                             $h_nearbyObj->nearby_id = $nearby_ary['nearby_place'];
                             $h_nearbyObj->km = $nearby_ary['nearby_distance'];
-                            $h_nearby_result = $this->repo->create($h_nearbyObj);
+                            $hotel_nearbyRepo = new HotelNearbyRepository;
+                            $h_nearby_result = $hotel_nearbyRepo->create($h_nearbyObj);
                         }
                     }else{
                         $h_nearby_result['aceplusStatusCode'] = ReturnMessage::OK;
@@ -921,7 +944,8 @@ class HotelController extends Controller
                                 $h_featureObj->open_hour = $h_feature['open_hour'];
                                 $h_featureObj->close_hour = $h_feature['close_hour'];
                                 $h_featureObj->remark = $h_feature['remark'];
-                                $h_feature_result = $this->repo->create($h_featureObj);
+                                $h_featureRepo = new HotelFeatureRepository;
+                                $h_feature_result = $h_featureRepo->create($h_featureObj);
                             }
                         }else{
                             $h_feature_result['aceplusStatusCode'] = ReturnMessage::OK;
@@ -933,11 +957,13 @@ class HotelController extends Controller
                                     $h_facilityObj = new HotelFacility();
                                     $h_facilityObj->hotel_id = $paramObj->id;
                                     $h_facilityObj->facility_id = $facility_ary['facility'];
-                                    $h_facility_result = $this->repo->create($h_facilityObj);
+                                    $h_facilityRepo = new HotelFacilityRepository;
+                                    $h_facility_result = $h_facilityRepo->create($h_facilityObj);
                                 }
                             }else{
                                 $h_facility_result['aceplusStatusCode'] = ReturnMessage::OK;
                             }
+                            // dd($h_facility_result);
                             if($h_facility_result['aceplusStatusCode'] ==  ReturnMessage::OK){
                                 DB::commit();
                                 return redirect()->action('Setup\Hotel\HotelController@index')

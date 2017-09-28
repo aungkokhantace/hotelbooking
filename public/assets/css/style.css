@@ -5694,4 +5694,14 @@ fieldset.skill-border{
     box-shadow:  0px 0px 0px 0px #000;
 }
 /*End tab-panel*/
+
+input[type=checkbox] .cus_checkbox{
+    margin: 4px 0 0 !important;
+    margin-top: 1px !important;
+    line-height: normal !important;
+    -webkit-box-sizing: border-box !important;
+    -moz-box-sizing: border-box !important;
+    box-sizing: border-box !important;
+    padding: 0 !important;
+}
 /* End Css */

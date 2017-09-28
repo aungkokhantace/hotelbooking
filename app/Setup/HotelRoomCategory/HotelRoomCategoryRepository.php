@@ -13,6 +13,8 @@ use App\Core\ReturnMessage;
 use App\Core\Utility;
 use App\Log\LogCustom;
 use App\Setup\HotelRoomCategory\HotelRoomCategory;
+use App\Setup\RoomCategoryAmenity\RoomCategoryAmenity;
+use App\Setup\RoomCategoryFacility\RoomCategoryFacility;
 use Illuminate\Support\Facades\DB;
 use Auth;
 use App\User;
@@ -154,6 +156,15 @@ class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterfac
 
         return $result;
     }
+    public function getRoomCategories($hotel_id = null){
+        $query = HotelRoomCategory::query();
+        if(isset($hotel_id) && $hotel_id!=null  && $hotel_id <> 'All'){
+            $query = $query->where('hotel_id',$hotel_id);
+        }
+        $query = $query->whereNull('h_room_category.deleted_at');
+        $result = $query->get();
+        return $result;
+    }
 
     public function getUserObjs() {
         $id     = Auth::guard('User')->user()->id;
@@ -185,5 +196,16 @@ class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterfac
 
         return $result;
 
+    }
+
+    public function getRoomCategoryAmenityByID($id){
+//        $hotel_config  =  DB::select("SELECT * FROM h_config WHERE hotel_id = '$id'");
+        $r_amenity = RoomCategoryAmenity::where('room_category_id',$id)->get();
+        return $r_amenity;
+    }
+    public function getRoomCategoryFacilityByID($id){
+//        $hotel_config  =  DB::select("SELECT * FROM h_config WHERE hotel_id = '$id'");
+        $r_facility = RoomCategoryFacility::where('h_room_category_id',$id)->get();
+        return $r_facility;
     }
 }

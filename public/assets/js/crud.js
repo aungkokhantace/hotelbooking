@@ -3,8 +3,14 @@
  * author Wai Yan Aung
  */
 
-function create_setup(type){
-    window.location ='/backend/' + type + '/create';
+function create_setup(type) {
+    /*var hotel_id = $("#all_hotel_id").val();*/
+    window.location = '/backend/' + type + '/create';
+}
+
+function create_setup_room_category(type){
+    var hotel_id = $("#all_hotel_id").val();
+    window.location ='/backend/' + type + '/create/' +hotel_id;
 }
 
 function edit_setup(type) {

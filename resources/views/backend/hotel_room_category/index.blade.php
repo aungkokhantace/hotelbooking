@@ -1,19 +1,33 @@
 @extends('layouts.master')
 @section('title','Hotel Room Category')
 @section('content')
-
         <!-- begin #content -->
 <div id="content" class="content">
 
     <h1 class="page-header">{{trans('setup_hotelroomcategory.title-list')}}</h1>
+    <br>
 
     <div class="row">
-        <div class="col-md-10"></div>
-        <div class="col-md-2">
+        @if(isset($all_hotels))
+            <div class="col-md-2">
+                <select class="form-control" name="hotel_id" id="hotel_id">
+                    <option value="All">All</option>
+                    @foreach($all_hotels as $all_hotel)
+                        <option value="{{$all_hotel->id}}"{{($hotel_id == $all_hotel->id)? 'selected' : ''}}>{{$all_hotel->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="button" onclick="filter_by_hotel_id('backend/hotel_room_category');" class="form-control btn-primary">Filter</button>
+            </div>
+        @endif
+        <div class="col-md-8">
             <div class="buttons pull-right">
-                <button type="button" onclick='create_setup("hotel_room_category");' class="btn btn-default btn-md first_btn">
+                @if(isset($all_hotels))
+                <button type="button" {{--onclick='create_setup("hotel_room_category");'--}} class="btn btn-default btn-md first_btn" data-toggle="modal" data-target="#hotel_modal">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </button>
+                @endif
                 <button type="button" onclick='edit_setup("hotel_room_category");' class="btn btn-default btn-md second_btn">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </button>
@@ -82,6 +96,28 @@
     </div>
     {!! Form::close() !!}
 
+</div>
+<div class="modal fade" id="hotel_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Choose Hotel</h4>
+            </div>
+            <div class="modal-body">
+                <select class="form-control" name="all_hotel_id" id="all_hotel_id">
+                    <option value="" selected disabled>-- Select Hotel --</option>
+                    @foreach($all_hotels as $all_hotel)
+                        <option value="{{$all_hotel->id}}">{{$all_hotel->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick='create_setup_room_category("hotel_room_category");'>Go Room Category Form</button>
+            </div>
+        </div>
+    </div>
 </div>
 @stop
 

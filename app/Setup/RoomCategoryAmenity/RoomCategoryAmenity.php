@@ -12,8 +12,8 @@ class RoomCategoryAmenity extends Model
         'id',
         'room_category_id',
         'amenity_id',
-        'value',
-        'description',
+        /*'value',
+        'description',*/
         'updated_at','created_at','deleted_at','updated_by','created_by','deleted_by'
     ];
 

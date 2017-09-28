@@ -66,17 +66,22 @@
     <br/>
 
     <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+       {{-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="hotel_id">{{trans('setup_hotelroomcategory.hotel')}}
                 <span class="require">*</span>
             </label>
-        </div>
+        </div>--}}
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <select class="form-control" name="hotel_id" id="hotel_id">
+            <label for="hotel_id">{{trans('setup_hotelroomcategory.hotel')}}
+                <span class="require">*</span>
+            </label>
                 @if(isset($hotel_room_category))
                     @if ($role == 3)
+                    <select class="form-control" name="hotel_id" id="hotel_id">
                         <option value="{{$hotels->id}}" selected>{{$hotels->name}}</option>
+                        </select>
                     @else
+                    <select class="form-control" name="hotel_id" id="hotel_id">
                         @foreach($hotels as $hotel)
                             @if($hotel->id == $hotel_room_category->hotel_id)
                                 <option value="{{$hotel->id}}" selected>{{$hotel->name}}</option>
@@ -84,31 +89,37 @@
                                 <option value="{{$hotel->id}}">{{$hotel->name}}</option>
                             @endif
                         @endforeach
+                            </select>
                     @endif
                 @else
                     @if ($role == 3)
+                    <select class="form-control" name="hotel_id" id="hotel_id">
                         <option value="{{$hotels->id}}" selected>{{$hotels->name}}</option>
+                        </select>
                     @else
-                        <option value="" disabled selected>
-                            {{trans('setup_hotelroomcategory.place-hotel')}}
-                        </option>
-                        @foreach($hotels as $hotel)
-                            <option value="{{$hotel->id}}">{{$hotel->name}}</option>
+                    @foreach($hotels as $hotel)
+                        @if($hotel_id == $hotel->id)
+                        <select class="form-control" name="hotel_id" id="hotel_id">
+                                <option value="{{$hotel->id}}" selected >{{$hotel->name}}</option>
+                        </select>
+                            @endif
                         @endforeach
                     @endif
                 @endif
-            </select>
             <p class="text-danger">{{$errors->first('hotel_id')}}
         </div>
-    </div>
+    {{--</div>
 
-    <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+    <div class="row">--}}
+      {{--  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="h_room_type_id">
                 {{trans('setup_hotelroomcategory.room-type')}}
                 <span class="require">*</span></label>
-        </div>
+        </div>--}}
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <label for="h_room_type_id">
+                {{trans('setup_hotelroomcategory.room-type')}}
+                <span class="require">*</span></label>
             <select class="form-control" name="h_room_type_id" id="h_room_type_id">
                 @if(isset($hotel_room_category))
                     @foreach($hotel_room_type as $type)
@@ -126,16 +137,20 @@
             </select>
             <p class="text-danger">{{$errors->first('h_room_type_id')}}
         </div>
-    </div>
+  {{--  </div>
 
-    <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+    <div class="row">--}}
+        {{--<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="name">
                 {{trans('setup_hotelroomcategory.name')}}
                 <span class="require">*</span>
             </label>
-        </div>
+        </div>--}}
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <label for="name">
+                {{trans('setup_hotelroomcategory.name')}}
+                <span class="require">*</span>
+            </label>
             <input type="text" required class="form-control" id="name" name="name"
                    placeholder="{{trans('setup_hotelroomcategory.place-name')}}"
                    value="{{ isset($hotel_room_category)? $hotel_room_category->name:Request::old('name') }}"/>
@@ -144,43 +159,55 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+       {{-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="price">
                 {{trans('setup_hotelroomcategory.price')}}
                 <span class="require">*</span>
             </label>
-        </div>
+        </div>--}}
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <label for="price">
+                {{trans('setup_hotelroomcategory.price')}}
+                <span class="require">*</span>
+            </label>
             <input type="text" required class="form-control" id="price" name="price"
                    placeholder="{{trans('setup_hotelroomcategory.place-price')}}"
                    value="{{ isset($hotel_room_category)? $hotel_room_category->price:Request::old('price') }}"/>
             <p class="text-danger">{{$errors->first('price')}}</p>
         </div>
-    </div>
+   {{-- </div>
 
-    <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+    <div class="row">--}}
+        {{--<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="square_metre">
                 {{trans('setup_hotelroomcategory.sqm')}}
                 <span class="require">*</span>
             </label>
-        </div>
+        </div>--}}
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <label for="square_metre">
+                {{trans('setup_hotelroomcategory.sqm')}}
+                <span class="require">*</span>
+            </label>
             <input type="text" required class="form-control" id="square_metre" name="square_metre"
                    placeholder="{{trans('setup_hotelroomcategory.place-sqm')}}"
                    value="{{ isset($hotel_room_category)? $hotel_room_category->square_metre:Request::old('square_metre') }}"/>
             <p class="text-danger">{{$errors->first('square_metre')}}</p>
         </div>
-    </div>
+    {{--</div>
 
-    <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+    <div class="row">--}}
+       {{-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="booking_cutoff_day">
                 {{trans('setup_hotelroomcategory.booking')}}
                 <span class="require">*</span>
             </label>
-        </div>
+        </div>--}}
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <label for="booking_cutoff_day">
+                {{trans('setup_hotelroomcategory.booking')}}
+                <span class="require">*</span>
+            </label>
             <input type="text" required class="form-control" id="booking_cutoff_day" name="booking_cutoff_day"
                    placeholder="{{trans('setup_hotelroomcategory.place-booking')}}"
                    value="{{ isset($hotel_room_category)? $hotel_room_category->booking_cutoff_day:Request::old('booking_cutoff_day') }}"/>
@@ -219,28 +246,36 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="capacity">
                 {{trans('setup_hotelroomcategory.capacity')}}
                 <span class="require">*</span>
             </label>
-        </div>
+        </div> -->
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+             <label for="capacity">
+                {{trans('setup_hotelroomcategory.capacity')}}
+                <span class="require">*</span>
+            </label>
             <input type="text" required class="form-control" id="capacity" name="capacity"
                    placeholder="{{trans('setup_hotelroomcategory.place-capacity')}}"
                    value="{{ isset($hotel_room_category)? $hotel_room_category->capacity:Request::old('capacity') }}"/>
             <p class="text-danger">{{$errors->first('capacity')}}</p>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+    <!-- </div>
+    
+    <div class="row"> -->
+        <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="bed_type">
                 {{trans('setup_hotelroomcategory.bed-type')}}
                 <span class="require">*</span>
             </label>
-        </div>
+        </div> -->
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+             <label for="bed_type">
+                {{trans('setup_hotelroomcategory.bed-type')}}
+                <span class="require">*</span>
+            </label>
             <input type="text" required class="form-control" id="bed_type" name="bed_type"
                    placeholder="{{trans('setup_hotelroomcategory.bed-type')}}"
                    value="{{ isset($hotel_room_category)? $hotel_room_category->bed_type:Request::old('bed_type') }}"/>
@@ -249,20 +284,22 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="description">{{trans('setup_hotelroomcategory.description')}}</label>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        </div> -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <label for="description">{{trans('setup_hotelroomcategory.description')}}</label>
             <textarea rows="5" cols="50" class="form-control" id="description" name="description" placeholder="{{trans('setup_hotelroomcategory.place-description')}}">{{ isset($hotel_room_category)? $hotel_room_category->description:Request::old('description') }}</textarea>
             <p class="text-danger">{{$errors->first('description')}}</p>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+       <!--  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+           <label for="remark">{{trans('setup_hotelroomcategory.remark')}}</label>
+       </div> -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <label for="remark">{{trans('setup_hotelroomcategory.remark')}}</label>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <textarea rows="5" cols="50" class="form-control" id="remark" name="remark" placeholder="{{trans('setup_hotelroomcategory.place-remark')}}">{{ isset($hotel_room_category)? $hotel_room_category->remark:Request::old('remark') }}</textarea>
             <p class="text-danger">{{$errors->first('remark')}}</p>
         </div>
@@ -307,7 +344,80 @@
         </div>
     @endif
     {{-- End Image --}}
+    <br>
+    {{--Start Tab Panel--}}
+    <div class="row">
+        <div id="exTab2">
+            <ul class="nav nav-tabs hotel">
+                <li class="active">
+                    <a  href="#1" data-toggle="tab">Room Category Amenities</a>
+                </li>
+                <li><a href="#2" data-toggle="tab">Room Category Facilities</a>
+                </li>
+            </ul>
 
+            <div class="tab-content ">
+                <div class="tab-pane row active" id="1">
+                    @if(isset($hotel_room_category))
+                        @if(isset($r_amenity))
+                            @foreach($amenities as $amenity)
+                                <div class="col-md-4">
+                                    <input type="checkbox" class="cus_checkbox" name="amenity_id[]"
+                                           value="{{$amenity->id}}" @foreach($amenity->amenity_id as $ame) @if($ame->amenity_id == $amenity->id)checked @endif @endforeach>&nbsp <strong>{{$amenity->name}}</strong>
+                                    <br><br>
+                                </div>
+                            @endforeach
+                        @else
+                            @foreach($amenities as $amenity)
+                                <div class="col-md-4">
+                                    <input type="checkbox" class="cus_checkbox" name="amenity_id[]"
+                                           value="{{$amenity->id}}">&nbsp <strong>{{$amenity->name}}</strong>
+                                    <br><br>
+                                </div>
+                            @endforeach
+                            @endif
+                        @else
+                        @foreach($amenities as $amenity)
+                            <div class="col-md-4">
+                                <input type="checkbox" class="cus_checkbox" name="amenity_id[]" value="{{$amenity->id}}">&nbsp <strong>{{$amenity->name}}</strong>
+                                <br><br>
+                            </div>
+                        @endforeach
+                        @endif
+
+                </div>
+                <div class="tab-pane row" id="2">
+                    @if(isset($hotel_room_category))
+                        @if(isset($r_facility))
+                            @foreach($facilities as $facility)
+                                <div class="col-md-4">
+                                    <input type="checkbox" class="cus_checkbox" name="facility_id[]" value="{{$facility->id}}" @foreach($facility->facility_id as $fac) @if($fac->facility_id == $facility->id)checked @endif @endforeach>&nbsp <strong>{{$facility->name}}</strong>
+                                    <br><br>
+                                </div>
+                            @endforeach
+                            @else
+                            @foreach($facilities as $facility)
+                                <div class="col-md-4">
+                                    <input type="checkbox" class="cus_checkbox" name="facility_id[]" value="{{$facility->id}}">&nbsp <strong>{{$facility->name}}</strong>
+                                    <br><br>
+                                </div>
+                            @endforeach
+                            @endif
+
+                        @else
+                        @foreach($facilities as $facility)
+                            <div class="col-md-4">
+                                <input type="checkbox" class="cus_checkbox" name="facility_id[]" value="{{$facility->id}}">&nbsp <strong>{{$facility->name}}</strong>
+                                <br><br>
+                            </div>
+                        @endforeach
+                        @endif
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--End Tab Panel--}}
     <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         </div>
@@ -362,7 +472,7 @@
             //Start Validation for Entry and Edit Form
             $('#hotel_room_category').validate({
                 rules: {
-                    hotel_id            : 'required',
+                    // hotel_id            : 'required',
                     h_room_type_id      : 'required',
                     name                : 'required',
                     price               : {

@@ -263,11 +263,12 @@ Route::group(['middleware' => 'web'], function () {
 
             //Hotel Room Category
             Route::get('hotel_room_category', array('as'=>'backend/hotel_room_category', 'uses'=>'Setup\HotelRoomCategory\HotelRoomCategoryController@index'));
-            Route::get('hotel_room_category/create', array('as'=>'backend/hotel_room_category/create', 'uses'=>'Setup\HotelRoomCategory\HotelRoomCategoryController@create'));
+            Route::get('hotel_room_category/create/{hotel_id?}', array('as'=>'backend/hotel_room_category/create/{hotel_id?}', 'uses'=>'Setup\HotelRoomCategory\HotelRoomCategoryController@create'));
             Route::post('hotel_room_category/store', array('as'=>'backend/hotel_room_category/store', 'uses'=>'Setup\HotelRoomCategory\HotelRoomCategoryController@store'));
             Route::get('hotel_room_category/edit/{id}', array('as'=>'backend/hotel_room_category/edit', 'uses'=>'Setup\HotelRoomCategory\HotelRoomCategoryController@edit'));
             Route::post('hotel_room_category/update', array('as'=>'backend/hotel_room_category/update', 'uses'=>'Setup\HotelRoomCategory\HotelRoomCategoryController@update'));
             Route::post('hotel_room_category/destroy', array('as'=>'backend/hotel_room_category/destroy', 'uses'=>'Setup\HotelRoomCategory\HotelRoomCategoryController@destroy'));
+            Route::get('hotel_room_category/{hotel_id?}',array('as'=>'backend/hotel_room_category/{hotel_id?}','uses'=>'Setup\HotelRoomCategory\HotelRoomCategoryController@search'));
 
             //Room
             Route::get('room', array('as'=>'backend/room', 'uses'=>'Setup\Room\RoomController@index'));

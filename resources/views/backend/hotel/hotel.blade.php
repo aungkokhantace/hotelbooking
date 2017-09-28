@@ -1,7 +1,6 @@
 @extends('layouts.master')
 @section('title','Hotel')
 @section('content')
-
         <!-- begin #content -->
 <div id="content" class="content">
 
@@ -656,14 +655,14 @@
                         @if(isset($h_landmarks))
                                 @foreach($landmarks as $landmark)
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="landmark[]" value="{{$landmark->id}}" @foreach($landmark->landmark_id as $land ) @if($land->landmark_id == $landmark->id)checked @endif @endforeach>{{$landmark->name}}
+                                        <input type="checkbox" name="landmark[]"  value="{{$landmark->id}}" @foreach($landmark->landmark_id as $land ) @if($land->landmark_id == $landmark->id)checked @endif @endforeach>&nbsp<strong>{{$landmark->name}}</strong>
                                         <br><br>
                                     </div>
                                     @endforeach
                             @else
                             @foreach($landmarks as $landmark)
                                 <div class="col-md-4">
-                                    <input type="checkbox" name="landmark[]" value="{{$landmark->id}}">{{$landmark->name}}
+                                    <input type="checkbox" name="landmark[]" value="{{$landmark->id}}">&nbsp<strong>{{$landmark->name}}</strong>
                                     <br><br>
                                 </div>
                             @endforeach
@@ -671,7 +670,7 @@
                         @else
                         @foreach($landmarks as $landmark)
                             <div class="col-md-4">
-                                <input type="checkbox" name="landmark[]" value="{{$landmark->id}}">{{$landmark->name}}
+                                <input type="checkbox" name="landmark[]" value="{{$landmark->id}}">&nbsp<strong>{{$landmark->name}}</strong>
                                 <br><br>
                             </div>
                         @endforeach
@@ -679,14 +678,14 @@
                 </div>
                 <div class="tab-pane row" id="3">
                     @if(isset($hotel))
-                        @if(!empty($h_nearby_places))
+                        @if(isset($h_nearby_places))
 {{--                            @foreach($h_nearby_places as $h_nearby_place)--}}
                                 @foreach($hotel_nearby as $nearby)
                                     <div class="col-md-3">
-                                        <input type="checkbox" name="nearby_place[]"  value="{{$nearby->id}}" @foreach($nearby->nearby_id as $near) @if($near->nearby_id == $nearby->id)checked @endif @endforeach><strong>
-                                            &nbsp;{{$nearby->name}}</strong><br>
+                                        <input type="checkbox" name="nearby_place[]"  value="{{$nearby->id}}" @foreach($nearby->nearby_id as $near) @if($near->nearby_id == $nearby->id) checked @endif @endforeach><strong>
+                                            &nbsp;{{$nearby->name}}</strong><br><br>
                                         <input type="text" name="nearby_distance_{{$nearby->id}}"  class="form-control"
-                                               @foreach($nearby->nearby_id as $near) @if($near->nearby_id == $nearby->id)value="{{$near->km}}" @else placeholder="{{trans('setup_hotel.nearby-distance')}}" @endif @endforeach>
+                                               @foreach($nearby->nearby_id as $near) @if($near->nearby_id == $nearby->id) value="{{$near->km}}" @else placeholder="{{trans('setup_hotel.nearby-distance')}}" @endif @endforeach>
                                         <br><br>
                                     </div>
                                 @endforeach
@@ -694,7 +693,7 @@
                             @else
                             @foreach($hotel_nearby as $nearby)
                                 <div class="col-md-3">
-                                    <input type="checkbox" name="nearby_place[]" value="{{$nearby->id}}"><strong>&nbsp;{{$nearby->name}}</strong><br>
+                                    <input type="checkbox" name="nearby_place[]" value="{{$nearby->id}}"><strong>&nbsp;{{$nearby->name}}</strong><br><br>
                                     <input type="text" name="nearby_distance_{{$nearby->id}}" class="form-control" placeholder="Enter Distance Kilometer">
                                     <br><br>
                                 </div>
@@ -703,7 +702,7 @@
                             @else
                                 @foreach($hotel_nearby as $nearby)
                                     <div class="col-md-3">
-                                        <input type="checkbox" name="nearby_place[]" value="{{$nearby->id}}"><strong>&nbsp;{{$nearby->name}}</strong><br>
+                                        <input type="checkbox" name="nearby_place[]" value="{{$nearby->id}}"><strong>&nbsp;{{$nearby->name}}</strong><br><br>
                                         <input type="text" name="nearby_distance_{{$nearby->id}}" class="form-control" placeholder="Enter Distance Kilometer">
                                         <br><br>
                                     </div>
@@ -712,12 +711,12 @@
                 </div>
                 <div class="tab-pane row" id="4">
                     @if(isset($hotel))
-                        @if(!empty($h_feature))
+                        @if(isset($h_feature))
                             @foreach($features as $feature)
                                 <div class="col-md-12">
                                     <fieldset class="skill-border">
                                     <div class="col-md-12">
-                                        <input type="checkbox" id="checked-box" name="feature_id[]" value="{{$feature->id}}" @foreach($feature->feature_id as $fea ) @if($fea->feature_id == $feature->id)checked  @endif @endforeach><strong>&nbsp;{{$feature->name}}</strong>
+                                        <strong>{{$feature->name}}</strong>&nbsp;&nbsp;<input type="checkbox" id="checked-box" name="feature_id[]" value="{{$feature->id}}" @foreach($feature->feature_id as $fea ) @if($fea->feature_id == $feature->id)checked  @endif @endforeach>
                                     </div>
                                     <div class="col-md-4">
                                         <label for="qty">{{trans('setup_hotelfeature.qty')}}</label>
@@ -751,18 +750,20 @@
                                     </div>
                                     <div class="col-md-12">
                                         <label for="remark">{{trans('setup_hotelfeature.remark')}}</label>
-                                        @foreach($feature->feature_id as $fea)
-                                            @if($fea->feature_id == $feature->id){{$fea->remark}}
+                                        {{-- @foreach($feature->feature_id as $fea)
+                                            @if($fea->feature_id == $feature->id)
                                             <textarea rows="5" cols="50" class="form-control" id="remark" name="remark_{{$feature->id}}" placeholder="{{trans('setup_hotelfeature.place-remark')}}">{{$fea->remark}}</textarea>
                                                 @else
                                                 <textarea rows="5" cols="50" class="form-control" id="remark" name="remark_{{$feature->id}}" placeholder="{{trans('setup_hotelfeature.place-remark')}}"></textarea>
                                             @endif
-                                            @endforeach
+                                            @endforeach --}}
+
+                                            <textarea rows="5" cols="50" class="form-control" id="remark" name="remark_{{$feature->id}}" @foreach($feature->feature_id as $fea) @if($fea->feature_id != $feature->id) placeholder="{{trans('setup_hotelfeature.place-remark')}}"  @endif @endforeach>@foreach($feature->feature_id as $fea)@if($fea->feature_id == $feature->id){{$fea->remark}} @endif @endforeach</textarea>
+
                                         <p class="text-danger">{{$errors->first('remark')}}</p>
                                     </div>
                                     </fieldset>
                                 </div>
-
                             @endforeach
                             @else
                             @foreach($features as $feature)
@@ -864,7 +865,7 @@
                         @if(isset($h_facility))
                             @foreach($facilities as $facility)
                                 <div class="col-md-4">
-                                    <input type="checkbox" name="facility[]" value="{{$facility->id}}" @foreach($facility->facility_id as $fac) @if($fac->facility_id == $facility->id)checked @endif @endforeach><strong>
+                                    <input type="checkbox" name="facility_id[]" value="{{$facility->id}}" @foreach($facility->facility_id as $fac) @if($fac->facility_id == $facility->id)checked @endif @endforeach><strong>
                                         &nbsp;{{$facility->name}}</strong>
                                     <br><br>
                                 </div>
@@ -872,16 +873,15 @@
                             @else
                             @foreach($facilities as $facility)
                                 <div class="col-md-4">
-                                        <input type="checkbox" name="facility[]" value="{{$facility->id}}">{{$facility->name}}
+                                        <input type="checkbox" name="facility_id[]" value="{{$facility->id}}">{{$facility->name}}
                                     <br><br>
                                 </div>
                             @endforeach
                             @endif
-
                     @else
                         @foreach($facilities as $facility)
                             <div class="col-md-4">
-                                <input type="checkbox" name="facility[]" value="{{$facility->id}}">{{$facility->name}}
+                                <input type="checkbox" name="facility_id[]" value="{{$facility->id}}">{{$facility->name}}
                                 <br><br>
                             </div>
                         @endforeach
@@ -1026,6 +1026,7 @@
     <script type="text/javascript">
 
         $(document).ready(function(){
+            $(':checkbox').checkboxpicker();
             //Start Validation for Entry and Edit Form
             $.validator.addMethod("greaterThan",
                     function (value, element, param) {

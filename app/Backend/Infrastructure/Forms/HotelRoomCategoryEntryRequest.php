@@ -24,7 +24,7 @@ class HotelRoomCategoryEntryRequest extends Request
     public function rules()
     {
         return [
-            'hotel_id'              => 'required',
+            // 'hotel_id'              => 'required',
             'h_room_type_id'        => 'required',
             'name'                  => 'required',
             'capacity'              => 'required',
@@ -38,7 +38,7 @@ class HotelRoomCategoryEntryRequest extends Request
     public function messages()
     {
         return [
-            'hotel_id.required'             => 'Hotel is required!',
+            // 'hotel_id.required'             => 'Hotel is required!',
             'h_room_type_id.required'       => 'Room Type is required!',
             'name.required'                 => 'Name is required!',
             'capacity.required'             => 'Capacity is required!',

@@ -22,6 +22,7 @@
 <script src="/assets/js/light.min.js"></script>
 
 <script src="/assets/js/crud.js"></script>
+<script src="/assets/js/backend.js"></script>
 {{--<script src="/assets/js/delete.js"></script>--}}
 
 <script src="/assets/js/checkbox.js"></script>

@@ -298,7 +298,7 @@
                         </a>
 
                         <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/hotel_room_category/create">Entry</a></li>
+                            {{--<li nav-id="modifier-create-modifier"><a href="/backend/hotel_room_category/create">Entry</a></li>--}}
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_room_category">List</a></li>
                         </ul>
                     </li>
@@ -316,7 +316,7 @@
                     </li>
 
                     @if (Auth::guard('User')->user()->role_id == 1)
-                    <li nav-id="modifier-create" class="has-sub">
+                    {{--<li nav-id="modifier-create" class="has-sub">
                         <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Room Category Facilities</span>
@@ -337,7 +337,7 @@
                             <li nav-id="modifier-create-modifier"><a href="/backend/room_category_amenity/create">Entry</a></li>
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_category_amenity">List</a></li>
                         </ul>
-                    </li>
+                    </li>--}}
                     <li nav-id="modifier-create" class="has-sub">
                         <a href="javascript:;">
                             <b class="caret pull-right"></b>
