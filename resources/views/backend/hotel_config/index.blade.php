@@ -28,7 +28,7 @@
 
     </div>
 
-    {!! Form::open(array('id'=> 'frm_hotel_config' ,'url' => '/backend/hotel_config/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+    {!! Form::open(array('id'=> 'frm_hotel_config' ,'url' => '/backend_mps/hotel_config/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
     {{ csrf_field() }}
     <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 
@@ -62,7 +62,7 @@
                     @foreach($hotel_configs as $h_config)
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $h_config->id }}" id="all"></td>
-                            <td><a href="/backend/hotel_config/edit/{{$h_config->id}}">{{$h_config->hotel->name}}</a></td>
+                            <td><a href="/backend_mps/hotel_config/edit/{{$h_config->id}}">{{$h_config->hotel->name}}</a></td>
                             <td>{{$h_config->first_cancellation_day_count }}</td>
                             <td>{{$h_config->second_cancellation_day_count }}</td>
                             <td>{{$h_config->breakfast_fees }}</td>

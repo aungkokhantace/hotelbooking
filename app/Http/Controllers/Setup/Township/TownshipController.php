@@ -80,7 +80,7 @@ class TownshipController extends Controller
 
             return view('backend.township.township')->with('township', $township)->with('cities', $cities);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(TownshipEditRequest $request){

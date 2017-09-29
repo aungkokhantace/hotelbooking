@@ -25,7 +25,7 @@
 
     </div>
 
-    {!! Form::open(array('id'=> 'frm_room_category_facility' ,'url' => 'backend/room_category_facility/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+    {!! Form::open(array('id'=> 'frm_room_category_facility' ,'url' => 'backend_mps/room_category_facility/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
     {{ csrf_field() }}
     <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 
@@ -69,7 +69,7 @@
                             <td>{{$facility->hotel_room_category->name}}</td>
                             <td>{{$facility->facility->name}}</td>
                             {{--<td>{{$facility->facility_group->name}}</td>--}}
-{{--                            <td><a href="/backend/room_category_facility/edit/{{$facility->id}}">{{$facility->value}}</a></td>--}}
+{{--                            <td><a href="/backend_mps/room_category_facility/edit/{{$facility->id}}">{{$facility->value}}</a></td>--}}
                             <!-- <td>{{$facility->description}}</td> -->
                         </tr>
                     @endforeach

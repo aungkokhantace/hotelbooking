@@ -71,7 +71,7 @@ class HotelRestaurantCategoryController extends Controller
             $hotel_restaurant_category = $this->repo->getObjByID($id);
             return view('backend.hotel_restaurant_category.hotel_restaurant_category')->with('hotel_restaurant_category', $hotel_restaurant_category);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(HotelRestaurantCategoryEditRequest $request){

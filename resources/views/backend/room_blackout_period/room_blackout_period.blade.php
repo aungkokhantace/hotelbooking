@@ -12,10 +12,10 @@
         <h1 class="page-header">{{isset($r_blackout_period) ? trans('setup_roomblackoutperiod.title-edit') : trans('setup_roomblackoutperiod.title-entry') }}</h1>
 
         @if(isset($r_blackout_period))
-            {!! Form::open(array('url' => '/backend/room_blackout_period/update','id'=>'room_blackout_period', 'class'=> 'form-horizontal user-form-border')) !!}
+            {!! Form::open(array('url' => '/backend_mps/room_blackout_period/update','id'=>'room_blackout_period', 'class'=> 'form-horizontal user-form-border')) !!}
 
         @else
-            {!! Form::open(array('url' => '/backend/room_blackout_period/store','id'=>'room_blackout_period', 'class'=> 'form-horizontal user-form-border')) !!}
+            {!! Form::open(array('url' => '/backend_mps/room_blackout_period/store','id'=>'room_blackout_period', 'class'=> 'form-horizontal user-form-border')) !!}
         @endif
         <input type="hidden" name="id" value="{{isset($r_blackout_period)? $r_blackout_period->id:''}}"/>
         <br/>
@@ -222,7 +222,7 @@
         function loadRoom(hotel_id){
             $.ajax({
                 type: "GET",
-                url: "/backend/room/get_room/"+hotel_id,
+                url: "/backend_mps/room/get_room/"+hotel_id,
             }).done(function( result ) {
                 $("#room_id").empty();//To reset states
                 $("#room_id").append("<option selected disabled>Select Room</option>");

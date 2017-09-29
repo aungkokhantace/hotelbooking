@@ -64,7 +64,7 @@ class ConfigController extends Controller
             return view('core.config.config')->with('configs', $tempConfigs);
 
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(){
@@ -137,12 +137,12 @@ class ConfigController extends Controller
             }
             catch(Exception $ex){
                 return redirect()->action('Core\ConfigController@edit');
-//                    return Redirect::to('backend/posconfig/1/edit')
+//                    return Redirect::to('backend_mps/posconfig/1/edit')
 //                        ->withMessage(FormatGenerator::message('Fail', $ex->getMessage()));
             }
 
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
 }

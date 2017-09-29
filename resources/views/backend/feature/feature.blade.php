@@ -11,10 +11,10 @@
 
     {{--check new or edit--}}
     @if(isset($feature))
-        {!! Form::open(array('url' => '/backend/feature/update','files'=>true, 'class'=> 'form-horizontal user-form-border', 'id'=>'feature')) !!}
+        {!! Form::open(array('url' => '/backend_mps/feature/update','files'=>true, 'class'=> 'form-horizontal user-form-border', 'id'=>'feature')) !!}
 
     @else
-        {!! Form::open(array('url' => '/backend/feature/store','files'=>true, 'class'=> 'form-horizontal user-form-border', 'id'=>'feature')) !!}
+        {!! Form::open(array('url' => '/backend_mps/feature/store','files'=>true, 'class'=> 'form-horizontal user-form-border', 'id'=>'feature')) !!}
     @endif
     <input type="hidden" name="id" value="{{isset($feature)? $feature->id:''}}"/>
     <br/>

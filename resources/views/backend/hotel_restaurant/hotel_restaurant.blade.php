@@ -13,10 +13,10 @@
     <h1 class="page-header">{{isset($hotel_restaurant) ? trans('setup_hotelrestaurant.title-edit') : trans('setup_hotelrestaurant.title-entry') }}</h1>
 
     @if(isset($hotel_restaurant))
-        {!! Form::open(array('url' => '/backend/hotel_restaurant/update','id'=>'hotel_restaurant', 'class'=> 'form-horizontal user-form-border','files' => true)) !!}
+        {!! Form::open(array('url' => '/backend_mps/hotel_restaurant/update','id'=>'hotel_restaurant', 'class'=> 'form-horizontal user-form-border','files' => true)) !!}
 
     @else
-        {!! Form::open(array('url' => '/backend/hotel_restaurant/store','id'=>'hotel_restaurant', 'class'=> 'form-horizontal user-form-border','files' => true)) !!}
+        {!! Form::open(array('url' => '/backend_mps/hotel_restaurant/store','id'=>'hotel_restaurant', 'class'=> 'form-horizontal user-form-border','files' => true)) !!}
     @endif
     <input type="hidden" name="id" value="{{isset($hotel_restaurant)? $hotel_restaurant->id:''}}"/>
     <br/>

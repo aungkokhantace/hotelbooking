@@ -102,7 +102,7 @@ class HotelRestaurantController extends Controller
                                                                     ->with('hotels',$hotels)
                                                                     ->with('hotel_restaurant_category',$hotel_restaurant_category);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(HotelRestaurantEditRequest $request){

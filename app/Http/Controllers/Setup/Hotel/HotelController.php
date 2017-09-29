@@ -592,7 +592,7 @@ class HotelController extends Controller
                 ->with('facilities',$facilities)
                 ->with('features',$features);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(HotelEditRequest $request){

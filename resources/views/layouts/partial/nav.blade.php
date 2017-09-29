@@ -24,7 +24,7 @@
                         {{--</a>--}}
 
                         {{--<ul class="sub-menu">--}}
-                            {{--<li nav-id="modifier-manage-modifier"><a href="/backend/site_config">Edit Config</a></li>--}}
+                            {{--<li nav-id="modifier-manage-modifier"><a href="/backend_mps/site_config">Edit Config</a></li>--}}
 
                         {{--</ul>--}}
                     {{--</li>--}}
@@ -35,8 +35,8 @@
                         </a>
 
                         <ul class="sub-menu">
-                            <li nav-id="modifier-manage-modifier"><a href="/backend/nearby_category/create">Entry</a></li>
-                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend/nearby_category">List</a></li>
+                            <li nav-id="modifier-manage-modifier"><a href="/backend_mps/nearby_category/create">Entry</a></li>
+                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend_mps/nearby_category">List</a></li>
                         </ul>
                     </li>
                     <li nav-id="modifier-create" class="has-sub">
@@ -46,8 +46,8 @@
                         </a>
 
                         <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/hotel_nearby/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_nearby">List</a></li>
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/hotel_nearby/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/hotel_nearby">List</a></li>
                         </ul>
                     </li>
                     <li nav-id="modifier-create" class="has-sub">
@@ -57,8 +57,8 @@
                         </a>
 
                         <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/facility_group/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/facility_group">List</a></li>
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/facility_group/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/facility_group">List</a></li>
                         </ul>
                     </li>
                     <li nav-id="modifier-create" class="has-sub">
@@ -68,8 +68,8 @@
                         </a>
 
                         <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/facilities/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/facilities">List</a></li>
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/facilities/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/facilities">List</a></li>
                         </ul>
                     </li>
                     <li nav-id="modifier-manage" class="has-sub">
@@ -79,8 +79,8 @@
                         </a>
 
                         <ul class="sub-menu">
-                            <li nav-id="modifier-manage-modifier"><a href="/backend/feature/create">Entry</a></li>
-                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend/feature">List</a></li>
+                            <li nav-id="modifier-manage-modifier"><a href="/backend_mps/feature/create">Entry</a></li>
+                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend_mps/feature">List</a></li>
 
                         </ul>
                     </li>
@@ -91,8 +91,8 @@
                         </a>
 
                         <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/amenities/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/amenities">List</a></li>
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/amenities/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/amenities">List</a></li>
                         </ul>
                     </li>
 
@@ -103,8 +103,8 @@
                         </a>
 
                         <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/landmark/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/landmark">List</a></li>
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/landmark/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/landmark">List</a></li>
                         </ul>
                     </li>
 
@@ -115,8 +115,8 @@
                         </a>
 
                         <ul class="sub-menu">
-                            <li nav-id="modifier-manage-modifier"><a href="/backend/country/create">Entry</a></li>
-                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend/country">List</a></li>
+                            <li nav-id="modifier-manage-modifier"><a href="/backend_mps/country/create">Entry</a></li>
+                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend_mps/country">List</a></li>
                         </ul>
                     </li>
                     <li nav-id="modifier-create" class="has-sub">
@@ -126,9 +126,9 @@
                         </a>
 
                         <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/city/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/city">List</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/popular_city/create">Set Popular City</a></li>
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/city/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/city">List</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/popular_city/create">Set Popular City</a></li>
                         </ul>
                     </li>
                     <li nav-id="modifier-manage" class="has-sub">
@@ -138,8 +138,8 @@
                         </a>
 
                         <ul class="sub-menu">
-                            <li nav-id="modifier-manage-modifier"><a href="/backend/township/create">Entry</a></li>
-                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend/township">List</a></li>
+                            <li nav-id="modifier-manage-modifier"><a href="/backend_mps/township/create">Entry</a></li>
+                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend_mps/township">List</a></li>
 
                         </ul>
                     </li>
@@ -151,19 +151,19 @@
                         {{--</a>--}}
 
                         {{--<ul class="sub-menu">--}}
-                            {{--<li nav-id="modifier-manage-modifier"><a href="backend/transportation_information">Entry</a></li>--}}
+                            {{--<li nav-id="modifier-manage-modifier"><a href="backend_mps/transportation_information">Entry</a></li>--}}
                         {{--</ul>--}}
                     {{--</li>--}}
 
                     <li nav-id="">
-                        <a href="/backend/transportation_information">
+                        <a href="/backend_mps/transportation_information">
                             <b class="caret pull-right"></b>
                             <span>Transportation Information</span>
                         </a>
                     </li>
 
                     <li nav-id="">
-                        <a href="/backend/tour_information">
+                        <a href="/backend_mps/tour_information">
                             <b class="caret pull-right"></b>
                             <span>Tour Guide Information</span>
                         </a>
@@ -176,7 +176,7 @@
                         {{--</a>--}}
 
                         {{--<ul class="sub-menu">--}}
-                            {{--<li nav-id="modifier-manage-modifierpanel"><a href="/backend/page">List</a></li>--}}
+                            {{--<li nav-id="modifier-manage-modifierpanel"><a href="/backend_mps/page">List</a></li>--}}
                         {{--</ul>--}}
                     {{--</li>--}}
                 </ul>
@@ -190,16 +190,19 @@
                 </a>
                 <ul class="sub-menu">
                     <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
+                        {{-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Hotel</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/hotel/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel">List</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/recommend_hotel/create">Set Recommend Hotel</a></li>
-                        </ul>
+                        </a> --}}
+                    <a href="/backend_mps/hotel">Hotel</a></li>
+                        {{-- <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/hotel/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/hotel">List</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/recommend_hotel/create">Set Recommend Hotel</a></li>
+                        </ul> --}}
+                    </li>
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="/backend_mps/recommend_hotel/create">Set Recommend Hotel</a>
                     </li>
                   {{--  <li nav-id="modifier-create" class="has-sub">
                         <a href="javascript:;">
@@ -208,8 +211,8 @@
                         </a>
 
                         <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/hotel_config/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_config">List</a></li>
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/hotel_config/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/hotel_config">List</a></li>
                         </ul>
                     </li>
                     <li nav-id="modifier-create" class="has-sub">
@@ -219,8 +222,8 @@
                         </a>
 
                         <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/hotel_landmark/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_landmark">List</a></li>
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/hotel_landmark/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/hotel_landmark">List</a></li>
                         </ul>
                     </li>
                     <li nav-id="modifier-create" class="has-sub">
@@ -230,8 +233,8 @@
                         </a>
 
                         <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/hotel_feature/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_feature">List</a></li>
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/hotel_feature/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/hotel_feature">List</a></li>
                         </ul>
                     </li>
 
@@ -242,31 +245,31 @@
                         </a>
 
                         <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/hotel_facility/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_facility">List</a></li>
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/hotel_facility/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/hotel_facility">List</a></li>
                         </ul>
                     </li>--}}
                     <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
-                            <b class="caret pull-right"></b>
-                            <span>Hotel Restaurant Category</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/hotel_restaurant_category/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_restaurant_category">List</a></li>
-                        </ul>
+                       <!--  <a href="javascript:;">
+                           <b class="caret pull-right"></b>
+                           <span>Hotel Restaurant Category</span>
+                       </a> -->
+                        <a href="/backend_mps/hotel_restaurant_category">Hotel Restaurant Category</a>
+                        <!-- <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/hotel_restaurant_category/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/hotel_restaurant_category">List</a></li>
+                        </ul> -->
                     </li>
                     <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
-                            <b class="caret pull-right"></b>
-                            <span>Hotel Restaurant</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/hotel_restaurant/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_restaurant">List</a></li>
-                        </ul>
+                       <!--  <a href="javascript:;">
+                           <b class="caret pull-right"></b>
+                           <span>Hotel Restaurant</span>
+                       </a> -->
+                        <a href="/backend_mps/hotel_restaurant">Hotel Restaurant</a>
+                        <!-- <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/hotel_restaurant/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/hotel_restaurant">List</a></li>
+                        </ul> -->
                     </li>
                 </ul>
             </li>
@@ -281,38 +284,38 @@
                 </a>
                 <ul class="sub-menu">
                     <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
+                        <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Room Type</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/hotel_room_type/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_room_type">List</a></li>
-                        </ul>
+                        </a> -->
+                        <a href="/backend_mps/hotel_room_type">Room Type</a>
+                        <!-- <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/hotel_room_type/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/hotel_room_type">List</a></li>
+                        </ul> -->
                     </li>
                     <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
+                        <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Hotel Room Category</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            {{--<li nav-id="modifier-create-modifier"><a href="/backend/hotel_room_category/create">Entry</a></li>--}}
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_room_category">List</a></li>
-                        </ul>
+                        </a> -->
+                        <a href="/backend_mps/hotel_room_category">Hotel Room Category</a>
+                        <!-- <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/hotel_room_category/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/hotel_room_category">List</a></li>
+                        </ul> -->
                     </li>
 
                     <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
+                        <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Room</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/room/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room">List</a></li>
-                        </ul>
+                        </a> -->
+                        <a href="/backend_mps/room">Room</a>
+                        <!-- <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/room/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/room">List</a></li>
+                        </ul> -->
                     </li>
 
                     @if (Auth::guard('User')->user()->role_id == 1)
@@ -323,8 +326,8 @@
                         </a>
 
                         <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/room_category_facility/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_category_facility">List</a></li>
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/room_category_facility/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/room_category_facility">List</a></li>
                         </ul>
                     </li>
                     <li nav-id="modifier-create" class="has-sub">
@@ -334,31 +337,31 @@
                         </a>
 
                         <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/room_category_amenity/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_category_amenity">List</a></li>
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/room_category_amenity/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/room_category_amenity">List</a></li>
                         </ul>
                     </li>--}}
                     <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
+                        <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Room Discount</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/room_discount/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_discount">List</a></li>
-                        </ul>
+                        </a> -->
+                        <a href="/backend_mps/room_discount">Room Discount</a>
+                        <!-- <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/room_discount/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/room_discount">List</a></li>
+                        </ul> -->
                     </li>
                     <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
+                        <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Room View</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/room_view/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_view">List</a></li>
-                        </ul>
+                        </a> -->
+                        <a href="/backend_mps/room_view">Room View</a>
+                        <!-- <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/room_view/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/room_view">List</a></li>
+                        </ul> -->
                     </li>
                     @endif
                 </ul>
@@ -372,25 +375,25 @@
                 </a>
                 <ul class="sub-menu">
                     <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
+                        <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Booking</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/booking">List</a></li>
-                        </ul>
+                        </a> -->
+                        <a href="/backend_mps/booking">Booking</a>
+                        <!-- <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/booking">List</a></li>
+                        </ul> -->
                     </li>
 
                     <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
+                        <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Communication</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/communication">List</a></li>
-                        </ul>
+                        </a> -->
+                        <a href="/backend_mps/communication">Communication</a>
+                        <!-- <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/communication">List</a></li>
+                        </ul> -->
                     </li>
                 </ul>
             </li>
@@ -410,8 +413,8 @@
                         {{--</a>--}}
 
                         {{--<ul class="sub-menu">--}}
-                            {{--<li nav-id="modifier-create-modifier"><a href="/backend/hotel_room_type/create">Entry</a></li>--}}
-                            {{--<li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_room_type">List</a></li>--}}
+                            {{--<li nav-id="modifier-create-modifier"><a href="/backend_mps/hotel_room_type/create">Entry</a></li>--}}
+                            {{--<li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/hotel_room_type">List</a></li>--}}
                         {{--</ul>--}}
                     {{--</li>--}}
                     {{--<li nav-id="modifier-create" class="has-sub">--}}
@@ -421,8 +424,8 @@
                         {{--</a>--}}
 
                         {{--<ul class="sub-menu">--}}
-                            {{--<li nav-id="modifier-create-modifier"><a href="/backend/hotel_room_category/create">Entry</a></li>--}}
-                            {{--<li nav-id="modifier-create-modifierpanel"><a href="/backend/hotel_room_category">List</a></li>--}}
+                            {{--<li nav-id="modifier-create-modifier"><a href="/backend_mps/hotel_room_category/create">Entry</a></li>--}}
+                            {{--<li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/hotel_room_category">List</a></li>--}}
                         {{--</ul>--}}
                     {{--</li>--}}
 
@@ -433,8 +436,8 @@
                         {{--</a>--}}
 
                         {{--<ul class="sub-menu">--}}
-                            {{--<li nav-id="modifier-create-modifier"><a href="/backend/room/create">Entry</a></li>--}}
-                            {{--<li nav-id="modifier-create-modifierpanel"><a href="/backend/room">List</a></li>--}}
+                            {{--<li nav-id="modifier-create-modifier"><a href="/backend_mps/room/create">Entry</a></li>--}}
+                            {{--<li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/room">List</a></li>--}}
                         {{--</ul>--}}
                     {{--</li>--}}
 
@@ -446,8 +449,8 @@
                         {{--</a>--}}
 
                         {{--<ul class="sub-menu">--}}
-                            {{--<li nav-id="modifier-create-modifier"><a href="/backend/room_category_facility/create">Entry</a></li>--}}
-                            {{--<li nav-id="modifier-create-modifierpanel"><a href="/backend/room_category_facility">List</a></li>--}}
+                            {{--<li nav-id="modifier-create-modifier"><a href="/backend_mps/room_category_facility/create">Entry</a></li>--}}
+                            {{--<li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/room_category_facility">List</a></li>--}}
                         {{--</ul>--}}
                     {{--</li>--}}
                     {{--<li nav-id="modifier-create" class="has-sub">--}}
@@ -457,8 +460,8 @@
                         {{--</a>--}}
 
                         {{--<ul class="sub-menu">--}}
-                            {{--<li nav-id="modifier-create-modifier"><a href="/backend/room_category_amenity/create">Entry</a></li>--}}
-                            {{--<li nav-id="modifier-create-modifierpanel"><a href="/backend/room_category_amenity">List</a></li>--}}
+                            {{--<li nav-id="modifier-create-modifier"><a href="/backend_mps/room_category_amenity/create">Entry</a></li>--}}
+                            {{--<li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/room_category_amenity">List</a></li>--}}
                         {{--</ul>--}}
                     {{--</li>--}}
                     {{--<li nav-id="modifier-create" class="has-sub">--}}
@@ -468,8 +471,8 @@
                         {{--</a>--}}
 
                         {{--<ul class="sub-menu">--}}
-                            {{--<li nav-id="modifier-create-modifier"><a href="/backend/room_discount/create">Entry</a></li>--}}
-                            {{--<li nav-id="modifier-create-modifierpanel"><a href="/backend/room_discount">List</a></li>--}}
+                            {{--<li nav-id="modifier-create-modifier"><a href="/backend_mps/room_discount/create">Entry</a></li>--}}
+                            {{--<li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/room_discount">List</a></li>--}}
                         {{--</ul>--}}
                     {{--</li>--}}
                     {{--@endif--}}
@@ -485,26 +488,26 @@
                 <ul class="sub-menu">
 
                     <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
+                        <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Room Available Period</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/room_available_period/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_available_period">List</a></li>
-                        </ul>
+                        </a> -->
+                        <a href="/backend_mps/room_available_period">Room Available Period</a>
+                        <!-- <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/room_available_period/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/room_available_period">List</a></li>
+                        </ul> -->
                     </li>
                     <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
+                        <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Room Blackout Period</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/room_blackout_period/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/room_blackout_period">List</a></li>
-                        </ul>
+                        </a> -->
+                        <a href="/backend_mps/room_blackout_period">Room Blackout Period</a>
+                        <!-- <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/room_blackout_period/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/room_blackout_period">List</a></li>
+                        </ul> -->
                     </li>
                 </ul>
             </li>
@@ -518,7 +521,7 @@
                 <ul class="sub-menu">
 
                     <li nav-id="modifier-create" class="has-sub">
-                        <li nav-id="modifier-create-modifier"><a href="/backend/import">CSV Import</a></li>
+                        <li nav-id="modifier-create-modifier"><a href="/backend_mps/import">CSV Import</a></li>
                     </li>
                 </ul>
             </li>
@@ -531,15 +534,15 @@
                 </a>
                 <ul class="sub-menu">
                     <li nav-id="modifier-manage" class="has-sub">
-                        <a href="javascript:;">
+                        <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Slider</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-manage-modifier"><a href="/backend/slider/create">Entry</a></li>
-                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend/slider">List</a></li>
-                        </ul>
+                        </a> -->
+                        <a href="/backend_mps/slider">Slider</a>
+                        <!-- <ul class="sub-menu">
+                            <li nav-id="modifier-manage-modifier"><a href="/backend_mps/slider/create">Entry</a></li>
+                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend_mps/slider">List</a></li>
+                        </ul> -->
                     </li>
 
                 </ul>
@@ -553,8 +556,8 @@
                 </a>
 
                 <ul class="sub-menu">
-                    <li nav-id="report-sale-summary"><a href="/backend/salesummaryreport">Sale Summary Report</a></li>
-                    <li nav-id="report-booking-summary"><a href="/backend/bookingreport">Booking Detail Report</a></li>
+                    <li nav-id="report-sale-summary"><a href="/backend_mps/salesummaryreport">Sale Summary Report</a></li>
+                    <li nav-id="report-booking-summary"><a href="/backend_mps/bookingreport">Booking Detail Report</a></li>
 
                 </ul>
             </li>
@@ -567,42 +570,41 @@
                 </a>
                 <ul class="sub-menu">
                     <li nav-id="modifier-manage" class="has-sub">
-                        <a href="javascript:;">
+                        <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Role</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-manage-modifier"><a href="/backend/role/create">Entry</a></li>
-                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend/role">List</a></li>
-                        </ul>
+                        </a> -->
+                        <a href="/backend_mps/role">Role</a>
+                        <!-- <ul class="sub-menu">
+                            <li nav-id="modifier-manage-modifier"><a href="/backend_mps/role/create">Entry</a></li>
+                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend_mps/role">List</a></li>
+                        </ul> -->
                     </li>
                     <li nav-id="modifier-manage" class="has-sub">
-                        <a href="javascript:;">
+                        <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Permission</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-manage-modifier"><a href="/backend/permission/create">Entry</a></li>
-                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend/permission">List</a></li>
-
-                        </ul>
+                        </a> -->
+                        <a href="/backend_mps/permission">Permission</a>
+                        <!-- <ul class="sub-menu">
+                            <li nav-id="modifier-manage-modifier"><a href="/backend_mps/permission/create">Entry</a></li>
+                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend_mps/permission">List</a></li>
+                        </ul> -->
                     </li>
                     <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
+                        <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Staff</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend/user/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend/user">List</a></li>
-                        </ul>
+                        </a> -->
+                        <a href="/backend_mps/user">Staff</a>
+                        <!-- <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/user/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/user">List</a></li>
+                        </ul> -->
                     </li>
-                    <li nav-id="">
-                        <a href="/backend/config">
-                            <b class="caret pull-right"></b>
+                    <li nav-id="modifier-creat" class="has-sub">
+                        <a href="/backend_mps/config">
+                            {{-- <b class="caret pull-right"></b> --}}
                             <span>Site Config</span>
                         </a>
                     </li>
@@ -619,15 +621,15 @@
                 </a>
                 <ul class="sub-menu">
                     <li nav-id="modifier-manage" class="has-sub">
-                        <a href="javascript:;">
+                        <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Event Email</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="modifier-manage-modifier"><a href="/backend/eventemail/create">Entry</a></li>
-                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend/eventemail">List</a></li>
-                        </ul>
+                        </a> -->
+                        <a href="/backend_mps/eventemail">Event Email</a>
+                        <!-- <ul class="sub-menu">
+                            <li nav-id="modifier-manage-modifier"><a href="/backend_mps/eventemail/create">Entry</a></li>
+                            <li nav-id="modifier-manage-modifierpanel"><a href="/backend_mps/eventemail">List</a></li>
+                        </ul> -->
                     </li>
 
                     <li nav-id="modifier-manage" class="has-sub">
@@ -637,9 +639,9 @@
                         </a>
 
                         <ul class="sub-menu">
-                            <li nav-id="modifier-manage-modifier"><a href="/backend/email_template_booking_confirm">Email Booking Confirm</a></li>
-                            <li nav-id="modifier-manage-modifier"><a href="/backend/email_template_booking_cancel">Email Booking Cancel</a></li>
-                            <li nav-id="modifier-manage-modifier"><a href="/backend/email_template_booking_edit">Email Booking Edit</a></li>
+                            <li nav-id="modifier-manage-modifier"><a href="/backend_mps/email_template_booking_confirm">Email Booking Confirm</a></li>
+                            <li nav-id="modifier-manage-modifier"><a href="/backend_mps/email_template_booking_cancel">Email Booking Cancel</a></li>
+                            <li nav-id="modifier-manage-modifier"><a href="/backend_mps/email_template_booking_edit">Email Booking Edit</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -653,25 +655,25 @@
                 </a>
                 <ul class="sub-menu">
                     <li nav-id="modifier-manage" class="has-sub">
-                        <a href="javascript:;">
+                        <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Reference</span>
-                        </a>
-
-                        <ul class="sub-menu">
-                            <li nav-id="systemreference"><a href="/backend/systemreference">System Reference</a></li>
-                        </ul>
+                        </a> -->
+                        <a href="/backend_mps/systemreference">System Reference</a>
+                        <!-- <ul class="sub-menu">
+                            <li nav-id="systemreference"><a href="/backend_mps/systemreference">System Reference</a></li>
+                        </ul> -->
                     </li>
 
                     <li nav-id="modifier-manage" class="has-sub">
-                        <a href="javascript:;">
+                        <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Samples</span>
-                        </a>
-
-                        <ul class="sub-menu">
+                        </a> -->
+                        <a href="/samples/googlemap">Google Map Sample</a>
+                        <!-- <ul class="sub-menu">
                             <li nav-id="samples_googlemap"><a href="/samples/googlemap">Google Map Sample</a></li>
-                        </ul>
+                        </ul> -->
                     </li>
                 </ul>
             </li>

@@ -18,7 +18,7 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <button type="button" onclick="filter_by_hotel_id('backend/hotel_room_category');" class="form-control btn-primary">Filter</button>
+                <button type="button" onclick="filter_by_hotel_id('backend_mps/hotel_room_category');" class="form-control btn-primary">Filter</button>
             </div>
         @endif
         <div class="col-md-8">
@@ -42,7 +42,7 @@
 
     </div>
 
-    {!! Form::open(array('id'=> 'frm_hotel_room_category' ,'url' => 'backend/hotel_room_category/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+    {!! Form::open(array('id'=> 'frm_hotel_room_category' ,'url' => 'backend_mps/hotel_room_category/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
     {{ csrf_field() }}
     <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 
@@ -80,7 +80,7 @@
                     @foreach($hotel_room_category as $category)
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{$category->id }}" id="all"></td>
-                            <td><a href="/backend/hotel_room_category/edit/{{$category->id}}">{{$category->name}}</a></td>
+                            <td><a href="/backend_mps/hotel_room_category/edit/{{$category->id}}">{{$category->name}}</a></td>
                             <td>{{$category->hotel->name}}</td>
                             <td>{{$category->h_room_type->name}}</td>
                             <td>{{$category->capacity}}</td>

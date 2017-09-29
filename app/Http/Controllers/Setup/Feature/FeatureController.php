@@ -98,7 +98,7 @@ class FeatureController extends Controller
             $feature  = $this->repo->getObjByID($id);
             return view('backend.feature.feature')->with('feature', $feature);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(FeatureEditRequest $request){

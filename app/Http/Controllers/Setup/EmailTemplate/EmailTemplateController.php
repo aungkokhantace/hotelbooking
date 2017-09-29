@@ -23,7 +23,7 @@ class EmailTemplateController extends Controller
             return view('backend.email_template.booking_cancel')
                 ->with('booking',$booking);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function booking_confirm()
@@ -33,7 +33,7 @@ class EmailTemplateController extends Controller
             return view('backend.email_template.booking_confirm')
                 ->with('booking',$booking);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function booking_edit()
@@ -43,7 +43,7 @@ class EmailTemplateController extends Controller
             return view('backend.email_template.booking_edit')
                 ->with('booking',$booking);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(Request $request)
@@ -62,17 +62,17 @@ class EmailTemplateController extends Controller
 
         if ($code == 'BOOKING_CANCEL')
         {
-            return redirect('backend/email_template_booking_cancel')->withMessage(FormatGenerator::message('Success', 'Template updated ...'));
+            return redirect('backend_mps/email_template_booking_cancel')->withMessage(FormatGenerator::message('Success', 'Template updated ...'));
         }
 
         if ($code == 'BOOKING_CONFIRM')
         {
-            return redirect('backend/email_template_booking_confirm')->withMessage(FormatGenerator::message('Success', 'Template updated ...'));
+            return redirect('backend_mps/email_template_booking_confirm')->withMessage(FormatGenerator::message('Success', 'Template updated ...'));
         }
 
         if ($code == 'BOOKING_EDIT')
         {
-            return redirect('backend/email_template_booking_edit')->withMessage(FormatGenerator::message('Success', 'Template updated ...'));
+            return redirect('backend_mps/email_template_booking_edit')->withMessage(FormatGenerator::message('Success', 'Template updated ...'));
         }
 
     }

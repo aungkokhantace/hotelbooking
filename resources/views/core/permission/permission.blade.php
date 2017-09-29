@@ -8,10 +8,10 @@
     <h1 class="page-header">{{isset($permission) ?  'Permission Edit' : 'Permission Entry' }}</h1>
 
     @if(isset($permission))
-        {!! Form::open(array('url' => 'backend/permission/update', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => 'backend_mps/permission/update', 'class'=> 'form-horizontal user-form-border')) !!}
 
     @else
-        {!! Form::open(array('url' => 'backend/permission/store', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => 'backend_mps/permission/store', 'class'=> 'form-horizontal user-form-border')) !!}
     @endif
     <input type="hidden" name="id" value="{{isset($permission)? $permission->id:''}}"/>
     <br/>

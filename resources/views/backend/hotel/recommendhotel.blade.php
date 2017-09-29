@@ -9,7 +9,7 @@
         {{trans('setup_hotel.title-recommend')}}
     </h1>
 
-    {!! Form::open(array('url' => '/backend/recommend_hotel/store', 'class'=> 'form-horizontal user-form-border', 'id'=>'recommend_hotel','files'=>true)) !!}
+    {!! Form::open(array('url' => '/backend_mps/recommend_hotel/store', 'class'=> 'form-horizontal user-form-border', 'id'=>'recommend_hotel','files'=>true)) !!}
     <br/>
 
     @foreach($hotels as $hotel)

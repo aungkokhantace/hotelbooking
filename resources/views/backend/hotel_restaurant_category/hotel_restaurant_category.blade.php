@@ -8,10 +8,10 @@
     <h1 class="page-header">{{isset($hotel_restaurant_category) ? trans('setup_hotelrestaurantcategory.title-edit') : trans('setup_hotelrestaurantcategory.title-entry') }}</h1>
 
     @if(isset($hotel_restaurant_category))
-        {!! Form::open(array('url' => '/backend/hotel_restaurant_category/update','id'=>'hotel_restaurant_category', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend_mps/hotel_restaurant_category/update','id'=>'hotel_restaurant_category', 'class'=> 'form-horizontal user-form-border')) !!}
 
     @else
-        {!! Form::open(array('url' => '/backend/hotel_restaurant_category/store','id'=>'hotel_restaurant_category', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend_mps/hotel_restaurant_category/store','id'=>'hotel_restaurant_category', 'class'=> 'form-horizontal user-form-border')) !!}
     @endif
     <input type="hidden" name="id" value="{{isset($hotel_restaurant_category)? $hotel_restaurant_category->id:''}}"/>
     <br/>

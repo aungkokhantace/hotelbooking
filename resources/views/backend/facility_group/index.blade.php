@@ -28,7 +28,7 @@
 
     </div>
 
-    {!! Form::open(array('id'=> 'frm_facility_group' ,'url' => '/backend/facility_group/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+    {!! Form::open(array('id'=> 'frm_facility_group' ,'url' => '/backend_mps/facility_group/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
     {{ csrf_field() }}
     <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 
@@ -58,7 +58,7 @@
                     @foreach($facility_group as $group)
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $group->id }}" id="all"></td>
-                            <td><a href="/backend/facility_group/edit/{{$group->id}}">{{$group->name}}</a></td>
+                            <td><a href="/backend_mps/facility_group/edit/{{$group->id}}">{{$group->name}}</a></td>
                             {{--<td>{{$group->icon }}</td>--}}
                             <td>{{$group->remark }}</td>
                         </tr>

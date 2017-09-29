@@ -8,10 +8,10 @@
     <h1 class="page-header">{{isset($room_view) ? trans('setup_roomview.title-edit') : trans('setup_roomview.title-entry') }}</h1>
 
     @if(isset($room_view))
-        {!! Form::open(array('url' => '/backend/room_view/update','id'=>'room_view', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend_mps/room_view/update','id'=>'room_view', 'class'=> 'form-horizontal user-form-border')) !!}
 
     @else
-        {!! Form::open(array('url' => '/backend/room_view/store','id'=>'room_view', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend_mps/room_view/store','id'=>'room_view', 'class'=> 'form-horizontal user-form-border')) !!}
     @endif
     <input type="hidden" name="id" value="{{isset($room_view)? $room_view->id:''}}"/>
     <br/>

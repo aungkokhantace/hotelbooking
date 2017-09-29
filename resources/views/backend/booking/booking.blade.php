@@ -12,7 +12,7 @@
             <br>
             <div>
                 @if($booking->can_refund == 1)
-                    {!! Form::open(array('url'=>'backend/booking/refund','class'=>'form-inline','id'=>'refund_form')) !!}
+                    {!! Form::open(array('url'=>'backend_mps/booking/refund','class'=>'form-inline','id'=>'refund_form')) !!}
                     <input type="hidden" name="b_num" value="{!! $booking->id !!}">
                     <div class="form-group">
                         <select class="form-control" name="refund_percentage">

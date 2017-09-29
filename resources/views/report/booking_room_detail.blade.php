@@ -13,7 +13,7 @@
     <br />
     <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <a href="/backend/bookingreport">
+            <a href="/backend_mps/bookingreport">
                 <h5>
                     <span class="glyphicon glyphicon-arrow-left"></span>
                     Back to Booking Detail

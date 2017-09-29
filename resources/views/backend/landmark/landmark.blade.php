@@ -8,10 +8,10 @@
     <h1 class="page-header">{{isset($landmark)? trans('setup_landmark.title-edit') : trans('setup_landmark.title-entry')  }}</h1>
 
     @if(isset($landmark))
-        {!! Form::open(array('url' => '/backend/landmark/update','id'=>'landmark', 'class'=> 'form-horizontal user-form-border','files' => true)) !!}
+        {!! Form::open(array('url' => '/backend_mps/landmark/update','id'=>'landmark', 'class'=> 'form-horizontal user-form-border','files' => true)) !!}
 
     @else
-        {!! Form::open(array('url' => '/backend/landmark/store','id'=>'landmark', 'class'=> 'form-horizontal user-form-border','files' => true)) !!}
+        {!! Form::open(array('url' => '/backend_mps/landmark/store','id'=>'landmark', 'class'=> 'form-horizontal user-form-border','files' => true)) !!}
     @endif
     <input type="hidden" name="id" value="{{isset($landmark)? $landmark->id:''}}"/>
     <br/>

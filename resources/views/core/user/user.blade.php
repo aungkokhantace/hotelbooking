@@ -15,10 +15,10 @@
 
     {{--check new or edit--}}
     @if(isset($user))
-        {!! Form::open(array('url' => '/backend/user/update', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend_mps/user/update', 'class'=> 'form-horizontal user-form-border')) !!}
 
     @else
-        {!! Form::open(array('url' => '/backend/user/store', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend_mps/user/store', 'class'=> 'form-horizontal user-form-border')) !!}
     @endif
     <input type="hidden" name="id" value="{{isset($user)? $user->id:''}}"/>
     <br/>

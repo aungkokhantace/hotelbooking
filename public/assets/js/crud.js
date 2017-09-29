@@ -5,12 +5,12 @@
 
 function create_setup(type) {
     /*var hotel_id = $("#all_hotel_id").val();*/
-    window.location = '/backend/' + type + '/create';
+    window.location = '/backend_mps/' + type + '/create';
 }
 
 function create_setup_room_category(type){
     var hotel_id = $("#all_hotel_id").val();
-    window.location ='/backend/' + type + '/create/' +hotel_id;
+    window.location ='/backend_mps/' + type + '/create/' +hotel_id;
 }
 
 function edit_setup(type) {
@@ -31,7 +31,7 @@ function edit_setup(type) {
 
     }
     else {
-        window.location ='/backend/' + type + "/edit/" + data;
+        window.location ='/backend_mps/' + type + "/edit/" + data;
     }
 }
 
@@ -75,7 +75,7 @@ function delete_setup(type) {
 }
 
 function cancel_setup(type) {
-    window.location.href = '/backend/' + type;
+    window.location.href = '/backend_mps/' + type;
 }
 
 $("#check_all").click(function(event){

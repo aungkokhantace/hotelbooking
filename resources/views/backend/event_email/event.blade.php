@@ -11,10 +11,10 @@
 
         {{--check new or edit--}}
         @if(isset($event))
-            {!! Form::open(array('url' => '/backend/eventemail/update', 'class'=> 'form-horizontal user-form-border', 'id'=>'event')) !!}
+            {!! Form::open(array('url' => '/backend_mps/eventemail/update', 'class'=> 'form-horizontal user-form-border', 'id'=>'event')) !!}
 
         @else
-            {!! Form::open(array('url' => '/backend/eventemail/store', 'class'=> 'form-horizontal user-form-border', 'id'=>'event')) !!}
+            {!! Form::open(array('url' => '/backend_mps/eventemail/store', 'class'=> 'form-horizontal user-form-border', 'id'=>'event')) !!}
         @endif
         <input type="hidden" name="id" value="{{isset($event)? $event->id:''}}"/>
         <br/>

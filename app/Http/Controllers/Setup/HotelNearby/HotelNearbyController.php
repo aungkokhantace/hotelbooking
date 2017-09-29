@@ -79,7 +79,7 @@ class HotelNearbyController extends Controller
                 ->with('nearby_categories',$nearby_categories)
                 ->with('hotel_nearby',$hotel_nearby);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(HotelNearbyEditRequest $request)

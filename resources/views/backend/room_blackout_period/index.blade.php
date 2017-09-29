@@ -25,7 +25,7 @@
 
     </div>
 
-    {!! Form::open(array('id'=> 'frm_room_blackout_period' ,'url' => 'backend/room_blackout_period/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+    {!! Form::open(array('id'=> 'frm_room_blackout_period' ,'url' => 'backend_mps/room_blackout_period/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
     {{ csrf_field() }}
     <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 
@@ -62,7 +62,7 @@
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $blackout->id }}" id="all"></td>
                             <td>{{$blackout->hotel->name}}</td>
                             <td>{{$blackout->room->name}}</td>
-                            <td><a href="/backend/room_blackout_period/edit/{{$blackout->id}}">{{$blackout->from_date}}</a></td>
+                            <td><a href="/backend_mps/room_blackout_period/edit/{{$blackout->id}}">{{$blackout->from_date}}</a></td>
                             <td>{{$blackout->to_date}}</td>
                             <td>{{$blackout->remark}}</td>
                         </tr>

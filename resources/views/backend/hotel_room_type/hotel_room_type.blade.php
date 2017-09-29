@@ -8,10 +8,10 @@
     <h1 class="page-header">{{isset($hotel_room_type) ? trans('setup_hotelroomtype.title-edit') : trans('setup_hotelroomtype.title-entry') }}</h1>
 
     @if(isset($hotel_room_type))
-        {!! Form::open(array('url' => '/backend/hotel_room_type/update','id'=>'hotel_room_type', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend_mps/hotel_room_type/update','id'=>'hotel_room_type', 'class'=> 'form-horizontal user-form-border')) !!}
 
     @else
-        {!! Form::open(array('url' => '/backend/hotel_room_type/store','id'=>'hotel_room_type', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend_mps/hotel_room_type/store','id'=>'hotel_room_type', 'class'=> 'form-horizontal user-form-border')) !!}
     @endif
     <input type="hidden" name="id" value="{{isset($hotel_room_type)? $hotel_room_type->id:''}}"/>
     <br/>

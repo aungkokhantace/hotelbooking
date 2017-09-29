@@ -27,7 +27,7 @@
 
     </div>
 
-    {!! Form::open(array('id'=> 'frm_hotel_room_type' ,'url' => 'backend/hotel_room_type/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+    {!! Form::open(array('id'=> 'frm_hotel_room_type' ,'url' => 'backend_mps/hotel_room_type/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
     {{ csrf_field() }}
     <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 
@@ -58,7 +58,7 @@
                     @foreach($hotel_room_type as $type)
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $type->id }}" id="all"></td>
-                            <td><a href="/backend/hotel_room_type/edit/{{$type->id}}">{{$type->name}}</a></td>
+                            <td><a href="/backend_mps/hotel_room_type/edit/{{$type->id}}">{{$type->name}}</a></td>
                             <td>{{$type->hotel->name}}</td>            
                             <td>
                                 @if(strlen($type->description) > 50)

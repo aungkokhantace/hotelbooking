@@ -83,7 +83,7 @@ class LandmarkController extends Controller
             return view('backend.landmark.landmark')->with('landmark', $landmark)
                                                     ->with('townships',$townships);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(LandMarkEditRequest $request){

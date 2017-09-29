@@ -112,7 +112,7 @@ class FacilitiesController extends Controller
                 ->with('facilities', $facilities)
                 ->with('facility_group', $facility_group);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(FacilitiesEditRequest $request){

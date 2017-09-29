@@ -114,7 +114,7 @@ class RoomCategoryFacilityController extends Controller
                 ->with('hotel_room_category',$hotel_room_category)
                 ->with('facility_group',$facility_group);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(RoomCategoryFacilityEditRequest $request){

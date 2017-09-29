@@ -6,10 +6,10 @@
     <h1 class="page-header">{{isset($slider) ? trans('setup_slider.title-edit') : trans('setup_slider.title-entry')}}</h1>
 
     @if(isset($slider))
-        {!! Form::open(array('url' => '/backend/slider/update','files'=>true,'id'=>'slider', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend_mps/slider/update','files'=>true,'id'=>'slider', 'class'=> 'form-horizontal user-form-border')) !!}
 
     @else
-        {!! Form::open(array('url' => '/backend/slider/store','files'=>true,'id'=>'slider', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend_mps/slider/store','files'=>true,'id'=>'slider', 'class'=> 'form-horizontal user-form-border')) !!}
     @endif
     <input type="hidden" name="id" value="{{isset($slider)? $slider->id:''}}"/>
     <br/>

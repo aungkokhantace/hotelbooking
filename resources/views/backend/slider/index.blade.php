@@ -25,7 +25,7 @@
 
     </div>
 
-    {!! Form::open(array('id'=> 'frm_slider' ,'url' => '/backend/slider/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+    {!! Form::open(array('id'=> 'frm_slider' ,'url' => '/backend_mps/slider/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
     {{ csrf_field() }}
     <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 

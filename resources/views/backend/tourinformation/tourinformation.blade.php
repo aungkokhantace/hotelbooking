@@ -6,7 +6,7 @@
 <div id="content" class="content">
 
     <h1 class="page-header">Tour Information Edit</h1>
-    {!! Form::open(array('url' => '/backend/tour_information', 'class'=> 'form-horizontal user-form-border','files' => true)) !!}
+    {!! Form::open(array('url' => '/backend_mps/tour_information', 'class'=> 'form-horizontal user-form-border','files' => true)) !!}
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
     <div class="row">

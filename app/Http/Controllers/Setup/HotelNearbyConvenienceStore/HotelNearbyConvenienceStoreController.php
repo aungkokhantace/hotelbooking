@@ -78,7 +78,7 @@ class HotelNearbyConvenienceStoreController extends Controller
             $hotels                 = $hotelRepo->getObjs();
             return view('backend.hotel_nearby_convenience_store.hotel_nearby_convenience_store')->with('hotel_nearby_convenience_store', $hotel_nearby_convenience_store)->with('hotels',$hotels);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(HotelNearbyConvenienceStoreEditRequest $request){

@@ -42,7 +42,7 @@ class PageController extends Controller
             return view('backend.page.page')
                 ->with('page',$page);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(PageEditRequest $request)

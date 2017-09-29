@@ -201,7 +201,7 @@
                         @foreach($bookings as $booking)
                             <tr>
                                 <td>{{$booking->date}}</td>
-                                <td><a href="/backend/bookingreport/room_detail/{{$booking->id}}">{{$booking->booking_no}}</a></td>
+                                <td><a href="/backend_mps/bookingreport/room_detail/{{$booking->id}}">{{$booking->booking_no}}</a></td>
                                 <td>{{ucwords($booking->first_name.' '.$booking->last_name)}}</td>
                                 <td>
                                     @if($booking->status == 1) {{'Pending'}}

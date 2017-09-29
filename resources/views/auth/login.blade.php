@@ -21,7 +21,7 @@
                      Log In
                 </div>
                 <!-- Starting Form -->
-                {!! Form::open(array('url' => 'backend/login'))!!}
+                {!! Form::open(array('url' => 'backend_mps/login'))!!}
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         @if ($errors->has())
                             <p class="alert alert-danger">
@@ -58,7 +58,7 @@
                         <button type="submit" class="btn btn-default fill_color login_btn" name="login">LOG IN</button>
                     </div>
                     <div class="col-md-7">
-                            <a class="btn btn-link" href="{{ url('/backend/password/reset') }}">Forgot Your Password?</a>
+                            <a class="btn btn-link" href="{{ url('/backend_mps/password/reset') }}">Forgot Your Password?</a>
 
                     </div>
                 </div>

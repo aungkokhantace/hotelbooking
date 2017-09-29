@@ -42,9 +42,9 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/backend';
+    protected $redirectTo = '/backend_mps';
     protected $guard='User';
-    protected $redirectAfterLogout='backend/login';
+    protected $redirectAfterLogout='backend_mps/login';
 
     /**
      * Create a new authentication controller instance.
@@ -121,7 +121,8 @@ class AuthController extends Controller
             else{
                 $id = Auth::guard('User')->id();
                 Check::createSession($id);
-                return redirect('/backend/userAuth');
+            
+                return redirect('/backend_mps/userAuth');
             }
         } else {
             return redirect()->back()->withErrors($this->getFailedLoginMessage());   
@@ -137,7 +138,7 @@ class AuthController extends Controller
     public function doLogout() //before logout, flush the session data
     {
         session()->flush();
-        return redirect('/backend');
+        return redirect('/backend_mps');
     }
 
     protected function checkRoleId($username) {

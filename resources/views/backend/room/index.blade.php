@@ -25,7 +25,7 @@
 
     </div>
 
-    {!! Form::open(array('id'=> 'frm_room' ,'url' => 'backend/room/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+    {!! Form::open(array('id'=> 'frm_room' ,'url' => 'backend_mps/room/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
     {{ csrf_field() }}
     <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 
@@ -64,7 +64,7 @@
                     @foreach($rooms as $room)
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $room->id }}" id="all"></td>
-                            <td><a href="/backend/room/edit/{{$room->id}}">{{$room->name}}</a></td>
+                            <td><a href="/backend_mps/room/edit/{{$room->id}}">{{$room->name}}</a></td>
                             <td>{{$room->hotel->name}}</td>
                             <td>{{$room->hotel_room_type->name}}</td>
                             <td>{{$room->hotel_room_category->name}}</td>

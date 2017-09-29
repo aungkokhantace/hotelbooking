@@ -8,10 +8,10 @@
     <h1 class="page-header">{{isset($hotel_nearby_drug_store) ? trans('setup_nearbydrugstore.title-edit') : trans('setup_nearbydrugstore.title-entry') }}</h1>
 
     @if(isset($hotel_nearby_drug_store))
-        {!! Form::open(array('url' => '/backend/hotel_nearby_drug_store/update','id'=>'hotel_nearby_drug_store', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend_mps/hotel_nearby_drug_store/update','id'=>'hotel_nearby_drug_store', 'class'=> 'form-horizontal user-form-border')) !!}
 
     @else
-        {!! Form::open(array('url' => '/backend/hotel_nearby_drug_store/store','id'=>'hotel_nearby_drug_store', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend_mps/hotel_nearby_drug_store/store','id'=>'hotel_nearby_drug_store', 'class'=> 'form-horizontal user-form-border')) !!}
     @endif
     <input type="hidden" name="id" value="{{isset($hotel_nearby_drug_store)? $hotel_nearby_drug_store->id:''}}"/>
     <br/>

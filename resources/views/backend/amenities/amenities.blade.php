@@ -11,10 +11,10 @@
 
     {{--check new or edit--}}
     @if(isset($amenities))
-        {!! Form::open(array('url' => '/backend/amenities/update','files'=>true, 'class'=> 'form-horizontal user-form-border', 'id'=>'amenities')) !!}
+        {!! Form::open(array('url' => '/backend_mps/amenities/update','files'=>true, 'class'=> 'form-horizontal user-form-border', 'id'=>'amenities')) !!}
 
     @else
-        {!! Form::open(array('url' => '/backend/amenities/store','files'=>true, 'class'=> 'form-horizontal user-form-border', 'id'=>'amenities')) !!}
+        {!! Form::open(array('url' => '/backend_mps/amenities/store','files'=>true, 'class'=> 'form-horizontal user-form-border', 'id'=>'amenities')) !!}
     @endif
     <input type="hidden" name="id" value="{{isset($amenities)? $amenities->id:''}}"/>
     <br/>

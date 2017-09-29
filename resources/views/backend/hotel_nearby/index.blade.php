@@ -25,7 +25,7 @@
 
         </div>
 
-        {!! Form::open(array('id'=> 'frm_nearby_category' ,'url' => 'backend/nearby_category/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('id'=> 'frm_nearby_category' ,'url' => 'backend_mps/nearby_category/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
         {{ csrf_field() }}
         <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 

@@ -25,7 +25,7 @@
 
     </div>
 
-    {!! Form::open(array('id'=> 'frm_role' ,'url' => '/backend/role/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+    {!! Form::open(array('id'=> 'frm_role' ,'url' => '/backend_mps/role/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
     {{ csrf_field() }}
     <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 
@@ -57,9 +57,9 @@
                     @foreach($roles as $role)
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $role->id }}" id="all"></td>
-                            <td><a href="/backend/role/edit/{{$role->id}}">{{$role->name}}</a></td>
+                            <td><a href="/backend_mps/role/edit/{{$role->id}}">{{$role->name}}</a></td>
                             <td>{{$role->description}}</td>
-                            <td><a href="/backend/rolePermission/{{$role->id}}">Edit Permissions</a></td>
+                            <td><a href="/backend_mps/rolePermission/{{$role->id}}">Edit Permissions</a></td>
                         </tr>
                     @endforeach
                     </tbody>

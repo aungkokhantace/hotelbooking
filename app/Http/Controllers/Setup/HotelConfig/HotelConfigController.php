@@ -92,7 +92,7 @@ class HotelConfigController extends Controller
             $hotel_config       = $this->repo->getObjByID($id);
             return view('backend.hotel_config.hotel_config')->with('hotel_config', $hotel_config);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(HotelConfigEditRequest $request){

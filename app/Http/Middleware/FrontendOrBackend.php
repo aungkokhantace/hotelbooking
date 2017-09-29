@@ -33,11 +33,11 @@ class FrontendOrBackend
             $currentPath= $request->route()->getName();
             $currentAction = str_replace(".","/",$currentPath);
 
-            if (strpos($currentAction, 'backend/') !== false) {
+            if (strpos($currentAction, 'backend_mps/') !== false) {
                 return $next($request);
             }
             else{
-                return redirect('backend/dashboard');
+                return redirect('backend_mps/dashboard');
             }
         }
         return $next($request);

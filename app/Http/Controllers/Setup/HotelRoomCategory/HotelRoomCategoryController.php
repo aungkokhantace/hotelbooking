@@ -367,7 +367,7 @@ class HotelRoomCategoryController extends Controller
                                                                           ->with('r_amenity',$r_amenity)
                                                                           ->with('r_facility',$r_facility);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(HotelRoomCategoryEditRequest $request){

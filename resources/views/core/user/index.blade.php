@@ -25,7 +25,7 @@
 
     </div>
 
-    {!! Form::open(array('id'=> 'frm_user' ,'url' => 'backend/user/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+    {!! Form::open(array('id'=> 'frm_user' ,'url' => 'backend_mps/user/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
     {{ csrf_field() }}
     <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 
@@ -62,7 +62,7 @@
                     @foreach($users as $user)
                         <tr>
                         <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $user->id }}" id="all"></td>
-                        <td><a href="/backend/user/edit/{{$user->id}}">{{$user->user_name}}</a></td>
+                        <td><a href="/backend_mps/user/edit/{{$user->id}}">{{$user->user_name}}</a></td>
                         <td>{{$user->display_name}}</td>
                         <td>{{$user->email}}</td>
                         <td>{{$user->role->name}}</td>

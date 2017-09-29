@@ -109,7 +109,7 @@ class RoomDiscountController extends Controller
                 ->with('hotel_room_type',$hotel_room_type)
                 ->with('hotel_room_category',$hotel_room_category);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(RoomDiscountEditRequest $request){

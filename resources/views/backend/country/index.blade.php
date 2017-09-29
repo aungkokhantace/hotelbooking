@@ -28,7 +28,7 @@
 
     </div>
 
-    {!! Form::open(array('id'=> 'frm_country' ,'url' => 'backend/country/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+    {!! Form::open(array('id'=> 'frm_country' ,'url' => 'backend_mps/country/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
     {{ csrf_field() }}
     <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 
@@ -55,7 +55,7 @@
                     @foreach($countries as $country)
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $country->id }}" id="all"></td>
-                            <td><a href="/backend/country/edit/{{$country->id}}">{{$country->name}}</a></td>
+                            <td><a href="/backend_mps/country/edit/{{$country->id}}">{{$country->name}}</a></td>
                             <td>{{$country->description}}</td>
                         </tr>
                     @endforeach

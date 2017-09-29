@@ -12,7 +12,7 @@ class AceplusRedirect implements AceplusRedirectInterface {
 
     public function firstRedirect() {
         if(Check::validSession()){
-            return Redirect::intended("/backend/dashboard");
+            return Redirect::intended("/backend_mps/dashboard");
         }
         else{
             return Redirect::intended("/");
@@ -21,7 +21,7 @@ class AceplusRedirect implements AceplusRedirectInterface {
 
     public function firstRedirectPath() {
         if(Check::validSession()) {
-            return "backend/dashboard";
+            return "backend_mps/dashboard";
         }
         else{
             return "/";
@@ -31,7 +31,7 @@ class AceplusRedirect implements AceplusRedirectInterface {
 
     public function afterAuthedRedirect() {
         if(Check::validSession()) {
-            return Redirect::intended("backend/dashboard");
+            return Redirect::intended("backend_mps/dashboard");
         }
         else{
             return Redirect::intended("/");
@@ -40,7 +40,7 @@ class AceplusRedirect implements AceplusRedirectInterface {
 
     public function afterAuthedRedirectPath() {
         if(Check::validSession()) {
-            return "backend/dashboard";
+            return "backend_mps/dashboard";
         }
         else{
             return "/";

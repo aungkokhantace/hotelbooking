@@ -28,7 +28,7 @@
 
     </div>
 
-    {!! Form::open(array('id'=> 'frm_township' ,'url' => 'backend/township/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+    {!! Form::open(array('id'=> 'frm_township' ,'url' => 'backend_mps/township/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
     {{ csrf_field() }}
     <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 
@@ -56,7 +56,7 @@
                     @foreach($townships as $township)
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $township->id }}" id="all"></td>
-                            <td><a href="/backend/township/edit/{{$township->id}}">{{$township->name}}</a></td>
+                            <td><a href="/backend_mps/township/edit/{{$township->id}}">{{$township->name}}</a></td>
                             <td>{{$township->city->name}}</td>
                         </tr>
                     @endforeach

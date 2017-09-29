@@ -25,7 +25,7 @@
 
     </div>
 
-    {!! Form::open(array('id'=> 'frm_hotel_nearby_hospital' ,'url' => 'backend/hotel_nearby_hospital/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+    {!! Form::open(array('id'=> 'frm_hotel_nearby_hospital' ,'url' => 'backend_mps/hotel_nearby_hospital/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
     {{ csrf_field() }}
     <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 
@@ -57,7 +57,7 @@
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $hospital->id }}" id="all"></td>
                             <td>{{$hospital->hotel->name}}</td>
-                            <td><a href="/backend/hotel_nearby_hospital/edit/{{$hospital->id}}">{{$hospital->name}}</a></td>
+                            <td><a href="/backend_mps/hotel_nearby_hospital/edit/{{$hospital->id}}">{{$hospital->name}}</a></td>
                             <td>{{$hospital->distance}}</td>
                         </tr>
                     @endforeach

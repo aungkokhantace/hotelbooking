@@ -11,10 +11,10 @@
 
     {{--check new or edit--}}
     @if(isset($city))
-        {!! Form::open(array('url' => '/backend/city/update', 'class'=> 'form-horizontal user-form-border', 'id'=>'city','files'=>true)) !!}
+        {!! Form::open(array('url' => '/backend_mps/city/update', 'class'=> 'form-horizontal user-form-border', 'id'=>'city','files'=>true)) !!}
 
     @else
-        {!! Form::open(array('url' => '/backend/city/store', 'class'=> 'form-horizontal user-form-border', 'id'=>'city','files'=>true)) !!}
+        {!! Form::open(array('url' => '/backend_mps/city/store', 'class'=> 'form-horizontal user-form-border', 'id'=>'city','files'=>true)) !!}
     @endif
     <input type="hidden" name="id" value="{{isset($city)? $city->id:''}}"/>
     <br/>

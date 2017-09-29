@@ -101,7 +101,7 @@ class CityController extends Controller
 
             return view('backend.city.city')->with('city', $city)->with('countries', $countries);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(CityEditRequest $request){

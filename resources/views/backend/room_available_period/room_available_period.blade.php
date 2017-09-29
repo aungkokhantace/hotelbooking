@@ -12,10 +12,10 @@
         <h1 class="page-header">{{isset($r_available_period) ? trans('setup_roomavailableperiod.title-edit') : trans('setup_roomavailableperiod.title-entry') }}</h1>
 
         @if(isset($r_available_period))
-            {!! Form::open(array('url' => '/backend/room_available_period/update','id'=>'room_available_period', 'class'=> 'form-horizontal user-form-border')) !!}
+            {!! Form::open(array('url' => '/backend_mps/room_available_period/update','id'=>'room_available_period', 'class'=> 'form-horizontal user-form-border')) !!}
 
         @else
-            {!! Form::open(array('url' => '/backend/room_available_period/store','id'=>'room_available_period', 'class'=> 'form-horizontal user-form-border')) !!}
+            {!! Form::open(array('url' => '/backend_mps/room_available_period/store','id'=>'room_available_period', 'class'=> 'form-horizontal user-form-border')) !!}
         @endif
         <input type="hidden" name="id" value="{{isset($r_available_period)? $r_available_period->id:''}}"/>
         <br/>
@@ -223,7 +223,7 @@
         function loadRoom(hotel_id){
             $.ajax({
                 type: "GET",
-                url: "/backend/room/get_room/"+hotel_id,
+                url: "/backend_mps/room/get_room/"+hotel_id,
             }).done(function( result ) {
                 $("#room_id").empty();//To reset states
                 $("#room_id").append("<option selected disabled>Select Room</option>");

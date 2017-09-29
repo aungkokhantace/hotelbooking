@@ -95,7 +95,7 @@ class RoomCategoryAmenityController extends Controller
                 ->with('room_categories',$room_categories)
                 ->with('amenities',$amenities);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(RoomCategoryAmenityEditRequest $request){

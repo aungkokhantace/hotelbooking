@@ -25,7 +25,7 @@
 
     </div>
 
-    {!! Form::open(array('id'=> 'frm_hotel_nearby_drug_store' ,'url' => 'backend/hotel_nearby_drug_store/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+    {!! Form::open(array('id'=> 'frm_hotel_nearby_drug_store' ,'url' => 'backend_mps/hotel_nearby_drug_store/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
     {{ csrf_field() }}
     <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 
@@ -57,7 +57,7 @@
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $drug_store->id }}" id="all"></td>
                             <td>{{$drug_store->hotel->name}}</td>
-                            <td><a href="/backend/hotel_nearby_drug_store/edit/{{$drug_store->id}}">{{$drug_store->name}}</a></td>
+                            <td><a href="/backend_mps/hotel_nearby_drug_store/edit/{{$drug_store->id}}">{{$drug_store->name}}</a></td>
                             <td>{{$drug_store->distance}}</td>
                         </tr>
                     @endforeach

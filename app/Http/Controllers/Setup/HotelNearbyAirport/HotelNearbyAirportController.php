@@ -78,7 +78,7 @@ class HotelNearbyAirportController extends Controller
             $hotels                 = $hotelRepo->getObjs();
             return view('backend.hotel_nearby_airport.hotel_nearby_airport')->with('hotel_nearby_airport', $hotel_nearby_airport)->with('hotels',$hotels);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(HotelNearbyAirportEditRequest $request){

@@ -83,7 +83,7 @@ class HotelLandmarkController extends Controller
                                                                 ->with('hotels',$hotels)
                                                                 ->with('landmarks',$landmarks);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(HotelLandmarkEditRequest $request){

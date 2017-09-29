@@ -35,7 +35,7 @@
         </style>
         <h1 class="page-header">{{ trans('setup_csvimport.title-entry') }}</h1>
 
-        {!! Form::open(array('url' => '/backend/import/store','id'=>'csv_import', 'enctype'=>'multipart/form-data' ,'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend_mps/import/store','id'=>'csv_import', 'enctype'=>'multipart/form-data' ,'class'=> 'form-horizontal user-form-border')) !!}
         <br/>
 
         <div class="row">

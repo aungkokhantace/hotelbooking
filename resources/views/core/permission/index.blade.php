@@ -25,7 +25,7 @@
 
     </div>
 
-    {!! Form::open(array('id'=> 'frm_permission' ,'url' => '/backend/permission/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+    {!! Form::open(array('id'=> 'frm_permission' ,'url' => '/backend_mps/permission/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
     {{ csrf_field() }}
     <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 
@@ -57,7 +57,7 @@
                     @foreach($permissions as $permission)
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $permission->id }}" id="all"></td>
-                            <td><a href="/backend/permission/edit/{{$permission->id}}">{{$permission->name}}</a></td>
+                            <td><a href="/backend_mps/permission/edit/{{$permission->id}}">{{$permission->name}}</a></td>
                             <td>{{$permission->module}}</td>
                             <td>{{$permission->description}}</td>
                             <td>{{$permission->url}}</td>

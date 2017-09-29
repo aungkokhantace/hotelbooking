@@ -11,10 +11,10 @@
 
     {{--check new or edit--}}
     @if(isset($township))
-        {!! Form::open(array('url' => '/backend/township/update', 'class'=> 'form-horizontal user-form-border', 'id'=>'township')) !!}
+        {!! Form::open(array('url' => '/backend_mps/township/update', 'class'=> 'form-horizontal user-form-border', 'id'=>'township')) !!}
 
     @else
-        {!! Form::open(array('url' => '/backend/township/store', 'class'=> 'form-horizontal user-form-border', 'id'=>'township')) !!}
+        {!! Form::open(array('url' => '/backend_mps/township/store', 'class'=> 'form-horizontal user-form-border', 'id'=>'township')) !!}
     @endif
     <input type="hidden" name="id" value="{{isset($township)? $township->id:''}}"/>
     <br/>

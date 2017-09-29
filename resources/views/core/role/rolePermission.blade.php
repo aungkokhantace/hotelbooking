@@ -51,7 +51,7 @@
                         <div id="feature_{{$feature_permission['feature']['module']}}" class="panel-collapse collapse">
                             <div class="panel-body">
 
-                                {!! Form::open(array('url' => 'backend/rolePermissionAssign/'.$role->id, 'method'=>'POST','class'=> 'form-horizontal user-form-border', 'data-parsley-validate'=>'true')) !!}
+                                {!! Form::open(array('url' => 'backend_mps/rolePermissionAssign/'.$role->id, 'method'=>'POST','class'=> 'form-horizontal user-form-border', 'data-parsley-validate'=>'true')) !!}
 
                                 <table class="footable table toggle-circle metro-black demo" data-filter-minimum="2">
 

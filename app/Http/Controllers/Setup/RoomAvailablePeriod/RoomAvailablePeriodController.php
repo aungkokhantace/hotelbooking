@@ -90,7 +90,7 @@ class RoomAvailablePeriodController extends Controller
                                                                               ->with('hotels',$hotels)
                                                                               ->with('rooms',$rooms);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(RoomAvailablePeriodEditRequest $request){

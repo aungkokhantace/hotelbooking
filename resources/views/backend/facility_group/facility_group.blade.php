@@ -11,10 +11,10 @@
 
     {{--check new or edit--}}
     @if(isset($facility_group))
-        {!! Form::open(array('url' => '/backend/facility_group/update','files'=>true, 'class'=> 'form-horizontal user-form-border', 'id'=>'facility_group')) !!}
+        {!! Form::open(array('url' => '/backend_mps/facility_group/update','files'=>true, 'class'=> 'form-horizontal user-form-border', 'id'=>'facility_group')) !!}
 
     @else
-        {!! Form::open(array('url' => '/backend/facility_group/store','files'=>true, 'class'=> 'form-horizontal user-form-border', 'id'=>'facility_group')) !!}
+        {!! Form::open(array('url' => '/backend_mps/facility_group/store','files'=>true, 'class'=> 'form-horizontal user-form-border', 'id'=>'facility_group')) !!}
     @endif
     <input type="hidden" name="id" value="{{isset($facility_group)? $facility_group->id:''}}"/>
     <br/>

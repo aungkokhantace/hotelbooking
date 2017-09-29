@@ -52,6 +52,6 @@ class HotelDashboardController extends Controller
                 ->with('rooms_count',$rooms_count)
                 ->with('bookings_count',$bookings_count);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 }

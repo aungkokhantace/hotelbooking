@@ -77,7 +77,7 @@ class EventEmailController extends Controller
             return view('backend.event_email.event')
                 ->with('event',$event);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(EventEmailEditRequest $request)

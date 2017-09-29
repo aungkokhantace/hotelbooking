@@ -70,7 +70,7 @@ class HotelNearbyCategoryController extends Controller
             return view('backend.hotel_category.hotel_category')
                 ->with('hotel_category',$hotel_category);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(HotelCategoryEditRequest $request){

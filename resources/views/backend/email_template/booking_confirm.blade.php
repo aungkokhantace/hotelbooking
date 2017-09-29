@@ -6,7 +6,7 @@
 <div id="content" class="content">
 
     <h1 class="page-header">{{trans('setup_email_template.booking-confirm-edit') }}</h1>
-        {!! Form::open(array('url' => '/backend/email_template_booking_confirm/update','id'=>'booking-cancel', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend_mps/email_template_booking_confirm/update','id'=>'booking-cancel', 'class'=> 'form-horizontal user-form-border')) !!}
     <input type="hidden" name="id" value="{{ $booking->code }}"/>
     <br/>
 

@@ -121,7 +121,7 @@ class HotelRoomTypeController extends Controller
             }
             return view('backend.hotel_room_type.hotel_room_type')->with('hotel_room_type', $hotel_room_type)->with('hotels',$hotels)->with('role',$role);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(HotelRoomTypeEditRequest $request){

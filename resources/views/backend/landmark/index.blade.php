@@ -25,7 +25,7 @@
 
     </div>
 
-    {!! Form::open(array('id'=> 'frm_landmark' ,'url' => 'backend/landmark/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+    {!! Form::open(array('id'=> 'frm_landmark' ,'url' => 'backend_mps/landmark/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
     {{ csrf_field() }}
     <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 
@@ -62,7 +62,7 @@
                     @foreach($landmarks as $landmark)
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $landmark->id }}" id="all"></td>
-                            <td><a href="/backend/landmark/edit/{{$landmark->id}}">{{$landmark->name}}</a></td>
+                            <td><a href="/backend_mps/landmark/edit/{{$landmark->id}}">{{$landmark->name}}</a></td>
                             <td>{{$landmark->township->name}}</td>
                             <td>{{$landmark->is_popular == 1? 'Yes':'No'}}</td>
                             <td>{{$landmark->latitude}}</td>

@@ -8,10 +8,10 @@
     <h1 class="page-header">{{isset($page) ? trans('setup_page.title-edit') : trans('setup_page.title-entry') }}</h1>
 
     @if(isset($page))
-        {!! Form::open(array('url' => '/backend/page/update','id'=>'page', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend_mps/page/update','id'=>'page', 'class'=> 'form-horizontal user-form-border')) !!}
 
     @else
-        {!! Form::open(array('url' => '/backend/page/store','id'=>'page', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend_mps/page/store','id'=>'page', 'class'=> 'form-horizontal user-form-border')) !!}
     @endif
     <input type="hidden" name="id" value="{{isset($page)? $page->id:''}}"/>
     <br/>

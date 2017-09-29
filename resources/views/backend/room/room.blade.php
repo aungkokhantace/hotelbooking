@@ -8,10 +8,10 @@
     <h1 class="page-header">{{isset($hotel_room_type) ? trans('setup_room.title-edit') : trans('setup_room.title-entry') }}</h1>
 
     @if(isset($room))
-        {!! Form::open(array('url' => '/backend/room/update','id'=>'room', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend_mps/room/update','id'=>'room', 'class'=> 'form-horizontal user-form-border')) !!}
 
     @else
-        {!! Form::open(array('url' => '/backend/room/store','id'=>'room', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend_mps/room/store','id'=>'room', 'class'=> 'form-horizontal user-form-border')) !!}
     @endif
     <input type="hidden" name="id" id="id" value="{{isset($room)? $room->id:0}}"/>
     <br/>
@@ -323,7 +323,7 @@
         function loadHotelRoomType(hotelId){
             $.ajax({
                 type: "GET",
-                url: "/backend/hotel_room_type/get_room_type/"+hotelId,
+                url: "/backend_mps/hotel_room_type/get_room_type/"+hotelId,
             }).done(function( result ) {
                 $("#h_room_type_id").empty();//To reset states
                 $("#h_room_type_id").append("<option selected disabled>Select Room Type</option>");
@@ -343,7 +343,7 @@
         function loadHotelRoomCategory(hRoomTypeId){
             $.ajax({
                 type: "GET",
-                url: "/backend/hotel_room_category/get_room_category/"+hRoomTypeId,
+                url: "/backend_mps/hotel_room_category/get_room_category/"+hRoomTypeId,
             }).done(function( result ) {
                 $("#h_room_category_id").empty();//To reset states
                 $("#h_room_category_id").append("<option selected disabled>Select Room Category</option>");

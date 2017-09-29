@@ -91,7 +91,7 @@ class HotelFacilityController extends Controller
                                                                 ->with('facility_group',$facility_group)
                                                                 ->with('facilities',$facilities);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(HotelFacilityEditRequest $request){

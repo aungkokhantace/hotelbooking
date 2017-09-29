@@ -95,7 +95,7 @@ class FacilityGroupController extends Controller
 
             return view('backend.facility_group.facility_group')->with('facility_group', $facility_group);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(FacilityGroupEditRequest $request){

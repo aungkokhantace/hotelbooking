@@ -99,7 +99,7 @@ class AmenitiesController extends Controller
             $amenities  = $this->repo->getObjByID($id);
             return view('backend.amenities.amenities')->with('amenities', $amenities);
         }
-        return redirect('/backend/login');
+        return redirect('/backend_mps/login');
     }
 
     public function update(AmenitiesEditRequest $request){

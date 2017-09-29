@@ -135,7 +135,7 @@ $companyLogo = \App\Core\Check::companyLogo();
 
             <!-- MULTI LANGUAGE -->
             <!-- <div class="navbar-header center">
-                <form action="/backend/language" method="post">
+                <form action="/backend_mps/language" method="post">
                     <select name="locale">
                         <option value="en" {{App::getLocale() == 'en'? 'selected':''}}>English</option>
                         <option value="jp" {{App::getLocale() == 'jp'? 'selected':''}}>Japan</option>
@@ -156,9 +156,9 @@ $companyLogo = \App\Core\Check::companyLogo();
                     </a>
                     <ul class="dropdown-menu animated fadeInLeft">
                         <li class="arrow"></li>
-                        <li nav-id="profile-edit"><a href="/backend/user/profile/{{isset($user_info['userId']) ? $user_info['userId'] : '' }}">Edit Profile</a></li>
+                        <li nav-id="profile-edit"><a href="/backend_mps/user/profile/{{isset($user_info['userId']) ? $user_info['userId'] : '' }}">Edit Profile</a></li>
                         <li class="divider"></li>
-                        <li><a href="/backend/logout">Log Out</a></li>
+                        <li><a href="/backend_mps/logout">Log Out</a></li>
                     </ul>
                 </li>
             </ul>

@@ -7,10 +7,10 @@
 
     <h1 class="page-header">{{isset($country) ?  trans('setup_country.title-edit') : trans('setup_country.title-entry') }}</h1>
     @if(isset($country))
-        {!! Form::open(array('url' => '/backend/country/update','id'=>'country', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend_mps/country/update','id'=>'country', 'class'=> 'form-horizontal user-form-border')) !!}
 
     @else
-        {!! Form::open(array('url' => '/backend/country/store','id'=>'country', 'class'=> 'form-horizontal user-form-border')) !!}
+        {!! Form::open(array('url' => '/backend_mps/country/store','id'=>'country', 'class'=> 'form-horizontal user-form-border')) !!}
     @endif
     <input type="hidden" name="id" value="{{isset($country)? $country->id:''}}"/>
     <br/>

@@ -9,7 +9,7 @@
     @if(isset($booking))
     <div class="row">
         <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-            {!! Form::open(array('url' => '/backend/communication/reply/store','id'=>'communication', 'onsubmit'=>'return validate()', 'class'=> 'form-horizontal user-form-border')) !!}
+            {!! Form::open(array('url' => '/backend_mps/communication/reply/store','id'=>'communication', 'onsubmit'=>'return validate()', 'class'=> 'form-horizontal user-form-border')) !!}
             <input type="hidden" name="id" value="{{ $booking->id }}" />
                 <div class="form-wrapper">
                     <div class="field-row row">

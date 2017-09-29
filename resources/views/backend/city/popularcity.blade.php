@@ -9,7 +9,7 @@
         Set Popular Cities
     </h1>
 
-    {!! Form::open(array('url' => '/backend/popular_city/store', 'class'=> 'form-horizontal user-form-border', 'id'=>'popular_city','files'=>true)) !!}
+    {!! Form::open(array('url' => '/backend_mps/popular_city/store', 'class'=> 'form-horizontal user-form-border', 'id'=>'popular_city','files'=>true)) !!}
     <br/>
 
     @foreach($cities as $city)
