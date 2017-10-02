@@ -13,6 +13,7 @@ use App\Setup\HotelFacility\HotelFacility;
 use App\Setup\HotelFeature\HotelFeature;
 use App\Setup\HotelLandmark\HotelLandmark;
 use App\Setup\Landmark\Landmark;
+use App\Setup\HotelRoomType\HotelRoomType;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use App\User;
@@ -180,6 +181,10 @@ class HotelRepository implements HotelRepositoryInterface
     public function getHFeatureID($id){
         $hotel_feature = HotelFeature::where('hotel_id',$id)->get();
         return $hotel_feature;
+    }
+    public function getHotelRoomTypeByID($id){
+        $hotel_room_type = HotelRoomType::where('hotel_id',$id)->first();
+        return $hotel_room_type;
     }
     public function getHotelsByDestination($name){
 //        $objs = Hotel::whereNull('deleted_at')->where('name', 'LIKE', "%$name%")->get();

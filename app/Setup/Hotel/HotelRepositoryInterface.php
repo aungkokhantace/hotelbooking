@@ -20,6 +20,7 @@ interface HotelRepositoryInterface
     public function getHNearbyID($id);
     public function getHFacilityID($id);
     public function getHFeatureID($id);
+    public function getHotelRoomTypeByID($id);
     public function delete($id);
     public function getArrays();
     public function getHotelsByDestination($name);

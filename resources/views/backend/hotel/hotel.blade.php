@@ -509,6 +509,8 @@
                 </li>
                 <li><a href="#5" data-toggle="tab">Hotel Facility</a>
                 </li>
+                <li><a href="#6" data-toggle="tab">Hotel RoomType</a>
+                </li>
             </ul>
 
             <div class="tab-content ">
@@ -693,7 +695,7 @@
                 </div>
                 <div class="tab-pane row" id="4">
                     @if(isset($hotel))
-                        @if(isset($h_feature))
+                        @if(!empty($h_feature))
                             @foreach($features as $feature)
                                 <div class="col-md-12">
                                     <fieldset class="skill-border">
@@ -735,12 +737,13 @@
                                         {{-- @foreach($feature->feature_id as $fea)
                                             @if($fea->feature_id == $feature->id)
                                             <textarea rows="5" cols="50" class="form-control" id="remark" name="remark_{{$feature->id}}" placeholder="{{trans('setup_hotelfeature.place-remark')}}">{{$fea->remark}}</textarea>
-                                                @else
-                                                <textarea rows="5" cols="50" class="form-control" id="remark" name="remark_{{$feature->id}}" placeholder="{{trans('setup_hotelfeature.place-remark')}}"></textarea>
+                                        
                                             @endif
                                             @endforeach --}}
 
-                                            <textarea rows="5" cols="50" class="form-control" id="remark" name="remark_{{$feature->id}}" @foreach($feature->feature_id as $fea) @if($fea->feature_id != $feature->id) placeholder="{{trans('setup_hotelfeature.place-remark')}}"  @endif @endforeach>@foreach($feature->feature_id as $fea)@if($fea->feature_id == $feature->id){{$fea->remark}} @endif @endforeach</textarea>
+                                            <textarea rows="5" cols="50" class="form-control" id="remark" name="remark_{{$feature->id}}" placeholder="{{trans('setup_hotelfeature.place-remark')}}"> @foreach($feature->feature_id as $fea)@if($fea->feature_id == $feature->id){{$fea->remark}} @endif @endforeach</textarea>
+
+
 
                                         <p class="text-danger">{{$errors->first('remark')}}</p>
                                     </div>
@@ -867,6 +870,78 @@
                                 <br><br>
                             </div>
                         @endforeach
+                    @endif
+                </div>
+
+                <div class="tab-pane" id="6">
+                    @if(isset($hotel))
+                    @if(!empty($h_room_types))
+                    @foreach($h_room_types as $h_room_type)
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <label for="name">{{trans('setup_hotelroomtype.name')}}</label>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <input type="text" class="form-control" {{-- id="name" --}} name="room_type_name"
+                                placeholder="{{trans('setup_hotelroomtype.place-name')}}" @if($h_room_type->hotel_id == $hotel->id) value="{{$h_room_type->name}}" @endif/>
+                                <p class="text-danger">{{$errors->first('name')}}</p>
+                            </div>
+                            </div>
+                            <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <label for="description">{{trans('setup_hotelroomtype.description')}}</label>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                @if($h_room_type->hotel_id == $hotel->id)
+                                    <textarea rows="5" cols="50" class="form-control" {{-- id="description" --}} name="room_type_description" placeholder="{{trans('setup_hotelroomtype.place-description')}}">{{$h_room_type->description}}</textarea>
+                               
+                                @endif
+                                
+                                <p class="text-danger">{{$errors->first('description')}}</p>
+                            </div>
+                        </div>
+                        @endforeach
+                    @else
+                       <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <label for="name">{{trans('setup_hotelroomtype.name')}}</label>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <input type="text" class="form-control" {{-- id="name" --}} name="room_type_name"
+                                placeholder="{{trans('setup_hotelroomtype.place-name')}}"/>
+                                <p class="text-danger">{{$errors->first('name')}}</p>
+                            </div>
+                            </div>
+                            <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <label for="description">{{trans('setup_hotelroomtype.description')}}</label>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <textarea rows="5" cols="50" class="form-control" {{-- id="description" --}} name="room_type_description" placeholder="{{trans('setup_hotelroomtype.place-description')}}"></textarea>
+                                <p class="text-danger">{{$errors->first('description')}}</p>
+                            </div>
+                        </div>  
+                    @endif
+                    @else
+                       <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <label for="name">{{trans('setup_hotelroomtype.name')}}</label>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <input type="text" class="form-control" {{-- id="name" --}} name="room_type_name"
+                                placeholder="{{trans('setup_hotelroomtype.place-name')}}"/>
+                                <p class="text-danger">{{$errors->first('name')}}</p>
+                            </div>
+                            </div>
+                            <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <label for="description">{{trans('setup_hotelroomtype.description')}}</label>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <textarea rows="5" cols="50" class="form-control" {{-- id="description" --}} name="room_type_description" placeholder="{{trans('setup_hotelroomtype.place-description')}}"></textarea>
+                                <p class="text-danger">{{$errors->first('description')}}</p>
+                            </div>
+                        </div> 
                     @endif
                 </div>
             </div>

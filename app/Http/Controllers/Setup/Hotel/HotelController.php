@@ -19,6 +19,8 @@ use App\Setup\HotelLandmark\HotelLandmarkRepository;
 use App\Setup\HotelNearby\HotelNearby;
 use App\Setup\HotelNearby\HotelNearbyRepository;
 use App\Setup\Hotel\Hotel;
+use App\Setup\HotelRoomType\HotelRoomType;
+use App\Setup\HotelRoomType\HotelRoomTypeRepository;
 use App\Setup\Landmark\Landmark;
 use App\Setup\Landmark\LandmarkRepository;
 use App\Setup\Township\TownshipRepository;
@@ -336,6 +338,12 @@ class HotelController extends Controller
         // dd($facility);
         //end getting hotel facility
 
+        //start getting hotel room type
+        $room_type_name = (Input::has('room_type_name'))? Input::get('room_type_name') : "";
+        $room_type_description = (Input::has('room_type_description'))? Input::get('room_type_description') : "";
+        // dd($room_type_name,$room_type_description);
+        //end getting hotel room type
+
         DB::beginTransaction();
         $userObj                        = new User();
         $userObj->user_name             = $user_name;
@@ -452,7 +460,20 @@ class HotelController extends Controller
                            }else{
                                $h_facility_result['aceplusStatusCode'] = ReturnMessage::OK;
                            }
+
+                           $hotel_room_type_result = array(); 
                            if($h_facility_result['aceplusStatusCode'] == ReturnMessage::OK){
+                            if($room_type_name != ""){
+                                $hotel_room_typeObj = new HotelRoomType();
+                                $hotel_room_typeObj->hotel_id = $paramObj->id;
+                                $hotel_room_typeObj->name = $room_type_name;
+                                $hotel_room_typeObj->description = $room_type_description;
+                                $hotel_room_typeRepo = new HotelRoomTypeRepository;
+                                $hotel_room_type_result = $hotel_room_typeRepo->create($hotel_room_typeObj);
+                            }else{
+                                $hotel_room_type_result['aceplusStatusCode'] = ReturnMessage::OK;
+                            }
+                            
                                DB::commit();
                                return redirect()->action('Setup\Hotel\HotelController@index')
                                    ->withMessage(FormatGenerator::message('Success', 'Hotel created ...'));
@@ -520,6 +541,9 @@ class HotelController extends Controller
             $facilityRepo       = new FacilitiesRepository();
             $facilities         = $facilityRepo->getObjsForHotel();
 
+            $hotel_room_typeRepo = new HotelRoomTypeRepository();
+            $hotel_room_types = $hotel_room_typeRepo->getObjs();
+
 
             $featureRepo= new FeatureRepository();
             $features   = $featureRepo->getObjs();
@@ -569,8 +593,13 @@ class HotelController extends Controller
                 $feature->feature_id = $h_feature;
 
             }
-    
 
+            
+            foreach($hotel_room_types as $hotel_room_type){
+                $h_room_types = DB::select("SELECT * FROM h_room_type WHERE hotel_id = '$h_id'");
+                $hotel_room_type->hotel_room_type_id = $h_room_types;
+                }
+    
             $admin_id = $hotel->admin_id;
             $userRepo = new UserRepository();
             $hotel_admin = $userRepo->getObjByID($admin_id);
@@ -585,6 +614,7 @@ class HotelController extends Controller
                 ->with('h_nearby_places',$h_nearby_places)
                 ->with('h_facility',$h_facility)
                 ->with('h_feature',$h_feature)
+                ->with('h_room_types',$h_room_types)
                 ->with('hotel_nearby',$hotel_nearby)
                 ->with('hotel_admin',$hotel_admin)
                 ->with('hotel_configs',$hotel_configs)
@@ -665,6 +695,7 @@ class HotelController extends Controller
         $tax                        = (Input::has('tax')) ? Input::get('tax') : "";
         //end getting hotel config info
         $hotel_config  =  $this->repo->getHConfigByID($id);
+        // dd($hotel_config);
         $hotel_config_count = count($hotel_config);
 
 
@@ -834,8 +865,15 @@ class HotelController extends Controller
             }
         }
         // dd($facility);
-    
         //end getting hotel facility
+        $room_type_name = (Input::has('room_type_name'))? Input::get('room_type_name') : "";
+        $room_type_description = (Input::has('room_type_description'))? Input::get('room_type_description') : "";
+        $hotel_room_type  =  $this->repo->getHotelRoomTypeByID($id);
+        // dd($hotel_room_type);
+        $hotel_room_type_count = count($hotel_room_type);
+        //getting hotel room type
+
+        //end getting hotel room type
         DB::beginTransaction();
         $hotel          = $this->repo->getObjByID($id);
         $admin_id       = $hotel->admin_id;
@@ -965,6 +1003,29 @@ class HotelController extends Controller
                             }
                             // dd($h_facility_result);
                             if($h_facility_result['aceplusStatusCode'] ==  ReturnMessage::OK){
+                                if($room_type_name != ""){
+                                    if(isset($hotel_room_type) && $hotel_room_type_count > 0){
+                                        $hotel_room_typeObj = $this->repo->getHotelRoomTypeByID($id);
+                                        $hotel_room_typeObj->hotel_id = $paramObj->id;
+                                        $hotel_room_typeObj->name  = $room_type_name;
+                                        $hotel_room_typeObj->description = $room_type_description;
+                                        $hotel_room_typeRepo = new HotelRoomTypeRepository;
+                                        $hotel_room_typeResult = $hotel_room_typeRepo->update($hotel_room_typeObj);
+
+                                    }else{
+                                        $hotel_room_typeObj = new HotelRoomType();
+                                        $hotel_room_typeObj->hotel_id =$paramObj->id;
+                                        $hotel_room_typeObj->name  = $room_type_name;
+                                        $hotel_room_typeObj->description = $room_type_description;
+                                        $hotel_room_typeRepo = new HotelRoomTypeRepository;
+                                        $hotel_room_typeResult = $hotel_room_typeRepo->create($hotel_room_typeObj);
+                                    }              
+                                }else{
+                                    $hotel_room_typeResult['aceplusStatusCode'] = ReturnMessage::OK;
+                                }
+                                  
+                            
+                                
                                 DB::commit();
                                 return redirect()->action('Setup\Hotel\HotelController@index')
                                     ->withMessage(FormatGenerator::message('Success', 'Hotel updated ...'));

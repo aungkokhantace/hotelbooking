@@ -283,17 +283,17 @@
                     <span>Room Management</span>
                 </a>
                 <ul class="sub-menu">
-                    <li nav-id="modifier-create" class="has-sub">
-                        <!-- <a href="javascript:;">
+                    {{-- <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Room Type</span>
-                        </a> -->
+                        </a>
                         <a href="/backend_mps/hotel_room_type">Room Type</a>
-                        <!-- <ul class="sub-menu">
+                        <ul class="sub-menu">
                             <li nav-id="modifier-create-modifier"><a href="/backend_mps/hotel_room_type/create">Entry</a></li>
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/hotel_room_type">List</a></li>
-                        </ul> -->
-                    </li>
+                        </ul>
+                    </li> --}}
                     <li nav-id="modifier-create" class="has-sub">
                         <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
