@@ -9,7 +9,7 @@
             <!-- end sidebar minify button -->
 
             {{--Only Admin and Super Admin Access--}}
-            @if (Auth::guard('User')->user()->role_id == 1)
+            @if (Auth::guard('User')->user()->role_id == 1 || Auth::guard('User')->user()->role_id == 2)
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
@@ -181,7 +181,7 @@
                     {{--</li>--}}
                 </ul>
             </li>
-
+            @endif
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
@@ -201,6 +201,7 @@
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/recommend_hotel/create">Set Recommend Hotel</a></li>
                         </ul> --}}
                     </li>
+                    @if (Auth::guard('User')->user()->role_id == 1 || Auth::guard('User')->user()->role_id == 2)
                     <li nav-id="modifier-create" class="has-sub">
                         <a href="/backend_mps/recommend_hotel/create">Set Recommend Hotel</a>
                     </li>
@@ -271,10 +272,11 @@
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/hotel_restaurant">List</a></li>
                         </ul> -->
                     </li>
+                    @endif
                 </ul>
             </li>
 
-            @endif
+            
 
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
@@ -305,7 +307,19 @@
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/hotel_room_category">List</a></li>
                         </ul> -->
                     </li>
-
+                    @if (Auth::guard('User')->user()->role_id == 1 || Auth::guard('User')->user()->role_id == 2)
+                    <li nav-id="modifier-create" class="has-sub">
+                        <!-- <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Room View</span>
+                        </a> -->
+                        <a href="/backend_mps/room_view">Room View</a>
+                        <!-- <ul class="sub-menu">
+                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/room_view/create">Entry</a></li>
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/room_view">List</a></li>
+                        </ul> -->
+                    </li>
+                    @endif
                     <li nav-id="modifier-create" class="has-sub">
                         <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
@@ -317,8 +331,8 @@
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/room">List</a></li>
                         </ul> -->
                     </li>
-
-                    @if (Auth::guard('User')->user()->role_id == 1)
+        
+                    @if (Auth::guard('User')->user()->role_id == 1 || Auth::guard('User')->user()->role_id == 2)
                     {{--<li nav-id="modifier-create" class="has-sub">
                         <a href="javascript:;">
                             <b class="caret pull-right"></b>
@@ -352,18 +366,7 @@
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/room_discount">List</a></li>
                         </ul> -->
                     </li>
-                    <li nav-id="modifier-create" class="has-sub">
-                        <!-- <a href="javascript:;">
-                            <b class="caret pull-right"></b>
-                            <span>Room View</span>
-                        </a> -->
-                        <a href="/backend_mps/room_view">Room View</a>
-                        <!-- <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/room_view/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/room_view">List</a></li>
-                        </ul> -->
-                    </li>
-                    @endif
+                @endif
                 </ul>
             </li>
 
@@ -398,87 +401,8 @@
                 </ul>
             </li>
 
-            @if (Auth::guard('User')->user()->role_id == 1)
-            {{--<li  nav-id='modifier' class="has-sub">--}}
-                {{--<a href="javascript:;">--}}
-                    {{--<b class="caret pull-right"></b>--}}
-                    {{--<i class="fa fa-users"></i>--}}
-                    {{--<span>Room Management</span>--}}
-                {{--</a>--}}
-                {{--<ul class="sub-menu">--}}
-                    {{--<li nav-id="modifier-create" class="has-sub">--}}
-                        {{--<a href="javascript:;">--}}
-                            {{--<b class="caret pull-right"></b>--}}
-                            {{--<span>Room Type</span>--}}
-                        {{--</a>--}}
-
-                        {{--<ul class="sub-menu">--}}
-                            {{--<li nav-id="modifier-create-modifier"><a href="/backend_mps/hotel_room_type/create">Entry</a></li>--}}
-                            {{--<li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/hotel_room_type">List</a></li>--}}
-                        {{--</ul>--}}
-                    {{--</li>--}}
-                    {{--<li nav-id="modifier-create" class="has-sub">--}}
-                        {{--<a href="javascript:;">--}}
-                            {{--<b class="caret pull-right"></b>--}}
-                            {{--<span>Hotel Room Category</span>--}}
-                        {{--</a>--}}
-
-                        {{--<ul class="sub-menu">--}}
-                            {{--<li nav-id="modifier-create-modifier"><a href="/backend_mps/hotel_room_category/create">Entry</a></li>--}}
-                            {{--<li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/hotel_room_category">List</a></li>--}}
-                        {{--</ul>--}}
-                    {{--</li>--}}
-
-                    {{--<li nav-id="modifier-create" class="has-sub">--}}
-                        {{--<a href="javascript:;">--}}
-                            {{--<b class="caret pull-right"></b>--}}
-                            {{--<span>Room</span>--}}
-                        {{--</a>--}}
-
-                        {{--<ul class="sub-menu">--}}
-                            {{--<li nav-id="modifier-create-modifier"><a href="/backend_mps/room/create">Entry</a></li>--}}
-                            {{--<li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/room">List</a></li>--}}
-                        {{--</ul>--}}
-                    {{--</li>--}}
-
-                    {{--@if (Auth::guard('User')->user()->role_id == 1)--}}
-                    {{--<li nav-id="modifier-create" class="has-sub">--}}
-                        {{--<a href="javascript:;">--}}
-                            {{--<b class="caret pull-right"></b>--}}
-                            {{--<span>Room Category Facilities</span>--}}
-                        {{--</a>--}}
-
-                        {{--<ul class="sub-menu">--}}
-                            {{--<li nav-id="modifier-create-modifier"><a href="/backend_mps/room_category_facility/create">Entry</a></li>--}}
-                            {{--<li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/room_category_facility">List</a></li>--}}
-                        {{--</ul>--}}
-                    {{--</li>--}}
-                    {{--<li nav-id="modifier-create" class="has-sub">--}}
-                        {{--<a href="javascript:;">--}}
-                            {{--<b class="caret pull-right"></b>--}}
-                            {{--<span>Room Category Amenities</span>--}}
-                        {{--</a>--}}
-
-                        {{--<ul class="sub-menu">--}}
-                            {{--<li nav-id="modifier-create-modifier"><a href="/backend_mps/room_category_amenity/create">Entry</a></li>--}}
-                            {{--<li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/room_category_amenity">List</a></li>--}}
-                        {{--</ul>--}}
-                    {{--</li>--}}
-                    {{--<li nav-id="modifier-create" class="has-sub">--}}
-                        {{--<a href="javascript:;">--}}
-                            {{--<b class="caret pull-right"></b>--}}
-                            {{--<span>Room Discount</span>--}}
-                        {{--</a>--}}
-
-                        {{--<ul class="sub-menu">--}}
-                            {{--<li nav-id="modifier-create-modifier"><a href="/backend_mps/room_discount/create">Entry</a></li>--}}
-                            {{--<li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/room_discount">List</a></li>--}}
-                        {{--</ul>--}}
-                    {{--</li>--}}
-                    {{--@endif--}}
-                {{--</ul>--}}
-            {{--</li>--}}
-
+            @if (Auth::guard('User')->user()->role_id == 1 || Auth::guard('User')->user()->role_id == 2)
+    
             <li nav-id="modifier-create" class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
@@ -561,7 +485,8 @@
 
                 </ul>
             </li>
-
+            @endif
+            @if (Auth::guard('User')->user()->role_id == 1)
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
@@ -612,7 +537,8 @@
                 </ul>
 
             </li>
-
+            @endif
+            @if (Auth::guard('User')->user()->role_id == 1 || Auth::guard('User')->user()->role_id == 2)
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
@@ -646,7 +572,8 @@
                     </li>
                 </ul>
             </li>
-
+            @endif
+            @if (Auth::guard('User')->user()->role_id == 1)
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>

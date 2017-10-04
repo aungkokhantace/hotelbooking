@@ -33,6 +33,7 @@ class RoomController extends Controller
     {
         if (Auth::guard('User')->check()) {
             //Get Loggin User Info
+           
             $user               = $this->repo->getUserObjs();
             $id                 = $user->id;
             $role               = $user->role_id;
@@ -42,8 +43,10 @@ class RoomController extends Controller
                 //Get Hotel ID
                 $hotelRepo          = new HotelRepository();
                 $hotels             = $hotelRepo->getHotelByUserEmail($email);
-                $hotel_id           = $hotels->id;
-                $rooms = $this->repo->getObjsByHotelId($hotel_id);
+                foreach($hotels as $hotel){
+                    $h_id = $hotel->id;
+                }
+                $rooms = $this->repo->getObjsByHotelId($h_id);
             } else {
                 $rooms = $this->repo->getObjs();
             }

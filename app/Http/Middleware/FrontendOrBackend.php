@@ -32,7 +32,6 @@ class FrontendOrBackend
         if(Check::validSession()){
             $currentPath= $request->route()->getName();
             $currentAction = str_replace(".","/",$currentPath);
-
             if (strpos($currentAction, 'backend_mps/') !== false) {
                 return $next($request);
             }

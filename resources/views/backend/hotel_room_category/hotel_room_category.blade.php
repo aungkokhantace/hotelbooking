@@ -78,23 +78,29 @@
                 @if(isset($hotel_room_category))
                     @if ($role == 3)
                     <select class="form-control" name="hotel_id" id="hotel_id">
-                        <option value="{{$hotels->id}}" selected>{{$hotels->name}}</option>
+                        @foreach($hotels as $hotel)
+                        <option value="{{$hotel->id}}" selected>{{$hotel->name}}</option>
+                        @endforeach
                         </select>
                     @else
                     <select class="form-control" name="hotel_id" id="hotel_id">
-                        @foreach($hotels as $hotel)
+                        {{-- @foreach($hotels as $hotel)
                             @if($hotel->id == $hotel_room_category->hotel_id)
+
                                 <option value="{{$hotel->id}}" selected>{{$hotel->name}}</option>
                             @else
                                 <option value="{{$hotel->id}}">{{$hotel->name}}</option>
                             @endif
-                        @endforeach
+                        @endforeach--}}
+                        <option value="{{$hotel_room_category->hotel_id}}" selected>{{$hotel_room_category->hotel->name}}</option>
                             </select>
                     @endif
                 @else
                     @if ($role == 3)
                     <select class="form-control" name="hotel_id" id="hotel_id">
-                        <option value="{{$hotels->id}}" selected>{{$hotels->name}}</option>
+                        @foreach($hotels as $hotel)
+                        <option value="{{$hotel->id}}" selected>{{$hotel->name}}</option>
+                        @endforeach
                         </select>
                     @else
                     @foreach($hotels as $hotel)

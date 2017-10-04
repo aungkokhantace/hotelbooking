@@ -27,7 +27,9 @@
             <select class="form-control" name="hotel_id" id="hotel_id">
                 @if(isset($room))
                     @if ($role == 3)
-                        <option value="{{$hotels->id}}" selected>{{$hotels->name}}</option>
+                        @foreach($hotels as $hotel)
+                            <option value="{{$hotel->id}}">{{$hotel->name}}</option>
+                        @endforeach
                     @else
                         @foreach($hotels as $hotel)
                             @if($hotel->id == $room->hotel_id)
@@ -39,7 +41,9 @@
                     @endif
                 @else
                     @if ($role == 3)
-                        <option value="{{$hotels->id}}">{{$hotels->name}}</option>
+                         @foreach($hotels as $hotel)
+                            <option value="{{$hotel->id}}">{{$hotel->name}}</option>
+                        @endforeach
                     @else
                         <option value="" disabled selected>
                             {{trans('setup_room.place-hotel')}}

@@ -300,6 +300,8 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>600,'module'=>'CSVImport','name'=>'Listing','description'=>'CSVImport Listing','url'=>'backend_mps/import'],
             ['id'=>601,'module'=>'CSVImport','name'=>'Store','description'=>'CSVImport Store','url'=>'backend_mps/import/store'],
 
+            //system_admin
+            ['id'=>602,'module'=>'SystemAdmin','name'=>'Dashboard','description'=>'System Admin Dashboard','url'=>'backend_mps/system_admin/dashboard'],
 
 
 

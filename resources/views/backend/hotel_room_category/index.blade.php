@@ -10,12 +10,21 @@
     <div class="row">
         @if(isset($all_hotels))
             <div class="col-md-2">
+                @if($role == 3)
                 <select class="form-control" name="hotel_id" id="hotel_id">
-                    <option value="All">All</option>
-                    @foreach($all_hotels as $all_hotel)
-                        <option value="{{$all_hotel->id}}"{{($hotel_id == $all_hotel->id)? 'selected' : ''}}>{{$all_hotel->name}}</option>
+                    @foreach($hotels as $hotel)
+                        <option value="{{$hotel->id}}"{{($hotel_id == $hotel->id)? 'selected' : ''}}>{{$hotel->name}}</option>
                     @endforeach
                 </select>
+                @else
+                <select class="form-control" name="hotel_id" id="hotel_id">
+                    <option value="All">All</option>
+                    @foreach($hotels as $hotel)
+                        <option value="{{$hotel->id}}"{{($hotel_id == $hotel->id)? 'selected' : ''}}>{{$hotel->name}}</option>
+                    @endforeach
+                </select>
+                @endif
+                
             </div>
             <div class="col-md-2">
                 <button type="button" onclick="filter_by_hotel_id('backend_mps/hotel_room_category');" class="form-control btn-primary">Filter</button>
@@ -105,12 +114,19 @@
                 <h4 class="modal-title" id="myModalLabel">Choose Hotel</h4>
             </div>
             <div class="modal-body">
+                @if( $role == 3)
                 <select class="form-control" name="all_hotel_id" id="all_hotel_id">
-                    <option value="" selected disabled>-- Select Hotel --</option>
-                    @foreach($all_hotels as $all_hotel)
-                        <option value="{{$all_hotel->id}}">{{$all_hotel->name}}</option>
+                    @foreach($hotels as $hotel)
+                        <option value="{{$hotel->id}}" selected>{{$hotel->name}}</option>
                     @endforeach
                 </select>
+                @else
+                <select class="form-control" name="all_hotel_id" id="all_hotel_id">
+                    @foreach($hotels as $hotel)
+                        <option value="{{$hotel->id}}">{{$hotel->name}}</option>
+                    @endforeach
+                </select>
+                @endif
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

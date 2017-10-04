@@ -450,6 +450,7 @@ Route::group(['middleware' => 'web'], function () {
 
             //Hotel Admin Group
             Route::get('hotel_admin/dashboard', array('as'=>'backend_mps/hotel_admin/dashboard', 'uses'=>'Setup\HotelAdmin\HotelDashboardController@dashboard'));
+            Route::get('system_admin/dashboard', array('as'=>'backend_mps/system_admin/dashboard', 'uses'=>'Setup\SystemAdmin\SystemAdminDashboardController@dashboard'));
 
             //Booking List
             Route::get('booking', array('as'=>'backend_mps/booking', 'uses'=>'Setup\HotelBooking\HotelBookingController@index'));

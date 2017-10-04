@@ -151,7 +151,7 @@ class UserController extends Controller
             if ($role->role_id == 1) {
                 return redirect('/backend_mps');
             } else if ($role->role_id == 2) {
-                return redirect('/backend_mps');
+                return redirect('/backend_mps/system_admin/dashboard');
             } else if ($role->role_id == 3) {
                 return redirect('/backend_mps/hotel_admin/dashboard');
             } else {

@@ -11,15 +11,19 @@
         <div class="col-md-10"></div>
         <div class="col-md-2">
             <div class="buttons pull-right">
+                @if($role != 3)
                 <button type="button" onclick='create_setup("hotel");' class="btn btn-default btn-md first_btn">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </button>
+                @endif
                 <button type="button" onclick='edit_setup("hotel");' class="btn btn-default btn-md second_btn">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </button>
+                 @if($role != 3)
                 <button type="button" onclick="delete_setup('hotel');" class="btn btn-default btn-md third_btn">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 </button>
+                 @endif
             </div>
         </div>
 

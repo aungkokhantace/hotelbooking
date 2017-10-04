@@ -16,6 +16,7 @@ use App\Setup\Landmark\Landmark;
 use App\Setup\HotelRoomType\HotelRoomType;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Auth;
 use App\User;
 use App\Setup\Hotel\Hotel;
 use App\Setup\Hnearby\Hnearby;
@@ -380,7 +381,7 @@ class HotelRepository implements HotelRepositoryInterface
     }
 
     public function getHotelByUserEmail($email) {
-        $objs   = Hotel::whereNull('deleted_at')->where('email',$email)->first();
+        $objs   = Hotel::whereNull('deleted_at')->where('email',$email)->get();
         return $objs;
     }
 
@@ -394,6 +395,11 @@ class HotelRepository implements HotelRepositoryInterface
         $obj = Hotel::whereNull('deleted_at')->where('admin_id',$admin_id)->first();
 
         return $obj;
+    }
+    public function getUserObjs() {
+        $id     = Auth::guard('User')->user()->id;
+        $objs   = User::select('id','email','role_id')->where('id',$id)->whereNull('deleted_at')->first();
+        return $objs;
     }
 }
 

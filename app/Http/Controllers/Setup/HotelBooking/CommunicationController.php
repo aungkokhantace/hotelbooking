@@ -47,8 +47,10 @@ class CommunicationController extends Controller
                 //Get Hotel ID
                 $hotelRepo             = new HotelRepository();
                 $hotels                = $hotelRepo->getHotelByUserEmail($email);
-                $hotel_id              = $hotels->id;
-                $bookings              = $this->repo->getCommunicationByHotelId($hotel_id,$id_arr);
+                foreach($hotels as $hotel){
+                    $h_id = $hotel->id;
+                }
+                $bookings              = $this->repo->getCommunicationByHotelId($h_id,$id_arr);
             } else {
                 $bookings              = $this->repo->getCommunicationBooking($id_arr);
             }

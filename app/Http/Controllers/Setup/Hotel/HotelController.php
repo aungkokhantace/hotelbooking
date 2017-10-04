@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Setup\Hotel;
 
+use App\Core\Check;
 use App\Core\User\UserRepository;
 use App\Core\Utility;
 use App\Setup\City\CityRepository;
@@ -53,8 +54,22 @@ class HotelController extends Controller
     public function index(Request $request)
     {
         if (Auth::guard('User')->check()) {
+        
+            //Get Loggin User Info
+            $user               = $this->repo->getUserObjs();
+            $id                 = $user->id;
+            $role               = $user->role_id;
+            $email              = $user->email;
 
-            $hotels = $this->repo->getObjs();
+            if ($role == 3) {
+                //Get Hotel ID
+                $hotels             = $this->repo->getHotelByUserEmail($email);
+                // dd($hotels);
+            } else {
+                 $hotels = $this->repo->getObjs();
+            }
+
+            // $hotels = $this->repo->getObjs();
 
             foreach($hotels as $hotel){
                 if($hotel->h_type_id == 1){
@@ -74,7 +89,7 @@ class HotelController extends Controller
                 }
             }
 
-            return view('backend.hotel.index')->with('hotels',$hotels);
+            return view('backend.hotel.index')->with('hotels',$hotels)->with('role',$role);
         }
         return redirect('/');
 
@@ -84,6 +99,7 @@ class HotelController extends Controller
     public function create()
     {
         if(Auth::guard('User')->check()){
+            
             $countryRepo = new CountryRepository();
             $countries = $countryRepo->getObjs();
 
@@ -666,7 +682,8 @@ class HotelController extends Controller
         //End Saving Image
 
         $star                   = (Input::has('star')) ? Input::get('star') : "";
-        $email                  = (Input::has('email')) ? Input::get('email') : "";
+        // $email                  = (Input::has('email')) ? Input::get('email') : "";
+        // dd($email);
         $country_id             = (Input::has('country_id')) ? Input::get('country_id') : "";
         $city_id                = (Input::has('city_id')) ? Input::get('city_id') : "";
         $township_id            = (Input::has('township_id')) ? Input::get('township_id') : "";
@@ -907,7 +924,7 @@ class HotelController extends Controller
         }
 
         $paramObj->star                     = $star;
-        $paramObj->email                    = $email;
+        $paramObj->email                    = $user_email;
         $paramObj->country_id               = $country_id;
         $paramObj->city_id                  = $city_id;
         $paramObj->township_id              = $township_id;

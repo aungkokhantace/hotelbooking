@@ -52,10 +52,13 @@ class HotelRoomCategoryController extends Controller
             if ($role == 3) {
                 //Get Hotel ID
                 $hotels             = $hotelRepo->getHotelByUserEmail($email);
-                $h_id               = $hotels->id;
+                foreach($hotels as $hotel){
+                    $h_id = $hotel->id;
+                }
                 $hotel_room_category = $this->repo->getRoomCategoriesByHotelId($h_id);
             } else {
                 $hotel_room_category = $this->repo->getRoomCategories($hotel_id);
+                $hotels = $hotelRepo->getObjs();
             }
 
             $all_hotels = $hotelRepo->getObjs();
@@ -64,6 +67,7 @@ class HotelRoomCategoryController extends Controller
                 ->with('hotel_room_category',$hotel_room_category)
                 ->with('role',$role)
                 ->with('all_hotels',$all_hotels)
+                 ->with('hotels',$hotels)
                 ->with('hotel_id',$hotel_id);
         }
         return redirect('/');
@@ -72,19 +76,22 @@ class HotelRoomCategoryController extends Controller
     public function search($hotel_id = null){
         if (Auth::guard('User')->check()) {
             //Get Loggin User Info
-            $id                 = $user->id;
             $user               = $this->repo->getUserObjs();
+            $id                 = $user->id;
             $role               = $user->role_id;
             $email              = $user->email;
             $hotelRepo          = new HotelRepository();
             if ($role == 3) {
                 //Get Hotel ID
                 $hotels             = $hotelRepo->getHotelByUserEmail($email);
-                $h_id               = $hotels->id;
+                foreach($hotels as $hotel){
+                    $h_id = $hotel->id;
+                }
                 $hotel_room_category = $this->repo->getRoomCategoriesByHotelId($h_id);
             } else {
 
                 $hotel_room_category = $this->repo->getRoomCategories($hotel_id);
+                $hotels = $hotelRepo->getObjs();
 
             }
 
@@ -94,6 +101,7 @@ class HotelRoomCategoryController extends Controller
                 ->with('hotel_room_category',$hotel_room_category)
                 ->with('role',$role)
                 ->with('all_hotels',$all_hotels)
+                ->with('hotels',$hotels)
                 ->with('hotel_id',$hotel_id);
         }
         return redirect('/');
@@ -110,6 +118,7 @@ class HotelRoomCategoryController extends Controller
             $hotelRepo          = new HotelRepository();
             if ($role == 3) {
                 $hotels         = $hotelRepo->getHotelByUserEmail($email);
+                // dd($hotels);
             } else {
                 $hotels         = $hotelRepo->getObjs();
             }
@@ -325,7 +334,9 @@ class HotelRoomCategoryController extends Controller
 
             if ($role == 3){
                 $hotels             = $hotelRepo->getHotelByUserEmail($email);
-                $h_id               = $hotels->id;
+                foreach($hotels as $hotel){
+                    $h_id = $hotel->id;
+                }
                 $checkPermission    = $this->repo->checkHasPermission($id,$h_id);
                 if ($checkPermission == false) {
                     return redirect('unauthorize');
