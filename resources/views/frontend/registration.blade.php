@@ -135,7 +135,7 @@
                     $.ajax({
                         url: '/register',
                         type: 'POST',
-                        data: serializedData,
+                        data: serializedData, 
                         success: function(data){
                             if(data.aceplusStatusCode == '200'){
                                 /*location.reload(true);*/

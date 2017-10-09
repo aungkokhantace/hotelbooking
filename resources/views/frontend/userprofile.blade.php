@@ -84,7 +84,7 @@
                                 <label for="submit" class="col-sm-2 col-form-labels"></label>
                                 <div class="col-sm-10">
                                     <button type="submit" class="btn profile-btn-default1">UPDATE</button>
-                                    <button type="submit" class="btn profile-btn-default2">CANCEL</button>
+                                    <button type="button" onclick="cancel_profile()" class="btn profile-btn-default2">CANCEL</button>
                                 </div>
                             </div>
                         {!! Form::close() !!}

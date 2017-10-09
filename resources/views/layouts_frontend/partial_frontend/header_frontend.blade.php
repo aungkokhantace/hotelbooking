@@ -83,6 +83,8 @@ $companyLogo    = \App\Core\Check::companyLogo();
     <!-- for select box with search function -->
     <script src="/assets/js/select2.min.js"></script>
 
+    <script src="/assets/js/crud.js"></script>
+
 </head>
 
 <body>

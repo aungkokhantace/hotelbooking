@@ -591,7 +591,7 @@
                                     @if(!empty($h_configs))
                                     @foreach($h_configs as $h_config)
                                             <input type="text" class="form-control" id="breakfast_fees" name="breakfast_fees"
-                                                   placeholder="{{trans('setup_hotelconfig.place-breakfast-fees')}}" @if($h_config->hotel_id == $hotel->id) value="{{$h_config->breakfast_fees}}"@endif/>
+                                                   placeholder="{{trans('setup_hotelconfig.place-breakfast-fees')}}" @if($h_config->hotel_id == $hotel->id) value="{{number_format($h_config->breakfast_fees,2)}}"@endif/>
                                             <p class="text-danger">{{$errors->first('breakfast_fees')}}</p>
                                     @endforeach
                                         @else

@@ -174,7 +174,8 @@ class SearchController extends Controller
         $townshipIdArr = array_unique($townshipIdArr);  //remove duplicate indexes
         $townshipIdArr = array_values($townshipIdArr); //re-index array after using array_unique function
 
-        $suggestedHotels= $hotelRepo->getSuggestedHotelsByDestination($hotelIdArr,$countryIdArr,$cityIdArr,$townshipIdArr); //get suggested hotels
+        $suggestedHotels= $hotelRepo->getSuggestedHotelsByDestination($hotelIdArr,$countryIdArr,$cityIdArr,$townshipIdArr);
+        // dd($suggestedHotels); //get suggested hotels
 
         foreach($suggestedHotels  as $sugg_hotel){
             $minRoomCategoryPrice = $hRoomCategoryRepo->getMinPriceByHotelId($sugg_hotel->id);

@@ -83,15 +83,15 @@
                         <div class="col-10">
                             <div class="col-3">
                                 <label for="street-number" class="control-label">Room</label>
-                                <input type="number" id="room" class="floatLabel form-control" name="room">
+                                <input type="number" id="room" class="floatLabel form-control" min="1" name="room">
                             </div>
                             <div class="col-3">
                                 <label class="control-label" for="check_out">Adults</label>
-                                <input type="number" id="adults" class="floatLabel form-control" name="adults">
+                                <input type="number" id="adults" class="floatLabel form-control" min="1" name="adults">
                             </div>
                             <div class="col-3">
                                 <label class="control-label" for="check_out">Children</label>
-                                <input type="number" id="children" class="floatLabel form-control" name="children">
+                                <input type="number" id="children" class="floatLabel form-control" min="1" name="children">
                             </div>
                         </div>
                     </div>

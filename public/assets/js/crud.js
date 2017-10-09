@@ -78,6 +78,10 @@ function cancel_setup(type) {
     window.location.href = '/backend_mps/' + type;
 }
 
+function cancel_profile(){
+    history.go(-1);
+}
+
 $("#check_all").click(function(event){
     if(this.checked) {
         $('.check_source').each(function() { //loop through each checkbox

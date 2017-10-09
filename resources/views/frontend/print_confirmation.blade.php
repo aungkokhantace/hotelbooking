@@ -106,7 +106,7 @@
             </td>
             <td width="40%" align="right" style="border-top: 2px solid grey;border-bottom: 2px solid grey;">
                 <span style="font-size:14pt;font-weight: bold;">
-                    <i>MMK</i> {{number_format($booking->total_payable_amt,2)}}
+                    <i>USD</i> {{number_format($booking->total_payable_amt,2)}}
                 </span>
             </td>
         </tr>
@@ -147,8 +147,8 @@
             <td colspan="4" width="100%" style="border-top: 2px solid black;">
                 <b>Cancellation Cost:</b><br>
                 until {{$booking->free_cancel_date}}[Yangon]: <b>Free cancellation </b><br>
-                from {{$booking->first_cancel_date}}[Yangon] : MMK {{number_format($booking->total_payable_amt/2,2)}} (50%)<br>
-                from {{$booking->second_cancel_date}}[Yangon] : MMK {{number_format($booking->total_payable_amt,2)}} (100%)
+                from {{$booking->first_cancel_date}}[Yangon] : USD {{number_format($booking->total_payable_amt/2,2)}} (50%)<br>
+                from {{$booking->second_cancel_date}}[Yangon] : USD {{number_format($booking->total_payable_amt,2)}} (100%)
             </td>
         </tr>
     </table>
