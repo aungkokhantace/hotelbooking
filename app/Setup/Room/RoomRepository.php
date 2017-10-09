@@ -238,7 +238,8 @@ class RoomRepository implements RoomRepositoryInterface
         //get rooms that are within available_period and not within black_out period and not booked
         $result = Room::whereNull('rooms.deleted_at')
             ->leftjoin('r_available_period', 'r_available_period.room_id', '=', 'rooms.id')
-            ->where('h_room_category_id',$r_category_id)
+//            ->where('h_room_category_id',$r_category_id)
+            ->whereIn('h_room_category_id',$r_category_id)
             ->where('r_available_period.from_date','<=',$newCheckIn)
             ->where('r_available_period.to_date','>=',$newCheckOut)
             ->whereNotIn('rooms.id', $blackout_arr)

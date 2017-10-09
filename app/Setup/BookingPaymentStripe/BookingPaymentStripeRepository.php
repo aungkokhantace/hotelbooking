@@ -87,4 +87,10 @@ class BookingPaymentStripeRepository implements BookingPaymentStripeRepositoryIn
 
         return $result;
     }
+
+    public function getStripePaymentIdByBookingId($booking_id){
+        $result = BookingPaymentStripe::where('booking_id',$booking_id)->first();
+
+        return $result;
+    }
 }

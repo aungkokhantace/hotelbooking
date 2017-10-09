@@ -19,14 +19,15 @@
                 @else
                     <td width="80%">{{$totalRooms}} room</td>
                 @endif
-
+                <td>{{session('total_amount_wo_discount').' '.$currency}}</td>
 {{--
                 <td>{{session('total_amount_wo_discount').' '.$currency}}</td>
                        <td>{{session('total_payable_amount_wo_extrabed')}} MMK</td>--}}   </tr>
+            <tr></tr>
 
             <tr>
                 <td width="80%">Discount</td>
-                <td>{{session('total_discount_amount').' '.$currency}}</td>
+                <td>{{'-'.session('total_discount_amount').' '.$currency}}</td>
             </tr>
 
             <tr>

@@ -113,12 +113,16 @@
                         <td>6</td>
                     </tr>
                     <tr>
-                        <td>Refund by Customer</td>
+                        <td>Refund by Customer(Cancel within first cancellation days)</td>
                         <td>7</td>
                     </tr>
                     <tr>
                         <td>Refund by Admin</td>
                         <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>Cancel within second cancellation days</td>
+                        <td>9</td>
                     </tr>
                 </table>
             </div>
@@ -141,6 +145,10 @@
                     <tr>
                         <td>Refund</td>
                         <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>Cancel</td>
+                        <td>4</td>
                     </tr>
                 </table>
             </div>

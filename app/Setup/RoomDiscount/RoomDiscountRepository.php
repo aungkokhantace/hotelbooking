@@ -197,4 +197,14 @@ class RoomDiscountRepository implements RoomDiscountRepositoryInterface
                     ->first();
         return $result;
     }
+
+    public function getRoomCategoryDiscount($id,$date){
+        $result     = RoomDiscount::whereNull('deleted_at')
+                                  ->where('h_room_category_id',$id)
+                                  ->where('from_date','<=',$date)
+                                  ->where('to_date','>=',$date)
+                                  ->first();
+
+        return $result;
+    }
 }

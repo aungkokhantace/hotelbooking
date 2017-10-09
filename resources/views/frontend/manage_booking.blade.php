@@ -107,7 +107,7 @@
                                                         {{$booking->total_day}} night, {{$booking->room_count}} room
                                                     </strong>
                                                 </li>
-                                                <li class="text_fa"><h4>{{$currency.' '.number_format($booking->total_payable_amt,2)}}</h4></li>
+                                                <li class="text_fa"><h4>{{$currency.' '.$booking->total_payable_amt}}</h4></li>
                                             </ul>
                                         </td>
                                         <td class="manageform_right">

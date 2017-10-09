@@ -131,7 +131,9 @@ class PaymentUtility
             $stripeObj = array();
             $stripeObj['stripe_user_id'] = $customerId;
             $stripeObj['stripe_payment_id'] = $charge->id;
-            $stripeObj['stripe_payment_amt'] = $amount;
+//            $stripeObj['stripe_payment_amt'] = $amount;
+            $stripeObj['stripe_payment_amt'] = $charge->amount/100;
+            $stripeObj['stripe_balance_transaction'] = $charge->balance_transaction;
 
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
             $returnedObj['stripe'] = $stripeObj;
@@ -225,6 +227,46 @@ class PaymentUtility
 
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
             $returnedObj['stripe'] = $stripeObj;
+            return $returnedObj;
+        }
+        catch(\Exception $e){
+            //create error log
+            $date    = date("Y-m-d H:i:s");
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a Payment and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            LogCustom::create($date,$message);
+
+            $returnedObj['aceplusStatusMessage'] = $e->getMessage();
+            return $returnedObj;
+        }
+
+    }
+
+    public function retrieveBalance($transactionId){
+        $returnedObj                                    = array();
+        $returnedObj['aceplusStatusCode']               = ReturnMessage::INTERNAL_SERVER_ERROR;
+//        $currentUser = Utility::getCurrentUserID(); //get currently logged in user
+        $currentUser                                    = Utility::getCurrentCustomerID();
+
+        try {
+            $paymentCurrency                            = PaymentConstance::STIRPE_CURRENCY;
+            $tempStripeObj                              = $this->createPaymentObj();
+            if($tempStripeObj['aceplusStatusCode'] != ReturnMessage::OK){
+                throw new Exception('Error with payment token !!!!');
+            }
+
+            // Retrieve stripe balance info.
+            $balance                                    = \Stripe\BalanceTransaction::retrieve($transactionId);
+
+            $stripeObj                                  = array();
+            $stripeObj['stripe_balance_transaction']    = $balance->id;
+            $stripeObj['stripe_payment_id']             = $balance->source;
+            $stripeObj['stripe_payment_amt']            = $balance->amount/100;
+            $stripeObj['stripe_payment_fee']            = $balance->fee/100;
+            $stripeObj['stripe_payment_net']            = $balance->net/100;
+
+
+            $returnedObj['aceplusStatusCode']           = ReturnMessage::OK;
+            $returnedObj['stripe']                      = $stripeObj;
             return $returnedObj;
         }
         catch(\Exception $e){
