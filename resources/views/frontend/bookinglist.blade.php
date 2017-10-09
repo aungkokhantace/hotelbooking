@@ -60,7 +60,7 @@
                                                         
                                                         <div class="listing_tableright pull-right">
                                                             <h4>status-{{$booking->status_txt}}</h4>
-                                                            <h3>{{$currency.' '.number_format($booking->total_payable_amt)}}</h3>
+                                                            <h3>{{$currency.' '.$booking->total_payable_amt}}</h3>
                                                         </div>
                                                         <h4>{{$booking->hotel->name}}</h4>
                                                         <p>&nbsp;</p>

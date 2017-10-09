@@ -59,21 +59,27 @@ use Stripe\Stripe;
 
 class PaymentController extends Controller
 {
+    private $stripe_fee_percent;
+    private $stripe_fee_cents;
 
     public function __construct() {
-
+        /* Stripe transaction fee is 2.9%+30 cents */
+        $this->stripe_fee_percent     = 0.029; //2.9%
+        $this->stripe_fee_cents       = 0.3;  //30 cents
     }
 
     public function enterDetails(Request $request){
+        /* Check request method is post or get */
         if($request->isMethod('POST')){
-            
+            /* Get hidden booked room category id */
             $available_room_categories                  = Input::get('available_room_categories');
 
-            $number_array = array();
+            /* Merge Room Category Id and number of booked room.*/
+            $number_array                               = array();
             foreach($available_room_categories as $available_room_category){
                 $number_array[$available_room_category] = Input::get('number_'.$available_room_category);
             }
-            
+
             //if method is post, add available_room_categories and number_array in session
             Session::put('available_room_categories',$available_room_categories);
             Session::put('number_array',$number_array);
@@ -84,34 +90,36 @@ class PaymentController extends Controller
             $available_room_categories                  = Session::get('available_room_categories');
             $number_array                               = Session::get('number_array');
         }
-    
+
+        /* Get room category objects By room category id */
         $roomCategoryRepo                               = new HotelRoomCategoryRepository();
         $available_room_category_array                  = array();
+
         foreach($available_room_categories as $available){
             $room_category      = $roomCategoryRepo->getObjByID($available);
-
             if(isset($number_array[$available]) && $number_array[$available] != "" && $number_array[$available] != 0){
                 $room_category->number = $number_array[$available];
                 array_push($available_room_category_array,$room_category);
             }
         }
-        
-        $hotel_id           = $available_room_category_array[0]->hotel_id;
 
-        $hotelRepo          = new HotelRepository();
-        $hotel              = $hotelRepo->getObjByID($hotel_id);
+        /* Get hotel data by hotel id of booked room category */
+        $hotel_id               = $available_room_category_array[0]->hotel_id;
+        $hotelRepo              = new HotelRepository();
+        $hotel                  = $hotelRepo->getObjByID($hotel_id);
 
-        $check_in           = session('check_in');
-        $check_out          = session('check_out');
+        $check_in               = session('check_in');
+        $check_out              = session('check_out');
 
-        //calculate the number of night stay
-        $difference = strtotime($check_out) - strtotime($check_in);
-        $nights     = floor($difference/(60*60*24));
+        /* Calculate the number of night stay */
+        $difference             = strtotime($check_out) - strtotime($check_in);
+        $nights                 = floor($difference/(60*60*24));
 
+        /* Get facilities of hotel */
         $hotelFacilitiesRepo    = new HotelFacilityRepository();
         $hotelFacilities        = $hotelFacilitiesRepo->getHotelFacilitiesByHotelID($hotel_id);
 
-        //calculate total number of rooms
+        /* Calculate total number of rooms */
         $totalRooms = 0;
         foreach($number_array as $room_category_id=>$number_of_room){
             if($number_of_room > 0){
@@ -119,100 +127,94 @@ class PaymentController extends Controller
             }
         }
 
-        $roomDiscountRepo = new RoomDiscountRepository();
+        $roomDiscountRepo                       = new RoomDiscountRepository();
 
-        //calculate total amount
-//        $total_amount = 0.0;
-        $total_amount_wo_discount = 0.0;
-        $total_amount_w_discount = 0.0;
+        /* Calculate total amount */
+        $total_amount_wo_discount               = 0.0;
+        $total_amount_w_discount                = 0.0;
 
-        $discount_array = array();
+        $discount_array                         = array();
 
         foreach($number_array as $room_category_id=>$number_of_room){
             if($number_of_room > 0){
-                $room_category = $roomCategoryRepo->getObjByID($room_category_id);
-//                $amount_per_category = $room_category->price * $number_of_room * $nights;
-                $amount_per_category_wo_discount = $room_category->price * $number_of_room * $nights;
-                $amount_per_category_w_discount  = $amount_per_category_wo_discount;
+                /* Get room category object and it's properties. */
+                $room_category                      = $roomCategoryRepo->getObjByID($room_category_id);
+                // Price for one room
+                $room_category_price                = $room_category->price;
+                // Amount of all reserved rooms without discount amount.
+                $amount_per_category_wo_discount    = $room_category->price* $number_of_room;
+                // Amount of all reserved rooms with discount amount.
+                $amount_per_category_w_discount     = $amount_per_category_wo_discount;
+                $reserved_date                      = date('Y-m-d', strtotime($check_in));
 
-                //start checking discount for each room_category
-                //get room discount by room_category_id
-                $room_discount = $roomDiscountRepo->getDiscountByRoomCategory($room_category_id);
+                /* Start checking discount for each room_category */
+                for($i=1;$i<=$nights;$i++){
+                    /*
+                     * Get room discount by room category id and reserved date.
+                     * If room discount is null, there's no discount.
+                     * If not, need to calculate for each reserved date.
+                     */
+                    $room_discount                      = $roomDiscountRepo->getRoomCategoryDiscount($room_category_id,$reserved_date);
 
-                //initialize discount_percent and discount_amt
-                $discount_percent = 0;
-                $discount_amt = 0.00;
+                    /* Initialize or reset discount_percent and discount_amt */
+                    $discount_percent                   = 0.00;
+                    $discount_amt                       = 0.00;
 
-                if(isset($room_discount) && count($room_discount)>0){
-                    if(isset($room_discount->discount_percent) && $room_discount->discount_percent != 0){
-                        $discount_percent = $room_discount->discount_percent;
+                    if(isset($room_discount) && count($room_discount)>0){
+                        /*
+                         * If discount is defined by percent, change percent to amount for each room.
+                         * If discount is defined by amount, get discount amount for each room.
+                         */
+                        if(isset($room_discount->discount_percent) && $room_discount->discount_percent != 0){
+                            $discount_percent           = $room_discount->discount_percent;
+                            $discount_amt               = round(($discount_percent / 100) * $room_category_price,2);
+                        }
+                        if(($room_discount->discount_amount) && $room_discount->discount_amount != 0){
+                            $discount_amt               = $room_discount->discount_amount;
+                            $discount_percent           = round(($discount_amt/$room_category_price)*100,2);
+                        }
+                        /*
+                         * Calculate amount with discount for all reserved room per category.
+                         * Subtract discount amount of all reserved room per category from the amount of all reserved rooms
+                         * without discount amount.
+                         * And create discount amount array.
+                         */
+
+                        $amount_per_category_w_discount = $amount_per_category_wo_discount-($discount_amt*$number_of_room);
+                        array_push($discount_array,$discount_amt*$number_of_room);
                     }
-                    elseif(($room_discount->discount_amount) && $room_discount->discount_amount != 0){
-                        $discount_amt = $room_discount->discount_amount;
-                    }
+                    // Total amount of all reserved rooms without discount amount.
+                    $total_amount_wo_discount          += $amount_per_category_wo_discount;
+                    // Total amount of all reserved rooms with discount.
+                    $total_amount_w_discount           += $amount_per_category_w_discount;
+                    // next reserved date
+                    $reserved_date                      = date("Y-m-d", strtotime("1 day", strtotime($reserved_date)));
                 }
-
-                //if there is discount_percent, change to amount and add to discount_array
-                if($discount_percent != 0){
-                    $discount_amount_per_category = ($discount_percent / 100) * $amount_per_category_wo_discount;
-                    $amount_per_category_w_discount = $amount_per_category_wo_discount - $discount_amount_per_category;
-                    array_push($discount_array,$discount_amount_per_category);
-                }
-                //else if there is discount_amt, add to discount_array
-                elseif($discount_amt != 0.00){
-                    $amount_per_category_w_discount = $amount_per_category_wo_discount - $discount_amt;
-                    array_push($discount_array,$discount_amt);
-                }
-                //end checking discount for each room_category
-
-//                $total_amount += $amount_per_category;
-                $total_amount_wo_discount += $amount_per_category_wo_discount;
-                $total_amount_w_discount += $amount_per_category_w_discount;
             }
         }
-
-        $total_discount_amount = 0.00;
-        //calculate total discount amount
+        /* Calculate total discount amount */
+        $total_discount_amount                  = 0.00;
         foreach($discount_array as $disc){
-            $total_discount_amount += $disc;
+            $total_discount_amount             += $disc;
         }
-
-        /*if(isset($available_room_category_array) && count($available_room_category_array) > 0){
-            //get first index of available room categories
-            $first_category = array_slice($available_room_category_array,0,1)[0];
-        }
-        else{
-            $first_category = null;
-        }
-
-        if(count($available_room_category_array) > 1){
-            $available_room_category_array = array_slice($available_room_category_array,1);
-        } */
-
-//        $tax = 0.0;
-//        $hotelConfigRepo = new HotelConfigRepository();
-//        $hotel_config = $hotelConfigRepo->getConfigByHotel($hotel_id);
-//        if(isset($hotel_config) && count($hotel_config) > 0){
-//            $tax = $hotel_config->tax;
-//        }
 
         //get hotel_service_tax if exists, else, get service_tax from core_configs
-        $service_tax        = Utility::getServiceTax($hotel_id);
-        $service_tax_amount = ($service_tax / 100) * $total_amount_w_discount;
+        $service_tax                            = Utility::getServiceTax($hotel_id);
+        $service_tax_amount                     = round(($service_tax / 100) * $total_amount_w_discount,2);
 
         //get government tax
-        $gov_tax_temp = DB::select("SELECT * FROM core_configs WHERE `code` = 'GST'");
+        $gov_tax_temp                           = DB::select("SELECT * FROM core_configs WHERE `code` = 'GST'");
         if(isset($gov_tax_temp) && count($gov_tax_temp)>0){
-            $gov_tax = $gov_tax_temp[0]->value;
+            $gov_tax                            = number_format((float)$gov_tax_temp[0]->value,2);
         }
         else{
-            $gov_tax = 0.0;
+            $gov_tax                            = 0.00;
         }
 
-        $gov_tax_amount = ($gov_tax / 100) * $total_amount_w_discount;
+        $gov_tax_amount                         = round(($gov_tax / 100) * $total_amount_w_discount,2);
+        $payable_amount                         = $total_amount_w_discount + $service_tax_amount + $gov_tax_amount;
 
-        $payable_amount = $total_amount_w_discount + $service_tax_amount + $gov_tax_amount;
-
+        /* Start deleting Session */
         Session::forget('total_amount');
         Session::forget('total_amount_wo_discount');
         Session::forget('total_amount_w_discount');
@@ -230,6 +232,9 @@ class PaymentController extends Controller
 
         Session::forget('total_discount_amount');
 
+        /* End deleting Session */
+
+        /* Calculate total amount without extra bed price or with extra bed price */
         $total_payable_amount_wo_extrabed = 0.00;
         $total_payable_amount_wo_extrabed = $total_amount_w_discount;
 
@@ -402,15 +407,30 @@ class PaymentController extends Controller
             Session::put('email',$email);
         }
 
-        $guest_array    = array();
-        $smoking_array  = array();
-        $name_array     = array();
-        $email_array    = array();
-        $extrabed_array = array();
-        $extrabed_fee_array = array();
+        $guest_array            = array();
+        $smoking_array          = array();
+        $name_array             = array();
+        $email_array            = array();
+        $extrabed_array         = array();
+        $extrabed_fee_array     = array();
+        $room_no_extra_array    = array();
+        $category_extra_array   = array();
+
+        /* Get check_in and check_out date from session */
+        $check_in               = session('check_in');
+        $check_out              = session('check_out');
+
+        /* Calculate the number of night stay */
+        $difference             = strtotime($check_out) - strtotime($check_in);
+        $nights                 = floor($difference/(60*60*24));
+        $total_extrabed_fee     = 0.00;
 
         if(isset($available_room_categories) && count($available_room_categories)){
             foreach($available_room_categories as $category){
+                /*
+                 * Delete some session.
+                 * Get guest information for each room that exist in the same category.
+                 */
                 if(isset($category->number) && $category->number !=0 && $category->number != ""){
                     for($i=0;$i<$category->number;$i++){
                         //for guest array
@@ -436,8 +456,17 @@ class PaymentController extends Controller
                         //if extrabed value is yes, store extrabed fee in extrabed_fee_array()
                         if($temp_extrabed == "yes"){
                             array_push($extrabed_fee_array,$category->extra_bed_price);
+                            /* Calculate total extra bed price */
+                            $extra_bed_price                    = $category->extra_bed_price*$nights;
+                            $total_extrabed_fee                += $extra_bed_price;
                         }
 
+                        /* Create array for extra bed info. Key is room no and Value is extra bed info array. */
+                        $temp_room_extra_array['room_no']       = $i;
+                        $temp_room_extra_array['add_extra']     = $temp_extrabed;
+                        $temp_room_extra_array['extra_price']   = $category->extra_bed_price;
+                        $temp_room_extra_array['category_id']   = $category->id;
+                        $room_no_extra_array[$i+1]              = $temp_room_extra_array;
 
                         //for first name array
                         Session::forget($category->id."_".($i+1)."_firstname");  //forget old session
@@ -461,7 +490,14 @@ class PaymentController extends Controller
                         session([$category->id."_".($i+1)."_email" => $temp_email]);
                     }
                 }
+                /* Create array using category id as key.Merge with array using room no as key. */
+                $category_extra_array[$category->id]      = $room_no_extra_array;
+                $temp_room_extra_array                      = array(); // Reset temp array.
             }
+        }
+
+        if(isset($total_extrabed_fee)){
+            session(['total_extrabed_fee' => $total_extrabed_fee]);
         }
 
         if(isset($booking_taxi)){
@@ -506,34 +542,19 @@ class PaymentController extends Controller
             session(['special_request' => $special_request]);
         }
 
-        $hotelRepo          = new HotelRepository();
-        $hotel              = $hotelRepo->getObjByID($hotel_id);
-
-        $check_in           = session('check_in');
-        $check_out          = session('check_out');
-
-        //calculate the number of night stay
-        $difference = strtotime($check_out) - strtotime($check_in);
-        $nights     = floor($difference/(60*60*24));
+        $hotelRepo              = new HotelRepository();
+        $hotel                  = $hotelRepo->getObjByID($hotel_id);
 
         $hotelFacilitiesRepo    = new HotelFacilityRepository();
         $hotelFacilities        = $hotelFacilitiesRepo->getHotelFacilitiesByHotelID($hotel_id);
 
-        //calculate total number of rooms
-        $totalRooms = 0;
+        /* Calculate total number of rooms */
+        $totalRooms             = 0;
         foreach($available_room_categories as $available_category){
             if($available_category->number > 0){
-                $totalRooms += $available_category->number;
+                $totalRooms    += $available_category->number;
             }
         }
-
-        //calculate total extrabed fees
-        $total_extrabed_fee = 0.0;
-        foreach($extrabed_fee_array as $extrabed_fee){
-            $total_extrabed_fee += $extrabed_fee;
-        }
-        //save in session
-        session(['total_extrabed_fee' => $total_extrabed_fee]);
 
         //calculate total amount
 //        $total_amount = 0.0;
@@ -550,38 +571,27 @@ class PaymentController extends Controller
         //save in session
 //        session(['total_amount' => $total_amount]);
 
-        //calculate total payable amount including extrabed
-        $total_payable_amount_w_extrabed = 0.00;
-        $total_payable_amount_wo_extrabed = 0.00;
-//        $total_payable_amount_wo_extrabed = $total_amount;
-//        $total_payable_amount_wo_extrabed = session('total_payable_amount_wo_extrabed');
-        $total_amount_w_discount = session('total_amount_w_discount');
+        /* Calculate total payable amount including extra bed fee */
+        $total_payable_amount_w_extrabed    = 0.00;
+        $total_payable_amount_wo_extrabed   = 0.00;
+        $total_amount_w_discount            = session('total_amount_w_discount');
 
-        $total_payable_amount_w_extrabed = $total_amount_w_discount + $total_extrabed_fee;
-
-//        $tax = 0.0;
-//        $hotelConfigRepo = new HotelConfigRepository();
-//        $hotel_config = $hotelConfigRepo->getConfigByHotel($hotel_id);
-//        if(isset($hotel_config) && count($hotel_config) > 0){
-//            $tax = $hotel_config->tax;
-//        }
-//        $tax_amount = ($tax / 100) * $total_payable_amount_w_extrabed;
-//        $payable_amount = $total_payable_amount_w_extrabed + $tax_amount;
+        $total_payable_amount_w_extrabed    = $total_amount_w_discount + $total_extrabed_fee;
 
         //get hotel_service_tax if exists, else, get service_tax from core_configs
-        $service_tax = Utility::getServiceTax($hotel_id);
+        $service_tax                        = Utility::getServiceTax($hotel_id);
 //        $service_tax_amount = ($service_tax / 100) * $total_amount;
-        $service_tax_amount = ($service_tax / 100) * $total_payable_amount_w_extrabed;
+        $service_tax_amount                 = round(($service_tax / 100) * $total_payable_amount_w_extrabed,2);
 
         //get government tax
         $gov_tax_temp = DB::select("SELECT * FROM core_configs WHERE `code` = 'GST'");
         if(isset($gov_tax_temp) && count($gov_tax_temp)>0){
-            $gov_tax = $gov_tax_temp[0]->value;
+            $gov_tax = number_format((float)$gov_tax_temp[0]->value,2);
         }
         else{
             $gov_tax = 0.0;
         }
-        $gov_tax_amount = ($gov_tax / 100) * $total_payable_amount_w_extrabed;
+        $gov_tax_amount = round(($gov_tax / 100) * $total_payable_amount_w_extrabed,2);
 
         //calculate payable amount
 //        $payable_amount = $total_amount + $service_tax_amount + $gov_tax_amount;
@@ -638,99 +648,121 @@ class PaymentController extends Controller
 
     public function bookAndPay() {
         //get input fields
-        $country                = Input::get('country');
-        $phone                  = Input::get('phone');
+        $country                            = Input::get('country');
+        $phone                              = Input::get('phone');
        
         //get session data
-        $hotel_id               = session('hotel_id');
-        $hotelRepo              = new HotelRepository();
-        $hotel                  = $hotelRepo->getObjByID($hotel_id);
+        $hotel_id                           = session('hotel_id');
+        $hotelRepo                          = new HotelRepository();
+        $hotel                              = $hotelRepo->getObjByID($hotel_id);
         //Generate Booking Number
-        $booking_number         = Utility::generateBookingNumber();
+        $booking_number                     = Utility::generateBookingNumber();
 
-        $user_id                = session('customer')['id'];
+        $user_id                            = session('customer')['id'];
 
-        $check_in_date_session  = session('check_in');
-        $check_out_date_session = session('check_out');
+        $check_in_date_session              = session('check_in');
+        $check_out_date_session             = session('check_out');
 
         //change date formats to store in DB
-        $check_in_date          = date('Y-m-d', strtotime($check_in_date_session));
-        $check_out_date         = date('Y-m-d', strtotime($check_out_date_session));
+        $check_in_date                      = date('Y-m-d', strtotime($check_in_date_session));
+        $check_out_date                     = date('Y-m-d', strtotime($check_out_date_session));
 
         //Get check_in, check_out time of hotel
-        $check_in_time          = $hotel->check_in_time;
-        $check_out_time         = $hotel->check_out_time;
+        $check_in_time                      = $hotel->check_in_time;
+        $check_out_time                     = $hotel->check_out_time;
 
         //Get Tax,Discount, and payable amount from session.
-        $total_payable_amount_w_extrabed  = session('total_payable_amount_w_extrabed');
-        $total_payable_amount_wo_extrabed = session('total_payable_amount_wo_extrabed');
-        $payable_amount                   = session('payable_amount');
+        $total_payable_amount_w_extrabed    = session('total_payable_amount_w_extrabed');
+        $total_payable_amount_wo_extrabed   = session('total_payable_amount_wo_extrabed');
+        $payable_amount                     = session('payable_amount');
 
-        $gov_tax_amount                   = session('gov_tax_amount');
-        $gov_tax                          = session('gov_tax');
-        $service_tax_amount               = session('service_tax_amount');
-        $service_tax                      = session('service_tax');
+        $gov_tax_amount                     = session('gov_tax_amount');
+        $gov_tax                            = session('gov_tax');
+        $service_tax_amount                 = session('service_tax_amount');
+        $service_tax                        = session('service_tax');
 
-        $total_discount_amount            = session('total_discount_amount');
+        $total_discount_amount              = session('total_discount_amount');
 
-        $travel_for_work                  = session('travel_for_work');
+        $travel_for_work                    = session('travel_for_work');
 
-        $first_cancellation_day_count     = 0;
-        $second_cancellation_day_count    = 0;
+        $first_cancellation_day_count       = 0;
+        $second_cancellation_day_count      = 0;
 
-        //start checking cancellation dates
-        $hotelConfigRepo                  = new HotelConfigRepository();
-        $h_config                         = $hotelConfigRepo->getConfigByHotel($hotel_id);
+        /* Declare Repository */
+        $roomDiscountRepo                   = new RoomDiscountRepository();
+
+        /* Start checking cancellation dates */
+        // Get cancellation day from hotel config
+        $hotelConfigRepo                    = new HotelConfigRepository();
+        $h_config                           = $hotelConfigRepo->getConfigByHotel($hotel_id);
         if(isset($h_config) && count($h_config)>0){
             $first_cancellation_day_count   = $h_config->first_cancellation_day_count;
             $second_cancellation_day_count  = $h_config->second_cancellation_day_count;
         }
 
-        //calculate the day to be charged by subtracting first_cancellation_date
-        $today_date  = date("Y-m-d");   //today's date
-//        $check_in_date = $booking_result['object']->check_in_date;
+        // Calculate the day to be charged by subtracting first_cancellation_date
+        $today_date                         = date("Y-m-d");   //today's date
 
-        $date = strtotime(date("Y-m-d", strtotime($check_in_date)) . "-".$first_cancellation_day_count."days");
+        $date                               = strtotime(date("Y-m-d", strtotime($check_in_date)) . "-".
+                                              $first_cancellation_day_count."days");
+
         //date to be charged //after subtracting 1st cancellation date
-        $charge_date = date("Y-m-d",$date); //re-format the date
-        //end checking cancellation dates
+        $charge_date                        = date("Y-m-d",$date); //re-format the date
 
-        //Compare today date with charge_date and if today is greater than charge_date(i.e. today is within first cancellation day), charge the customer
+        /* End checking cancellation dates */
+
+        /* Compare today date with charge_date and if today is greater than charge_date
+        (i.e. today is within first cancellation day or second cancellation day), charge the customer */
         if($today_date >= $charge_date){
-            $status = 5; //today is within cancellation date and so, user will be charged immediately and booking_status will be "complete"
+            $status                         = 5;
+            //today is within cancellation date and so, user will be charged immediately and booking_status will be "complete"
         }
         else{
-            $status = 2; //booking_status = "confirm"
+            $status                         = 2;
+            //booking_status = "confirm"
         }
 
         try{
+            /* Start Calculation for stripe */
+            $total_stripe_fee_percent                       = round($payable_amount*$this->stripe_fee_percent,2);
+            $stripe_fee_default_cent                        = $this->stripe_fee_cents;
+            $total_stripe_fee_amt                           = $total_stripe_fee_percent+$stripe_fee_default_cent;
+            $total_cancel_income                            = 0.00;
+            $total_stripe_net_amt                           = round($payable_amount-$total_stripe_fee_amt,2);
+            $total_vendor_net_amt                           = $total_stripe_net_amt;
+            /* End Calculation for stripe */
+
             DB::beginTransaction();
+            $bookingObj                                     = new Booking();
+            $bookingObj->booking_no                         = $booking_number;
+            $bookingObj->user_id                            = $user_id;
+            $bookingObj->status                             = $status;
+            $bookingObj->check_in_date                      = $check_in_date;
+            $bookingObj->check_out_date                     = $check_out_date;
+            $bookingObj->check_in_time                      = $check_in_time;
+            $bookingObj->check_out_time                     = $check_out_time;
+            $bookingObj->price_wo_tax                       = $total_payable_amount_w_extrabed;
+            $bookingObj->price_w_tax                        = $payable_amount;
+            $bookingObj->total_government_tax_amt           = $gov_tax_amount;
+            $bookingObj->total_government_tax_percentage    = $gov_tax;
+            $bookingObj->total_service_tax_amt              = $service_tax_amount;
+            $bookingObj->total_service_tax_percentage       = $service_tax;
+            $bookingObj->total_payable_amt                  = $payable_amount;
+            $bookingObj->total_discount_amt                 = $total_discount_amount;
+            $bookingObj->total_discount_percentage          = 0;
+            $bookingObj->total_cancel_income                = $total_cancel_income;
+            $bookingObj->total_stripe_fee_percent           = $total_stripe_fee_percent;
+            $bookingObj->stripe_fee_default_cent            = $stripe_fee_default_cent;
+            $bookingObj->total_stripe_fee_amt               = $total_stripe_fee_amt;
+            $bookingObj->total_stripe_net_amt               = $total_stripe_net_amt;
+            $bookingObj->total_vendor_net_amt               = $total_vendor_net_amt;
+            $bookingObj->hotel_id                           = $hotel_id;
+            $bookingObj->travel_for_work                    = $travel_for_work;
+            $bookingObj->country_id                         = $country;
+            $bookingObj->phone                              = $phone;
 
-            $bookingObj = new Booking();
-            $bookingObj->booking_no = $booking_number;
-            $bookingObj->user_id = $user_id;
-            $bookingObj->status = $status;
-            $bookingObj->check_in_date = $check_in_date;
-            $bookingObj->check_out_date = $check_out_date;
-            $bookingObj->check_in_time = $check_in_time;
-            $bookingObj->check_out_time = $check_out_time;
-            $bookingObj->price_wo_tax = $total_payable_amount_w_extrabed;
-            $bookingObj->price_w_tax = $payable_amount;
-            $bookingObj->total_government_tax_amt = $gov_tax_amount;
-            $bookingObj->total_government_tax_percentage = $gov_tax;
-            $bookingObj->total_service_tax_amt = $service_tax_amount;
-            $bookingObj->total_service_tax_percentage = $service_tax;
-            $bookingObj->total_payable_amt = $payable_amount;
-            $bookingObj->total_discount_amt = $total_discount_amount;
-            $bookingObj->total_discount_percentage = 0;
-            $bookingObj->hotel_id = $hotel_id;
-            $bookingObj->travel_for_work = $travel_for_work;
-            $bookingObj->country_id = $country;
-            $bookingObj->phone      = $phone;
-
-            $bookingRepo = new BookingRepository();
-            $booking_result = $bookingRepo->create($bookingObj);
-
+            $bookingRepo                                    = new BookingRepository();
+            $booking_result                                 = $bookingRepo->create($bookingObj);
             //if booking creation fails, alert and redirect to homepage
             if ($booking_result['aceplusStatusCode'] != ReturnMessage::OK){
                 DB::rollback();
@@ -738,269 +770,262 @@ class PaymentController extends Controller
                 return redirect('/');
             }
             //if booking creation was successful, start booking room creation
-            else {
-    //            $room_array = array();
-                $available_room_categories = session('available_room_categories');
-                $roomRepo = New RoomRepository();
+//            $room_array = array();
+            $available_room_categories  = session('available_room_categories');
+            $roomRepo                   = new RoomRepository();
+            /* START Operation for Booking Room */
+            $cat_id_arr                 = array();
 
-                foreach ($available_room_categories as $r_category) {
-                    //get available rooms for each room category
-                    $rooms = $roomRepo->getRoomArrayByRoomCategoryId($r_category->id, $check_in_date_session, $check_out_date_session);
+            foreach($available_room_categories as $category){
+                array_push($cat_id_arr,$category->id);
+            }
 
-                    //get only required number of rooms from available rooms
-                    $booked_rooms = array_slice($rooms, 0, $r_category->number);
+            $rooms                      = $roomRepo->getRoomArrayByRoomCategoryId($cat_id_arr, $check_in_date_session, $check_out_date_session);
+            $booked_rooms               = array();
+            foreach($available_room_categories as $catKey=>$catValue){
+                $room_count             = 1;
 
-                    foreach ($booked_rooms as $key => $booked_room) {
-                        $booking_id = $booking_result["object"]->id;
-                        $room_id = $booked_room['id'];
-//                        $room_status = 2; //confirm
-                        if($today_date >= $charge_date){
-                            $room_status = 5; //today is within cancellation date and so, user will be charged immediately and room_status will be "complete"
-                        }
-                        else{
-                            $room_status = 2; //booking_status = "confirm"
-                        }
-
-                        $remark = "";
-                        $added_extra_bed = 0;
-                        $extra_bed_price = 0.0;
-
-                        //get username for each room from session
-//                        $user_name = session($r_category->id . '_' . ($key + 1) . '_name');
-                        $user_firstname = session($r_category->id . '_' . ($key + 1) . '_firstname');
-                        $user_lastname = session($r_category->id . '_' . ($key + 1) . '_lastname');
-                        $user_email = session($r_category->id . '_' . ($key + 1) . '_email');
-                        $guest_count = session($r_category->id . '_' . ($key + 1) . '_guest');
-                        $smoking_session = session($r_category->id . '_' . ($key + 1) . '_smoking');
-                        $extrabed_session = session($r_category->id . '_' . ($key + 1) . '_extrabed');
-
-                        if ($smoking_session == "yes") {
-                            $smoking = 1;
-                        } else {
-                            $smoking = 0;
-                        }
-
-                        if ($extrabed_session == "yes") {
-                            $added_extra_bed = 1;
-                        } else {
-                            $added_extra_bed = 0;
-                        }
-
-                        if($added_extra_bed == 1){
-                            $extra_bed_price = $r_category->extra_bed_price;
-                        }
-
-                        //calculate the number of night stay
-                        $difference = strtotime($check_out_date) - strtotime($check_in_date);
-                        $nights     = floor($difference/(60*60*24));
-
-                        $room_price = $r_category->price;
-
-                        $room_price_total = $room_price * $nights;
-
-                        //start checking discount for each room
-                        //get room discount by room_category_id
-                        $roomDiscountRepo = new RoomDiscountRepository();
-                        $room_discount = $roomDiscountRepo->getDiscountByRoomCategory($r_category->id);
-
-                        //initialize discount_percent and discount_amt
-                        $discount_percent = 0;
-                        $discount_amt = 0.00;
-
-                        //final discount amount
-                        $discount_amount = 0.00;
-
-                        if(isset($room_discount) && count($room_discount)>0){
-                            if(isset($room_discount->discount_percent) && $room_discount->discount_percent != 0){
-                                $discount_percent = $room_discount->discount_percent;
-                            }
-                            elseif(($room_discount->discount_amount) && $room_discount->discount_amount != 0){
-                                $discount_amt = $room_discount->discount_amount;
-                            }
-                        }
-
-                        //if there is discount_percent, change to amount and add to discount_array
-                        if($discount_percent != 0){
-                            $discount_amount = ($discount_percent / 100) * $room_price_total;
-                        }
-                        //else if there is discount_amt, add to discount_array
-                        elseif($discount_amt != 0.00){
-                            $discount_amount = $discount_amt;
-                        }
-                        //end checking discount for each room
-
-                        $room_payable_amount = $room_price_total - $discount_amount + $extra_bed_price;
-
-
-                        //create booking room obj
-                        $bookingRoomObj = new BookingRoom();
-                        $bookingRoomObj->booking_id = $booking_id;
-                        $bookingRoomObj->user_id = $user_id;
-                        $bookingRoomObj->room_id = $room_id;
-                        $bookingRoomObj->hotel_id = $hotel_id;
-                        $bookingRoomObj->status = $room_status;
-                        $bookingRoomObj->check_in_date = $check_in_date;
-                        $bookingRoomObj->check_out_date = $check_out_date;
-                        $bookingRoomObj->check_in_time = $check_in_time;
-                        $bookingRoomObj->check_out_time = $check_out_time;
-                        $bookingRoomObj->remark = $remark;
-                        $bookingRoomObj->number_of_night = $nights;
-                        $bookingRoomObj->room_price_per_night = $r_category->price;
-                        $bookingRoomObj->discount_amt = $discount_amount;
-                        $bookingRoomObj->room_payable_amt = $room_payable_amount;
-                        $bookingRoomObj->added_extra_bed = $added_extra_bed;
-                        $bookingRoomObj->extra_bed_price = $extra_bed_price;
-                        $bookingRoomObj->user_first_name = $user_firstname;
-                        $bookingRoomObj->user_last_name = $user_lastname;
-                        $bookingRoomObj->user_email = $user_email;
-                        $bookingRoomObj->guest_count = $guest_count;
-                        $bookingRoomObj->smoking = $smoking;
-
-                        $bookingRoomRepo = new BookingRoomRepository();
-                        $booking_room_result = $bookingRoomRepo->create($bookingRoomObj);
-
-                        //if booking room creation fails, alert and redirect to homepage
-                        if ($booking_room_result['aceplusStatusCode'] != ReturnMessage::OK){
-                            DB::rollback();
-                            alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
-                            return redirect('/');
-                        }
+                foreach($rooms as $roomKey=>$room){
+                    if($catValue->id == $room['h_room_category_id'] && $room_count <= $catValue->number){
+                        $room['room_price']     = $catValue->price;
+                        $room['first_name']     = session($catValue->id. '_' . $room_count . '_firstname');
+                        $room['last_name']      = session($catValue->id. '_' . $room_count . '_lastname');
+                        $room['email']          = session($catValue->id. '_' . $room_count . '_email');
+                        $room['guest']          = session($catValue->id. '_' . $room_count . '_guest');
+                        $smoking_session        = session($catValue->id. '_' . $room_count . '_smoking');
+                        $extrabed_session       = session($catValue->id. '_' . $room_count . '_extrabed');
+                        $room['smoking']        = isset($smoking_session) && $smoking_session == "yes"?1:0;
+                        $added_extra_bed        = isset($extrabed_session)&& $extrabed_session == "yes"?1:0;
+                        $room['extra_bed']      = $added_extra_bed;
+                        $room['extra_bed_price']= isset($added_extra_bed) && $added_extra_bed == 1?$catValue->extra_bed_price:0.00;
+                        array_push($booked_rooms,$room);
+                        $room_count++;
                     }
                 }
             }
 
-            //if booking creation fails, alert and redirect to homepage
-            if ($booking_result['aceplusStatusCode'] != ReturnMessage::OK){
-                DB::rollback();
-                alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
-                return redirect('/');
-            }
-            //if booking creation was successful, start booking request creation
-            else {
-                $booking_id = $booking_result["object"]->id;
-                $non_smoking_request = session('non_smoking_request');
-                $late_check_in_request = session('late_check_in_request');
-                $early_check_in_request = session('early_check_in_request');
-                $high_floor_request = session('high_floor_request');
-                $large_bed_request = session('large_bed_request');
-                $twin_bed_request = session('twin_bed_request');
-                $quiet_room_request = session('quiet_room_request');
-                $baby_cot_request = session('baby_cot_request');
-                $airport_transfer_request = session('airport_transfer_request');
-                $private_parking_request = session('private_parking_request');
-                $special_request = session('special_request');
-                $booking_taxi = session('booking_taxi');
-                $booking_tour_guide = session('booking_tour_guide');
+            /* Calculate the number of night stay */
+            $difference                         = strtotime($check_out_date) - strtotime($check_in_date);
+            $nights                             = floor($difference/(60*60*24));
+            $discount_array                     = array();
+//            $reserved_date                      = $check_in_date;
+            foreach($booked_rooms as $b_roomKey=>$b_roomValue){
+                $category_id                    = $b_roomValue['h_room_category_id'];
+                $booking_id                     = $booking_result["object"]->id;
+                $room_id                        = $b_roomValue['id'];
+                $room_status                    = $today_date >= $charge_date?5:2;
+                $room_price                     = $b_roomValue['room_price'];
+                $room_extra_bed_price           = $b_roomValue['extra_bed_price'];
+                $remark                         = "";
+//                $added_extra_bed                = 0;
+//                $extra_bed_price                = 0.0;
+                $discount_amt_per_room          = 0.00;
+                $total_room_extra_price         = 0.00;
+                $reserved_date                  = $check_in_date;
 
-                $bookingRequestObj = new BookingRequest();
-                $bookingRequestObj->booking_id = $booking_id;
-                $bookingRequestObj->non_smoking_room = $non_smoking_request;
-                $bookingRequestObj->late_check_in = $late_check_in_request;
-                $bookingRequestObj->early_check_in = $early_check_in_request;
-                $bookingRequestObj->high_floor_room = $high_floor_request;
-                $bookingRequestObj->large_bed = $large_bed_request;
-                $bookingRequestObj->twin_bed = $twin_bed_request;
-                $bookingRequestObj->quiet_room = $quiet_room_request;
-                $bookingRequestObj->baby_cot = $baby_cot_request;
-                $bookingRequestObj->airport_transfer = $airport_transfer_request;
-                $bookingRequestObj->private_parking = $private_parking_request;
-//                $bookingRequestObj->special_request = $special_request;
-                $bookingRequestObj->special_request = "";  //special request is not stored in BookingRequest anymore
-                $bookingRequestObj->booking_taxi = $booking_taxi;
-                $bookingRequestObj->booking_tour_guide = $booking_tour_guide;
+                /* Start checking discount for each room */
+                for($i=1;$i<=$nights;$i++){
+                    /*
+                     * Get room discount by room category id and reserved date.
+                     * If room discount is null, there's no discount.
+                     * If not, need to calculate for each reserved date.
+                     */
+                    $room_discount              = $roomDiscountRepo->getRoomCategoryDiscount($category_id,$reserved_date);
+                    $discount_percent           = 0.00;
+                    $discount_amt               = 0.00;
 
-                $bookingRequestRepo = new BookingRequestRepository();
-                $booking_request_result = $bookingRequestRepo->create($bookingRequestObj);
+                    if(isset($room_discount) && count($room_discount)>0){
+                        /*
+                         * If discount is defined by percent, change percent to amount for each room.
+                         * If discount is defined by amount, get discount amount for each room.
+                         */
+                        if(isset($room_discount->discount_percent) && $room_discount->discount_percent != 0){
+                            $discount_percent           = $room_discount->discount_percent;
+                            $discount_amt               = round(($discount_percent / 100) * $room_price,2);
+                        }
+                        if(($room_discount->discount_amount) && $room_discount->discount_amount != 0){
+                            $discount_amt               = $room_discount->discount_amount;
+                            $discount_percent           = round(($discount_amt/$room_price)*100,2);
+                        }
+                        $discount_amt_per_room         += $discount_amt;
+                    }
+                    /* Calculate extra bed price for all reserved day(night) */
+                    $total_room_extra_price            += $room_extra_bed_price;
+                    // next reserved date
+                    $reserved_date                      = date("Y-m-d", strtotime("1 day", strtotime($reserved_date)));
+                }
 
-                //if booking request creation fails, alert and redirect to homepage
-                if ($booking_request_result['aceplusStatusCode'] != ReturnMessage::OK){
+                /* End checking discount for each room */
+
+                $price_for_all_nights                       = $room_price*$nights;
+                $room_payable_amount_wo_tax                 = ($price_for_all_nights-$discount_amt_per_room)+$total_room_extra_price;
+                $gst_amt                                    = round(($gov_tax / 100) * $room_payable_amount_wo_tax,2);
+                $service_amt                                = round(($service_tax / 100) * $room_payable_amount_wo_tax,2);
+                $room_payable_amount_w_tax                  = $room_payable_amount_wo_tax+$gst_amt+$service_amt;
+                $room_stripe_fee_amt                        = round($room_payable_amount_w_tax*$this->stripe_fee_percent,2);
+                $room_net_amt                               = $room_payable_amount_w_tax-$room_stripe_fee_amt;
+
+                /* Start creating booking room */
+                $bookingRoomObj                             = new BookingRoom();
+                $bookingRoomObj->booking_id                 = $booking_id;
+                $bookingRoomObj->user_id                    = $user_id;
+                $bookingRoomObj->room_id                    = $room_id;
+                $bookingRoomObj->hotel_id                   = $hotel_id;
+                $bookingRoomObj->status                     = $room_status;
+                $bookingRoomObj->check_in_date              = $check_in_date;
+                $bookingRoomObj->check_out_date             = $check_out_date;
+                $bookingRoomObj->check_in_time              = $check_in_time;
+                $bookingRoomObj->check_out_time             = $check_out_time;
+                $bookingRoomObj->remark                     = $remark;
+                $bookingRoomObj->number_of_night            = $nights;
+                $bookingRoomObj->room_price_per_night       = $b_roomValue['room_price'];
+                $bookingRoomObj->discount_amt               = $discount_amt_per_room;
+                $bookingRoomObj->room_payable_amt_wo_tax    = $room_payable_amount_wo_tax;
+                $bookingRoomObj->government_tax_amt         = $gst_amt;
+                $bookingRoomObj->service_tax_amt            = $service_amt;
+                $bookingRoomObj->room_payable_amt_w_tax     = $room_payable_amount_w_tax;
+                $bookingRoomObj->stripe_fee_percent         = $room_stripe_fee_amt;
+                $bookingRoomObj->room_net_amt               = $room_net_amt;
+                $bookingRoomObj->added_extra_bed            = $b_roomValue['extra_bed'];
+                $bookingRoomObj->extra_bed_price            = $b_roomValue['extra_bed_price'];
+                $bookingRoomObj->user_first_name            = $b_roomValue['first_name'];
+                $bookingRoomObj->user_last_name             = $b_roomValue['last_name'];
+                $bookingRoomObj->user_email                 = $b_roomValue['email'];
+                $bookingRoomObj->guest_count                = $b_roomValue['guest'];
+                $bookingRoomObj->smoking                    = $b_roomValue['smoking'];
+                $bookingRoomObj->refund_amt                 = 0.00;
+                $bookingRoomObj->room_payable_amt_wo_tax_af = 0.00;
+                $bookingRoomObj->government_tax_amt_af      = 0.00;
+                $bookingRoomObj->service_tax_amt_af         = 0.00;
+                $bookingRoomObj->room_payable_amt_w_tax_af  = 0.00;
+                $bookingRoomObj->stripe_fee_percent_af      = 0.00;
+                $bookingRoomObj->room_net_amt_af            = 0.00;
+                $bookingRoomRepo                            = new BookingRoomRepository();
+                $booking_room_result                        = $bookingRoomRepo->create($bookingRoomObj);
+                //if booking room creation fails, alert and redirect to homepage
+                if ($booking_room_result['aceplusStatusCode'] != ReturnMessage::OK){
                     DB::rollback();
                     alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
                     return redirect('/');
                 }
-                else{
-                    $communicationObj = new Communication(); //for booking_special_request table
-                    $communicationObj->booking_id = $booking_id;
-                    $order = Communication::whereNull('deleted_at')->max('order'); //get max order from current table
-                    if($order == null){
-                        $communicationObj->order = 1;
-                    }
-                    else{
-                        $communicationObj->order = $order + 1;
-                    }
-                    $communicationObj->special_request = $special_request;
-                    $communicationObj->type = 2;  //type 1 is admin, 2 is user
+                /* End creating booking room */
 
-                    $communicationRepo = new CommunicationRepository();
-                    $communication_result = $communicationRepo->createForFrontend($communicationObj);
-
-                    //if communication creation fails, alert and redirect to homepage
-                    if ($communication_result['aceplusStatusCode'] != ReturnMessage::OK){
-                        DB::rollback();
-                        alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
-                        return redirect('/');
-                    }
-                }
             }
-            //Start Stripe Payment Section
-            /*    //Set your secret key: remember to change this to your live secret key in production
-                //See your keys here: https://dashboard.stripe.com/account/apikeys
-            Stripe::setApiKey("sk_test_pfDJKF6zoTRgCuHdPptjcgQX");
+            /* END Operation for Booking Room*/
 
-            // Token is created using Stripe.js or Checkout!
-            // Get the payment token submitted by the form:
-            $token = $_POST['stripeToken'];
-            $email = $_POST['stripeEmail'];
+            /* START Operation for Booking Request */
+            $booking_id                             = $booking_result["object"]->id;
+            $non_smoking_request                    = session('non_smoking_request');
+            $late_check_in_request                  = session('late_check_in_request');
+            $early_check_in_request                 = session('early_check_in_request');
+            $high_floor_request                     = session('high_floor_request');
+            $large_bed_request                      = session('large_bed_request');
+            $twin_bed_request                       = session('twin_bed_request');
+            $quiet_room_request                     = session('quiet_room_request');
+            $baby_cot_request                       = session('baby_cot_request');
+            $airport_transfer_request               = session('airport_transfer_request');
+            $private_parking_request                = session('private_parking_request');
+            $special_request                        = session('special_request');
+            $booking_taxi                           = session('booking_taxi');
+            $booking_tour_guide                     = session('booking_tour_guide');
 
+            $bookingRequestObj                      = new BookingRequest();
+            $bookingRequestObj->booking_id          = $booking_id;
+            $bookingRequestObj->non_smoking_room    = $non_smoking_request;
+            $bookingRequestObj->late_check_in       = $late_check_in_request;
+            $bookingRequestObj->early_check_in      = $early_check_in_request;
+            $bookingRequestObj->high_floor_room     = $high_floor_request;
+            $bookingRequestObj->large_bed           = $large_bed_request;
+            $bookingRequestObj->twin_bed            = $twin_bed_request;
+            $bookingRequestObj->quiet_room          = $quiet_room_request;
+            $bookingRequestObj->baby_cot            = $baby_cot_request;
+            $bookingRequestObj->airport_transfer    = $airport_transfer_request;
+            $bookingRequestObj->private_parking     = $private_parking_request;
+            $bookingRequestObj->special_request     = "";  //special request is not stored in BookingRequest anymore
+            $bookingRequestObj->booking_taxi        = $booking_taxi;
+            $bookingRequestObj->booking_tour_guide  = $booking_tour_guide;
 
-            $total_amount = session('total_amount');
-//            $tax = session('tax');
-//            $tax_amount = session('tax_amount');
-            $payable_amount = session('payable_amount');
+            $bookingRequestRepo                     = new BookingRequestRepository();
+            $booking_request_result                 = $bookingRequestRepo->create($bookingRequestObj);
+            if ($booking_request_result['aceplusStatusCode'] != ReturnMessage::OK){
+                DB::rollback();
+                alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                return redirect('/');
+            }
+            /* END Operation for Booking Request */
 
-            // Create a Customer:
-            $customer = Customer::create(array(
-                "email" => $email,
-                "source" => $token,
-            ));
+            /* START Operation for communication */
+            $communicationObj                       = new Communication(); //for booking_special_request table
+            $communicationObj->booking_id           = $booking_id;
+            //get max order from current table
+            $order                                  = Communication::whereNull('deleted_at')->max('order');
+            if($order == null){
+                $communicationObj->order            = 1;
+            }
+            else{
+                $communicationObj->order            = $order + 1;
+            }
+            $communicationObj->special_request      = $special_request;
+            $communicationObj->type                 = 2;  //type 1 is admin, 2 is user
 
-            $customer_id = $customer['id']; */
+            $communicationRepo                      = new CommunicationRepository();
+            $communication_result                   = $communicationRepo->createForFrontend($communicationObj);
+            //if communication creation fails, alert and redirect to homepage
+            if ($communication_result['aceplusStatusCode'] != ReturnMessage::OK){
+                DB::rollback();
+                alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                return redirect('/');
+            }
+            /* END Operation for communication */
 
-            $email = $_POST['stripeEmail'];
-
+            /* START Operation for stripe */
+            //Get email from stripe checkout form
+            $email                                  = $_POST['stripeEmail'];
             //create a customer
-            $stripePaymentObj           = new PaymentUtility();
-            $stripeCustomerResult        = $stripePaymentObj->createCustomer($_POST);
-
-            $customer_id = $stripeCustomerResult["stripe"]["stripe_user_id"];
+            $stripePaymentObj                       = new PaymentUtility();
+            $stripeCustomerResult                   = $stripePaymentObj->createCustomer($_POST);
+            if($stripeCustomerResult['aceplusStatusCode'] != ReturnMessage::OK){
+                DB::rollback();
+                alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                return redirect('/');
+            }
+            // Get Stripe Customer Id
+            $customer_id                            = $stripeCustomerResult["stripe"]["stripe_user_id"];
 
             //Compare today date with charge_date and if today is greater than charge_date(i.e. today is within first cancellation day), charge the customer
             if($today_date >= $charge_date){
-                // Charge the Customer
-//                $charge = Charge::create(array(
-//                    "amount" => $payable_amount,
-//                    "currency" => "usd",
-//                    "customer" => $customer_id
-//                ));
+                //Capture payment
+                $stripePaymentResult                = $stripePaymentObj->capturePayment($customer_id, $payable_amount);
+                if($stripePaymentResult['aceplusStatusCode'] != ReturnMessage::OK){
+                    DB::rollback();
+                    alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                    return redirect('/');
+                }
+                $stripe_user_id                     = $stripePaymentResult["stripe"]["stripe_user_id"];
+                $stripe_payment_id                  = $stripePaymentResult["stripe"]["stripe_payment_id"];
+                $stripe_payment_amt                 = $stripePaymentResult["stripe"]["stripe_payment_amt"];
+                $stripe_balance_transaction         = $stripePaymentResult['stripe']['stripe_balance_transaction'];
 
-                //capture payment
-                $stripePaymentResult        = $stripePaymentObj->capturePayment($customer_id, $payable_amount);
-
-                $stripe_user_id = $stripePaymentResult["stripe"]["stripe_user_id"];
-                $stripe_payment_id = $stripePaymentResult["stripe"]["stripe_payment_id"];
-                $stripe_payment_amt = $stripePaymentResult["stripe"]["stripe_payment_amt"];
+                // Retrieve Balance
+                $stripeBalanceResult                = $stripePaymentObj->retrieveBalance($stripe_balance_transaction);
+                if($stripeBalanceResult['aceplusStatusCode'] != ReturnMessage::OK){
+                    DB::rollback();
+                    alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                    return redirect('/');
+                }
+                $stripe_payment_fee                 = $stripeBalanceResult['stripe']['stripe_payment_fee'];
+                $stripe_payment_net                 = $stripeBalanceResult['stripe']['stripe_payment_net'];
             }
+            /* END Operation for stripe */
 
-            //Insert Stripe Customer
-    //        DB::table('stripe_user')->insert(['stripe_user_id'=>$customer_id,'email'=>$email,'status'=>1]);
+            /* START Operation for payment */
+            $paymentObj                             = new Payment();
+            $paymentObj->name                       = "Stripe Payment";
+            $paymentObj->type                       = 1;
+            $paymentObj->description                = "";
 
-            $paymentObj = new Payment();
-            $paymentObj->name = "Stripe Payment";
-            $paymentObj->type = 1;
-            $paymentObj->description = "";
-
-            $paymentRepo = new PaymentRepository();
-            $payment_result = $paymentRepo->create($paymentObj);
+            $paymentRepo                            = new PaymentRepository();
+            $payment_result                         = $paymentRepo->create($paymentObj);
 
             //if payment creation fails, alert and redirect to homepage
             if ($payment_result['aceplusStatusCode'] != ReturnMessage::OK){
@@ -1008,96 +1033,87 @@ class PaymentController extends Controller
                 alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
                 return redirect('/');
             }
-            //if payment creation was successful, start booking payment creation
-            else{
-                $payment_id = $payment_result["object"]->id;
-                $bookingPaymentObj = new BookingPayment();
-                $bookingPaymentObj->payment_amount_wo_tax = $total_payable_amount_w_extrabed;
-                $bookingPaymentObj->payment_amount_w_tax = $payable_amount;
-                $bookingPaymentObj->description = "";
-                $bookingPaymentObj->booking_id = $booking_id;
-                $bookingPaymentObj->payment_id = $payment_id;
-                $bookingPaymentObj->payment_gateway_tax_amt = 0.0;
-                $bookingPaymentObj->status = 1;
-//                $bookingPaymentObj->payment_tax_percentage = $tax_percent;
-//                $bookingPaymentObj->payment_tax_amt = $tax_amount;
-                $bookingPaymentObj->total_government_tax_amt = $gov_tax_amount;
-                $bookingPaymentObj->total_government_tax_percentage = $gov_tax;
-                $bookingPaymentObj->total_service_tax_amt = $service_tax_amount;
-                $bookingPaymentObj->total_service_tax_percentage = $service_tax;
-                $bookingPaymentObj->total_payable_amt = $payable_amount;
-                $bookingPaymentObj->payment_reference_no = null;
+            /* END Operation for payment */
 
-                $bookingPaymentRepo = new BookingPaymentRepository();
-                $booking_payment_result = $bookingPaymentRepo->create($bookingPaymentObj);
+            /* START Operation for Booking Payment */
+            $payment_id                                         = $payment_result["object"]->id;
+            $bookingPaymentObj                                  = new BookingPayment();
+            $bookingPaymentObj->payment_amount_wo_tax           = $payable_amount;
+            $bookingPaymentObj->payment_amount_w_tax            = $total_stripe_net_amt;
+            $bookingPaymentObj->description                     = "";
+            $bookingPaymentObj->booking_id                      = $booking_id;
+            $bookingPaymentObj->payment_id                      = $payment_id;
+            $bookingPaymentObj->payment_gateway_tax_amt         = $total_stripe_fee_amt;
+            $bookingPaymentObj->status                          = $status;
+            $bookingPaymentObj->total_government_tax_amt        = $gov_tax_amount;
+            $bookingPaymentObj->total_government_tax_percentage = $gov_tax;
+            $bookingPaymentObj->total_service_tax_amt           = $service_tax_amount;
+            $bookingPaymentObj->total_service_tax_percentage    = $service_tax;
+            $bookingPaymentObj->total_payable_amt               = $payable_amount;
+            $bookingPaymentObj->payment_reference_no            = null;
 
-                //if booking payment creation fails, alert and redirect to homepage
-                if ($booking_payment_result['aceplusStatusCode'] != ReturnMessage::OK){
-                    DB::rollback();
-                    alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
-                    return redirect('/');
-                }
-                //if booking payment creation was successful, start booking payment stripe creation
-                else {
-                    $booking_payment_id = $booking_payment_result["object"]->id;
-                    $bookingPaymentStripeObj = new BookingPaymentStripe();
-                    $bookingPaymentStripeObj->stripe_user_id = $customer_id;
-                    if(isset($stripe_payment_id)){
-                        $bookingPaymentStripeObj->stripe_payment_id = $stripe_payment_id;
-                    }
-                    if(isset($stripe_payment_amt)){
-                        $bookingPaymentStripeObj->stripe_payment_amt = $stripe_payment_amt;
-                    }
-                    $bookingPaymentStripeObj->email = $email;
-
-                    if($today_date >= $charge_date) {
-                        $bookingPaymentStripeObj->status = 2; //2 is capture
-                    }
-                    else{
-                        $bookingPaymentStripeObj->status = 1; //1 is create_customer
-                    }
-                    $bookingPaymentStripeObj->booking_id = $booking_id;
-                    $bookingPaymentStripeObj->booking_payment_id = $booking_payment_id;
-
-                    $bookingPaymentStripeRepo = new BookingPaymentStripeRepository();
-                    $booking_payment_stripe_result = $bookingPaymentStripeRepo->create($bookingPaymentStripeObj);
-
-                    //if booking payment stripe creation fails, alert and redirect to homepage
-                    if ($booking_payment_stripe_result['aceplusStatusCode'] != ReturnMessage::OK){
-                        DB::rollback();
-                        alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
-                        return redirect('/');
-                    }
-                }
+            $bookingPaymentRepo                                 = new BookingPaymentRepository();
+            $booking_payment_result                             = $bookingPaymentRepo->create($bookingPaymentObj);
+            if ($booking_payment_result['aceplusStatusCode'] != ReturnMessage::OK){
+                DB::rollback();
+                alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                return redirect('/');
             }
+            /* END Operation for Booking Payment */
 
+            /* START Operation for Booking Payment Stripe */
+            //if booking payment creation was successful, start booking payment stripe creation
+            $booking_payment_id                                 = $booking_payment_result["object"]->id;
+            $bookingPaymentStripeObj                            = new BookingPaymentStripe();
+            $bookingPaymentStripeObj->stripe_user_id            = $customer_id;
+            if(isset($stripe_payment_id)){
+                $bookingPaymentStripeObj->stripe_payment_id     = $stripe_payment_id;
+            }
+            if(isset($stripe_payment_amt)){
+                $bookingPaymentStripeObj->stripe_payment_amt    = $stripe_payment_amt;
+            }
+            if(isset($stripe_balance_transaction)){
+                $bookingPaymentStripeObj->stripe_balance_transaction    = $stripe_balance_transaction;
+            }
+            if(isset($stripe_payment_fee)){
+                $bookingPaymentStripeObj->stripe_payment_fee    = $stripe_payment_fee;
+            }
+            if(isset($stripe_payment_net)){
+                $bookingPaymentStripeObj->stripe_payment_net    = $stripe_payment_net;
+            }
+            $bookingPaymentStripeObj->email                     = $email;
+            // 2 is capture, 1 is create_customer
+            $bookingPaymentStripeObj->status                    = $today_date >= $charge_date? 2:1;
+            $bookingPaymentStripeObj->booking_id                = $booking_id;
+            $bookingPaymentStripeObj->booking_payment_id        = $booking_payment_id;
+            $bookingPaymentStripeRepo                           = new BookingPaymentStripeRepository();
+            $booking_payment_stripe_result                      = $bookingPaymentStripeRepo->create($bookingPaymentStripeObj);
+            if($booking_payment_stripe_result['aceplusStatusCode'] != ReturnMessage::OK){
+                //
+                DB::rollback();
+                alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                return redirect('/');
+            }
             //if all insertions were successful, commit DB and redirect to congratulation page
             DB::commit();
+            /* END Operation for Booking Payment Stripe */
 
-            $booking_id = $bookingObj->id;
-//            $booking_room_id = $bookingRoomObj->id;
-//            $booking_request_id = $bookingRequestObj->id;
-//            $booking_payment_id = $bookingPaymentObj->id;
-//            $booking_payment_stripe_id = $bookingPaymentStripeObj->id;
-
-            //Compare today date with charge_date and if today is greater than charge_date(i.e. today is within first cancellation day), send booking COMPLETE mail
+            $booking_id                                         = $bookingObj->id;
+            /*
+             * Compare today date with charge_date and if today is greater than charge_date
+             * (i.e. today is within first cancellation day), send booking COMPLETE mail
+             */
             if($today_date >= $charge_date){
                 //Start sending complete email
-                $email            = $bookingObj->user->email;
-                $hotel_email      = $hotelConfigRepo->getEmailByHotelId($hotel_id);
-                $hotel_email_str  = $hotel_email->email;
-                $system_email     = "naingsoens4321@gmail.com";
-                $emails           = array($email,$hotel_email_str,$system_email);
-//                Mail::send('booking_cancellation_start', [], function($message) use ($emails)
-//                {
-//                    $subject        = "Booking Complete Email";
-//                    $message->to($emails)
-//                        ->subject($subject);
-//                });
-                $template = "booking_cancellation_start";
-                $subject  = "Booking Complete Email";
-                $logMessage = "created a booking";
-                $mailResult = Utility::sendMail($template,$emails,$subject,$logMessage);
+                $email              = $bookingObj->user->email;
+                $hotel_email        = $hotelConfigRepo->getEmailByHotelId($hotel_id);
+                $hotel_email_str    = $hotel_email->email;
+                $system_email       = "testingmps2017@gmail.com";
+                $emails             = array($email,$hotel_email_str,$system_email);
+                $template           = "booking_cancellation_start";
+                $subject            = "Booking Complete Email";
+                $logMessage         = "created a booking";
+                $mailResult         = Utility::sendMail($template,$emails,$subject,$logMessage);
                 if ($mailResult['aceplusStatusCode'] != ReturnMessage::OK){
                     alert()->success('Your Booking was successful, but there was a problem in sending email to you!')->persistent('OK');
                 }
@@ -1109,22 +1125,15 @@ class PaymentController extends Controller
             //else, send booking CONFIRM mail
             else{
                 //Start sending confirm email
-                $email            = $bookingObj->user->email;
-                $hotel_email      = $hotelConfigRepo->getEmailByHotelId($hotel_id);
-                $hotel_email_str  = $hotel_email->email;
-                $system_email     = "naingsoens4321@gmail.com";
-                $emails           = array($email,$hotel_email_str,$system_email);
-//                Mail::send('booking_cancellation_start', [], function($message) use ($emails)
-//                {
-//                    $subject        = "Booking Confirm Email";
-//                    $message->to($emails)
-//                        ->subject($subject);
-//                });
-
-                $template = "booking_cancellation_start";
-                $subject  = "Booking Confirm Email";
-                $logMessage = "created a booking";
-                $mailResult = Utility::sendMail($template,$emails,$subject,$logMessage);
+                $email              = $bookingObj->user->email;
+                $hotel_email        = $hotelConfigRepo->getEmailByHotelId($hotel_id);
+                $hotel_email_str    = $hotel_email->email;
+                $system_email       = "testingmps2017@gmail.com";
+                $emails             = array($email,$hotel_email_str,$system_email);
+                $template           = "booking_cancellation_start";
+                $subject            = "Booking Confirm Email";
+                $logMessage         = "created a booking";
+                $mailResult         = Utility::sendMail($template,$emails,$subject,$logMessage);
                 if ($mailResult['aceplusStatusCode'] != ReturnMessage::OK){
                     alert('Your Booking was successful, but there was a problem in sending email to you!');
                 }

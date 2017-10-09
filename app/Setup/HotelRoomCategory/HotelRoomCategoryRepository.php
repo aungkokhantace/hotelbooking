@@ -13,6 +13,7 @@ use App\Core\ReturnMessage;
 use App\Core\Utility;
 use App\Log\LogCustom;
 use App\Setup\HotelRoomCategory\HotelRoomCategory;
+use App\Setup\RoomDiscount\RoomDiscount;
 use Illuminate\Support\Facades\DB;
 use Auth;
 use App\User;
