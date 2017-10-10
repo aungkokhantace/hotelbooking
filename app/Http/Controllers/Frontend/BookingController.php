@@ -1297,6 +1297,7 @@ class BookingController extends Controller
                 $second_cancel_date                     = Carbon::parse($booking->check_in_date)->subDays($second_cancel_days);
                 $today_date                             = Carbon::now();
                 if($today_date >= $first_cancel_date && $today_date < $second_cancel_date){
+
 //                    dd('first');
                     // first cancellation
                     // refund 50% of room payable amount with tax
@@ -1305,6 +1306,12 @@ class BookingController extends Controller
                      *
                      */
                     $cancel_room_refund_amt                     = $cancel_room_payable_amt_w_tax/2;
+
+                    // dd('first');
+                    // first cancellation
+                    // refund 50% of room payable amount with tax
+                    $cancel_room_refund_amt                     = round($cancel_room_payable_amt_w_tax/2,2);
+
                     $cancel_room_payable_amt_wo_tax_af          = $cancel_room_payable_amt_wo_tax/2;
                     /* Start Calculating Total Government Tax Amount and Percentage*/
                     $government_tax_amt                         = 0.00;
@@ -1453,12 +1460,16 @@ class BookingController extends Controller
                     $stripe_booking_id                      = $stripePayment->booking_id;
                     $stripePaymentObj                       = new PaymentUtility();
                     $refundResult                           = $stripePaymentObj->refundPayment($customer_id,$cancel_room_refund_amt,$stripePaymentId);
+<<<<<<< HEAD
 //                    dd('refund res',$refundResult);
 //                    $refundResult['aceplusStatusCode']              = ReturnMessage::OK;
 //                    $refundResult['stripe']['stripe_user_id']       = 'cus_BY2nbLUyL05Pcn';
 //                    $refundResult['stripe']['stripe_payment_id']    = 'ch_1BAwi8Ki85kjRqY0QQzkyEri';
 //                    $refundResult['stripe']['stripe_payment_amt']   = 33.0;
 //                    $refundResult['stripe']['stripe_balance_transaction'] = 'txn_1BAxjBKi85kjRqY039eQw2Wr';
+=======
+                    // dd($refundResult);
+>>>>>>> heinkhantlin
                     if($refundResult['aceplusStatusCode'] != ReturnMessage::OK) {
                         DB::rollback();
                         alert()->error('Cancellation of room is fail.')->persistent('OK');
@@ -1662,6 +1673,7 @@ class BookingController extends Controller
         }
         catch(\Exception $e){
             //
+            dd($e->getMessage(),$e->getLine(),$e->getFile());
             alert()->warning('You could not cancel your reserved room!')->persistent('OK');
             return redirect()->back();
         }
