@@ -169,10 +169,11 @@
                                 @foreach($booking->rooms as $room)
                                     <div class="blog_booking">
                                         <div class="col-md-4 left_list">
-                                            <img class="img-hover"
+                                            <img class="img-hover img-responsive"
                                                  src="{{$room->category_image}}"
                                                  alt="">
                                         </div>
+
                                         <div class="col-md-8 lead_left">
                                             <h4>{{$room->room_category}}</h4>
                                             <div class="manageform-edit" id="rowEdit{{$room->id}}">
@@ -247,7 +248,7 @@
                                                 ⨂Cancel your room
                                             </a>
                                         </div>
-                                    </div>
+                                    </div> 
                                 @endforeach
                             </div>
                             <div class="payment_formtitle">
@@ -390,7 +391,7 @@
     </section>
 @stop
 
-@section('page_script')
+@section('script')
 
     <script>
         $(document).ready(function(){

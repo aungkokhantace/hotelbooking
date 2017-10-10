@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Console\Commands;
-
 use Illuminate\Console\Command;
 use App\Setup\HotelConfig\HotelConfig;
 use App\Setup\HotelConfig\HotelConfigRepository;
@@ -10,12 +8,14 @@ use App\Core\ReturnMessage;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Setup\Booking\Booking;
+use App\Setup\BookingRoom\BookingRoom;
+use App\Setup\BookingPayment\BookingPayment;
+use App\Setup\BookingPaymentStripe\BookingPaymentStripe;
 use Mail;
 use Stripe\Charge;
 use Stripe\Customer;
 use Stripe\Stripe;
 use App\Payment\PaymentUtility;
-
 class PaymentStartCron extends Command
 {
     /**
@@ -24,14 +24,12 @@ class PaymentStartCron extends Command
      * @var string
      */
     protected $signature = 'booking:payment';
-
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Cron Job For Sending Email and Payment';
-
     /**
      * Create a new command instance.
      *
@@ -41,7 +39,6 @@ class PaymentStartCron extends Command
     {
         parent::__construct();
     }
-
     /**
      * Execute the console command.
      *
@@ -53,7 +50,6 @@ class PaymentStartCron extends Command
         $hotelsConfigs      = $HotelConfigRepo->getObjs();
         $cronCheckDay       = Carbon::now()->format('Y-m-d');
         $hotel_id           = array();
-
         foreach($hotelsConfigs as $hotelsConfig) {
             $id                          = $hotelsConfig->id;
             $hotel_id[$id]               = $hotelsConfig->hotel_id;
@@ -61,7 +57,14 @@ class PaymentStartCron extends Command
         $bookingDate                = Booking::select('id','check_in_date','hotel_id','user_id','total_payable_amt')
                                       ->where('status',2)
                                       ->whereIn('hotel_id',$hotel_id)
-                                      ->whereNull('deleted_at')->get();                          
+                                      ->whereNull('deleted_at')->get();
+
+        $bookingRooms = BookingRoom::where('status',2)->get();
+
+        $bookingPayments = BookingPayment::where('status',2)->get();
+
+        $paymentStripes = BookingPaymentStripe::where('status',1)->get();
+
         $email_arr                  = array();
         foreach ($bookingDate as $booking) {
             $booking_id                 = $booking->id;
@@ -74,43 +77,90 @@ class PaymentStartCron extends Command
             $first_cancellation_day_str = "-" . $first_cancellation_day_str . " days";
             $check_cron_run_day         = strtotime($first_cancellation_day_str, strtotime($check_in_date_formatted));
             $check_cron_run_day         = date('Y-m-d', $check_cron_run_day);
-            
-            if ($check_cron_run_day == $cronCheckDay) {
+
+              if ($check_cron_run_day == $cronCheckDay) {
+
                 $email            = $booking->user->email;
-                $hotel_email      = $HotelConfigRepo->getEmailByHotelId($h_id);
-                $hotel_email_str  = $hotel_email->email;
-                $system_email     = "gentlemanShwekayin@gmail.com";
-                $emails           = array($email,$hotel_email_str,$system_email);
-                
-                //Get Customer ID
-                $paramObj         = Booking::find($booking_id);
-                $customerId       = $paramObj->booking_stripe->stripe_user_id;
-                //Get Payable Amount
-                $payable_amount_formatted   = (int)($booking->total_payable_amt);
-                $payable_amount             = $payable_amount_formatted * 100;
-                //Start Payment
-                $flag                       = 2; //From Cron Job
-                $paymentObjs                = new PaymentUtility();
-                $result                     = $paymentObjs->capturePayment($customerId, $payable_amount);
-                if ($result['aceplusStatusCode'] == 200) {
-                    $status             = 5;
-                    $paramObj->status   = $status;
-                    $paramObj->save();
-                    Mail::send('booking_payment_first_start', [], function($message) use ($emails)
-                    {    
-                        $subject        = "Your Payment is Cut Off now.";
-                        $message->to($emails)
-                                ->subject($subject);    
-                    });
-                    $message            = "Email have been sent to " . $email . " First Cancellation Start Success!";
-                    $this->info($message);
-                } else {
-                    $message            = "Email have not sent to " . $email . " First Cancellation Start Success!";
-                    $this->info($message);
+                  $hotel_email      = $HotelConfigRepo->getEmailByHotelId($h_id);
+                  $hotel_email_str  = $hotel_email->email;
+                  $system_email     = "gentlemanShwekayin@gmail.com";
+                  $emails           = array($email,$hotel_email_str,$system_email);
+                  
+                  //Get Customer ID
+                  $paramObj         = Booking::find($booking_id);
+                  $customerId       = $paramObj->booking_stripe->stripe_user_id;
+
+                  //Get Payable Amount
+                  $payable_amount_formatted   = (int)($booking->total_payable_amt);
+                  $payable_amount             = $payable_amount_formatted * 100;
+                  //Start Payment
+                  $flag                       = 2; //From Cron Job
+                  $paymentObjs                = new PaymentUtility();
+                  $result                     = $paymentObjs->capturePayment($customerId, $payable_amount);
+
+                DB::beginTransaction();
+                foreach($bookingRooms as $bookingRoom){
+                  $bookingRoom_b_id = $bookingRoom->booking_id;
+                  if($bookingRoom_b_id == $booking->id){
+                      $bookingRoomObj = BookingRoom::find($bookingRoom_b_id); 
+
+                      $bookingRoomStatus = 5;
+                      $bookingRoomObj->status = $bookingRoomStatus;
+                      $bookingRoomObj->save();  
+                  }
                 }
+                // DB::commit();
+
+                foreach($bookingPayments as $bookingPayment){
+                  $bookingPayment_b_id = $bookingPayment->booking_id;
+                  if($bookingPayment_b_id == $booking->id){
+                    $bookingPaymentObj = BookingPayment::find($bookingPayment_b_id);
+
+                    $bookingPaymentStatus = 5;
+                    $bookingPaymentObj->status = $bookingPaymentStatus;
+                    $bookingPaymentObj->save();
+                  }
+                }
+
+                foreach($paymentStripes as $paymentStripe){
+                  $paymentStripe_b_id = $paymentStripe->booking_id;
+                  if($paymentStripe_b_id == $booking->id){
+                      $stripe_payment_id = $result['stripe']['stripe_payment_id'];
+                      $transactionId = $result['stripe']['stripe_balance_transaction'];
+                      $stripeResult = $paymentObjs->retrieveBalance($transactionId);
+                      $paymentStripeObj = BookingPaymentStripe::find($paymentStripe_b_id);
+                      $paymentStripeObj->stripe_payment_id = $stripeResult['stripe']['stripe_payment_id'];
+                      $paymentStripeObj->stripe_balance_transaction = $stripeResult['stripe']['stripe_balance_transaction'];
+                      $paymentStripeObj->stripe_payment_net = $stripeResult['stripe']['stripe_payment_net'];
+                      $paymentStripeObj->stripe_payment_fee = $stripeResult['stripe']['stripe_payment_fee'];
+                      $paymentStripeObj->stripe_payment_amt = $stripeResult['stripe']['stripe_payment_amt'];
+                      $paymentStripeObj->save();
+                  }
+                }
+
+                  if ($result['aceplusStatusCode'] == 200) {
+                      $status             = 5;
+                      $paramObj->status   = $status;
+                      $paramObj->save();
+                      DB::commit();
+
+                      Mail::send('booking_payment_first_start', [], function($message) use ($emails)
+                      {    
+                          $subject        = "Your Payment is Cut Off now.";
+                          $message->to($emails)
+                                  ->subject($subject);    
+                      });
+                      $message            = "Email have been sent to " . $email . " First Cancellation Start Success!";
+                      $this->info($message);
+                  } else {
+                    DB::rollback();
+                      $message            = "Email have not sent to " . $email . " First Cancellation Start Success!";
+                      $this->info($message);
+                  }
+              }    
                 
-            }
-            
+            // }
+          
         }
     }
 }

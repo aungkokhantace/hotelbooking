@@ -70,12 +70,11 @@
 </footer>
 
 
-
-<script>
+{{-- <script>
     $(document).ready(function() {
 
     });
-</script>
+</script> --}}
 
 <!-- Script to Activate the Carousel -->
 <script>
