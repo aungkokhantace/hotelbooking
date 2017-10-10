@@ -176,9 +176,11 @@ class PaymentUtility
             ));
 
             $stripeObj = array();
-            $stripeObj['stripe_user_id'] = $customerId;
-            $stripeObj['stripe_payment_id'] = $chargeId;
-            $stripeObj['stripe_payment_amt'] = $amount;
+            $stripeObj['stripe_user_id']                = $customerId;
+            $stripeObj['stripe_payment_id']             = $chargeId;
+            $stripeObj['stripe_payment_amt']            = $refund->amount/100;
+            $stripeObj['stripe_balance_transaction']    = $refund->balance_transaction;
+            $stripeObj['stripe_refund_status']          = $refund->status;
 
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
             $returnedObj['stripe'] = $stripeObj;
@@ -256,7 +258,6 @@ class PaymentUtility
 
             // Retrieve stripe balance info.
             $balance                                    = \Stripe\BalanceTransaction::retrieve($transactionId);
-
             $stripeObj                                  = array();
             $stripeObj['stripe_balance_transaction']    = $balance->id;
             $stripeObj['stripe_payment_id']             = $balance->source;
