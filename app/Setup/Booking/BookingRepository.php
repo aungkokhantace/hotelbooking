@@ -28,7 +28,8 @@ class BookingRepository implements BookingRepositoryInterface
     }
 
     public function getBookingRoomByCustomerId($id){
-        $booking_room   = BookingRoom::where('user_id','=',$id)->get();
+        $statusAry = array(2,5);
+        $booking_room   = BookingRoom::whereIn('status',$statusAry)->where('user_id','=',$id)->get();
         return $booking_room;
     }
 
