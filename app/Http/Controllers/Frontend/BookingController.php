@@ -765,6 +765,7 @@ class BookingController extends Controller
     }
 
     public function test_cancel($id){
+        //comment
         $booking            = Booking::find($id);
         $settingRepo        = new CoreSettingRepository();
         $reasons            = $settingRepo->getCancelReason('REASON');
