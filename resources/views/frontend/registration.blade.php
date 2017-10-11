@@ -80,7 +80,7 @@
     $(document).ready(function(){
             $('.register-btn').click(function(){
                 $('#registration').submit();
-                $('#create-btn').attr("disabled","disabled")
+                // $('#create-btn').attr("disabled","disabled");
             });
             $('#registration').validate({
                 rules: {

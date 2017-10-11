@@ -37,6 +37,7 @@ use App\Setup\RoomCategoryAmenity\RoomCategoryAmenityRepository;
 use App\Setup\RoomCategoryFacility\RoomCategoryFacilityRepository;
 use App\Setup\RoomCategoryImage\RoomCategoryImageRepository;
 use App\Setup\RoomDiscount\RoomDiscountRepository;
+use App\Setup\RoomAvailablePeriod\RoomAvailablePeriodRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
@@ -79,6 +80,11 @@ class HotelDetailController extends Controller
             }
         }
         //end hotel discount
+
+        $room_availableRepo = new RoomAvailablePeriodRepository();
+        $room_availables = $room_availableRepo->getObjByH_Id($hotel_id);
+        $room_availables_count = count($room_availables);
+        
 
         //start hotel images
         $roomCategoryRepo = new HotelRoomCategoryRepository();
@@ -156,6 +162,7 @@ class HotelDetailController extends Controller
             $rooms    = $roomRepo->getRoomCountByRoomCategoryId($r_category->id,$check_in,$check_out);
 
             $r_category->available_room_count = count($rooms);
+            // dd($r_category->available_room_count);
         }
         //end room count for each room category
 
@@ -225,6 +232,7 @@ class HotelDetailController extends Controller
             ->with('book_now_flag',$book_now_flag)
             ->with('available_category_id_array',$available_category_id_array)
             ->with('hFeatures',$hFeatures)
+            ->with('room_availables_count',$room_availables_count)
             ->with('restaurantCategoryArr',$restaurantCategoryArr);
     }
 }

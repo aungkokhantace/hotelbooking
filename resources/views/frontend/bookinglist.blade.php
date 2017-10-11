@@ -96,6 +96,10 @@
                                                             <a class="bookinglist-manage" href="#" onclick='manage("{{$booking->id}}")'>
                                                                 {{$booking->button_status}}
                                                             </a>
+                                                        @elseif($booking->status == 7 || $booking->status == 9)
+                                                         <a class="bookinglist-primary" href="/hotel_detail/{!! $booking->hotel_id!!}">
+                                                                {{$booking->button_status}}
+                                                            </a>
                                                         @else
                                                             <a class="bookinglist-primary" href="/hotel_detail/{!! $booking->hotel_id!!}">{{$booking->button_status}}</a>
                                                         @endif

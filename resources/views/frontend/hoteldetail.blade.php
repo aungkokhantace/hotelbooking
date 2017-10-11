@@ -172,6 +172,7 @@
                             $default    = 0;
                             ?>
                             @foreach($roomCategories as $roomCategory)
+                            @if($room_availables_count != 0)
                                 @if($roomCategory->available_room_count > 0)
                                 <input type="hidden" id="available_room_categories" name="available_room_categories[]" value="{{$roomCategory->id }}">
                                 <tr>
@@ -284,7 +285,11 @@
                                         </td>
                                     @endif
                                 </tr>
-
+                                @endif
+                                @else
+                                    <tr>
+                                        <td colspan="6"><h5 align="center">No Room Available</h5></td>
+                                    </tr>
                                 @endif
                             @endforeach
                             {!! Form::close() !!}
@@ -339,7 +344,9 @@
                                         <h4>Most Popular LandMarks</h4>
                                         <ul class="fa-ul-li">
                                             @foreach($popularLandmarks as $popularLandmark)
+                                            @if($hotel->township_id == $popularLandmark->township_id)
                                                 <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$popularLandmark->name}}</li>
+                                            @endif
                                             @endforeach
                                         </ul>
                                     </div>
