@@ -95,6 +95,14 @@ class BookingController extends Controller
                     $b->status_txt      = "Complete";
                     $b->button_status   = "MANAGE BOOKING";
                 }
+                if($b->status == 7){
+                    $b->status_txt      = "Cancel";
+                    $b->button_status   = "BOOKING AGAIN";
+                }
+                if($b->status == 9){
+                    $b->status_txt      = "Cancel";
+                    $b->button_status   = "BOOKING AGAIN";
+                }
 
             }
 

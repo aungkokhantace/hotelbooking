@@ -123,8 +123,17 @@ class RoomAvailablePeriodRepository implements RoomAvailablePeriodRepositoryInte
     public function getObjByHotelId($hotel_id){
         $res    = RoomBlackoutPeriod::where('hotel_id',$hotel_id)
                                     ->whereNull('deleted_at')
-                                    ->first();
+                                    ->get();
 
         return $res;
     }
+
+    public function getObjByH_Id($hotel_id){
+        $res    = RoomAvailablePeriod::where('hotel_id',$hotel_id)
+                                    ->whereNull('deleted_at')
+                                    ->get();
+
+        return $res;
+    }
+
 }

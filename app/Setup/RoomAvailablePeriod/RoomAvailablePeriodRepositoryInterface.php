@@ -18,4 +18,5 @@ interface RoomAvailablePeriodRepositoryInterface
     public function update($paramObj);
     public function delete($paramObj);
     public function getObjByHotelId($hotel_id);
+    public function getObjByH_Id($hotel_id);
 }
