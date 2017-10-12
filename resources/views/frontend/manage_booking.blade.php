@@ -113,7 +113,7 @@
                                         <td class="manageform_right">
                                             <ul class="fa-ul price_night">
                                                 <li class="text_fa">
-                                                    <a href="#" data-toggle="modal" data-target="#change_date">Changes Date</a>
+                                                    <a href="#" data-toggle="modal" data-target="#change_date" class="change_date_link">Changes Date</a>
                                                     <!-- Modal for Change Date -->
                                                     @include('frontend.change_date')
                                                     <!-- Modal for Change Date -->

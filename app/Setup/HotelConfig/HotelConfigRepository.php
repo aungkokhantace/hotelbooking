@@ -129,7 +129,7 @@ class HotelConfigRepository implements HotelConfigRepositoryInterface
     }
 
     public function getConfigByHotel($hotel_id){
-        $result = HotelConfig::where('hotel_id','=',$hotel_id)->first();
+        $result = HotelConfig::where('hotel_id','=',$hotel_id)->whereNull('deleted_at')->first();
         return $result;
     }
 

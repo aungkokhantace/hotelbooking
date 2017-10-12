@@ -489,7 +489,7 @@ class BookingController extends Controller
 //                    dd($first_cancel_date,$second_cancel_date,$today_date);
                     /* For 1st Cancellation Day */
                     if($today_date >= $first_cancel_date && $today_date < $second_cancel_date){
-//                        dd('first');
+                    //    dd('first cancellation day');
                         /* Refund */
                         $stripePayment                  = $paymentStripeRepo->getStripePaymentId($id);
                         $stripePaymentId                = '';
@@ -557,10 +557,14 @@ class BookingController extends Controller
                     }
                     /* For 2nd Cancellation Day */
                     else{
+                        // dd('second cancellation day');
                         /* START changing status for booking */
+                        $total_cancel_income                = $booking->total_vendor_net_amt;
                         $booking->status                    = 3;
                         $booking->booking_cancel_reason     = $reason;
-                        $result                             = $this->repo->changeBookingStatus($booking);
+                        $booking->total_cancel_income       = $total_cancel_income;
+                        $result                             = $this->repo->update($booking);
+                        
                         if($result['aceplusStatusCode'] != ReturnMessage::OK){
                             DB::rollback();
                             return \Response::json($response);
@@ -576,10 +580,15 @@ class BookingController extends Controller
                                 return \Response::json($response);
                             }
                         }
+                        // dd($bRoomResult);
                         /* END changing status for booking room */
                         /* START changing status for booking payment */
                         $oldBookPayment                                  = $bookPaymentRepo->getObjsByBookingId($id);
+                        $oldBookPayment->status                          = 3;
+                        $bookPaymentResult                               = $bookPaymentRepo->update($oldBookPayment);
+                        // dd($bookPaymentResult);
 //                        dd($oldBookPayment);
+                        /*
                         $newBookPayment                                  = new BookingPayment();
                         $newBookPayment->payment_amount_wo_tax           = $oldBookPayment->payment_amount_wo_tax;
                         $newBookPayment->payment_amount_w_tax            = $oldBookPayment->payment_amount_w_tax;
@@ -595,12 +604,13 @@ class BookingController extends Controller
                         $newBookPayment->total_payable_amt               = $oldBookPayment->total_payable_amt;
                         $newBookPayment->payment_reference_no            = null;
 
-                        $bookPaymentResult                               = $bookPaymentRepo->create($newBookPayment);
+                        $bookPaymentResult                               = $bookPaymentRepo->create($newBookPayment);*/
                         if($bookPaymentResult['aceplusStatusCode'] != ReturnMessage::OK){
                             DB::rollback();
                             return \Response::json($response);
                         }
                         /* END changing status for booking payment */
+                      
                         DB::commit();
                         /* START sending email */
                         $user_email                     = $booking->user->email;
@@ -778,19 +788,20 @@ class BookingController extends Controller
         $settingRepo        = new CoreSettingRepository();
         $reasons            = $settingRepo->getCancelReason('REASON');
 
-        return view('frontend.booking_cancel')->with('reasons',$reasons)->with('booking',$booking);
-//        return view('frontend.change_date')->with('booking',$booking);
+        // return view('frontend.booking_cancel')->with('reasons',$reasons)->with('booking',$booking);
+       return view('frontend.change_date')->with('booking',$booking);
 
     }
 
     public function change_date(Request $request){
         if($request->ajax()){
             try{
+            
                 $response['aceplusStatusCode']  = '500';
                 $b_id                           = Input::get('id');
                 $check_in                       = Input::get('check_in');
                 $check_out                      = Input::get('check_out');
-
+               
                 $h_configRepo                   = new HotelConfigRepository();
                 $b_roomRepo                     = new BookingRoomRepository();
                 $roomRepo                       = new RoomRepository();
@@ -807,28 +818,33 @@ class BookingController extends Controller
                  */
 
                 if($booking->status == 2){
-//                    dd('status 2');
+                //    dd('status 2');
                     $new_check_in               = date('Y-m-d', strtotime($check_in));
                     $new_check_out              = date('Y-m-d', strtotime($check_out));
+                    // dd($new_check_in,$new_check_out);
                     /*
                      * Check new check_in and check_out is available or not
                      */
                     $b_room                     = $b_roomRepo->getBookingRoomByBookingId($b_id);
+                    // dd($b_room);
                     $room_id_arr                = array();
                     foreach($b_room as $room){
                         array_push($room_id_arr,$room->room_id);
                     }
                     $h_id                       = $booking->hotel_id;
                     $r_available                = $this->repo->getAvailableRoom($new_check_in,$new_check_out,$room_id_arr);
+                    // dd($r_available);
                     $r_available_arr            = array();
                     $r_category_arr             = array();
+                
                     if(isset($r_available) && count($r_available) > 0){
                         foreach($r_available as $available){
                             array_push($r_available_arr,$available->id);
                             array_push($r_category_arr,$available->h_room_category_id);
                         }
                     }
-                    if($room_id_arr != $r_available_arr){
+                    if(empty($r_available_arr) || $room_id_arr != $r_available_arr){
+                        // dd('empty');
                         /*
                          * If room_id array from booking room is not same with room_id from available room array,
                          * then new check_in and check_out date can't be change.
@@ -836,6 +852,7 @@ class BookingController extends Controller
                          */
                         return \Response::json($response);
                     }
+                    
                     /*
                      * Payment Calculation
                      * (1) Calculate total room price with discount and without discount and with extra bed price
@@ -847,7 +864,17 @@ class BookingController extends Controller
                     // Calculate the number of night stay
                     $difference                 = strtotime($check_out) - strtotime($check_in);
                     $nights                     = floor($difference/(60*60*24));
-                    $room_with_discount         = $roomRepo->getRoomWithDiscount($r_category_arr,$r_available_arr);
+                    
+                    // Get Government tax amount from config table
+                    $gst_temp                           = $configRepo->getGST();
+                    $gst_tax                            = number_format((float)$gst_temp[0]->value,2);
+                   
+                    // Get Service tax amount
+                    $service_tax                        = Utility::getServiceTax($h_id);
+
+                    // Get Room discount
+                    $room_with_discount                 = $roomRepo->getRoomWithDiscount($r_category_arr,$r_available_arr);
+                   
                     foreach($b_room as $room){
                         foreach($room_with_discount as $room_discount){
                             if($room->room_id == $room_discount->id){
@@ -856,100 +883,125 @@ class BookingController extends Controller
                         }
                     }
 
+                    $discount_amount_tmp        = 0.00;
+                    $discount_percent_tmp       = 0.00;
+                    $total_room_price           = 0.00;
+                    $price_wo_tax               = 0.00;
+                    $total_gst_amt              = 0.00;
+                    $total_service_amt          = 0.00;
+                    $price_w_tax                = 0.00;
+                    $total_stripe_fee_percent   = 0.00;
+                    $total_room_net_amt         = 0.00;
                     $total_discount_amount      = 0.00;
                     $total_discount_percent     = 0.00;
-                    $total_room_price           = 0.00;
                     $room_discount_arr          = array();
                     $discount_temp_arr          = array();
 
                     if(isset($room_with_discount) && count($room_with_discount) > 0){
                         foreach($room_with_discount as $r_discount){
                             $next_date                  = $new_check_in;
+                            // $next_date = '2017-10-18';
                             //Calculate extra bed price
                             $extra_bed_price            = $r_discount->added_extra_bed==1?$r_discount->extra_bed_price:0.00;
                             for($i=1;$i<=$nights;$i++){
 
                                 if($next_date >= $r_discount->discount_start_date && $next_date <= $r_discount->discount_end_date) {
                                     //Calculate total discount amount
+                                    // dd('if');
                                     $discount_amount        = $r_discount->discount_type== 'Amount'?$r_discount->discount_amount:
-                                        ($r_discount->discount_percent/100)*$r_discount->price;
+                                        round(($r_discount->discount_percent/100)*$r_discount->price,2);
+                                    $discount_amount_tmp   += $discount_amount;    
                                     $total_discount_amount += $discount_amount;
-
+                                    
                                     //Calculate total discount percent
                                     $discount_percent       = $r_discount->discount_type== '%'?$r_discount->discount_percent:
-                                        number_format(($discount_amount/$r_discount->price)*100,2);
+                                        round(($discount_amount/$r_discount->price)*100,2);
+                                    $discount_percent_tmp  += $discount_percent;
                                     $total_discount_percent+= $discount_percent;
 
                                     //Calculate room price
-                                    $room_price             = ($r_discount->price-$discount_amount)+$extra_bed_price;
-                                    $total_room_price      += $room_price;
+                                    $room_price_wo_tax      = ($r_discount->price-$discount_amount)+$extra_bed_price;
+                                    $total_room_price      += $room_price_wo_tax;
+                                    $price_wo_tax          += $room_price_wo_tax;
                                 }
                                 else{
-                                    $room_price             = $r_discount->price+$extra_bed_price;
-                                    $total_room_price      += $room_price;
+                                    // dd('else');
+                                    $room_price_wo_tax      = $r_discount->price+$extra_bed_price;
+                                    $total_room_price      += $room_price_wo_tax;
+                                    $price_wo_tax          += $room_price_wo_tax;
                                 }
 //                            $discount_amount            = 0.00;
 //                            $discount_percent           = 0;
 //                            $room_price                 = 0.00;
                                 $next_date = date("Y-m-d", strtotime("1 day", strtotime($next_date)));
+                                
                             }
+                           
+                            // Calculate government tax amount
+                            $gst_tax_amount                                 = round(($gst_tax / 100) * $total_room_price,2);
+                            $total_gst_amt                                 += $gst_tax_amount;
+
+                            // Calculate service tax amount
+                            $service_tax_amount                             = round(($service_tax / 100) * $total_room_price,2);
+                            $total_service_amt                             += $service_tax_amount;
+
+                            // Calculate room price with tax
+                            $room_price_w_tax                               = $total_room_price+$gst_tax_amount+$service_tax_amount;
+                            $price_w_tax                                   += $room_price_w_tax;
+                            
+                            // Calculate stripe fee only with percent 2.9%
+                            $room_stripe_fee_percent                        = round($room_price_w_tax*$this->stripe_fee_percent,2);
+                            $total_stripe_fee_percent                      += $room_stripe_fee_percent; 
+
+                            // Calculate room net amount
+                            $room_net_amount                                = round($room_price_w_tax-$room_stripe_fee_percent,2);
+                            $total_room_net_amt                            += $room_net_amount;
+                            
                             //Create temp array
-                            $discount_temp_arr['room_id']           = $r_discount->id;
-                            $discount_temp_arr['discount_amt']      = $total_discount_amount;
-                            $discount_temp_arr['room_payable_amt']  = $room_price;
-                            $discount_temp_arr['room_price']        = $r_discount->price;
-                            $discount_temp_arr['extra_bed_price']   = $extra_bed_price;
+                            $discount_temp_arr['room_id']                   = $r_discount->id;
+                            $discount_temp_arr['discount_amt']              = $discount_amount_tmp;
+                            $discount_temp_arr['room_payable_amt_wo_tax']   = $total_room_price;
+                            $discount_temp_arr['gst']                       = $gst_tax_amount;
+                            $discount_temp_arr['service']                   = $service_tax_amount;
+                            $discount_temp_arr['room_payable_amt_w_tax']    = $room_price_w_tax;
+                            $discount_temp_arr['room_price']                = $r_discount->price;
+                            $discount_temp_arr['extra_bed_price']           = $extra_bed_price*$nights;
+                            $discount_temp_arr['stripe_fee_percent']        = $room_stripe_fee_percent;
+                            $discount_temp_arr['room_net_amt']              = $room_net_amount;
                             array_push($room_discount_arr,$discount_temp_arr);
-                            $discount_temp_arr                      = array();
+                            $discount_temp_arr                              = array();
+                            $discount_amount_tmp                            = 0.00;
+                            $discount_percent_tmp                           = 0.00;
+                            $total_room_price                               = 0.00;
                         }
                     }
+                    // dd($room_discount_arr,$next_date);
+                    // dd($total_room_net_amt,$total_stripe_fee_percent);
                     /* End (1) */
 
-                    /* Start (2) Calculate total government tax amount */
-                    $total_government_tax_amt           = 0.00;
-                    $total_government_tax_percentage    = 0;
-                    $config                             = $configRepo->getGST();
-                    if(isset($config) && count($config) > 0){
-                        $total_government_tax_percentage= $config[0]->value;
-                        $total_government_tax_amt       = ($total_government_tax_percentage/100)*$total_room_price;
-                    }
-                    /* End (2) */
-
-                    // Get Hotel Config
-                    $h_config                           = $h_configRepo->getObjByID($h_id);
-
-                    /* Start (3) Calculate total service tax amount */
-                    $total_service_tax_amt              = 0.00;
-                    $total_service_tax_percentage       = 0;
-                    if(isset($h_config) && count($h_config) > 0){
-                        $total_service_tax_percentage   = $h_config->tax;
-                        $total_service_tax_amt          = ($total_service_tax_percentage/100)*$total_room_price;
-                    }
-                    else{
-                        $config                         = $configRepo->getServiceTax();
-                        if(isset($config) && count($config) > 0){
-                            $total_service_tax_percentage   = $config[0]->value;
-                        }
-                    }
-                    /* End (3) */
-
-                    /* Start (4) Calculate Total Payable Amount */
-                    $total_payable_amount               = $total_room_price+$total_government_tax_amt+$total_service_tax_amt;
-                    /* End (4) */
-
+                    // Calculate Stripe Fee Amount
+                    $total_stripe_fee_amt                       = $total_stripe_fee_percent+$this->stripe_fee_cents;
+                    $total_room_net_amt                         = $total_room_net_amt-$this->stripe_fee_cents;
+                    $total_vendor_amt                           = $total_room_net_amt;
                     DB::beginTransaction();
                     //Update Booking
                     $booking->check_in_date                     = $new_check_in;
                     $booking->check_out_date                    = $new_check_out;
-                    $booking->price_w_tax                       = $total_payable_amount;
-                    $booking->price_wo_tax                      = $total_room_price;
-                    $booking->total_government_tax_amt          = $total_government_tax_amt;
-                    $booking->total_government_tax_percentage   = $total_government_tax_percentage;
-                    $booking->total_service_tax_amt             = $total_service_tax_amt;
-                    $booking->total_service_tax_percentage      = $total_service_tax_percentage;
-                    $booking->total_payable_amt                 = $total_payable_amount;
+                    $booking->price_wo_tax                      = $price_wo_tax;
+                    $booking->price_w_tax                       = $price_w_tax;
+                    $booking->total_government_tax_amt          = $total_gst_amt;
+                    // $booking->total_government_tax_percentage   = $total_government_tax_percentage;
+                    $booking->total_service_tax_amt             = $total_service_amt;
+                    // $booking->total_service_tax_percentage      = $total_service_tax_percentage;
+                    $booking->total_payable_amt                 = $price_w_tax;
                     $booking->total_discount_amt                = $total_discount_amount;
-                    $booking->total_discount_percentage         = $total_discount_percent;
+                    // $booking->total_discount_percentage         = $total_discount_percent;
+                    $booking->total_stripe_fee_percent          = $total_stripe_fee_percent;
+                    // $booking->stripe_fee_default_cent           = $thi;
+                    $booking->total_stripe_fee_amt              = $total_stripe_fee_amt;
+                    $booking->total_stripe_net_amt              = $total_room_net_amt;
+                    $booking->total_vendor_net_amt              = $total_vendor_amt;
+                    // dd($booking);
                     $booking_update_res                         = $this->repo->update($booking);
                     if($booking_update_res['aceplusStatusCode'] != ReturnMessage::OK){
                         DB::rollback();
@@ -964,11 +1016,18 @@ class BookingController extends Controller
                             if($room->room_id == $discountValue['room_id']){
                                 $room->room_price_per_night     = $discountValue['room_price'];
                                 $room->discount_amt             = $discountValue['discount_amt'];
-                                $room->room_payable_amt         = $discountValue['room_payable_amt'];
+                                $room->room_payable_amt_wo_tax  = $discountValue['room_payable_amt_wo_tax'];
                                 $room->extra_bed_price          = $discountValue['extra_bed_price'];
+                                $room->government_tax_amt       = $discountValue['gst'];
+                                $room->service_tax_amt          = $discountValue['service'];
+                                $room->room_payable_amt_w_tax   = $discountValue['room_payable_amt_w_tax'];
+                                $room->stripe_fee_percent       = $discountValue['stripe_fee_percent'];
+                                $room->room_net_amt             = $discountValue['room_net_amt'];
+                                
                                 break;
                             }
                         }
+                        // dd($room);
                         $b_room_update_res                      = $b_roomRepo->update($room);
                         if($b_room_update_res['aceplusStatusCode'] != ReturnMessage::OK){
                             DB::rollback();
@@ -977,14 +1036,15 @@ class BookingController extends Controller
                     }
                     //Update Booking Payment
                     $b_payment                                  = $b_paymentRepo->getObjsByBookingId($b_id);
-                    $b_payment->payment_amount_wo_tax           = $total_room_price;
-                    $b_payment->payment_amount_w_tax            = $total_payable_amount;
-//                $b_payment->payment_gateway_tax_amt         = 0;
-                    $b_payment->total_government_tax_amt        = $total_government_tax_amt;
-                    $b_payment->total_government_tax_percentage = $total_government_tax_percentage;
-                    $b_payment->total_service_tax_amt           = $total_service_tax_amt;
-                    $b_payment->total_service_tax_percentage    = $total_service_tax_percentage;
-                    $b_payment->total_payable_amt               = $total_payable_amount;
+                    $b_payment->payment_amount_wo_tax           = $price_w_tax;
+                    $b_payment->payment_amount_w_tax            = $total_room_net_amt;
+                    $b_payment->payment_gateway_tax_amt         = $total_stripe_fee_amt;
+                    $b_payment->total_government_tax_amt        = $total_gst_amt;
+                    // $b_payment->total_government_tax_percentage = $total_government_tax_percentage;
+                    $b_payment->total_service_tax_amt           = $total_service_amt;
+                    // $b_payment->total_service_tax_percentage    = $total_service_tax_percentage;
+                    $b_payment->total_payable_amt               = $price_w_tax;
+                    // dd($b_payment);
                     $b_payment_update_res                       = $b_paymentRepo->update($b_payment);
                     if($b_payment_update_res['aceplusStatusCode'] != ReturnMessage::OK){
                         DB::rollback();
@@ -997,39 +1057,55 @@ class BookingController extends Controller
 
                     $first_cancel_days          = 0;
                     $second_cancel_days         = 0;
+                    $h_config                   = $h_configRepo->getConfigByHotel($h_id);
+                    // dd($h_config);
                     if(isset($h_config) && count($h_config) > 0){
+                        // dd('h_config');
                         $first_cancel_days      = $h_config->first_cancellation_day_count;
                         $second_cancel_days     = $h_config->second_cancellation_day_count;
                     }
+                    // dd('no h_config');
                     $first_cancel_date          = Carbon::parse($new_check_in)->subDays($first_cancel_days);
                     $today_date                 = Carbon::now();
-
+                    // dd('today',$today_date,'first',$first_cancel_date);
                     if($today_date >= $first_cancel_date){
-
+                        // dd('within cancellation day');
                         $stripe_payment         = $stripeRepo->getStripePaymentIdWithStatusOne($b_id);
                         $stripe_user_id         = $stripe_payment->stripe_user_id;
                         $paymentObj             = new PaymentUtility();
-                        $stripe_capture_payment = $paymentObj->capturePayment($stripe_user_id,$total_payable_amount);
-//                    $stripe_capture_payment['aceplusStatusCode'] = ReturnMessage::OK;
-//                    $stripe_capture_payment['stripe']['stripe_payment_id'] = "ch_1B3e8sKi85kjRqY04ztN51oh";
-//                    $stripe_capture_payment['stripe']['stripe_payment_amt'] = 113.85;
+                        $stripe_capture_payment = $paymentObj->capturePayment($stripe_user_id,$price_w_tax);
+                        // dd($stripe_capture_payment);
+                        // $stripe_capture_payment['aceplusStatusCode'] = ReturnMessage::OK;
+                        // $stripe_capture_payment['stripe']['stripe_payment_id'] = "ch_1BBxegKi85kjRqY0uO6Rz2yy";
+                        // $stripe_capture_payment['stripe']['stripe_payment_amt'] = 160.6;
+                        // $stripe_capture_payment['stripe']['stripe_balance_transaction'] = "txn_1BBxegKi85kjRqY0FUFt4rdO";
 
                         if($stripe_capture_payment['aceplusStatusCode'] != ReturnMessage::OK){
                             DB::rollback();
                             return \Response::json($response);
                         }
-                        $stripe_payment->stripe_payment_id          = $stripe_capture_payment['stripe']['stripe_payment_id'];
-                        $stripe_payment->stripe_payment_amt         = $stripe_capture_payment['stripe']['stripe_payment_amt'];
-//                        $stripe_payment->stripe_balance_transaction = $stripe_capture_payment['stripe']['stripe_balance_transaction'];
-                        $stripe_payment->status             = 2;
-                        $stripe_payment_update_res          = $stripeRepo->update($stripe_payment);
+                        // Get Stripe Balance Transaction
+                        $stripe_balance_transaction                 = $stripe_capture_payment['stripe']['stripe_balance_transaction'];
+                        $stripeBalanceRes                           = $paymentObj->retrieveBalance($stripe_balance_transaction);
+                        // dd($stripeBalanceRes);
+                        if($stripeBalanceRes['aceplusStatusCode'] != ReturnMessage::OK){
+                            DB::rollback();
+                            return \Response::json($response);
+                        }
+                        $stripe_payment->stripe_payment_id          = $stripeBalanceRes['stripe']['stripe_payment_id'];
+                        $stripe_payment->stripe_balance_transaction = $stripeBalanceRes['stripe']['stripe_balance_transaction'];
+                        $stripe_payment->stripe_payment_amt         = $stripeBalanceRes['stripe']['stripe_payment_amt'];
+                        $stripe_payment->stripe_payment_fee         = $stripeBalanceRes['stripe']['stripe_payment_fee'];
+                        $stripe_payment->stripe_payment_net         = $stripeBalanceRes['stripe']['stripe_payment_net'];    
+                        $stripe_payment->status                     = 2;
+                        $stripe_payment_update_res                  = $stripeRepo->update($stripe_payment);
                         if($stripe_payment_update_res['aceplusStatusCode'] != ReturnMessage::OK){
                             DB::rollback();
                             return \Response::json($response);
                         }
                         /* Payment is complete. So, we need to change status of booking, booking_room, booking_payment.*/
                         // Update status of Booking Payment
-                        $b_payment->status                  = 2;
+                        $b_payment->status                  = 5;
                         $b_payment_update_res               = $b_paymentRepo->update($b_payment);
                         if($b_payment_update_res['aceplusStatusCode'] != ReturnMessage::OK){
                             DB::rollback();
@@ -1051,7 +1127,7 @@ class BookingController extends Controller
                             DB::rollback();
                             return \Response::json($response);
                         }
-
+                        
                         // If all updating is complete,send mail
                         $email              = $booking->user->email;
                         $hotel_email        = $h_configRepo->getEmailByHotelId($h_id);
@@ -1067,6 +1143,8 @@ class BookingController extends Controller
                             return \Response::json($response);
                         }
                     }
+                    // dd('complete');
+                    // dd('no cancellation day');
                     DB::commit();
                     $response['aceplusStatusCode']      = '200';
                     return \Response::json($response);
@@ -1469,16 +1547,14 @@ class BookingController extends Controller
                     $stripe_booking_id                      = $stripePayment->booking_id;
                     $stripePaymentObj                       = new PaymentUtility();
                     $refundResult                           = $stripePaymentObj->refundPayment($customer_id,$cancel_room_refund_amt,$stripePaymentId);
-<<<<<<< HEAD
 //                    dd('refund res',$refundResult);
 //                    $refundResult['aceplusStatusCode']              = ReturnMessage::OK;
 //                    $refundResult['stripe']['stripe_user_id']       = 'cus_BY2nbLUyL05Pcn';
 //                    $refundResult['stripe']['stripe_payment_id']    = 'ch_1BAwi8Ki85kjRqY0QQzkyEri';
 //                    $refundResult['stripe']['stripe_payment_amt']   = 33.0;
 //                    $refundResult['stripe']['stripe_balance_transaction'] = 'txn_1BAxjBKi85kjRqY039eQw2Wr';
-=======
                     // dd($refundResult);
->>>>>>> heinkhantlin
+
                     if($refundResult['aceplusStatusCode'] != ReturnMessage::OK) {
                         DB::rollback();
                         alert()->error('Cancellation of room is fail.')->persistent('OK');

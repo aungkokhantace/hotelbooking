@@ -59,8 +59,10 @@
     </div>
 </div>
 @section('page_script')
+
     <script>
         $(document).ready(function () {
+        
             /* Date Picker with controls of from date and to date */
             $("#check_in").datepicker({
                 format: 'dd-mm-yyyy',
@@ -88,6 +90,9 @@
 
             /* Change Date Ajax */
             $('.btn-change-ok').click(function(){
+                /* Disable change date link */
+                $('.change_date_link').click(function () {return false;});
+
                 var serializedData = $('#change_date_form').serialize();
                 $.ajax({
                     url: '/booking/change_date',

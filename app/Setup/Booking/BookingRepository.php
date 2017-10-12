@@ -183,6 +183,7 @@ class BookingRepository implements BookingRepositoryInterface
 
     public function getAvailableRoom($check_in,$check_out,$room_id_arr){
         $id             = implode("','",$room_id_arr);
+        // $statusArr      = array(3,7,9);
         //check for blacked out rooms between check_in date and check_out date
         $blackout_query = DB::select("SELECT room_id
                                       FROM r_blackout_period
@@ -208,7 +209,8 @@ class BookingRepository implements BookingRepositoryInterface
 	                                  OR
 	                                    ('$check_out' BETWEEN booking_room.check_in_date AND booking_room.check_out_date)
 	                                    )
-	                                  AND (booking_room.status <> 3)
+	                                
+                                      AND status NOT IN (3,7,9)
 	                                  AND (booking_room.deleted_at IS NULL)
 	                                  AND  room_id NOT IN ('$id')");
 
