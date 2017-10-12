@@ -165,8 +165,9 @@
                                     </tbody>
                                 </table>
                             </div>
+                             @foreach($booking->rooms as $room)
                             <div id="bookingmanage_blog">
-                                @foreach($booking->rooms as $room)
+                               
                                     <div class="blog_booking">
                                         <div class="col-md-4 left_list">
                                             <img class="img-hover img-responsive"
@@ -249,8 +250,9 @@
                                             </a>
                                         </div>
                                     </div> 
-                                @endforeach
+                                
                             </div>
+                            @endforeach
                             <div class="payment_formtitle">
                                 <!-- First Blog Post Left -->
                                 <div class="payment_list">
