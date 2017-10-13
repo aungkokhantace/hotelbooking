@@ -169,13 +169,13 @@
                             <div id="bookingmanage_blog">
                                
                                     <div class="blog_booking">
-                                        <div class="col-md-4 left_list">
+                                        <div class="col-md-4 col-sm-4 col-xs-12 left_list">
                                             <img class="img-hover img-responsive"
                                                  src="{{$room->category_image}}"
                                                  alt="">
                                         </div>
 
-                                        <div class="col-md-8 lead_left">
+                                        <div class="col-md-8 col-sm-8 col-xs-12 lead_left">
                                             <h4>{{$room->room_category}}</h4>
                                             <div class="manageform-edit" id="rowEdit{{$room->id}}">
                                                 <i>for </i> <span>{{$room->guest_name}}</span>

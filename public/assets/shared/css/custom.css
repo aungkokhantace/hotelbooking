@@ -295,3 +295,15 @@ button.closed {
     color: #626262;
     font-size: 14px;
 }
+@media only screen and (max-width: 414px) {
+#bookingmanage_blog{
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 600px;
+}
+}
+@media only screen and (max-width: 375px) {
+#bookingmanage_blog{
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 570px;
+}
+}
