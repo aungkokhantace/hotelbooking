@@ -280,7 +280,6 @@
                                                 <div class="formtitle_left">
                                                     <span>We'll forward these to your hotel or host immediately upon booking.</span>
                                                 </div>
-
                                                 <div>
                                                     <textarea class="col-xs-7" id="special_request" name="special_request"></textarea>
                                                 </div>
