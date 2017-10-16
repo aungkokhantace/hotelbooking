@@ -1005,6 +1005,8 @@ class PaymentController extends Controller
                 $stripe_payment_id                  = $stripePaymentResult["stripe"]["stripe_payment_id"];
                 $stripe_payment_amt                 = $stripePaymentResult["stripe"]["stripe_payment_amt"];
                 $stripe_balance_transaction         = $stripePaymentResult['stripe']['stripe_balance_transaction'];
+                $stripe_card_brand                  = $stripePaymentResult['stripe']['card_brand'];
+                $stripe_card_type                   = $stripePaymentResult['stripe']['card_type'];
 
                 // Retrieve Balance
                 $stripeBalanceResult                = $stripePaymentObj->retrieveBalance($stripe_balance_transaction);
@@ -1018,31 +1020,21 @@ class PaymentController extends Controller
             }
             /* END Operation for stripe */
 
-            /* START Operation for payment */
-            $paymentObj                             = new Payment();
-            $paymentObj->name                       = "Stripe Payment";
-            $paymentObj->type                       = 1;
-            $paymentObj->description                = "";
-
-            $paymentRepo                            = new PaymentRepository();
-            $payment_result                         = $paymentRepo->create($paymentObj);
-
-            //if payment creation fails, alert and redirect to homepage
-            if ($payment_result['aceplusStatusCode'] != ReturnMessage::OK){
-                DB::rollback();
-                alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
-                return redirect('/');
-            }
-            /* END Operation for payment */
-
+            /* Update Booking */
+            $booking                                = $bookingRepo->getBookingById($booking_id);
+            $booking->card_brand                    = $stripe_card_brand;
+            $booking->card_type                     = $stripe_card_type;
+            $bookingRes                             = $bookingRepo->update($booking);
+            /*
+            if($bookingRes['aceplusStatusCode'] != ReturnMessage::OK){
+                //write log or something
+            }*/
             /* START Operation for Booking Payment */
-            $payment_id                                         = $payment_result["object"]->id;
             $bookingPaymentObj                                  = new BookingPayment();
             $bookingPaymentObj->payment_amount_wo_tax           = $payable_amount;
             $bookingPaymentObj->payment_amount_w_tax            = $total_stripe_net_amt;
             $bookingPaymentObj->description                     = "";
             $bookingPaymentObj->booking_id                      = $booking_id;
-            $bookingPaymentObj->payment_id                      = $payment_id;
             $bookingPaymentObj->payment_gateway_tax_amt         = $total_stripe_fee_amt;
             $bookingPaymentObj->status                          = $status;
             $bookingPaymentObj->total_government_tax_amt        = $gov_tax_amount;

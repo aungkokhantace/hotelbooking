@@ -127,14 +127,16 @@ class PaymentUtility
                 "currency" => $paymentCurrency,
                 "customer" => $customerId
             ));
-
+           
             $stripeObj = array();
-            $stripeObj['stripe_user_id'] = $customerId;
-            $stripeObj['stripe_payment_id'] = $charge->id;
+            $stripeObj['stripe_user_id']                = $customerId;
+            $stripeObj['stripe_payment_id']             = $charge->id;
 //            $stripeObj['stripe_payment_amt'] = $amount;
-            $stripeObj['stripe_payment_amt'] = $charge->amount/100;
-            $stripeObj['stripe_balance_transaction'] = $charge->balance_transaction;
-
+            $stripeObj['stripe_payment_amt']            = $charge->amount/100;
+            $stripeObj['stripe_balance_transaction']    = $charge->balance_transaction;
+            $stripeObj['card_brand']                    = $charge->source->brand;
+            $stripeObj['card_type']                     = $charge->source->funding;
+            
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
             $returnedObj['stripe'] = $stripeObj;
             return $returnedObj;
