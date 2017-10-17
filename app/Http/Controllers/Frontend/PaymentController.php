@@ -132,21 +132,14 @@ class PaymentController extends Controller
         /* Calculate total amount */
         $total_amount_wo_discount               = 0.0;
         $total_amount_w_discount                = 0.0;
-
         $discount_array                         = array();
-
         foreach($number_array as $room_category_id=>$number_of_room){
             if($number_of_room > 0){
                 /* Get room category object and it's properties. */
                 $room_category                      = $roomCategoryRepo->getObjByID($room_category_id);
                 // Price for one room
                 $room_category_price                = $room_category->price;
-                // Amount of all reserved rooms without discount amount.
-                $amount_per_category_wo_discount    = $room_category->price* $number_of_room;
-                // Amount of all reserved rooms with discount amount.
-                $amount_per_category_w_discount     = $amount_per_category_wo_discount;
                 $reserved_date                      = date('Y-m-d', strtotime($check_in));
-
                 /* Start checking discount for each room_category */
                 for($i=1;$i<=$nights;$i++){
                     /*
@@ -154,8 +147,12 @@ class PaymentController extends Controller
                      * If room discount is null, there's no discount.
                      * If not, need to calculate for each reserved date.
                      */
+                    // Amount of all reserved rooms without discount amount.
+                    $amount_per_category_wo_discount    = $room_category_price* $number_of_room;
+                    // Amount of all reserved rooms with discount amount.
+                    $amount_per_category_w_discount     = $amount_per_category_wo_discount;
+                    // Get room discount by reserved_date and room_category _id
                     $room_discount                      = $roomDiscountRepo->getRoomCategoryDiscount($room_category_id,$reserved_date);
-
                     /* Initialize or reset discount_percent and discount_amt */
                     $discount_percent                   = 0.00;
                     $discount_amt                       = 0.00;
@@ -173,13 +170,14 @@ class PaymentController extends Controller
                             $discount_amt               = $room_discount->discount_amount;
                             $discount_percent           = round(($discount_amt/$room_category_price)*100,2);
                         }
+                        
                         /*
                          * Calculate amount with discount for all reserved room per category.
                          * Subtract discount amount of all reserved room per category from the amount of all reserved rooms
                          * without discount amount.
                          * And create discount amount array.
                          */
-
+                    
                         $amount_per_category_w_discount = $amount_per_category_wo_discount-($discount_amt*$number_of_room);
                         array_push($discount_array,$discount_amt*$number_of_room);
                     }
@@ -887,7 +885,7 @@ class PaymentController extends Controller
                 $bookingRoomObj->stripe_fee_percent         = $room_stripe_fee_amt;
                 $bookingRoomObj->room_net_amt               = $room_net_amt;
                 $bookingRoomObj->added_extra_bed            = $b_roomValue['extra_bed'];
-                $bookingRoomObj->extra_bed_price            = $b_roomValue['extra_bed_price'];
+                $bookingRoomObj->extra_bed_price            = $total_room_extra_price;
                 $bookingRoomObj->user_first_name            = $b_roomValue['first_name'];
                 $bookingRoomObj->user_last_name             = $b_roomValue['last_name'];
                 $bookingRoomObj->user_email                 = $b_roomValue['email'];
