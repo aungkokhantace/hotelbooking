@@ -529,60 +529,60 @@ class HotelController extends Controller
     public function edit($id)
     {
         if (Auth::guard('User')->check()) {
-            $hotel = $this->repo->getObjByID($id);
-            $h_id = $hotel->id;
-            $country_id = $hotel->country_id;
-            $city_id = $hotel->city_id;
-            $township_id = $hotel->township_id;
+            $hotel                  = $this->repo->getObjByID($id);
+            $h_id                   = $hotel->id;
+            $country_id             = $hotel->country_id;
+            $city_id                = $hotel->city_id;
+            $township_id            = $hotel->township_id;
 
-            $countryRepo = new CountryRepository();
-            $countries = $countryRepo->getObjs();
+            $countryRepo            = new CountryRepository();
+            $countries              = $countryRepo->getObjs();
 
-            $cityRepo = new CityRepository();
-            $cities = $cityRepo->getCityByCountryId($country_id);
+            $cityRepo               = new CityRepository();
+            $cities                 = $cityRepo->getCityByCountryId($country_id);
 
-            $townshipRepo = new TownshipRepository();
-            $townships = $townshipRepo->getTownshipByCityId($city_id);
+            $townshipRepo           = new TownshipRepository();
+            $townships              = $townshipRepo->getTownshipByCityId($city_id);
 
-            $hotel_nearbyRepo     = new HotelNearbyRepository();
-            $hotel_nearby     = $hotel_nearbyRepo->getObjs();
+            $hotel_nearbyRepo       = new HotelNearbyRepository();
+            $hotel_nearby           = $hotel_nearbyRepo->getObjs();
 
+            $hotel_configsRepo      =  new HotelConfigRepository();
+            $hotel_configs          = $hotel_configsRepo->getObjs();
 
-            $hotel_configsRepo =  new HotelConfigRepository();
-            $hotel_configs = $hotel_configsRepo->getObjs();
+            $landmarkRepo           = new LandmarkRepository();
+            $landmarks              = $landmarkRepo->getObjs();
 
-            $landmarkRepo       = new LandmarkRepository();
-            $landmarks          = $landmarkRepo->getObjs();
+            $facilityRepo           = new FacilitiesRepository();
+            $facilities             = $facilityRepo->getObjsForHotel();
 
-            $facilityRepo       = new FacilitiesRepository();
-            $facilities         = $facilityRepo->getObjsForHotel();
+            $hotel_room_typeRepo    = new HotelRoomTypeRepository();
+            $hotel_room_types       = $hotel_room_typeRepo->getObjs();
 
-            $hotel_room_typeRepo = new HotelRoomTypeRepository();
-            $hotel_room_types = $hotel_room_typeRepo->getObjs();
+            $featureRepo            = new FeatureRepository();
+            $features               = $featureRepo->getObjs();
 
-
-            $featureRepo= new FeatureRepository();
-            $features   = $featureRepo->getObjs();
-
+            // Declare array
+            $h_configs              = array();
+            $h_facility             = array();
+            $h_feature              = array();
+            $h_room_types           = array();
+        
             foreach ($landmarks as $landmark) {
                 $h_landmarks = DB::select("SELECT landmark_id FROM h_landmark WHERE hotel_id = '$h_id'");
                 $landmark->landmark_id = $h_landmarks;
             }
-            // dd($h_landmarks);
 
 //            $h_nearby_places        = Hnearby::where('hotel_id',$id)->whereNull('deleted_at')->get();
             foreach ($hotel_nearby as $nearby){
                 $h_nearby_places = DB::select("SELECT * FROM h_nearby WHERE hotel_id = '$h_id'");
                 $nearby->nearby_id = $h_nearby_places;
-//                dd($h_nearby_places);
             }
 //            $h_configs        = HotelConfig::where('hotel_id',$id)->whereNull('deleted_at')->get();
-//            dd(count($h_configs));
             foreach($hotel_configs as $hotel_config){
                 $h_configs = DB::select("SELECT * FROM h_config WHERE hotel_id = '$h_id'");
                 $hotel_config->hotel_config_id = $h_configs;
             }
-
 
             if(isset($hotel_nearby)){
                 $h_nearby_places = "";
@@ -592,17 +592,15 @@ class HotelController extends Controller
                     $nearby->nearby_id = $h_nearby_places;
                 }
             }
-                foreach($hotel_configs as $hotel_config){
-                  $h_configs = DB::select("SELECT * FROM h_config WHERE hotel_id = '$h_id'");
-                  $hotel_config->hotel_config_id = $h_configs;
-                }
-
+            foreach($hotel_configs as $hotel_config){
+                $h_configs = DB::select("SELECT * FROM h_config WHERE hotel_id = '$h_id'");
+                $hotel_config->hotel_config_id = $h_configs;
+            }
 
             foreach ($facilities as $facility) {
                 $h_facility = DB::select("SELECT facility_id FROM h_facility WHERE hotel_id = '$h_id'");
                 $facility->facility_id = $h_facility;
             }
-            // dd($h_facility);
 
             foreach($features as $feature){
                 $h_feature = DB::select("SELECT * FROM h_feature WHERE hotel_id = '$h_id'");
@@ -614,7 +612,7 @@ class HotelController extends Controller
             foreach($hotel_room_types as $hotel_room_type){
                 $h_room_types = DB::select("SELECT * FROM h_room_type WHERE hotel_id = '$h_id'");
                 $hotel_room_type->hotel_room_type_id = $h_room_types;
-                }
+            }
     
             $admin_id = $hotel->admin_id;
             $userRepo = new UserRepository();
