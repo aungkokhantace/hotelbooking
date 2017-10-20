@@ -282,9 +282,27 @@
                 {{trans('setup_hotelroomcategory.bed-type')}}
                 <span class="require">*</span>
             </label>
-            <input type="text" required class="form-control" id="bed_type" name="bed_type"
+            <!-- <input type="text" required class="form-control" id="bed_type" name="bed_type"
                    placeholder="{{trans('setup_hotelroomcategory.bed-type')}}"
-                   value="{{ isset($hotel_room_category)? $hotel_room_category->bed_type:Request::old('bed_type') }}"/>
+                   value="{{ isset($hotel_room_category)? $hotel_room_category->bed_type:Request::old('bed_type') }}"/> -->
+            
+            <select class="form-control" name="bed_type" id="bed_type">
+                   @if(isset($hotel_room_category))
+                        @foreach($bed_types as $bed_type)
+                            @if($bed_type->id == $hotel_room_category->bed_type)
+                                <option value="{{$bed_type->id}}" selected>{{$bed_type->name}}</option>
+                            @else
+                                <option value="{{$bed_type->id}}">{{$bed_type->name}}</option>
+                            @endif
+                        @endforeach
+                   @else
+                    <option value="" selected disabled>Select Bed Type</option>
+                        @foreach($bed_types as $bed_type)
+                            <option value="{{$bed_type->id}}">{{$bed_type->name}}</option>
+                        @endforeach
+                   @endif
+               </select>
+
             <p class="text-danger">{{$errors->first('bed_type')}}</p>
         </div>
     </div>

@@ -128,12 +128,15 @@ class HotelRoomCategoryController extends Controller
             $facilityRepo = new FacilitiesRepository();
             $facilities = $facilityRepo->getObjsForRoom();
 
+            $bed_types = DB::select('SELECT * FROM bed_types WHERE deleted_at IS NULL');
+            
             return view('backend.hotel_room_category.hotel_room_category')
                 ->with('hotels',$hotels)
                 ->with('role',$role)
                 ->with('hotel_id',$hotel_id)
                 ->with('facilities',$facilities)
-                ->with('amenities',$amenities);
+                ->with('amenities',$amenities)
+                ->with('bed_types',$bed_types);
         }
         return redirect('/');
     }
@@ -368,6 +371,8 @@ class HotelRoomCategoryController extends Controller
                 $facility->facility_id = $r_facility;
             }
 
+            $bed_types = DB::select('SELECT * FROM bed_types WHERE deleted_at IS NULL');
+
             return view('backend.hotel_room_category.hotel_room_category')->with('hotel_room_category', $hotel_room_category)
                                                                           ->with('hotels',$hotels)
                                                                           ->with('hotel_room_type',$hotel_room_type)
@@ -376,7 +381,8 @@ class HotelRoomCategoryController extends Controller
                                                                           ->with('amenities',$amenities)
                                                                           ->with('facilities',$facilities)
                                                                           ->with('r_amenity',$r_amenity)
-                                                                          ->with('r_facility',$r_facility);
+                                                                          ->with('r_facility',$r_facility)
+                                                                          ->with('bed_types',$bed_types);
         }
         return redirect('/backend_mps/login');
     }

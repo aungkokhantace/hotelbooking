@@ -17,6 +17,9 @@ class SystemReferenceController extends Controller
 
     public function index()
     {
-        return view('backend.systemreference.index');
+        if (Auth::guard('User')->check()) {
+            return view('backend.systemreference.index');
+        }
+        return redirect('/backend_mps/login');   
     }
 }
