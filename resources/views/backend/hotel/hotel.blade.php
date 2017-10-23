@@ -875,73 +875,65 @@
 
                 <div class="tab-pane" id="6">
                     @if(isset($hotel))
-                    @if(!empty($h_room_types))
-                    @foreach($h_room_types as $h_room_type)
-                        <div class="row">
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                <label for="name">{{trans('setup_hotelroomtype.name')}}</label>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <input type="text" class="form-control" {{-- id="name" --}} name="room_type_name"
-                                placeholder="{{trans('setup_hotelroomtype.place-name')}}" @if($h_room_type->hotel_id == $hotel->id) value="{{$h_room_type->name}}" @endif/>
-                                <p class="text-danger">{{$errors->first('name')}}</p>
-                            </div>
-                            </div>
-                            <div class="row">
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                <label for="description">{{trans('setup_hotelroomtype.description')}}</label>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                @if($h_room_type->hotel_id == $hotel->id)
-                                    <textarea rows="5" cols="50" class="form-control" {{-- id="description" --}} name="room_type_description" placeholder="{{trans('setup_hotelroomtype.place-description')}}">{{$h_room_type->description}}</textarea>
-                               
-                                @endif
-                                
-                                <p class="text-danger">{{$errors->first('description')}}</p>
-                            </div>
-                        </div>
-                        @endforeach
+                        @if(!empty($h_room_types))
+                            <?php $i = 0;?>
+                            @foreach($h_room_types as $h_room_type)
+                            <!-- Start -->
+                            <div class="row div_facility">
+                                <div class="col-lg-8 col-md-8 col-sm-8 div_border">
+                                    <div class="col-md-4">
+                                        <label for="name">{{trans('setup_hotelroomtype.name')}}</label>
+                                        <input type="text" class="form-control room_type" {{-- id="name" --}} name="room_type[{{$i}}][name]" placeholder="{{trans('setup_hotelroomtype.place-name')}}" @if($h_room_type->hotel_id == $hotel->id) value="{{$h_room_type->name}}" @endif//>
+                                        <p class="text-danger">{{$errors->first('name')}}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="description">{{trans('setup_hotelroomtype.description')}}</label>
+                                        <textarea rows="5" cols="50" class="form-control room_type" {{-- id="description" --}} name="room_type[{{$i}}][description]" placeholder="{{trans('setup_hotelroomtype.place-description')}}">{{$h_room_type->description}}</textarea>
+                                        <p class="text-danger">{{$errors->first('description')}}</p>
+                                    </div>
+                                </div>
+                                @if($i != 0)
+                                    <input type="button" class="btn btn-danger hotel_remove_btn" value="Remove">
+                                @endif    
+                            </div> 
+                            
+                            <!-- End -->
+                            <?php $i++;?>
+                            @endforeach
+                            <button type="button" class="btn btn-info" id="add_more_btn">Add More</button>
+                        @else
+                            <div class="row div_facility">
+                                <div class="col-lg-8 col-md-8 col-sm-8 div_border">
+                                    <div class="col-md-4">
+                                        <label for="name">{{trans('setup_hotelroomtype.name')}}</label>
+                                        <input type="text" class="form-control room_type" {{-- id="name" --}} name="room_type[0][name]" placeholder="{{trans('setup_hotelroomtype.place-name')}}"/>
+                                        <p class="text-danger">{{$errors->first('name')}}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="description">{{trans('setup_hotelroomtype.description')}}</label>
+                                        <textarea rows="5" cols="50" class="form-control room_type" {{-- id="description" --}} name="room_type[0][description]" placeholder="{{trans('setup_hotelroomtype.place-description')}}"></textarea>
+                                        <p class="text-danger">{{$errors->first('description')}}</p>
+                                    </div>
+                                </div>
+                            </div>    
+                            <button type="button" class="btn btn-info" id="add_more_btn">Add More</button>
+                        @endif
                     @else
-                       <div class="row">
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                <label for="name">{{trans('setup_hotelroomtype.name')}}</label>
+                        <div class="row div_facility">
+                            <div class="col-lg-8 col-md-8 col-sm-8 div_border">
+                                <div class="col-md-4">
+                                    <label for="name">{{trans('setup_hotelroomtype.name')}}</label>
+                                    <input type="text" class="form-control room_type" {{-- id="name" --}} name="room_type[0][name]" placeholder="{{trans('setup_hotelroomtype.place-name')}}"/>
+                                    <p class="text-danger">{{$errors->first('name')}}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="description">{{trans('setup_hotelroomtype.description')}}</label>
+                                    <textarea rows="5" cols="50" class="form-control room_type" {{-- id="description" --}} name="room_type[0][description]" placeholder="{{trans('setup_hotelroomtype.place-description')}}"></textarea>
+                                    <p class="text-danger">{{$errors->first('description')}}</p>
+                                </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <input type="text" class="form-control" {{-- id="name" --}} name="room_type_name"
-                                placeholder="{{trans('setup_hotelroomtype.place-name')}}"/>
-                                <p class="text-danger">{{$errors->first('name')}}</p>
-                            </div>
-                            </div>
-                            <div class="row">
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                <label for="description">{{trans('setup_hotelroomtype.description')}}</label>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <textarea rows="5" cols="50" class="form-control" {{-- id="description" --}} name="room_type_description" placeholder="{{trans('setup_hotelroomtype.place-description')}}"></textarea>
-                                <p class="text-danger">{{$errors->first('description')}}</p>
-                            </div>
-                        </div>  
-                    @endif
-                    @else
-                       <div class="row">
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                <label for="name">{{trans('setup_hotelroomtype.name')}}</label>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <input type="text" class="form-control" {{-- id="name" --}} name="room_type_name"
-                                placeholder="{{trans('setup_hotelroomtype.place-name')}}"/>
-                                <p class="text-danger">{{$errors->first('name')}}</p>
-                            </div>
-                            </div>
-                            <div class="row">
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                <label for="description">{{trans('setup_hotelroomtype.description')}}</label>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <textarea rows="5" cols="50" class="form-control" {{-- id="description" --}} name="room_type_description" placeholder="{{trans('setup_hotelroomtype.place-description')}}"></textarea>
-                                <p class="text-danger">{{$errors->first('description')}}</p>
-                            </div>
-                        </div> 
+                        </div>    
+                        <button type="button" class="btn btn-info" id="add_more_btn">Add More</button>
                     @endif
                 </div>
             </div>
@@ -1328,6 +1320,44 @@
 
             //For selectbox with search function
             $("#country_id").select2();
+
+            /* Muti text box for hotel facilities */
+            $('#add_more_btn').click(function() {
+                var i = $('.room_type').size();
+                $(this).before(
+                    $("<div/>", {
+                        class: 'row div_facility'
+                    }).fadeIn('slow').append(
+                        "<div class='col-md-8 div_border'>"+
+                            "<div class='col-md-4'>"+
+                                "<label for='name'>{{trans('setup_hotelroomtype.name')}}</label>"+
+                                "<input type='text' class='form-control room_type' {{-- id='name' --}} name='room_type["+i+"][name]' placeholder='{{trans('setup_hotelroomtype.place-name')}}'/>"+
+                                "<p class='text-danger'>{{$errors->first('name')}}</p>"+
+                            "</div>"+
+                            "<div class='col-md-6'>"+
+                                "<label for='description'>{{trans('setup_hotelroomtype.description')}}</label>"+
+                                "<textarea rows='5' cols='50' class='form-control room_type' {{-- id='description' --}} name='room_type["+i+"][description]' placeholder='{{trans('setup_hotelroomtype.place-description')}}'></textarea>"+
+                                "<p class='text-danger'>{{$errors->first('description')}}</p>"+
+                            "</div>"+
+                        "</div>"
+                    ).append(
+                        $("<input>",{
+                            type: 'button',
+                            id: 'remove',
+                            value: 'Remove',
+                            class: 'btn btn-danger hotel_remove_btn'
+                        }).click(function(){
+                            console.log($(this).parent());
+                            $(this).parent().remove();
+                        })
+                    )
+                );
+            });
+            /* Muti text box for hotel facilities */
+            
+            $('.hotel_remove_btn').click(function(){
+                $(this).parent().remove();
+            });
         });
 
         //start js function for fileupload

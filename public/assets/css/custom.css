@@ -97,3 +97,14 @@
     font: italic 10.5pt bold;
 }
 
+.div_border{
+    /* border: solid black 1px; */
+    border: 1px groove #ddd;
+    padding: 1.2em 1em 1.2em 1em !important;
+    margin: 1.2em 1em 1.2em 1em;
+}
+
+.hotel_remove_btn{
+    /* padding: 1.2em 1em 1.2em 1em !important; */
+    margin: 1.2em 1em 1.2em 1em;
+}
