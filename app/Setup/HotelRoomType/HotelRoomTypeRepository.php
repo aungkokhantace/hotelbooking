@@ -149,4 +149,20 @@ class HotelRoomTypeRepository implements HotelRoomTypeRepositoryInterface
             return false;
         }
     }
+
+    public function deleteHotelRoomTypeByHotelId($h_id){
+        $returnedObj                        = array();
+        $returnedObj['aceplusStatusCode']   = ReturnMessage::INTERNAL_SERVER_ERROR;
+        try{
+            $result                             = DB::delete("delete from h_room_type where hotel_id = ?",[$h_id]);
+            
+            $returnedObj['aceplusStatusCode']   = ReturnMessage::OK;
+            return $returnedObj;            
+        }
+        catch(\Exception $e){
+            $returnedObj['aceplusStatusMessage'] = $e->getMessage();
+            return $returnedObj;
+        }
+        
+    }
 }
