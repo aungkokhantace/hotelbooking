@@ -84,11 +84,13 @@ class HotelDetailController extends Controller
         $room_availableRepo = new RoomAvailablePeriodRepository();
         $room_availables = $room_availableRepo->getObjByH_Id($hotel_id);
         $room_availables_count = count($room_availables);
+        // dd($room_availables_count);
         
 
         //start hotel images
         $roomCategoryRepo = new HotelRoomCategoryRepository();
         $roomCategories = $roomCategoryRepo->getRoomCategoriesByHotelId($hotel_id);
+        // dd($roomCategories);
 
         $roomCategoryIdArray = array();
         foreach($roomCategories as $roomCategoryId){
@@ -155,15 +157,17 @@ class HotelDetailController extends Controller
 
         //get check-out date from session
         $check_out = session('check_out');
-
+        $total_available_room = 0;
         foreach($roomCategories as $r_category){
-            $roomRepo = New RoomRepository();
+            $roomRepo                           = New RoomRepository();
             //get rooms that are within available_period and not within black_out period and not booked and not in cutoff date
-            $rooms    = $roomRepo->getRoomCountByRoomCategoryId($r_category->id,$check_in,$check_out);
+            $rooms                              = $roomRepo->getRoomCountByRoomCategoryId($r_category->id,$check_in,$check_out);
 
-            $r_category->available_room_count = count($rooms);
+            $r_category->available_room_count   = count($rooms);
+            $total_available_room               += count($rooms);
             // dd($r_category->available_room_count);
         }
+        
         //end room count for each room category
 
         //start images for each room category
@@ -233,6 +237,7 @@ class HotelDetailController extends Controller
             ->with('available_category_id_array',$available_category_id_array)
             ->with('hFeatures',$hFeatures)
             ->with('room_availables_count',$room_availables_count)
-            ->with('restaurantCategoryArr',$restaurantCategoryArr);
+            ->with('restaurantCategoryArr',$restaurantCategoryArr)
+            ->with('total_available_room',$total_available_room);
     }
 }

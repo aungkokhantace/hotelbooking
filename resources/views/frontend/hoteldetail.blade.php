@@ -171,8 +171,9 @@
                             <?php
                             $default    = 0;
                             ?>
+                            {{--  @if($room_availables_count != 0)  --}}
+                            @if($total_available_room != 0)
                             @foreach($roomCategories as $roomCategory)
-                            @if($room_availables_count != 0)
                                 @if($roomCategory->available_room_count > 0)
                                 <input type="hidden" id="available_room_categories" name="available_room_categories[]" value="{{$roomCategory->id }}">
                                 <tr>
@@ -286,12 +287,12 @@
                                     @endif
                                 </tr>
                                 @endif
-                                @else
-                                    <tr>
-                                        <td colspan="6"><h5 align="center">No Room Available</h5></td>
-                                    </tr>
-                                @endif
                             @endforeach
+                            @else
+                                    <tr>
+                                        <td colspan="6"><h5 align="center">No Available Room</h5></td>
+                                    </tr>
+                            @endif
                             {!! Form::close() !!}
                             </tbody>
                         </table>

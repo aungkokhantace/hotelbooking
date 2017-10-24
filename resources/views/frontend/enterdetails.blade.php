@@ -214,9 +214,13 @@
                                                         {{--</div>--}}
 
                                                         <div class="payment_formgroup">
-                                                            <div class="col-sm-6 pd_rg_10 flast">
+                                                            <div class="col-sm-3 pd_rg_10 flast">
                                                                 {{--<input type="text" class="formcontrols" id="name" placeholder="First name, Last name">--}}
                                                                 <input type="text" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_firstname"}}" name="{{$available_room_category->id."_".($i+1)."_firstname"}}" placeholder="First name" autocomplete="off">
+                                                            </div>
+                                                             <div class="col-sm-3 pd_rg_10 flast">
+                                                                {{--<input type="text" class="formcontrols" id="name" placeholder="First name, Last name">--}}
+                                                                <input type="text" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_lastname"}}" name="{{$available_room_category->id."_".($i+1)."_lastname"}}" placeholder="Last name" autocomplete="off">
                                                             </div>
                                                             <div class="col-sm-6 pd_lf_5 flast">
                                                                 <input type="email" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_email"}}" name="{{$available_room_category->id."_".($i+1)."_email"}}" placeholder="Email Address" >

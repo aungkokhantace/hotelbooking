@@ -19,7 +19,9 @@
     <table style="width:100%;border-collapse: collapse;border: 2px solid black;padding:7px 0 4px 4px;">
         <tr>
             <td width="16%">
-                <img style="width:80px;height:70px;" src="/images/upload/{!! $hotel->logo !!}" alt="hotel_logo">
+                @if($hotel->logo != "default_image.jpg" && $hotel->logo == "")
+                    <img style="width:80px;height:70px;" src="/images/upload/{!! $hotel->logo !!}" alt="hotel_logo">
+                @endif
             </td>
             <td colspan="3" width="84%">
                 <span style="font-size:13px;font-weight:bold;">{{$hotel->name}}</span>
@@ -65,7 +67,7 @@
             <td width="40%" align="right">
                 {{--<span style="font-size:8pt;">PRICE</span><br>--}}
                 <span style="font-size:11pt;text-align: center;">
-                    {{number_format($booking->total_room_price,2)}}
+                    {{number_format($booking->price_wo_tax,2)}}
                 </span>
             </td>
         </tr>
