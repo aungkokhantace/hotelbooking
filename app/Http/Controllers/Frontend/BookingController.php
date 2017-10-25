@@ -247,7 +247,8 @@ class BookingController extends Controller
                                                       ->with('communications',$communications);
             }
             else{
-                dd('unauthorized');
+                // dd('unauthorized');
+                return redirect('bookingList');
             }
         }
         return redirect('/');

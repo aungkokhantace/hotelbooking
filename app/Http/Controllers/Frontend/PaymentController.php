@@ -989,7 +989,8 @@ class PaymentController extends Controller
             }
             // Get Stripe Customer Id
             $customer_id                            = $stripeCustomerResult["stripe"]["stripe_user_id"];
-
+            $stripe_card_brand                      = "";
+            $stripe_card_type                       = "";
             //Compare today date with charge_date and if today is greater than charge_date(i.e. today is within first cancellation day), charge the customer
             if($today_date >= $charge_date){
                 //Capture payment

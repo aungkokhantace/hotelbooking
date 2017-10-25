@@ -25,9 +25,9 @@
                    <!-- <button type="submit" class="btn btn-default formcontrolnew">Login</button> -->   
                    <button type="button" class="btn btn-default formcontrols login-btn">Login</button>                         
                 </div> 
-                <div class="col-sm-12 pd_lf_5 form_text">
+                {{--  <div class="col-sm-12 pd_lf_5 form_text">
                     <span class="psw"><a href="#">Forgot password?</a></span>
-                </div>
+                </div>  --}}
                 <div class="formgroup text-center">
                     <div class="col-md-12 control">
                         <div class="form_textone">

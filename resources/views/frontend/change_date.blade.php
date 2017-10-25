@@ -38,17 +38,13 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <div class="col-sm-6 pd_lf_5">
-                    <button type="button"
-                            class="btn btn-defaulted1 btn-change-ok"
-                            data-dismiss="modal">
+                <div class="col-sm-6 pd_lf_5 form-group">
+                    <button type="button" class="btn btn-defaulted1 btn-change-ok" data-dismiss="modal">
                         OK
                     </button>
                 </div>
-                <div class="col-sm-6 pd_lf_5">
-                    <button type="button"
-                            class="btn btn-defaulted2 btn-change-cancel"
-                            data-dismiss="modal">
+                <div class="col-sm-6 pd_lf_5 form-group">
+                    <button type="button" class="btn btn-defaulted2 btn-change-cancel" data-dismiss="modal">
                         Cancel
                     </button>
                 </div>
