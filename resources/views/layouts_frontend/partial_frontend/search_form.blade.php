@@ -38,25 +38,25 @@
     <div class="col-sm-4 pd_rg_10">
         <label class="control-label" for="check_out">Room</label>
         @if(Session::has('room'))
-            <input type="number" id="room" class="floatLabel form-control" name="room" value="{{session('room')}}">
+            <input type="number" id="room" class="floatLabel form-control" name="room" value="{{session('room')}}" min="1">
         @else
-            <input type="number" id="room" class="floatLabel form-control" name="room" value="">
+            <input type="number" id="room" class="floatLabel form-control" name="room" value="" min="1">
         @endif
     </div>
     <div class="col-sm-4 pd_lf_5">
         <label class="control-label" for="check_out">Adults</label>
         @if(Session::has('adults'))
-            <input type="number" id="adults" class="floatLabel form-control" name="adults" value="{{session('adults')}}">
+            <input type="number" id="adults" class="floatLabel form-control" name="adults" value="{{session('adults')}}" min="1">
         @else
-            <input type="number" id="adults" class="floatLabel form-control" name="adults" value="">
+            <input type="number" id="adults" class="floatLabel form-control" name="adults" value="" min="1">
         @endif
     </div>
     <div class="col-sm-4 pd_lf_5">
         <label class="control-label" for="check_out">Children</label>
         @if(Session::has('children'))
-            <input type="number" id="children" class="floatLabel form-control" name="children" value="{{session('children')}}">
+            <input type="number" id="children" class="floatLabel form-control" name="children" value="{{session('children')}}" min="1">
         @else
-            <input type="number" id="children" class="floatLabel form-control" name="children" value="">
+            <input type="number" id="children" class="floatLabel form-control" name="children" value="" min="1">
         @endif
 
     </div>
