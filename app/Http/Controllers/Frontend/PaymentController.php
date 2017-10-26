@@ -56,6 +56,7 @@ use Redirect;
 use Stripe\Charge;
 use Stripe\Customer;
 use Stripe\Stripe;
+use App\Payment\PaymentConstance;
 
 class PaymentController extends Controller
 {
@@ -631,8 +632,11 @@ class PaymentController extends Controller
 //            session(['payable_amount' => $payable_amount]);
 //        }
 
-        $countryRepo = new CountryRepository();
-        $countries = $countryRepo->getObjs();
+        $countryRepo    = new CountryRepository();
+        $countries      = $countryRepo->getObjs();
+
+        // for passing publishable key to stripe js checkout form i
+        $pub_key        = PaymentConstance::STIRPE_PUBLISHABLE_KEY;
 
         return view('frontend.confirm_reservation')
             ->with('available_room_category_array',$available_room_categories)
@@ -640,7 +644,8 @@ class PaymentController extends Controller
             ->with('nights',$nights)
             ->with('hotelFacilities',$hotelFacilities)
             ->with('totalRooms',$totalRooms)
-            ->with('countries',$countries);
+            ->with('countries',$countries)
+            ->with('pub_key',$pub_key);
 //            ->with('total_amount',$total_amount);
     }
 
@@ -761,6 +766,7 @@ class PaymentController extends Controller
 
             $bookingRepo                                    = new BookingRepository();
             $booking_result                                 = $bookingRepo->create($bookingObj);
+            // dd('booking',$booking_result);
             //if booking creation fails, alert and redirect to homepage
             if ($booking_result['aceplusStatusCode'] != ReturnMessage::OK){
                 DB::rollback();
@@ -900,6 +906,7 @@ class PaymentController extends Controller
                 $bookingRoomObj->room_net_amt_af            = 0.00;
                 $bookingRoomRepo                            = new BookingRoomRepository();
                 $booking_room_result                        = $bookingRoomRepo->create($bookingRoomObj);
+                // dd('booking room',$booking_room_result);
                 //if booking room creation fails, alert and redirect to homepage
                 if ($booking_room_result['aceplusStatusCode'] != ReturnMessage::OK){
                     DB::rollback();
@@ -945,6 +952,7 @@ class PaymentController extends Controller
 
             $bookingRequestRepo                     = new BookingRequestRepository();
             $booking_request_result                 = $bookingRequestRepo->create($bookingRequestObj);
+            // dd('booking request',$booking_request_result);
             if ($booking_request_result['aceplusStatusCode'] != ReturnMessage::OK){
                 DB::rollback();
                 alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
@@ -968,6 +976,7 @@ class PaymentController extends Controller
 
             $communicationRepo                      = new CommunicationRepository();
             $communication_result                   = $communicationRepo->createForFrontend($communicationObj);
+            // dd('communication',$communication_result);
             //if communication creation fails, alert and redirect to homepage
             if ($communication_result['aceplusStatusCode'] != ReturnMessage::OK){
                 DB::rollback();
@@ -982,6 +991,7 @@ class PaymentController extends Controller
             //create a customer
             $stripePaymentObj                       = new PaymentUtility();
             $stripeCustomerResult                   = $stripePaymentObj->createCustomer($_POST);
+            // dd('stripe customer',$stripeCustomerResult);
             if($stripeCustomerResult['aceplusStatusCode'] != ReturnMessage::OK){
                 DB::rollback();
                 alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
@@ -1137,6 +1147,7 @@ class PaymentController extends Controller
             return redirect('/congratulations/'.$booking_id);
         }
         catch(\Exception $e){
+            dd('catch',$e);
             DB::rollback();
             alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
             return redirect('/');

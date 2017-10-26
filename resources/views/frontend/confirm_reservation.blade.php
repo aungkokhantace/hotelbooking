@@ -226,7 +226,7 @@
 
     <script>
         var handler = StripeCheckout.configure({
-            key: 'pk_test_4T1qgSnrYT8e6btfWGS7efld',
+            key:  <?php echo "'".$pub_key."'"; ?>,
             image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
             locale: 'auto',
             token: function(token) {
