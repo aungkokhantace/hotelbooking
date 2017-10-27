@@ -64,9 +64,9 @@ class PaymentController extends Controller
     private $stripe_fee_cents;
 
     public function __construct() {
-        /* Stripe transaction fee is 2.9%+30 cents */
-        $this->stripe_fee_percent     = 0.029; //2.9%
-        $this->stripe_fee_cents       = 0.3;  //30 cents
+        /* Stripe transaction fee */
+        $this->stripe_fee_percent       = PaymentConstance::STIRPE_FEE_PERCENT; 
+        $this->stripe_fee_cents         = PaymentConstance::STRIPE_FEE_FIXED; 
     }
 
     public function enterDetails(Request $request){

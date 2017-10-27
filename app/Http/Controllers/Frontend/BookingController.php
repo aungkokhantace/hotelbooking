@@ -8,6 +8,7 @@ use App\Core\Config\ConfigRepository;
 use App\Core\ReturnMessage;
 use App\Core\Utility;
 use App\Log\LogCustom;
+use App\Payment\PaymentConstance;
 use App\Payment\PaymentUtility;
 use App\Setup\Amenities\AmenitiesRepository;
 use App\Setup\Booking\Booking;
@@ -53,9 +54,9 @@ class BookingController extends Controller
     private $stripe_fee_cents;
     public function __construct(BookingRepositoryInterface $repo){
         $this->repo                     = $repo;
-        /* Stripe transaction fee is 2.9%+30 cents */
-        $this->stripe_fee_percent       = 0.029; //2.9%
-        $this->stripe_fee_cents         = 0.3;  //30 cents
+        /* Stripe transaction fee */
+        $this->stripe_fee_percent       = PaymentConstance::STIRPE_FEE_PERCENT; 
+        $this->stripe_fee_cents         = PaymentConstance::STRIPE_FEE_FIXED; 
     }
 
     public function booking_list(){
@@ -537,6 +538,7 @@ class BookingController extends Controller
 
                         /* Update Booking */
                         $booking->status                            = 7;
+                        $booking->booking_cancel_reason             = $reason;
                         $booking->price_wo_tax                      = $total_price_wo_tax;
                         $booking->price_w_tax                       = $total_price_w_tax;
                         $booking->total_government_tax_amt          = $total_gst_amt;
@@ -686,6 +688,7 @@ class BookingController extends Controller
 
                         /* Update Booking */
                         $booking->status                                = 9;
+                        $booking->booking_cancel_reason                 = $reason;
                         $booking->price_wo_tax                          = $total_price_wo_tax;
                         $booking->price_w_tax                           = $total_price_w_tax;
                         $booking->total_government_tax_amt              = $total_gst_amt;
@@ -787,7 +790,7 @@ class BookingController extends Controller
         $total_day                      = $end->diffInDays($start);
         $booking->total_day             = $total_day; //Add total booked days to booking
 
-        $bRooms                         = $bRoomRepo->getBookingRoomAndRoomByBookingId($b_id);
+        $bRooms                         = $bRoomRepo->getAllBookingRoomAndRoomByBookingId($b_id);
         $room_count                     = count($bRooms);
         $booking->room_count            = $room_count; //Add Number of Room to booking
 
