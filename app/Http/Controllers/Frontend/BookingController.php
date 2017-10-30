@@ -1458,6 +1458,7 @@ class BookingController extends Controller
                     $bCancelRoom->stripe_fee_percent_af         = $cancel_stripe_fee_amt_af;
                     $bCancelRoom->room_net_amt_af               = $cancel_room_net_amt_af;
                     $bRoomUpdateRes                             = $bRoomRepo->update($bCancelRoom);
+                    // dd('cancel room res',$bRoomUpdateRes);
                     if($bRoomUpdateRes['aceplusStatusCode'] != ReturnMessage::OK){
                         DB::rollback();
                         alert()->error('Cancellation of room is fail.')->persistent('OK');
@@ -1571,7 +1572,6 @@ class BookingController extends Controller
                     $newBookPayment->payment_amount_w_tax            = $cancel_room_net_amt_af;
                     $newBookPayment->description                     = "";
                     $newBookPayment->booking_id                      = $b_id;
-                    $newBookPayment->payment_id                      = $oldBookPayment->payment_id;
                     $newBookPayment->payment_gateway_tax_amt         = $cancel_stripe_fee_amt_af;
                     $newBookPayment->status                          = 7;
                     $newBookPayment->total_government_tax_amt        = $government_tax_amt;
