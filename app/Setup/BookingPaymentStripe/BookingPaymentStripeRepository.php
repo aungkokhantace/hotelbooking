@@ -10,6 +10,7 @@ namespace App\Setup\BookingPaymentStripe;
 
 
 use App\Core\ReturnMessage;
+use App\Core\Utility;
 use App\Log\LogCustom;
 
 class BookingPaymentStripeRepository implements BookingPaymentStripeRepositoryInterface
@@ -92,5 +93,34 @@ class BookingPaymentStripeRepository implements BookingPaymentStripeRepositoryIn
         $result = BookingPaymentStripe::where('booking_id',$booking_id)->first();
 
         return $result;
+    }
+
+    public function createBookingPaymentStripe($paramObj){
+        $returnedObj                            = array();
+        $returnedObj['aceplusStatusCode']       = ReturnMessage::INTERNAL_SERVER_ERROR;
+
+        try {
+
+            $currentUser                        = Utility::getCurrentUserID(); //get currently logged in user
+            $paramObj->save();
+
+            //create info log
+            $date                               = $paramObj->created_at;
+            $message                            = '['. $date .'] '. 'info: ' . 'Hotel admin '.$currentUser.' created booking_payment_stripe_id = '.$paramObj->id . PHP_EOL;
+            LogCustom::create($date,$message);
+
+            $returnedObj['aceplusStatusCode']   = ReturnMessage::OK;
+            $returnedObj['object']              = $paramObj;
+            return $returnedObj;
+        }
+        catch(\Exception $e){
+            //create error log
+            $date                   = date("Y-m-d H:i:s");
+            $message                = '['. $date .'] '. 'error: ' . 'Hotel admin '.$currentUser.' created a booking_payment_stripe and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            LogCustom::create($date,$message);
+
+            $returnedObj['aceplusStatusMessage'] = $e->getMessage();
+            return $returnedObj;
+        }
     }
 }

@@ -29,18 +29,20 @@
                         {{--</ul>--}}
                     {{--</li>--}}
                     <li nav-id="modifier-manage" class="has-sub">
-                        <a href="javascript:;">
+                        <a href="/backend_mps/nearby_category">Nearby Category</a>
+                        {{--  <a href="javascript:;">
                             <b class="caret pull-right"></b>
-                            <span>Nearby Category</span>
-                        </a>
+                            <span><a href="/backend_mps/nearby_category">Nearby Category</a></span>
+                        </a>  --}}
 
-                        <ul class="sub-menu">
+                        {{--  <ul class="sub-menu">
                             <li nav-id="modifier-manage-modifier"><a href="/backend_mps/nearby_category/create">Entry</a></li>
                             <li nav-id="modifier-manage-modifierpanel"><a href="/backend_mps/nearby_category">List</a></li>
-                        </ul>
+                        </ul>  --}}
                     </li>
                     <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
+                        <a href="/backend_mps/hotel_nearby">Hotel Nearby</a>
+                        {{--  <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Hotel Nearby</span>
                         </a>
@@ -48,10 +50,11 @@
                         <ul class="sub-menu">
                             <li nav-id="modifier-create-modifier"><a href="/backend_mps/hotel_nearby/create">Entry</a></li>
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/hotel_nearby">List</a></li>
-                        </ul>
+                        </ul>  --}}
                     </li>
                     <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
+                        <a href="/backend_mps/facility_group">Facility Group</a>
+                        {{--  <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Facility Group</span>
                         </a>
@@ -59,10 +62,11 @@
                         <ul class="sub-menu">
                             <li nav-id="modifier-create-modifier"><a href="/backend_mps/facility_group/create">Entry</a></li>
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/facility_group">List</a></li>
-                        </ul>
+                        </ul>  --}}
                     </li>
                     <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
+                        <a href="/backend_mps/facilities">Facilities</a>
+                        {{--  <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Facilities</span>
                         </a>
@@ -70,10 +74,11 @@
                         <ul class="sub-menu">
                             <li nav-id="modifier-create-modifier"><a href="/backend_mps/facilities/create">Entry</a></li>
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/facilities">List</a></li>
-                        </ul>
+                        </ul>  --}}
                     </li>
                     <li nav-id="modifier-manage" class="has-sub">
-                        <a href="javascript:;">
+                        <a href="/backend_mps/feature">Features</a>
+                        {{--  <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Features</span>
                         </a>
@@ -82,10 +87,11 @@
                             <li nav-id="modifier-manage-modifier"><a href="/backend_mps/feature/create">Entry</a></li>
                             <li nav-id="modifier-manage-modifierpanel"><a href="/backend_mps/feature">List</a></li>
 
-                        </ul>
+                        </ul>  --}}
                     </li>
                     <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
+                        <a href="/backend_mps/amenities">Amenities</a>
+                        {{--  <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Amenities</span>
                         </a>
@@ -93,11 +99,12 @@
                         <ul class="sub-menu">
                             <li nav-id="modifier-create-modifier"><a href="/backend_mps/amenities/create">Entry</a></li>
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/amenities">List</a></li>
-                        </ul>
+                        </ul>  --}}
                     </li>
 
                     <li nav-id="modifier-create" class="has-sub">
-                        <a href="javascript:;">
+                        <a href="/backend_mps/landmark">Landmark</a>
+                        {{--  <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Landmark</span>
                         </a>
@@ -105,11 +112,12 @@
                         <ul class="sub-menu">
                             <li nav-id="modifier-create-modifier"><a href="/backend_mps/landmark/create">Entry</a></li>
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/landmark">List</a></li>
-                        </ul>
+                        </ul>  --}}
                     </li>
 
                     <li nav-id="modifier-manage" class="has-sub">
-                        <a href="javascript:;">
+                        <a href="/backend_mps/country">Country</a>
+                        {{--  <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Country</span>
                         </a>
@@ -117,7 +125,7 @@
                         <ul class="sub-menu">
                             <li nav-id="modifier-manage-modifier"><a href="/backend_mps/country/create">Entry</a></li>
                             <li nav-id="modifier-manage-modifierpanel"><a href="/backend_mps/country">List</a></li>
-                        </ul>
+                        </ul>  --}}
                     </li>
                     <li nav-id="modifier-create" class="has-sub">
                         <a href="javascript:;">
@@ -126,13 +134,14 @@
                         </a>
 
                         <ul class="sub-menu">
-                            <li nav-id="modifier-create-modifier"><a href="/backend_mps/city/create">Entry</a></li>
-                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/city">List</a></li>
+                            {{--  <li nav-id="modifier-create-modifier"><a href="/backend_mps/city/create">Entry</a></li>  --}}
+                            <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/city">City</a></li>
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/popular_city/create">Set Popular City</a></li>
                         </ul>
                     </li>
                     <li nav-id="modifier-manage" class="has-sub">
-                        <a href="javascript:;">
+                        <a href="/backend_mps/township">Township</a>
+                        {{--  <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <span>Township</span>
                         </a>
@@ -141,7 +150,7 @@
                             <li nav-id="modifier-manage-modifier"><a href="/backend_mps/township/create">Entry</a></li>
                             <li nav-id="modifier-manage-modifierpanel"><a href="/backend_mps/township">List</a></li>
 
-                        </ul>
+                        </ul>  --}}
                     </li>
 
                     {{--<li nav-id="modifier-manage" class="has-sub">--}}
@@ -157,14 +166,14 @@
 
                     <li nav-id="">
                         <a href="/backend_mps/transportation_information">
-                            <b class="caret pull-right"></b>
+                            {{--  <b class="caret pull-right"></b>  --}}
                             <span>Transportation Information</span>
                         </a>
                     </li>
 
                     <li nav-id="">
                         <a href="/backend_mps/tour_information">
-                            <b class="caret pull-right"></b>
+                            {{--  <b class="caret pull-right"></b>  --}}
                             <span>Tour Guide Information</span>
                         </a>
                     </li>
@@ -436,6 +445,7 @@
                 </ul>
             </li>
 
+            @if (Auth::guard('User')->user()->role_id == 1)
             <li nav-id="modifier-create" class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
@@ -449,7 +459,9 @@
                     </li>
                 </ul>
             </li>
+            @endif
 
+            @if (Auth::guard('User')->user()->role_id == 1 || Auth::guard('User')->user()->role_id == 2)
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
@@ -471,7 +483,7 @@
 
                 </ul>
             </li>
-
+            @endif
             <li nav-id='report'  class="has-sub" >
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
@@ -486,7 +498,7 @@
                 </ul>
             </li>
             @endif
-            @if (Auth::guard('User')->user()->role_id == 1)
+            @if (Auth::guard('User')->user()->role_id != 3)           
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
@@ -494,6 +506,7 @@
                     <span>{{trans('menu.group-setup')}}</span>
                 </a>
                 <ul class="sub-menu">
+                     @if (Auth::guard('User')->user()->role_id == 1)
                     <li nav-id="modifier-manage" class="has-sub">
                         <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
@@ -505,6 +518,9 @@
                             <li nav-id="modifier-manage-modifierpanel"><a href="/backend_mps/role">List</a></li>
                         </ul> -->
                     </li>
+                    @endif
+
+                    @if (Auth::guard('User')->user()->role_id == 1)
                     <li nav-id="modifier-manage" class="has-sub">
                         <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
@@ -516,6 +532,9 @@
                             <li nav-id="modifier-manage-modifierpanel"><a href="/backend_mps/permission">List</a></li>
                         </ul> -->
                     </li>
+                    @endif
+
+                    @if (Auth::guard('User')->user()->role_id == 1 || Auth::guard('User')->user()->role_id == 2)
                     <li nav-id="modifier-create" class="has-sub">
                         <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
@@ -527,18 +546,21 @@
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/user">List</a></li>
                         </ul> -->
                     </li>
+                    @endif
+
+                    @if (Auth::guard('User')->user()->role_id == 1 || Auth::guard('User')->user()->role_id == 2)
                     <li nav-id="modifier-creat" class="has-sub">
                         <a href="/backend_mps/config">
                             {{-- <b class="caret pull-right"></b> --}}
                             <span>Site Config</span>
                         </a>
                     </li>
-
+                    @endif
                 </ul>
 
             </li>
             @endif
-            @if (Auth::guard('User')->user()->role_id == 1 || Auth::guard('User')->user()->role_id == 2)
+            @if (Auth::guard('User')->user()->role_id == 1 )
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>

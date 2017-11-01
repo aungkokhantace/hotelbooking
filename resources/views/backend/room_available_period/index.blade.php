@@ -61,8 +61,8 @@
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{$available->id}}" id="all"></td>
                             <td>{{$available->hotel->name}}</td>
-                            <td>{{$available->room->name}}</td>
-                            <td><a href="/backend_mps/room_available_period/edit/{{$available->id}}">{{$available->from_date}}</a></td>
+                            <td><a href="/backend_mps/room_available_period/edit/{{$available->id}}">{{$available->room->name}}</a></td>
+                            <td>{{$available->from_date}}</td>
                             <td>{{$available->to_date}}</td>
                             <td>{{$available->remark}}</td>
                         </tr>

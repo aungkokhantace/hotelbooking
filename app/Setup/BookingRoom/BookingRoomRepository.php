@@ -10,6 +10,7 @@ namespace App\Setup\BookingRoom;
 
 
 use App\Core\ReturnMessage;
+use App\Core\Utility;
 use App\Log\LogCustom;
 use Illuminate\Support\Facades\DB;
 
@@ -159,4 +160,34 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
 
         return $result;
     }
+
+    public function updateBookingRoom($paramObj){
+        $returnedObj                            = array();
+        $returnedObj['aceplusStatusCode']       = ReturnMessage::INTERNAL_SERVER_ERROR;
+
+        try {
+            $currentUser                        = Utility::getCurrentUserID(); //get currently logged in user
+            $paramObj->save();
+
+            //create info log
+            $date                               = $paramObj->updated_at;
+            $message                            = '['. $date .'] '. 'info: ' . 'Hotel admin '.$currentUser.' update booking_room_id = '.$paramObj->id . PHP_EOL;
+            LogCustom::create($date,$message);
+
+            $returnedObj['aceplusStatusCode']   = ReturnMessage::OK;
+            $returnedObj['object']              = $paramObj;
+            return $returnedObj;
+        }
+        catch(\Exception $e){
+            //create error log
+            $date                               = date("Y-m-d H:i:s");
+            $message                            = '['. $date .'] '. 'error: ' . 'Hotel admin '.$currentUser.' updated a booking room and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+
+            LogCustom::create($date,$message);
+
+            $returnedObj['aceplusStatusMessage'] = $e->getMessage();
+            return $returnedObj;
+        }
+    }
+
 }

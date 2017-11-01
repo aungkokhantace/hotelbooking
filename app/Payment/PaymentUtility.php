@@ -177,7 +177,7 @@ class PaymentUtility
                 "amount" => $actual_amount,
             ));
 
-            $stripeObj = array();
+            $stripeObj                                  = array();
             $stripeObj['stripe_user_id']                = $customerId;
             $stripeObj['stripe_payment_id']             = $chargeId;
             $stripeObj['stripe_payment_amt']            = $refund->amount/100;
@@ -224,10 +224,18 @@ class PaymentUtility
                 "amount" => $actual_amount,
             ));
 
+            /*
             $stripeObj = array();
             $stripeObj['stripe_user_id'] = $customerId;
             $stripeObj['stripe_payment_id'] = $chargeId;
-            $stripeObj['stripe_payment_amt'] = $amount;
+            $stripeObj['stripe_payment_amt'] = $amount;*/
+
+            $stripeObj                                  = array();
+            $stripeObj['stripe_user_id']                = $customerId;
+            $stripeObj['stripe_payment_id']             = $chargeId;
+            $stripeObj['stripe_payment_amt']            = $refund->amount/100;
+            $stripeObj['stripe_balance_transaction']    = $refund->balance_transaction;
+            $stripeObj['stripe_refund_status']          = $refund->status;
 
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
             $returnedObj['stripe'] = $stripeObj;

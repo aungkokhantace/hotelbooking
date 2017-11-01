@@ -248,7 +248,7 @@ class BookingController extends Controller
                                                       ->with('communications',$communications);
             }
             else{
-                // dd('unauthorized');
+                // Unauthorized
                 return redirect('bookingList');
             }
         }
@@ -347,10 +347,50 @@ class BookingController extends Controller
         $booking->rooms                 = $bRooms; //Add Rooms Array to booking
 
         /* get booking request to know special request */
+        $b_request_arr                  = array();
         $b_request                      = $b_requestRepo->getBookingRequestByBookingId($b_id);
-
+        if($b_request->non_smoking_room == 1){
+            array_push($b_request_arr,'Non Smoking Room');
+        }
+        if($b_request->non_smoking_room == 1){
+            array_push($b_request_arr,'Non Smoking Room');
+        }
+        if($b_request->late_check_in == 1){
+            array_push($b_request_arr,'Late Check In');
+        }
+        if($b_request->early_check_in == 1){
+            array_push($b_request_arr,'Early Check In');
+        }
+        if($b_request->high_floor_room == 1){
+            array_push($b_request_arr,'High Floor Room');
+        }
+        if($b_request->large_bed == 1){
+            array_push($b_request_arr,'Large Bed');
+        }
+        if($b_request->twin_bed == 1){
+            array_push($b_request_arr,'Twin Bed');
+        }
+        if($b_request->quiet_room == 1){
+            array_push($b_request_arr,'Quiet Room');
+        }
+        if($b_request->baby_cot == 1){
+            array_push($b_request_arr,'Baby Cot');
+        }
+        if($b_request->airport_transfer == 1){
+            array_push($b_request_arr,'Air Port Transfer');
+        }
+        if($b_request->private_parking == 1){
+            array_push($b_request_arr,'Private Parking');
+        }
+        if($b_request->booking_taxi == 1){
+            array_push($b_request_arr,'Book Taxi');
+        }
+        if($b_request->booking_tour_guide == 1){
+            array_push($b_request_arr,'Request Tour Guide');
+        }
+       
         /* Start Print Function */
-        $view                           = \View::make('frontend.print_confirmation',compact('booking','hotel','h_config','b_request'));
+        $view                           = \View::make('frontend.print_confirmation',compact('booking','hotel','h_config','b_request_arr'));
         $html                           = $view->render();
         $pdf                            = new TCPDF();
 

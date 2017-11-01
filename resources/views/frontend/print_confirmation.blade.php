@@ -165,7 +165,9 @@
             </td>
             <td width="50%">
                 <b>Special Requests</b><br>
-                {!! $b_request->special_request !!}
+                @foreach($b_request_arr as $request)
+                    {!! '-'.$request !!}<br>
+                @endforeach
             </td>
         </tr>
     </table>
