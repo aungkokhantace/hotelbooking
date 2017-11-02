@@ -2,25 +2,33 @@
 Route::group(['middleware' => 'web'], function () {
 
     Route::group(['middleware' => ['frontendorbackend','LanguageSwitcher']], function () {
+    
+    Route::group(['middleware' => 'checksession'], function () {
+        //search
+        Route::post('/search', 'Frontend\SearchController@search');
+        Route::get('search','Frontend\SearchController@search');
+        Route::get('/search_result', 'Frontend\SearchController@index');
 
+        //hotel detail
+        Route::get('/hotel_detail/{id}', 'Frontend\HotelDetailController@index');
+    
+        //Booking and Payment
+        Route::post('/enter_details', 'Frontend\PaymentController@enterDetails');
+        Route::get('enter_details', 'Frontend\PaymentController@enterDetails');
+        Route::post('/confirm_reservation', 'Frontend\PaymentController@confirmReservation');
+        Route::get('confirm_reservation', 'Frontend\PaymentController@confirmReservation');    
+        Route::post('/book_and_pay', 'Frontend\PaymentController@bookAndPay');
+        Route::get('/congratulations/{booking_id}', 'Frontend\PaymentController@congratulations');
+    });
     //Frontend
     Route::get('/', 'Frontend\HomeController@index');
 
     Route::get('/comingsoon', array('as'=>'/comingsoon','uses'=>'Frontend\HomeController@comingsoon'));
+    //about us
+    Route::get('/aboutus', 'Frontend\HomeController@aboutus');
 
     //for autocomplete destination in search form
     Route::get('/autocompletedestination', 'Frontend\HomeController@autocompleteDestination');
-
-    //search
-    Route::post('/search', 'Frontend\SearchController@search');
-    Route::get('search','Frontend\SearchController@search');
-    Route::get('/search_result', 'Frontend\SearchController@index');
-
-    //hotel detail
-    Route::get('/hotel_detail/{id}', 'Frontend\HotelDetailController@index');
-
-    //about us
-    Route::get('/aboutus', 'Frontend\HomeController@aboutus');
 
     //User(Customer Registration)
 //    Route::get('register','Frontend\UserRegistrationController@create');
@@ -55,12 +63,13 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('airtickets', 'Frontend\StaticPageController@airtickets');
 
     //Booking and Payment
+    /*
     Route::post('/enter_details', 'Frontend\PaymentController@enterDetails');
     Route::get('enter_details', 'Frontend\PaymentController@enterDetails');
     Route::post('/confirm_reservation', 'Frontend\PaymentController@confirmReservation');
     Route::get('confirm_reservation', 'Frontend\PaymentController@confirmReservation');    
     Route::post('/book_and_pay', 'Frontend\PaymentController@bookAndPay');
-    Route::get('/congratulations/{booking_id}', 'Frontend\PaymentController@congratulations');
+    Route::get('/congratulations/{booking_id}', 'Frontend\PaymentController@congratulations');*/
 
     //get directions (google map) for hotel
     Route::get('/get_directions/{hotel_id}', 'Frontend\PaymentController@getDirections');

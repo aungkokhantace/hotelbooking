@@ -38,12 +38,12 @@ use Carbon\Carbon;
 use Elibyy\TCPDF\Facades\TCPDF;
 use Faker\Provider\fr_CH\Payment;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 use PDF;
 use Mail;
 
@@ -265,140 +265,148 @@ class BookingController extends Controller
     }
 
     public function print_congratulation($id){
-        $b_id                           = $id;
-        $hotelRepo                      = new HotelRepository();
-        $h_facilityRepo                 = new HotelFacilityRepository();
-        $bRoomRepo                      = new BookingRoomRepository();
-        $amenityRepo                    = new AmenitiesRepository();
-        $facilityRepo                   = new FacilitiesRepository();
-        $h_configRepo                   = new HotelConfigRepository();
-        $b_requestRepo                  = new BookingRequestRepository();
-
-        $r_category_id                  = array();
-        $amenity_arr                    = array();
-        $facility_arr                   = array();
-
-        $booking                        = $this->repo->getBookingById($b_id);
-        $hotel                          = $hotelRepo->getObjByID($booking->hotel_id);
-        $h_facilities                   = $h_facilityRepo->getHotelFacilitiesByHotelID($booking->hotel_id);
-        $hotel->h_facilities            = $h_facilities;
-
-        $start                          = Carbon::parse($booking->check_in_date);
-        $end                            = Carbon::parse($booking->check_out_date);
-        $total_day                      = $end->diffInDays($start);
-        $booking->total_day             = $total_day; //Add total booked days to booking
-
-        $bRooms                         = $bRoomRepo->getBookingRoomAndRoomByBookingId($b_id);
-        $room_count                     = count($bRooms);
-        $booking->room_count            = $room_count; //Add Number of Room to booking
-
-        /* Calculate Cancellation Cost */
-        $h_config                       = $h_configRepo->getConfigByHotel($booking->hotel_id);
-        $first_cancel_days              = 0;
-        $second_cancel_days             = 0;
-        if(isset($h_config) && count($h_config) > 0){
-            $first_cancel_days          = $h_config->first_cancellation_day_count;
-            $second_cancel_days         = $h_config->second_cancellation_day_count;
-        }
-        $first_cancel_date              = Carbon::parse($booking->check_in_date)->subDays($first_cancel_days)->format('M d, Y');
-        $second_cancel_date             = Carbon::parse($booking->check_in_date)->subDays($second_cancel_days)->format('M d, Y');
-        $free_cancel_days               = Carbon::parse($first_cancel_date)->diffInDays(Carbon::now());
-        $free_cancel_date               = Carbon::parse($first_cancel_date)->subDay()->format('M d, Y');
-
-        $booking->free_cancel_date      = $free_cancel_date;
-        $booking->first_cancel_date     = $first_cancel_date;
-        $booking->second_cancel_date    = $second_cancel_date;
-
-        if(isset($bRooms) && count($bRooms) > 0){
-            foreach($bRooms as $bRoom){
-                array_push($r_category_id,$bRoom->h_room_category_id);
+        try{
+            if(!Session::has('customer')){
+                return redirect('/');
             }
-        }
-
-        $amenities                      = $amenityRepo->getAmenitiesByRoomCategoryId($r_category_id);
-        $facilities                     = $facilityRepo->getFacilitiesByRoomCategoryId($r_category_id);
-        if(isset($bRooms) && count($bRooms) > 0){
-            $total_room_price           = 0.00;
-            $total_extra_bed_price      = 0.00;
-            foreach($bRooms as $bRoom){
-                $total_room_price       += $bRoom->room_payable_amt;
-//                $total_extra_bed_price  += $bRoom->extra_bed_price;
-                //Add amenities array in booking room
-                foreach($amenities as $amenity){
-                    if($bRoom->h_room_category_id == $amenity->room_category_id){
-                        array_push($amenity_arr,$amenity);
-                    }
-                }
-                $bRoom->amenities       = $amenity_arr;
-                $amenity_arr            = array();
-
-                //Add facilities array in booking room
-                foreach($facilities as $facility){
-                    if($bRoom->h_room_category_id == $facility->h_room_category_id){
-                        array_push($facility_arr,$facility);
-                    }
-                }
-                $bRoom->facilities      = $facility_arr;
-                $facility_arr           = array();
+            $b_id                           = $id;
+            $hotelRepo                      = new HotelRepository();
+            $h_facilityRepo                 = new HotelFacilityRepository();
+            $bRoomRepo                      = new BookingRoomRepository();
+            $amenityRepo                    = new AmenitiesRepository();
+            $facilityRepo                   = new FacilitiesRepository();
+            $h_configRepo                   = new HotelConfigRepository();
+            $b_requestRepo                  = new BookingRequestRepository();
+    
+            $r_category_id                  = array();
+            $amenity_arr                    = array();
+            $facility_arr                   = array();
+    
+            $booking                        = $this->repo->getBookingById($b_id);
+            $hotel                          = $hotelRepo->getObjByID($booking->hotel_id);
+            $h_facilities                   = $h_facilityRepo->getHotelFacilitiesByHotelID($booking->hotel_id);
+            $hotel->h_facilities            = $h_facilities;
+    
+            $start                          = Carbon::parse($booking->check_in_date);
+            $end                            = Carbon::parse($booking->check_out_date);
+            $total_day                      = $end->diffInDays($start);
+            $booking->total_day             = $total_day; //Add total booked days to booking
+    
+            $bRooms                         = $bRoomRepo->getBookingRoomAndRoomByBookingId($b_id);
+            $room_count                     = count($bRooms);
+            $booking->room_count            = $room_count; //Add Number of Room to booking
+    
+            /* Calculate Cancellation Cost */
+            $h_config                       = $h_configRepo->getConfigByHotel($booking->hotel_id);
+            $first_cancel_days              = 0;
+            $second_cancel_days             = 0;
+            if(isset($h_config) && count($h_config) > 0){
+                $first_cancel_days          = $h_config->first_cancellation_day_count;
+                $second_cancel_days         = $h_config->second_cancellation_day_count;
             }
+            $first_cancel_date              = Carbon::parse($booking->check_in_date)->subDays($first_cancel_days)->format('M d, Y');
+            $second_cancel_date             = Carbon::parse($booking->check_in_date)->subDays($second_cancel_days)->format('M d, Y');
+            $free_cancel_days               = Carbon::parse($first_cancel_date)->diffInDays(Carbon::now());
+            $free_cancel_date               = Carbon::parse($first_cancel_date)->subDay()->format('M d, Y');
+    
+            $booking->free_cancel_date      = $free_cancel_date;
+            $booking->first_cancel_date     = $first_cancel_date;
+            $booking->second_cancel_date    = $second_cancel_date;
+    
+            if(isset($bRooms) && count($bRooms) > 0){
+                foreach($bRooms as $bRoom){
+                    array_push($r_category_id,$bRoom->h_room_category_id);
+                }
+            }
+    
+            $amenities                      = $amenityRepo->getAmenitiesByRoomCategoryId($r_category_id);
+            $facilities                     = $facilityRepo->getFacilitiesByRoomCategoryId($r_category_id);
+            if(isset($bRooms) && count($bRooms) > 0){
+                $total_room_price           = 0.00;
+                $total_extra_bed_price      = 0.00;
+                foreach($bRooms as $bRoom){
+                    $total_room_price       += $bRoom->room_payable_amt;
+    //                $total_extra_bed_price  += $bRoom->extra_bed_price;
+                    //Add amenities array in booking room
+                    foreach($amenities as $amenity){
+                        if($bRoom->h_room_category_id == $amenity->room_category_id){
+                            array_push($amenity_arr,$amenity);
+                        }
+                    }
+                    $bRoom->amenities       = $amenity_arr;
+                    $amenity_arr            = array();
+    
+                    //Add facilities array in booking room
+                    foreach($facilities as $facility){
+                        if($bRoom->h_room_category_id == $facility->h_room_category_id){
+                            array_push($facility_arr,$facility);
+                        }
+                    }
+                    $bRoom->facilities      = $facility_arr;
+                    $facility_arr           = array();
+                }
+            }
+            $booking->total_room_price      = $total_room_price;
+    //        $booking->total_extra_bed_price = $total_extra_bed_price;
+            $booking->rooms                 = $bRooms; //Add Rooms Array to booking
+    
+            /* get booking request to know special request */
+            $b_request_arr                  = array();
+            $b_request                      = $b_requestRepo->getBookingRequestByBookingId($b_id);
+            if($b_request->non_smoking_room == 1){
+                array_push($b_request_arr,'Non Smoking Room');
+            }
+            if($b_request->non_smoking_room == 1){
+                array_push($b_request_arr,'Non Smoking Room');
+            }
+            if($b_request->late_check_in == 1){
+                array_push($b_request_arr,'Late Check In');
+            }
+            if($b_request->early_check_in == 1){
+                array_push($b_request_arr,'Early Check In');
+            }
+            if($b_request->high_floor_room == 1){
+                array_push($b_request_arr,'High Floor Room');
+            }
+            if($b_request->large_bed == 1){
+                array_push($b_request_arr,'Large Bed');
+            }
+            if($b_request->twin_bed == 1){
+                array_push($b_request_arr,'Twin Bed');
+            }
+            if($b_request->quiet_room == 1){
+                array_push($b_request_arr,'Quiet Room');
+            }
+            if($b_request->baby_cot == 1){
+                array_push($b_request_arr,'Baby Cot');
+            }
+            if($b_request->airport_transfer == 1){
+                array_push($b_request_arr,'Air Port Transfer');
+            }
+            if($b_request->private_parking == 1){
+                array_push($b_request_arr,'Private Parking');
+            }
+            if($b_request->booking_taxi == 1){
+                array_push($b_request_arr,'Book Taxi');
+            }
+            if($b_request->booking_tour_guide == 1){
+                array_push($b_request_arr,'Request Tour Guide');
+            }
+           
+            /* Start Print Function */
+            $view                           = \View::make('frontend.print_confirmation',compact('booking','hotel','h_config','b_request_arr'));
+            $html                           = $view->render();
+            $pdf                            = new TCPDF();
+    
+            $pdf::SetTitle('Booking Confirmation Preview');
+            $pdf::AddPage();
+            $pdf::writeHTML($html, true, false, true, false, '');
+            $pdf::Output('pdf_booking_confirmation.pdf');
+            /* End Print Function */
+        }catch(\Exception $e){
+            // write log here
+            return redirect('/');
         }
-        $booking->total_room_price      = $total_room_price;
-//        $booking->total_extra_bed_price = $total_extra_bed_price;
-        $booking->rooms                 = $bRooms; //Add Rooms Array to booking
-
-        /* get booking request to know special request */
-        $b_request_arr                  = array();
-        $b_request                      = $b_requestRepo->getBookingRequestByBookingId($b_id);
-        if($b_request->non_smoking_room == 1){
-            array_push($b_request_arr,'Non Smoking Room');
-        }
-        if($b_request->non_smoking_room == 1){
-            array_push($b_request_arr,'Non Smoking Room');
-        }
-        if($b_request->late_check_in == 1){
-            array_push($b_request_arr,'Late Check In');
-        }
-        if($b_request->early_check_in == 1){
-            array_push($b_request_arr,'Early Check In');
-        }
-        if($b_request->high_floor_room == 1){
-            array_push($b_request_arr,'High Floor Room');
-        }
-        if($b_request->large_bed == 1){
-            array_push($b_request_arr,'Large Bed');
-        }
-        if($b_request->twin_bed == 1){
-            array_push($b_request_arr,'Twin Bed');
-        }
-        if($b_request->quiet_room == 1){
-            array_push($b_request_arr,'Quiet Room');
-        }
-        if($b_request->baby_cot == 1){
-            array_push($b_request_arr,'Baby Cot');
-        }
-        if($b_request->airport_transfer == 1){
-            array_push($b_request_arr,'Air Port Transfer');
-        }
-        if($b_request->private_parking == 1){
-            array_push($b_request_arr,'Private Parking');
-        }
-        if($b_request->booking_taxi == 1){
-            array_push($b_request_arr,'Book Taxi');
-        }
-        if($b_request->booking_tour_guide == 1){
-            array_push($b_request_arr,'Request Tour Guide');
-        }
-       
-        /* Start Print Function */
-        $view                           = \View::make('frontend.print_confirmation',compact('booking','hotel','h_config','b_request_arr'));
-        $html                           = $view->render();
-        $pdf                            = new TCPDF();
-
-        $pdf::SetTitle('Booking Confirmation Preview');
-        $pdf::AddPage();
-        $pdf::writeHTML($html, true, false, true, false, '');
-        $pdf::Output('pdf_booking_confirmation.pdf');
-        /* End Print Function */
 
     }
 
