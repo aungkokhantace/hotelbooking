@@ -57,6 +57,7 @@ use Stripe\Charge;
 use Stripe\Customer;
 use Stripe\Stripe;
 use App\Payment\PaymentConstance;
+use URL;
 
 class PaymentController extends Controller
 {
@@ -70,273 +71,153 @@ class PaymentController extends Controller
     }
 
     public function enterDetails(Request $request){
-        /* Check request method is post or get */
-        if($request->isMethod('POST')){
-            /* Get hidden booked room category id */
-            $available_room_categories                  = Input::get('available_room_categories');
+        try{
+            /* Check request method is post or get */
+            if($request->isMethod('POST')){
+                /* Get hidden booked room category id */
+                $available_room_categories                  = Input::get('available_room_categories');
+                /* Merge Room Category Id and number of booked room.*/
+                $number_array                               = array();
+                foreach($available_room_categories as $available_room_category){
+                    $number_array[$available_room_category] = Input::get('number_'.$available_room_category);
+                }
 
-            /* Merge Room Category Id and number of booked room.*/
-            $number_array                               = array();
-            foreach($available_room_categories as $available_room_category){
-                $number_array[$available_room_category] = Input::get('number_'.$available_room_category);
+                //if method is post, add available_room_categories and number_array in session
+                Session::put('available_room_categories',$available_room_categories);
+                Session::put('number_array',$number_array);
+
+            }
+            else{
+                $available_room_categories                  = Session::get('available_room_categories');
+                $number_array                               = Session::get('number_array');
             }
 
-            //if method is post, add available_room_categories and number_array in session
-            Session::put('available_room_categories',$available_room_categories);
-            Session::put('number_array',$number_array);
+            /* Get room category objects By room category id */
+            $roomCategoryRepo                               = new HotelRoomCategoryRepository();
+            $available_room_category_array                  = array();
 
-        }
-        else{
-            
-            $available_room_categories                  = Session::get('available_room_categories');
-            $number_array                               = Session::get('number_array');
-        }
-
-        /* Get room category objects By room category id */
-        $roomCategoryRepo                               = new HotelRoomCategoryRepository();
-        $available_room_category_array                  = array();
-
-        foreach($available_room_categories as $available){
-            $room_category      = $roomCategoryRepo->getObjByID($available);
-            if(isset($number_array[$available]) && $number_array[$available] != "" && $number_array[$available] != 0){
-                $room_category->number = $number_array[$available];
-                array_push($available_room_category_array,$room_category);
-            }
-        }
-
-        /* Get hotel data by hotel id of booked room category */
-        $hotel_id               = $available_room_category_array[0]->hotel_id;
-        $hotelRepo              = new HotelRepository();
-        $hotel                  = $hotelRepo->getObjByID($hotel_id);
-
-        $check_in               = session('check_in');
-        $check_out              = session('check_out');
-
-        /* Calculate the number of night stay */
-        $difference             = strtotime($check_out) - strtotime($check_in);
-        $nights                 = floor($difference/(60*60*24));
-
-        /* Get facilities of hotel */
-        $hotelFacilitiesRepo    = new HotelFacilityRepository();
-        $hotelFacilities        = $hotelFacilitiesRepo->getHotelFacilitiesByHotelID($hotel_id);
-
-        /* Calculate total number of rooms */
-        $totalRooms = 0;
-        foreach($number_array as $room_category_id=>$number_of_room){
-            if($number_of_room > 0){
-                $totalRooms += $number_of_room;
-            }
-        }
-
-        $roomDiscountRepo                       = new RoomDiscountRepository();
-
-        /* Calculate total amount */
-        $total_amount_wo_discount               = 0.0;
-        $total_amount_w_discount                = 0.0;
-        $discount_array                         = array();
-        foreach($number_array as $room_category_id=>$number_of_room){
-            if($number_of_room > 0){
-                /* Get room category object and it's properties. */
-                $room_category                      = $roomCategoryRepo->getObjByID($room_category_id);
-                // Price for one room
-                $room_category_price                = $room_category->price;
-                $reserved_date                      = date('Y-m-d', strtotime($check_in));
-                /* Start checking discount for each room_category */
-                for($i=1;$i<=$nights;$i++){
-                    /*
-                     * Get room discount by room category id and reserved date.
-                     * If room discount is null, there's no discount.
-                     * If not, need to calculate for each reserved date.
-                     */
-                    // Amount of all reserved rooms without discount amount.
-                    $amount_per_category_wo_discount    = $room_category_price* $number_of_room;
-                    // Amount of all reserved rooms with discount amount.
-                    $amount_per_category_w_discount     = $amount_per_category_wo_discount;
-                    // Get room discount by reserved_date and room_category _id
-                    $room_discount                      = $roomDiscountRepo->getRoomCategoryDiscount($room_category_id,$reserved_date);
-                    /* Initialize or reset discount_percent and discount_amt */
-                    $discount_percent                   = 0.00;
-                    $discount_amt                       = 0.00;
-
-                    if(isset($room_discount) && count($room_discount)>0){
-                        /*
-                         * If discount is defined by percent, change percent to amount for each room.
-                         * If discount is defined by amount, get discount amount for each room.
-                         */
-                        if(isset($room_discount->discount_percent) && $room_discount->discount_percent != 0){
-                            $discount_percent           = $room_discount->discount_percent;
-                            $discount_amt               = round(($discount_percent / 100) * $room_category_price,2);
-                        }
-                        if(($room_discount->discount_amount) && $room_discount->discount_amount != 0){
-                            $discount_amt               = $room_discount->discount_amount;
-                            $discount_percent           = round(($discount_amt/$room_category_price)*100,2);
-                        }
-                        
-                        /*
-                         * Calculate amount with discount for all reserved room per category.
-                         * Subtract discount amount of all reserved room per category from the amount of all reserved rooms
-                         * without discount amount.
-                         * And create discount amount array.
-                         */
-                    
-                        $amount_per_category_w_discount = $amount_per_category_wo_discount-($discount_amt*$number_of_room);
-                        array_push($discount_array,$discount_amt*$number_of_room);
-                    }
-                    // Total amount of all reserved rooms without discount amount.
-                    $total_amount_wo_discount          += $amount_per_category_wo_discount;
-                    // Total amount of all reserved rooms with discount.
-                    $total_amount_w_discount           += $amount_per_category_w_discount;
-                    // next reserved date
-                    $reserved_date                      = date("Y-m-d", strtotime("1 day", strtotime($reserved_date)));
+            foreach($available_room_categories as $available){
+                $room_category      = $roomCategoryRepo->getObjByID($available);
+                if(isset($number_array[$available]) && $number_array[$available] != "" && $number_array[$available] != 0){
+                    $room_category->number = $number_array[$available];
+                    array_push($available_room_category_array,$room_category);
                 }
             }
-        }
-        /* Calculate total discount amount */
-        $total_discount_amount                  = 0.00;
-        foreach($discount_array as $disc){
-            $total_discount_amount             += $disc;
-        }
 
-        //get hotel_service_tax if exists, else, get service_tax from core_configs
-        $service_tax                            = Utility::getServiceTax($hotel_id);
-        $service_tax_amount                     = round(($service_tax / 100) * $total_amount_w_discount,2);
+            /* Get hotel data by hotel id of booked room category */
+            $hotel_id               = $available_room_category_array[0]->hotel_id;
+            $hotelRepo              = new HotelRepository();
+            $hotel                  = $hotelRepo->getObjByID($hotel_id);
 
-        //get government tax
-        $gov_tax_temp                           = DB::select("SELECT * FROM core_configs WHERE `code` = 'GST'");
-        if(isset($gov_tax_temp) && count($gov_tax_temp)>0){
-            $gov_tax                            = number_format((float)$gov_tax_temp[0]->value,2);
-        }
-        else{
-            $gov_tax                            = 0.00;
-        }
+            $check_in               = session('check_in');
+            $check_out              = session('check_out');
 
-        $gov_tax_amount                         = round(($gov_tax / 100) * $total_amount_w_discount,2);
-        $payable_amount                         = $total_amount_w_discount + $service_tax_amount + $gov_tax_amount;
+            /* Calculate the number of night stay */
+            $difference             = strtotime($check_out) - strtotime($check_in);
+            $nights                 = floor($difference/(60*60*24));
 
-        /* Start deleting Session */
-        Session::forget('total_amount');
-        Session::forget('total_amount_wo_discount');
-        Session::forget('total_amount_w_discount');
-        Session::forget('total_discount_amount');
+            /* Get facilities of hotel */
+            $hotelFacilitiesRepo    = new HotelFacilityRepository();
+            $hotelFacilities        = $hotelFacilitiesRepo->getHotelFacilitiesByHotelID($hotel_id);
 
-        Session::forget('service_tax');
-        Session::forget('service_tax_amount');
-        Session::forget('gov_tax');
-        Session::forget('gov_tax_amount');
+            /* Calculate total number of rooms */
+            $totalRooms = 0;
+            foreach($number_array as $room_category_id=>$number_of_room){
+                if($number_of_room > 0){
+                    $totalRooms += $number_of_room;
+                }
+            }
 
-        Session::forget('payable_amount');
-//        Session::forget('total_payable_amount_w_extrabed');
-        Session::forget('total_payable_amount_wo_extrabed');
-        Session::forget('total_extrabed_fee');
+            $roomDiscountRepo                       = new RoomDiscountRepository();
 
-        Session::forget('total_discount_amount');
+            /* Calculate total amount */
+            $total_amount_wo_discount               = 0.0;
+            $total_amount_w_discount                = 0.0;
+            $discount_array                         = array();
+            foreach($number_array as $room_category_id=>$number_of_room){
+                if($number_of_room > 0){
+                    /* Get room category object and it's properties. */
+                    $room_category                      = $roomCategoryRepo->getObjByID($room_category_id);
+                    // Price for one room
+                    $room_category_price                = $room_category->price;
+                    $reserved_date                      = date('Y-m-d', strtotime($check_in));
+                    /* Start checking discount for each room_category */
+                    for($i=1;$i<=$nights;$i++){
+                        /*
+                        * Get room discount by room category id and reserved date.
+                        * If room discount is null, there's no discount.
+                        * If not, need to calculate for each reserved date.
+                        */
+                        // Amount of all reserved rooms without discount amount.
+                        $amount_per_category_wo_discount    = $room_category_price* $number_of_room;
+                        // Amount of all reserved rooms with discount amount.
+                        $amount_per_category_w_discount     = $amount_per_category_wo_discount;
+                        // Get room discount by reserved_date and room_category _id
+                        $room_discount                      = $roomDiscountRepo->getRoomCategoryDiscount($room_category_id,$reserved_date);
+                        /* Initialize or reset discount_percent and discount_amt */
+                        $discount_percent                   = 0.00;
+                        $discount_amt                       = 0.00;
 
-        /* End deleting Session */
+                        if(isset($room_discount) && count($room_discount)>0){
+                            /*
+                            * If discount is defined by percent, change percent to amount for each room.
+                            * If discount is defined by amount, get discount amount for each room.
+                            */
+                            if(isset($room_discount->discount_percent) && $room_discount->discount_percent != 0){
+                                $discount_percent           = $room_discount->discount_percent;
+                                $discount_amt               = round(($discount_percent / 100) * $room_category_price,2);
+                            }
+                            if(($room_discount->discount_amount) && $room_discount->discount_amount != 0){
+                                $discount_amt               = $room_discount->discount_amount;
+                                $discount_percent           = round(($discount_amt/$room_category_price)*100,2);
+                            }
+                            
+                            /*
+                            * Calculate amount with discount for all reserved room per category.
+                            * Subtract discount amount of all reserved room per category from the amount of all reserved rooms
+                            * without discount amount.
+                            * And create discount amount array.
+                            */
+                        
+                            $amount_per_category_w_discount = $amount_per_category_wo_discount-($discount_amt*$number_of_room);
+                            array_push($discount_array,$discount_amt*$number_of_room);
+                        }
+                        // Total amount of all reserved rooms without discount amount.
+                        $total_amount_wo_discount          += $amount_per_category_wo_discount;
+                        // Total amount of all reserved rooms with discount.
+                        $total_amount_w_discount           += $amount_per_category_w_discount;
+                        // next reserved date
+                        $reserved_date                      = date("Y-m-d", strtotime("1 day", strtotime($reserved_date)));
+                    }
+                }
+            }
+            /* Calculate total discount amount */
+            $total_discount_amount                  = 0.00;
+            foreach($discount_array as $disc){
+                $total_discount_amount             += $disc;
+            }
 
-        /* Calculate total amount without extra bed price or with extra bed price */
-        $total_payable_amount_wo_extrabed = 0.00;
-        $total_payable_amount_wo_extrabed = $total_amount_w_discount;
+            //get hotel_service_tax if exists, else, get service_tax from core_configs
+            $service_tax                            = Utility::getServiceTax($hotel_id);
+            $service_tax_amount                     = round(($service_tax / 100) * $total_amount_w_discount,2);
 
-        if(isset($total_payable_amount_wo_extrabed) && $total_payable_amount_wo_extrabed != 0.00){
-            session(['total_payable_amount_wo_extrabed' => $total_payable_amount_wo_extrabed]);
-        }
+            //get government tax
+            $gov_tax_temp                           = DB::select("SELECT * FROM core_configs WHERE `code` = 'GST'");
+            if(isset($gov_tax_temp) && count($gov_tax_temp)>0){
+                $gov_tax                            = number_format((float)$gov_tax_temp[0]->value,2);
+            }
+            else{
+                $gov_tax                            = 0.00;
+            }
 
-//        if(isset($total_amount) && $total_amount != null && $total_amount != ""){
-//            session(['total_amount' => $total_amount]);
-//        }
+            $gov_tax_amount                         = round(($gov_tax / 100) * $total_amount_w_discount,2);
+            $payable_amount                         = $total_amount_w_discount + $service_tax_amount + $gov_tax_amount;
 
-        if(isset($total_amount_wo_discount) && $total_amount_wo_discount != null && $total_amount_wo_discount != ""){
-            session(['total_amount_wo_discount' => $total_amount_wo_discount]);
-        }
-
-        if(isset($total_amount_w_discount) && $total_amount_w_discount != null && $total_amount_w_discount != ""){
-            session(['total_amount_w_discount' => $total_amount_w_discount]);
-        }
-
-        if(isset($total_discount_amount) && $total_discount_amount != null && $total_discount_amount != ""){
-            session(['total_discount_amount' => $total_discount_amount]);
-        }
-
-        if(isset($service_tax) && $service_tax != null && $service_tax != ""){
-            session(['service_tax' => $service_tax]);
-        }
-
-        if(isset($service_tax_amount) && !is_null($service_tax_amount)){
-            session(['service_tax_amount' => $service_tax_amount]);
-        }
-
-//        if(isset($gov_tax) && $gov_tax != null && $gov_tax != ""){
-        if(isset($gov_tax)){
-            session(['gov_tax' => $gov_tax]);
-        }
-
-        if(isset($gov_tax_amount)){
-            session(['gov_tax_amount' => $gov_tax_amount]);
-        }
-
-        if(isset($payable_amount) && $payable_amount != null && $payable_amount != ""){
-            session(['payable_amount' => $payable_amount]);
-        }
-
-        return view('frontend.enterdetails')
-                    ->with('available_room_category_array',$available_room_category_array)
-                    ->with('hotel',$hotel)
-                    ->with('nights',$nights)
-                    ->with('hotelFacilities',$hotelFacilities)
-                    ->with('totalRooms',$totalRooms)
-                    ->with('payable_amount',$payable_amount);
-    }
-
-    public function confirmReservation(Request $request) {
-
-        $hotel_id                   = Input::get('hotel_id');
-        $available_room_categories  = Input::get('available_room_categories');
-
-        $travel_for_work            = (Input::has('travel_for_work')) ? 1 : 0;
-        $first_name                 = Input::get('first_name');
-        $last_name                  = Input::get('last_name');
-        $email                      = Input::get('email');
-
-        $booking_taxi               = (Input::has('booking_taxi')) ? 1 : 0;
-        $booking_tour_guide         = (Input::has('booking_tour_guide')) ? 1 : 0;
-
-        $non_smoking_request        = (Input::has('non_smoking_request')) ? 1 : 0;
-        $late_check_in_request      = (Input::has('late_check_in_request')) ? 1 : 0;
-        $high_floor_request         = (Input::has('high_floor_request')) ? 1 : 0;
-        $large_bed_request          = (Input::has('large_bed_request')) ? 1 : 0;
-        $early_check_in_request     = (Input::has('early_check_in_request')) ? 1 : 0;
-        $twin_bed_request           = (Input::has('twin_bed_request')) ? 1 : 0;
-        $quiet_room_request         = (Input::has('quiet_room_request')) ? 1 : 0;
-        $airport_transfer_request   = (Input::has('airport_transfer_request')) ? 1 : 0;
-        $private_parking_request    = (Input::has('private_parking_request')) ? 1 : 0;
-        $baby_cot_request           = (Input::has('baby_cot_request')) ? 1 : 0;
-        $special_request            = (Input::has('special_request')) ? Input::get('special_request') : "";
-
-        if($request->isMethod('POST')){
-            Session::forget('hotel_id');
-            Session::forget('travel_for_work');
-            Session::forget('first_name');
-            Session::forget('last_name');
-            Session::forget('email');
-            Session::forget('available_room_categories');
-
-            Session::forget('booking_taxi');
-            Session::forget('booking_tour_guide');
-
-            Session::forget('non_smoking_request');
-            Session::forget('late_check_in_request');
-            Session::forget('high_floor_request');
-            Session::forget('large_bed_request');
-            Session::forget('early_check_in_request');
-            Session::forget('twin_bed_request');
-            Session::forget('quiet_room_request');
-            Session::forget('airport_transfer_request');
-            Session::forget('private_parking_request');
-            Session::forget('baby_cot_request');
-            Session::forget('special_request');
-
+            /* Start deleting Session */
             Session::forget('total_amount');
-            Session::forget('total_payable_amount_w_extrabed');
+            Session::forget('total_amount_wo_discount');
+            Session::forget('total_amount_w_discount');
+            Session::forget('total_discount_amount');
 
             Session::forget('service_tax');
             Session::forget('service_tax_amount');
@@ -344,388 +225,522 @@ class PaymentController extends Controller
             Session::forget('gov_tax_amount');
 
             Session::forget('payable_amount');
+    //        Session::forget('total_payable_amount_w_extrabed');
+            Session::forget('total_payable_amount_wo_extrabed');
+            Session::forget('total_extrabed_fee');
 
-            foreach($available_room_categories as $key=>$temp){
-                $temp = json_decode($temp);
-                $available_room_categories[$key] = $temp;
+            Session::forget('total_discount_amount');
+
+            /* End deleting Session */
+
+            /* Calculate total amount without extra bed price or with extra bed price */
+            $total_payable_amount_wo_extrabed = 0.00;
+            $total_payable_amount_wo_extrabed = $total_amount_w_discount;
+
+            if(isset($total_payable_amount_wo_extrabed) && $total_payable_amount_wo_extrabed != 0.00){
+                session(['total_payable_amount_wo_extrabed' => $total_payable_amount_wo_extrabed]);
             }
+
+    //        if(isset($total_amount) && $total_amount != null && $total_amount != ""){
+    //            session(['total_amount' => $total_amount]);
+    //        }
+
+            if(isset($total_amount_wo_discount) && $total_amount_wo_discount != null && $total_amount_wo_discount != ""){
+                session(['total_amount_wo_discount' => $total_amount_wo_discount]);
+            }
+
+            if(isset($total_amount_w_discount) && $total_amount_w_discount != null && $total_amount_w_discount != ""){
+                session(['total_amount_w_discount' => $total_amount_w_discount]);
+            }
+
+            if(isset($total_discount_amount) && $total_discount_amount != null && $total_discount_amount != ""){
+                session(['total_discount_amount' => $total_discount_amount]);
+            }
+
+            if(isset($service_tax) && $service_tax != null && $service_tax != ""){
+                session(['service_tax' => $service_tax]);
+            }
+
+            if(isset($service_tax_amount) && !is_null($service_tax_amount)){
+                session(['service_tax_amount' => $service_tax_amount]);
+            }
+
+    //        if(isset($gov_tax) && $gov_tax != null && $gov_tax != ""){
+            if(isset($gov_tax)){
+                session(['gov_tax' => $gov_tax]);
+            }
+
+            if(isset($gov_tax_amount)){
+                session(['gov_tax_amount' => $gov_tax_amount]);
+            }
+
+            if(isset($payable_amount) && $payable_amount != null && $payable_amount != ""){
+                session(['payable_amount' => $payable_amount]);
+            }
+
+            return view('frontend.enterdetails')
+                        ->with('available_room_category_array',$available_room_category_array)
+                        ->with('hotel',$hotel)
+                        ->with('nights',$nights)
+                        ->with('hotelFacilities',$hotelFacilities)
+                        ->with('totalRooms',$totalRooms)
+                        ->with('payable_amount',$payable_amount);
+        }
+        catch(\Exception $e){
+            //write log here
+            Session::flush(); // destroy all sessions
+            return redirect('/');
+        }
         
-            //push to session array
-            if(isset($available_room_categories) && $available_room_categories != null && count($available_room_categories)>0){
-                foreach($available_room_categories as $available_room_cat){
-                    Session::push('available_room_categories',$available_room_cat);
-                }
-            }
-
-        }
-        else{
-            $hotel_id                   = Session::get('hotel_id');
-            $travel_for_work            = Session::get('travel_for_work');
-            $first_name                 = Session::get('first_name');
-            $last_name                  = Session::get('last_name');
-            $email                      = Session::get('email');
-            $available_room_categories  = Session::get('available_room_categories');
-
-            $booking_taxi               = Session::get('booking_taxi');
-            $booking_tour_guide         = Session::get('booking_tour_guide');
-
-            $non_smoking_request        = Session::get('non_smoking_request');
-            $late_check_in_request      = Session::get('late_check_in_request');
-            $high_floor_request         = Session::get('high_floor_request');
-            $large_bed_request          = Session::get('large_bed_request');
-            $early_check_in_request     = Session::get('early_check_in_request');
-            $twin_bed_request           = Session::get('twin_bed_request');
-            $quiet_room_request         = Session::get('quiet_room_request');
-            $airport_transfer_request   = Session::get('airport_transfer_request');
-            $private_parking_request    = Session::get('private_parking_request');
-            $baby_cot_request           = Session::get('baby_cot_request');
-            $special_request            = Session::get('special_request');
-
-        }
-        
-        //store general data fields in session
-        if(isset($hotel_id) && $hotel_id != null && $hotel_id != ""){
-            // session(['hotel_id' => $hotel_id]);
-            Session::put('hotel_id',$hotel_id);
-        }
-
-        if(isset($travel_for_work)){
-            // session(['travel_for_work' => $travel_for_work]);
-            Session::put('travel_for_work',$travel_for_work);
-        }
-        if(isset($first_name) && $first_name != null && $first_name != ""){
-            // session(['first_name' => $first_name]);
-            Session::put('first_name',$first_name);
-        }
-        if(isset($last_name) && $last_name != null && $last_name != ""){
-            // session(['last_name' => $last_name]);
-            Session::put('last_name',$last_name);
-        }
-        if(isset($email) && $email != null && $email != ""){
-            // session(['email' => $email]);
-            Session::put('email',$email);
-        }
-
-        $guest_array            = array();
-        $smoking_array          = array();
-        $name_array             = array();
-        $email_array            = array();
-        $extrabed_array         = array();
-        $extrabed_fee_array     = array();
-        $room_no_extra_array    = array();
-        $category_extra_array   = array();
-
-        /* Get check_in and check_out date from session */
-        $check_in               = session('check_in');
-        $check_out              = session('check_out');
-
-        /* Calculate the number of night stay */
-        $difference             = strtotime($check_out) - strtotime($check_in);
-        $nights                 = floor($difference/(60*60*24));
-        $total_extrabed_fee     = 0.00;
-
-        if(isset($available_room_categories) && count($available_room_categories)){
-            foreach($available_room_categories as $category){
-                /*
-                 * Delete some session.
-                 * Get guest information for each room that exist in the same category.
-                 */
-                if(isset($category->number) && $category->number !=0 && $category->number != ""){
-                    for($i=0;$i<$category->number;$i++){
-                        //for guest array
-                        Session::forget($category->id."_".($i+1)."_guest");  //forget old session
-                        $temp_guest = (Input::has($category->id."_".($i+1)."_guest")) ? Input::get($category->id."_".($i+1)."_guest") : 1;
-                        $guest_array[$category->id."_".($i+1)] = $temp_guest;
-                        //store in session
-                        session([$category->id."_".($i+1)."_guest" => $temp_guest]);
-
-                        //for smoking array
-                        Session::forget($category->id."_".($i+1)."_smoking");  //forget old session
-                        $temp_smoking = (Input::has($category->id."_".($i+1)."_smoking")) ? Input::get($category->id."_".($i+1)."_smoking") : "yes";
-                        $smoking_array[$category->id."_".($i+1)] = $temp_smoking;
-                        //store in session
-                        session([$category->id."_".($i+1)."_smoking" => $temp_smoking]);
-
-                        //for extrabed array
-                        Session::forget($category->id."_".($i+1)."_extrabed");  //forget old session
-                        $temp_extrabed = (Input::has($category->id."_".($i+1)."_extrabed")) ? Input::get($category->id."_".($i+1)."_extrabed") : "no";
-                        $extrabed_array[$category->id."_".($i+1)] = $temp_extrabed;
-                        //store in session
-                        session([$category->id."_".($i+1)."_extrabed" => $temp_extrabed]);
-                        //if extrabed value is yes, store extrabed fee in extrabed_fee_array()
-                        if($temp_extrabed == "yes"){
-                            array_push($extrabed_fee_array,$category->extra_bed_price);
-                            /* Calculate total extra bed price */
-                            $extra_bed_price                    = $category->extra_bed_price*$nights;
-                            $total_extrabed_fee                += $extra_bed_price;
-                        }
-
-                        /* Create array for extra bed info. Key is room no and Value is extra bed info array. */
-                        $temp_room_extra_array['room_no']       = $i;
-                        $temp_room_extra_array['add_extra']     = $temp_extrabed;
-                        $temp_room_extra_array['extra_price']   = $category->extra_bed_price;
-                        $temp_room_extra_array['category_id']   = $category->id;
-                        $room_no_extra_array[$i+1]              = $temp_room_extra_array;
-
-                        //for first name array
-                        Session::forget($category->id."_".($i+1)."_firstname");  //forget old session
-                        $temp_firstname = (Input::has($category->id."_".($i+1)."_firstname")) ? Input::get($category->id."_".($i+1)."_firstname") : "";
-                        $firstname_array[$category->id."_".($i+1)] = $temp_firstname;
-                        //store in session
-                        session([$category->id."_".($i+1)."_firstname" => $temp_firstname]);
-
-                        //for last name array
-                        Session::forget($category->id."_".($i+1)."_lastname");  //forget old session
-                        $temp_lastname = (Input::has($category->id."_".($i+1)."_lastname")) ? Input::get($category->id."_".($i+1)."_lastname") : "";
-                        $lastname_array[$category->id."_".($i+1)] = $temp_lastname;
-                        //store in session
-                        session([$category->id."_".($i+1)."_lastname" => $temp_lastname]);
-
-                        //for email array
-                        Session::forget($category->id."_".($i+1)."_email");  //forget old session
-                        $temp_email = (Input::has($category->id."_".($i+1)."_email")) ? Input::get($category->id."_".($i+1)."_email") : "";
-                        $email_array[$category->id."_".($i+1)] = $temp_email;
-                        //store in session
-                        session([$category->id."_".($i+1)."_email" => $temp_email]);
-                    }
-                }
-                /* Create array using category id as key.Merge with array using room no as key. */
-                $category_extra_array[$category->id]      = $room_no_extra_array;
-                $temp_room_extra_array                      = array(); // Reset temp array.
-            }
-        }
-
-        if(isset($total_extrabed_fee)){
-            session(['total_extrabed_fee' => $total_extrabed_fee]);
-        }
-
-        if(isset($booking_taxi)){
-            session(['booking_taxi' => $booking_taxi]);
-        }
-
-        if(isset($booking_tour_guide)){
-            session(['booking_tour_guide' => $booking_tour_guide]);
-        }
-
-        if(isset($non_smoking_request)){
-            session(['non_smoking_request' => $non_smoking_request]);
-        }
-        if(isset($late_check_in_request)){
-            session(['late_check_in_request' => $late_check_in_request]);
-        }
-        if(isset($high_floor_request)){
-            session(['high_floor_request' => $high_floor_request]);
-        }
-        if(isset($large_bed_request)){
-            session(['large_bed_request' => $large_bed_request]);
-        }
-        if(isset($early_check_in_request)){
-            session(['early_check_in_request' => $early_check_in_request]);
-        }
-        if(isset($twin_bed_request)){
-            session(['twin_bed_request' => $twin_bed_request]);
-        }
-        if(isset($quiet_room_request)){
-            session(['quiet_room_request' => $quiet_room_request]);
-        }
-        if(isset($airport_transfer_request)){
-            session(['airport_transfer_request' => $airport_transfer_request]);
-        }
-        if(isset($private_parking_request)){
-            session(['private_parking_request' => $private_parking_request]);
-        }
-        if(isset($baby_cot_request)){
-            session(['baby_cot_request' => $baby_cot_request]);
-        }
-        if(isset($special_request)){
-            session(['special_request' => $special_request]);
-        }
-
-        $hotelRepo              = new HotelRepository();
-        $hotel                  = $hotelRepo->getObjByID($hotel_id);
-
-        $hotelFacilitiesRepo    = new HotelFacilityRepository();
-        $hotelFacilities        = $hotelFacilitiesRepo->getHotelFacilitiesByHotelID($hotel_id);
-
-        /* Calculate total number of rooms */
-        $totalRooms             = 0;
-        foreach($available_room_categories as $available_category){
-            if($available_category->number > 0){
-                $totalRooms    += $available_category->number;
-            }
-        }
-
-        //calculate total amount
-//        $total_amount = 0.0;
-        $total_amount_wo_discount = 0.0;
-        $total_amount_w_discount = 0.0;
-
-//        foreach($available_room_categories as $available_room_category_amount){
-//            if($available_room_category_amount->number > 0){
-//                $amount_per_category = $available_room_category_amount->price * $available_room_category_amount->number * $nights;
-//                $total_amount += $amount_per_category;
-//            }
-//        }
-
-        //save in session
-//        session(['total_amount' => $total_amount]);
-
-        /* Calculate total payable amount including extra bed fee */
-        $total_payable_amount_w_extrabed    = 0.00;
-        $total_payable_amount_wo_extrabed   = 0.00;
-        $total_amount_w_discount            = session('total_amount_w_discount');
-
-        $total_payable_amount_w_extrabed    = $total_amount_w_discount + $total_extrabed_fee;
-
-        //get hotel_service_tax if exists, else, get service_tax from core_configs
-        $service_tax                        = Utility::getServiceTax($hotel_id);
-//        $service_tax_amount = ($service_tax / 100) * $total_amount;
-        $service_tax_amount                 = round(($service_tax / 100) * $total_payable_amount_w_extrabed,2);
-
-        //get government tax
-        $gov_tax_temp = DB::select("SELECT * FROM core_configs WHERE `code` = 'GST'");
-        if(isset($gov_tax_temp) && count($gov_tax_temp)>0){
-            $gov_tax = number_format((float)$gov_tax_temp[0]->value,2);
-        }
-        else{
-            $gov_tax = 0.0;
-        }
-        $gov_tax_amount = round(($gov_tax / 100) * $total_payable_amount_w_extrabed,2);
-
-        //calculate payable amount
-//        $payable_amount = $total_amount + $service_tax_amount + $gov_tax_amount;
-        $payable_amount = $total_payable_amount_w_extrabed + $service_tax_amount + $gov_tax_amount;
-
-        if(isset($total_payable_amount_w_extrabed) && $total_payable_amount_w_extrabed != 0.00){
-            session(['total_payable_amount_w_extrabed' => $total_payable_amount_w_extrabed]);
-        }
-
-//        if(isset($total_payable_amount_wo_extrabed) && $total_payable_amount_wo_extrabed != 0.00){
-//            session(['total_payable_amount_wo_extrabed' => $total_payable_amount_wo_extrabed]);
-//        }
-
-        if(isset($service_tax) && $service_tax != null && $service_tax != ""){
-            session(['service_tax' => $service_tax]);
-        }
-
-        if(isset($service_tax_amount) && !is_null($service_tax_amount)){
-            session(['service_tax_amount' => $service_tax_amount]);
-        }
-
-//        if(isset($gov_tax) && $gov_tax != null && $gov_tax != ""){
-        if(isset($gov_tax)){
-            session(['gov_tax' => $gov_tax]);
-        }
-//        if(isset($gov_tax_amount) && $gov_tax_amount != null && $gov_tax_amount != ""){
-        if(isset($gov_tax_amount)){
-            session(['gov_tax_amount' => $gov_tax_amount]);
-        }
-        if(isset($payable_amount) && $payable_amount != null && $payable_amount != ""){
-            session(['payable_amount' => $payable_amount]);
-        }
-
-        if(isset($total_extrabed_fee) && $total_extrabed_fee != 0.00){
-            session(['total_extrabed_fee' => $total_extrabed_fee]);
-        }
-//
-//        if(isset($payable_amount) && $payable_amount != 0.00){
-//            session(['payable_amount' => $payable_amount]);
-//        }
-
-        $countryRepo    = new CountryRepository();
-        $countries      = $countryRepo->getObjs();
-
-        // for passing publishable key to stripe js checkout form i
-        $pub_key        = PaymentConstance::STIRPE_PUBLISHABLE_KEY;
-
-        return view('frontend.confirm_reservation')
-            ->with('available_room_category_array',$available_room_categories)
-            ->with('hotel',$hotel)
-            ->with('nights',$nights)
-            ->with('hotelFacilities',$hotelFacilities)
-            ->with('totalRooms',$totalRooms)
-            ->with('countries',$countries)
-            ->with('pub_key',$pub_key);
-//            ->with('total_amount',$total_amount);
     }
 
-    public function bookAndPay() {
-        //get input fields
-        $country                            = Input::get('country');
-        $phone                              = Input::get('phone');
-       
-        //get session data
-        $hotel_id                           = session('hotel_id');
-        $hotelRepo                          = new HotelRepository();
-        $hotel                              = $hotelRepo->getObjByID($hotel_id);
-        //Generate Booking Number
-        $booking_number                     = Utility::generateBookingNumber();
-
-        $user_id                            = session('customer')['id'];
-
-        $check_in_date_session              = session('check_in');
-        $check_out_date_session             = session('check_out');
-
-        //change date formats to store in DB
-        $check_in_date                      = date('Y-m-d', strtotime($check_in_date_session));
-        $check_out_date                     = date('Y-m-d', strtotime($check_out_date_session));
-
-        //Get check_in, check_out time of hotel
-        $check_in_time                      = $hotel->check_in_time;
-        $check_out_time                     = $hotel->check_out_time;
-
-        //Get Tax,Discount, and payable amount from session.
-        $total_payable_amount_w_extrabed    = session('total_payable_amount_w_extrabed');
-        $total_payable_amount_wo_extrabed   = session('total_payable_amount_wo_extrabed');
-        $payable_amount                     = session('payable_amount');
-
-        $gov_tax_amount                     = session('gov_tax_amount');
-        $gov_tax                            = session('gov_tax');
-        $service_tax_amount                 = session('service_tax_amount');
-        $service_tax                        = session('service_tax');
-
-        $total_discount_amount              = session('total_discount_amount');
-
-        $travel_for_work                    = session('travel_for_work');
-
-        $first_cancellation_day_count       = 0;
-        $second_cancellation_day_count      = 0;
-
-        /* Declare Repository */
-        $roomDiscountRepo                   = new RoomDiscountRepository();
-
-        /* Start checking cancellation dates */
-        // Get cancellation day from hotel config
-        $hotelConfigRepo                    = new HotelConfigRepository();
-        $h_config                           = $hotelConfigRepo->getConfigByHotel($hotel_id);
-        if(isset($h_config) && count($h_config)>0){
-            $first_cancellation_day_count   = $h_config->first_cancellation_day_count;
-            $second_cancellation_day_count  = $h_config->second_cancellation_day_count;
-        }
-
-        // Calculate the day to be charged by subtracting first_cancellation_date
-        $today_date                         = date("Y-m-d");   //today's date
-
-        $date                               = strtotime(date("Y-m-d", strtotime($check_in_date)) . "-".
-                                              $first_cancellation_day_count."days");
-
-        //date to be charged //after subtracting 1st cancellation date
-        $charge_date                        = date("Y-m-d",$date); //re-format the date
-
-        /* End checking cancellation dates */
-
-        /* Compare today date with charge_date and if today is greater than charge_date
-        (i.e. today is within first cancellation day or second cancellation day), charge the customer */
-        if($today_date >= $charge_date){
-            $status                         = 5;
-            //today is within cancellation date and so, user will be charged immediately and booking_status will be "complete"
-        }
-        else{
-            $status                         = 2;
-            //booking_status = "confirm"
-        }
-
+    public function confirmReservation(Request $request) {
         try{
+            $hotel_id                   = Input::get('hotel_id');
+            $available_room_categories  = Input::get('available_room_categories');
+    
+            $travel_for_work            = (Input::has('travel_for_work')) ? 1 : 0;
+            $first_name                 = Input::get('first_name');
+            $last_name                  = Input::get('last_name');
+            $email                      = Input::get('email');
+    
+            $booking_taxi               = (Input::has('booking_taxi')) ? 1 : 0;
+            $booking_tour_guide         = (Input::has('booking_tour_guide')) ? 1 : 0;
+    
+            $non_smoking_request        = (Input::has('non_smoking_request')) ? 1 : 0;
+            $late_check_in_request      = (Input::has('late_check_in_request')) ? 1 : 0;
+            $high_floor_request         = (Input::has('high_floor_request')) ? 1 : 0;
+            $large_bed_request          = (Input::has('large_bed_request')) ? 1 : 0;
+            $early_check_in_request     = (Input::has('early_check_in_request')) ? 1 : 0;
+            $twin_bed_request           = (Input::has('twin_bed_request')) ? 1 : 0;
+            $quiet_room_request         = (Input::has('quiet_room_request')) ? 1 : 0;
+            $airport_transfer_request   = (Input::has('airport_transfer_request')) ? 1 : 0;
+            $private_parking_request    = (Input::has('private_parking_request')) ? 1 : 0;
+            $baby_cot_request           = (Input::has('baby_cot_request')) ? 1 : 0;
+            $special_request            = (Input::has('special_request')) ? Input::get('special_request') : "";
+    
+            if($request->isMethod('POST')){
+                Session::forget('hotel_id');
+                Session::forget('travel_for_work');
+                Session::forget('first_name');
+                Session::forget('last_name');
+                Session::forget('email');
+                Session::forget('available_room_categories');
+    
+                Session::forget('booking_taxi');
+                Session::forget('booking_tour_guide');
+    
+                Session::forget('non_smoking_request');
+                Session::forget('late_check_in_request');
+                Session::forget('high_floor_request');
+                Session::forget('large_bed_request');
+                Session::forget('early_check_in_request');
+                Session::forget('twin_bed_request');
+                Session::forget('quiet_room_request');
+                Session::forget('airport_transfer_request');
+                Session::forget('private_parking_request');
+                Session::forget('baby_cot_request');
+                Session::forget('special_request');
+    
+                Session::forget('total_amount');
+                Session::forget('total_payable_amount_w_extrabed');
+    
+                Session::forget('service_tax');
+                Session::forget('service_tax_amount');
+                Session::forget('gov_tax');
+                Session::forget('gov_tax_amount');
+    
+                Session::forget('payable_amount');
+    
+                foreach($available_room_categories as $key=>$temp){
+                    $temp = json_decode($temp);
+                    $available_room_categories[$key] = $temp;
+                }
+            
+                //push to session array
+                if(isset($available_room_categories) && $available_room_categories != null && count($available_room_categories)>0){
+                    foreach($available_room_categories as $available_room_cat){
+                        Session::push('available_room_categories',$available_room_cat);
+                    }
+                }
+    
+            }
+            else{
+                $hotel_id                   = Session::get('hotel_id');
+                $travel_for_work            = Session::get('travel_for_work');
+                $first_name                 = Session::get('first_name');
+                $last_name                  = Session::get('last_name');
+                $email                      = Session::get('email');
+                $available_room_categories  = Session::get('available_room_categories');
+    
+                $booking_taxi               = Session::get('booking_taxi');
+                $booking_tour_guide         = Session::get('booking_tour_guide');
+    
+                $non_smoking_request        = Session::get('non_smoking_request');
+                $late_check_in_request      = Session::get('late_check_in_request');
+                $high_floor_request         = Session::get('high_floor_request');
+                $large_bed_request          = Session::get('large_bed_request');
+                $early_check_in_request     = Session::get('early_check_in_request');
+                $twin_bed_request           = Session::get('twin_bed_request');
+                $quiet_room_request         = Session::get('quiet_room_request');
+                $airport_transfer_request   = Session::get('airport_transfer_request');
+                $private_parking_request    = Session::get('private_parking_request');
+                $baby_cot_request           = Session::get('baby_cot_request');
+                $special_request            = Session::get('special_request');
+    
+            }
+            
+            //store general data fields in session
+            if(isset($hotel_id) && $hotel_id != null && $hotel_id != ""){
+                // session(['hotel_id' => $hotel_id]);
+                Session::put('hotel_id',$hotel_id);
+            }
+    
+            if(isset($travel_for_work)){
+                // session(['travel_for_work' => $travel_for_work]);
+                Session::put('travel_for_work',$travel_for_work);
+            }
+            if(isset($first_name) && $first_name != null && $first_name != ""){
+                // session(['first_name' => $first_name]);
+                Session::put('first_name',$first_name);
+            }
+            if(isset($last_name) && $last_name != null && $last_name != ""){
+                // session(['last_name' => $last_name]);
+                Session::put('last_name',$last_name);
+            }
+            if(isset($email) && $email != null && $email != ""){
+                // session(['email' => $email]);
+                Session::put('email',$email);
+            }
+    
+            $guest_array            = array();
+            $smoking_array          = array();
+            $name_array             = array();
+            $email_array            = array();
+            $extrabed_array         = array();
+            $extrabed_fee_array     = array();
+            $room_no_extra_array    = array();
+            $category_extra_array   = array();
+    
+            /* Get check_in and check_out date from session */
+            $check_in               = session('check_in');
+            $check_out              = session('check_out');
+    
+            /* Calculate the number of night stay */
+            $difference             = strtotime($check_out) - strtotime($check_in);
+            $nights                 = floor($difference/(60*60*24));
+            $total_extrabed_fee     = 0.00;
+    
+            if(isset($available_room_categories) && count($available_room_categories)){
+                foreach($available_room_categories as $category){
+                    /*
+                     * Delete some session.
+                     * Get guest information for each room that exist in the same category.
+                     */
+                    if(isset($category->number) && $category->number !=0 && $category->number != ""){
+                        for($i=0;$i<$category->number;$i++){
+                            //for guest array
+                            Session::forget($category->id."_".($i+1)."_guest");  //forget old session
+                            $temp_guest = (Input::has($category->id."_".($i+1)."_guest")) ? Input::get($category->id."_".($i+1)."_guest") : 1;
+                            $guest_array[$category->id."_".($i+1)] = $temp_guest;
+                            //store in session
+                            session([$category->id."_".($i+1)."_guest" => $temp_guest]);
+    
+                            //for smoking array
+                            Session::forget($category->id."_".($i+1)."_smoking");  //forget old session
+                            $temp_smoking = (Input::has($category->id."_".($i+1)."_smoking")) ? Input::get($category->id."_".($i+1)."_smoking") : "yes";
+                            $smoking_array[$category->id."_".($i+1)] = $temp_smoking;
+                            //store in session
+                            session([$category->id."_".($i+1)."_smoking" => $temp_smoking]);
+    
+                            //for extrabed array
+                            Session::forget($category->id."_".($i+1)."_extrabed");  //forget old session
+                            $temp_extrabed = (Input::has($category->id."_".($i+1)."_extrabed")) ? Input::get($category->id."_".($i+1)."_extrabed") : "no";
+                            $extrabed_array[$category->id."_".($i+1)] = $temp_extrabed;
+                            //store in session
+                            session([$category->id."_".($i+1)."_extrabed" => $temp_extrabed]);
+                            //if extrabed value is yes, store extrabed fee in extrabed_fee_array()
+                            if($temp_extrabed == "yes"){
+                                array_push($extrabed_fee_array,$category->extra_bed_price);
+                                /* Calculate total extra bed price */
+                                $extra_bed_price                    = $category->extra_bed_price*$nights;
+                                $total_extrabed_fee                += $extra_bed_price;
+                            }
+    
+                            /* Create array for extra bed info. Key is room no and Value is extra bed info array. */
+                            $temp_room_extra_array['room_no']       = $i;
+                            $temp_room_extra_array['add_extra']     = $temp_extrabed;
+                            $temp_room_extra_array['extra_price']   = $category->extra_bed_price;
+                            $temp_room_extra_array['category_id']   = $category->id;
+                            $room_no_extra_array[$i+1]              = $temp_room_extra_array;
+    
+                            //for first name array
+                            Session::forget($category->id."_".($i+1)."_firstname");  //forget old session
+                            $temp_firstname = (Input::has($category->id."_".($i+1)."_firstname")) ? Input::get($category->id."_".($i+1)."_firstname") : "";
+                            $firstname_array[$category->id."_".($i+1)] = $temp_firstname;
+                            //store in session
+                            session([$category->id."_".($i+1)."_firstname" => $temp_firstname]);
+    
+                            //for last name array
+                            Session::forget($category->id."_".($i+1)."_lastname");  //forget old session
+                            $temp_lastname = (Input::has($category->id."_".($i+1)."_lastname")) ? Input::get($category->id."_".($i+1)."_lastname") : "";
+                            $lastname_array[$category->id."_".($i+1)] = $temp_lastname;
+                            //store in session
+                            session([$category->id."_".($i+1)."_lastname" => $temp_lastname]);
+    
+                            //for email array
+                            Session::forget($category->id."_".($i+1)."_email");  //forget old session
+                            $temp_email = (Input::has($category->id."_".($i+1)."_email")) ? Input::get($category->id."_".($i+1)."_email") : "";
+                            $email_array[$category->id."_".($i+1)] = $temp_email;
+                            //store in session
+                            session([$category->id."_".($i+1)."_email" => $temp_email]);
+                        }
+                    }
+                    /* Create array using category id as key.Merge with array using room no as key. */
+                    $category_extra_array[$category->id]      = $room_no_extra_array;
+                    $temp_room_extra_array                      = array(); // Reset temp array.
+                }
+            }
+    
+            if(isset($total_extrabed_fee)){
+                session(['total_extrabed_fee' => $total_extrabed_fee]);
+            }
+    
+            if(isset($booking_taxi)){
+                session(['booking_taxi' => $booking_taxi]);
+            }
+    
+            if(isset($booking_tour_guide)){
+                session(['booking_tour_guide' => $booking_tour_guide]);
+            }
+    
+            if(isset($non_smoking_request)){
+                session(['non_smoking_request' => $non_smoking_request]);
+            }
+            if(isset($late_check_in_request)){
+                session(['late_check_in_request' => $late_check_in_request]);
+            }
+            if(isset($high_floor_request)){
+                session(['high_floor_request' => $high_floor_request]);
+            }
+            if(isset($large_bed_request)){
+                session(['large_bed_request' => $large_bed_request]);
+            }
+            if(isset($early_check_in_request)){
+                session(['early_check_in_request' => $early_check_in_request]);
+            }
+            if(isset($twin_bed_request)){
+                session(['twin_bed_request' => $twin_bed_request]);
+            }
+            if(isset($quiet_room_request)){
+                session(['quiet_room_request' => $quiet_room_request]);
+            }
+            if(isset($airport_transfer_request)){
+                session(['airport_transfer_request' => $airport_transfer_request]);
+            }
+            if(isset($private_parking_request)){
+                session(['private_parking_request' => $private_parking_request]);
+            }
+            if(isset($baby_cot_request)){
+                session(['baby_cot_request' => $baby_cot_request]);
+            }
+            if(isset($special_request)){
+                session(['special_request' => $special_request]);
+            }
+    
+            $hotelRepo              = new HotelRepository();
+            $hotel                  = $hotelRepo->getObjByID($hotel_id);
+    
+            $hotelFacilitiesRepo    = new HotelFacilityRepository();
+            $hotelFacilities        = $hotelFacilitiesRepo->getHotelFacilitiesByHotelID($hotel_id);
+    
+            /* Calculate total number of rooms */
+            $totalRooms             = 0;
+            foreach($available_room_categories as $available_category){
+                if($available_category->number > 0){
+                    $totalRooms    += $available_category->number;
+                }
+            }
+    
+            //calculate total amount
+    //        $total_amount = 0.0;
+            $total_amount_wo_discount = 0.0;
+            $total_amount_w_discount = 0.0;
+    
+    //        foreach($available_room_categories as $available_room_category_amount){
+    //            if($available_room_category_amount->number > 0){
+    //                $amount_per_category = $available_room_category_amount->price * $available_room_category_amount->number * $nights;
+    //                $total_amount += $amount_per_category;
+    //            }
+    //        }
+    
+            //save in session
+    //        session(['total_amount' => $total_amount]);
+    
+            /* Calculate total payable amount including extra bed fee */
+            $total_payable_amount_w_extrabed    = 0.00;
+            $total_payable_amount_wo_extrabed   = 0.00;
+            $total_amount_w_discount            = session('total_amount_w_discount');
+    
+            $total_payable_amount_w_extrabed    = $total_amount_w_discount + $total_extrabed_fee;
+    
+            //get hotel_service_tax if exists, else, get service_tax from core_configs
+            $service_tax                        = Utility::getServiceTax($hotel_id);
+    //        $service_tax_amount = ($service_tax / 100) * $total_amount;
+            $service_tax_amount                 = round(($service_tax / 100) * $total_payable_amount_w_extrabed,2);
+    
+            //get government tax
+            $gov_tax_temp = DB::select("SELECT * FROM core_configs WHERE `code` = 'GST'");
+            if(isset($gov_tax_temp) && count($gov_tax_temp)>0){
+                $gov_tax = number_format((float)$gov_tax_temp[0]->value,2);
+            }
+            else{
+                $gov_tax = 0.0;
+            }
+            $gov_tax_amount = round(($gov_tax / 100) * $total_payable_amount_w_extrabed,2);
+    
+            //calculate payable amount
+    //        $payable_amount = $total_amount + $service_tax_amount + $gov_tax_amount;
+            $payable_amount = $total_payable_amount_w_extrabed + $service_tax_amount + $gov_tax_amount;
+    
+            if(isset($total_payable_amount_w_extrabed) && $total_payable_amount_w_extrabed != 0.00){
+                session(['total_payable_amount_w_extrabed' => $total_payable_amount_w_extrabed]);
+            }
+    
+    //        if(isset($total_payable_amount_wo_extrabed) && $total_payable_amount_wo_extrabed != 0.00){
+    //            session(['total_payable_amount_wo_extrabed' => $total_payable_amount_wo_extrabed]);
+    //        }
+    
+            if(isset($service_tax) && $service_tax != null && $service_tax != ""){
+                session(['service_tax' => $service_tax]);
+            }
+    
+            if(isset($service_tax_amount) && !is_null($service_tax_amount)){
+                session(['service_tax_amount' => $service_tax_amount]);
+            }
+    
+    //        if(isset($gov_tax) && $gov_tax != null && $gov_tax != ""){
+            if(isset($gov_tax)){
+                session(['gov_tax' => $gov_tax]);
+            }
+    //        if(isset($gov_tax_amount) && $gov_tax_amount != null && $gov_tax_amount != ""){
+            if(isset($gov_tax_amount)){
+                session(['gov_tax_amount' => $gov_tax_amount]);
+            }
+            if(isset($payable_amount) && $payable_amount != null && $payable_amount != ""){
+                session(['payable_amount' => $payable_amount]);
+            }
+    
+            if(isset($total_extrabed_fee) && $total_extrabed_fee != 0.00){
+                session(['total_extrabed_fee' => $total_extrabed_fee]);
+            }
+    //
+    //        if(isset($payable_amount) && $payable_amount != 0.00){
+    //            session(['payable_amount' => $payable_amount]);
+    //        }
+    
+            $countryRepo    = new CountryRepository();
+            $countries      = $countryRepo->getObjs();
+    
+            // for passing publishable key to stripe js checkout form i
+            $pub_key        = PaymentConstance::STIRPE_PUBLISHABLE_KEY;
+    
+            return view('frontend.confirm_reservation')
+                ->with('available_room_category_array',$available_room_categories)
+                ->with('hotel',$hotel)
+                ->with('nights',$nights)
+                ->with('hotelFacilities',$hotelFacilities)
+                ->with('totalRooms',$totalRooms)
+                ->with('countries',$countries)
+                ->with('pub_key',$pub_key);
+    //            ->with('total_amount',$total_amount);
+        }
+        catch(\Exception $e){
+            // write log here
+            // dd('catch',$e);
+            Session::flush(); // destroy all session.
+            return redirect('/');
+        }
+        
+    }
+
+    public function bookAndPay() {   
+        try{
+            //get input fields
+            $country                            = Input::get('country');
+            $phone                              = Input::get('phone');
+        
+            //get session data
+            $hotel_id                           = session('hotel_id');
+            $hotelRepo                          = new HotelRepository();
+            $hotel                              = $hotelRepo->getObjByID($hotel_id);
+            //Generate Booking Number
+            $booking_number                     = Utility::generateBookingNumber();
+
+            $user_id                            = session('customer')['id'];
+
+            $check_in_date_session              = session('check_in');
+            $check_out_date_session             = session('check_out');
+
+            //change date formats to store in DB
+            $check_in_date                      = date('Y-m-d', strtotime($check_in_date_session));
+            $check_out_date                     = date('Y-m-d', strtotime($check_out_date_session));
+
+            //Get check_in, check_out time of hotel
+            $check_in_time                      = $hotel->check_in_time;
+            $check_out_time                     = $hotel->check_out_time;
+
+            //Get Tax,Discount, and payable amount from session.
+            $total_payable_amount_w_extrabed    = session('total_payable_amount_w_extrabed');
+            $total_payable_amount_wo_extrabed   = session('total_payable_amount_wo_extrabed');
+            $payable_amount                     = session('payable_amount');
+
+            $gov_tax_amount                     = session('gov_tax_amount');
+            $gov_tax                            = session('gov_tax');
+            $service_tax_amount                 = session('service_tax_amount');
+            $service_tax                        = session('service_tax');
+
+            $total_discount_amount              = session('total_discount_amount');
+
+            $travel_for_work                    = session('travel_for_work');
+
+            $first_cancellation_day_count       = 0;
+            $second_cancellation_day_count      = 0;
+
+            /* Declare Repository */
+            $roomDiscountRepo                   = new RoomDiscountRepository();
+
+            /* Start checking cancellation dates */
+            // Get cancellation day from hotel config
+            $hotelConfigRepo                    = new HotelConfigRepository();
+            $h_config                           = $hotelConfigRepo->getConfigByHotel($hotel_id);
+            if(isset($h_config) && count($h_config)>0){
+                $first_cancellation_day_count   = $h_config->first_cancellation_day_count;
+                $second_cancellation_day_count  = $h_config->second_cancellation_day_count;
+            }
+
+            // Calculate the day to be charged by subtracting first_cancellation_date
+            $today_date                         = date("Y-m-d");   //today's date
+
+            $date                               = strtotime(date("Y-m-d", strtotime($check_in_date)) . "-".
+                                                $first_cancellation_day_count."days");
+
+            //date to be charged //after subtracting 1st cancellation date
+            $charge_date                        = date("Y-m-d",$date); //re-format the date
+
+            /* End checking cancellation dates */
+
+            /* Compare today date with charge_date and if today is greater than charge_date
+            (i.e. today is within first cancellation day or second cancellation day), charge the customer */
+            if($today_date >= $charge_date){
+                $status                         = 5;
+                //today is within cancellation date and so, user will be charged immediately and booking_status will be "complete"
+            }
+            else{
+                $status                         = 2;
+                //booking_status = "confirm"
+            }
+
             /* Start Calculation for stripe */
             $total_stripe_fee_percent                       = round($payable_amount*$this->stripe_fee_percent,2);
             $stripe_fee_default_cent                        = $this->stripe_fee_cents;
@@ -1147,7 +1162,6 @@ class PaymentController extends Controller
             return redirect('/congratulations/'.$booking_id);
         }
         catch(\Exception $e){
-            dd('catch',$e);
             DB::rollback();
             alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
             return redirect('/');
