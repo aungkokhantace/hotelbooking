@@ -42,6 +42,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
+use App\Setup\HotelGallery\HotelGalleryRepository;
 
 //use Redirect;
 
@@ -227,7 +228,11 @@ class HotelDetailController extends Controller
                 }
             } 
             /* End Hotel Restaurant */
-            
+
+            //get hotel gallery images
+            $hotelGalleryRepo   = new HotelGalleryRepository();
+            $hotelGalleryImages = $hotelGalleryRepo->getObjsByHotelID($hotel_id);
+
             return view('frontend.hoteldetail')
                 ->with('hotel', $hotel)
                 ->with('roomCategoryImages',$roomCategoryImages)
@@ -242,7 +247,8 @@ class HotelDetailController extends Controller
                 ->with('hFeatures',$hFeatures)
                 ->with('room_availables_count',$room_availables_count)
                 ->with('restaurantCategoryArr',$restaurantCategoryArr)
-                ->with('total_available_room',$total_available_room);
+                ->with('total_available_room',$total_available_room)
+                ->with('hotelGalleryImages',$hotelGalleryImages);
         }
         catch(\Exception $e){
             //write log here

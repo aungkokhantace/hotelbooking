@@ -45,12 +45,27 @@
                         @endif
                     </div>
                     <div id="jssor_main" class="slider_one">
-                        <div data-u="slides" class="slider_images">
+                        <!-- <div data-u="slides" class="slider_images">
                             @if(isset($roomCategoryImages) && count($roomCategoryImages)>0)
                                 @foreach($roomCategoryImages as $roomCategoryImage)
                                     <div>
                                         <img data-u="image" src="{{$roomCategoryImage->img_path}}" />
                                         <img data-u="thumb" src="{{$roomCategoryImage->img_path}}" />
+                                    </div>
+                                @endforeach
+                            @else
+                                <div>
+                                    <img data-u="image" src="/images/upload/{{$hotel->logo}}" />
+                                    <img data-u="thumb" src="/images/upload/{{$hotel->logo}}" />
+                                </div>
+                            @endif
+                        </div> -->
+                        <div data-u="slides" class="slider_images">
+                            @if(isset($hotelGalleryImages) && count($hotelGalleryImages)>0)
+                                @foreach($hotelGalleryImages as $hotelGalleryImage)
+                                    <div>
+                                        <img data-u="image" src="/images/upload/{{$hotelGalleryImage->image}}" />
+                                        <img data-u="thumb" src="/images/upload/{{$hotelGalleryImage->image}}" />
                                     </div>
                                 @endforeach
                             @else
