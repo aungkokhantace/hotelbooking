@@ -23,7 +23,7 @@ return [
     'btn-add'               => 'ADD',
     'btn-update'            => 'UPDATE',
     'btn-cancel'            => 'CANCEL',
-    'title-list'            => 'Facilty Listing',
+    'title-list'            => 'Facility Listing',
     'tb-col-name'           => 'Facility Name',
     'tb-col-facility-gp'    => 'Facility Group',
     'tb-col-type'           => 'Type',

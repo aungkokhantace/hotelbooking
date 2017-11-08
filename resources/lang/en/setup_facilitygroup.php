@@ -17,7 +17,7 @@ return [
     'btn-add'               => 'ADD',
     'btn-update'            => 'UPDATE',
     'btn-cancel'            => 'CANCEL',
-    'title-list'            => 'Facilty Group Listing',
+    'title-list'            => 'Facility Group Listing',
     'tb-col-name'           => 'Facility Group Name',
     'tb-col-icon'           => 'Icon',
     'tb-col-remark'         => 'Remark',

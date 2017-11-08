@@ -16,7 +16,7 @@ return [
     'btn-add'               => 'ADD',
     'btn-update'            => 'UPDATE',
     'btn-cancel'            => 'CANCEL',
-    'title-list'            => 'Hotel Nearby Listing',
+    'title-list'            => 'Hotel Nearby Category Listing',
     'tb-col-name'           => 'Name',
     'tb-col-description'    => 'Description',
     'tb-col-qty'            => 'Quantity',
