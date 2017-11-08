@@ -741,15 +741,69 @@ class PaymentController extends Controller
                 //booking_status = "confirm"
             }
 
+            /* START Operation for stripe */
+            // Get email from stripe checkout form
+            $email                                          = $_POST['stripeEmail'];
+            // Create a customer in stripe
+            $stripePaymentObj                               = new PaymentUtility();
+            $stripeCustomerResult                           = $stripePaymentObj->createCustomer($_POST);
+            // dd('stripe customer',$stripeCustomerResult);
+            /*
+            $stripeCustomerResult['aceplusStatusCode'] = ReturnMessage::OK;
+            $stripeCustomerResult['stripe']['stripe_user_id'] = 'cus_BjGveSLGYFVUgb';
+            $stripeCustomerResult['stripe']['stripe_payment_id'] = '';
+            $stripeCustomerResult['stripe']['stripe_payment_amt'] = '';*/
+            if($stripeCustomerResult['aceplusStatusCode'] != ReturnMessage::OK){
+                DB::rollback();
+                alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                return redirect('/');
+            }
+            // Get Stripe Customer Id
+            $customer_id                                    = $stripeCustomerResult["stripe"]["stripe_user_id"];
+            $stripe_card_brand                              = "";
+            $stripe_card_type                               = "";
+            //Compare today date with charge_date and if today is greater than charge_date(i.e. today is within first cancellation day), charge the customer
+            if($today_date >= $charge_date){
+                // Capture payment
+                $stripePaymentResult                        = $stripePaymentObj->capturePayment($customer_id, $payable_amount);
+                // dd('capturepayment res',$stripePaymentResult);
+            
+                if($stripePaymentResult['aceplusStatusCode'] != ReturnMessage::OK){
+                    DB::rollback();
+                    alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                    return redirect('/');
+                }
+                $stripe_user_id                             = $stripePaymentResult["stripe"]["stripe_user_id"];
+                $stripe_payment_id                          = $stripePaymentResult["stripe"]["stripe_payment_id"];
+                $stripe_payment_amt                         = $stripePaymentResult["stripe"]["stripe_payment_amt"];
+                $stripe_balance_transaction                 = $stripePaymentResult['stripe']['stripe_balance_transaction'];
+                $stripe_card_brand                          = $stripePaymentResult['stripe']['card_brand'];
+                $stripe_card_type                           = $stripePaymentResult['stripe']['card_type'];
+
+                // Retrieve Balance
+                $stripeBalanceResult                        = $stripePaymentObj->retrieveBalance($stripe_balance_transaction);
+                // dd('stripe balance res',$stripeBalanceResult);
+                
+                if($stripeBalanceResult['aceplusStatusCode'] != ReturnMessage::OK){
+                    DB::rollback();
+                    alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                    return redirect('/');
+                }
+                $stripe_payment_fee                         = $stripeBalanceResult['stripe']['stripe_payment_fee'];
+                $stripe_payment_net                         = $stripeBalanceResult['stripe']['stripe_payment_net'];
+            }
+            /* END Operation for stripe */
+
             /* Start Calculation for stripe */
-            $total_stripe_fee_percent                       = round($payable_amount*$this->stripe_fee_percent,2);
             $stripe_fee_default_cent                        = $this->stripe_fee_cents;
-            $total_stripe_fee_amt                           = $total_stripe_fee_percent+$stripe_fee_default_cent;
+            $total_stripe_fee_percent                       = $stripe_payment_fee-$stripe_fee_default_cent;   
+            $total_stripe_fee_amt                           = $stripe_payment_fee;
             $total_cancel_income                            = 0.00;
-            $total_stripe_net_amt                           = round($payable_amount-$total_stripe_fee_amt,2);
+            $total_stripe_net_amt                           = $stripe_payment_net;
             $total_vendor_net_amt                           = $total_stripe_net_amt;
             /* End Calculation for stripe */
 
+            // dd('before begin transaction');
             DB::beginTransaction();
             $bookingObj                                     = new Booking();
             $bookingObj->booking_no                         = $booking_number;
@@ -778,10 +832,12 @@ class PaymentController extends Controller
             $bookingObj->travel_for_work                    = $travel_for_work;
             $bookingObj->country_id                         = $country;
             $bookingObj->phone                              = $phone;
-
+            $bookingObj->card_brand                         = $stripe_card_brand;
+            $bookingObj->card_type                          = $stripe_card_type;
             $bookingRepo                                    = new BookingRepository();
             $booking_result                                 = $bookingRepo->create($bookingObj);
             // dd('booking',$booking_result);
+            
             //if booking creation fails, alert and redirect to homepage
             if ($booking_result['aceplusStatusCode'] != ReturnMessage::OK){
                 DB::rollback();
@@ -999,60 +1055,7 @@ class PaymentController extends Controller
                 return redirect('/');
             }
             /* END Operation for communication */
-
-            /* START Operation for stripe */
-            //Get email from stripe checkout form
-            $email                                  = $_POST['stripeEmail'];
-            //create a customer
-            $stripePaymentObj                       = new PaymentUtility();
-            $stripeCustomerResult                   = $stripePaymentObj->createCustomer($_POST);
-            // dd('stripe customer',$stripeCustomerResult);
-            if($stripeCustomerResult['aceplusStatusCode'] != ReturnMessage::OK){
-                DB::rollback();
-                alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
-                return redirect('/');
-            }
-            // Get Stripe Customer Id
-            $customer_id                            = $stripeCustomerResult["stripe"]["stripe_user_id"];
-            $stripe_card_brand                      = "";
-            $stripe_card_type                       = "";
-            //Compare today date with charge_date and if today is greater than charge_date(i.e. today is within first cancellation day), charge the customer
-            if($today_date >= $charge_date){
-                //Capture payment
-                $stripePaymentResult                = $stripePaymentObj->capturePayment($customer_id, $payable_amount);
-                if($stripePaymentResult['aceplusStatusCode'] != ReturnMessage::OK){
-                    DB::rollback();
-                    alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
-                    return redirect('/');
-                }
-                $stripe_user_id                     = $stripePaymentResult["stripe"]["stripe_user_id"];
-                $stripe_payment_id                  = $stripePaymentResult["stripe"]["stripe_payment_id"];
-                $stripe_payment_amt                 = $stripePaymentResult["stripe"]["stripe_payment_amt"];
-                $stripe_balance_transaction         = $stripePaymentResult['stripe']['stripe_balance_transaction'];
-                $stripe_card_brand                  = $stripePaymentResult['stripe']['card_brand'];
-                $stripe_card_type                   = $stripePaymentResult['stripe']['card_type'];
-
-                // Retrieve Balance
-                $stripeBalanceResult                = $stripePaymentObj->retrieveBalance($stripe_balance_transaction);
-                if($stripeBalanceResult['aceplusStatusCode'] != ReturnMessage::OK){
-                    DB::rollback();
-                    alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
-                    return redirect('/');
-                }
-                $stripe_payment_fee                 = $stripeBalanceResult['stripe']['stripe_payment_fee'];
-                $stripe_payment_net                 = $stripeBalanceResult['stripe']['stripe_payment_net'];
-            }
-            /* END Operation for stripe */
-
-            /* Update Booking */
-            $booking                                = $bookingRepo->getBookingById($booking_id);
-            $booking->card_brand                    = $stripe_card_brand;
-            $booking->card_type                     = $stripe_card_type;
-            $bookingRes                             = $bookingRepo->update($booking);
-            /*
-            if($bookingRes['aceplusStatusCode'] != ReturnMessage::OK){
-                //write log or something
-            }*/
+            
             /* START Operation for Booking Payment */
             $bookingPaymentObj                                  = new BookingPayment();
             $bookingPaymentObj->payment_amount_wo_tax           = $payable_amount;
@@ -1070,6 +1073,7 @@ class PaymentController extends Controller
 
             $bookingPaymentRepo                                 = new BookingPaymentRepository();
             $booking_payment_result                             = $bookingPaymentRepo->create($bookingPaymentObj);
+            // dd('booking payment res',$booking_payment_result);
             if ($booking_payment_result['aceplusStatusCode'] != ReturnMessage::OK){
                 DB::rollback();
                 alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
@@ -1104,6 +1108,7 @@ class PaymentController extends Controller
             $bookingPaymentStripeObj->booking_payment_id        = $booking_payment_id;
             $bookingPaymentStripeRepo                           = new BookingPaymentStripeRepository();
             $booking_payment_stripe_result                      = $bookingPaymentStripeRepo->create($bookingPaymentStripeObj);
+            // dd('stripe res',$booking_payment_stripe_result);
             if($booking_payment_stripe_result['aceplusStatusCode'] != ReturnMessage::OK){
                 //
                 DB::rollback();
@@ -1162,6 +1167,7 @@ class PaymentController extends Controller
             return redirect('/congratulations/'.$booking_id);
         }
         catch(\Exception $e){
+            // dd('booking catch',$e);
             DB::rollback();
             alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
             return redirect('/');
