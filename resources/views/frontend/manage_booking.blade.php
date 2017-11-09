@@ -127,7 +127,7 @@
                                                     </a>
                                                 </li>
                                                 <li class="text_fa">
-                                                    <a href="#" data-toggle="modal" data-target="#cancelbooking">Cancel Booking</a>
+                                                    <a href="#" data-toggle="modal" data-target="#cancelbooking" class="cancel_link">Cancel Booking</a>
                                                     <!-- Modal for Cancel Booking -->
                                                     @include('frontend.booking_cancel')
                                                     <!-- Modal for Cancel Booking -->

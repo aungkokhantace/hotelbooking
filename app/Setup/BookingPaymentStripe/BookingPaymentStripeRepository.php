@@ -123,4 +123,10 @@ class BookingPaymentStripeRepository implements BookingPaymentStripeRepositoryIn
             return $returnedObj;
         }
     }
+
+    public function getAllBookingPaymentStripeByBookingId($booking_id){
+        $result = BookingPaymentStripe::where('booking_id',$booking_id)->get();
+        
+        return $result;
+    }
 }

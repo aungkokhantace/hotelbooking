@@ -57,6 +57,9 @@
 <script>
     $(document).ready(function(){
         $('.btn-yes').click(function(){
+            /* Disable change date link */
+            $('.cancel_link').click(function () {return false;});
+
             var serializedData = $('#booking_cancel').serialize();
             $.ajax({
                 url: '/booking/cancel',
