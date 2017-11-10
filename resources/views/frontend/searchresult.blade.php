@@ -181,7 +181,7 @@
                                                         {{--<li>MMK {{$hotel->min_price}}</li>--}}
                                                         <li>{{ isset($hotel->min_price)? $currency.' '.number_format($hotel->min_price,2):'' }}</li>
                                                         <li>
-                                                            <a class="btn btn-primary" href="/hotel_detail/{{$hotel->id}}">BOOKING NOW</a>
+                                                            <a class="btn btn-primary" href="/hotel_detail/{{$hotel->id}}">BOOK NOW</a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -238,7 +238,7 @@
                                                         {{--<li>MMK {{$suggestedHotelhotel->min_price}}</li>--}}
                                                         <li>{{ isset($suggestedHotelhotel->min_price)? $currency.' '.number_format($suggestedHotelhotel->min_price):'' }}</li>
                                                         <li>
-                                                            <a class="btn btn-primary" href="/hotel_detail/{{$suggestedHotelhotel->id}}">BOOKING NOW</a>
+                                                            <a class="btn btn-primary" href="/hotel_detail/{{$suggestedHotelhotel->id}}">BOOK NOW</a>
                                                         </li>
                                                     </ul>
                                                 </div>

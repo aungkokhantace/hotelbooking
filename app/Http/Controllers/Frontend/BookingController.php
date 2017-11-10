@@ -575,12 +575,14 @@ class BookingController extends Controller
                                 $stripe_payment_net_balance         = $balance['stripe']['stripe_payment_net'];
                                 $stripe_payment_fee_balance         = $balance['stripe']['stripe_payment_fee'];
                                 $stripe_payment_amt_balance         = $balance['stripe']['stripe_payment_amt'];
+                                $stripe_payment_id_balance          = $balance['stripe']['stripe_payment_id'];
+                                $stripe_balance_transaction_balance = $balance['stripe']['stripe_balance_transaction'];
 
                                 /* Create Booking Payment Stripe */
                                 $stripe                             = new BookingPaymentStripe();
                                 $stripe->stripe_user_id             = $customer_id;
-                                $stripe->stripe_payment_id          = $stripePaymentId;
-                                $stripe->stripe_balance_transaction = $stripe_balance_transaction;
+                                $stripe->stripe_payment_id          = $stripe_payment_id_balance;
+                                $stripe->stripe_balance_transaction = $stripe_balance_transaction_balance;
                                 $stripe->stripe_payment_net         = $stripe_payment_net_balance;
                                 $stripe->stripe_payment_fee         = $stripe_payment_fee_balance;
                                 $stripe->stripe_payment_amt         = $stripe_payment_amt_balance;
@@ -590,6 +592,24 @@ class BookingController extends Controller
                                 $stripeRes                          = $paymentStripeRepo->create($stripe);
                                 if($stripeRes['aceplusStatusCode'] != ReturnMessage::OK){
                                     //write log
+                                    DB::rollback();
+                                    return \Response::json($response);
+                                }
+
+                                /* Create booking payment for refund amt */
+                                $newBPayment                                = new BookingPayment();
+                                $newBPayment->payment_amount_wo_tax         = $r_payment_amt_wo_tax;
+                                $newBPayment->payment_amount_w_tax          = $r_payment_amt_w_tax;
+                                $newBPayment->booking_id                    = $id;
+                                $newBPayment->payment_gateway_tax_amt       = abs($stripe_payment_fee_balance);
+                                $newBPayment->status                        = 7;
+                                $newBPayment->total_government_tax_amt      = $r_gst_amt;
+                                // $newBPayment->total_government_tax_percentage  = ;
+                                $newBPayment->total_service_tax_amt         = $r_service_amt;
+                                // $newBPayment->total_service_tax_percentage  =;
+                                $newBPayment->total_payable_amt             = $r_payment_amt_w_tax;
+                                $newBPaymentRes                             = $bookPaymentRepo->create($newBPayment);
+                                if($newBPaymentRes['aceplusStatusCode'] != ReturnMessage::OK){
                                     DB::rollback();
                                     return \Response::json($response);
                                 }
@@ -674,7 +694,7 @@ class BookingController extends Controller
                             DB::rollback();
                             return \Response::json($response);
                         }
-                        /* Create booking payment for refund amt */
+                        /* Create booking payment for refund amt 
                         $oldBPayment                                = $bookPaymentRepo->getObjsByBookingId($id);
                         $newBPayment                                = new BookingPayment();
                         $newBPayment->payment_amount_wo_tax         = $total_price_w_tax;
@@ -691,7 +711,7 @@ class BookingController extends Controller
                         if($newBPaymentRes['aceplusStatusCode'] != ReturnMessage::OK){
                             DB::rollback();
                             return \Response::json($response);
-                        }
+                        }*/
 
                         DB::commit();
                         /* Send Mail */
@@ -1519,25 +1539,98 @@ class BookingController extends Controller
                             $service_tax_amt                    = round(($service_tax_percentage/100)*$cancel_room_payable_amt_wo_tax_af,2);
                         }
                     }
-                    $cancel_room_payable_amt_w_tax_af           = $cancel_room_payable_amt_wo_tax_af+$government_tax_amt+
-                        $service_tax_amt;
+                    $cancel_room_payable_amt_w_tax_af           = $cancel_room_payable_amt_wo_tax_af+$government_tax_amt+$service_tax_amt;
                     $cancel_stripe_fee_amt_af                   = round($cancel_room_payable_amt_w_tax_af*$this->stripe_fee_percent,2);
                     $cancel_room_net_amt_af                     = $cancel_room_payable_amt_w_tax_af-$cancel_stripe_fee_amt_af;
                     /* End Calculating Total Service Tax Amount and Percentage */
 
+                    /* START Refund Operation */
+                    $stripePayment                              = $paymentStripeRepo->getStripePaymentId($b_id);
+                    //Get data of stripe payment to calculate refund amount
+                    $stripeStatus                               = $stripePayment->status;
+                    $stripePaymentId                            = $stripePayment->stripe_payment_id;
+                    $stripeId                                   = $stripePayment->id;
+                    $customer_id                                = $stripePayment->stripe_user_id;
+                    $stripe_email                               = $stripePayment->email;
+                    $stripe_booking_id                          = $stripePayment->booking_id;
+                    $stripePaymentObj                           = new PaymentUtility();
+                    $refundResult                               = $stripePaymentObj->refundPayment($customer_id,$cancel_room_refund_amt,$stripePaymentId);
+                    if($refundResult['aceplusStatusCode'] != ReturnMessage::OK) {
+                        DB::rollback();
+                        alert()->error('Cancellation of room is fail.')->persistent('OK');
+                    }
+                    /* END Refund Operation */
+
+                    /* START retrieve balance transaction */
+                    $refund_balance_transaction                 = $refundResult['stripe']['stripe_balance_transaction'];
+                    $stripeBalanceRes                           = $stripePaymentObj->retrieveBalance($refund_balance_transaction);
+                    if($stripeBalanceRes['aceplusStatusCode'] != ReturnMessage::OK){
+                        // shouldn't rollback, write log or do something bcz refundPayment method is already executed.
+                        DB::rollback();
+                        alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                        return redirect('/');
+                    }
+                    $stripe_payment_amt                             = $stripeBalanceRes['stripe']['stripe_payment_amt'];
+                    $stripe_payment_fee                             = $stripeBalanceRes['stripe']['stripe_payment_fee'];
+                    $stripe_payment_net                             = $stripeBalanceRes['stripe']['stripe_payment_net'];
+                    $stripe_balance_transaction                     = $stripeBalanceRes['stripe']['stripe_balance_transaction'];
+                    $stripe_blanace_payment_id                      = $stripeBalanceRes['stripe']['stripe_payment_id'];
+                    /* END retrieve balance transaction */
+
+                    /* START Booking Payment */
+                    $newBookPayment                                 = new BookingPayment();
+                    $newBookPayment->payment_amount_wo_tax          = abs($stripe_payment_amt);
+                    $newBookPayment->payment_amount_w_tax           = abs($stripe_payment_net);
+                    $newBookPayment->description                    = "";
+                    $newBookPayment->booking_id                     = $b_id;
+                    $newBookPayment->payment_gateway_tax_amt        = abs($stripe_payment_fee);
+                    $newBookPayment->status                         = 7;
+                    $newBookPayment->total_government_tax_amt       = $government_tax_amt;
+//                $newBookPayment->total_government_tax_percentage = $oldBookPayment->$service_tax_amt;
+                    $newBookPayment->total_service_tax_amt          = $service_tax_amt;
+//                $newBookPayment->total_service_tax_percentage    = $oldBookPayment->total_service_tax_percentage;
+                    $newBookPayment->total_payable_amt              = abs($stripe_payment_amt);
+                    $newBookPayment->payment_reference_no           = null;
+                    $bookPaymentResult                              = $bPaymentRepo->create($newBookPayment);
+                    if($bookPaymentResult['aceplusStatusCode'] != ReturnMessage::OK){
+                        DB::rollback();
+                        alert()->error('Cancellation of room is fail.')->persistent('OK');
+                    }
+                    $new_b_payment_id                               = $bookPaymentResult['object']->id;
+                    /* END Booking Payment */
+
+                    /* START Booking Payment Stripe */
+                    $newStripePayment                               = new BookingPaymentStripe();
+                    $newStripePayment->stripe_user_id               = $customer_id;
+                    $newStripePayment->stripe_payment_id            = $stripe_blanace_payment_id;
+                    $newStripePayment->stripe_balance_transaction   = $stripe_balance_transaction;
+                    $newStripePayment->stripe_payment_amt           = $stripe_payment_amt;
+                    $newStripePayment->stripe_payment_net           = $stripe_payment_net;
+                    $newStripePayment->stripe_payment_fee           = $stripe_payment_fee;
+                    $newStripePayment->status                       = 3; // refund status
+                    $newStripePayment->email                        = $stripe_email;
+                    $newStripePayment->booking_id                   = $stripe_booking_id;
+                    $newStripePayment->booking_payment_id           = $new_b_payment_id;
+                    $newStripePaymentRes                            = $paymentStripeRepo->create($newStripePayment);
+                    if($newStripePaymentRes['aceplusStatusCode'] != ReturnMessage::OK){
+                        // shouldn't rollback, write log or do something bcz refundPayment method is already executed.
+                        DB::rollback();
+                        alert()->warning('Cancellation of room is success.')->persistent('OK');
+                    }
+                    /* END Booking Payment Stripe */
+
                     /* START booking room */
-                    $bCancelRoom->status                        = 7;
-                    $bCancelRoom->refund_amt                    = $cancel_room_refund_amt;
-                    $bCancelRoom->discount_amt_af               = $cancel_room_discount_amt_af;
-                    $bCancelRoom->extra_bed_price_af            = $cancel_room_extra_bed_price_af;
-                    $bCancelRoom->room_payable_amt_wo_tax_af    = $cancel_room_payable_amt_wo_tax_af;
-                    $bCancelRoom->government_tax_amt_af         = $government_tax_amt;
-                    $bCancelRoom->service_tax_amt_af            = $service_tax_amt;
-                    $bCancelRoom->room_payable_amt_w_tax_af     = $cancel_room_payable_amt_w_tax_af;
-                    $bCancelRoom->stripe_fee_percent_af         = $cancel_stripe_fee_amt_af;
-                    $bCancelRoom->room_net_amt_af               = $cancel_room_net_amt_af;
-                    $bRoomUpdateRes                             = $bRoomRepo->update($bCancelRoom);
-                    // dd('cancel room res',$bRoomUpdateRes);
+                    $bCancelRoom->status                            = 7;
+                    $bCancelRoom->refund_amt                        = $cancel_room_refund_amt;
+                    $bCancelRoom->discount_amt_af                   = $cancel_room_discount_amt_af;
+                    $bCancelRoom->extra_bed_price_af                = $cancel_room_extra_bed_price_af;
+                    $bCancelRoom->room_payable_amt_wo_tax_af        = $cancel_room_payable_amt_wo_tax_af;
+                    $bCancelRoom->government_tax_amt_af             = $government_tax_amt;
+                    $bCancelRoom->service_tax_amt_af                = $service_tax_amt;
+                    $bCancelRoom->room_payable_amt_w_tax_af         = $cancel_room_payable_amt_w_tax_af;
+                    $bCancelRoom->stripe_fee_percent_af             = abs($stripe_payment_fee);
+                    $bCancelRoom->room_net_amt_af                   = abs($stripe_payment_net);
+                    $bRoomUpdateRes                                 = $bRoomRepo->update($bCancelRoom);
                     if($bRoomUpdateRes['aceplusStatusCode'] != ReturnMessage::OK){
                         DB::rollback();
                         alert()->error('Cancellation of room is fail.')->persistent('OK');
@@ -1577,8 +1670,8 @@ class BookingController extends Controller
                                     $total_gst_amt                  += $bookingRoom->government_tax_amt;
                                     $total_service_amt              += $bookingRoom->service_tax_amt;
                                     $total_discount_amt             += $bookingRoom->discount_amt;
-                                    $total_stripe_fee_percent       += $bookingRoom->stripe_fee_percent;
-                                    $total_stripe_net_amt           += $bookingRoom->room_net_amt;   
+                                    // $total_stripe_fee_percent       += $bookingRoom->stripe_fee_percent;
+                                    // $total_stripe_net_amt           += $bookingRoom->room_net_amt;   
                                     break;
                                 case 5:
                                     $total_price_wo_tax             += $bookingRoom->room_payable_amt_wo_tax;
@@ -1586,8 +1679,8 @@ class BookingController extends Controller
                                     $total_gst_amt                  += $bookingRoom->government_tax_amt;
                                     $total_service_amt              += $bookingRoom->service_tax_amt;
                                     $total_discount_amt             += $bookingRoom->discount_amt;
-                                    $total_stripe_fee_percent       += $bookingRoom->stripe_fee_percent;
-                                    $total_stripe_net_amt           += $bookingRoom->room_net_amt;
+                                    // $total_stripe_fee_percent       += $bookingRoom->stripe_fee_percent;
+                                    // $total_stripe_net_amt           += $bookingRoom->room_net_amt;
                                     break;
                                 case 7:
                                     $total_price_wo_tax             += $bookingRoom->room_payable_amt_wo_tax_af;
@@ -1595,8 +1688,8 @@ class BookingController extends Controller
                                     $total_gst_amt                  += $bookingRoom->government_tax_amt_af;
                                     $total_service_amt              += $bookingRoom->service_tax_amt_af;
                                     $total_discount_amt             += $bookingRoom->discount_amt_af;
-                                    $total_stripe_fee_percent       += $bookingRoom->stripe_fee_percent_af;
-                                    $total_stripe_net_amt           += $bookingRoom->room_net_amt_af;  
+                                    // $total_stripe_fee_percent       += $bookingRoom->stripe_fee_percent_af;
+                                    // $total_stripe_net_amt           += $bookingRoom->room_net_amt_af;  
                                     break;
                                 case 9:
                                     $total_price_wo_tax             += $bookingRoom->room_payable_amt_wo_tax_af;
@@ -1604,16 +1697,15 @@ class BookingController extends Controller
                                     $total_gst_amt                  += $bookingRoom->government_tax_amt_af;
                                     $total_service_amt              += $bookingRoom->service_tax_amt_af;
                                     $total_discount_amt             += $bookingRoom->discount_amt_af;
-                                    $total_stripe_fee_percent       += $bookingRoom->stripe_fee_percent_af;
-                                    $total_stripe_net_amt           += $bookingRoom->room_net_amt_af;  
+                                    // $total_stripe_fee_percent       += $bookingRoom->stripe_fee_percent_af;
+                                    // $total_stripe_net_amt           += $bookingRoom->room_net_amt_af;  
                                     break;
                                 default : break;
                             }
                         }
-                        $total_stripe_fee_amt                       = $total_stripe_fee_percent+$this->stripe_fee_cents;
-                        $total_stripe_net_amt                       = $total_stripe_net_amt-$this->stripe_fee_cents;
+                        // $total_stripe_fee_amt                       = $total_stripe_fee_percent+$this->stripe_fee_cents;
+                        // $total_stripe_net_amt                       = $total_stripe_net_amt-$this->stripe_fee_cents;
                     }
-                    // dd($total_price_wo_tax,$total_price_w_tax,$total_gst_amt,$total_service_amt,$total_discount_amt,$total_stripe_fee_percent,$total_stripe_net_amt);
                     /* END */
                     
                     /* START booking */
@@ -1622,6 +1714,15 @@ class BookingController extends Controller
                         // If the canceled room is the last room, subtract 30 cents from total_cancel_income.
                         $total_cancel_income                        = $total_cancel_income-$this->stripe_fee_cents;
                     }
+
+                    /* Recalculate total stripe fee amt, net amt and fee percent with data from booking payment stripe */
+                    $bPaymentStripes                                = $paymentStripeRepo->getAllBookingPaymentStripeByBookingId($b_id);
+                    foreach($bPaymentStripes as $bStripe){
+                        $total_stripe_fee_amt                      += $bStripe->stripe_payment_fee;
+                        $total_stripe_net_amt                      += $bStripe->stripe_payment_net;
+
+                    }
+                    $total_stripe_fee_percent                       = $total_stripe_fee_amt-$this->stripe_fee_cents;
 
                     $booking->price_wo_tax                          = $total_price_wo_tax;
                     $booking->price_w_tax                           = $total_price_w_tax;
@@ -1644,82 +1745,7 @@ class BookingController extends Controller
                         alert()->error('Cancellation of room is fail.')->persistent('OK');
                     }
                     /* END booking */
-                    /* START booking payment */
-                    $oldBookPayment                                  = $bPaymentRepo->getObjsByBookingId($b_id);
-                    $newBookPayment                                  = new BookingPayment();
-                    $newBookPayment->payment_amount_wo_tax           = $cancel_room_payable_amt_w_tax_af;
-                    $newBookPayment->payment_amount_w_tax            = $cancel_room_net_amt_af;
-                    $newBookPayment->description                     = "";
-                    $newBookPayment->booking_id                      = $b_id;
-                    $newBookPayment->payment_gateway_tax_amt         = $cancel_stripe_fee_amt_af;
-                    $newBookPayment->status                          = 7;
-                    $newBookPayment->total_government_tax_amt        = $government_tax_amt;
-//                $newBookPayment->total_government_tax_percentage = $oldBookPayment->$service_tax_amt;
-                    $newBookPayment->total_service_tax_amt           = $service_tax_amt;
-//                $newBookPayment->total_service_tax_percentage    = $oldBookPayment->total_service_tax_percentage;
-                    $newBookPayment->total_payable_amt               = $cancel_room_payable_amt_w_tax_af;
-                    $newBookPayment->payment_reference_no            = null;
-                    $bookPaymentResult                               = $bPaymentRepo->create($newBookPayment);
-                    if($bookPaymentResult['aceplusStatusCode'] != ReturnMessage::OK){
-                        DB::rollback();
-                        alert()->error('Cancellation of room is fail.')->persistent('OK');
-                    }
-                    /* END booking payment */
-                    /* START Refund */
-                    $new_b_payment_id                       = $bookPaymentResult['object']->id;
-                    $stripePayment                          = $paymentStripeRepo->getStripePaymentId($b_id);
-                    //Get data of stripe payment to calculate refund amount
-                    $stripeStatus                           = $stripePayment->status;
-                    $stripePaymentId                        = $stripePayment->stripe_payment_id;
-                    $stripeId                               = $stripePayment->id;
-                    $customer_id                            = $stripePayment->stripe_user_id;
-                    $stripe_email                           = $stripePayment->email;
-                    $stripe_booking_id                      = $stripePayment->booking_id;
-                    $stripePaymentObj                       = new PaymentUtility();
-                    $refundResult                           = $stripePaymentObj->refundPayment($customer_id,$cancel_room_refund_amt,$stripePaymentId);
-//                    $refundResult['aceplusStatusCode']              = ReturnMessage::OK;
-//                    $refundResult['stripe']['stripe_user_id']       = 'cus_BY2nbLUyL05Pcn';
-//                    $refundResult['stripe']['stripe_payment_id']    = 'ch_1BAwi8Ki85kjRqY0QQzkyEri';
-//                    $refundResult['stripe']['stripe_payment_amt']   = 33.0;
-//                    $refundResult['stripe']['stripe_balance_transaction'] = 'txn_1BAxjBKi85kjRqY039eQw2Wr';
-
-                    if($refundResult['aceplusStatusCode'] != ReturnMessage::OK) {
-                        DB::rollback();
-                        alert()->error('Cancellation of room is fail.')->persistent('OK');
-                    }
-                    /* END Refund */
-                    /* START booking payment stripe */
-                    // Retrieve stripe balance
-                    $refund_balance_transaction             = $refundResult['stripe']['stripe_balance_transaction'];
-                    $stripeBalanceRes                       = $stripePaymentObj->retrieveBalance($refund_balance_transaction);
-                    if($stripeBalanceRes['aceplusStatusCode'] != ReturnMessage::OK){
-                        // shouldn't rollback, write log or do something bcz refundPayment method is already executed.
-                        DB::rollback();
-                        alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
-                        return redirect('/');
-                    }
-                    $stripe_payment_amt                             = $stripeBalanceRes['stripe']['stripe_payment_amt'];
-                    $stripe_payment_fee                             = $stripeBalanceRes['stripe']['stripe_payment_fee'];
-                    $stripe_payment_net                             = $stripeBalanceRes['stripe']['stripe_payment_net'];
-                    $stripe_balance_transaction                     = $stripeBalanceRes['stripe']['stripe_balance_transaction'];
-                    $newStripePayment                               = new BookingPaymentStripe();
-                    $newStripePayment->stripe_user_id               = $customer_id;
-                    $newStripePayment->stripe_payment_id            = $stripePaymentId;
-                    $newStripePayment->stripe_balance_transaction   = $stripe_balance_transaction;
-                    $newStripePayment->stripe_payment_amt           = $stripe_payment_amt;
-                    $newStripePayment->stripe_payment_net           = $stripe_payment_net;
-                    $newStripePayment->stripe_payment_fee           = $stripe_payment_fee;
-                    $newStripePayment->status                       = 3; // refund status
-                    $newStripePayment->email                        = $stripe_email;
-                    $newStripePayment->booking_id                   = $stripe_booking_id;
-                    $newStripePayment->booking_payment_id           = $new_b_payment_id;
-                    $newStripePaymentRes                            = $paymentStripeRepo->create($newStripePayment);
-                    if($newStripePaymentRes['aceplusStatusCode'] != ReturnMessage::OK){
-                        // shouldn't rollback, write log or do something bcz refundPayment method is already executed.
-                        DB::rollback();
-                        alert()->warning('Cancellation of room is success.')->persistent('OK');
-                    }
-                    /* END booking payment stripe */
+                   
                     DB::commit();
                     /* START Mail */
                     // If all updating is complete,send mail
@@ -1743,33 +1769,6 @@ class BookingController extends Controller
                 }
                 else{
                     // dd('second');
-                    // second cancellation
-                    /* Start Calculating Total Government Tax Amount and Percentage*/
-                    /*
-                    $government_tax_amt                     = 0.00;
-                    $government_tax_percentage              = 0;
-                    $config                                 = $configRepo->getGST();
-                    if(isset($config) && count($config) > 0){
-                        $government_tax_percentage          = $config[0]->value;
-                        $government_tax_amt                 = round(($government_tax_percentage/100)*$cancel_room_payable_amt_wo_tax,2);
-                    }*/
-                    /* End Calculating Total Government Tax Amount and Percentage*/
-                    /* Start Calculating Total Service Tax Amount and Percentage */
-                    /*
-                    $service_tax_amt                        = 0.00;
-                    $service_tax_percentage                 = 0;
-                    if(isset($h_config) && count($h_config) > 0){
-                        $service_tax_percentage             = $h_config->tax;
-                        $service_tax_amt                    = round(($service_tax_percentage/100)*$cancel_room_payable_amt_wo_tax,2);
-                    }
-                    else{
-                        $config                             = $configRepo->getServiceTax();
-                        if(isset($config) && count($config) > 0){
-                            $service_tax_percentage         = number_format((float)$config[0]->value,2);
-                            $service_tax_amt                = round(($service_tax_percentage/100)*$cancel_room_payable_amt_wo_tax,2);
-                        }
-                    }*/
-                    /* End Calculating Total Service Tax Amount and Percentage */
                     /*
                      * Update booking room with refund amount 0.00 and status 9.
                      * Update booking.
@@ -1813,55 +1812,7 @@ class BookingController extends Controller
                         $active                                     = 1;
                     }
                     /* End checking */    
-                    /* START */
-                    $allBookingRoom                                 = $bRoomRepo->getBookingRoomByBookingId($b_id);
-                    if(isset($allBookingRoom) && count($allBookingRoom) > 0){
-                        foreach($allBookingRoom as $bookingRoom){
-                        
-                            switch($bookingRoom->status){
-                                case 2: 
-                                    $total_price_wo_tax             += $bookingRoom->room_payable_amt_wo_tax;
-                                    $total_price_w_tax              += $bookingRoom->room_payable_amt_w_tax;
-                                    $total_gst_amt                  += $bookingRoom->government_tax_amt;
-                                    $total_service_amt              += $bookingRoom->service_tax_amt;
-                                    $total_discount_amt             += $bookingRoom->discount_amt;
-                                    $total_stripe_fee_percent       += $bookingRoom->stripe_fee_percent;
-                                    $total_stripe_net_amt           += $bookingRoom->room_net_amt;   
-                                    break;
-                                case 5:
-                                    $total_price_wo_tax             += $bookingRoom->room_payable_amt_wo_tax;
-                                    $total_price_w_tax              += $bookingRoom->room_payable_amt_w_tax;
-                                    $total_gst_amt                  += $bookingRoom->government_tax_amt;
-                                    $total_service_amt              += $bookingRoom->service_tax_amt;
-                                    $total_discount_amt             += $bookingRoom->discount_amt;
-                                    $total_stripe_fee_percent       += $bookingRoom->stripe_fee_percent;
-                                    $total_stripe_net_amt           += $bookingRoom->room_net_amt;
-                                    break;
-                                case 7:
-                                    $total_price_wo_tax             += $bookingRoom->room_payable_amt_wo_tax_af;
-                                    $total_price_w_tax              += $bookingRoom->room_payable_amt_w_tax_af;
-                                    $total_gst_amt                  += $bookingRoom->government_tax_amt_af;
-                                    $total_service_amt              += $bookingRoom->service_tax_amt_af;
-                                    $total_discount_amt             += $bookingRoom->discount_amt_af;
-                                    $total_stripe_fee_percent       += $bookingRoom->stripe_fee_percent_af;
-                                    $total_stripe_net_amt           += $bookingRoom->room_net_amt_af;  
-                                    break;
-                                case 9:
-                                    $total_price_wo_tax             += $bookingRoom->room_payable_amt_wo_tax_af;
-                                    $total_price_w_tax              += $bookingRoom->room_payable_amt_w_tax_af;
-                                    $total_gst_amt                  += $bookingRoom->government_tax_amt_af;
-                                    $total_service_amt              += $bookingRoom->service_tax_amt_af;
-                                    $total_discount_amt             += $bookingRoom->discount_amt_af;
-                                    $total_stripe_fee_percent       += $bookingRoom->stripe_fee_percent_af;
-                                    $total_stripe_net_amt           += $bookingRoom->room_net_amt_af;  
-                                    break;    
-                                default : break;
-                            }
-                        }
-                        $total_stripe_fee_amt                       = $total_stripe_fee_percent+$this->stripe_fee_cents;
-                        $total_stripe_net_amt                       = $total_stripe_net_amt-$this->stripe_fee_cents;
-                    }
-                    /* END */
+                    
                     /* Update Booking */
                     // Calculate total cancel income
                     $cancel_room_net_amt_af                         = $bRoomUpdateRes['object']->room_net_amt_af;
@@ -1870,7 +1821,7 @@ class BookingController extends Controller
                         // If the canceled room is the last room, subtract 30 cents from total_cancel_income.
                         $total_cancel_income                        = $total_cancel_income-$this->stripe_fee_cents;
                     }
-                    
+                    /*
                     $booking->price_wo_tax                          = $total_price_wo_tax;
                     $booking->price_w_tax                           = $total_price_w_tax;
                     $booking->total_government_tax_amt              = $total_gst_amt;
@@ -1886,22 +1837,14 @@ class BookingController extends Controller
                     $booking->total_stripe_fee_amt                  = $total_stripe_fee_amt;
                     $booking->total_stripe_net_amt                  = $total_stripe_net_amt;
                     $booking->total_vendor_net_amt                  = $total_stripe_net_amt;
+                    */
+                    $booking->status                                = $bookingStatus;
+                    $booking->total_cancel_income                   = $total_cancel_income;
                     $bookingUpdateRes                               = $this->repo->update($booking);
                     if($bookingUpdateRes['aceplusStatusCode'] != ReturnMessage::OK){
                         DB::rollback();
                         alert()->error('Cancellation of room is fail.')->persistent('OK');
                     }
-                    /* START changing status for booking payment */
-                    /*
-                    $bPayment                                       = $bPaymentRepo->getObjsByBookingId($b_id);
-                    $bPayment->status                               = $bookingStatus;
-//                    dd('Booking Payment',$bPayment);
-                    $bookPaymentResult                              = $bPaymentRepo->update($bPayment);
-                    if($bookPaymentResult['aceplusStatusCode'] != ReturnMessage::OK){
-                        DB::rollback();
-                        alert()->error('Cancellation of room is fail.')->persistent('OK');
-                    }*/
-                    /* END changing status for booking payment */
 
                     DB::commit();
                     // If all updating is complete,send mail
@@ -1932,7 +1875,14 @@ class BookingController extends Controller
             }
         }
         catch(\Exception $e){
-            //
+            // dd('catch',$e);
+            $currentUser                        = Utility::getCurrentCustomerID();
+            $date                               = date("Y-m-d H:i:s");
+            $message                            = '['. $date .'] '. 'error: ' . 'Customer - '.$currentUser.
+                                                  ' cancel the booking room and got error -------'.$e->getMessage(). ' ----- line ' .
+                                                  $e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+
+            LogCustom::create($date,$message);
             alert()->warning('You could not cancel your reserved room!')->persistent('OK');
             return redirect()->back();
         }
