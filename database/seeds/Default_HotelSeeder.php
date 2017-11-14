@@ -12,7 +12,8 @@ class Default_HotelSeeder extends Seeder
     public function run()
     {
         $admins = array(
-            ['id'=>'4', 'user_name'=>'arthawka','display_name'=>'Arthawka Hotel', 'password' =>'$2y$10$AgB3COL/OzbHo9IDIH.a1uZHOt.Mq6O2SvjcGTR/GU/0r37C/i7cG', 'email' =>'arthawka.hotel@gmail.com','role_id' =>'3','staff_id'=>'0004','address'=>'','description'=>''],
+            // ['id'=>'4', 'user_name'=>'arthawka','display_name'=>'Arthawka Hotel', 'password' =>'$2y$10$AgB3COL/OzbHo9IDIH.a1uZHOt.Mq6O2SvjcGTR/GU/0r37C/i7cG', 'email' =>'arthawka.hotel@gmail.com','role_id' =>'3','staff_id'=>'0004','address'=>'','description'=>''],
+            ['id'=>'4', 'user_name'=>'arthawka','display_name'=>'Arthawka Hotel', 'password' =>'$2y$10$KbM7QKh5b0t9OaWoLn793.EuSKdowmbzkfq6KZZe0cagKnz2x9smO', 'email' =>'arthawka.hotel@gmail.com','role_id' =>'3','staff_id'=>'0004','address'=>'','description'=>''],
             ['id'=>'5', 'user_name'=>'amazingbaganresort','display_name'=>'Amazing Bagan Resort Hotel', 'password' =>'$2y$10$pQD8TN7MPwWsVjuO44uS8Ob2Q58vqYiLVkx.y91oIEDaRyTLwRcsi', 'email' =>'amazingrm.abr@amazing-hotel.com','role_id' =>'3','staff_id'=>'0005','address'=>'','description'=>''],
             ['id'=>'6', 'user_name'=>'aureumpalace','display_name'=>'Aureum Palace Hotel & Resort', 'password' =>'$2y$10$ce.1rBW.YH/KLtyjx5KJSO9wwTgq4308xdQVbhN9551w1sUO47.2y', 'email' =>'aureumbgn.head@htoohospitality.com','role_id' =>'3','staff_id'=>'0006','address'=>'','description'=>''],
             ['id'=>'7', 'user_name'=>'baganheritage','display_name'=>'Bagan Heritage Hotel', 'password' =>'$2y$10$SNZhL6C4g/CzZq.FMJD63ueaa1xOzc4tGtrpYwMQBQY0ZEfYtnAn2', 'email' =>'sales@heritagebaganhotel.com.mm','role_id' =>'3','staff_id'=>'0007','address'=>'','description'=>''],
