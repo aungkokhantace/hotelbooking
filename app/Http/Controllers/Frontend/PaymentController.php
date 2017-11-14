@@ -762,6 +762,12 @@ class PaymentController extends Controller
             $customer_id                                    = $stripeCustomerResult["stripe"]["stripe_user_id"];
             $stripe_card_brand                              = "";
             $stripe_card_type                               = "";
+            $stripe_fee_default_cent                        = 0.00;
+            $total_stripe_fee_percent                       = 0.00;   
+            $total_stripe_fee_amt                           = 0.00;
+            $total_cancel_income                            = 0.00;
+            $total_stripe_net_amt                           = 0.00;
+            $total_vendor_net_amt                           = 0.00;
             //Compare today date with charge_date and if today is greater than charge_date(i.e. today is within first cancellation day), charge the customer
             if($today_date >= $charge_date){
                 // Capture payment
@@ -791,17 +797,16 @@ class PaymentController extends Controller
                 }
                 $stripe_payment_fee                         = $stripeBalanceResult['stripe']['stripe_payment_fee'];
                 $stripe_payment_net                         = $stripeBalanceResult['stripe']['stripe_payment_net'];
+                /* Start Calculation for stripe */
+                $stripe_fee_default_cent                    = $this->stripe_fee_cents;
+                $total_stripe_fee_percent                   = $stripe_payment_fee-$stripe_fee_default_cent;   
+                $total_stripe_fee_amt                       = $stripe_payment_fee;
+                $total_cancel_income                        = 0.00;
+                $total_stripe_net_amt                       = $stripe_payment_net;
+                $total_vendor_net_amt                       = $total_stripe_net_amt;
+                /* End Calculation for stripe */
             }
             /* END Operation for stripe */
-
-            /* Start Calculation for stripe */
-            $stripe_fee_default_cent                        = $this->stripe_fee_cents;
-            $total_stripe_fee_percent                       = $stripe_payment_fee-$stripe_fee_default_cent;   
-            $total_stripe_fee_amt                           = $stripe_payment_fee;
-            $total_cancel_income                            = 0.00;
-            $total_stripe_net_amt                           = $stripe_payment_net;
-            $total_vendor_net_amt                           = $total_stripe_net_amt;
-            /* End Calculation for stripe */
 
             // dd('before begin transaction');
             DB::beginTransaction();
@@ -1168,6 +1173,7 @@ class PaymentController extends Controller
         }
         catch(\Exception $e){
             // dd('booking catch',$e);
+            // dd('catch',$e);
             DB::rollback();
             alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
             return redirect('/');

@@ -1189,11 +1189,15 @@ class BookingController extends Controller
                     $booking->total_payable_amt                 = $price_w_tax;
                     $booking->total_discount_amt                = $total_discount_amount;
                     // $booking->total_discount_percentage         = $total_discount_percent;
+                    /*
                     $booking->total_stripe_fee_percent          = $total_stripe_fee_percent;
-                    // $booking->stripe_fee_default_cent           = $thi;
                     $booking->total_stripe_fee_amt              = $total_stripe_fee_amt;
                     $booking->total_stripe_net_amt              = $total_room_net_amt;
-                    $booking->total_vendor_net_amt              = $total_vendor_amt;
+                    $booking->total_vendor_net_amt              = $total_vendor_amt;*/
+                    $booking->total_stripe_fee_percent          = 0.00;
+                    $booking->total_stripe_fee_amt              = 0.00;
+                    $booking->total_stripe_net_amt              = 0.00;
+                    $booking->total_vendor_net_amt              = 0.00;
                     $booking_update_res                         = $this->repo->update($booking);
                     if($booking_update_res['aceplusStatusCode'] != ReturnMessage::OK){
                         DB::rollback();
@@ -1226,6 +1230,7 @@ class BookingController extends Controller
                         }
                     }
                     //Update Booking Payment
+                    /*
                     $b_payment                                  = $b_paymentRepo->getObjsByBookingId($b_id);
                     $b_payment->payment_amount_wo_tax           = $price_w_tax;
                     $b_payment->payment_amount_w_tax            = $total_room_net_amt;
@@ -1235,6 +1240,21 @@ class BookingController extends Controller
                     $b_payment->total_service_tax_amt           = $total_service_amt;
                     // $b_payment->total_service_tax_percentage    = $total_service_tax_percentage;
                     $b_payment->total_payable_amt               = $price_w_tax;
+                    $b_payment_update_res                       = $b_paymentRepo->update($b_payment);
+                    if($b_payment_update_res['aceplusStatusCode'] != ReturnMessage::OK){
+                        DB::rollback();
+                        return \Response::json($response);
+                    }*/
+
+                    $b_payment                                  = $b_paymentRepo->getObjsByBookingId($b_id);
+                    $b_payment->payment_amount_wo_tax           = $price_w_tax;
+                    $b_payment->payment_amount_w_tax            = 0.00;
+                    $b_payment->payment_gateway_tax_amt         = 0.00;
+                    $b_payment->total_government_tax_amt        = $total_gst_amt;
+                    // $b_payment->total_government_tax_percentage = $total_government_tax_percentage;
+                    $b_payment->total_service_tax_amt           = $total_service_amt;
+                    // $b_payment->total_service_tax_percentage    = $total_service_tax_percentage;
+                    $b_payment->total_payable_amt               = 0.00;
                     $b_payment_update_res                       = $b_paymentRepo->update($b_payment);
                     if($b_payment_update_res['aceplusStatusCode'] != ReturnMessage::OK){
                         DB::rollback();
@@ -1272,6 +1292,9 @@ class BookingController extends Controller
                             DB::rollback();
                             return \Response::json($response);
                         }
+                        // Get card brand and card type
+                        $stripe_card_brand      = $stripe_capture_payment['stripe']['card_brand'];
+                        $stripe_card_type       = $stripe_capture_payment['stripe']['card_type'];
                         // Get Stripe Balance Transaction
                         $stripe_balance_transaction                 = $stripe_capture_payment['stripe']['stripe_balance_transaction'];
                         $stripeBalanceRes                           = $paymentObj->retrieveBalance($stripe_balance_transaction);
@@ -1293,24 +1316,34 @@ class BookingController extends Controller
                         }
                         /* Payment is complete. So, we need to change status of booking, booking_room, booking_payment.*/
                         // Update status of Booking Payment
-                        $b_payment->status                  = 5;
-                        $b_payment_update_res               = $b_paymentRepo->update($b_payment);
+                        $b_payment->payment_amount_w_tax            = $stripeBalanceRes['stripe']['stripe_payment_net'];
+                        $b_payment->payment_gateway_tax_amt         = $stripeBalanceRes['stripe']['stripe_payment_fee'];
+                        $b_payment->total_payable_amt               = $stripeBalanceRes['stripe']['stripe_payment_net'];
+                        $b_payment->status                          = 5;
+                        $b_payment_update_res                       = $b_paymentRepo->update($b_payment);
                         if($b_payment_update_res['aceplusStatusCode'] != ReturnMessage::OK){
                             DB::rollback();
                             return \Response::json($response);
                         }
                         // Update status of Booking Room
                         foreach($b_room as $room){
-                            $room->status                   = 5;
-                            $b_room_update_res              = $b_roomRepo->update($room);
+                            $room->status                           = 5;
+                            $b_room_update_res                      = $b_roomRepo->update($room);
                             if($b_room_update_res['aceplusStatusCode'] != ReturnMessage::OK){
                                 DB::rollback();
                                 return \Response::json($response);
                             }
                         }
                         //Update status of Booking
-                        $booking->status                    = 5;
-                        $booking_update_res                 = $this->repo->update($booking);
+                        $booking->status                            = 5;
+                        $booking->total_stripe_fee_percent          = $stripeBalanceRes['stripe']['stripe_payment_fee']-$this->stripe_fee_cents;
+                        $booking->stripe_fee_default_cent           = $this->stripe_fee_cents;                    
+                        $booking->total_stripe_fee_amt              = $stripeBalanceRes['stripe']['stripe_payment_fee'];
+                        $booking->total_stripe_net_amt              = $stripeBalanceRes['stripe']['stripe_payment_net'];
+                        $booking->total_vendor_net_amt              = $stripeBalanceRes['stripe']['stripe_payment_net'];
+                        $booking->card_brand                        = $stripe_card_brand;
+                        $booking->card_type                         = $stripe_card_type;
+                        $booking_update_res                         = $this->repo->update($booking);
                         if($booking_update_res['aceplusStatusCode'] != ReturnMessage::OK){
                             DB::rollback();
                             return \Response::json($response);
