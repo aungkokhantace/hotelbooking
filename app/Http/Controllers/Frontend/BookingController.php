@@ -324,10 +324,10 @@ class BookingController extends Controller
             $amenities                      = $amenityRepo->getAmenitiesByRoomCategoryId($r_category_id);
             $facilities                     = $facilityRepo->getFacilitiesByRoomCategoryId($r_category_id);
             if(isset($bRooms) && count($bRooms) > 0){
-                $total_room_price           = 0.00;
+                // $total_room_price           = 0.00;
                 $total_extra_bed_price      = 0.00;
                 foreach($bRooms as $bRoom){
-                    $total_room_price       += $bRoom->room_payable_amt;
+                    // $total_room_price       += $bRoom->room_payable_amt;
     //                $total_extra_bed_price  += $bRoom->extra_bed_price;
                     //Add amenities array in booking room
                     foreach($amenities as $amenity){
@@ -348,7 +348,7 @@ class BookingController extends Controller
                     $facility_arr           = array();
                 }
             }
-            $booking->total_room_price      = $total_room_price;
+            // $booking->total_room_price      = $total_room_price;
     //        $booking->total_extra_bed_price = $total_extra_bed_price;
             $booking->rooms                 = $bRooms; //Add Rooms Array to booking
     
