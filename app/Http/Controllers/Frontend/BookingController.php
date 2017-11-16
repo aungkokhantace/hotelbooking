@@ -242,8 +242,6 @@ class BookingController extends Controller
                 /*get Cancel Reason */
                 $reasons                = $settingRepo->getCancelReason('REASON');
 
-//                dd($booking);
-
                 return view('frontend.manage_booking')->with('customer',$customer)
                                                       ->with('booking',$booking)
                                                       ->with('hotel',$hotel)

@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // Default Seeders
+        
          $this->call(Default_ConfigSeeder::class);
          $this->call(Default_RoleSeeder::class);
          $this->call(Default_UserSeeder::class);
@@ -38,7 +39,8 @@ class DatabaseSeeder extends Seeder
          $this->call(Default_BedTypeSeeder::class);
 
          $this->call(Default_HotelGallerySeeder::class);
-
          $this->call(Default_HotelRoomTypeSeeder::class);
+         $this->call(Default_HotelRoomCategorySeeder::class);
+
     }
 }
