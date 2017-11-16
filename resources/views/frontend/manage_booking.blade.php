@@ -186,7 +186,6 @@
                                                </button>
                                            </div>
                                            {!! Form::open(array('url'=>'/booking/room/edit',
-                                                                'class'=>'form-inline',
                                                                 'id'=>'form'.$room->id)) !!}
                                            <div class="form-groups row formEdit" id="formEdit{{$room->id}}">
                                                <div class="col-10">
