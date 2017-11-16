@@ -303,6 +303,15 @@ class Default_PermissionSeeder extends Seeder
             //system_admin
             ['id'=>602,'module'=>'SystemAdmin','name'=>'Dashboard','description'=>'System Admin Dashboard','url'=>'backend_mps/system_admin/dashboard'],
 
+            //Hotel Gallery
+            ['id'=>610,'module'=>'HotelGallery','name'=>'Listing','description'=>'Hotel Gallery Listing','url'=>'backend_mps/hotel_gallery'],
+            ['id'=>611,'module'=>'HotelGallery','name'=>'Create','description'=>'Hotel Gallery Create','url'=>'backend_mps/hotel_gallery/create/{hotel_id?}'],
+            ['id'=>612,'module'=>'HotelGallery','name'=>'Store','description'=>'Hotel Gallery Store','url'=>'backend_mps/hotel_gallery/store'],
+            ['id'=>613,'module'=>'HotelGallery','name'=>'Edit','description'=>'Hotel Gallery Edit','url'=>'backend_mps/hotel_gallery/edit'],
+            ['id'=>614,'module'=>'HotelGallery','name'=>'Update','description'=>'Hotel Gallery Update','url'=>'backend_mps/hotel_gallery/update'],
+            ['id'=>615,'module'=>'HotelGallery','name'=>'Destroy','description'=>'Hotel Gallery Destroy','url'=>'backend_mps/hotel_gallery/destroy'],
+            ['id'=>616,'module'=>'HotelGallery','name'=>'Filter','description'=>'Hotel Gallery Filter','url'=>'backend_mps/hotel_gallery/{hotel_id?}'],
+
 
 
         );

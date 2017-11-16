@@ -62,4 +62,9 @@ class Hotel extends Model
     {
         return $this->hasMany('App\Setup\HotelLandmark\HotelLandmark');
     }
+
+    public function hotel_gallery()
+    {
+        return $this->hasMany('App\Setup\HotelGallery\HotelGallery');
+    }
 }

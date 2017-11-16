@@ -20,4 +20,9 @@ class HotelRoomType extends Model
     {
         return $this->belongsTo('App\Setup\Hotel\Hotel','hotel_id','id');
     }
+
+    public function hotel_room_category()
+    {
+        return $this->hasMany('App\Setup\HotelRoomCategory\HotelRoomCategory');
+    }
 }

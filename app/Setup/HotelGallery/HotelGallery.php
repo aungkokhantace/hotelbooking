@@ -15,4 +15,8 @@ class HotelGallery extends Model
         'status',
         'updated_at','created_at','deleted_at','updated_by','created_by','deleted_by'
     ];
+
+    public function hotel(){
+        return $this->belongsTo('App\Setup\Hotel\Hotel','hotel_id','id');
+    }
 }
