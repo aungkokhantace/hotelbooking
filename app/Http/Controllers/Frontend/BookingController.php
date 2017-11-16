@@ -607,7 +607,7 @@ class BookingController extends Controller
                                 // $newBPayment->total_government_tax_percentage  = ;
                                 $newBPayment->total_service_tax_amt         = $r_service_amt;
                                 // $newBPayment->total_service_tax_percentage  =;
-                                $newBPayment->total_payable_amt             = $r_payment_amt_w_tax;
+                                $newBPayment->total_payable_amt             = $r_payment_amt_wo_tax;
                                 $newBPaymentRes                             = $bookPaymentRepo->create($newBPayment);
                                 if($newBPaymentRes['aceplusStatusCode'] != ReturnMessage::OK){
                                     DB::rollback();
@@ -1318,7 +1318,7 @@ class BookingController extends Controller
                         // Update status of Booking Payment
                         $b_payment->payment_amount_w_tax            = $stripeBalanceRes['stripe']['stripe_payment_net'];
                         $b_payment->payment_gateway_tax_amt         = $stripeBalanceRes['stripe']['stripe_payment_fee'];
-                        $b_payment->total_payable_amt               = $stripeBalanceRes['stripe']['stripe_payment_net'];
+                        $b_payment->total_payable_amt               = $stripeBalanceRes['stripe']['stripe_payment_amt'];
                         $b_payment->status                          = 5;
                         $b_payment_update_res                       = $b_paymentRepo->update($b_payment);
                         if($b_payment_update_res['aceplusStatusCode'] != ReturnMessage::OK){

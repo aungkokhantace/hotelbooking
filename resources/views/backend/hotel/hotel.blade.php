@@ -509,8 +509,8 @@
                 </li>
                 <li><a href="#5" data-toggle="tab">Hotel Facility</a>
                 </li>
-                <li><a href="#6" data-toggle="tab">Hotel RoomType</a>
-                </li>
+                {{--  <li><a href="#6" data-toggle="tab">Hotel RoomType</a>
+                </li>  --}}
             </ul>
 
             <div class="tab-content ">
@@ -872,13 +872,13 @@
                         @endforeach
                     @endif
                 </div>
-
+                <!--
                 <div class="tab-pane" id="6">
                     @if(isset($hotel))
                         @if(!empty($h_room_types))
                             <?php $i = 0;?>
                             @foreach($h_room_types as $h_room_type)
-                            <!-- Start -->
+                            
                             <div class="row div_facility">
                                 <div class="col-lg-8 col-md-8 col-sm-8 div_border">
                                     <div class="col-md-4">
@@ -897,7 +897,6 @@
                                 @endif    
                             </div> 
                             
-                            <!-- End -->
                             <?php $i++;?>
                             @endforeach
                             <button type="button" class="btn btn-info" id="add_more_btn">Add More</button>
@@ -936,6 +935,7 @@
                         <button type="button" class="btn btn-info" id="add_more_btn">Add More</button>
                     @endif
                 </div>
+                -->
             </div>
         </div>
     </div>
