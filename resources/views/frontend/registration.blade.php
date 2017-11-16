@@ -130,7 +130,7 @@
                     }
                 },
                 submitHandler: function(form) {
-                    $('button[type="submit"]').attr('disabled','disabled');
+                    $('#create-btn').attr('disabled','disabled');
                     var serializedData = $('#registration').serialize();
                     $.ajax({
                         url: '/register',

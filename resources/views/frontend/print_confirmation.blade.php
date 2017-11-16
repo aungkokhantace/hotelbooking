@@ -19,7 +19,7 @@
     <table style="width:100%;border-collapse: collapse;border: 2px solid black;padding:7px 0 4px 4px;">
         <tr>
             <td width="16%">
-                @if($hotel->logo != "default_image.jpg" && $hotel->logo == "")
+                @if($hotel->logo != "default_image.jpg" && $hotel->logo != "")
                     <img style="width:80px;height:70px;" src="/images/upload/{!! $hotel->logo !!}" alt="hotel_logo">
                 @endif
             </td>
