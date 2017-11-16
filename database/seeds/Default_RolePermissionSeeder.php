@@ -580,6 +580,31 @@ class Default_RolePermissionSeeder extends Seeder
             ['role_id'=>2, 'permission_id'=>601],
             ['role_id'=>2, 'permission_id'=>602],
 
+            //hotel gallery
+            ['role_id'=>1, 'permission_id'=>610],
+            ['role_id'=>1, 'permission_id'=>611],
+            ['role_id'=>1, 'permission_id'=>612],
+            ['role_id'=>1, 'permission_id'=>613],
+            ['role_id'=>1, 'permission_id'=>614],
+            ['role_id'=>1, 'permission_id'=>615],
+            ['role_id'=>1, 'permission_id'=>616],
+
+            ['role_id'=>2, 'permission_id'=>610],
+            ['role_id'=>2, 'permission_id'=>611],
+            ['role_id'=>2, 'permission_id'=>612],
+            ['role_id'=>2, 'permission_id'=>613],
+            ['role_id'=>2, 'permission_id'=>614],
+            ['role_id'=>2, 'permission_id'=>615],
+            ['role_id'=>2, 'permission_id'=>616],
+
+            ['role_id'=>3, 'permission_id'=>610],
+            ['role_id'=>3, 'permission_id'=>611],
+            ['role_id'=>3, 'permission_id'=>612],
+            ['role_id'=>3, 'permission_id'=>613],
+            ['role_id'=>3, 'permission_id'=>614],
+            ['role_id'=>3, 'permission_id'=>615],
+            ['role_id'=>3, 'permission_id'=>616],
+
         );
 
         DB::table('core_permission_role')->insert($roles);

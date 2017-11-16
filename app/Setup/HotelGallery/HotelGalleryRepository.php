@@ -13,6 +13,9 @@ use App\Core\ReturnMessage;
 use App\Core\Utility;
 use App\Log\LogCustom;
 use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\Storage;
+use Illuminate\Contracts\Filesystem;
+use Storage;
 
 class HotelGalleryRepository implements HotelGalleryRepositoryInterface
 {
@@ -48,7 +51,7 @@ class HotelGalleryRepository implements HotelGalleryRepositoryInterface
 
             //create info log
             $date = $tempObj->created_at;
-            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' created room_category_image_id = '.$tempObj->id . PHP_EOL;
+            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' created hotel_gallery_image_id = '.$tempObj->id . PHP_EOL;
             LogCustom::create($date,$message);
 
 
@@ -58,7 +61,7 @@ class HotelGalleryRepository implements HotelGalleryRepositoryInterface
         catch(\Exception $e){
             //create error log
             $date    = date("Y-m-d H:i:s");
-            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a room_category_image and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a hotel_gallery_image and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusMessage'] = $e->getMessage();
@@ -69,5 +72,64 @@ class HotelGalleryRepository implements HotelGalleryRepositoryInterface
     public function getObjsByHotelID($hotel_id){
         $objs   = HotelGallery::where('hotel_id','=',$hotel_id)->get();
         return $objs;
+    }
+
+    public function deleteHotelGalleryImageByHotelId($hotel_id,$hotel_gallery_image_id_array){        
+        $currentUser = Utility::getCurrentUserID(); //get currently logged in user
+        $date    = date("Y-m-d H:i:s");
+
+        try{
+            $result = DB::table('hotel_gallery')
+                            ->where('hotel_id','=',$hotel_id)
+                            ->whereIn('id',$hotel_gallery_image_id_array)
+                            ->delete();
+
+            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' deleted hotel_gallery_image of hotel_id = '.$hotel_id . PHP_EOL;
+            LogCustom::create($date,$message);
+        }
+        catch(\Exception $e){
+            //delete error log
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' deleted  hotel_gallery_image of hotel_id = ' .$hotel_id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            LogCustom::create($date,$message);
+        }
+    }
+
+    public function delete($id) {
+        $currentUser = Utility::getCurrentUserID(); //get currently logged in user
+        $date    = date("Y-m-d H:i:s");
+
+        $imageObj = HotelGallery::find($id);
+        $image_name = $imageObj->image;
+
+        try{
+            $result = DB::table('hotel_gallery')
+                            ->where('id','=',$id)
+                            ->delete();
+
+            //actually deleting image
+            // $image_path = "/images/upload/".$image_name;  // Value is not URL but directory file path 
+            
+            // if(Storage::exists($image_path)) {
+                // Storage::delete($image_path);
+            // }
+
+            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' deleted hotel_gallery_image id = '.$id . PHP_EOL;
+            LogCustom::create($date,$message);
+        }
+        catch(\Exception $e){
+            //delete error log
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' deleted  hotel_gallery_image id = ' .$id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            LogCustom::create($date,$message);
+        }
+    }
+
+    public function checkHasPermission($id,$h_id) {
+        $hasPermission      = DB::select("SELECT count(id) as rowCount FROM h_room_category WHERE id = '$id' AND hotel_id = '$h_id' AND deleted_at IS  NULL");
+        $count              = $hasPermission[0]->rowCount;
+        if ($count > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

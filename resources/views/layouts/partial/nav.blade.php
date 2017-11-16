@@ -280,8 +280,14 @@
                             <li nav-id="modifier-create-modifier"><a href="/backend_mps/hotel_restaurant/create">Entry</a></li>
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/hotel_restaurant">List</a></li>
                         </ul> -->
-                    </li>
+                    </li>                    
+                   
                     @endif
+                    
+                     <!-- Hotel Gallery -->
+                     <li nav-id="modifier-create" class="has-sub">
+                        <a href="/backend_mps/hotel_gallery">Hotel Gallery</a>
+                    </li>
                 </ul>
             </li>
 
