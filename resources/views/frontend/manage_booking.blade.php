@@ -205,7 +205,7 @@
                                                        <select class="floatLabel form-control" name="g_count">
                                                            @for($i=1;$i<=$room->max_count;$i++){
                                                            <option value="{{$i}}" {{$i==$room->guest_count?'selected':''}}>
-                                                               {{$i>1?$i.'guests':$i.'guest'}}
+                                                               {{$i>1?$i.' guests':$i.' guest'}}
                                                            </option>
                                                            @endfor
                                                        </select>

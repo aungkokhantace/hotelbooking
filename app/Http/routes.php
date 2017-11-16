@@ -524,6 +524,15 @@ Route::group(['middleware' => 'web'], function () {
                 'uses'=>'Setup\CSVImport\CSVImportController@store'
             ));
 
+            //Hotel Gallery
+            Route::get('hotel_gallery', array('as'=>'backend_mps/hotel_gallery', 'uses'=>'Setup\HotelGallery\HotelGalleryController@index'));
+            Route::get('hotel_gallery/create/{hotel_id?}', array('as'=>'backend_mps/hotel_gallery/create/{hotel_id?}', 'uses'=>'Setup\HotelGallery\HotelGalleryController@create'));
+            Route::post('hotel_gallery/store', array('as'=>'backend_mps/hotel_gallery/store', 'uses'=>'Setup\HotelGallery\HotelGalleryController@store'));
+            Route::get('hotel_gallery/edit/{id}', array('as'=>'backend_mps/hotel_gallery/edit', 'uses'=>'Setup\HotelGallery\HotelGalleryController@edit'));
+            Route::post('hotel_gallery/update', array('as'=>'backend_mps/hotel_gallery/update', 'uses'=>'Setup\HotelGallery\HotelGalleryController@update'));
+            Route::post('hotel_gallery/destroy', array('as'=>'backend_mps/hotel_gallery/destroy', 'uses'=>'Setup\HotelGallery\HotelGalleryController@destroy'));
+            Route::get('hotel_gallery/{hotel_id?}',array('as'=>'backend_mps/hotel_gallery/{hotel_id?}','uses'=>'Setup\HotelGallery\HotelGalleryController@search'));
+
         });
 
     });

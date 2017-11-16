@@ -209,6 +209,7 @@ class RoomRepository implements RoomRepositoryInterface
     }
 
     //for getting array to use in PaymentController
+    //Room Search Query
     public function getRoomArrayByRoomCategoryId($r_category_id,$check_in,$check_out) {
         //change date formats of check_in and check_out
         $newCheckIn  = date("Y-m-d", strtotime($check_in));

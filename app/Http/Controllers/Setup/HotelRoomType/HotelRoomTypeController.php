@@ -36,7 +36,7 @@ class HotelRoomTypeController extends Controller
             if ($role == 3){
                 //Get Hotel ID
                 $hotelRepo          = new HotelRepository();
-                $hotels             = $hotelRepo->getHotelByUserEmail($email);
+                $hotels             = $hotelRepo->getFirstHotelByUserEmail($email);
                 $hotel_id           = $hotels->id;
                 $hotel_room_type    = $this->repo->getHotelRoomTypeWithHotelId($hotel_id);
             } else {
@@ -57,7 +57,7 @@ class HotelRoomTypeController extends Controller
             $hotelRepo          = new HotelRepository();
 
             if ($role == 3){
-                $hotels     = $hotelRepo->getHotelByUserEmail($email);
+                $hotels     = $hotelRepo->getFirstHotelByUserEmail($email);
             } else {
                 $hotels     = $hotelRepo->getObjs();
             }
@@ -107,7 +107,7 @@ class HotelRoomTypeController extends Controller
 
                 //Check User has permission to edit
                 //Get Hotel ID
-                $hotels             = $hotelRepo->getHotelByUserEmail($email);
+                $hotels             = $hotelRepo->getFirstHotelByUserEmail($email);
                 $h_id               = $hotels->id;
                 $checkPermission    = $this->repo->checkHasPermission($id,$h_id);
                 if ($checkPermission == false) {
@@ -115,7 +115,8 @@ class HotelRoomTypeController extends Controller
                     exit();
                 }
                 //Get Hotel By User Email
-                $hotels         = $hotelRepo->getHotelByUserEmail($email);
+                // $hotels         = $hotelRepo->getHotelByUserEmail($email);
+                $hotels         = $hotelRepo->getFirstHotelByUserEmail($email);
             } else {
                 $hotels         = $hotelRepo->getObjs();
             }
