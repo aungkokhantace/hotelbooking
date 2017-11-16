@@ -627,7 +627,7 @@ label.control-label {
     font-family: 'Playfair Display';
 }
 .lead_left, .left_list{
-    float: left;
+    /*float: left;*/
     font-family: 'Playfair Display';
 }
 .lead_right{
@@ -1687,7 +1687,16 @@ button.closes {
 }
 
 @media only screen and (max-width: 414px) {
-    #form_id {
+.booking_manage_table{
+    display: table-row;
+    background-color:#E1E1E1; 
+}
+.booking_data_fix{
+    padding-left: 10px;
+    word-wrap: break-word;
+}
+
+#form_id {
     position: absolute;
     z-index: 500;
     top: 100px;
@@ -1955,6 +1964,7 @@ button.closes {
 }
 
 @media only screen and (max-width: 360px) {
+
 #form_id {
     position: absolute;
     z-index: 500;

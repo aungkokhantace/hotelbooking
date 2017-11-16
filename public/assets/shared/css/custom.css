@@ -192,8 +192,8 @@
     color: #626262;
 }
 #bookingmanage_blog{
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 350px;
+    /*border-bottom: 1px solid #ccc;*/
+    /*padding-bottom: 350px;*/
 }
 .modal-headers {
     padding: 15px 25px;
@@ -307,3 +307,4 @@ button.closed {
     padding-bottom: 570px;
 }
 }
+
