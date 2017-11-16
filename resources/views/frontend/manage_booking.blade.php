@@ -165,94 +165,187 @@
                                     </tbody>
                                 </table>
                             </div>
-                             @foreach($booking->rooms as $room)
-                            <div id="bookingmanage_blog">
-                               
-                                    <div class="blog_booking">
-                                        <div class="col-md-4 col-sm-4 col-xs-12 left_list">
-                                            <img class="img-hover img-responsive"
-                                                 src="{{$room->category_image}}"
-                                                 alt="">
-                                        </div>
+                            <div class="table-responsive room_table ">
+                                @foreach($booking->rooms as $room)
+                                    <table class="table table-striped">
+                                        <tbody>
+                                        <tr>
+                                            <td class="b-manage-table booking_manage_table" width="40%" >
+                                                <img class="img-hover img-responsive"
+                                                src="{{$room->category_image}}"
+                                                alt="">
+                                            </td>
+                                            <td class="lead_left booking_manage_table">
+                                           <div class="booking_data_fix">
+                                           <h4>{{$room->room_category}}</h4>
+                                           <div class="manageform-edit" id="rowEdit{{$room->id}}">
+                                               <i>for </i> <span>{{$room->guest_name}}</span>
+                                               ({{$room->guest_count>1?$room->guest_count.'guests':$room->guest_count.'guest'}})
+                                               <button type="button" class="btn-four btn-primary-four btn-edit" id="{{$room->id}}">
+                                                   <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>Edit
+                                               </button>
+                                           </div>
+                                           {!! Form::open(array('url'=>'/booking/room/edit',
+                                                                'class'=>'form-inline',
+                                                                'id'=>'form'.$room->id)) !!}
+                                           <div class="form-groups row formEdit" id="formEdit{{$room->id}}">
+                                               <div class="col-10">
+                                                   <input type="hidden" name="r_id" value="{{$room->id}}">
+                                                   <input type="hidden" name="b_id" value="{{$booking->id}}">
+                                                   <div class="col-2">
+                                                       <input type="text" class="floatLabel form-control"
+                                                              id="f_name" placeholder="First" name="f_name"
+                                                              value="{{isset($room->user_first_name)?$room->user_first_name:''}}">
+                                                   </div>
+                                                   <div class="col-2">
+                                                       <input type="text" class="floatLabel form-control"
+                                                              id="l_name" placeholder="Last" name="l_name"
+                                                              value="{{isset($room->user_last_name)?$room->user_last_name:''}}">
+                                                   </div>
+                                                   <div class="col-2">
+                                                       <select class="floatLabel form-control" name="g_count">
+                                                           @for($i=1;$i<=$room->max_count;$i++){
+                                                           <option value="{{$i}}" {{$i==$room->guest_count?'selected':''}}>
+                                                               {{$i>1?$i.'guests':$i.'guest'}}
+                                                           </option>
+                                                           @endfor
+                                                       </select>
+                                                   </div>
+                                                   <div class="col-2 text-center">
+                                                       <button type="button" class="btn btn-primary btn-success saveEdit"
+                                                               id="saveEdit-{{$room->id}}">
+                                                           &nbsp; Save &nbsp;
+                                                       </button>
+                                                   </div>
+                                                   <div class="col-2">
+                                                       <button type="button" class="btn btn-primary cancelEdit" id="cancelEdit-{{$room->id}}">
+                                                           Cancel
+                                                       </button>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                           {!! Form::close() !!}
+                                           <div class="manageform">
+                                               <h4>Amenities</h4>
+                                               @foreach($room->amenities as $amenity)
+                                                   <p>{{"* ".$amenity->name}}</p>
+                                               @endforeach
+                                           </div>
+                                           <div class="clearfix"></div>
+                                           <div class="manageform">
+                                               <h4>Room Facilities</h4>
+                                               @foreach($room->facilities as $facility)
+                                                   <p>{{"* ".$facility->name}}</p>
+                                               @endforeach
+                                           </div>
+                                           <div class="clearfix"></div>
+                                           <div class="manageform">
+                                               <h4>Hotel Facilities</h4>
+                                               @foreach($hotel->h_facilities as $h_facility)
+                                                   <p>{{"* ".$h_facility->facility->name}}</p>
+                                               @endforeach
+                                           </div>
+                                           <div class="clearfix"></div>
+                                           <a class="cancelbooking" href="/booking/room/cancel/{{$booking->id}}/{{$room->id}}">
+                                               ⨂Cancel your room
+                                           </a>
+                                           <div class="clearfix"></div>
+                                           </div>
+                                       </td>
+                                    </tr>
+                                        </tbody>
+                                    </table>
+                           @endforeach
+                       </div>
+                        {{--@foreach($booking->rooms as $room)--}}
+                        {{--<div id="bookingmanage_blog">--}}
+                                    {{--<div class="blog_booking">--}}
+                                        {{--<div class="col-md-4 col-sm-4 col-xs-12 left_list">--}}
+                                            {{--<img class="img-hover img-responsive"--}}
+                                                 {{--src="{{$room->category_image}}"--}}
+                                                 {{--alt="">--}}
+                                        {{--</div>--}}
 
-                                        <div class="col-md-8 col-sm-8 col-xs-12 lead_left">
-                                            <h4>{{$room->room_category}}</h4>
-                                            <div class="manageform-edit" id="rowEdit{{$room->id}}">
-                                                <i>for </i> <span>{{$room->guest_name}}</span>
-                                                ({{$room->guest_count>1?$room->guest_count.'guests':$room->guest_count.'guest'}})
-                                                <button type="button" class="btn-four btn-primary-four btn-edit" id="{{$room->id}}">
-                                                    <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>Edit
-                                                </button>
-                                            </div>
-                                            {!! Form::open(array('url'=>'/booking/room/edit',
-                                                                 'class'=>'form-inline',
-                                                                 'id'=>'form'.$room->id)) !!}
-                                            <div class="form-groups row formEdit" id="formEdit{{$room->id}}">
-                                                <div class="col-10">
-                                                    <input type="hidden" name="r_id" value="{{$room->id}}">
-                                                    <input type="hidden" name="b_id" value="{{$booking->id}}">
-                                                    <div class="col-2">
-                                                        <input type="text" class="floatLabel form-control"
-                                                               id="f_name" placeholder="First" name="f_name"
-                                                               value="{{isset($room->user_first_name)?$room->user_first_name:''}}">
-                                                    </div>
-                                                    <div class="col-2">
-                                                        <input type="text" class="floatLabel form-control"
-                                                               id="l_name" placeholder="Last" name="l_name"
-                                                               value="{{isset($room->user_last_name)?$room->user_last_name:''}}">
-                                                    </div>
-                                                    <div class="col-2">
-                                                        <select class="floatLabel form-control" name="g_count">
-                                                            @for($i=1;$i<=$room->max_count;$i++){
-                                                            <option value="{{$i}}" {{$i==$room->guest_count?'selected':''}}>
-                                                                {{$i>1?$i.'guests':$i.'guest'}}
-                                                            </option>
-                                                            @endfor
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-2 text-center">
-                                                        <button type="button" class="btn btn-primary btn-success saveEdit"
-                                                                id="saveEdit-{{$room->id}}">
-                                                            &nbsp; Save &nbsp;
-                                                        </button>
-                                                    </div>
-                                                    <div class="col-2">
-                                                        <button type="button" class="btn btn-primary cancelEdit" id="cancelEdit-{{$room->id}}">
-                                                            Cancel
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {!! Form::close() !!}
-                                            <div class="manageform">
-                                                <h4>Amenities</h4>
-                                                @foreach($room->amenities as $amenity)
-                                                    <p>{{"* ".$amenity->name}}</p>
-                                                @endforeach
-                                            </div>
-                                            <div class="clearfix"></div>
-                                            <div class="manageform">
-                                                <h4>Room Facilities</h4>
-                                                @foreach($room->facilities as $facility)
-                                                    <p>{{"* ".$facility->name}}</p>
-                                                @endforeach
-                                            </div>
-                                            <div class="clearfix"></div>
-                                            <div class="manageform">
-                                                <h4>Hotel Facilities</h4>
-                                                @foreach($hotel->h_facilities as $h_facility)
-                                                    <p>{{"* ".$h_facility->facility->name}}</p>
-                                                @endforeach
-                                            </div>
-                                            <div class="clearfix"></div>
-                                            <a class="cancelbooking" href="/booking/room/cancel/{{$booking->id}}/{{$room->id}}">
-                                                ⨂Cancel your room
-                                            </a>
-                                        </div>
-                                    </div> 
-                                
-                            </div>
-                            @endforeach
+
+                                        {{--<div class="col-md-8 col-sm-8 col-xs-12 lead_left">--}}
+                                            {{--<h4>{{$room->room_category}}</h4>--}}
+                                            {{--<div class="manageform-edit" id="rowEdit{{$room->id}}">--}}
+                                                {{--<i>for </i> <span>{{$room->guest_name}}</span>--}}
+                                                {{--({{$room->guest_count>1?$room->guest_count.'guests':$room->guest_count.'guest'}})--}}
+                                                {{--<button type="button" class="btn-four btn-primary-four btn-edit" id="{{$room->id}}">--}}
+                                                    {{--<i class="fa fa-pencil fa-lg" aria-hidden="true"></i>Edit--}}
+                                                {{--</button>--}}
+                                            {{--</div>--}}
+                                            {{--{!! Form::open(array('url'=>'/booking/room/edit',--}}
+                                                                 {{--'class'=>'form-inline',--}}
+                                                                 {{--'id'=>'form'.$room->id)) !!}--}}
+                                            {{--<div class="form-groups row formEdit" id="formEdit{{$room->id}}">--}}
+                                                {{--<div class="col-10">--}}
+                                                    {{--<input type="hidden" name="r_id" value="{{$room->id}}">--}}
+                                                    {{--<input type="hidden" name="b_id" value="{{$booking->id}}">--}}
+                                                    {{--<div class="col-2">--}}
+                                                        {{--<input type="text" class="floatLabel form-control"--}}
+                                                               {{--id="f_name" placeholder="First" name="f_name"--}}
+                                                               {{--value="{{isset($room->user_first_name)?$room->user_first_name:''}}">--}}
+                                                    {{--</div>--}}
+                                                    {{--<div class="col-2">--}}
+                                                        {{--<input type="text" class="floatLabel form-control"--}}
+                                                               {{--id="l_name" placeholder="Last" name="l_name"--}}
+                                                               {{--value="{{isset($room->user_last_name)?$room->user_last_name:''}}">--}}
+                                                    {{--</div>--}}
+                                                    {{--<div class="col-2">--}}
+                                                        {{--<select class="floatLabel form-control" name="g_count">--}}
+                                                            {{--@for($i=1;$i<=$room->max_count;$i++){--}}
+                                                            {{--<option value="{{$i}}" {{$i==$room->guest_count?'selected':''}}>--}}
+                                                                {{--{{$i>1?$i.'guests':$i.'guest'}}--}}
+                                                            {{--</option>--}}
+                                                            {{--@endfor--}}
+                                                        {{--</select>--}}
+                                                    {{--</div>--}}
+                                                    {{--<div class="col-2 text-center">--}}
+                                                        {{--<button type="button" class="btn btn-primary btn-success saveEdit"--}}
+                                                                {{--id="saveEdit-{{$room->id}}">--}}
+                                                            {{--&nbsp; Save &nbsp;--}}
+                                                        {{--</button>--}}
+                                                    {{--</div>--}}
+                                                    {{--<div class="col-2">--}}
+                                                        {{--<button type="button" class="btn btn-primary cancelEdit" id="cancelEdit-{{$room->id}}">--}}
+                                                            {{--Cancel--}}
+                                                        {{--</button>--}}
+                                                    {{--</div>--}}
+                                                {{--</div>--}}
+                                            {{--</div>--}}
+                                            {{--{!! Form::close() !!}--}}
+                                            {{--<div class="manageform">--}}
+                                                {{--<h4>Amenities</h4>--}}
+                                                {{--@foreach($room->amenities as $amenity)--}}
+                                                    {{--<p>{{"* ".$amenity->name}}</p>--}}
+                                                {{--@endforeach--}}
+                                            {{--</div>--}}
+                                            {{--<div class="clearfix"></div>--}}
+                                            {{--<div class="manageform">--}}
+                                                {{--<h4>Room Facilities</h4>--}}
+                                                {{--@foreach($room->facilities as $facility)--}}
+                                                    {{--<p>{{"* ".$facility->name}}</p>--}}
+                                                {{--@endforeach--}}
+                                            {{--</div>--}}
+                                            {{--<div class="clearfix"></div>--}}
+                                            {{--<div class="manageform">--}}
+                                                {{--<h4>Hotel Facilities</h4>--}}
+                                                {{--@foreach($hotel->h_facilities as $h_facility)--}}
+                                                    {{--<p>{{"* ".$h_facility->facility->name}}</p>--}}
+                                                {{--@endforeach--}}
+                                            {{--</div>--}}
+                                            {{--<div class="clearfix"></div>--}}
+                                            {{--<a class="cancelbooking" href="/booking/room/cancel/{{$booking->id}}/{{$room->id}}">--}}
+                                                {{--⨂Cancel your room--}}
+                                            {{--</a>--}}
+                                            {{--<div class="clearfix"></div>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                             {{--</div>--}}
+                                {{--<hr style="border-top: 1px solid red;">--}}
+                            {{--@endforeach--}}
                             <div class="payment_formtitle">
                                 <!-- First Blog Post Left -->
                                 <div class="payment_list">
