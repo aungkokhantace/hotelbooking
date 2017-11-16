@@ -501,6 +501,7 @@ class HotelController extends Controller
             /********** End creating Hotel Facility Object  **********/   
             
             /********** Start creating Hotel Room Type Object  **********/    
+            /*
             if($room_types != ""){
                 foreach($room_types as $r_typeKey=>$r_typeValue){
                     $hotel_room_typeObj                 = new HotelRoomType();
@@ -516,7 +517,7 @@ class HotelController extends Controller
                                          ->withMessage(FormatGenerator::message('Fail', 'Hotel did not create ...'));
                     }
                 }
-            }
+            }*/
             /********** End creating Hotel Room Type Object  **********/   
 
             DB::commit();
@@ -645,6 +646,7 @@ class HotelController extends Controller
 
     public function update(HotelEditRequest $request){
         // dd(Input::all());
+        // dd('update');
         $request->validate();
         try{
 
@@ -1020,7 +1022,14 @@ class HotelController extends Controller
                                 }else{
                                     $h_facility_result['aceplusStatusCode'] = ReturnMessage::OK;
                                 }
-                               
+                                // dd('facility');
+                                if($h_facility_result['aceplusStatusCode'] ==  ReturnMessage::OK){
+                                    DB::commit();
+                                    return redirect()->action('Setup\Hotel\HotelController@index')
+                                        ->withMessage(FormatGenerator::message('Success', 'Hotel updated ...'));
+                                }
+                                /*
+                                // Room Type 
                                 if($h_facility_result['aceplusStatusCode'] ==  ReturnMessage::OK){
                                     if($room_types != ""){
                                         $r_type_repo                            = new HotelRoomTypeRepository();
@@ -1056,7 +1065,7 @@ class HotelController extends Controller
                                     DB::rollback();
                                     return redirect()->action('Setup\Hotel\HotelController@index')
                                         ->withMessage(FormatGenerator::message('Fail', 'Hotel did not update ...'));
-                                }
+                                }*/
     
                             }else{
                                 DB::rollback();

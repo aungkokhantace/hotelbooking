@@ -305,6 +305,9 @@
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/hotel_room_type">List</a></li>
                         </ul>
                     </li> --}}
+                    <li nav-id="modifier-create">
+                        <a href="/backend_mps/hotel_room_type">Hotel Room Type</a>
+                    </li>
                     <li nav-id="modifier-create" class="has-sub">
                         <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
