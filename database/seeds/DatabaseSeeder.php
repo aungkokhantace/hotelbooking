@@ -40,5 +40,8 @@ class DatabaseSeeder extends Seeder
          $this->call(Default_HotelGallerySeeder::class);
 
          $this->call(Default_HotelRoomTypeSeeder::class);
+
+         $this->call(Default_RoomCategoryFacilitySeeder::class);
+         $this->call(Default_RoomCategoryAmenitySeeder::class);
     }
 }
