@@ -27,6 +27,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Redirect;
+use App\Setup\Slider\SliderRepository;
 
 class HomeController extends Controller
 {
@@ -112,10 +113,18 @@ class HomeController extends Controller
     //end hotel promotions
         //Get Slider For Home Page
         $template_id        = 1; //1 For Home Page
-        $sliders            = Slider::select('image_url','title','description')
-                                    ->where('template_id',$template_id)
-                                    ->whereNull('deleted_at')
-                                    ->get();
+
+        // $sliders            = Slider::select('image_url','title','description')
+        //                             ->where('template_id',$template_id)
+        //                             ->whereNull('deleted_at')
+        //                             ->get();
+
+        $sliderRepo         = new SliderRepository();
+        $sliders            = $sliderRepo->getSlidersByTemplateId($template_id);
+
+        //flag for first slider image(to be active)
+        $first_slider       = 1;
+
         /*Create Session for check_in date and check_out date*/
         $check_in           = Carbon::today()->format('d-m-Y');
         $check_out          = Carbon::tomorrow()->format('d-m-Y');
@@ -132,6 +141,7 @@ class HomeController extends Controller
             ->with('recommended_hotels',$recommendedHotelArray)
             ->with('percent_promotions',$percentPromotionArray)
             ->with('amount_promotions',$amountPromotionArray)
+            ->with('first_slider',$first_slider)
             ->with('sliders',$sliders);
     }
 

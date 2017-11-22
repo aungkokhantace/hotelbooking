@@ -13,7 +13,7 @@
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
-                    <i class="fa fa-users"></i>
+                    <i class="fa fa-sitemap"></i>
                     <span>General</span>
                 </a>
                 <ul class="sub-menu">
@@ -194,7 +194,7 @@
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
-                    <i class="fa fa-users"></i>
+                    <i class="fa fa-university"></i>
                     <span>Hotel Management</span>
                 </a>
                 <ul class="sub-menu">
@@ -280,10 +280,10 @@
                             <li nav-id="modifier-create-modifier"><a href="/backend_mps/hotel_restaurant/create">Entry</a></li>
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/hotel_restaurant">List</a></li>
                         </ul> -->
-                    </li>                    
-                   
+                    </li>
+
                     @endif
-                    
+
                      <!-- Hotel Gallery -->
                      <li nav-id="modifier-create" class="has-sub">
                         <a href="/backend_mps/hotel_gallery">Hotel Gallery</a>
@@ -291,12 +291,12 @@
                 </ul>
             </li>
 
-            
+
 
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
-                    <i class="fa fa-users"></i>
+                    <i class="fa fa-key"></i>
                     <span>Room Management</span>
                 </a>
                 <ul class="sub-menu">
@@ -349,7 +349,7 @@
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/room">List</a></li>
                         </ul> -->
                     </li>
-        
+
                     @if (Auth::guard('User')->user()->role_id == 1 || Auth::guard('User')->user()->role_id == 2)
                     {{--<li nav-id="modifier-create" class="has-sub">
                         <a href="javascript:;">
@@ -391,7 +391,7 @@
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
-                    <i class="fa fa-users"></i>
+                    <i class="fa fa-phone"></i>
                     <span>Booking Management</span>
                 </a>
                 <ul class="sub-menu">
@@ -420,11 +420,11 @@
             </li>
 
             @if (Auth::guard('User')->user()->role_id == 1 || Auth::guard('User')->user()->role_id == 2)
-    
+
             <li nav-id="modifier-create" class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
-                    <i class="fa fa-users"></i>
+                    <i class="fa fa-key"></i>
                     <span>Room Availability Management</span>
                 </a>
                 <ul class="sub-menu">
@@ -458,7 +458,7 @@
             <li nav-id="modifier-create" class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
-                    <i class="fa fa-calendar"></i>
+                    <i class="fa fa-file-excel-o"></i>
                     <span>{{trans('menu.group-import')}}</span>
                 </a>
                 <ul class="sub-menu">
@@ -474,7 +474,7 @@
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
-                    <i class="fa fa-users"></i>
+                    <i class="fa fa-file-image-o"></i>
                     <span>Slider Management</span>
                 </a>
                 <ul class="sub-menu">
@@ -496,7 +496,7 @@
             <li nav-id='report'  class="has-sub" >
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
-                    <i class="fa fa-calendar"></i>
+                    <i class="fa fa-line-chart"></i>
                     <span>{{trans('menu.group-report')}}</span>
                 </a>
 
@@ -507,11 +507,11 @@
                 </ul>
             </li>
             @endif
-            @if (Auth::guard('User')->user()->role_id != 3)           
+            @if (Auth::guard('User')->user()->role_id != 3)
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
-                    <i class="fa fa-users"></i>
+                    <i class="fa fa-cog"></i>
                     <span>{{trans('menu.group-setup')}}</span>
                 </a>
                 <ul class="sub-menu">
@@ -573,7 +573,7 @@
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
-                    <i class="fa fa-users"></i>
+                    <i class="fa fa-envelope"></i>
                     <span>Email Management</span>
                 </a>
                 <ul class="sub-menu">

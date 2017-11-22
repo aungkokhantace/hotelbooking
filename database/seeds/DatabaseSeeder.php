@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // Default Seeders
-        
+
          $this->call(Default_ConfigSeeder::class);
          $this->call(Default_RoleSeeder::class);
          $this->call(Default_UserSeeder::class);
@@ -45,6 +45,7 @@ class DatabaseSeeder extends Seeder
 
          $this->call(Default_RoomCategoryFacilitySeeder::class);
          $this->call(Default_RoomCategoryAmenitySeeder::class);
+         $this->call(Default_TemplateSeeder::class);
 
     }
 }

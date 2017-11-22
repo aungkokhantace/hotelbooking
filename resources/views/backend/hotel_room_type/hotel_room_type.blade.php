@@ -18,37 +18,6 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="hotel_id">{{trans('setup_hotelroomtype.hotel')}}<span class="require">*</span></label>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <select class="form-control" name="hotel_id" id="hotel_id">
-                @if ($role == 3)
-                    <option value="{{$hotels->id}}" selected>{{$hotels->name}}</option>
-                @else
-                    @if(isset($hotel_room_type))
-                        @foreach($hotels as $hotel)
-                            @if($hotel->id == $hotel_room_type->hotel_id)
-                                <option value="{{$hotel->id}}" selected>{{$hotel->name}}</option>
-                            @else
-                                <option value="{{$hotel->id}}">{{$hotel->name}}</option>
-                            @endif
-                        @endforeach
-                    @else
-                        <option value="" disabled selected>
-                            {{trans('setup_hotelroomtype.place-hotel')}}
-                        </option>
-                        @foreach($hotels as $hotel)
-                            <option value="{{$hotel->id}}">{{$hotel->name}}</option>
-                        @endforeach
-                    @endif
-                @endif
-            </select>
-            <p class="text-danger">{{$errors->first('hotel_id')}}
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="name">{{trans('setup_hotelroomtype.name')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -88,11 +57,11 @@
             //Start Validation for Entry and Edit Form
             $('#hotel_room_type').validate({
                 rules: {
-                    hotel_id      : 'required',
+                    // hotel_id      : 'required',
                     name          : 'required',
                 },
                 messages: {
-                    hotel_id      : 'Hotel is required',
+                    // hotel_id      : 'Hotel is required',
                     name          : 'Name is required',
                 },
                 submitHandler: function(form) {

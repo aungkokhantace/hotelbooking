@@ -26,7 +26,7 @@ class RoomDiscountEntryRequest extends Request
         return [
             'name'              => 'required',
             'hotel_id'          => 'required',
-            'h_room_type_id'    => 'required',
+            // 'h_room_type_id'    => 'required',
             'h_room_category_id'=> 'required',
             'type'              => 'required',
             'discount_amount'   => 'required',
@@ -40,7 +40,7 @@ class RoomDiscountEntryRequest extends Request
         return [
             'name.required'              => 'Name is required!',
             'hotel_id.required'          => 'Hotel is required!',
-            'h_room_type_id.required'    => 'Room Type is required!',
+            // 'h_room_type_id.required'    => 'Room Type is required!',
             'h_room_category_id.required'=> 'Room Category is required!',
             'type.required'              => 'Type is required!',
             'discount_amount.required'   => 'Discount Amount is required!',

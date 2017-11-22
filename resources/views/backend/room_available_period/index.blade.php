@@ -14,12 +14,12 @@
                 <button type="button" onclick='create_setup("room_available_period");' class="btn btn-default btn-md first_btn">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </button>
-                <button type="button" onclick='edit_setup("room_available_period");' class="btn btn-default btn-md second_btn">
+                <!--<button type="button" onclick='edit_setup("room_available_period");' class="btn btn-default btn-md second_btn">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </button>
                 <button type="button" onclick="delete_setup('room_available_period');" class="btn btn-default btn-md third_btn">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                </button>
+                </button> -->
             </div>
         </div>
 
@@ -61,7 +61,7 @@
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{$available->id}}" id="all"></td>
                             <td>{{$available->hotel->name}}</td>
-                            <td><a href="/backend_mps/room_available_period/edit/{{$available->id}}">{{$available->room->name}}</a></td>
+                            <td>{{$available->room->name}}</td>
                             <td>{{$available->from_date}}</td>
                             <td>{{$available->to_date}}</td>
                             <td>{{$available->remark}}</td>

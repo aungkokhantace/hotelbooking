@@ -51,7 +51,7 @@ class RoomDiscountController extends Controller
     {
         $request->validate();
         $hotel_id           = Input::get('hotel_id');
-        $h_room_type_id     = Input::get('h_room_type_id');
+        // $h_room_type_id     = Input::get('h_room_type_id');
         $h_room_category_id = Input::get('h_room_category_id');
         $name               = Input::get('name');
         $type               = Input::get('type');
@@ -59,6 +59,11 @@ class RoomDiscountController extends Controller
         $from_date          = Carbon::parse(Input::get('from_date'))->format('Y-m-d');
         $to_date            = Carbon::parse(Input::get('to_date'))->format('Y-m-d');
         $remark             = Input::get('remark');
+
+        //get room_type_id from room category
+        $roomCategoryRepo   = new HotelRoomCategoryRepository();
+        $roomCategory       = $roomCategoryRepo->getObjByID($h_room_category_id);
+        $h_room_type_id     = $roomCategory->h_room_type_id;
 
         $paramObj                       = new RoomDiscount();
         $paramObj->name                 = $name;
@@ -102,8 +107,9 @@ class RoomDiscountController extends Controller
             $hotelRoomTypeRepo      = new HotelRoomTypeRepository();
             $hotel_room_type        = $hotelRoomTypeRepo->getHotelRoomTypeWithHotelId($hotel_id);
             $hotelRoomCategoryRepo  = new HotelRoomCategoryRepository();
-            $hotel_room_category    = $hotelRoomCategoryRepo->getHotelRoomCategoryWithRoomTypeId($h_room_type_id);
-
+            // $hotel_room_category    = $hotelRoomCategoryRepo->getHotelRoomCategoryWithRoomTypeId($h_room_type_id);
+            $hotel_room_category    = $hotelRoomCategoryRepo->getHotelRoomCategoryWithHotelId($hotel_id);
+            
             return view('backend.room_discount.room_discount')->with('room_discount', $room_discount)
                 ->with('hotels',$hotels)
                 ->with('hotel_room_type',$hotel_room_type)
@@ -117,7 +123,7 @@ class RoomDiscountController extends Controller
         $request->validate();
         $id                 = Input::get('id');
         $hotel_id           = Input::get('hotel_id');
-        $h_room_type_id     = Input::get('h_room_type_id');
+        // $h_room_type_id     = Input::get('h_room_type_id');
         $h_room_category_id = Input::get('h_room_category_id');
         $name               = Input::get('name');
         $type               = Input::get('type');
@@ -125,6 +131,11 @@ class RoomDiscountController extends Controller
         $from_date          = Carbon::parse(Input::get('from_date'))->format('Y-m-d');
         $to_date            = Carbon::parse(Input::get('to_date'))->format('Y-m-d');
         $remark             = Input::get('remark');
+
+        //get room_type_id from room category
+        $roomCategoryRepo   = new HotelRoomCategoryRepository();
+        $roomCategory       = $roomCategoryRepo->getObjByID($h_room_category_id);
+        $h_room_type_id     = $roomCategory->h_room_type_id;
 
         $paramObj                       = $this->repo->getObjByID($id);
         $paramObj->name                 = $name;

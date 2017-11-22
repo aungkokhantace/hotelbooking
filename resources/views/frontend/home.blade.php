@@ -7,6 +7,30 @@
         <header id="myCarousel" class="carousel slide">
             <!-- Wrapper for slides -->
             <div class="carousel-inner">
+                @if(isset($sliders) && count($sliders) > 0)
+                  @foreach($sliders as $slider)
+                      @if(isset($first_slider) && $first_slider == 1)
+                          <div class="item active">
+                              <div class="fill"><img src="/assets/shared/images/{{ $slider->image_url }}"></div>
+                              <div class="carousel-caption">
+                                  <h1 class="container">{{ $slider->title }}</h1>
+                                  <p class="container">{{ $slider->description }}</p>
+                              </div>
+                          </div>
+                          <?php
+                            $first_slider = 0; //clear first_slider flag
+                            ?>
+                       @else
+                       <div class="item">
+                           <div class="fill"><img src="/assets/shared/images/{{ $slider->image_url }}"></div>
+                           <div class="carousel-caption">
+                               <h1 class="container">{{ $slider->title }}</h1>
+                               <p class="container">{{ $slider->description }}</p>
+                           </div>
+                       </div>
+                     @endif
+                  @endforeach
+                @else
                 <div class="item active">
                     <div class="fill"><img src="/assets/shared/images/slider.png"></div>
                     <div class="carousel-caption">
@@ -29,16 +53,7 @@
                         <p class="container">Discover your next great adventure, become an explorer to get started!</p>
                     </div>
                 </div>
-
-                @foreach($sliders as $slider)
-                    <div class="item active">
-                        <div class="fill"><img src="/assets/shared/images/{{ $slider->image_url }}"></div>
-                        <div class="carousel-caption">
-                            <h1 class="container">{{ $slider->title }}</h1>
-                            <p class="container">{{ $slider->description }}</p>
-                        </div>
-                    </div>
-                @endforeach
+                @endif
             </div>
         </header>
     </div>

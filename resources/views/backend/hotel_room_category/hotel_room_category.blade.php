@@ -125,7 +125,8 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <label for="h_room_type_id">
                 {{trans('setup_hotelroomcategory.room-type')}}
-                <span class="require">*</span></label>
+                <span class="require">*</span>
+            </label>
             <select class="form-control" name="h_room_type_id" id="h_room_type_id">
                 @if(isset($hotel_room_category))
                     @foreach($hotel_room_type as $type)
@@ -269,7 +270,7 @@
             <p class="text-danger">{{$errors->first('capacity')}}</p>
         </div>
     <!-- </div>
-    
+
     <div class="row"> -->
         <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="bed_type">
@@ -285,7 +286,7 @@
             <!-- <input type="text" required class="form-control" id="bed_type" name="bed_type"
                    placeholder="{{trans('setup_hotelroomcategory.bed-type')}}"
                    value="{{ isset($hotel_room_category)? $hotel_room_category->bed_type:Request::old('bed_type') }}"/> -->
-            
+
             <select class="form-control" name="bed_type" id="bed_type">
                    @if(isset($hotel_room_category))
                         @foreach($bed_types as $bed_type)
@@ -482,7 +483,7 @@
                 $(".extra_bed_price").hide();
             }
 
-            //Whenever Extra Bed Allowed change, 
+            //Whenever Extra Bed Allowed change,
             $(':checkbox').change(function() {
                 if (document.getElementById('extra_bed_allowed').checked)
                 {
@@ -510,7 +511,7 @@
                     booking_cutoff_day  : 'required',
                     capacity            : {
                         required  : true,
-                        number    : true  
+                        number    : true
 
                     },
                     bed_type            : 'required',
@@ -617,6 +618,7 @@
             /* End multi image */
 
             $(':checkbox').checkboxpicker();
+
         });
         function loadHotelRoomType(hotelId){
             $.ajax({
