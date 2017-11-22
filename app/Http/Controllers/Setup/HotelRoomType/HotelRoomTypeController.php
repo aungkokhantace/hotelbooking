@@ -42,6 +42,7 @@ class HotelRoomTypeController extends Controller
             } else {
                 $hotel_room_type = $this->repo->getObjs();
             }
+            
             return view('backend.hotel_room_type.index')->with('hotel_room_type',$hotel_room_type)->with('role',$role);
         }
         return redirect('/');
@@ -56,12 +57,15 @@ class HotelRoomTypeController extends Controller
             $role               = $user->role_id;
             $hotelRepo          = new HotelRepository();
 
-            if ($role == 3){
-                $hotels     = $hotelRepo->getFirstHotelByUserEmail($email);
-            } else {
-                $hotels     = $hotelRepo->getObjs();
-            }
-            return view('backend.hotel_room_type.hotel_room_type')->with('hotels',$hotels)->with('role',$role);
+            // if ($role == 3){
+            //     $hotels     = $hotelRepo->getFirstHotelByUserEmail($email);
+            // } else {
+            //     $hotels     = $hotelRepo->getObjs();
+            // }
+            
+            return view('backend.hotel_room_type.hotel_room_type');
+                            // ->with('hotels',$hotels)
+                            // ->with('role',$role);
         }
         return redirect('/');
     }
@@ -71,10 +75,10 @@ class HotelRoomTypeController extends Controller
         $request->validate();
         $name               = Input::get('name');
         $description        = Input::get('description');
-        $hotel_id           = Input::get('hotel_id');
+        // $hotel_id           = Input::get('hotel_id');
 
         $paramObj               = new HotelRoomType();
-        $paramObj->hotel_id     = $hotel_id;
+        // $paramObj->hotel_id     = $hotel_id;
         $paramObj->name         = $name;
         $paramObj->description  = $description;
 
@@ -120,7 +124,9 @@ class HotelRoomTypeController extends Controller
             } else {
                 $hotels         = $hotelRepo->getObjs();
             }
-            return view('backend.hotel_room_type.hotel_room_type')->with('hotel_room_type', $hotel_room_type)->with('hotels',$hotels)->with('role',$role);
+            return view('backend.hotel_room_type.hotel_room_type')->with('hotel_room_type', $hotel_room_type);
+                                            // ->with('hotels',$hotels)
+                                            // ->with('role',$role);
         }
         return redirect('/backend_mps/login');
     }
@@ -129,12 +135,12 @@ class HotelRoomTypeController extends Controller
 
         $request->validate();
         $id                                         = Input::get('id');
-        $hotel_id                                   = Input::get('hotel_id');
+        // $hotel_id                                   = Input::get('hotel_id');
         $name                                       = Input::get('name');
         $description                                = Input::get('description');
 
         $paramObj                                   = $this->repo->getObjByID($id);
-        $paramObj->hotel_id                         = $hotel_id;
+        // $paramObj->hotel_id                         = $hotel_id;
         $paramObj->name                             = $name;
         $paramObj->description                      = $description;
 

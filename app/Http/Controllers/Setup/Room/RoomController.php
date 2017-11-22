@@ -33,7 +33,7 @@ class RoomController extends Controller
     {
         if (Auth::guard('User')->check()) {
             //Get Loggin User Info
-           
+
             $user               = $this->repo->getUserObjs();
             $id                 = $user->id;
             $role               = $user->role_id;
@@ -80,11 +80,10 @@ class RoomController extends Controller
 
     public function store(RoomEntryRequest $request)
     {
-
         $request->validate();
         $room_name          = Input::get('room_name');
         $hotel_id           = Input::get('hotel_id');
-        $h_room_type_id     = Input::get('h_room_type_id');
+        // $h_room_type_id     = Input::get('h_room_type_id');
         $h_room_category_id = Input::get('h_room_category_id');
         $room_view_id       = Input::get('room_view_id');
 //        $apply_cutoff_date  = Input::get('apply_cutoff_date');
@@ -93,6 +92,11 @@ class RoomController extends Controller
 //        $no_of_rooms        = Input::get('number_of_rooms');
         $description        = Input::get('description');
         $remark             = Input::get('remark');
+
+        $roomCategoryRepo   = new HotelRoomCategoryRepository();
+        $roomCategory       = $roomCategoryRepo->getObjByID($h_room_category_id);
+
+        $h_room_type_id     = $roomCategory->h_room_type_id;
 
         foreach($room_name as $name){
             $paramObj                       = new Room();
@@ -145,7 +149,8 @@ class RoomController extends Controller
                 $hotelRoomTypeRepo      = new HotelRoomTypeRepository();
                 $hotel_room_type        = $hotelRoomTypeRepo->getHotelRoomTypeWithHotelId($hotel_id);
                 $hotelRoomCategoryRepo  = new HotelRoomCategoryRepository();
-                $hotel_room_category    = $hotelRoomCategoryRepo->getHotelRoomCategoryWithRoomTypeId($h_room_type_id);
+                // $hotel_room_category    = $hotelRoomCategoryRepo->getHotelRoomCategoryWithRoomTypeId($h_room_type_id);
+                $hotel_room_category    = $hotelRoomCategoryRepo->getHotelRoomCategoryWithHotelId($hotel_id);
                 $roomViewRepo           = new RoomViewRepository();
                 $room_view              = $roomViewRepo->getObjs();
             } else {
@@ -155,11 +160,14 @@ class RoomController extends Controller
                 $hotels                 = $hotelRepo->getObjs();
                 $hotelRoomTypeRepo      = new HotelRoomTypeRepository();
                 $hotel_room_type        = $hotelRoomTypeRepo->getHotelRoomTypeWithHotelId($hotel_id);
+
                 $hotelRoomCategoryRepo  = new HotelRoomCategoryRepository();
-                $hotel_room_category    = $hotelRoomCategoryRepo->getHotelRoomCategoryWithRoomTypeId($h_room_type_id);
+                // $hotel_room_category    = $hotelRoomCategoryRepo->getHotelRoomCategoryWithRoomTypeId($h_room_type_id);
+                $hotel_room_category    = $hotelRoomCategoryRepo->getHotelRoomCategoryWithHotelId($hotel_id);
                 $roomViewRepo           = new RoomViewRepository();
                 $room_view              = $roomViewRepo->getObjs();
             }
+
             return view('backend.room.room')->with('room', $room)
                                             ->with('hotels',$hotels)
                                             ->with('room_view',$room_view)
@@ -176,13 +184,18 @@ class RoomController extends Controller
         $id                 = Input::get('id');
         $name               = Input::get('room_name');
         $hotel_id           = Input::get('hotel_id');
-        $h_room_type_id     = Input::get('h_room_type_id');
+        // $h_room_type_id     = Input::get('h_room_type_id');
         $h_room_category_id = Input::get('h_room_category_id');
         $room_view_id       = Input::get('room_view_id');
         $apply_cutoff_date  = Input::get('apply_cutoff_date');
         $status             = Input::get('status');
         $description        = Input::get('description');
         $remark             = Input::get('remark');
+
+        $roomCategoryRepo   = new HotelRoomCategoryRepository();
+        $roomCategory       = $roomCategoryRepo->getObjByID($h_room_category_id);
+
+        $h_room_type_id     = $roomCategory->h_room_type_id;
 
         $paramObj                       = $this->repo->getObjByID($id);
         $paramObj->name                 = $name;

@@ -25,7 +25,7 @@ class RoomEditRequest extends Request
     {
         return [
             'hotel_id'          => 'required',
-            'h_room_type_id'    => 'required',
+            // 'h_room_type_id'    => 'required',
             'h_room_category_id'=> 'required',
             'room_view_id'      => 'required',
 //            'name'              => 'required',
@@ -36,7 +36,7 @@ class RoomEditRequest extends Request
     {
         return [
             'hotel_id.required'             => 'Hotel is required!',
-            'h_room_type_id.required'       => 'Room Type is required!',
+            // 'h_room_type_id.required'       => 'Room Type is required!',
             'h_room_category_id.required'   => 'Room Category is required!',
             'room_view_id.required'         => 'Room View is required!',
 //            'name.required'                 => 'Name is required!',

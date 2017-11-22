@@ -123,7 +123,7 @@ class HotelRoomTypeRepository implements HotelRoomTypeRepositoryInterface
 
     public function getHotelRoomTypeWithHotelId($hotel_id){
         $objs   = HotelRoomType::select('id','hotel_id','name','description')
-                                ->where('hotel_id','=',$hotel_id)
+                                // ->where('hotel_id','=',$hotel_id)
                                 ->get();
 
         return $objs;

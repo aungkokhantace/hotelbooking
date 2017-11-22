@@ -58,7 +58,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="h_room_type_id">
                 {{trans('setup_room.room-type')}}
@@ -83,7 +83,7 @@
             </select>
             <p class="text-danger">{{$errors->first('h_room_type_id')}}</p>
         </div>
-    </div>
+    </div> -->
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -258,16 +258,18 @@
             var room       = $('input[type="hidden"][name="id"]').val();
 
             if (hotelId > 0 && room <= 0) {
-                loadHotelRoomType(hotelId);
+                // loadHotelRoomType(hotelId);
+                loadHotelRoomCategory(hotelId);
             }
 
             $('#hotel_id').change(function(e){
-                loadHotelRoomType($(this).val());
-            });
-
-            $('#h_room_type_id').change(function(e){
+                // loadHotelRoomType($(this).val());
                 loadHotelRoomCategory($(this).val());
             });
+
+            // $('#h_room_type_id').change(function(e){
+            //     loadHotelRoomCategory($(this).val());
+            // });
 
             //Number of Rooms
             $('#number_of_rooms').focusout(function (e){
@@ -299,7 +301,7 @@
             $('#room').validate({
                 rules: {
                     'hotel_id'            : 'required',
-                    'h_room_type_id'      : 'required',
+                    // 'h_room_type_id'      : 'required',
                     'h_room_category_id'  : 'required',
                     'room_view_id'        : 'required',
                     'room_name[1]'        : 'required',
@@ -307,7 +309,7 @@
                 },
                 messages: {
                     'hotel_id'            : 'Hotel is required!',
-                    'h_room_type_id'      : 'Room Type is required!',
+                    // 'h_room_type_id'      : 'Room Type is required!',
                     'h_room_category_id'  : 'Room Category is required!',
                     'room_view_id'        : 'Room View is required!',
                     'room_name[1]'        : 'Room Name is required!',
@@ -324,30 +326,45 @@
             $(':checkbox').checkboxpicker();
         });
 
-        function loadHotelRoomType(hotelId){
+        // function loadHotelRoomType(hotelId){
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "/backend_mps/hotel_room_type/get_room_type/"+hotelId,
+        //     }).done(function( result ) {
+        //         $("#h_room_type_id").empty();//To reset states
+        //         $("#h_room_type_id").append("<option selected disabled>Select Room Type</option>");
+
+        //         $("#h_room_category_id").empty();//To reset states
+        //         $("#h_room_category_id").append("<option selected disabled>Select Room Category</option>");
+
+        //         $(result).each(function(){
+        //             $("#h_room_type_id").append($('<option>', {
+        //                 value: this.id,
+        //                 text: this.name,
+        //             }));
+        //         })
+        //     });
+        // }
+
+        // function loadHotelRoomCategory(hRoomTypeId){
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "/backend_mps/hotel_room_category/get_room_category/"+hRoomTypeId,
+        //     }).done(function( result ) {
+        //         $("#h_room_category_id").empty();//To reset states
+        //         $("#h_room_category_id").append("<option selected disabled>Select Room Category</option>");
+        //         $(result).each(function(){
+        //             $("#h_room_category_id").append($('<option>', {
+        //                 value: this.id,
+        //                 text: this.name,
+        //             }));
+        //         })
+        //     });
+        // }
+        function loadHotelRoomCategory(hotelId){
             $.ajax({
                 type: "GET",
-                url: "/backend_mps/hotel_room_type/get_room_type/"+hotelId,
-            }).done(function( result ) {
-                $("#h_room_type_id").empty();//To reset states
-                $("#h_room_type_id").append("<option selected disabled>Select Room Type</option>");
-
-                $("#h_room_category_id").empty();//To reset states
-                $("#h_room_category_id").append("<option selected disabled>Select Room Category</option>");
-
-                $(result).each(function(){
-                    $("#h_room_type_id").append($('<option>', {
-                        value: this.id,
-                        text: this.name,
-                    }));
-                })
-            });
-        }
-
-        function loadHotelRoomCategory(hRoomTypeId){
-            $.ajax({
-                type: "GET",
-                url: "/backend_mps/hotel_room_category/get_room_category/"+hRoomTypeId,
+                url: "/backend_mps/hotel_room_category/get_room_category/"+hotelId,
             }).done(function( result ) {
                 $("#h_room_category_id").empty();//To reset states
                 $("#h_room_category_id").append("<option selected disabled>Select Room Category</option>");

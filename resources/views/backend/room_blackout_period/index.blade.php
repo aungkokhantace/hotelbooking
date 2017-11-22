@@ -14,12 +14,12 @@
                 <button type="button" onclick='create_setup("room_blackout_period");' class="btn btn-default btn-md first_btn">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </button>
-                <button type="button" onclick='edit_setup("room_blackout_period");' class="btn btn-default btn-md second_btn">
+                <!-- <button type="button" onclick='edit_setup("room_blackout_period");' class="btn btn-default btn-md second_btn">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </button>
                 <button type="button" onclick="delete_setup('room_blackout_period');" class="btn btn-default btn-md third_btn">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                </button>
+                </button> -->
             </div>
         </div>
 
@@ -62,7 +62,7 @@
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $blackout->id }}" id="all"></td>
                             <td>{{$blackout->hotel->name}}</td>
                             <td>{{$blackout->room->name}}</td>
-                            <td><a href="/backend_mps/room_blackout_period/edit/{{$blackout->id}}">{{$blackout->from_date}}</a></td>
+                            <td>{{$blackout->from_date}}</td>
                             <td>{{$blackout->to_date}}</td>
                             <td>{{$blackout->remark}}</td>
                         </tr>

@@ -55,7 +55,7 @@ class SliderController extends Controller
         $description            = Input::get('Description');
 
         //Start Saving Image
-        $removeImageFlag        = (Input::has('removeImageFl    ag')) ? Input::get('removeImageFlag') : 0;
+        $removeImageFlag        = (Input::has('removeImageFlag')) ? Input::get('removeImageFlag') : 0;
         $path                   = base_path().'/public/assets/shared/images/';
         if(Input::hasFile('photo'))
         {

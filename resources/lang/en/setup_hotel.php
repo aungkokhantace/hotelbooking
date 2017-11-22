@@ -26,7 +26,7 @@ return [
     'nearby'                => 'Nearby',
     'floor'                 => 'Number of Floors',
     'class'                 => 'Class',
-    'website'               => 'Website',
+    'website'               => 'Website(eg. http://www.hotelname.com)',
     'check-in'              => 'Check-in Time',
     'check-out'             => 'Check-out Time',
     'breakfast-start'       => 'Breakfast Start Time',

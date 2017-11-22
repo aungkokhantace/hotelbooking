@@ -94,4 +94,13 @@ class SliderRepository implements SliderRepositoryInterface
         }
     }
 
+    public function getSlidersByTemplateId($template_id){
+      $result = Slider::select('image_url','title','description')
+                                  ->where('template_id',$template_id)
+                                  ->whereNull('deleted_at')
+                                  ->get();
+
+      return $result;
+    }
+
 }

@@ -129,7 +129,8 @@ class HotelRoomCategoryController extends Controller
             $facilities = $facilityRepo->getObjsForRoom();
 
             $bed_types = DB::select('SELECT * FROM bed_types WHERE deleted_at IS NULL');
-            
+
+
             return view('backend.hotel_room_category.hotel_room_category')
                 ->with('hotels',$hotels)
                 ->with('role',$role)
@@ -227,7 +228,7 @@ class HotelRoomCategoryController extends Controller
                         {
                             mkdir($path, 0777, true);
                         }
-                    
+
                         $photo_name_original            = Utility::getImage($image);
                         $photo_ext                      = Utility::getImageExt($image);
                         $photo_name                     = uniqid() . "." . $photo_ext;
@@ -235,7 +236,7 @@ class HotelRoomCategoryController extends Controller
                         $imgWidth                       = 500;
                         $imgHeight                      = 300;
                         $photo                          = Utility::resizeImageWithDefaultWidthHeight($image,$photo_name,$path,$imgWidth,$imgHeight);
-                       
+
                         $imageObj                       = new RoomCategoryImage();
                         $imageObj->h_room_category_id   = $lastRoomCategoryId;
                         $imageObj->img_path             = $image_path;
@@ -289,7 +290,7 @@ class HotelRoomCategoryController extends Controller
                 DB::rollback();
                 return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
                     ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category did not create ...'));
-            }            
+            }
 
             $r_cat_facilityResult = array();
             if($facilities != ""){
@@ -603,9 +604,14 @@ class HotelRoomCategoryController extends Controller
         return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index'); //to redirect listing page
     }
 
-    public function getHotelRoomCategory($h_room_type_id){
-        $result = $this->repo->getHotelRoomCategoryWithRoomTypeId($h_room_type_id);
+    // public function getHotelRoomCategory($h_room_type_id){
+    //     $result = $this->repo->getHotelRoomCategoryWithRoomTypeId($h_room_type_id);
+    //
+    //     return \Response::json($result);
+    // }
 
+    public function getHotelRoomCategory($hotel_id){
+        $result = $this->repo->getHotelRoomCategoryWithHotelId($hotel_id);
         return \Response::json($result);
     }
 }
