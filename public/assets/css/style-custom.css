@@ -46,7 +46,8 @@
 
 /* Overwrite Template Colors */
 .navbar.navbar-inverse .navbar-brand, .sidebar .nav > li.active > a, .sidebar .nav > li.active > a:focus, .sidebar .nav > li.active > a:hover, .page-sidebar-minified .sidebar .nav > li.has-sub.active:focus > a, .page-sidebar-minified .sidebar .nav > li.has-sub.active:hover > a, .page-sidebar-minified .sidebar .nav > li.has-sub.active > a, .label.label-theme, .btn.btn-scroll-to-top {
-  background: #d38563 !important;
+  /*background: #d38563 !important;*/
+  background: #53cdF9 !important;
 }
 
 .navbar-logo,
@@ -133,4 +134,10 @@
 
 .pull-right {
   float: right !important;
+}
+
+/*nav bar active font color*/
+.sidebar .nav>li li.has-sub.active>a{
+  color:#53cdF9 !important;
+  font-weight: bold;
 }
