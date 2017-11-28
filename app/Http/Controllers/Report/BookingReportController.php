@@ -157,9 +157,11 @@ class BookingReportController extends Controller
                     $sheet->row(1,function($row){
                         $row->setBackground('#D63090');
                         $row->setFontSize(13);
+                        $row->setFontColor('#ffffff');
                     });
                     $sheet->cells('A'.$count.':F'.$count, function($cells) {
                         $cells->setBackground('#D63090');
+                        $cells->setFontColor('#ffffff');
                     });
                 });
             })->download('xls');
