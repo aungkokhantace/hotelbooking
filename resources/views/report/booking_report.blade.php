@@ -144,10 +144,19 @@
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <select class="form-control" id="status">
                 <option value=0>All</option>
-                <option value=1 {{isset($status)&&$status== 1?'selected':''}}>Pending</option>
+                <!-- <option value=1 {{isset($status)&&$status== 1?'selected':''}}>Pending</option>
                 <option value=2 {{isset($status)&&$status== 2?'selected':''}}>Confirm</option>
                 <option value=3 {{isset($status)&&$status== 3?'selected':''}}>Cancel</option>
-                <option value=4 {{isset($status)&&$status== 4?'selected':''}}>Void</option>
+                <option value=4 {{isset($status)&&$status== 4?'selected':''}}>Void</option> -->
+                <option value=1 {{isset($status)&&$status== 1?'selected':''}}>Pending</option>
+                <option value=2 {{isset($status)&&$status== 2?'selected':''}}>Confirm</option>
+                <option value=3 {{isset($status)&&$status== 3?'selected':''}}>Cancel(Cancel By User)</option>
+                <option value=4 {{isset($status)&&$status== 4?'selected':''}}>Void(Cancel By System Admin)</option>
+                <option value=4 {{isset($status)&&$status== 5?'selected':''}}>Complete</option>
+                <option value=4 {{isset($status)&&$status== 6?'selected':''}}>Transaction Fail</option>
+                <option value=4 {{isset($status)&&$status== 7?'selected':''}}>Refund by Customer(Cancel within first cancellation days)</option>
+                <option value=4 {{isset($status)&&$status== 8?'selected':''}}>Refund by Admin</option>
+                <option value=4 {{isset($status)&&$status== 9?'selected':''}}>Cancel within second cancellation days</option>
             </select>
         </div>
     </div>
@@ -204,10 +213,20 @@
                                 <td><a href="/backend_mps/bookingreport/room_detail/{{$booking->id}}">{{$booking->booking_no}}</a></td>
                                 <td>{{ucwords($booking->first_name.' '.$booking->last_name)}}</td>
                                 <td>
-                                    @if($booking->status == 1) {{'Pending'}}
+                                    <!-- @if($booking->status == 1) {{'Pending'}}
                                     @elseif($booking->status == 2) {{'Confirm'}}
                                     @elseif($booking->status == 3) {{'Cancel'}}
                                     @else {{'Void'}}
+                                    @endif -->
+                                    @if($booking->status == 1) {{'Pending'}}
+                                    @elseif($booking->status == 2) {{'Confirm'}}
+                                    @elseif($booking->status == 3) {{'Cancel(Cancel By User)'}}
+                                    @elseif($booking->status == 4) {{'Void (Cancel By System Admin)'}}
+                                    @elseif($booking->status == 5) {{'Complete'}}
+                                    @elseif($booking->status == 6) {{'Transaction Fail'}}
+                                    @elseif($booking->status == 7) {{'Refund by Customer(Cancel within first cancellation days)'}}
+                                    @elseif($booking->status == 8) {{'Refund by Admin'}}
+                                    @else {{'Cancel within second cancellation days'}}
                                     @endif
                                 </td>
                                 <td>{{$booking->total_room}}</td>

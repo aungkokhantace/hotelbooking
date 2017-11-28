@@ -125,10 +125,19 @@ class BookingReportController extends Controller
                             $room_count++;
                         }
                         //Change integer status to text status
+                        // if($booking->status == 1) $booking->b_status_text = 'Pending';
+                        // elseif($booking->status == 2) $booking->b_status_text = 'Confirm';
+                        // elseif($booking->status == 3) $booking->b_status_text = 'Cancel';
+                        // else $booking->b_status_text = 'Void';
                         if($booking->status == 1) $booking->b_status_text = 'Pending';
                         elseif($booking->status == 2) $booking->b_status_text = 'Confirm';
-                        elseif($booking->status == 3) $booking->b_status_text = 'Cancel';
-                        else $booking->b_status_text = 'Void';
+                        elseif($booking->status == 3) $booking->b_status_text = 'Cancel(Cancel By User)';
+                        elseif($booking->status == 4) $booking->b_status_text = 'Void (Cancel By System Admin)';
+                        elseif($booking->status == 5) $booking->b_status_text = 'Complete';
+                        elseif($booking->status == 6) $booking->b_status_text = 'Transaction Fail';
+                        elseif($booking->status == 7) $booking->b_status_text = 'Refund by Customer(Cancel within first cancellation days)';
+                        elseif($booking->status == 8) $booking->b_status_text = 'Refund by Admin';
+                        else $booking->b_status_text = 'Cancel within second cancellation days';
                     }
                     $booking->total_room    = $room_count;
                     $grandTotal            += $booking->total_payable_amt;
@@ -185,10 +194,19 @@ class BookingReportController extends Controller
                 $b_room->date   = $formatted_date;
 
                 /* Add string status to BookingRoom Obj */
+                // if($b_room->status == 1) $b_room->status_text = 'Pending';
+                // elseif($b_room->status == 2) $b_room->status_text = 'Confirm';
+                // elseif($b_room->status == 3) $b_room->status_text = 'Cancel';
+                // else $b_room->status_text = 'Void';
                 if($b_room->status == 1) $b_room->status_text = 'Pending';
                 elseif($b_room->status == 2) $b_room->status_text = 'Confirm';
-                elseif($b_room->status == 3) $b_room->status_text = 'Cancel';
-                else $b_room->status_text = 'Void';
+                elseif($b_room->status == 3) $b_room->status_text = 'Cancel(Cancel By User)';
+                elseif($b_room->status == 4) $b_room->status_text = 'Void (Cancel By System Admin)';
+                elseif($b_room->status == 5) $b_room->status_text = 'Complete';
+                elseif($b_room->status == 6) $b_room->status_text = 'Transaction Fail';
+                elseif($b_room->status == 7) $b_room->status_text = 'Refund by Customer(Cancel within first cancellation days)';
+                elseif($b_room->status == 8) $b_room->status_text = 'Refund by Admin';
+                else $b_room->status_text = 'Cancel within second cancellation days';
 
                 /* Add added extra bed string status to BookingRoom Obj */
                 if($b_room->added_extra_bed == 1) $b_room->added_extra_bed_status = 'Yes';
