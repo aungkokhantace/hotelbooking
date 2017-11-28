@@ -43,13 +43,15 @@
                         <th><input type='checkbox' name='check' id='check_all'/></th>
                         <th>{{trans('setup_township.tb-col-township')}}</th>
                         <th>{{trans('setup_township.tb-col-city')}}</th>
+                        <th>{{trans('setup_township.tb-col-country')}}</th>
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
                         <th></th>
                         <th class="search-col" con-id="display_name">Township Name</th>
-                        <th class="search-col" con-id="display_name">City Name</th>
+                        <th class="search-col" con-id="city_name">City Name</th>
+                        <th class="search-col" con-id="country_name">Country Name</th>
                     </tr>
                     </tfoot>
                     <tbody>
@@ -58,6 +60,7 @@
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $township->id }}" id="all"></td>
                             <td><a href="/backend_mps/township/edit/{{$township->id}}">{{$township->name}}</a></td>
                             <td>{{$township->city->name}}</td>
+                            <td>{{$township->country_name}}</td>
                         </tr>
                     @endforeach
                     </tbody>

@@ -19,5 +19,6 @@ return [
     'title-list'            => 'Township Listing',
     'tb-col-city'           => 'City Name',
     'tb-col-township'       => 'Township Name',
+    'tb-col-country'        => 'Country Name',
 
 ];

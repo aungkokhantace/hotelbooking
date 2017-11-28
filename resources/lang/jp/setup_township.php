@@ -18,5 +18,5 @@ return [
     'title-list'            => 'Township Listing - JP',
     'tb-col-city'           => 'City Name - JP',
     'tb-col-township'       => 'Township Name - JP',
-
+    'tb-col-country'        => 'Country Name - JP',
 ];

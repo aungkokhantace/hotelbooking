@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Setup\Township;
 
 use App\Setup\City\CityRepository;
+use App\Setup\Country\CountryRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -31,6 +32,15 @@ class TownshipController extends Controller
     {
         if (Auth::guard('User')->check()) {
             $townships      = $this->repo->getObjs();
+
+            $countryRepo    = new CountryRepository();
+            $cityRepo = new CityRepository();
+            foreach($townships as $township){
+              $city     = $cityRepo->getObjByID($township->city_id);
+              $country  = $countryRepo->getObjByID($city->country_id);
+              $township->country_name = $country->name;
+            }
+            
             return view('backend.township.index')->with('townships',$townships);
         }
         return redirect('/');
@@ -118,4 +128,3 @@ class TownshipController extends Controller
 
 
 }
-

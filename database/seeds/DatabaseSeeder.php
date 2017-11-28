@@ -47,5 +47,7 @@ class DatabaseSeeder extends Seeder
          $this->call(Default_RoomCategoryAmenitySeeder::class);
          $this->call(Default_TemplateSeeder::class);
 
+         $this->call(Default_RestaurantCategorySeeder::class);
+
     }
 }
