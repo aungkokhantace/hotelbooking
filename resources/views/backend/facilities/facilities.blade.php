@@ -57,12 +57,25 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="type">{{trans('setup_facility.type')}}<span class="require">*</span></label>
+            <label for="description">{{trans('setup_facility.description')}}</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <input type="radio" name="type" value="1" {{isset($facilities)&&$facilities->type==1?'checked':''}}>{{trans('setup_facility.type-hotel')}} &nbsp;
-            <input type="radio" name="type" value="2" {{isset($facilities)&&$facilities->type==2?'checked':''}}>{{trans('setup_facility.type-room')}}
+            <textarea rows="5" cols="50" class="form-control" id="description" name="description" placeholder="{{trans('setup_facility.place-description')}}">{{ isset($facilities)? $facilities->description:Request::old('description') }}</textarea>
+            <p class="text-danger">{{$errors->first('description')}}</p>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="type">{{trans('setup_facility.type')}}<span class="require">*</span></label>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <input type="radio" name="type" value="1" {{isset($facilities)&&$facilities->type==1?'checked':''}}>&nbsp;&nbsp;{{trans('setup_facility.type-hotel')}} &nbsp;
+            <!-- <input type="radio" name="type" value="2" {{isset($facilities)&&$facilities->type==2?'checked':''}}>{{trans('setup_facility.type-room')}} -->
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <!-- <input type="radio" name="type" value="1" {{isset($facilities)&&$facilities->type==1?'checked':''}}>{{trans('setup_facility.type-hotel')}} &nbsp; -->
+            <input type="radio" name="type" value="2" {{isset($facilities)&&$facilities->type==2?'checked':''}}>&nbsp;&nbsp;{{trans('setup_facility.type-room')}}
         </div>
         <p class="text-danger">{{$errors->first('type')}}</p>
     </div>
@@ -79,15 +92,6 @@
         </div>
     </div>
     <br>
-    <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="description">{{trans('setup_facility.description')}}</label>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <textarea rows="5" cols="50" class="form-control" id="description" name="description" placeholder="{{trans('setup_facility.place-description')}}">{{ isset($facilities)? $facilities->description:Request::old('description') }}</textarea>
-            <p class="text-danger">{{$errors->first('description')}}</p>
-        </div>
-    </div>
 
     {{--Start File Upload--}}
     <div class="row">
