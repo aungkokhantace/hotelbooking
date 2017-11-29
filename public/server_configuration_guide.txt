@@ -1,0 +1,9 @@
+To fix issue "413 Request Entity Too Large Error"
+
+sudo nano /etc/nginx/nginx.conf
+# set client body size to 2M #
+client_max_body_size 10M;
+
+and then 
+service nginx restart
+=======================================
