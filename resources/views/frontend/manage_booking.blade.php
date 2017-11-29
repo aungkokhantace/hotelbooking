@@ -54,9 +54,9 @@
                                             <ul class="fa-ul-new price_night manage-form">
                                                 <li>
                                                     <div class="thumbnail">
-                                                        <a href="shared/images/us.png">
+                                                        <!-- <a href="shared/images/us.png"> -->
                                                             <img src="/images/upload/{{$booking->hotel->logo}}" alt="logo" style="width:100%">
-                                                        </a>
+                                                        <!-- </a> -->
                                                     </div>
                                                 </li>
                                                 {{--<li style="float:right;">--}}
@@ -177,6 +177,7 @@
                                             </td>
                                             <td class="lead_left booking_manage_table">
                                            <div class="booking_data_fix">
+
                                            <h4>{{$room->room_category}}</h4>
                                            <div class="manageform-edit" id="rowEdit{{$room->id}}">
                                                <i>for </i> <span>{{$room->guest_name}}</span>
@@ -245,8 +246,9 @@
                                                @endforeach
                                            </div>
                                            <div class="clearfix"></div>
-                                           <a class="cancelbooking" href="/booking/room/cancel/{{$booking->id}}/{{$room->id}}">
-                                               ⨂Cancel your room
+                                           <!-- <a class="cancelbooking" href="/booking/room/cancel/{{$booking->id}}/{{$room->id}}"> -->
+                                           <a class="cancelbooking" id="cancelbooking" href="#" onclick="cancel_room('{{$booking->id}}','{{$room->id}}','{{$booking->charge}}');">
+                                               ⨂ Cancel your room
                                            </a>
                                            <div class="clearfix"></div>
                                            </div>
@@ -443,8 +445,8 @@
                                     @foreach($communications as $comm)
                                         @if(!empty($comm->special_request))
                                             <div class="ptext_left" style="width: 100%;">
-                                                <h5>{{$comm->type==1?'Admin':'Me'}}</h5>
-                                                <h6>[{{$comm->created_at}}]</h6>
+                                                <h5 class="@if($comm->type == 2) {{'text-right'}} @endif">{{$comm->type==1?'Admin':'Me'}}</h5>
+                                                <h6 class="@if($comm->type == 2) {{'text-right'}} @endif">[{{$comm->created_at}}]</h6>
                                                 <div class="textarea_p">
                                                     <p>{{$comm->special_request}}</p>
                                                 </div>
@@ -467,12 +469,13 @@
                                 {{--</div>--}}
                                 <div class="clearfix"></div>
                                 {!! Form::open(array('url'=>'/booking/communication','class'=>'form-inline','id'=>'communication')) !!}
-                                <div class="textarea">
+                                <div class="textarea ptext_left">
                                     <input type="hidden" name="id" value="{{$booking->id}}">
-                                    <textarea class="col-xs-7" id="special_request" name="special_request"></textarea>
+                                    <!-- <textarea class="col-xs-7" id="special_request" name="special_request"></textarea> -->
+                                    <textarea class="textarea_p special_request_textarea" id="special_request" name="special_request"></textarea>
                                 </div>
                                 <div class="clearfix"></div>
-                                <button type="button" class="btn btn-primary btn-success" id="communication-btn">Say</button>
+                                <button type="button" class="btn btn-primary btn-success communication_btn" id="communication-btn">Say</button>
                                 {!! Form::close() !!}
                             </div>
                         </div>
@@ -560,38 +563,88 @@
             });
 
             $('#communication-btn').click(function(){
-                var serializedData  = $('#communication').serialize();
-                $('#communication-btn').attr("disabled","disabled")
-                $.ajax({
-                    url: '/booking/communication',
-                    type: 'POST',
-                    data: serializedData,
-                    success: function(data){
-                        if(data.aceplusStatusCode == '200'){
-                            location.reload();
-                            return;
-                        }
-                        else{
-                            swal({title: "Fail", text: "Something Wrong!", type: "error"},
-                                    function(){
-                                        location.reload();
-                                    }
-                            );
-                            return;
-                        }
+                ////////////////////
+                swal({
+                        title: "Are you sure?",
+                        text: "You will not be able to recover!",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55 ",
+                        confirmButtonText: "Confirm",
+                        cancelButtonText: "Cancel",
+                        closeOnConfirm: false,
+                        closeOnCancel: true
                     },
-                    error: function(data){
-                        console.log(data);
-                        alert(data);
-                        swal({title: "Opps", text: "Sorry, Please Try Again!", type: "error"},
-                                function(){
-                                    location.reload();
-                                }
-                        );
+                    function (isConfirm) {
+                        if (isConfirm) {
+                          var serializedData  = $('#communication').serialize();
+                          $('#communication-btn').attr("disabled","disabled")
+                          $.ajax({
+                              url: '/booking/communication',
+                              type: 'POST',
+                              data: serializedData,
+                              success: function(data){
+                                  if(data.aceplusStatusCode == '200'){
+                                      location.reload();
+                                      return;
+                                  }
+                                  else{
+                                      swal({title: "Fail", text: "Something Wrong!", type: "error"},
+                                              function(){
+                                                  location.reload();
+                                              }
+                                      );
+                                      return;
+                                  }
+                              },
+                              error: function(data){
+                                  console.log(data);
+                                  alert(data);
+                                  swal({title: "Opps", text: "Sorry, Please Try Again!", type: "error"},
+                                          function(){
+                                              location.reload();
+                                          }
+                                  );
+                                  return;
+                              }
+                          });
+                        } else {
+                            return;
+                        }
+                    });
+            });
+
+        });
+
+        function cancel_room(booking_id,room_id,booking_charge) {
+            if(booking_charge == "free"){
+              var alert_text = "You will not be able to recover!";
+            }
+            else{
+              var alert_text = booking_charge;
+            }
+
+            swal({
+                    title: "Are you sure to cancel your room?",
+                    // text: "You will not be able to recover!",
+                    text: alert_text,
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55 ",
+                    confirmButtonText: "Confirm",
+                    cancelButtonText: "Cancel",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        // window.location = "/" + type + "/destroy/" + data;
+                        window.location = "/booking/room/cancel/"+ booking_id + "/" + room_id;
+                    } else {
                         return;
                     }
                 });
-            });
-        });
+            }
+
     </script>
 @stop

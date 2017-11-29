@@ -9,20 +9,21 @@
     @if(isset($booking))
     <div class="row">
         <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-            {!! Form::open(array('url' => '/backend_mps/communication/reply/store','id'=>'communication', 'onsubmit'=>'return validate()', 'class'=> 'form-horizontal user-form-border')) !!}
+            <!-- {!! Form::open(array('url' => '/backend_mps/communication/reply/store','id'=>'communication', 'onsubmit'=>'return validate()', 'class'=> 'form-horizontal user-form-border')) !!} -->
+            {!! Form::open(array('url' => '/backend_mps/communication/reply/store','id'=>'communication', 'class'=> 'form-horizontal user-form-border')) !!}
             <input type="hidden" name="id" value="{{ $booking->id }}" />
                 <div class="form-wrapper">
                     <div class="field-row row">
                         <div class="input-field col-md-8 col-xs-8 col-md-offset-2">
                             <label><span class="text-title">{{trans('setup_communication.place-hotel')}}</span></label>
-                            <input id="hotel" value="{{ $booking->hotel->name }}" type="text" readonly>  
+                            <input id="hotel" value="{{ $booking->hotel->name }}" type="text" readonly>
                         </div>
                     </div>
 
                     <div class="field-row row">
                         <div class="input-field col-md-4 col-xs-8 col-md-offset-2">
                             <label class="">{{trans('setup_communication.place-check-in')}}</label>
-                            <input id="check-in" value="{{ $booking->check_in_date }}" type="text" readonly>  
+                            <input id="check-in" value="{{ $booking->check_in_date }}" type="text" readonly>
                         </div>
 
                         <div class="input-field col-md-4 col-xs-8">
@@ -65,13 +66,13 @@
                             <div class="row">
                                 <div class="input-field col-md-12 col-xs-12">
                                     <label class="">{{trans('setup_communication.first-last-name')}}</label>
-                                    <input id="first-name" value="{{ $booking_room->user_first_name . ' ' . $booking_room->user_last_name }}" required="" type="text" readonly>  
+                                    <input id="first-name" value="{{ $booking_room->user_first_name . ' ' . $booking_room->user_last_name }}" required="" type="text" readonly>
                                 </div>
                             </div><div class="spacer-20px"></div>
                             <div class="row">
                                 <div class="input-field col-md-12 col-xs-12">
                                     <label class="">{{trans('setup_communication.email')}}</label>
-                                    <input id="first-name" value="{{ $booking_room->user_email }}" required="" type="text" readonly>  
+                                    <input id="first-name" value="{{ $booking_room->user_email }}" required="" type="text" readonly>
                                 </div>
                             </div><div class="spacer-20px"></div>
                         </div>
@@ -89,7 +90,7 @@
                                     <td width="15%"><i class="fa fa-car fa-4x field-color" aria-hidden="true"></i></td>
                                     <td width="75%"><label>I'm interested in booking a taxi in advance</label></td>
                                 </tr>
-                            </table>  
+                            </table>
                         </div>
                     </div>
 
@@ -104,7 +105,7 @@
                                     <td width="15%"><i class="fa fa-comments-o fa-4x field-color" aria-hidden="true"></i></td>
                                     <td width="75%"><label>I'm interested in booking tour guide.</label></td>
                                 </tr>
-                            </table>  
+                            </table>
                         </div>
                     </div>
 
@@ -137,7 +138,7 @@
                             @endforeach
 
                             <p class="@if($booking_spec_req->type == 1) {{ 'text-right'}} @endif">{{ $booking_spec_req->created_at }}</p>
-                            <textarea class="textarea-field" rows="10" readonly>{{ $booking_spec_req->special_request }}</textarea>  
+                            <textarea class="textarea-field" rows="10" readonly>{{ $booking_spec_req->special_request }}</textarea>
                         </div>
                     </div><div class="spacer-20px"></div>
                     @endforeach
@@ -145,7 +146,7 @@
                     <div class="field-row row">
                         <div class="input-field col-md-8 col-xs-8 col-md-offset-2">
                             <label class="">Reply</label>
-                            <textarea class="textarea-field" rows="10" name="reply" id="reply"></textarea> 
+                            <textarea class="textarea-field" rows="10" name="reply" id="reply"></textarea>
                             <p class="text-danger">{{$errors->first('reply')}}</p>
                         </div>
                     </div>
@@ -154,13 +155,13 @@
                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                            <input name="submit" value="REPLY" class="form-control btn-primary" type="submit">
+                            <input name="btnsubmit" value="REPLY" class="form-control btn-primary" type="submit">
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                             <input value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('communication')" type="button">
                         </div>
                     </div>
-                </div> 
+                </div>
             {!! Form::close() !!}
         </div>
     </div>
@@ -179,10 +180,49 @@
                     reply                    : 'Reply Message is required',
                 },
                 submitHandler: function(form) {
-                    $('input[type="submit"]').attr('disabled','disabled');
-                    form.submit();
+                    // $('input[type="submit"]').attr('disabled','disabled');
+                    swal({
+                            title: "Are you sure?",
+                            text: "You will not be able to recover!",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55 ",
+                            confirmButtonText: "Confirm",
+                            cancelButtonText: "Cancel",
+                            closeOnConfirm: false,
+                            closeOnCancel: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                              form.submit();
+                            } else {
+                                return;
+                            }
+                      });
+                    // form.submit();
                 }
             });
     });
+
+    function confirm_reply() {
+            swal({
+                    title: "Are you sure?",
+                    text: "You will not be able to recover!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55 ",
+                    confirmButtonText: "Confirm",
+                    cancelButtonText: "Cancel",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $("#communication").submit();
+                    } else {
+                        return;
+                    }
+              });
+      }
 </script>
 @stop

@@ -57,7 +57,6 @@ class HotelDetailController extends Controller
     public function index($hotel_id)
     {
         try{
-            
             //get hotel by id
             $hotelRepo              = new HotelRepository();
             $hotel                  = $hotelRepo->getObjByID($hotel_id);
@@ -91,7 +90,6 @@ class HotelDetailController extends Controller
             $room_availables = $room_availableRepo->getObjByH_Id($hotel_id);
             $room_availables_count = count($room_availables);
             // dd($room_availables_count);
-            
 
             //start hotel images
             $roomCategoryRepo = new HotelRoomCategoryRepository();
@@ -154,7 +152,15 @@ class HotelDetailController extends Controller
 
             foreach($roomCategories as $roomCategory){
                 $room_amenities = $roomCategoryAmenityRepo->getAmenitiesByRoomCategoryId($roomCategory->id);
+
+                //get up to 5 amenities to show in hotel detail page, remaining amenities will be shown in 'more' link...
+                $display_room_amenities = $roomCategoryAmenityRepo->getDisplayAmenitiesByRoomCategoryId($roomCategory->id);
+
+                // $roomCategory->room_amenities = $room_amenities;
+                $roomCategory->room_amenities_count = count($room_amenities);
+                $roomCategory->display_room_amenities = $display_room_amenities; //only up to five amenities
                 $roomCategory->room_amenities = $room_amenities;
+
             }
 
             //start room count for each room category
@@ -172,7 +178,7 @@ class HotelDetailController extends Controller
                 $total_available_room               += count($rooms);
                 // dd($r_category->available_room_count);
             }
-            
+
             //end room count for each room category
 
             //start images for each room category
@@ -226,7 +232,7 @@ class HotelDetailController extends Controller
                 if(!empty($hRestaurantCategory->restaurants)){
                     array_push($restaurantCategoryArr,$hRestaurantCategory);
                 }
-            } 
+            }
             /* End Hotel Restaurant */
 
             //get hotel gallery images

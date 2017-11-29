@@ -154,11 +154,11 @@
                                                     <li>
                                                         <i class="fa fa-check-square-o" aria-hidden="true"></i>
                                                         {{$res->name}} (Open {{$res->opening_hours}} - Close {{$res->closing_hours}})
-                                                    </li>  
-                                                @endforeach      
+                                                    </li>
+                                                @endforeach
                                                 </ul>
                                             </li>
-                                        @endforeach 
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
@@ -195,23 +195,23 @@
                                     <td>
                                         <ul class="fa-ul">
                                             <li class="title_fa">
-                                                <a href="#myModal-{{$roomCategory->id}}" data-toggle="modal" id="{{ $roomCategory->id }}" class="insertcolumn" onclick="myFunction({{ $roomCategory->id }})">{{$roomCategory->name}}</a>                                
-                                                <?php 
+                                                <a href="#myModal-{{$roomCategory->id}}" data-toggle="modal" id="{{ $roomCategory->id }}" class="insertcolumn" onclick="myFunction({{ $roomCategory->id }})">{{$roomCategory->name}}</a>
+                                                <?php
                                                     $default    = $default + 1;
                                                 ?>
                                                 <input type="hidden" id="slider-{{ $default }}" name="slider-input" value="{{ $roomCategory->id }}" />
                                                 <!-- Start Modal -->
                                                 <div class="modal fade" id="myModal-{{$roomCategory->id}}" role="dialog">
                                                     <div class="modal-dialogs modal-lg">
-                                                    
+
                                                         <!-- Modal content Start-->
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                             </div>
                                                             <div class="modal-body">
-                                                        
-                                                                <div id="jssor_{{ $roomCategory->id }}" class="slider_two">    
+
+                                                                <div id="jssor_{{ $roomCategory->id }}" class="slider_two">
                                                                     <div data-u="slides" class="slider_images_two">
                                                                     @if(isset($roomCategory->images) && count($roomCategory->images)>0)
                                                                         @foreach($roomCategory->images as $image)
@@ -225,7 +225,7 @@
                                                                             <img data-u="image" src="/images/upload/{{$hotel->logo}}" />
                                                                             <img data-u="thumb" src="/images/upload/{{$hotel->logo}}" />
                                                                         </div>
-                                                                    @endif                                                   
+                                                                    @endif
                                                                     </div>
                                                                     <!-- Thumbnail Navigator -->
                                                                     <div data-u="thumbnavigator" class="jssort01" style="position:absolute;left:0px;bottom:0px;width:250px;height:100px;" data-autocenter="1">
@@ -239,7 +239,7 @@
                                                                             </div>
                                                                         </div>
                                                                         <!-- Thumbnail Item Skin End -->
-                                                                    </div>                                          
+                                                                    </div>
                                                                 </div>
                                                                 <div class="detailmodal_text">
                                                                     <h4>Room size : {{$roomCategory->square_metre}} m<sup>2</sup></h4>
@@ -257,26 +257,43 @@
                                                                         @endif
                                                                     </ul>
                                                                 </div>
+                                                                <br>
+                                                                <hr>
+                                                                <div class="detailmodal_text">
+                                                                    <h4>Room Amenities</h4>
+                                                                    <ul class="room_facilities">
+                                                                        @if(isset($roomCategory->room_amenities) && count($roomCategory->room_amenities) > 0)
+                                                                            @foreach($roomCategory->room_amenities as $room_amenity)
+                                                                                <div class="col-md-3">
+                                                                                    <li class="text_fa">{{$room_amenity->amenity->name}}</li>
+                                                                                </div>
+                                                                            @endforeach
+                                                                        @endif
+                                                                    </ul>
+                                                                </div>
                                                             </div>
-                                                    
+
                                                             <div class="modal-footer"></div>
                                                         </div>
                                                         <!-- Modal content End-->
-                                            
+
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <!-- End Modal -->
                                             </li>
-                                            <li><img class="fa-lis" src="/assets/shared/images/cityview.png">View</li>
+                                            <!-- <li><img class="fa-lis" src="/assets/shared/images/cityview.png">View</li> -->
                                             <li><img class="fa-lis" src="/assets/shared/images/16sqm.png">{{$roomCategory->square_metre}} s.q.m</li>
                                             <li><img class="fa-lis" src="/assets/shared/images/signlebed.png">{{$roomCategory->bed_type}}</li>
                                         </ul>
                                     </td>
                                     <td>
                                         <ul class="fa-ul price_night">
-                                            @foreach($roomCategory->room_amenities as $room_amenity)
-                                                <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$room_amenity->amenity->name}}</li>
+                                            @foreach($roomCategory->display_room_amenities as $display_room_amenity)
+                                                <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$display_room_amenity->amenity->name}}</li>
                                             @endforeach
+                                            @if($roomCategory->room_amenities_count > 5)
+                                              <li><a href="#myModal-{{$roomCategory->id}}" data-toggle="modal" id="{{ $roomCategory->id }}" class="insertcolumn" onclick="myFunction({{ $roomCategory->id }})">MORE>></a></li>
+                                            @endif
                                         </ul>
                                     </td>
                                     <td>

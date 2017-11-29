@@ -124,4 +124,10 @@ class RoomCategoryAmenityRepository implements RoomCategoryAmenityRepositoryInte
         $result   = RoomCategoryAmenity::where('room_category_id', '=' ,$room_category_id)->get();
         return $result;
     }
+
+    public function getDisplayAmenitiesByRoomCategoryId($room_category_id){
+      //limit result up to five rows
+        $result   = RoomCategoryAmenity::where('room_category_id', '=' ,$room_category_id)->limit(5)->get();
+        return $result;
+    }
 }

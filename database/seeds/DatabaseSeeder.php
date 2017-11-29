@@ -48,6 +48,7 @@ class DatabaseSeeder extends Seeder
          $this->call(Default_TemplateSeeder::class);
 
          $this->call(Default_RestaurantCategorySeeder::class);
+         $this->call(Default_NearbyCategorySeeder::class);
 
     }
 }

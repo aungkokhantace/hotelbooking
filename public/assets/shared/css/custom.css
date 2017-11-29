@@ -274,9 +274,18 @@ button.closed {
 .textarea_p{
     padding: 10px;
     background: #fff;
-    width: 58.33333333%;
+    /*width: 58.33333333%;*/
     border: 1px solid rgb(169, 169, 169);;
 }
+
+.special_request_textarea{
+    width:100% !important;
+}
+
+.communication_btn{
+  float:right !important;
+}
+
 .ptext_left h5{
     color: #626262;
     font-size: 16px;
@@ -307,4 +316,3 @@ button.closed {
     padding-bottom: 570px;
 }
 }
-

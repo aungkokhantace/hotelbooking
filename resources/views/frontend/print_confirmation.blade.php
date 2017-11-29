@@ -148,9 +148,12 @@
         <tr>
             <td colspan="4" width="100%" style="border-top: 2px solid black;">
                 <b>Cancellation Cost:</b><br>
-                until {{$booking->free_cancel_date}}[Yangon]: <b>Free cancellation </b><br>
+                <!-- until {{$booking->free_cancel_date}}[Yangon]: <b>Free cancellation </b><br>
                 from {{$booking->first_cancel_date}}[Yangon] : USD {{number_format($booking->total_payable_amt/2,2)}} (50%)<br>
-                from {{$booking->second_cancel_date}}[Yangon] : USD {{number_format($booking->total_payable_amt,2)}} (100%)
+                from {{$booking->second_cancel_date}}[Yangon] : USD {{number_format($booking->total_payable_amt,2)}} (100%) -->
+                until {{$booking->free_cancel_date}}: <b>Free cancellation </b><br>
+                from {{$booking->first_cancel_date}} : USD {{number_format($booking->total_payable_amt/2,2)}} (50%)<br>
+                from {{$booking->second_cancel_date}} : USD {{number_format($booking->total_payable_amt,2)}} (100%)
             </td>
         </tr>
     </table>
