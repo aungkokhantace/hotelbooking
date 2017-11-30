@@ -478,6 +478,9 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('tour_information', array('as'=>'backend_mps/tour_information', 'uses'=>'Setup\TourInformation\TourInformationController@edit'));
             Route::post('tour_information', array('as'=>'backend_mps/tour_information', 'uses'=>'Setup\TourInformation\TourInformationController@update'));
 
+            //Activities
+            Route::get('activities', array('as'=>'backend_mps/activities','uses'=>'Setup\Activities\ActivitiesController@index'));
+
             //SaleSummary Report
             Route::get('salesummaryreport',array(
                 'as'=>'backend_mps/salesummaryreport',

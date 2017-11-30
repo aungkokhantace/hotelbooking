@@ -43,52 +43,52 @@
                     <tr>
                         <th><input type='checkbox' name='check' id='check_all'/></th>
                         <th>{{trans('setup_hotel.tb-col-name')}}</th>
-                        <th>{{trans('setup_hotel.tb-col-type')}}</th>
+                        <!-- <th>{{trans('setup_hotel.tb-col-type')}}</th> -->
                         <th>{{trans('setup_hotel.tb-col-address')}}</th>
                         <th>{{trans('setup_hotel.tb-col-phone')}}</th>
-                        <th>{{trans('setup_hotel.tb-col-fax')}}</th>
-                        <th>{{trans('setup_hotel.tb-col-latitude')}}</th>
-                        <th>{{trans('setup_hotel.tb-col-longitude')}}</th>
+                        <!-- <th>{{trans('setup_hotel.tb-col-fax')}}</th> -->
+                        <!-- <th>{{trans('setup_hotel.tb-col-latitude')}}</th> -->
+                        <!-- <th>{{trans('setup_hotel.tb-col-longitude')}}</th> -->
                         {{--<th>{{trans('setup_hotel.tb-col-logo')}}</th>--}}
-                        <th>{{trans('setup_hotel.tb-col-star')}}</th>
+                        <!-- <th>{{trans('setup_hotel.tb-col-star')}}</th> -->
                         <th>{{trans('setup_hotel.tb-col-email')}}</th>
-                        <th>{{trans('setup_hotel.tb-col-country')}}</th>
+                        <!-- <th>{{trans('setup_hotel.tb-col-country')}}</th>
                         <th>{{trans('setup_hotel.tb-col-city')}}</th>
-{{--                        <th>{{trans('setup_hotel.tb-col-township')}}</th>--}}
+                        <th>{{trans('setup_hotel.tb-col-township')}}</th> -->
                         {{--<th>{{trans('setup_hotel.tb-col-description')}}</th>--}}
-                        <th>{{trans('setup_hotel.tb-col-floor')}}</th>
+                        <!-- <th>{{trans('setup_hotel.tb-col-floor')}}</th> -->
                         <th>{{trans('setup_hotel.tb-col-class')}}</th>
                         <th>{{trans('setup_hotel.tb-col-website')}}</th>
-                        <th>{{trans('setup_hotel.tb-col-check-in')}}</th>
+                        <!-- <th>{{trans('setup_hotel.tb-col-check-in')}}</th>
                         <th>{{trans('setup_hotel.tb-col-check-out')}}</th>
                         <th>{{trans('setup_hotel.tb-col-breakfast-start')}}</th>
-                        <th>{{trans('setup_hotel.tb-col-breakfast-end')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-breakfast-end')}}</th> -->
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
                         <th></th>
                         <th class="search-col" con-id="name">Name</th>
-                        <th class="search-col" con-id="type">Type</th>
+                        <!-- <th class="search-col" con-id="type">Type</th> -->
                         <th class="search-col" con-id="address">Address</th>
                         <th class="search-col" con-id="phone">Phone</th>
-                        <th class="search-col" con-id="fax">Fax</th>
-                        <th class="search-col" con-id="latitude">Latitude</th>
-                        <th class="search-col" con-id="longitude">Longitude</th>
+                        <!-- <th class="search-col" con-id="fax">Fax</th> -->
+                        <!-- <th class="search-col" con-id="latitude">Latitude</th> -->
+                        <!-- <th class="search-col" con-id="longitude">Longitude</th> -->
                         {{--<th class="search-col" con-id="logo">Logo</th>--}}
-                        <th class="search-col" con-id="star">Star</th>
+                        <!-- <th class="search-col" con-id="star">Star</th> -->
                         <th class="search-col" con-id="email">Email</th>
-                        <th class="search-col" con-id="country">Country</th>
+                        <!-- <th class="search-col" con-id="country">Country</th>
                         <th class="search-col" con-id="city">City</th>
-                        {{--<th class="search-col" con-id="township">Township</th>--}}
+                        <th class="search-col" con-id="township">Township</th> -->
                         {{--<th class="search-col" con-id="description">Description</th>--}}
-                        <th class="search-col" con-id="number_of_floors">Number of Floors</th>
+                        <!-- <th class="search-col" con-id="number_of_floors">Number of Floors</th> -->
                         <th class="search-col" con-id="class">Class</th>
                         <th class="search-col" con-id="website">Website</th>
-                        <th class="search-col" con-id="check_in_time">Check-in Time</th>
+                        <!-- <th class="search-col" con-id="check_in_time">Check-in Time</th>
                         <th class="search-col" con-id="check_out_time">Check-out Time</th>
                         <th class="search-col" con-id="breakfast_start_time">Breakfast Start Time</th>
-                        <th class="search-col" con-id="breakfast_end_time">Breakfast End Time</th>
+                        <th class="search-col" con-id="breakfast_end_time">Breakfast End Time</th> -->
                     </tr>
                     </tfoot>
                     <tbody>
@@ -96,26 +96,26 @@
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $hotel->id }}" id="all"></td>
                             <td><a href="/backend_mps/hotel/edit/{{$hotel->id}}">{{$hotel->name}}</a></td>
-                            <td>{{$hotel->h_type_id}}</td>
+                            <!-- <td>{{$hotel->h_type_id}}</td> -->
                             <td>{{$hotel->address}}</td>
                             <td>{{$hotel->phone}}</td>
-                            <td>{{$hotel->fax}}</td>
-                            <td>{{$hotel->latitude}}</td>
-                            <td>{{$hotel->longitude}}</td>
-                            {{--<td>{{$hotel->logo}}</td>--}}
-                            <td>{{$hotel->star}}</td>
+                            <!-- <td>{{$hotel->fax}}</td> -->
+                            <!-- <td>{{$hotel->latitude}}</td> -->
+                            <!-- <td>{{$hotel->longitude}}</td> -->
+                            <!-- <td>{{$hotel->logo}}</td> -->
+                            <!-- <td>{{$hotel->star}}</td> -->
                             <td>{{$hotel->email}}</td>
-                            <td>{{$hotel->country->name}}</td>
+                            <!-- <td>{{$hotel->country->name}}</td>
                             <td>{{$hotel->city->name}}</td>
-{{--                            <td>{{$hotel->township->name}}</td>--}}
+                            <td>{{$hotel->township->name}}</td> -->
                             {{--<td>{{$hotel->description}}</td>--}}
-                            <td>{{$hotel->number_of_floors}}</td>
+                            <!-- <td>{{$hotel->number_of_floors}}</td> -->
                             <td>{{$hotel->class}}</td>
                             <td>{{$hotel->website}}</td>
-                            <td>{{$hotel->check_in_time}}</td>
+                            <!-- <td>{{$hotel->check_in_time}}</td>
                             <td>{{$hotel->check_out_time}}</td>
                             <td>{{$hotel->breakfast_start_time}}</td>
-                            <td>{{$hotel->breakfast_end_time}}</td>
+                            <td>{{$hotel->breakfast_end_time}}</td> -->
                         </tr>
                     @endforeach
                     </tbody>

@@ -200,8 +200,8 @@
                                                                         <option value="yes">Yes</option>
                                                                     </select>
                                                                 </div>
-                                                                <label class="col-sm-4 col-form-labels" style="visibility:hidden" id="extra-price-{{$i}}">
-                                                                    {{$available_room_category->extra_bed_price}}
+                                                                <label class="col-sm-12 col-form-labels" style="visibility:hidden" id="extra-price-{{$i}}">
+                                                                    Extrabed Price: $ {{$available_room_category->extra_bed_price}}
                                                                 </label>
                                                             </div>
                                                             @endif
@@ -231,7 +231,7 @@
                                                              <span class="included">INCLUDED</span><span style="padding-left:30px;"><strong>Breakfast</strong><br></span>
                                                             <span style="padding-left: 148px;">
                                                             Yes,we'd like breakfast during our stay at no additional cost.
-                                                            </span> 
+                                                            </span>
                                                         </div>
                                                     </div>
                                                         &nbsp;
@@ -306,7 +306,7 @@
                                                     <input type="checkbox" name="baby_cot_request" value="1"> <span>I'd like to have a baby cot <br>(additional charges may apply)</span>
                                                 </div>
                                                 <br>
-                                                
+
                                             </div>
                                             <div class="continue">
                                                 @if(\Illuminate\Support\Facades\Session::has('customer'))
@@ -403,12 +403,12 @@
                     $('#extra-price-'+l_id[1]).css({"visibility":"visible"});
                 }
                 else{
-                    $('#extra-price-'+l_id[1]).css({"visibility":"hidden"});                    
+                    $('#extra-price-'+l_id[1]).css({"visibility":"hidden"});
                 }
-                
+
             });
         });
-        
+
     </script>
     <script type="text/javascript" language="javascript" class="init">
         $(document).ready(function(){

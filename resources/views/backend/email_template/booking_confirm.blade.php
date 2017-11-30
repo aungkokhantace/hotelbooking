@@ -21,7 +21,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <input type="submit" name="submit" value="{{trans('setup_email_template.btn-update') }}" class="form-control btn-primary">

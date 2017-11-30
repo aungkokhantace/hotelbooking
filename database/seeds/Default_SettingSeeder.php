@@ -20,6 +20,10 @@ class Default_SettingSeeder extends Seeder
             ['code'=>'CANCEL REASON 4', 'type'=>'REASON', 'value'=>'4','description'=>'I am no longer visiting this destination.'],
             ['code'=>'CANCEL REASON 5', 'type'=>'REASON', 'value'=>'5','description'=>'For Personal Reason.'],
 
+            ['code'=>'BOOKING_CONFIRM', 'type'=>'EMAIL', 'value'=>'0','description'=>''],
+            ['code'=>'BOOKING_EDIT', 'type'=>'EMAIL', 'value'=>'0','description'=>''],
+            ['code'=>'BOOKING_CANCEL', 'type'=>'EMAIL', 'value'=>'0','description'=>''],
+
         );
 
         DB::table('core_settings')->insert($roles);

@@ -312,6 +312,9 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>615,'module'=>'HotelGallery','name'=>'Destroy','description'=>'Hotel Gallery Destroy','url'=>'backend_mps/hotel_gallery/destroy'],
             ['id'=>616,'module'=>'HotelGallery','name'=>'Filter','description'=>'Hotel Gallery Filter','url'=>'backend_mps/hotel_gallery/{hotel_id?}'],
 
+            //Activity Log
+            ['id'=>620,'module'=>'Activity Log','name'=>'Activity Log','description'=>'Activity Log','url'=>'backend_mps/activities'],
+
 
 
         );

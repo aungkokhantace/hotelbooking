@@ -565,6 +565,14 @@
                         </a>
                     </li>
                     @endif
+
+                    @if (Auth::guard('User')->user()->role_id == 1 || Auth::guard('User')->user()->role_id == 2)
+                    <li nav-id="modifier-creat" class="has-sub">
+                        <a href="/backend_mps/activities">
+                            <span>Activity Log</span>
+                        </a>
+                    </li>
+                    @endif
                 </ul>
 
             </li>

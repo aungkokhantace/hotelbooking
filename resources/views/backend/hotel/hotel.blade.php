@@ -156,7 +156,7 @@
             <p class="text-danger">{{$errors->first('number_of_floors')}}</p>
         </div>
     {{-- </div>
-    
+
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="phone">{{trans('setup_hotel.phone')}}<span class="require">*</span></label>
@@ -211,7 +211,7 @@
             <p class="text-danger">{{$errors->first('longitude')}}</p>
         </div>
     </div>
-    
+
     <div class="row">
         {{-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="country_id">{{trans('setup_hotel.country')}}<span class="require">*</span></label>
@@ -237,7 +237,7 @@
             <p class="text-danger">{{$errors->first('country_id')}}</p>
         </div>
     {{-- </div>
-    
+
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="city_id">{{trans('setup_hotel.city')}}<span class="require">*</span></label>
@@ -317,7 +317,7 @@
             <p class="text-danger">{{$errors->first('check_out_time')}}</p>
         </div>
     </div>
-    
+
     <div class="row">
        {{--  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="breakfast_start_time">{{trans('setup_hotel.breakfast-start')}}<span class="require">*</span></label>
@@ -737,7 +737,7 @@
                                         {{-- @foreach($feature->feature_id as $fea)
                                             @if($fea->feature_id == $feature->id)
                                             <textarea rows="5" cols="50" class="form-control" id="remark" name="remark_{{$feature->id}}" placeholder="{{trans('setup_hotelfeature.place-remark')}}">{{$fea->remark}}</textarea>
-                                        
+
                                             @endif
                                             @endforeach --}}
 
@@ -878,7 +878,7 @@
                         @if(!empty($h_room_types))
                             <?php $i = 0;?>
                             @foreach($h_room_types as $h_room_type)
-                            
+
                             <div class="row div_facility">
                                 <div class="col-lg-8 col-md-8 col-sm-8 div_border">
                                     <div class="col-md-4">
@@ -894,9 +894,9 @@
                                 </div>
                                 @if($i != 0)
                                     <input type="button" class="btn btn-danger hotel_remove_btn" value="Remove">
-                                @endif    
-                            </div> 
-                            
+                                @endif
+                            </div>
+
                             <?php $i++;?>
                             @endforeach
                             <button type="button" class="btn btn-info" id="add_more_btn">Add More</button>
@@ -914,7 +914,7 @@
                                         <p class="text-danger">{{$errors->first('description')}}</p>
                                     </div>
                                 </div>
-                            </div>    
+                            </div>
                             <button type="button" class="btn btn-info" id="add_more_btn">Add More</button>
                         @endif
                     @else
@@ -931,7 +931,7 @@
                                     <p class="text-danger">{{$errors->first('description')}}</p>
                                 </div>
                             </div>
-                        </div>    
+                        </div>
                         <button type="button" class="btn btn-info" id="add_more_btn">Add More</button>
                     @endif
                 </div>
@@ -942,7 +942,7 @@
     {{--End Tab Panel--}}
 
     <div class="row">
-        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <input type="submit" name="submit" value="{{isset($hotel)? trans('setup_hotel.btn-update') : trans('setup_hotel.btn-add')}}" class="form-control btn-primary">
@@ -1354,7 +1354,7 @@
                 );
             });
             /* Muti text box for hotel facilities */
-            
+
             $('.hotel_remove_btn').click(function(){
                 $(this).parent().remove();
             });

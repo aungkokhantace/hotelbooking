@@ -37,6 +37,14 @@
             </select>
             <p class="text-danger">{{$errors->first('type')}}</p>
         </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <button type="button" onclick="report_search_with_type('salesummaryreport');" class="form-control btn-primary">Preview By List</button>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <button type="button" onclick="report_export_with_type('salesummaryreport');" class="form-control btn-primary">Export Excel</button>
+        </div>
     </div>
     <br>
 
@@ -135,7 +143,7 @@
     </div>
     {{--End Yearpicker--}}
     <br class="years">
-
+<!--
     <div class="row">
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
 
@@ -143,14 +151,10 @@
             <button type="button" onclick="report_search_with_type('salesummaryreport');" class="form-control btn-primary">Preview By List</button>
         </div>
 
-        {{--<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">--}}
-        {{--<button type="button" onclick="check_to_redirect_to_graph_with_type();" class="form-control btn-primary">Preview By Graph</button>--}}
-        {{--</div>--}}
-
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <button type="button" onclick="report_export_with_type('salesummaryreport');" class="form-control btn-primary">Export Excel</button>
         </div>
-    </div>
+    </div> -->
 
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

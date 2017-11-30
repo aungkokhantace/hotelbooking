@@ -37,6 +37,39 @@
             </select>
             <p class="text-danger">{{$errors->first('type')}}</p>
         </div>
+
+        <!-- start status filter -->
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+            <label for="status" class="text_bold_black">Status</label>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <select class="form-control" id="status">
+                <option value=0>All</option>
+                <option value=1 {{isset($status)&&$status== 1?'selected':''}}>Pending</option>
+                <option value=2 {{isset($status)&&$status== 2?'selected':''}}>Confirm</option>
+                <option value=3 {{isset($status)&&$status== 3?'selected':''}}>Cancel(Cancel By User)</option>
+                <option value=4 {{isset($status)&&$status== 4?'selected':''}}>Void(Cancel By System Admin)</option>
+                <option value=4 {{isset($status)&&$status== 5?'selected':''}}>Complete</option>
+                <option value=4 {{isset($status)&&$status== 6?'selected':''}}>Transaction Fail</option>
+                <option value=4 {{isset($status)&&$status== 7?'selected':''}}>Refund by Customer(Cancel within first cancellation days)</option>
+                <option value=4 {{isset($status)&&$status== 8?'selected':''}}>Refund by Admin</option>
+                <option value=4 {{isset($status)&&$status== 9?'selected':''}}>Cancel within second cancellation days</option>
+            </select>
+        </div>
+
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <button type="button" onclick="report_search_with_type('bookingreport');" class="form-control btn-primary">Preview By List</button>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <button type="button" onclick="report_export_with_type('bookingreport');" class="form-control btn-primary">Export Excel</button>
+        </div>
+        <!-- end status filter -->
     </div>
     <br>
 
@@ -136,7 +169,7 @@
     {{--End Yearpicker--}}
     <br class="years">
 
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <label for="status" class="text_bold_black">Status</label>
         </div>
@@ -144,10 +177,6 @@
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <select class="form-control" id="status">
                 <option value=0>All</option>
-                <!-- <option value=1 {{isset($status)&&$status== 1?'selected':''}}>Pending</option>
-                <option value=2 {{isset($status)&&$status== 2?'selected':''}}>Confirm</option>
-                <option value=3 {{isset($status)&&$status== 3?'selected':''}}>Cancel</option>
-                <option value=4 {{isset($status)&&$status== 4?'selected':''}}>Void</option> -->
                 <option value=1 {{isset($status)&&$status== 1?'selected':''}}>Pending</option>
                 <option value=2 {{isset($status)&&$status== 2?'selected':''}}>Confirm</option>
                 <option value=3 {{isset($status)&&$status== 3?'selected':''}}>Cancel(Cancel By User)</option>
@@ -159,25 +188,21 @@
                 <option value=4 {{isset($status)&&$status== 9?'selected':''}}>Cancel within second cancellation days</option>
             </select>
         </div>
-    </div>
+    </div> -->
 
     <br class="staus">
 
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
 
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <button type="button" onclick="report_search_with_type('bookingreport');" class="form-control btn-primary">Preview By List</button>
         </div>
 
-        {{--<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">--}}
-        {{--<button type="button" onclick="check_to_redirect_to_graph_with_type();" class="form-control btn-primary">Preview By Graph</button>--}}
-        {{--</div>--}}
-
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <button type="button" onclick="report_export_with_type('bookingreport');" class="form-control btn-primary">Export Excel</button>
         </div>
-    </div>
+    </div> -->
 
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
