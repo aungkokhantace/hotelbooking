@@ -96,6 +96,7 @@ class FacilityGroupRepository implements FacilityGroupRepositoryInterface
 
         try{
             $tempObj = FacilityGroup::find($id);
+            Utility::delete_file_in_upload_folder($tempObj->icon);
             $tempObj = Utility::addDeletedBy($tempObj);
             $tempObj->deleted_at = date('Y-m-d H:m:i');
             $tempObj->save();

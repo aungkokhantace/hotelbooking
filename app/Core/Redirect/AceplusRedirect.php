@@ -18,7 +18,7 @@ class AceplusRedirect implements AceplusRedirectInterface {
             return Redirect::intended("/");
         }
     }
-
+    
     public function firstRedirectPath() {
         if(Check::validSession()) {
             return "backend_mps/dashboard";

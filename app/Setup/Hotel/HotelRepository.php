@@ -140,6 +140,7 @@ class HotelRepository implements HotelRepositoryInterface
 
         try{
             $tempObj = Hotel::find($id);
+            Utility::delete_file_in_upload_folder($tempObj->logo);
             $tempObj = Utility::addDeletedBy($tempObj);
             $tempObj->deleted_at = date('Y-m-d H:m:i');
             $tempObj->save();
