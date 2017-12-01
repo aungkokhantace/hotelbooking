@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Setup\Hotelgallery;
+namespace App\Http\Controllers\Setup\HotelGallery;
 
 use App\Backend\Infrastructure\Forms\HotelGalleryEditRequest;
 use App\Backend\Infrastructure\Forms\HotelGalleryEntryRequest;
@@ -49,19 +49,19 @@ class HotelGalleryController extends Controller
             if ($role == 3) {
                 //Get Hotel ID
                 $hotels             = $hotelRepo->getHotelByUserEmail($email);
-                
+
                 foreach($hotels as $hotel){
                     $h_id = $hotel->id;
                 }
-                
+
                 $all_hotel_gallery = $this->repo->getObjsByHotelID($h_id);
-            } 
+            }
             else {
             $all_hotel_gallery = $this->repo->getObjs();
             $hotels = $hotelRepo->getObjs();
             }
             $all_hotels = $hotelRepo->getObjs();
-            
+
             return view('backend.hotel_gallery.index')
                 ->with('all_hotel_gallery',$all_hotel_gallery)
                 ->with('role',$role)
@@ -85,7 +85,7 @@ class HotelGalleryController extends Controller
             $hotelRepo          = new HotelRepository();
             if ($role == 3) {
                 //Get Hotel ID
-                $hotels             = $hotelRepo->getHotelByUserEmail($email);                
+                $hotels             = $hotelRepo->getHotelByUserEmail($email);
                 foreach($hotels as $hotel){
                     $h_id = $hotel->id;
                 }
@@ -99,7 +99,7 @@ class HotelGalleryController extends Controller
                 else{
                     $all_hotel_gallery = $this->repo->getObjsByHotelID($hotel_id);
                 }
-                
+
                 $hotels = $hotelRepo->getObjs();
             }
 
@@ -132,7 +132,7 @@ class HotelGalleryController extends Controller
             } else {
                 $hotels         = $hotelRepo->getObjs();
             }
-            
+
             return view('backend.hotel_gallery.hotel_gallery')
                 ->with('hotels',$hotels)
                 ->with('role',$role)
@@ -149,7 +149,7 @@ class HotelGalleryController extends Controller
             // dd(Input::all());
         $request->validate();
 
-        $hotel_id           = Input::get('hotel_id');        
+        $hotel_id           = Input::get('hotel_id');
 
         try{
             DB::beginTransaction();
@@ -167,7 +167,7 @@ class HotelGalleryController extends Controller
                         {
                             mkdir($path, 0777, true);
                         }
-                    
+
                         $photo_name_original            = Utility::getImage($image);
                         $photo_ext                      = Utility::getImageExt($image);
                         $photo_name                     = uniqid() . "." . $photo_ext;
@@ -184,7 +184,7 @@ class HotelGalleryController extends Controller
 
                         $hotelGalleryRepo               = new HotelGalleryRepository();
                         $hotelGalleryResult        = $hotelGalleryRepo->create($paramObj);
-                        
+
                         if($hotelGalleryResult['aceplusStatusCode'] !=  ReturnMessage::OK){
                             DB::rollback();
 
@@ -195,7 +195,7 @@ class HotelGalleryController extends Controller
                     }
                 }
             }
-            
+
             DB::commit();
             return redirect()->action('Setup\HotelGallery\HotelGalleryController@index')
                 ->withMessage(FormatGenerator::message('Success', 'Hotel Gallery Image created ...'));
@@ -219,7 +219,7 @@ class HotelGalleryController extends Controller
             $user               = $userRepo->getObjByID($user_id);
             $email                  = $user->email;
             $role                   = $user->role_id;
-            
+
             $hotelRepo              = new HotelRepository();
             $hotel                  = $hotelRepo->getObjByID($id);
 
@@ -236,7 +236,7 @@ class HotelGalleryController extends Controller
                 else{
                     $checkPermission = false;
                 }
-                
+
                 // $checkPermission    = $this->repo->checkHasPermission($id,$h_id);
                 if ($checkPermission == false) {
                     return redirect('unauthorize');
@@ -250,7 +250,7 @@ class HotelGalleryController extends Controller
                 // $hotel_room_type        = $hotelRoomTypeRepo->getHotelRoomTypeWithHotelId($hotel_id);
                 $hotelGalleryRepo       = new HotelGalleryRepository();
                 $images                 = $hotelGalleryRepo->getObjsByHotelID($id);
-            }            
+            }
 
             return view('backend.hotel_gallery.hotel_gallery')
                         ->with('hotels',$hotels)
@@ -290,24 +290,24 @@ class HotelGalleryController extends Controller
                     }
                 }
             }
-            
+
             $hotelGalleryRepo->deleteHotelGalleryImageByHotelId($id,$hotel_gallery_image_id_array);
             $hotelGalleryResult['aceplusStatusCode']  = ReturnMessage::OK;
-            
+
             //Hotel Gallery Images
             if(Input::hasFile('file'))
             {
                 $images                     = Input::file('file');
                 // $count                      = 1;
-                
-                foreach($images as $image){                    
+
+                foreach($images as $image){
                     if (! is_null($image)) {
                         $path = base_path().'/public/images/upload/';
                         if ( ! file_exists($path))
                         {
                             mkdir($path, 0777, true);
                         }
-                    
+
                         $photo_name_original            = Utility::getImage($image);
                         $photo_ext                      = Utility::getImageExt($image);
                         $photo_name                     = uniqid() . "." . $photo_ext;
@@ -315,16 +315,16 @@ class HotelGalleryController extends Controller
                         $imgWidth                       = 500;
                         $imgHeight                      = 300;
                         $photo                          = Utility::resizeImageWithDefaultWidthHeight($image,$photo_name,$path,$imgWidth,$imgHeight);
-                        
+
                         $paramObj                       = new HotelGallery();
                         $paramObj->hotel_id             = $id;
                         // $paramObj->image                = $image_path;
                         $paramObj->image                = $photo_name;
                         $paramObj->status               = 1; //status is 1 by default
-                        
+
                         // $hotelGalleryRepo               = new HotelGalleryRepository();
                         $hotelGalleryResult        = $hotelGalleryRepo->create($paramObj);
-                        
+
                         if($hotelGalleryResult['aceplusStatusCode'] !=  ReturnMessage::OK){
                             DB::rollback();
 
@@ -334,7 +334,7 @@ class HotelGalleryController extends Controller
                     }
                 }
             }
-            
+
             DB::commit();
             return redirect()->action('Setup\HotelGallery\HotelGalleryController@index')
                 ->withMessage(FormatGenerator::message('Success', 'Hotel Gallery Image updated ...'));

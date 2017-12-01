@@ -109,7 +109,7 @@ class RoomDiscountController extends Controller
             $hotelRoomCategoryRepo  = new HotelRoomCategoryRepository();
             // $hotel_room_category    = $hotelRoomCategoryRepo->getHotelRoomCategoryWithRoomTypeId($h_room_type_id);
             $hotel_room_category    = $hotelRoomCategoryRepo->getHotelRoomCategoryWithHotelId($hotel_id);
-            
+
             return view('backend.room_discount.room_discount')->with('room_discount', $room_discount)
                 ->with('hotels',$hotels)
                 ->with('hotel_room_type',$hotel_room_type)

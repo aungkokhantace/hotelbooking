@@ -141,3 +141,13 @@
   color:#53cdF9 !important;
   font-weight: bold;
 }
+
+/*start style for summernote text editor*/
+.note-btn{
+  background : #575454 !important;
+}
+
+.note-toolbar{
+  background : #8c8c8c !important;
+}
+/*end style for summernote text editor*/
