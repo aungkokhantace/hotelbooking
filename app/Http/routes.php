@@ -98,7 +98,10 @@ Route::group(['middleware' => 'web'], function () {
     // Route::get('backend_myanmarpolestar', 'Auth\AuthController@showLogin');
     Route::group(['prefix' => 'backend_mps'], function () {
 
-    Route::get('/', 'Auth\AuthController@showLogin');
+    Route::get('/', 'Auth\AuthController@show_first_login');
+    // Route::post('first_login', 'Auth\AuthController@dofirstLogin');
+    Route::post('first_login', array('as'=>'backend_mps/first_login','uses'=>'Auth\AuthController@dofirstLogin'));
+    // Route::get('/', 'Auth\AuthController@showLogin');
     Route::get('login', array('as'=>'backend_mps/login','uses'=>'Auth\AuthController@showLogin'));
     Route::post('login', array('as'=>'backend_mps/login','uses'=>'Auth\AuthController@doLogin'));
     Route::get('logout', array('as'=>'backend_mps/logout','uses'=>'Auth\AuthController@doLogout'));

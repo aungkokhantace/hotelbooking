@@ -99,6 +99,7 @@ class HotelGalleryRepository implements HotelGalleryRepositoryInterface
         $date    = date("Y-m-d H:i:s");
 
         $imageObj = HotelGallery::find($id);
+        Utility::delete_file_in_upload_folder($imageObj->image);
         $image_name = $imageObj->image;
 
         try{

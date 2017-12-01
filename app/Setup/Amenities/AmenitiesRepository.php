@@ -14,6 +14,8 @@ use App\User;
 use App\Setup\Amenities\Amenity;
 use App\Core\Utility;
 use App\Core\ReturnMessage;
+use File;
+use Illuminate\Support\Facades\Storage;
 class AmenitiesRepository implements AmenitiesRepositoryInterface
 {
     public function getObjs()
@@ -96,6 +98,7 @@ class AmenitiesRepository implements AmenitiesRepositoryInterface
 
         try{
             $tempObj = Amenity::find($id);
+            Utility::delete_file_in_upload_folder($tempObj->icon);
             $tempObj = Utility::addDeletedBy($tempObj);
             $tempObj->deleted_at = date('Y-m-d H:m:i');
             $tempObj->save();

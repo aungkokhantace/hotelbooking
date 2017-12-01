@@ -20,6 +20,7 @@ use App\Http\Requests;
 use App\Core\User\UserRepository;
 use App\Core\SyncsTable\SyncsTable;
 use InterventionImage;
+use File;
 
 class Utility
 {
@@ -296,5 +297,17 @@ class Utility
 
             return $returnedObj;
         }
+    }
+
+    public static function delete_file_in_upload_folder($filename){
+        if(PHP_OS == "WINNT"){
+            $image_path = public_path().'\images\upload\\'.$filename;
+        }else{
+            $image_path = public_path().'/images/upload/'.$filename;
+        }
+        
+            if(File::exists($image_path)){
+                File::delete($image_path);
+            }
     }
 }

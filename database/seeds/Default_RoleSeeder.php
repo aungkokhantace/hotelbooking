@@ -21,7 +21,8 @@ class Default_RoleSeeder extends Seeder
             ['id'=>1, 'name'=>'SUPER-ADMIN', 'description'=>'This is super admin role'],
             ['id'=>2, 'name'=>'ADMIN', 'description'=>'This is user admin role'],
             ['id'=>3, 'name'=>'HOTEL ADMIN', 'description'=>'This is hotel admin role'],
-            ['id'=>4, 'name'=>'CUSTOMER', 'description'=>'This is customer role']
+            ['id'=>4, 'name'=>'CUSTOMER', 'description'=>'This is customer role'],
+            ['id'=>9999, 'name'=>'SUPER-ADMIN FIRST LOGIN', 'description'=>'This is super admin first login role'],
         );
 
         DB::table('core_roles')->insert($roles);
