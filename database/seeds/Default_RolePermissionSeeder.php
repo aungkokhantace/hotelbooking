@@ -618,6 +618,30 @@ class Default_RolePermissionSeeder extends Seeder
             ['role_id'=>1, 'permission_id'=>620],
             ['role_id'=>2, 'permission_id'=>620],
 
+            ['role_id'=>1, 'permission_id'=>630],
+            ['role_id'=>1, 'permission_id'=>631],
+            ['role_id'=>1, 'permission_id'=>632],
+            ['role_id'=>1, 'permission_id'=>633],
+            ['role_id'=>1, 'permission_id'=>634],
+            ['role_id'=>1, 'permission_id'=>635],
+            ['role_id'=>1, 'permission_id'=>636],
+
+            ['role_id'=>2, 'permission_id'=>630],
+            ['role_id'=>2, 'permission_id'=>631],
+            ['role_id'=>2, 'permission_id'=>632],
+            ['role_id'=>2, 'permission_id'=>633],
+            ['role_id'=>2, 'permission_id'=>634],
+            ['role_id'=>2, 'permission_id'=>635],
+            ['role_id'=>2, 'permission_id'=>636],
+
+            ['role_id'=>3, 'permission_id'=>630],
+            ['role_id'=>3, 'permission_id'=>631],
+            ['role_id'=>3, 'permission_id'=>632],
+            ['role_id'=>3, 'permission_id'=>633],
+            ['role_id'=>3, 'permission_id'=>634],
+            ['role_id'=>3, 'permission_id'=>635],
+            ['role_id'=>3, 'permission_id'=>636],
+
         );
 
         DB::table('core_permission_role')->insert($roles);
