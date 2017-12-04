@@ -77,6 +77,10 @@ class RoomCategoryImageRepository implements RoomCategoryImageRepositoryInterfac
         $date    = date("Y-m-d H:i:s");
 
         try{
+            $images = RoomCategoryImage::find($r_category_image_id);
+            foreach ($images as $value) {
+                Utility::delete_file_in_upload_folder($value->img_path);
+            }
             $result = DB::table('r_category_image')
                           ->where('h_room_category_id','=',$h_room_category_id)
                           ->whereIn('id',$r_category_image_id)
