@@ -539,6 +539,15 @@ Route::group(['middleware' => 'web'], function () {
             Route::post('hotel_gallery/destroy', array('as'=>'backend_mps/hotel_gallery/destroy', 'uses'=>'Setup\HotelGallery\HotelGalleryController@destroy'));
             Route::get('hotel_gallery/{hotel_id?}',array('as'=>'backend_mps/hotel_gallery/{hotel_id?}','uses'=>'Setup\HotelGallery\HotelGalleryController@search'));
 
+            //Hotel Policy
+            Route::get('hotel_policy', array('as'=>'backend_mps/hotel_policy', 'uses'=>'Setup\HotelPolicy\HotelPolicyController@index'));
+            Route::get('hotel_policy/create/{hotel_id?}', array('as'=>'backend_mps/hotel_policy/create/{hotel_id?}', 'uses'=>'Setup\HotelPolicy\HotelPolicyController@create'));
+            Route::post('hotel_policy/store', array('as'=>'backend_mps/hotel_policy/store', 'uses'=>'Setup\HotelPolicy\HotelPolicyController@store'));
+            Route::get('hotel_policy/edit/{id}', array('as'=>'backend_mps/hotel_policy/edit', 'uses'=>'Setup\HotelPolicy\HotelPolicyController@edit'));
+            Route::post('hotel_policy/update', array('as'=>'backend_mps/hotel_policy/update', 'uses'=>'Setup\HotelPolicy\HotelPolicyController@update'));
+            Route::post('hotel_policy/destroy', array('as'=>'backend_mps/hotel_policy/destroy', 'uses'=>'Setup\HotelPolicy\HotelPolicyController@destroy'));
+            Route::get('hotel_policy/{hotel_id?}',array('as'=>'backend_mps/hotel_policy/{hotel_id?}','uses'=>'Setup\HotelPolicy\HotelPolicyController@search'));
+
         });
 
     });

@@ -288,6 +288,11 @@
                      <li nav-id="modifier-create" class="has-sub">
                         <a href="/backend_mps/hotel_gallery">Hotel Gallery</a>
                     </li>
+
+                     <!-- Hotel Gallery -->
+                     <li nav-id="modifier-create" class="has-sub">
+                        <a href="/backend_mps/hotel_policy">Hotel Policy</a>
+                    </li>
                 </ul>
             </li>
 
@@ -657,8 +662,6 @@
     $(document).ready(function() {
         //make sidebar active current tab when a page is selected
         var path = window.location.pathname;
-//        path = path.replace(/\/$/, "");
-//        path = decodeURIComponent(path);
         var submenu = '.sub-menu li';
         var hassub = '.has-sub';
 
@@ -667,8 +670,10 @@
 
         $(".sub-menu li a").each(function () {
             var href = $(this).attr('href');
-
-            if (path === href) {
+            var child_href = href+'/';
+            //check for child hrefs also (eg. room and room/create)
+            if (path === href || path.includes(child_href)) {
+            // if (path.includes(href)) {
                 $(this).closest('li').addClass('active');
                 $(this).closest('.has-sub').addClass('active');
                 $(this).parents(".has-sub:eq(1)").toggleClass("active");
