@@ -316,13 +316,13 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>620,'module'=>'Activity Log','name'=>'Activity Log','description'=>'Activity Log','url'=>'backend_mps/activities'],
 
             //Hotel Policy
-            ['id'=>610,'module'=>'Hotel Policy','name'=>'Listing','description'=>'Hotel Policy Listing','url'=>'backend_mps/hotel_policy'],
-            ['id'=>611,'module'=>'Hotel Policy','name'=>'Create','description'=>'Hotel Policy Create','url'=>'backend_mps/hotel_policy/create/{hotel_id?}'],
-            ['id'=>612,'module'=>'Hotel Policy','name'=>'Store','description'=>'Hotel Policy Store','url'=>'backend_mps/hotel_policy/store'],
-            ['id'=>613,'module'=>'Hotel Policy','name'=>'Edit','description'=>'Hotel Policy Edit','url'=>'backend_mps/hotel_policy/edit'],
-            ['id'=>614,'module'=>'Hotel Policy','name'=>'Update','description'=>'Hotel Policy Update','url'=>'backend_mps/hotel_policy/update'],
-            ['id'=>615,'module'=>'Hotel Policy','name'=>'Destroy','description'=>'Hotel Policy Destroy','url'=>'backend_mps/hotel_policy/destroy'],
-            ['id'=>616,'module'=>'Hotel Policy','name'=>'Filter','description'=>'Hotel Policy Filter','url'=>'backend_mps/hotel_policy/{hotel_id?}'],
+            ['id'=>630,'module'=>'Hotel Policy','name'=>'Listing','description'=>'Hotel Policy Listing','url'=>'backend_mps/hotel_policy'],
+            ['id'=>631,'module'=>'Hotel Policy','name'=>'Create','description'=>'Hotel Policy Create','url'=>'backend_mps/hotel_policy/create/{hotel_id?}'],
+            ['id'=>632,'module'=>'Hotel Policy','name'=>'Store','description'=>'Hotel Policy Store','url'=>'backend_mps/hotel_policy/store'],
+            ['id'=>633,'module'=>'Hotel Policy','name'=>'Edit','description'=>'Hotel Policy Edit','url'=>'backend_mps/hotel_policy/edit'],
+            ['id'=>634,'module'=>'Hotel Policy','name'=>'Update','description'=>'Hotel Policy Update','url'=>'backend_mps/hotel_policy/update'],
+            ['id'=>635,'module'=>'Hotel Policy','name'=>'Destroy','description'=>'Hotel Policy Destroy','url'=>'backend_mps/hotel_policy/destroy'],
+            ['id'=>636,'module'=>'Hotel Policy','name'=>'Filter','description'=>'Hotel Policy Filter','url'=>'backend_mps/hotel_policy/{hotel_id?}'],
 
         );
 
