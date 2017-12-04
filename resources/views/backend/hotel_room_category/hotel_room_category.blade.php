@@ -343,7 +343,7 @@
                         <div id='abcd' class='abcd'>
                             <input type="hidden" name="file_id[]" value="{{$image->id}}"/>
                             <input name="file[]" type="file" id="file" value="{{$image->img_path}}" class="file-hide"/>
-                            <img id='previewimg' src='images/upload/{{$image->img_path}}'/>
+                            <img id='previewimg' src='/images/upload/{{$image->img_path}}'/>
                             <input type="button" id="remove-img{{$image->id}}" value="Remove" class="btn btn-default remove-img">
                         </div>
                     </div>
