@@ -339,6 +339,7 @@ class HotelController extends Controller
     
             //start getting hotel facility
             $facility                   = (Input::has('facility_id')) ? Input::get('facility_id') : "";
+            // dd($facility);
             $facility_mainAry           = array();
             $facility_count             = count($facility);
     
@@ -877,6 +878,7 @@ class HotelController extends Controller
                 HotelFacility::where('hotel_id',$hotel_id)->delete();
             }
             $facility = (Input::has('facility_id')) ? Input::get('facility_id') : "";
+
             $facility_mainAry = array();
             $facility_count = count($facility);
     
@@ -891,9 +893,9 @@ class HotelController extends Controller
             //end getting hotel facility
             
             //start getting hotel room type
-            $room_types                     = (Input::has('room_type'))? Input::get('room_type') : "";
-            $hotel_room_type                = $this->repo->getHotelRoomTypeByID($id);
-            $hotel_room_type_count          = count($hotel_room_type);
+            // $room_types                     = (Input::has('room_type'))? Input::get('room_type') : "";
+            // $hotel_room_type                = $this->repo->getHotelRoomTypeByID($id);
+            // $hotel_room_type_count          = count($hotel_room_type);
             //end getting hotel room type
             DB::beginTransaction();
             $hotel          = $this->repo->getObjByID($id);

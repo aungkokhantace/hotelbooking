@@ -185,8 +185,8 @@ class HotelRepository implements HotelRepositoryInterface
         return $hotel_feature;
     }
     public function getHotelRoomTypeByID($id){
-        $hotel_room_type = HotelRoomType::where('hotel_id',$id)->first();
-        return $hotel_room_type;
+        // $hotel_room_type = HotelRoomType::where('hotel_id',$id)->first();
+        // return $hotel_room_type;
     }
     public function getHotelsByDestination($name){
 //        $objs = Hotel::whereNull('deleted_at')->where('name', 'LIKE', "%$name%")->get();
