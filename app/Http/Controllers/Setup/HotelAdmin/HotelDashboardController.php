@@ -24,8 +24,7 @@ class HotelDashboardController extends Controller
             $hotel_obj      = DB::table('hotels')->select('id')->where('admin_id',$id)->first();
             $hotel_id       = $hotel_obj->id;
 
-            $room_type      = DB::select("SELECT count(id) as roomTypeCount FROM h_room_type WHERE hotel_id = '"
-                              . $hotel_id . "' AND deleted_at IS  NULL");
+            $room_type      = DB::select("SELECT count(id) as roomTypeCount FROM h_room_category WHERE hotel_id = '"             . $hotel_id . "' AND deleted_at IS  NULL");
             $rooms          = DB::select("SELECT count(id) as roomsCount FROM rooms WHERE hotel_id = '"
                               . $hotel_id . "' AND deleted_at IS  NULL");
             $bookings       = DB::select("SELECT count(id) as bookingCount FROM bookings WHERE hotel_id = '"

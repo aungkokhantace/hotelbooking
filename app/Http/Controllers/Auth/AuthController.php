@@ -87,14 +87,43 @@ class AuthController extends Controller
         ]);
     }
 
+     public function show_first_login(){
+        if(!$this->validSession) {
+            return view('auth.first_login.first_login');
+        }
+        $jeriRedirect = new AceplusRedirect();
+        return $jeriRedirect->firstRedirect();
+    }
+
     public function showLogin()
     {
+     if(Auth::guard('User')->check()){
         if(!$this->validSession) {
            
             return view('auth.login');
         }
+     }
         $aplusRedirect = new AceplusRedirect();
         return $aplusRedirect->firstRedirect();
+     
+    }
+
+    public function dofirstLogin(LoginFormRequest $request){
+        $request->validate();
+            $validation = Auth::guard('User')->attempt([
+            'user_name'=>$request->user_name,
+            'password'=>$request->password,
+            'role_id' =>9999
+        ]);
+
+        if(!$validation){
+            return redirect()->back()->withErrors($this->getFailedLoginMessage());
+        }
+        else{
+            
+
+            return redirect('/backend_mps/login');
+        }
     }
 
     public function doLogin(LoginFormRequest $request){

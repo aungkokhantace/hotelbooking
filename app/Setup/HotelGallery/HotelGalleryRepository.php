@@ -79,6 +79,10 @@ class HotelGalleryRepository implements HotelGalleryRepositoryInterface
         $date    = date("Y-m-d H:i:s");
 
         try{
+            $images = HotelGallery::find($hotel_gallery_image_id_array);
+            foreach ($images as $value) {
+                Utility::delete_file_in_upload_folder($value->image);
+            }
             $result = DB::table('hotel_gallery')
                             ->where('hotel_id','=',$hotel_id)
                             ->whereIn('id',$hotel_gallery_image_id_array)
@@ -99,6 +103,7 @@ class HotelGalleryRepository implements HotelGalleryRepositoryInterface
         $date    = date("Y-m-d H:i:s");
 
         $imageObj = HotelGallery::find($id);
+        Utility::delete_file_in_upload_folder($imageObj->image);
         $image_name = $imageObj->image;
 
         try{

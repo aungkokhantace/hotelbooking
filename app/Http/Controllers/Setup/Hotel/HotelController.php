@@ -339,6 +339,7 @@ class HotelController extends Controller
 
             //start getting hotel facility
             $facility                   = (Input::has('facility_id')) ? Input::get('facility_id') : "";
+            // dd($facility);
             $facility_mainAry           = array();
             $facility_count             = count($facility);
 
@@ -614,11 +615,11 @@ class HotelController extends Controller
             }
 
 
-            foreach($hotel_room_types as $hotel_room_type){
-                $h_room_types = DB::select("SELECT * FROM h_room_type WHERE hotel_id = '$h_id'");
-                $hotel_room_type->hotel_room_type_id = $h_room_types;
-            }
-
+            // foreach($hotel_room_types as $hotel_room_type){
+            //     $h_room_types = DB::select("SELECT * FROM h_room_type WHERE hotel_id = '$h_id'");
+            //     $hotel_room_type->hotel_room_type_id = $h_room_types;
+            // }
+    
             $admin_id = $hotel->admin_id;
             $userRepo = new UserRepository();
             $hotel_admin = $userRepo->getObjByID($admin_id);
@@ -633,7 +634,7 @@ class HotelController extends Controller
                 ->with('h_nearby_places',$h_nearby_places)
                 ->with('h_facility',$h_facility)
                 ->with('h_feature',$h_feature)
-                ->with('h_room_types',$h_room_types)
+                // ->with('h_room_types',$h_room_types)
                 ->with('hotel_nearby',$hotel_nearby)
                 ->with('hotel_admin',$hotel_admin)
                 ->with('hotel_configs',$hotel_configs)
@@ -877,6 +878,7 @@ class HotelController extends Controller
                 HotelFacility::where('hotel_id',$hotel_id)->delete();
             }
             $facility = (Input::has('facility_id')) ? Input::get('facility_id') : "";
+
             $facility_mainAry = array();
             $facility_count = count($facility);
 
@@ -891,9 +893,9 @@ class HotelController extends Controller
             //end getting hotel facility
 
             //start getting hotel room type
-            $room_types                     = (Input::has('room_type'))? Input::get('room_type') : "";
-            $hotel_room_type                = $this->repo->getHotelRoomTypeByID($id);
-            $hotel_room_type_count          = count($hotel_room_type);
+            // $room_types                     = (Input::has('room_type'))? Input::get('room_type') : "";
+            // $hotel_room_type                = $this->repo->getHotelRoomTypeByID($id);
+            // $hotel_room_type_count          = count($hotel_room_type);
             //end getting hotel room type
             DB::beginTransaction();
             $hotel          = $this->repo->getObjByID($id);

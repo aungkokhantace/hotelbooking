@@ -239,7 +239,8 @@ class HotelRoomCategoryController extends Controller
 
                         $imageObj                       = new RoomCategoryImage();
                         $imageObj->h_room_category_id   = $lastRoomCategoryId;
-                        $imageObj->img_path             = $image_path;
+                        // $imageObj->img_path             = $image_path;
+                        $imageObj->img_path             = $photo_name;
                         $imageObj->description          = $description;
                         $imageObj->default_image        = isset($count) && $count == 1?1:0;
                         $roomCategoryImageRepo          = new RoomCategoryImageRepository();
@@ -511,7 +512,8 @@ class HotelRoomCategoryController extends Controller
                         $photo                          = Utility::resizeImageWithDefaultWidthHeight($image,$photo_name,$path,$imgWidth,$imgHeight);
                         $imageObj                       = new RoomCategoryImage();
                         $imageObj->h_room_category_id   = $id;
-                        $imageObj->img_path             = $image_path;
+                        // $imageObj->img_path             = $image_path;
+                        $imageObj->img_path             = $photo_name;
                         $imageObj->description          = $description;
                         $imageObj->default_image        = isset($count) && $count == 1?1:0;
 
