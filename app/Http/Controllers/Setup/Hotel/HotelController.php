@@ -54,7 +54,7 @@ class HotelController extends Controller
     public function index(Request $request)
     {
         if (Auth::guard('User')->check()) {
-        
+
             //Get Loggin User Info
             $user               = $this->repo->getUserObjs();
             $id                 = $user->id;
@@ -99,7 +99,7 @@ class HotelController extends Controller
     public function create()
     {
         if(Auth::guard('User')->check()){
-            
+
             $countryRepo            = new CountryRepository();
             $countries              = $countryRepo->getObjs();
 
@@ -147,15 +147,15 @@ class HotelController extends Controller
             $fax                        = (Input::has('fax')) ? Input::get('fax') : "";
             $latitude                   = (Input::has('latitude')) ? Input::get('latitude') : "";
             $longitude                  = (Input::has('longitude')) ? Input::get('longitude') : "";
-    
+
             //Start Saving Image
             $removeImageFlag            = (Input::has('removeImageFlag')) ? Input::get('removeImageFlag') : 0;
             $path                       = base_path().'/public/images/upload/';
-    
+
             if(Input::hasFile('photo'))
             {
                 $photo        = Input::file('photo');
-    
+
                 $photo_name_original    = Utility::getImage($photo);
                 $photo_ext              = Utility::getImageExt($photo);
                 $photo_name             = uniqid() . "." . $photo_ext;
@@ -167,12 +167,12 @@ class HotelController extends Controller
             else{
                 $photo_name = "";
             }
-    
+
             if($removeImageFlag == 1){
                 $photo_name = "";
             }
             //End Saving Image
-    
+
             $star                   = (Input::has('star')) ? Input::get('star') : "";
     //        $email                  = (Input::has('email')) ? Input::get('email') : "";
             $email                  = (Input::has('user_email')) ? Input::get('user_email') : "";
@@ -187,7 +187,7 @@ class HotelController extends Controller
             $check_out_time         = (Input::has('check_out_time')) ? Input::get('check_out_time') : "";
             $breakfast_start_time   = (Input::has('breakfast_start_time')) ? Input::get('breakfast_start_time') : "";
             $breakfast_end_time     = (Input::has('breakfast_end_time')) ? Input::get('breakfast_end_time') : "";
-    
+
             //start getting hotel_admin information
             $user_name              = (Input::has('user_name')) ? trim(Input::get('user_name')) : "";
             $display_name           = (Input::has('display_name')) ? trim(Input::get('display_name')) : "";
@@ -196,14 +196,14 @@ class HotelController extends Controller
             $user_address           = (Input::has('user_address')) ? Input::get('user_address') : "";
             $role_id                = 3; //for hotel_admin
             //end getting hotel_admin information
-    
+
             //start getting hotel config info
             $first_cancellation_day     = (Input::has('first_cancellation_day')) ? Input::get('first_cancellation_day') : "";
             $second_cancellation_day    = (Input::has('second_cancellation_day')) ? Input::get('second_cancellation_day') : "";
             $breakfast_fees             = (Input::has('breakfast_fees')) ? Input::get('breakfast_fees') : "";
             $tax                        = (Input::has('tax')) ? Input::get('tax') : "";
             //end getting hotel config info
-    
+
             //start getting landmark
             $landmark                   = (Input::has('landmark')) ? Input::get('landmark') : "";
             $landmarkAry                = array();
@@ -214,14 +214,14 @@ class HotelController extends Controller
                 }else{
                     $landmarkAry[$l]['landmark'] = "";
                 }
-    
+
             }
             //end getting landmark
-    
+
             //start getting hotel nearby
             $nearby_place = (Input::has('nearby_place')) ? Input::get('nearby_place') : "";
-    
-    
+
+
             if($nearby_place == ""){
                 $nearby_place       = (Input::has('nearby_place')) ? Input::get('nearby_place') : "";
                 $nearby_distance    = (Input::has('$nearby_distance_'.$nearby_place)) ? Input::get('$nearby_distance_'.$nearby_place) : "";
@@ -232,11 +232,11 @@ class HotelController extends Controller
                     array_push($nearby_distance, $nearby_distance_temp);
                 }
             }
-    
+
             $nearby_mainAry         = array();
             $nearby_count           = count($nearby_place);
-    
-    
+
+
             for($n=0;$n<$nearby_count;$n++){
                 if($nearby_place != ""){
                     $nearby_mainAry[$n]['nearby_place']     = $nearby_place[$n];
@@ -250,10 +250,10 @@ class HotelController extends Controller
                 }
             }
             //end getting hotel nearby
-    
+
             //start getting hotel feature
             $feature_id             = (Input::has('feature_id')) ? Input::get('feature_id') : "";
-    
+
             if($feature_id == ""){
                 $qty                = (Input::has('qty_'.$feature_id)) ? Input::get('qty_'.$feature_id) : "";
                 $capacity           = (Input::has('capacity_'.$feature_id)) ? Input::get('capacity_'.$feature_id) : "";
@@ -293,10 +293,10 @@ class HotelController extends Controller
                     array_push($remark,$remark_temp);
                 }
             }
-    
+
             $h_feature_mainAry      = array();
             $h_feature_count        = count($feature_id);
-    
+
             for($fe=0;$fe<$h_feature_count;$fe++){
                 if($feature_id != ""){
                     $h_feature_mainAry[$fe]['feature_id'] = $feature_id[$fe];
@@ -334,30 +334,30 @@ class HotelController extends Controller
                     $h_feature_mainAry[$fe]['remark'] = "";
                 }
             }
-    
+
             //end start getting hotel feature
-    
+
             //start getting hotel facility
             $facility                   = (Input::has('facility_id')) ? Input::get('facility_id') : "";
             $facility_mainAry           = array();
             $facility_count             = count($facility);
-    
+
             for($f=0;$f<$facility_count;$f++){
                 if($facility != ""){
                     $facility_mainAry[$f]['facility'] = $facility[$f];
                 }else{
                     $facility_mainAry[$f]['facility'] = "";
                 }
-    
+
             }
             //end getting hotel facility
-    
+
             /********** start getting hotel room type **********/
             $room_types                     = (Input::has('room_type'))? Input::get('room_type') : "";
             /********** end getting hotel room type **********/
-            
+
             DB::beginTransaction();
-    
+
             /********** Start creating User Object for hotel admin **********/
             $userObj                            = new User();
             $userObj->user_name                 = $user_name;
@@ -369,7 +369,7 @@ class HotelController extends Controller
             $userRepo                           = new UserRepository();
             $userRepo->create($userObj);
             /********** End creating User Object for hotel admin **********/
-    
+
             /********** Start creating Hotel Object  **********/
             $paramObj                           = new Hotel();
             $paramObj->name                     = $name;
@@ -394,7 +394,7 @@ class HotelController extends Controller
             $paramObj->breakfast_start_time     = $breakfast_start_time;
             $paramObj->breakfast_end_time       = $breakfast_end_time;
             $paramObj->admin_id                 = $userObj->id;
-    
+
             $result                             = $this->repo->create($paramObj);
             if($result['aceplusStatusCode'] !=  ReturnMessage::OK){
                 // dd('did not create hotel');
@@ -482,7 +482,7 @@ class HotelController extends Controller
             }
             /********** End creating Hotel Feature Object  **********/
 
-            /********** Start creating Hotel Facility Object  **********/            
+            /********** Start creating Hotel Facility Object  **********/
             if($facility != ""){
                 foreach($facility_mainAry as $facility_ary){
                     $h_facilityObj              = new HotelFacility();
@@ -498,9 +498,9 @@ class HotelController extends Controller
                     }
                 }
             }
-            /********** End creating Hotel Facility Object  **********/   
-            
-            /********** Start creating Hotel Room Type Object  **********/    
+            /********** End creating Hotel Facility Object  **********/
+
+            /********** Start creating Hotel Room Type Object  **********/
             /*
             if($room_types != ""){
                 foreach($room_types as $r_typeKey=>$r_typeValue){
@@ -518,7 +518,7 @@ class HotelController extends Controller
                     }
                 }
             }*/
-            /********** End creating Hotel Room Type Object  **********/   
+            /********** End creating Hotel Room Type Object  **********/
 
             DB::commit();
             return redirect()->action('Setup\Hotel\HotelController@index')
@@ -572,7 +572,7 @@ class HotelController extends Controller
             $h_facility             = array();
             $h_feature              = array();
             $h_room_types           = array();
-        
+
             foreach ($landmarks as $landmark) {
                 $h_landmarks = DB::select("SELECT landmark_id FROM h_landmark WHERE hotel_id = '$h_id'");
                 $landmark->landmark_id = $h_landmarks;
@@ -613,12 +613,12 @@ class HotelController extends Controller
 
             }
 
-            
+
             foreach($hotel_room_types as $hotel_room_type){
                 $h_room_types = DB::select("SELECT * FROM h_room_type WHERE hotel_id = '$h_id'");
                 $hotel_room_type->hotel_room_type_id = $h_room_types;
             }
-    
+
             $admin_id = $hotel->admin_id;
             $userRepo = new UserRepository();
             $hotel_admin = $userRepo->getObjByID($admin_id);
@@ -652,7 +652,7 @@ class HotelController extends Controller
 
             $input              = $request->all();
             $id                 = (Input::has('id')) ? Input::get('id') : "";
-    
+
             $name               = (Input::has('name')) ? Input::get('name') : "";
             $type               = (Input::has('h_type_id')) ? Input::get('h_type_id') : "";
             $address            = (Input::has('address')) ? Input::get('address') : "";
@@ -660,16 +660,16 @@ class HotelController extends Controller
             $fax                = (Input::has('fax')) ? Input::get('fax') : "";
             $latitude           = (Input::has('latitude')) ? Input::get('latitude') : "";
             $longitude          = (Input::has('longitude')) ? Input::get('longitude') : "";
-    
-    
+
+
             //Start Saving Image
             $removeImageFlag    = (Input::has('removeImageFlag')) ? Input::get('removeImageFlag') : 0;
             $path               = base_path().'/public/images/upload/';
-    
+
             if(Input::hasFile('photo'))
             {
                 $photo                  = Input::file('photo');
-    
+
                 $photo_name_original    = Utility::getImage($photo);
                 $photo_ext              = Utility::getImageExt($photo);
                 $photo_name             = uniqid() . "." . $photo_ext;
@@ -681,12 +681,12 @@ class HotelController extends Controller
             else{
                 $photo_name = "";
             }
-    
+
             if($removeImageFlag == 1){
                 $photo_name = "";
             }
             //End Saving Image
-    
+
             $star                   = (Input::has('star')) ? Input::get('star') : "";
             // $email                  = (Input::has('email')) ? Input::get('email') : "";
             // dd($email);
@@ -701,7 +701,7 @@ class HotelController extends Controller
             $check_out_time         = (Input::has('check_out_time')) ? Input::get('check_out_time') : "";
             $breakfast_start_time   = (Input::has('breakfast_start_time')) ? Input::get('breakfast_start_time') : "";
             $breakfast_end_time     = (Input::has('breakfast_end_time')) ? Input::get('breakfast_end_time') : "";
-    
+
             //start getting hotel_admin information
             $user_name              = (Input::has('user_name')) ? trim(Input::get('user_name')) : "";
             $display_name           = (Input::has('display_name')) ? trim(Input::get('display_name')) : "";
@@ -710,7 +710,7 @@ class HotelController extends Controller
             $user_address           = (Input::has('user_address')) ? Input::get('user_address') : "";
     //        $role_id                = 3; //for hotel_admin
             //end getting hotel_admin information
-    
+
             //start getting hotel config info
             $first_cancellation_day     = (Input::has('first_cancellation_day')) ? Input::get('first_cancellation_day') : "";
             $second_cancellation_day    = (Input::has('second_cancellation_day')) ? Input::get('second_cancellation_day') : "";
@@ -720,15 +720,15 @@ class HotelController extends Controller
             $hotel_config               =  $this->repo->getHConfigByID($id);
             // dd($hotel_config);
             $hotel_config_count = count($hotel_config);
-    
-    
+
+
             //start getting landmark
             $hotel_landmarks            = $this->repo->getHLandmarkByID($id);
             foreach($hotel_landmarks as $hotel_landmark){
                 $hotel_id = $hotel_landmark->hotel_id;
                 HotelLandmark::where('hotel_id',$hotel_id)->delete();
             }
-    
+
             $landmark = (Input::has('landmark')) ? Input::get('landmark') : "";
             $landmarkAry = array();
             $landmark_count = count($landmark);
@@ -738,11 +738,11 @@ class HotelController extends Controller
                 }else{
                     $landmarkAry[$l]['landmark'] = "";
                 }
-    
+
             }
             // dd($landmarkAry);
             //end getting landmark
-    
+
             //start getting hotel nearby
             $hotel_nearbys = $this->repo->getHNearbyID($id);
             foreach($hotel_nearbys as $hotel_nearby){
@@ -750,7 +750,7 @@ class HotelController extends Controller
                 Hnearby::where('hotel_id',$hotel_id)->delete();
             }
             $nearby_place = (Input::has('nearby_place')) ? Input::get('nearby_place') : "";
-    
+
             if($nearby_place == ""){
                 $nearby_place = (Input::has('nearby_place')) ? Input::get('nearby_place') : "";
             $nearby_distance = (Input::has('$nearby_distance_'.$nearby_place)) ? Input::get('$nearby_distance_'.$nearby_place) : "";
@@ -763,7 +763,7 @@ class HotelController extends Controller
             }
             $nearby_mainAry = array();
             $nearby_count = count($nearby_place);
-    
+
             for($n=0;$n<$nearby_count;$n++){
                 if($nearby_place != ""){
                     $nearby_mainAry[$n]['nearby_place']= $nearby_place[$n];
@@ -775,10 +775,10 @@ class HotelController extends Controller
                 }else{
                     $nearby_mainAry[$n]['nearby_distance'] = "";
                 }
-    
+
             }
             //end getting hotel nearby
-    
+
             //start getting hotel feature
             $hotel_features = $this->repo->getHFeatureID($id);
             foreach($hotel_features as $hotel_feature){
@@ -786,7 +786,7 @@ class HotelController extends Controller
                 HotelFeature::where('hotel_id',$hotel_id)->delete();
             }
             $feature_id = (Input::has('feature_id')) ? Input::get('feature_id') : "";
-    
+
             if($feature_id == ""){
                 $qty = (Input::has('qty_'.$feature_id)) ? Input::get('qty_'.$feature_id) : "";
                 $capacity = (Input::has('capacity_'.$feature_id)) ? Input::get('capacity_'.$feature_id) : "";
@@ -826,10 +826,10 @@ class HotelController extends Controller
                     array_push($remark,$remark_temp);
                 }
             }
-    
+
             $h_feature_mainAry = array();
             $h_feature_count = count($feature_id);
-    
+
             for($fe=0;$fe<$h_feature_count;$fe++){
                 if($feature_id != ""){
                     $h_feature_mainAry[$fe]['feature_id'] = $feature_id[$fe];
@@ -867,9 +867,9 @@ class HotelController extends Controller
                     $h_feature_mainAry[$fe]['remark'] = "";
                 }
             }
-    
+
             //end start getting hotel feature
-    
+
             //start getting hotel facility
             $hotel_facilities = $this->repo->getHFacilityID($id);
             foreach($hotel_facilities as $hotel_facility){
@@ -879,7 +879,7 @@ class HotelController extends Controller
             $facility = (Input::has('facility_id')) ? Input::get('facility_id') : "";
             $facility_mainAry = array();
             $facility_count = count($facility);
-    
+
             for($f=0;$f<$facility_count;$f++){
                 if($facility != ""){
                     $facility_mainAry[$f]['facility'] = $facility[$f];
@@ -889,7 +889,7 @@ class HotelController extends Controller
             }
             // dd($facility);
             //end getting hotel facility
-            
+
             //start getting hotel room type
             $room_types                     = (Input::has('room_type'))? Input::get('room_type') : "";
             $hotel_room_type                = $this->repo->getHotelRoomTypeByID($id);
@@ -906,9 +906,9 @@ class HotelController extends Controller
     //        $userObj->password              = $password;
             $userObj->address               = $user_address;
     //        $userObj->role_id               = $role_id;
-    
+
             $userRepo->update($userObj);
-    
+
             $paramObj                           = $this->repo->getObjByID($id);
             $paramObj->name                     = $name;
             $paramObj->h_type_id                = $type;
@@ -917,7 +917,7 @@ class HotelController extends Controller
             $paramObj->fax                      = $fax;
             $paramObj->latitude                 = $latitude;
             $paramObj->longitude                = $longitude;
-    
+
             if(Input::hasFile('photo')){
                 $paramObj->logo                 = $photo_name;
             }
@@ -926,7 +926,7 @@ class HotelController extends Controller
                     $paramObj->logo             = "";
                 }
             }
-    
+
             $paramObj->star                     = $star;
             $paramObj->email                    = $user_email;
             $paramObj->country_id               = $country_id;
@@ -940,7 +940,7 @@ class HotelController extends Controller
             $paramObj->check_out_time           = $check_out_time;
             $paramObj->breakfast_start_time     = $breakfast_start_time;
             $paramObj->breakfast_end_time       = $breakfast_end_time;
-    
+
             $result = $this->repo->update($paramObj);
             if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
                 if(isset($hotel_config) && $hotel_config_count > 0){
@@ -952,7 +952,7 @@ class HotelController extends Controller
                     $hotel_configObj->tax              = $tax;
                     $hotel_configsRepo = new HotelConfigRepository;
                     $hotel_configResult = $hotel_configsRepo->update($hotel_configObj);
-    
+
                 }else{
                     $hotel_configObj = new HotelConfig();
                     $hotel_configObj->hotel_id =$paramObj->id;
@@ -1029,21 +1029,21 @@ class HotelController extends Controller
                                         ->withMessage(FormatGenerator::message('Success', 'Hotel updated ...'));
                                 }
                                 /*
-                                // Room Type 
+                                // Room Type
                                 if($h_facility_result['aceplusStatusCode'] ==  ReturnMessage::OK){
                                     if($room_types != ""){
                                         $r_type_repo                            = new HotelRoomTypeRepository();
                                         $old_room_types                         = $r_type_repo->getHotelRoomTypeWithHotelId($id);
                                         if(isset($old_room_types) && count($old_room_types) > 0){
                                             $delete_r_types_res                 = $r_type_repo->deleteHotelRoomTypeByHotelId($id);
-    
+
                                             if($delete_r_types_res['aceplusStatusCode'] != ReturnMessage::OK){
                                                 DB::rollback();
                                                 return redirect()->action('Setup\Hotel\HotelController@index')
                                                                  ->withMessage(FormatGenerator::message('Fail', 'Hotel did not update ...'));
                                             }
                                         }
-                                        
+
                                         foreach($room_types as $r_type){
                                             $hotel_room_typeObj                 = new HotelRoomType();
                                             $hotel_room_typeObj->hotel_id       = $paramObj->id;
@@ -1057,7 +1057,7 @@ class HotelController extends Controller
                                             }
                                         }
                                     }
-                                      
+
                                     DB::commit();
                                     return redirect()->action('Setup\Hotel\HotelController@index')
                                         ->withMessage(FormatGenerator::message('Success', 'Hotel updated ...'));
@@ -1066,31 +1066,31 @@ class HotelController extends Controller
                                     return redirect()->action('Setup\Hotel\HotelController@index')
                                         ->withMessage(FormatGenerator::message('Fail', 'Hotel did not update ...'));
                                 }*/
-    
+
                             }else{
                                 DB::rollback();
                                 return redirect()->action('Setup\Hotel\HotelController@index')
                                     ->withMessage(FormatGenerator::message('Fail', 'Hotel did not update ...'));
                             }
-    
+
                         }else{
                             DB::rollback();
                             return redirect()->action('Setup\Hotel\HotelController@index')
                                 ->withMessage(FormatGenerator::message('Fail', 'Hotel did not update ...'));
                         }
-    
+
                     }else{
                         DB::rollback();
                         return redirect()->action('Setup\Hotel\HotelController@index')
                             ->withMessage(FormatGenerator::message('Fail', 'Hotel did not update ...'));
                     }
-    
+
                 }else{
                     DB::rollback();
                     return redirect()->action('Setup\Hotel\HotelController@index')
                         ->withMessage(FormatGenerator::message('Fail', 'Hotel did not update ...'));
                 }
-    
+
             }
             else{
                 DB::rollback();

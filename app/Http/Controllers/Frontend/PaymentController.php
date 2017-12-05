@@ -66,8 +66,8 @@ class PaymentController extends Controller
 
     public function __construct() {
         /* Stripe transaction fee */
-        $this->stripe_fee_percent       = PaymentConstance::STIRPE_FEE_PERCENT; 
-        $this->stripe_fee_cents         = PaymentConstance::STRIPE_FEE_FIXED; 
+        $this->stripe_fee_percent       = PaymentConstance::STIRPE_FEE_PERCENT;
+        $this->stripe_fee_cents         = PaymentConstance::STRIPE_FEE_FIXED;
     }
 
     public function enterDetails(Request $request){
@@ -171,14 +171,14 @@ class PaymentController extends Controller
                                 $discount_amt               = $room_discount->discount_amount;
                                 $discount_percent           = round(($discount_amt/$room_category_price)*100,2);
                             }
-                            
+
                             /*
                             * Calculate amount with discount for all reserved room per category.
                             * Subtract discount amount of all reserved room per category from the amount of all reserved rooms
                             * without discount amount.
                             * And create discount amount array.
                             */
-                        
+
                             $amount_per_category_w_discount = $amount_per_category_wo_discount-($discount_amt*$number_of_room);
                             array_push($discount_array,$discount_amt*$number_of_room);
                         }
@@ -291,22 +291,22 @@ class PaymentController extends Controller
             Session::flush(); // destroy all sessions
             return redirect('/');
         }
-        
+
     }
 
     public function confirmReservation(Request $request) {
         try{
             $hotel_id                   = Input::get('hotel_id');
             $available_room_categories  = Input::get('available_room_categories');
-    
+
             $travel_for_work            = (Input::has('travel_for_work')) ? 1 : 0;
             $first_name                 = Input::get('first_name');
             $last_name                  = Input::get('last_name');
             $email                      = Input::get('email');
-    
+
             $booking_taxi               = (Input::has('booking_taxi')) ? 1 : 0;
             $booking_tour_guide         = (Input::has('booking_tour_guide')) ? 1 : 0;
-    
+
             $non_smoking_request        = (Input::has('non_smoking_request')) ? 1 : 0;
             $late_check_in_request      = (Input::has('late_check_in_request')) ? 1 : 0;
             $high_floor_request         = (Input::has('high_floor_request')) ? 1 : 0;
@@ -318,7 +318,7 @@ class PaymentController extends Controller
             $private_parking_request    = (Input::has('private_parking_request')) ? 1 : 0;
             $baby_cot_request           = (Input::has('baby_cot_request')) ? 1 : 0;
             $special_request            = (Input::has('special_request')) ? Input::get('special_request') : "";
-    
+
             if($request->isMethod('POST')){
                 Session::forget('hotel_id');
                 Session::forget('travel_for_work');
@@ -326,10 +326,10 @@ class PaymentController extends Controller
                 Session::forget('last_name');
                 Session::forget('email');
                 Session::forget('available_room_categories');
-    
+
                 Session::forget('booking_taxi');
                 Session::forget('booking_tour_guide');
-    
+
                 Session::forget('non_smoking_request');
                 Session::forget('late_check_in_request');
                 Session::forget('high_floor_request');
@@ -341,29 +341,29 @@ class PaymentController extends Controller
                 Session::forget('private_parking_request');
                 Session::forget('baby_cot_request');
                 Session::forget('special_request');
-    
+
                 Session::forget('total_amount');
                 Session::forget('total_payable_amount_w_extrabed');
-    
+
                 Session::forget('service_tax');
                 Session::forget('service_tax_amount');
                 Session::forget('gov_tax');
                 Session::forget('gov_tax_amount');
-    
+
                 Session::forget('payable_amount');
-    
+
                 foreach($available_room_categories as $key=>$temp){
                     $temp = json_decode($temp);
                     $available_room_categories[$key] = $temp;
                 }
-            
+
                 //push to session array
                 if(isset($available_room_categories) && $available_room_categories != null && count($available_room_categories)>0){
                     foreach($available_room_categories as $available_room_cat){
                         Session::push('available_room_categories',$available_room_cat);
                     }
                 }
-    
+
             }
             else{
                 $hotel_id                   = Session::get('hotel_id');
@@ -372,10 +372,10 @@ class PaymentController extends Controller
                 $last_name                  = Session::get('last_name');
                 $email                      = Session::get('email');
                 $available_room_categories  = Session::get('available_room_categories');
-    
+
                 $booking_taxi               = Session::get('booking_taxi');
                 $booking_tour_guide         = Session::get('booking_tour_guide');
-    
+
                 $non_smoking_request        = Session::get('non_smoking_request');
                 $late_check_in_request      = Session::get('late_check_in_request');
                 $high_floor_request         = Session::get('high_floor_request');
@@ -387,15 +387,15 @@ class PaymentController extends Controller
                 $private_parking_request    = Session::get('private_parking_request');
                 $baby_cot_request           = Session::get('baby_cot_request');
                 $special_request            = Session::get('special_request');
-    
+
             }
-            
+
             //store general data fields in session
             if(isset($hotel_id) && $hotel_id != null && $hotel_id != ""){
                 // session(['hotel_id' => $hotel_id]);
                 Session::put('hotel_id',$hotel_id);
             }
-    
+
             if(isset($travel_for_work)){
                 // session(['travel_for_work' => $travel_for_work]);
                 Session::put('travel_for_work',$travel_for_work);
@@ -412,7 +412,7 @@ class PaymentController extends Controller
                 // session(['email' => $email]);
                 Session::put('email',$email);
             }
-    
+
             $guest_array            = array();
             $smoking_array          = array();
             $name_array             = array();
@@ -421,16 +421,16 @@ class PaymentController extends Controller
             $extrabed_fee_array     = array();
             $room_no_extra_array    = array();
             $category_extra_array   = array();
-    
+
             /* Get check_in and check_out date from session */
             $check_in               = session('check_in');
             $check_out              = session('check_out');
-    
+
             /* Calculate the number of night stay */
             $difference             = strtotime($check_out) - strtotime($check_in);
             $nights                 = floor($difference/(60*60*24));
             $total_extrabed_fee     = 0.00;
-    
+
             if(isset($available_room_categories) && count($available_room_categories)){
                 foreach($available_room_categories as $category){
                     /*
@@ -445,14 +445,14 @@ class PaymentController extends Controller
                             $guest_array[$category->id."_".($i+1)] = $temp_guest;
                             //store in session
                             session([$category->id."_".($i+1)."_guest" => $temp_guest]);
-    
+
                             //for smoking array
                             Session::forget($category->id."_".($i+1)."_smoking");  //forget old session
                             $temp_smoking = (Input::has($category->id."_".($i+1)."_smoking")) ? Input::get($category->id."_".($i+1)."_smoking") : "yes";
                             $smoking_array[$category->id."_".($i+1)] = $temp_smoking;
                             //store in session
                             session([$category->id."_".($i+1)."_smoking" => $temp_smoking]);
-    
+
                             //for extrabed array
                             Session::forget($category->id."_".($i+1)."_extrabed");  //forget old session
                             $temp_extrabed = (Input::has($category->id."_".($i+1)."_extrabed")) ? Input::get($category->id."_".($i+1)."_extrabed") : "no";
@@ -466,28 +466,28 @@ class PaymentController extends Controller
                                 $extra_bed_price                    = $category->extra_bed_price*$nights;
                                 $total_extrabed_fee                += $extra_bed_price;
                             }
-    
+
                             /* Create array for extra bed info. Key is room no and Value is extra bed info array. */
                             $temp_room_extra_array['room_no']       = $i;
                             $temp_room_extra_array['add_extra']     = $temp_extrabed;
                             $temp_room_extra_array['extra_price']   = $category->extra_bed_price;
                             $temp_room_extra_array['category_id']   = $category->id;
                             $room_no_extra_array[$i+1]              = $temp_room_extra_array;
-    
+
                             //for first name array
                             Session::forget($category->id."_".($i+1)."_firstname");  //forget old session
                             $temp_firstname = (Input::has($category->id."_".($i+1)."_firstname")) ? Input::get($category->id."_".($i+1)."_firstname") : "";
                             $firstname_array[$category->id."_".($i+1)] = $temp_firstname;
                             //store in session
                             session([$category->id."_".($i+1)."_firstname" => $temp_firstname]);
-    
+
                             //for last name array
                             Session::forget($category->id."_".($i+1)."_lastname");  //forget old session
                             $temp_lastname = (Input::has($category->id."_".($i+1)."_lastname")) ? Input::get($category->id."_".($i+1)."_lastname") : "";
                             $lastname_array[$category->id."_".($i+1)] = $temp_lastname;
                             //store in session
                             session([$category->id."_".($i+1)."_lastname" => $temp_lastname]);
-    
+
                             //for email array
                             Session::forget($category->id."_".($i+1)."_email");  //forget old session
                             $temp_email = (Input::has($category->id."_".($i+1)."_email")) ? Input::get($category->id."_".($i+1)."_email") : "";
@@ -501,19 +501,19 @@ class PaymentController extends Controller
                     $temp_room_extra_array                      = array(); // Reset temp array.
                 }
             }
-    
+
             if(isset($total_extrabed_fee)){
                 session(['total_extrabed_fee' => $total_extrabed_fee]);
             }
-    
+
             if(isset($booking_taxi)){
                 session(['booking_taxi' => $booking_taxi]);
             }
-    
+
             if(isset($booking_tour_guide)){
                 session(['booking_tour_guide' => $booking_tour_guide]);
             }
-    
+
             if(isset($non_smoking_request)){
                 session(['non_smoking_request' => $non_smoking_request]);
             }
@@ -547,13 +547,13 @@ class PaymentController extends Controller
             if(isset($special_request)){
                 session(['special_request' => $special_request]);
             }
-    
+
             $hotelRepo              = new HotelRepository();
             $hotel                  = $hotelRepo->getObjByID($hotel_id);
-    
+
             $hotelFacilitiesRepo    = new HotelFacilityRepository();
             $hotelFacilities        = $hotelFacilitiesRepo->getHotelFacilitiesByHotelID($hotel_id);
-    
+
             /* Calculate total number of rooms */
             $totalRooms             = 0;
             foreach($available_room_categories as $available_category){
@@ -561,34 +561,34 @@ class PaymentController extends Controller
                     $totalRooms    += $available_category->number;
                 }
             }
-    
+
             //calculate total amount
     //        $total_amount = 0.0;
             $total_amount_wo_discount = 0.0;
             $total_amount_w_discount = 0.0;
-    
+
     //        foreach($available_room_categories as $available_room_category_amount){
     //            if($available_room_category_amount->number > 0){
     //                $amount_per_category = $available_room_category_amount->price * $available_room_category_amount->number * $nights;
     //                $total_amount += $amount_per_category;
     //            }
     //        }
-    
+
             //save in session
     //        session(['total_amount' => $total_amount]);
-    
+
             /* Calculate total payable amount including extra bed fee */
             $total_payable_amount_w_extrabed    = 0.00;
             $total_payable_amount_wo_extrabed   = 0.00;
             $total_amount_w_discount            = session('total_amount_w_discount');
-    
+
             $total_payable_amount_w_extrabed    = $total_amount_w_discount + $total_extrabed_fee;
-    
+
             //get hotel_service_tax if exists, else, get service_tax from core_configs
             $service_tax                        = Utility::getServiceTax($hotel_id);
     //        $service_tax_amount = ($service_tax / 100) * $total_amount;
             $service_tax_amount                 = round(($service_tax / 100) * $total_payable_amount_w_extrabed,2);
-    
+
             //get government tax
             $gov_tax_temp = DB::select("SELECT * FROM core_configs WHERE `code` = 'GST'");
             if(isset($gov_tax_temp) && count($gov_tax_temp)>0){
@@ -598,27 +598,27 @@ class PaymentController extends Controller
                 $gov_tax = 0.0;
             }
             $gov_tax_amount = round(($gov_tax / 100) * $total_payable_amount_w_extrabed,2);
-    
+
             //calculate payable amount
     //        $payable_amount = $total_amount + $service_tax_amount + $gov_tax_amount;
             $payable_amount = $total_payable_amount_w_extrabed + $service_tax_amount + $gov_tax_amount;
-    
+
             if(isset($total_payable_amount_w_extrabed) && $total_payable_amount_w_extrabed != 0.00){
                 session(['total_payable_amount_w_extrabed' => $total_payable_amount_w_extrabed]);
             }
-    
+
     //        if(isset($total_payable_amount_wo_extrabed) && $total_payable_amount_wo_extrabed != 0.00){
     //            session(['total_payable_amount_wo_extrabed' => $total_payable_amount_wo_extrabed]);
     //        }
-    
+
             if(isset($service_tax) && $service_tax != null && $service_tax != ""){
                 session(['service_tax' => $service_tax]);
             }
-    
+
             if(isset($service_tax_amount) && !is_null($service_tax_amount)){
                 session(['service_tax_amount' => $service_tax_amount]);
             }
-    
+
     //        if(isset($gov_tax) && $gov_tax != null && $gov_tax != ""){
             if(isset($gov_tax)){
                 session(['gov_tax' => $gov_tax]);
@@ -630,7 +630,7 @@ class PaymentController extends Controller
             if(isset($payable_amount) && $payable_amount != null && $payable_amount != ""){
                 session(['payable_amount' => $payable_amount]);
             }
-    
+
             if(isset($total_extrabed_fee) && $total_extrabed_fee != 0.00){
                 session(['total_extrabed_fee' => $total_extrabed_fee]);
             }
@@ -638,13 +638,13 @@ class PaymentController extends Controller
     //        if(isset($payable_amount) && $payable_amount != 0.00){
     //            session(['payable_amount' => $payable_amount]);
     //        }
-    
+
             $countryRepo    = new CountryRepository();
             $countries      = $countryRepo->getObjs();
-    
+
             // for passing publishable key to stripe js checkout form i
             $pub_key        = PaymentConstance::STIRPE_PUBLISHABLE_KEY;
-    
+
             return view('frontend.confirm_reservation')
                 ->with('available_room_category_array',$available_room_categories)
                 ->with('hotel',$hotel)
@@ -661,15 +661,15 @@ class PaymentController extends Controller
             Session::flush(); // destroy all session.
             return redirect('/');
         }
-        
+
     }
 
-    public function bookAndPay() {   
+    public function bookAndPay() {
         try{
             //get input fields
             $country                            = Input::get('country');
             $phone                              = Input::get('phone');
-        
+
             //get session data
             $hotel_id                           = session('hotel_id');
             $hotelRepo                          = new HotelRepository();
@@ -763,7 +763,7 @@ class PaymentController extends Controller
             $stripe_card_brand                              = "";
             $stripe_card_type                               = "";
             $stripe_fee_default_cent                        = 0.00;
-            $total_stripe_fee_percent                       = 0.00;   
+            $total_stripe_fee_percent                       = 0.00;
             $total_stripe_fee_amt                           = 0.00;
             $total_cancel_income                            = 0.00;
             $total_stripe_net_amt                           = 0.00;
@@ -773,7 +773,7 @@ class PaymentController extends Controller
                 // Capture payment
                 $stripePaymentResult                        = $stripePaymentObj->capturePayment($customer_id, $payable_amount);
                 // dd('capturepayment res',$stripePaymentResult);
-            
+
                 if($stripePaymentResult['aceplusStatusCode'] != ReturnMessage::OK){
                     DB::rollback();
                     alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
@@ -789,7 +789,7 @@ class PaymentController extends Controller
                 // Retrieve Balance
                 $stripeBalanceResult                        = $stripePaymentObj->retrieveBalance($stripe_balance_transaction);
                 // dd('stripe balance res',$stripeBalanceResult);
-                
+
                 if($stripeBalanceResult['aceplusStatusCode'] != ReturnMessage::OK){
                     DB::rollback();
                     alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
@@ -799,7 +799,7 @@ class PaymentController extends Controller
                 $stripe_payment_net                         = $stripeBalanceResult['stripe']['stripe_payment_net'];
                 /* Start Calculation for stripe */
                 $stripe_fee_default_cent                    = $this->stripe_fee_cents;
-                $total_stripe_fee_percent                   = $stripe_payment_fee-$stripe_fee_default_cent;   
+                $total_stripe_fee_percent                   = $stripe_payment_fee-$stripe_fee_default_cent;
                 $total_stripe_fee_amt                       = $stripe_payment_fee;
                 $total_cancel_income                        = 0.00;
                 $total_stripe_net_amt                       = $stripe_payment_net;
@@ -842,7 +842,7 @@ class PaymentController extends Controller
             $bookingRepo                                    = new BookingRepository();
             $booking_result                                 = $bookingRepo->create($bookingObj);
             // dd('booking',$booking_result);
-            
+
             //if booking creation fails, alert and redirect to homepage
             if ($booking_result['aceplusStatusCode'] != ReturnMessage::OK){
                 DB::rollback();
@@ -1060,7 +1060,7 @@ class PaymentController extends Controller
                 return redirect('/');
             }
             /* END Operation for communication */
-            
+
             /* START Operation for Booking Payment */
             $bookingPaymentObj                                  = new BookingPayment();
             $bookingPaymentObj->payment_amount_wo_tax           = $payable_amount;

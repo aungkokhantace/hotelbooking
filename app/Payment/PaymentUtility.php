@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Payment;
 
 /**
@@ -88,6 +88,11 @@ class PaymentUtility
             $stripeObj['stripe_payment_id']     = "";
             $stripeObj['stripe_payment_amt']    = "";
 
+            //if customer creation was successful, then create date and message for stripe customer log
+            $date     = date('Y-m-d H:i:s');
+            $message  = '['. $date .'] '. 'info: ' . 'User '. $currentUser.' created stripe customer_id ='.$customer['id']. PHP_EOL;
+            LogCustom::create($date,$message);
+
             $returnedObj['aceplusStatusCode']   = ReturnMessage::OK;
             $returnedObj['stripe']              = $stripeObj;
             return $returnedObj;
@@ -127,7 +132,7 @@ class PaymentUtility
                 "currency" => $paymentCurrency,
                 "customer" => $customerId
             ));
-           
+
             $stripeObj = array();
             $stripeObj['stripe_user_id']                = $customerId;
             $stripeObj['stripe_payment_id']             = $charge->id;
@@ -136,7 +141,7 @@ class PaymentUtility
             $stripeObj['stripe_balance_transaction']    = $charge->balance_transaction;
             $stripeObj['card_brand']                    = $charge->source->brand;
             $stripeObj['card_type']                     = $charge->source->funding;
-            
+
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
             $returnedObj['stripe'] = $stripeObj;
             return $returnedObj;
