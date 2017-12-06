@@ -70,6 +70,10 @@ class RoomCategoryImageRepository implements RoomCategoryImageRepositoryInterfac
         $objs   = RoomCategoryImage::where('h_room_category_id','=',$h_room_category_id)->get();
         return $objs;
     }
+    public function getFirstRoomCategoryImageByHotelRoomCategoryId($h_room_category_id){
+        $objs   = RoomCategoryImage::where('h_room_category_id','=',$h_room_category_id)->first();
+        return $objs;
+    }
 
     public function deleteRoomCategoryImageByHotelRoomCateogryId($h_room_category_id,$r_category_image_id){
 

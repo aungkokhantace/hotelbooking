@@ -218,6 +218,9 @@ class HotelRoomCategoryController extends Controller
             //RoomCategoryImage
             if(Input::hasFile('file'))
             {
+                $roomCategoryImageRepo          = new RoomCategoryImageRepository();
+                $firstRoomCategoryImage = $roomCategoryImageRepo->getFirstRoomCategoryImageByHotelRoomCategoryId($id);
+                
                 $images                     = Input::file('file');
                 $count                      = 1;
                 foreach($images as $image){
@@ -242,7 +245,11 @@ class HotelRoomCategoryController extends Controller
                         // $imageObj->img_path             = $image_path;
                         $imageObj->img_path             = $photo_name;
                         $imageObj->description          = $description;
-                        $imageObj->default_image        = isset($count) && $count == 1?1:0;
+                        if(isset($firstRoomCategoryImage)){
+                            $imageObj->default_image        = 0;
+                        }else{
+                            $imageObj->default_image        = (isset($count) && $count == 1)?1:0;
+                        }
                         $roomCategoryImageRepo          = new RoomCategoryImageRepository();
                         $roomCategoryImageResult        = $roomCategoryImageRepo->create($imageObj);
 // dd($roomCategoryImageResult);
@@ -495,6 +502,8 @@ class HotelRoomCategoryController extends Controller
             $roomCategoryImageResult['aceplusStatusCode']  = ReturnMessage::OK;
             if(Input::hasFile('file'))
             {
+                $firstRoomCategoryImage = $roomCategoryImageRepo->getFirstRoomCategoryImageByHotelRoomCategoryId($id);
+              
                 $images                         = Input::file('file');
                 $count                          = 1;
                 foreach($images as $image) {
@@ -515,7 +524,11 @@ class HotelRoomCategoryController extends Controller
                         // $imageObj->img_path             = $image_path;
                         $imageObj->img_path             = $photo_name;
                         $imageObj->description          = $description;
-                        $imageObj->default_image        = isset($count) && $count == 1?1:0;
+                        if(isset($firstRoomCategoryImage)){
+                            $imageObj->default_image        = 0;
+                        }else{
+                            $imageObj->default_image        = (isset($count) && $count == 1)?1:0;
+                        }
 
                         $roomCategoryImageResult        = $roomCategoryImageRepo->create($imageObj);
 
