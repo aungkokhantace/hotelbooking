@@ -172,7 +172,7 @@
                                         <tr>
                                             <td class="b-manage-table booking_manage_table" width="40%" >
                                                 <img class="img-hover img-responsive"
-                                                src="{{$room->category_image}}"
+                                                src="/images/upload/{{$room->category_image}}"
                                                 alt="">
                                             </td>
                                             <td class="lead_left booking_manage_table">

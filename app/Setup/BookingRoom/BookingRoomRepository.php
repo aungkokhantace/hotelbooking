@@ -91,7 +91,8 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
                                           'h_room_category.name as room_category',
                                           'r_category_image.img_path as category_image'
                                  )
-                                 ->where('r_category_image.default_image',1)
+                                 ->where('booking_id',$id)
+                                 // ->where('r_category_image.default_image',1)
                                  ->whereIn('booking_room.status',$statusArr)
                                  ->get();
 
@@ -155,7 +156,8 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
                                           'h_room_category.name as room_category',
                                           'r_category_image.img_path as category_image'
                                  )
-                                 ->where('r_category_image.default_image',1)
+                                 ->where('booking_id',$id)
+                                 // ->where('r_category_image.default_image',1)
                                  ->get();
 
         return $result;
