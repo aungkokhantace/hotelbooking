@@ -98,7 +98,6 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
 
         return $result;
     }
-
     public function getObjectById($id){
         $result = BookingRoom::find($id);
 
