@@ -235,10 +235,18 @@ class Utility
                     ->subject($subject);
             });
 
+            //create mail success log
+            $currentUser                        = Utility::getCurrentCustomerID();
+            $date                               = date("Y-m-d H:i:s");
+            $message                            = '['. $date .'] '. 'info: ' . 'Mail is sent to Customer - '.$currentUser.
+                ' ----- Log Message: '.$logMessage. PHP_EOL;
+
+            LogCustom::create($date,$message);
+
             return $returnedObj;
         }
         catch(\Exception $e){
-
+            //create mail error log
             $currentUser                        = Utility::getCurrentCustomerID();
             $date                               = date("Y-m-d H:i:s");
             $message                            = '['. $date .'] '. 'error: ' . 'Mail is not sent when Customer - '.$currentUser.
@@ -305,7 +313,7 @@ class Utility
         }else{
             $image_path = public_path().'/images/upload/'.$filename;
         }
-        
+
             if(File::exists($image_path)){
                 File::delete($image_path);
             }

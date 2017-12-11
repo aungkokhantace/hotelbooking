@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Payment;
 
 /**
@@ -88,6 +88,11 @@ class PaymentUtility
             $stripeObj['stripe_payment_id']     = "";
             $stripeObj['stripe_payment_amt']    = "";
 
+            //if customer creation was successful, then create date and message for stripe customer log
+            $date     = date('Y-m-d H:i:s');
+            $message  = '['. $date .'] '. 'info: ' . 'Customer '. $currentUser.' created stripe customer_id ='.$customer['id']. PHP_EOL;
+            LogCustom::create($date,$message);
+
             $returnedObj['aceplusStatusCode']   = ReturnMessage::OK;
             $returnedObj['stripe']              = $stripeObj;
             return $returnedObj;
@@ -95,7 +100,7 @@ class PaymentUtility
         catch(\Exception $e){
         //create error log
         $date    = date("Y-m-d H:i:s");
-        $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a Payment and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+        $message = '['. $date .'] '. 'error: ' . 'Customer '.$currentUser.' created a stripe customer and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
         LogCustom::create($date,$message);
 
         $returnedObj['aceplusStatusMessage'] = $e->getMessage();
@@ -127,7 +132,7 @@ class PaymentUtility
                 "currency" => $paymentCurrency,
                 "customer" => $customerId
             ));
-           
+
             $stripeObj = array();
             $stripeObj['stripe_user_id']                = $customerId;
             $stripeObj['stripe_payment_id']             = $charge->id;
@@ -136,7 +141,12 @@ class PaymentUtility
             $stripeObj['stripe_balance_transaction']    = $charge->balance_transaction;
             $stripeObj['card_brand']                    = $charge->source->brand;
             $stripeObj['card_type']                     = $charge->source->funding;
-            
+
+            //if stripe obj creation was successful, then create date and message for transaction log
+            $date     = date('Y-m-d H:i:s');
+            $message  = '['. $date .'] '. 'info: ' . 'Customer '. $currentUser.' created a payment charge id ='.$charge->id. PHP_EOL;
+            LogCustom::create($date,$message);
+
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
             $returnedObj['stripe'] = $stripeObj;
             return $returnedObj;
@@ -144,7 +154,7 @@ class PaymentUtility
         catch(\Exception $e){
             //create error log
             $date    = date("Y-m-d H:i:s");
-            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a Payment and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a payment charge and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusMessage'] = $e->getMessage();
@@ -184,9 +194,15 @@ class PaymentUtility
             $stripeObj['stripe_balance_transaction']    = $refund->balance_transaction;
             $stripeObj['stripe_refund_status']          = $refund->status;
 
+
              //if customer booking cancellation was successful, then create date and message for stripe refundPayment log
             $date     = date('Y-m-d H:i:s');
             $message  = '['. $date .'] '. 'info: ' . 'User '. $currentUser.' cancelled stripe payment_id = '.$refund->balance_transaction.' and Refund Amount is '.$refund->amount/100 . PHP_EOL;
+
+            //if stripe obj creation was successful, then create date and message for transaction log
+            $date     = date('Y-m-d H:i:s');
+            $message  = '['. $date .'] '. 'info: ' . 'Customer '. $currentUser.' created a refund charge id ='.$charge->id. PHP_EOL;
+
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
@@ -196,7 +212,7 @@ class PaymentUtility
         catch(\Exception $e){
             //create error log
             $date    = date("Y-m-d H:i:s");
-            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a Payment and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a refund and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusMessage'] = $e->getMessage();
@@ -242,6 +258,11 @@ class PaymentUtility
             $stripeObj['stripe_balance_transaction']    = $refund->balance_transaction;
             $stripeObj['stripe_refund_status']          = $refund->status;
 
+            //if stripe obj creation was successful, then create date and message for transaction log
+            $date     = date('Y-m-d H:i:s');
+            $message  = '['. $date .'] '. 'info: ' . 'Customer '. $currentUser.' created a refund_by_hotel_admin charge id ='.$charge->id. PHP_EOL;
+            LogCustom::create($date,$message);
+
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
             $returnedObj['stripe'] = $stripeObj;
             return $returnedObj;
@@ -249,7 +270,7 @@ class PaymentUtility
         catch(\Exception $e){
             //create error log
             $date    = date("Y-m-d H:i:s");
-            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a Payment and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a refund_by_hotel_admin and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusMessage'] = $e->getMessage();
@@ -280,11 +301,19 @@ class PaymentUtility
             $stripeObj['stripe_payment_fee']            = $balance->fee/100;
             $stripeObj['stripe_payment_net']            = $balance->net/100;
 
+<<<<<<< HEAD
             //if customer booking cancellation was successful, then create date and message for stripe retrieveBalance log
             $date     = date('Y-m-d H:i:s');
             $message  = '['. $date .'] '. 'info: ' . 'User '. $currentUser.' cancelled stripe payment_id = '.$refund->balance_transaction.' and Refund Amount is '.$refund->amount/100 . PHP_EOL;
             LogCustom::create($date,$message);
             
+=======
+            //if stripe obj creation was successful, then create date and message for transaction log
+            $date     = date('Y-m-d H:i:s');
+            $message  = '['. $date .'] '. 'info: ' . 'Customer '. $currentUser.' created a balance retrieve id ='.$balance->id. PHP_EOL;
+            LogCustom::create($date,$message);
+
+>>>>>>> 28c19035865633188c4a594ceb59809726ab74fe
             $returnedObj['aceplusStatusCode']           = ReturnMessage::OK;
             $returnedObj['stripe']                      = $stripeObj;
             return $returnedObj;
@@ -292,7 +321,7 @@ class PaymentUtility
         catch(\Exception $e){
             //create error log
             $date    = date("Y-m-d H:i:s");
-            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a Payment and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a balnce retrieve and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusMessage'] = $e->getMessage();
