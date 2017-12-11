@@ -58,7 +58,7 @@
 
     <script>
         $(document).ready(function () {
-        
+
             /* Date Picker with controls of from date and to date */
             $("#check_in").datepicker({
                 format: 'dd-mm-yyyy',
