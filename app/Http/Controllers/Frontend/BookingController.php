@@ -407,7 +407,15 @@ class BookingController extends Controller
             $pdf::Output('pdf_booking_confirmation.pdf');
             /* End Print Function */
         }catch(\Exception $e){
-            // write log here
+            //create error log
+            $currentUser                        = Utility::getCurrentCustomerID();
+            $date                               = date("Y-m-d H:i:s");
+            $message                            = '['. $date .'] '. 'error: ' . 'Customer - '.$currentUser.
+                ' printed a booking and got error -------'.$e->getMessage(). ' ----- line ' .
+                $e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+
+            LogCustom::create($date,$message);
+
             return redirect('/');
         }
 
@@ -1058,6 +1066,15 @@ class BookingController extends Controller
                          * then new check_in and check_out date can't be change.
                          * So, return error status.
                          */
+
+                         //create error log
+                         $currentUser                        = Utility::getCurrentCustomerID();
+                         $date                               = date("Y-m-d H:i:s");
+                         $error_message                      = "room_id array from booking room is not same with room_id from available room array";
+                         $message                            = '['. $date .'] '. 'error: ' . 'Customer - '.$currentUser. ' changed booking dates and got error : '.$error_message. PHP_EOL;
+
+                         LogCustom::create($date,$message);
+
                         return \Response::json($response);
                     }
 
@@ -1371,6 +1388,15 @@ class BookingController extends Controller
                 }
                 else{
                     //don't allow to change check_in and check_out date
+                    //create change dates error log
+                    $currentUser                        = Utility::getCurrentCustomerID();
+                    $date                               = date("Y-m-d H:i:s");
+                    $errorMessage                       = "booking status is not 2(confirm) and user is not allowed to change dates";
+
+                    $message                            = '['. $date .'] '. 'error: ' . 'Customer id - '.$currentUser.
+                        ' updated booking check_in and check_out date and got error : '.$errorMessage. PHP_EOL;
+                    LogCustom::create($date,$message);
+
                     $response['aceplusStatusCode']      = '403';
                     return \Response::json($response);
                 }

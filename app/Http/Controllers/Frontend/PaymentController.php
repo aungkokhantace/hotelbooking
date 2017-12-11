@@ -1172,8 +1172,6 @@ class PaymentController extends Controller
             return redirect('/congratulations/'.$booking_id);
         }
         catch(\Exception $e){
-            // dd('booking catch',$e);
-            // dd('catch',$e);
             DB::rollback();
             alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
             return redirect('/');

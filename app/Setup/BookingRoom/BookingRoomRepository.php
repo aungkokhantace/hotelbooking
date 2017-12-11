@@ -14,6 +14,7 @@ use App\Core\Utility;
 use App\Log\LogCustom;
 use Illuminate\Support\Facades\DB;
 
+
 class BookingRoomRepository implements BookingRoomRepositoryInterface
 {
 
@@ -107,7 +108,6 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
     public function update($paramObj){
         $returnedObj                            = array();
         $returnedObj['aceplusStatusCode']       = ReturnMessage::INTERNAL_SERVER_ERROR;
-
         try {
             $userSession                        = session('customer');
             $loginUserId                        = $userSession['id'];
@@ -116,7 +116,7 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
 
             //create info log
             $date                               = $paramObj->updated_at;
-            $message                            = '['. $date .'] '. 'info: ' . 'Customer '.$loginUserId.' update booking_room_id = '.$paramObj->id . PHP_EOL;
+            $message                            = '['. $date .'] '. 'info: ' . 'Customer '.$loginUserId.' updated booking_room_id = '.$paramObj->id . PHP_EOL;
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusCode']   = ReturnMessage::OK;
@@ -143,7 +143,7 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
     }
 
     public function getAllBookingRoomAndRoomByBookingId($id){
-       
+
         $result     = BookingRoom::where('booking_id',$id)
                                  ->leftJoin('rooms','rooms.id','=','booking_room.room_id')
                                  ->leftJoin('h_room_type','h_room_type.id','=','rooms.h_room_type_id')

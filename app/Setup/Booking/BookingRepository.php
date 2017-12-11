@@ -88,7 +88,7 @@ class BookingRepository implements BookingRepositoryInterface
         catch(\Exception $e){
             //create error log
             $date    = date("Y-m-d H:i:s");
-            $message = '['. $date .'] '. 'error: ' . 'Customer '.$loginUserId.' created a booking and got error -------'.
+            $message = '['. $date .'] '. 'error: ' . 'Customer '.$loginUserId.' updated a booking and got error -------'.
                         $e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
             LogCustom::create($date,$message);
 
@@ -209,7 +209,7 @@ class BookingRepository implements BookingRepositoryInterface
 	                                  OR
 	                                    ('$check_out' BETWEEN booking_room.check_in_date AND booking_room.check_out_date)
 	                                    )
-	                                
+
                                       AND status NOT IN (3,7,9)
 	                                  AND (booking_room.deleted_at IS NULL)
 	                                  AND  room_id NOT IN ('$id')");
