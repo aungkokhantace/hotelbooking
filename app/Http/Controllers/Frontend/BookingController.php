@@ -152,8 +152,11 @@ class BookingController extends Controller
 
                 $bRooms             = $bRoomRepo->getBookingRoomAndRoomByBookingId($b_id);
 
-                $room_count         = count($bRooms);
+                $book_rooms = $bRoomRepo->getBookingRoomByBookingId($b_id);
+
+                $room_count         = count($book_rooms);
                 $booking->room_count= $room_count; //Add Number of Room to booking
+                // dd($bRooms);
 
                 if(isset($bRooms) && count($bRooms) > 0){
                     foreach($bRooms as $bRoom){
@@ -210,6 +213,7 @@ class BookingController extends Controller
                     }
                 }
                 $booking->rooms                     = $bRooms; //Add Rooms Array to booking
+                // dd($booking->rooms);
 
                 if($booking->status == 2){
                     $booking->charge                = 'free';
@@ -889,7 +893,8 @@ class BookingController extends Controller
         $booking->total_day             = $total_day; //Add total booked days to booking
 
         $bRooms                         = $bRoomRepo->getAllBookingRoomAndRoomByBookingId($b_id);
-        $room_count                     = count($bRooms);
+        $book_rooms                     = $bRoomRepo->getBookingRoomByBookingId($b_id);
+        $room_count                     = count($book_rooms);
         $booking->room_count            = $room_count; //Add Number of Room to booking
 
         $booking->check_in_date_fmt     = Carbon::parse($booking->check_in_date)->format('M d, Y');

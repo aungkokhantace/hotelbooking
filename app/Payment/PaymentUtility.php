@@ -41,6 +41,11 @@ class PaymentUtility
 
             \Stripe\Stripe::setApiKey($secret_key);
 
+            //if customer creation was successful, then create date and message for stripe customer log
+            $date     = date('Y-m-d H:i:s');
+            $message  = '['. $date .'] '. 'info: ' . 'Customer '. $currentUser.' created Payment with '.$secret_key.' and '.$publishable_key. PHP_EOL;
+            LogCustom::create($date,$message);
+
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
             $returnedObj['stripe'] = $stripe;
             return $returnedObj;
@@ -199,10 +204,6 @@ class PaymentUtility
             $date     = date('Y-m-d H:i:s');
             $message  = '['. $date .'] '. 'info: ' . 'User '. $currentUser.' cancelled stripe payment_id = '.$refund->balance_transaction.' and Refund Amount is '.$refund->amount/100 . PHP_EOL;
 
-            //if stripe obj creation was successful, then create date and message for transaction log
-            $date     = date('Y-m-d H:i:s');
-            $message  = '['. $date .'] '. 'info: ' . 'Customer '. $currentUser.' created a refund charge id ='.$charge->id. PHP_EOL;
-
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
@@ -260,7 +261,7 @@ class PaymentUtility
 
             //if stripe obj creation was successful, then create date and message for transaction log
             $date     = date('Y-m-d H:i:s');
-            $message  = '['. $date .'] '. 'info: ' . 'Customer '. $currentUser.' created a refund_by_hotel_admin charge id ='.$charge->id. PHP_EOL;
+            $message  = '['. $date .'] '. 'info: ' . 'Customer '. $currentUser.' created a refund_by_hotel_admin charge id ='.$chargeId. PHP_EOL;
             LogCustom::create($date,$message);
 
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
@@ -300,20 +301,13 @@ class PaymentUtility
             $stripeObj['stripe_payment_amt']            = $balance->amount/100;
             $stripeObj['stripe_payment_fee']            = $balance->fee/100;
             $stripeObj['stripe_payment_net']            = $balance->net/100;
-
-<<<<<<< HEAD
-            //if customer booking cancellation was successful, then create date and message for stripe retrieveBalance log
-            $date     = date('Y-m-d H:i:s');
-            $message  = '['. $date .'] '. 'info: ' . 'User '. $currentUser.' cancelled stripe payment_id = '.$refund->balance_transaction.' and Refund Amount is '.$refund->amount/100 . PHP_EOL;
-            LogCustom::create($date,$message);
             
-=======
             //if stripe obj creation was successful, then create date and message for transaction log
             $date     = date('Y-m-d H:i:s');
             $message  = '['. $date .'] '. 'info: ' . 'Customer '. $currentUser.' created a balance retrieve id ='.$balance->id. PHP_EOL;
             LogCustom::create($date,$message);
 
->>>>>>> 28c19035865633188c4a594ceb59809726ab74fe
+
             $returnedObj['aceplusStatusCode']           = ReturnMessage::OK;
             $returnedObj['stripe']                      = $stripeObj;
             return $returnedObj;

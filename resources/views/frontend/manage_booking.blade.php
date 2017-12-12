@@ -167,6 +167,7 @@
                             </div>
                             <div class="table-responsive room_table ">
                                 @foreach($booking->rooms as $room)
+                                @if($room->default_image == 1 || !isset($room->default_image))
                                     <table class="table table-striped">
                                         <tbody>
                                         <tr>
@@ -256,6 +257,7 @@
                                     </tr>
                                         </tbody>
                                     </table>
+                                @endif
                            @endforeach
                        </div>
                         {{--@foreach($booking->rooms as $room)--}}

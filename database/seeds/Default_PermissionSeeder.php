@@ -287,9 +287,13 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>553,'module'=>'EmailTemplate','name'=>'Update','description'=>'Bookin Confirm Email Template Update','url'=>'backend_mps/email_template_booking_confirm/update'],
             ['id'=>554,'module'=>'EmailTemplate','name'=>'Edit','description'=>'Bookin Edit Email Template Edit','url'=>'backend_mps/email_template_booking_edit'],
             ['id'=>555,'module'=>'EmailTemplate','name'=>'Update','description'=>'Bookin Edit Email Template Update','url'=>'backend_mps/email_template_booking_edit/update'],
+
             ['id'=>560,'module'=>'HotelAdmin','name'=>'Dashboard','description'=>'Hotel Admin Dashboard','url'=>'backend_mps/hotel_admin/dashboard'],
+
             ['id'=>570,'module'=>'HotelBooking','name'=>'Listing','description'=>'Hotel Booking Listing','url'=>'backend_mps/booking'],
             ['id'=>571,'module'=>'HotelBooking','name'=>'Detail','description'=>'Hotel Booking Detail','url'=>'backend_mps/booking/{id}'],
+            ['id'=>572,'module'=>'HotelBooking','name'=>'Refund','description'=>'Hotel Booking Refund','url'=>'backend_mps/booking/refund'],
+
             ['id'=>580,'module'=>'Communication','name'=>'Listing','description'=>'Communication Listing','url'=>'backend_mps/communication'],
             ['id'=>581,'module'=>'Communication','name'=>'Edit','description'=>'Communication Edit','url'=>'backend_mps/communication/reply/{id}'],
             ['id'=>582,'module'=>'Communication','name'=>'Store','description'=>'Communication Store','url'=>'backend_mps/communication/reply/store'],

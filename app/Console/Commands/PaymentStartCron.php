@@ -229,6 +229,12 @@ class PaymentStartCron extends Command
                     $booking->card_type                     = $stripe_card_type;
                     $booking->status                        = 5;
                     $bookingResult                          = $bookingRepo->update($booking);
+
+                     //if payment cron started successful, then create date and message for PaymentStartCron log
+                    $date     = date('Y-m-d H:i:s');
+                    $message  = '['. $date .'] '. 'info: ' . 'Cron Job For Sending Email and Payment run successfully'.PHP_EOL;
+                    LogCustom::create($date,$message);
+
                     DB::commit();
                     // Send Email
                     Mail::send('booking_payment_first_start', [], function($message) use ($emails)
