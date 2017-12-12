@@ -480,7 +480,11 @@ class BookingController extends Controller
                         DB::rollback();
                         return \Response::json($response);
                     }*/
-
+                    //if customer cancel the booking status 2(confirm) was successful, then create date and message for cancel booking success log
+                    $currentUser = Utility::getCurrentCustomerID(); //get currently logged in customer
+                    $date     = date('Y-m-d H:i:s');
+                    $message  = '['. $date .'] '. 'info: ' . 'Customer '. $currentUser.' cancelled booking id = '.$booking->booking_no.' with status 2 is successful'. PHP_EOL;
+                    LogCustom::create($date,$message);
                     DB::commit();
                     /* START send mail */
                     $user_email                             = $booking->user->email;
@@ -724,6 +728,12 @@ class BookingController extends Controller
                             return \Response::json($response);
                         }*/
 
+                        //if customer cancel the booking status 5(complete) was successful, then create date and message for cancel booking success log
+                        $currentUser = Utility::getCurrentCustomerID(); //get currently logged in customer
+                        $date     = date('Y-m-d H:i:s');
+                        $message  = '['. $date .'] '. 'info: ' . 'Customer '. $currentUser.' cancelled booking id = '.$booking->booking_no.' with status 5 is successful'. PHP_EOL;
+                        LogCustom::create($date,$message);
+
                         DB::commit();
                         /* Send Mail */
                         $user_email                                 = $booking->user->email;
@@ -826,6 +836,12 @@ class BookingController extends Controller
                             DB::rollback();
                             return \Response::json($response);
                         }
+
+                        //if customer cancel the booking in 2nd cancellation was successful, then create date and message for cancel booking success log
+                        $currentUser = Utility::getCurrentCustomerID(); //get currently logged in customer
+                        $date     = date('Y-m-d H:i:s');
+                        $message  = '['. $date .'] '. 'info: ' . 'Customer '. $currentUser.' cancelled booking id = '.$booking->booking_no.' in second cancellation is successful'. PHP_EOL;
+                        LogCustom::create($date,$message);
 
                         DB::commit();
                         /* START sending email */
@@ -1537,6 +1553,12 @@ class BookingController extends Controller
                 }
                 /* END changing status for booking payment */
 
+                //if customer cancel room with status 2 was successful, then create date and message for cancel booking success log
+                $currentUser = Utility::getCurrentCustomerID(); //get currently logged in customer
+                $date     = date('Y-m-d H:i:s');
+                $message  = '['. $date .'] '. 'info: ' . 'Customer '. $currentUser.' cancelled booking_room id = '.$bCancelRoom->id.' with status 2 is successful'. PHP_EOL;
+                LogCustom::create($date,$message);
+
                 DB::commit();
                 // If all updating is complete,send mail
                 $email              = $booking->user->email;
@@ -1809,6 +1831,12 @@ class BookingController extends Controller
                     }
                     /* END booking */
 
+                    //if customer cancel room with status 5 was successful, then create date and message for cancel booking success log
+                    $currentUser = Utility::getCurrentCustomerID(); //get currently logged in customer
+                    $date     = date('Y-m-d H:i:s');
+                    $message  = '['. $date .'] '. 'info: ' . 'Customer '. $currentUser.' cancelled booking_room id = '.$bCancelRoom->id.' with status 5 is successful'. PHP_EOL;
+                    LogCustom::create($date,$message);
+
                     DB::commit();
                     /* START Mail */
                     // If all updating is complete,send mail
@@ -1909,6 +1937,12 @@ class BookingController extends Controller
                         alert()->error('Cancellation of room is fail.')->persistent('OK');
                     }
 
+                    //if customer cancel room in second cancellation was successful, then create date and message for cancel booking success log
+                    $currentUser = Utility::getCurrentCustomerID(); //get currently logged in customer
+                    $date     = date('Y-m-d H:i:s');
+                    $message  = '['. $date .'] '. 'info: ' . 'Customer '. $currentUser.' cancelled booking_room id = '.$bCancelRoom->id.' in second cancellation is successful'. PHP_EOL;
+                    LogCustom::create($date,$message);
+
                     DB::commit();
                     // If all updating is complete,send mail
                     $email              = $booking->user->email;
@@ -1933,6 +1967,15 @@ class BookingController extends Controller
             }
             else{
                 //don't allow to cancel room
+                //create cancel room error log
+                    $currentUser                        = Utility::getCurrentCustomerID();
+                    $date                               = date("Y-m-d H:i:s");
+                    $errorMessage                       = "booking status is not 2(confirm) and 5(complete)";
+
+                    $message                            = '['. $date .'] '. 'error: ' . 'Customer id - '.$currentUser.
+                        ' cancel room and got error : '.$errorMessage. PHP_EOL;
+                    LogCustom::create($date,$message);
+
                 alert()->warning('You could not cancel your reserved room!')->persistent('OK');
                 return redirect()->back();
             }

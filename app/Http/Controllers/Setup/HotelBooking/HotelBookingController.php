@@ -269,6 +269,12 @@ class HotelBookingController extends Controller
                         alert()->error('Refund Operation is unsuccessful.')->persistent('Close');
                         return redirect()->back();
                     }
+
+                    //if admin refund the booking was successful, then create date and message for refund booking success log
+                    $currentUser = Utility::getCurrentUserID(); //get currently logged in customer
+                    $date     = date('Y-m-d H:i:s');
+                    $message  = '['. $date .'] '. 'info: ' . 'Admin '. $currentUser.' refund booking no. = '.$booking->booking_no.' is successful'. PHP_EOL;
+                    LogCustom::create($date,$message);
                     
                     DB::commit();
                     alert()->success('Refund Operation is successful.')->persistent('Close');
@@ -277,6 +283,15 @@ class HotelBookingController extends Controller
                     
                 }
                 else{
+                    //create RefundByHotelAdmin error log
+                    $currentUser                        = Utility::getCurrentUserID();
+                    $date                               = date("Y-m-d H:i:s");
+                    $errorMessage                       = "No payment for this booking.";
+
+                    $message                            = '['. $date .'] '. 'error: ' . 'Admin - '.$currentUser.
+                        ' refund by hotel admin and got error : '.$errorMessage. PHP_EOL;
+                    LogCustom::create($date,$message);
+
                     DB::rollback();
                     alert()->warning("Oppp!!!There\'s no payment for this booking.")->persistent('Close');
                     return redirect()->back();
