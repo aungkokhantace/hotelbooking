@@ -585,6 +585,14 @@ class BookingController extends Controller
                                 $balance                            = $stripePaymentObj->retrieveBalance($stripe_balance_transaction);
                                 if($balance['aceplusStatusCode'] != ReturnMessage::OK){
                                     // write log or do something
+
+                                    //create Retrieve Balance Transaction error log
+                                    $currentUser                        = Utility::getCurrentCustomerID();
+                                    $date                               = date("Y-m-d H:i:s");
+                                    
+                                    $message                            = '['. $date .'] '. 'error: ' . 'Customer id - '.$currentUser.' retrieve balance transaction '.$stripe_balance_transaction.' and got error'. PHP_EOL;
+                                    LogCustom::create($date,$message);
+
                                     return \Response::json($response);
                                 }
                                 $stripe_payment_net_balance         = $balance['stripe']['stripe_payment_net'];
@@ -608,6 +616,12 @@ class BookingController extends Controller
                                 if($stripeRes['aceplusStatusCode'] != ReturnMessage::OK){
                                     //write log
                                     DB::rollback();
+                                    //create Booking Payment Stripe error log
+                                    $currentUser                        = Utility::getCurrentCustomerID();
+                                    $date                               = date("Y-m-d H:i:s");
+                                    
+                                    $message                            = '['. $date .'] '. 'error: ' . 'Customer id - '.$currentUser.' create booking payment stripe '.$stripe_balance_transaction.' and got error'. PHP_EOL;
+                                    LogCustom::create($date,$message);
                                     return \Response::json($response);
                                 }
 
@@ -1700,6 +1714,14 @@ class BookingController extends Controller
                     if($newStripePaymentRes['aceplusStatusCode'] != ReturnMessage::OK){
                         // shouldn't rollback, write log or do something bcz refundPayment method is already executed.
                         DB::rollback();
+
+                        //create Booking Payment Stripe error log
+                        $currentUser                        = Utility::getCurrentCustomerID();
+                        $date                               = date("Y-m-d H:i:s");
+                        
+                        $message                            = '['. $date .'] '. 'error: ' . 'Customer id - '.$currentUser.' start booking payment stripe '.$stripe_balance_transaction.' and got error'. PHP_EOL;
+                        LogCustom::create($date,$message);
+
                         alert()->warning('Cancellation of room is success.')->persistent('OK');
                     }
                     /* END Booking Payment Stripe */

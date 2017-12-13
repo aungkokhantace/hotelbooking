@@ -225,6 +225,14 @@ class HotelBookingController extends Controller
                     if($stripeBalanceRes['aceplusStatusCode'] != ReturnMessage::OK){
                         // shouldn't rollback, write log or do something bcz refundPayment method is already executed.
                         DB::rollback();
+
+                        //create refundPayment error log
+                        $currentUser                        = Utility::getCurrentUserID();
+                        $date                               = date("Y-m-d H:i:s");
+                        
+                        $message                            = '['. $date .'] '. 'error: ' . 'Customer id - '.$currentUser.' create refundPayment '.$refund_balance_transaction.' and got error'. PHP_EOL;
+                        LogCustom::create($date,$message);
+                        
                         alert()->error('Refund Operation is unsuccessful.')->persistent('Close');
                         return redirect()->back();
                     }
@@ -266,6 +274,14 @@ class HotelBookingController extends Controller
                     /* Change Booking Payment Stripe Status */
                     if($newStripePaymentRes['aceplusStatusCode'] != ReturnMessage::OK){
                         DB::rollback();
+
+                        //create Booking Payment Stripe error log
+                        $currentUser                        = Utility::getCurrentUserID();
+                        $date                               = date("Y-m-d H:i:s");
+                        
+                        $message                            = '['. $date .'] '. 'error: ' . 'Customer id - '.$currentUser.' create booking payment stripe '.$stripe_balance_transaction.' and got error'. PHP_EOL;
+                        LogCustom::create($date,$message);
+
                         alert()->error('Refund Operation is unsuccessful.')->persistent('Close');
                         return redirect()->back();
                     }
