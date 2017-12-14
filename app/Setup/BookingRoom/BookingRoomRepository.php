@@ -55,18 +55,12 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
         return $result;
     }
 
-    public function getBookingRoomByBookingId($id){
-        $statusArr  = array(2,5);        
-        $result     = BookingRoom::whereNull('deleted_at')->where('booking_id','=',$id)->whereIn('status',$statusArr)->get();
-
-        return $result;
-    }
-
-     public function getAllBookingRoomByBookingId($id){   
+    public function getBookingRoomByBookingId($id){    
         $result     = BookingRoom::whereNull('deleted_at')->where('booking_id','=',$id)->get();
 
         return $result;
     }
+
 
     public function getBookingRoomAndRoomByBookingId($id){
         /*

@@ -152,7 +152,7 @@ class BookingController extends Controller
 
                 $bRooms             = $bRoomRepo->getBookingRoomAndRoomByBookingId($b_id);
 
-                $book_rooms = $bRoomRepo->getBookingRoomByBookingId($b_id);
+                $book_rooms = $bRoomRepo->getActiveBookingRoom($b_id);
                 // dd($book_rooms);
 
                 $room_count         = count($book_rooms);
@@ -924,7 +924,7 @@ class BookingController extends Controller
         $booking->total_day             = $total_day; //Add total booked days to booking
 
         $bRooms                         = $bRoomRepo->getAllBookingRoomAndRoomByBookingId($b_id);
-        $book_rooms                     = $bRoomRepo->getAllBookingRoomByBookingId($b_id);
+        $book_rooms                     = $bRoomRepo->getBookingRoomByBookingId($b_id);
         $room_count                     = count($book_rooms);
         $booking->room_count            = $room_count; //Add Number of Room to booking
 
