@@ -464,6 +464,7 @@ class BookingController extends Controller
                     foreach($bookRooms as $bRoom){
                         $bRoom->status                      = 3;
                         $bRoomResult                        = $bookRoomRepo->update($bRoom);
+                        // dd($bRoomResult);   
                         if($bRoomResult['aceplusStatusCode'] != ReturnMessage::OK){
                             DB::rollback();
                             return \Response::json($response);
@@ -472,8 +473,7 @@ class BookingController extends Controller
                     /* END changing status for booking room */
 
                     /* Update booking payment status */
-                    /*
-                    $bPayment                               = $bookPaymentRepo->getObjsByBookingId($id);
+                    /* $bPayment                               = $bookPaymentRepo->getObjsByBookingId($id);
                     $bPayment->status                       = 3;
                     $bookPaymentResult                      = $bookPaymentRepo->update($bPayment);
                     if($bookPaymentResult['aceplusStatusCode'] != ReturnMessage::OK){
@@ -1677,6 +1677,11 @@ class BookingController extends Controller
                     /* END retrieve balance transaction */
 
                     /* START Booking Payment */
+
+                    // $test = abs($stripe_payment_amt);
+                    // $te = $cancel_room_payable_amt_w_tax - $test;
+                    // dd($test);
+
                     $newBookPayment                                 = new BookingPayment();
                     $newBookPayment->payment_amount_wo_tax          = abs($stripe_payment_amt);
                     $newBookPayment->payment_amount_w_tax           = abs($stripe_payment_net);

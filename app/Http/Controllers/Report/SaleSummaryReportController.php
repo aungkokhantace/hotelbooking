@@ -27,6 +27,7 @@ class SaleSummaryReportController extends Controller
             $grandTotal = 0.00;
 
             $bookings = $this->repo->saleSummaryReport($type,$from_date,$to_date);
+            // dd($bookings);
             if(isset($bookings) && count($bookings) > 0){
                 foreach($bookings as $booking){
                     $grandTotal += $booking->total_payable_amt;
