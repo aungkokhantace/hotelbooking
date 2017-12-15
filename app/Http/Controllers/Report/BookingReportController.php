@@ -36,6 +36,10 @@ class BookingReportController extends Controller
                 foreach($bookings as $booking){
                     if($booking->booking_room_status == 3){
                         $booking->total_payable_amt = 0;
+                    }elseif($booking->booking_room_status == 7){
+                        $room_payable_amt_w_tax = $booking->room_payable_amt_w_tax;
+                        $amount = $room_payable_amt_w_tax/2;
+                        $booking->total_payable_amt = number_format($amount,2);  
                     }else{
                         $room_payable_amt_w_tax = $booking->room_payable_amt_w_tax;
                         $refund_amt             = $booking->refund_amt;
