@@ -142,7 +142,8 @@
                     <div class="row margin-bottom-30">
                         <div class="col-md-6">
                             <div class="service">
-                                <img class="fa fa-university service-icon" src="/assets/shared/images/knife_fork.png">
+                                <!-- <img class="fa fa-university service-icon" src="/assets/shared/images/knife_fork.png"> -->
+                                <span class="fa fa-cutlery service-icon"></span>
                                 <div class="desc">
                                     <h4>Restaurants</h4>
                                     <ul>
