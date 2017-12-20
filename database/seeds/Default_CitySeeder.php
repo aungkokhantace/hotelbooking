@@ -22,7 +22,7 @@ class Default_CitySeeder extends Seeder
             ['country_id'=>'117', 'name'=>'Magway Division', 'id' =>'7', 'image' =>'magway.jpg', 'created_by' =>'1', 'updated_by' =>'1', 'created_at' =>'2017-01-06 11:30:35', 'updated_at' =>'2017-01-06 11:30:35'],
             ['country_id'=>'117', 'name'=>'Mandalay Division', 'id' =>'8', 'image' =>'mandalay.jpg', 'created_by' =>'1', 'updated_by' =>'1', 'created_at' =>'2017-01-06 11:30:35', 'updated_at' =>'2017-01-06 11:30:35'],
             ['country_id'=>'117', 'name'=>'Mon State', 'id' =>'9', 'image' =>'mon.jpg', 'created_by' =>'1', 'updated_by' =>'1', 'created_at' =>'2017-01-06 11:30:35', 'updated_at' =>'2017-01-06 11:30:35'],
-            ['country_id'=>'117', 'name'=>'Rakhine State', 'id' =>'10', 'image' =>'tanintharyi.jpg', 'created_by' =>'1', 'updated_by' =>'1', 'created_at' =>'2017-01-06 11:30:35', 'updated_at' =>'2017-01-06 11:30:35'],
+            ['country_id'=>'117', 'name'=>'Rakhine State', 'id' =>'10', 'image' =>'rakhine.jpg', 'created_by' =>'1', 'updated_by' =>'1', 'created_at' =>'2017-01-06 11:30:35', 'updated_at' =>'2017-01-06 11:30:35'],
             ['country_id'=>'117', 'name'=>'Sagaing Division', 'id' =>'11', 'image' =>'sagaing.jpg', 'created_by' =>'1', 'updated_by' =>'1', 'created_at' =>'2017-01-06 11:30:35', 'updated_at' =>'2017-01-06 11:30:35'],
             ['country_id'=>'117', 'name'=>'Shan State', 'id' =>'12', 'image' =>'', 'created_by' =>'1', 'updated_by' =>'1', 'created_at' =>'2017-01-06 11:30:35', 'updated_at' =>'2017-01-06 11:30:35'],
             ['country_id'=>'117', 'name'=>'Tanintharyi Division', 'id' =>'13', 'image' =>'tanintharyi.jpg', 'created_by' =>'1', 'updated_by' =>'1', 'created_at' =>'2017-01-06 11:30:35', 'updated_at' =>'2017-01-06 11:30:35'],

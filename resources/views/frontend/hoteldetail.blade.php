@@ -246,31 +246,35 @@
                                                                     <h4>Room size : {{$roomCategory->square_metre}} m<sup>2</sup></h4>
                                                                     <p>{{$roomCategory->description}}</p>
                                                                 </div>
-                                                                <div class="detailmodal_text">
-                                                                    <h4>Room Facilities</h4>
-                                                                    <ul class="room_facilities">
-                                                                        @if(isset($roomCategory->facilities) && count($roomCategory->facilities) > 0)
-                                                                            @foreach($roomCategory->facilities as $room_category_facility)
-                                                                                <div class="col-md-3">
-                                                                                    <li class="text_fa">{{$room_category_facility->facility->name}}</li>
-                                                                                </div>
-                                                                            @endforeach
-                                                                        @endif
-                                                                    </ul>
+                                                                <div class="detailmodal_text row">
+                                                                    <div class="col-md-12">
+                                                                      <h4>Room Facilities</h4>
+                                                                      <ul class="room_facilities">
+                                                                          @if(isset($roomCategory->facilities) && count($roomCategory->facilities) > 0)
+                                                                              @foreach($roomCategory->facilities as $room_category_facility)
+                                                                                  <div class="col-md-3">
+                                                                                      <li class="text_fa">{{$room_category_facility->facility->name}}</li>
+                                                                                  </div>
+                                                                              @endforeach
+                                                                          @endif
+                                                                      </ul>
+                                                                    </div>
                                                                 </div>
                                                                 <br>
                                                                 <hr>
-                                                                <div class="detailmodal_text">
-                                                                    <h4>Room Amenities</h4>
-                                                                    <ul class="room_facilities">
-                                                                        @if(isset($roomCategory->room_amenities) && count($roomCategory->room_amenities) > 0)
-                                                                            @foreach($roomCategory->room_amenities as $room_amenity)
-                                                                                <div class="col-md-3">
-                                                                                    <li class="text_fa">{{$room_amenity->amenity->name}}</li>
-                                                                                </div>
-                                                                            @endforeach
-                                                                        @endif
-                                                                    </ul>
+                                                                <div class="detailmodal_text row">
+                                                                    <div class="col-md-12">
+                                                                      <h4>Room Amenities</h4>
+                                                                      <ul class="room_facilities">
+                                                                          @if(isset($roomCategory->room_amenities) && count($roomCategory->room_amenities) > 0)
+                                                                              @foreach($roomCategory->room_amenities as $room_amenity)
+                                                                                  <div class="col-md-3">
+                                                                                      <li class="text_fa">{{$room_amenity->amenity->name}}</li>
+                                                                                  </div>
+                                                                              @endforeach
+                                                                          @endif
+                                                                      </ul>
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
