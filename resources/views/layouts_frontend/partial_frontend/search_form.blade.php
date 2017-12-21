@@ -1,5 +1,5 @@
 {!! Form::open(array('url' => '/search','files'=>true, 'id'=>'search', 'class'=> 'form-horizontal user-form-border')) !!}
-<label class="control-label" for="destination">Destination</label>
+<label class="control-label" for="destination">Destination / Property Name</label>
 <div class="col-10 input-group">
     @if(Session::has('destination'))
         <input class="form-control font_sz_11" type="text" id="destination" name="destination" value="{{session('destination')}}" autocomplete="off">

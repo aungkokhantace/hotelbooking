@@ -318,4 +318,9 @@ class Utility
                 File::delete($image_path);
             }
     }
+
+    public static function getCurrentUserRole(){
+        $role_id = Auth::guard('User')->user()->role_id;
+        return $role_id;
+    }
 }

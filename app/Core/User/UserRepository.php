@@ -43,6 +43,7 @@ class UserRepository implements UserRepositoryInterface
         $roles = DB::table('core_roles')->get();
         return $roles;
     }
+
     public function delete_users($id){
         if($id != 1){
             //DB::table('core_users')->where('id',$id)->update(['deleted_at'=> date('Y-m-d H:m:i')]);
@@ -83,5 +84,16 @@ class UserRepository implements UserRepositoryInterface
                 return $permissions;
         }
         return null;
+    }
+
+    public function getUsersWithExceptRoles($current_user_role, $except_role_array){
+        // $result = DB::table('core_users')->where('role_id','>=',$current_user_role)->whereNotIn('role_id',$except_role_array)->get();
+        $result = User::where('role_id','>=',$current_user_role)->whereNotIn('role_id',$except_role_array)->get();
+        return $result;
+    }
+
+    public function getRolesWithExceptRoles($current_user_role, $except_role_array){
+        $result = DB::table('core_roles')->where('id','>=',$current_user_role)->whereNotIn('id',$except_role_array)->get();
+        return $result;
     }
 }

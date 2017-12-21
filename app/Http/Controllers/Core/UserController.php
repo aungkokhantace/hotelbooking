@@ -15,6 +15,7 @@ use Auth;
 use Illuminate\Support\Facades\DB;
 use App\User;
 use Carbon\Carbon;
+use App\Core\Utility;
 
 class UserController extends Controller
 {
@@ -31,11 +32,22 @@ class UserController extends Controller
     {
         if (Auth::guard('User')->check()) {
             //if (Auth::guard('User')->user()->role_id == 1) {
-                $users      = $this->userRepository->getUsers();
-                $roles      = $this->userRepository->getRoles();
+                // $users      = $this->userRepository->getUsers();
+                // $roles      = $this->userRepository->getRoles();
+                $current_user_role = Utility::getCurrentUserRole();
+                $except_role_array = [9999];
+                $users      = $this->userRepository->getUsersWithExceptRoles($current_user_role, $except_role_array);
+
+
+                $except_role_array = [9999];
+                $roles      = $this->userRepository->getRolesWithExceptRoles($current_user_role, $except_role_array);
+
                 $cur_time   = Carbon::now();
-                return view('core.user.index')->with('users', $users)->with('roles', $roles)->with('cur_time',
-                    $cur_time);
+
+                return view('core.user.index')
+                            ->with('users', $users)
+                            ->with('roles', $roles)
+                            ->with('cur_time', $cur_time);
             //}
         }
         return redirect('/backend_mps/login');
@@ -43,7 +55,10 @@ class UserController extends Controller
 
     public function create(){
         if (Auth::guard('User')->check()) {
-            $roles = $this->userRepository->getRoles();
+            // $roles = $this->userRepository->getRoles();
+            $current_user_role = Utility::getCurrentUserRole();
+            $except_role_array = [9999];
+            $roles      = $this->userRepository->getRolesWithExceptRoles($current_user_role, $except_role_array);
             return view('core.user.user')->with('roles', $roles);
         }
          return redirect('/backend_mps/login');
@@ -75,7 +90,10 @@ class UserController extends Controller
     public function edit($id){
         if (Auth::guard('User')->check()) {
                 $user = $this->userRepository->getObjByID($id);
-                $roles = DB::table('core_roles')->get();
+                // $roles = DB::table('core_roles')->get();
+                $current_user_role = Utility::getCurrentUserRole();
+                $except_role_array = [9999];
+                $roles      = $this->userRepository->getRolesWithExceptRoles($current_user_role, $except_role_array);
                 return view('core.user.user')->with('user', $user)->with('roles', $roles);
         }
         return redirect('/backend_mps/login');
@@ -117,7 +135,10 @@ class UserController extends Controller
 
             if($id == $loginUserId){
                 $user = $this->userRepository->getObjByID($id);
-                $roles = DB::table('core_roles')->get();
+                // $roles = DB::table('core_roles')->get();
+                $current_user_role = Utility::getCurrentUserRole();
+                $except_role_array = [9999];
+                $roles      = $this->userRepository->getRolesWithExceptRoles($current_user_role, $except_role_array);
                 return view('core.user.user')->with('user', $user)->with('roles', $roles)->with('profile',true);
             }
             else{

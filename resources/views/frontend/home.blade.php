@@ -65,7 +65,7 @@
 
                 {!! Form::open(array('url' => '/search','files'=>true, 'id'=>'search', 'class'=> 'form-horizontal user-form-border')) !!}
                     <div class="form-group row">
-                        <label class="control-label" for="destination">Destination</label>
+                        <label class="control-label" for="destination">Destination / Property Name</label>
                         <div class="col-10 input-group">
                             <input class="form-control font_sz_11" type="text" value="" id="destination" name="destination" autocomplete="off">
                             <div class="input-group-addon">
