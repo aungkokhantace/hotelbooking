@@ -316,9 +316,11 @@
                             <li nav-id="modifier-create-modifierpanel"><a href="/backend_mps/hotel_room_type">List</a></li>
                         </ul>
                     </li> --}}
+                    @if (Auth::guard('User')->user()->role_id == 1 || Auth::guard('User')->user()->role_id == 2)
                     <li nav-id="modifier-create">
                         <a href="/backend_mps/hotel_room_type">Hotel Room Type</a>
                     </li>
+                    @endif
                     <li nav-id="modifier-create" class="has-sub">
                         <!-- <a href="javascript:;">
                             <b class="caret pull-right"></b>
