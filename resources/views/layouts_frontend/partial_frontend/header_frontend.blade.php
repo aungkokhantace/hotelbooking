@@ -164,7 +164,8 @@ $companyLogo    = \App\Core\Check::companyLogo();
                             <div class="language">
                                 <ul>
                                     <li>
-                                        <a href="#"><img src="/assets/shared/images/en_US.png"></a>
+                                        <!-- <a href="#"><img src="/assets/shared/images/en_US.png"></a> -->
+                                        <a href="#"><img src="/assets/shared/images/jp.png"></a>
                                     </li>
                                     <li style="text-decoration:underline;">
                                         <a href="#"><img src="/assets/shared/images/my_MM.png"></a>
