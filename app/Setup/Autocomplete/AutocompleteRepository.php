@@ -20,26 +20,30 @@ class AutocompleteRepository implements AutocompleteRepositoryInterface
     {
         $term = Input::get('term');
         $results = array();
-        $hotels = DB::select("SELECT * FROM hotels WHERE name like  '%$term%'");
+        // $hotels = DB::select("SELECT * FROM hotels WHERE name like  '%$term%'");
+        $hotels = DB::select("SELECT * FROM hotels WHERE name like  '$term%'");
         foreach($hotels as $hotel){
             array_push($results,$hotel->name);
         }
 
-        $countries = DB::select("SELECT * FROM countries WHERE name like  '%$term%'");
+        // $countries = DB::select("SELECT * FROM countries WHERE name like  '%$term%'");
+        $countries = DB::select("SELECT * FROM countries WHERE name like  '$term%'");
         foreach($countries as $country){
             array_push($results,$country->name);
         }
 
-        $cities = DB::select("SELECT * FROM cities WHERE name like  '%$term%'");
+        // $cities = DB::select("SELECT * FROM cities WHERE name like  '%$term%'");
+        $cities = DB::select("SELECT * FROM cities WHERE name like  '$term%'");
         foreach($cities as $city){
             array_push($results,$city->name);
         }
 
-        $townships = DB::select("SELECT * FROM townships WHERE name like  '%$term%'");
+        // $townships = DB::select("SELECT * FROM townships WHERE name like  '%$term%'");
+        $townships = DB::select("SELECT * FROM townships WHERE name like  '$term%'");
         foreach($townships as $township){
             array_push($results,$township->name);
         }
-
+        
         return $results;
     }
 }

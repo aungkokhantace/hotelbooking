@@ -14,6 +14,8 @@ use Stripe\Customer;
 use Stripe\Stripe;
 use Mail;
 use App\Payment\PaymentUtility;
+use App\Core\Utility;
+use App\Core\ReturnMessage;
 
 class PaymentTestController extends Controller
 {
@@ -128,5 +130,22 @@ class PaymentTestController extends Controller
 
         dd($stripePaymentResult);
 
+    }
+
+    public function emailTest(){
+        $emails              = ['aungkokhantace@gmail.com'];
+        $template           = "booking_cancellation_start";
+        $subject            = "Email Function Test";
+        $logMessage         = "Test Log";
+
+        $mailResult         = Utility::sendMail($template,$emails,$subject,$logMessage);
+
+        if ($mailResult['aceplusStatusCode'] == ReturnMessage::OK){
+            alert()->success('Sending email was successful !')->persistent('OK');
+        }
+        else{
+            alert()->success('Sending email failed !')->persistent('OK');
+        }
+        return redirect()->action('Frontend\HomeController@index');
     }
 }

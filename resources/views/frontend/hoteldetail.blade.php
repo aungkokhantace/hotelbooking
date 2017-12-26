@@ -191,7 +191,8 @@
                             @if($total_available_room != 0)
                             @foreach($roomCategories as $roomCategory)
                                 @if($roomCategory->available_room_count > 0)
-                                <input type="hidden" id="available_room_categories" name="available_room_categories[]" value="{{$roomCategory->id }}">
+                                <!-- <input type="hidden" id="available_room_categories" name="available_room_categories[]" value="{{$roomCategory->id }}"> -->
+                                <input type="hidden" name="available_room_categories[]" value="{{$roomCategory->id }}">
                                 <tr>
                                     <td>
                                         <ul class="fa-ul">
@@ -243,7 +244,11 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="detailmodal_text">
+                                                                    <h4>Price Per Night : USD {{$roomCategory->price}}</h4>
                                                                     <h4>Room size : {{$roomCategory->square_metre}} m<sup>2</sup></h4>
+                                                                    <h4>Bed Type : {{$roomCategory->bed_types->name}}</h4>
+                                                                    <h4>Extra Bed : {{$roomCategory->extra_bed_allowed}}</h4>
+                                                                    <h5>Description</h5>
                                                                     <p>{{$roomCategory->description}}</p>
                                                                 </div>
                                                                 <div class="detailmodal_text row">
@@ -288,7 +293,8 @@
                                             </li>
                                             <!-- <li><img class="fa-lis" src="/assets/shared/images/cityview.png">View</li> -->
                                             <li><img class="fa-lis" src="/assets/shared/images/16sqm.png">{{$roomCategory->square_metre}} s.q.m</li>
-                                            <li><img class="fa-lis" src="/assets/shared/images/signlebed.png">{{$roomCategory->bed_type}}</li>
+                                            <li><img class="fa-lis" src="/assets/shared/images/signlebed.png">Bed : {{$roomCategory->bed_types->name}}</li>
+                                            <li><img class="fa-lis" src="/assets/shared/images/signlebed.png">Extra Bed : {{$roomCategory->extra_bed_allowed}}</li>
                                         </ul>
                                     </td>
                                     <td>
@@ -313,7 +319,13 @@
                                         </ul>
                                     </td>
                                     <td>
-                                        <input type="number" name="number_{{$roomCategory->id}}" id="number_{{$roomCategory->id}}" class="floatLabel form-control" min="0" max="{{$roomCategory->available_room_count}}">
+                                        <!-- <input type="number" name="number_{{$roomCategory->id}}" id="number_{{$roomCategory->id}}" class="floatLabel form-control" min="0" max="{{$roomCategory->available_room_count}}"> -->
+                                        <select class="form-control" name="number_{{$roomCategory->id}}" id="number_{{$roomCategory->id}}">
+                                          <option value="0">0</option>
+                                          @for($i = 1; $i <= $roomCategory->available_room_count; $i++)
+                                            <option value="{{$i}}">{{$i}}</option>
+                                          @endfor
+                                        </select>
                                     </td>
 
                                     @if(isset($book_now_flag) && $book_now_flag == 1)
@@ -402,10 +414,10 @@
                             <p>From {{$hotel->check_in_time}}</p>
                             <h4>Check-out</h4>
                             <p>Until {{$hotel->check_out_time}}</p>
-                            <!-- <h4>Extra Bed</h4>
-                            <p>The maximum number of extra beds in a room is 1</p>
-                            <h4>Cards accepted at this property</h4>
-                            <p><img src="/assets/shared/images/visa.jpg"></p> -->
+                            <h4>Breakfast Start Time</h4>
+                            <p>From {{$hotel->breakfast_start_time}}</p>
+                            <h4>Breakfast End Time</h4>
+                            <p>Until {{$hotel->breakfast_end_time}}</p>
                         </div>
                     </div>	 <!-- /.room-tabel -->
                 </div><!-- /.row -->
@@ -535,7 +547,8 @@
         function book() {
             var null_value_flag = 0; //if 0, all fields are null; and if 1, there is at least a value
 
-            $(':input[type="number"][name^="number_"]').each(function(){
+            // $(':input[type="number"][name^="number_"]').each(function(){
+            $('[name^="number_"]').each(function(){
                 if(this.value > 0 && this.value != "" && this.value != null){
                     null_value_flag = 1; //set to 1 as soon as there is a value in input type = number
                 }

@@ -43,6 +43,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use App\Setup\HotelGallery\HotelGalleryRepository;
+use App\Setup\BedType\BedType;
+use App\Setup\BedType\BedTypeRepository;
+use App\Setup\BedType\BedTypeRepositoryInterface;
 
 //use Redirect;
 
@@ -238,6 +241,22 @@ class HotelDetailController extends Controller
             //get hotel gallery images
             $hotelGalleryRepo   = new HotelGalleryRepository();
             $hotelGalleryImages = $hotelGalleryRepo->getObjsByHotelID($hotel_id);
+
+            //change to desired time formats (eg. 02:00 PM) to display in Good to Know
+            $hotel->check_in_time = date("h:i A", strtotime($hotel->check_in_time));
+            $hotel->check_out_time = date("h:i A", strtotime($hotel->check_out_time));
+            $hotel->breakfast_start_time = date("h:i A", strtotime($hotel->breakfast_start_time));
+            $hotel->breakfast_end_time = date("h:i A", strtotime($hotel->breakfast_end_time));
+
+            foreach($roomCategories as $roomCategory){
+                //if extrabed is allowed, display extra bed price also
+                if($roomCategory->extra_bed_allowed == 1){
+                    $roomCategory->extra_bed_allowed = "Yes (USD ".$roomCategory->extra_bed_price.")";
+                }
+                else{
+                    $roomCategory->extra_bed_allowed = "No";
+                }
+            }
 
             return view('frontend.hoteldetail')
                 ->with('hotel', $hotel)

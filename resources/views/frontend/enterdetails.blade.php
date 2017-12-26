@@ -195,12 +195,14 @@
                                                             <div class="col-sm-4 pd_lf_5">
                                                                 <label class="col-sm-4 col-form-labels">Extrabed</label>
                                                                 <div class="col-sm-8 pd_rg_10">
-                                                                    <select class="col-sm-12 pd_rg_12 formcontrols extrabed" name="{{$available_room_category->id."_".($i+1)."_extrabed"}}" id="extra-{{$i}}">
+                                                                    <!-- <select class="col-sm-12 pd_rg_12 formcontrols extrabed" name="{{$available_room_category->id."_".($i+1)."_extrabed"}}" id="extra-{{$i}}"> -->
+                                                                    <select class="col-sm-12 pd_rg_12 formcontrols extrabed" name="{{$available_room_category->id."_".($i+1)."_extrabed"}}" id="extra-{{$available_room_category->id."_".($i+1)}}">
                                                                         <option value="no">No</option>
                                                                         <option value="yes">Yes</option>
                                                                     </select>
                                                                 </div>
-                                                                <label class="col-sm-12 col-form-labels" style="visibility:hidden" id="extra-price-{{$i}}">
+                                                                <!-- <label class="col-sm-12 col-form-labels" style="visibility:hidden" id="extra-price-{{$i}}"> -->
+                                                                <label class="col-sm-12 col-form-labels" style="visibility:hidden" id="extra-price-{{$available_room_category->id."_".($i+1)}}">
                                                                     Extrabed Price: $ {{$available_room_category->extra_bed_price}}
                                                                 </label>
                                                             </div>
@@ -397,12 +399,13 @@
             $('.extrabed').on('change', function() {
                 var id      = $(this).attr('id');
                 var l_id    = id.split('-');
-                console.log(l_id);
                 var extra   = $(this).val();
                 if(extra == 'yes'){
+                    // $('#extra-price-'+l_id[1]).css({"visibility":"visible"});
                     $('#extra-price-'+l_id[1]).css({"visibility":"visible"});
                 }
                 else{
+                    // $('#extra-price-'+l_id[1]).css({"visibility":"hidden"});
                     $('#extra-price-'+l_id[1]).css({"visibility":"hidden"});
                 }
 

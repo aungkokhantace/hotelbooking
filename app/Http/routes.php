@@ -94,6 +94,9 @@ Route::group(['middleware' => 'web'], function () {
     //Display Tour Information
     Route::get('tour_information', array('as'=>'/tour_information', 'uses'=>'Frontend\TourInformationController@index'));
 
+    //Email function test
+    Route::get('/email_test', 'Payment\PaymentTestController@emailTest');
+
     //Backend
     // Route::get('backend_myanmarpolestar', 'Auth\AuthController@showLogin');
     Route::group(['prefix' => 'backend_mps'], function () {

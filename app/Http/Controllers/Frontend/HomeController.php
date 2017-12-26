@@ -148,6 +148,8 @@ class HomeController extends Controller
     public function autocompleteDestination(){
         $autocompleteRepo = new AutocompleteRepository();
         $results = $autocompleteRepo->getDestinations();
+        //sort array values alphabetically
+        sort($results);
         return \Response::json($results);
     }
 
