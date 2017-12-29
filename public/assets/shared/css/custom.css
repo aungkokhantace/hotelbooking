@@ -340,3 +340,8 @@ button.closed {
     padding-bottom: 570px;
 }
 }
+
+/* frontend nav css */
+.navbar-inverse {
+    background-color: white;
+}

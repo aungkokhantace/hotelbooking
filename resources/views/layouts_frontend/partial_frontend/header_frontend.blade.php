@@ -110,7 +110,23 @@ $companyLogo    = \App\Core\Check::companyLogo();
                             <a href="/">Home</a>
                         </li>
                         <li>
-                            <a href="/comingsoon">Destinations</a>
+                            {{--  <a href="/comingsoon">Service</a>  --}}
+                            <div class="login">
+                                <ul>
+                                    <li>
+                                        <div class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                Services 
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="/transportation_information">Transportation Information</a></li>
+                                                <li><a href="/tour_information">Tour Information</a></li>
+                                            </ul>
+                                        </div>
+                                       
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
                         <li>
                             <a href="/aboutus">About Us</a>

@@ -244,6 +244,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="detailmodal_text">
+                                                                    <h4>Category Name : {{$roomCategory->name}}</h4>
                                                                     <h4>Price Per Night : USD {{$roomCategory->price}}</h4>
                                                                     <h4>Room size : {{$roomCategory->square_metre}} m<sup>2</sup></h4>
                                                                     <h4>Bed Type : {{$roomCategory->bed_types->name}}</h4>
