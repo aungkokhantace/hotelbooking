@@ -218,8 +218,8 @@
                                                                     @if(isset($roomCategory->images) && count($roomCategory->images)>0)
                                                                         @foreach($roomCategory->images as $image)
                                                                             <div>
-                                                                                <img data-u="image" src="{{$image->img_path}}" />
-                                                                                <img data-u="thumb" src="{{$image->img_path}}" />
+                                                                                <img data-u="image" src="/images/upload/{{$image->img_path}}" />
+                                                                                <img data-u="thumb" src="/images/upload/{{$image->img_path}}" />
                                                                             </div>
                                                                         @endforeach
                                                                     @else

@@ -243,7 +243,7 @@ class HotelDetailController extends Controller
             //get hotel gallery images
             $hotelGalleryRepo   = new HotelGalleryRepository();
             $hotelGalleryImages = $hotelGalleryRepo->getObjsByHotelID($hotel_id);
-
+          
             //change to desired time formats (eg. 02:00 PM) to display in Good to Know
             $hotel->check_in_time = date("h:i A", strtotime($hotel->check_in_time));
             $hotel->check_out_time = date("h:i A", strtotime($hotel->check_out_time));
@@ -266,8 +266,6 @@ class HotelDetailController extends Controller
             $gst                    = $config_gov[0]->value;
             
             $service_tax            = Utility::getServiceTax($hotel_id);
-
-            
 
             return view('frontend.hoteldetail')
                 ->with('hotel', $hotel)
