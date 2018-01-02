@@ -146,6 +146,24 @@ class SearchController extends Controller
         }
         //end hotel search result
 
+        //Start Rendering Pagination
+        $hotelArr                       = array();
+        $countHotel                     = 0;
+        foreach($hotels as $hotel){
+             // set hotel to hotel array
+             $countHotel++;
+             array_push($hotelArr,$hotel);
+        }
+        $currentPage                    = LengthAwarePaginator::resolveCurrentPage();
+        $col                            = new Collection($hotelArr);
+        $perPage                        = 12;
+        $currentPageSearchResults       = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $hotelEntries                   = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage);
+        $hotelEntries->setPath($request->url());
+        $hotelEntries->appends($request->except(['page']));
+        $limitNum                       = $perPage - $countHotel;
+        // End Rendering Pagination
+        
         //start suggested hotels
 
         //create hotel_id array
@@ -173,23 +191,24 @@ class SearchController extends Controller
 
         $townshipIdArr = array_unique($townshipIdArr);  //remove duplicate indexes
         $townshipIdArr = array_values($townshipIdArr); //re-index array after using array_unique function
-
-        $suggestedHotels= $hotelRepo->getSuggestedHotelsByDestination($hotelIdArr,$countryIdArr,$cityIdArr,$townshipIdArr);
-        // dd($suggestedHotels); //get suggested hotels
-
-        foreach($suggestedHotels  as $sugg_hotel){
-            $minRoomCategoryPrice = $hRoomCategoryRepo->getMinPriceByHotelId($sugg_hotel->id);
-            $sugg_hotel->min_price = $minRoomCategoryPrice; //get mininum price to show in search result
-
-            if(isset($minRoomCategoryPrice) && $minRoomCategoryPrice != null){
-//                $minRoomCategoryPrice = $hRoomCategoryRepo->getRoomTypeByHotelIdAndPrice($sugg_hotel->id,$minRoomCategoryPrice);
-                $roomCategoryWithMinPrice = $hRoomCategoryRepo->getRoomTypeByHotelIdAndPrice($sugg_hotel->id,$minRoomCategoryPrice);
-                $sugg_hotel->room_type = $roomCategoryWithMinPrice; //get room type with minimum price to show in search result
-            }
-            else{
-                $sugg_hotel->room_type = null;
+        $suggestedHotels        = array();
+        if($limitNum > 0){
+            $suggestedHotels    = $hotelRepo->getSuggestedHotelsByDestinationWithLimit($hotelIdArr,$countryIdArr,$cityIdArr,$townshipIdArr,$limitNum);
+            foreach($suggestedHotels  as $sugg_hotel){
+                $minRoomCategoryPrice = $hRoomCategoryRepo->getMinPriceByHotelId($sugg_hotel->id);
+                $sugg_hotel->min_price = $minRoomCategoryPrice; //get mininum price to show in search result
+    
+                if(isset($minRoomCategoryPrice) && $minRoomCategoryPrice != null){
+    //                $minRoomCategoryPrice = $hRoomCategoryRepo->getRoomTypeByHotelIdAndPrice($sugg_hotel->id,$minRoomCategoryPrice);
+                    $roomCategoryWithMinPrice = $hRoomCategoryRepo->getRoomTypeByHotelIdAndPrice($sugg_hotel->id,$minRoomCategoryPrice);
+                    $sugg_hotel->room_type = $roomCategoryWithMinPrice; //get room type with minimum price to show in search result
+                }
+                else{
+                    $sugg_hotel->room_type = null;
+                }
             }
         }
+        
         //end suggested hotels
 
         //start getting facilities
@@ -218,18 +237,21 @@ class SearchController extends Controller
             $hotel->hotelFacilities     = $hotelFacilityArr;
             $hotelFacilityArr           = array();
         }
-        
         //end getting hotel facility
 
         $price_filters                  = Utility::getPriceFilter();
 
+
+
         return view('frontend.searchresult')
-            ->with('hotels', $hotels)
+            // ->with('hotels', $hotels)
+            ->with('hotels',$hotelEntries)
             ->with('suggestedHotels', $suggestedHotels)
             ->with('destination', $destination)
             ->with('facilities', $facilities)
             ->with('landmarks', $landmarks)
-            ->with('price_filters',$price_filters);
+            ->with('price_filters',$price_filters)
+            ->with('countHotel',$countHotel);
     }
 
     public function getLocations()

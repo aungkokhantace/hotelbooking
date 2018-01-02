@@ -112,9 +112,9 @@
                 <div class="col-md-9 search_list">
                     <!-- First Blog Post -->
                     @if(count($hotels)>1)
-                        <h2>{{isset($destination) && $destination != "" ? $destination:'Destination'}} : {{count($hotels)}} properties found</h2>
+                        <h2>{{isset($destination) && $destination != "" ? $destination:'Destination'}} : {{$countHotel}} properties found</h2>
                     @else
-                        <h2>{{isset($destination) && $destination != "" ? $destination:'Destination'}} : {{count($hotels)}} property found</h2>
+                        <h2>{{isset($destination) && $destination != "" ? $destination:'Destination'}} : {{$countHotel}} property found</h2>
                     @endif
 
                     <p class="lead">
@@ -188,6 +188,11 @@
                                             </div>
                                         </div>
                                     @endforeach
+                                    <!--start rendering paginator-->
+                                        <div class="row">
+                                            {!! $hotels->render() !!}
+                                        </div>
+                                    <!--end rendering paginator-->
 
                                     <!--Suggested Hotels are shown if search result count is less than 10 -->
                                     @if(isset($suggestedHotels) && count($suggestedHotels)>0 && count($hotels)<10)

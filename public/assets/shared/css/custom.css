@@ -341,7 +341,19 @@ button.closed {
 }
 }
 
-/* frontend nav css */
+/* start frontend nav css */
 .navbar-inverse {
     background-color: white;
+}
+
+.span_middle{
+    text-align: center;
+}
+/* end frontend nav css */
+
+
+.remove_arrow::-webkit-inner-spin-button,
+remove_arrow::-webkit-outer-spin-button{
+    -webkit-appearance: none; 
+    margin: 0; 
 }

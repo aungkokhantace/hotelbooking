@@ -9,6 +9,8 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Core\Config\ConfigRepository;
+use App\Core\Utility;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
@@ -251,12 +253,21 @@ class HotelDetailController extends Controller
             foreach($roomCategories as $roomCategory){
                 //if extrabed is allowed, display extra bed price also
                 if($roomCategory->extra_bed_allowed == 1){
-                    $roomCategory->extra_bed_allowed = "Yes (USD ".$roomCategory->extra_bed_price.")";
+                    $roomCategory->extra_bed_allowed = "A/V (USD ".$roomCategory->extra_bed_price.")";
                 }
                 else{
-                    $roomCategory->extra_bed_allowed = "No";
+                    $roomCategory->extra_bed_allowed = "N/V";
                 }
             }
+
+            // To show government tax and service tax on available room table
+            $configRepo             = new ConfigRepository();
+            $config_gov             = $configRepo->getGST();
+            $gst                    = $config_gov[0]->value;
+            
+            $service_tax            = Utility::getServiceTax($hotel_id);
+
+            
 
             return view('frontend.hoteldetail')
                 ->with('hotel', $hotel)
@@ -273,7 +284,9 @@ class HotelDetailController extends Controller
                 ->with('room_availables_count',$room_availables_count)
                 ->with('restaurantCategoryArr',$restaurantCategoryArr)
                 ->with('total_available_room',$total_available_room)
-                ->with('hotelGalleryImages',$hotelGalleryImages);
+                ->with('hotelGalleryImages',$hotelGalleryImages)
+                ->with('gst',$gst)
+                ->with('service_tax',$service_tax);
         }
         catch(\Exception $e){
             //write log here

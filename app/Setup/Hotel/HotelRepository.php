@@ -416,5 +416,21 @@ class HotelRepository implements HotelRepositoryInterface
         $objs   = User::select('id','email','role_id')->where('id',$id)->whereNull('deleted_at')->first();
         return $objs;
     }
+
+    public function getSuggestedHotelsByDestinationWithLimit($hotelIdArr,$countryIdArr,$cityIdArr,$townshipIdArr,$limitNum){
+        $objs  = Hotel::whereHas('city', function($query) use($hotelIdArr,$cityIdArr) {
+                            $query->whereIn('cities.id', $cityIdArr);
+                            $query->whereNotIn('hotels.id', $hotelIdArr);
+                        })
+                      ->orWhereHas('township', function($query) use($hotelIdArr,$townshipIdArr) {
+                            $query->whereIn('townships.id', $townshipIdArr);
+                            $query->whereNotIn('hotels.id', $hotelIdArr);
+                        })
+                      ->limit($limitNum)
+                      ->get();
+
+        return $objs;
+    }
+
 }
 

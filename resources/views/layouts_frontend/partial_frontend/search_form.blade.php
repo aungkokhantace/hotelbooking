@@ -38,25 +38,55 @@
     <div class="col-sm-4 pd_rg_10">
         <label class="control-label" for="check_out">Room</label>
         @if(Session::has('room'))
-            <input type="number" id="room" class="floatLabel form-control" name="room" value="{{session('room')}}" min="1">
+            {{--  <input type="number" id="room" class="floatLabel form-control" name="room" value="{{session('room')}}" min="1">  --}}
+            <select class="form-control" name="room" id="room">
+                @for($i = 0; $i <= 100; $i++)
+                    <option value="{{$i}}" {{$i==session('room')?'selected':''}}>{{$i}}</option>
+                @endfor
+            </select>
         @else
-            <input type="number" id="room" class="floatLabel form-control" name="room" value="" min="1">
+            {{--  <input type="number" id="room" class="floatLabel form-control" name="room" value="" min="1">  --}}
+            <select class="form-control" name="room" id="room">
+                @for($i = 0; $i <= 100; $i++)
+                    <option value="{{$i}}">{{$i}}</option>
+                @endfor
+            </select>
         @endif
     </div>
     <div class="col-sm-4 pd_lf_5">
         <label class="control-label" for="check_out">Adults</label>
         @if(Session::has('adults'))
-            <input type="number" id="adults" class="floatLabel form-control" name="adults" value="{{session('adults')}}" min="1">
+            {{--  <input type="number" id="adults" class="floatLabel form-control" name="adults" value="{{session('adults')}}" min="1">  --}}
+            <select class="form-control" name="adults" id="adults">
+                @for($i = 0; $i <= 100; $i++)
+                    <option value="{{$i}}" {{$i==session('adults')?'selected':''}}>{{$i}}</option>
+                @endfor
+            </select>
         @else
-            <input type="number" id="adults" class="floatLabel form-control" name="adults" value="" min="1">
+            {{--  <input type="number" id="adults" class="floatLabel form-control" name="adults" value="" min="1">  --}}
+            <select class="form-control" name="adults" id="adults">
+                @for($i = 0; $i <= 100; $i++)
+                    <option value="{{$i}}">{{$i}}</option>
+                @endfor
+            </select>
         @endif
     </div>
     <div class="col-sm-4 pd_lf_5">
         <label class="control-label" for="check_out">Children</label>
         @if(Session::has('children'))
-            <input type="number" id="children" class="floatLabel form-control" name="children" value="{{session('children')}}" min="1">
+            {{--  <input type="number" id="children" class="floatLabel form-control" name="children" value="{{session('children')}}" min="1">  --}}
+            <select class="form-control" name="children" id="children">
+                @for($i = 0; $i <= 100; $i++)
+                    <option value="{{$i}}" {{$i==session('children')?'selected':''}}>{{$i}}</option>
+                @endfor
+            </select>
         @else
-            <input type="number" id="children" class="floatLabel form-control" name="children" value="" min="1">
+            {{--  <input type="number" id="children" class="floatLabel form-control" name="children" value="" min="1">  --}}
+            <select class="form-control" name="children" id="children">
+                @for($i = 0; $i <= 100; $i++)
+                    <option value="{{$i}}">{{$i}}</option>
+                @endfor
+            </select>
         @endif
 
     </div>

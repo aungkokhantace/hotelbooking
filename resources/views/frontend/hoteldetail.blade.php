@@ -316,16 +316,20 @@
                                     </td>
                                     <td>
                                         <ul class="fa-ul price_night">
-                                            <li>{{$currency.' '.number_format($roomCategory->price,2)}}</li>
+                                            <li>
+                                                {{$currency.' '.number_format($roomCategory->price,2)}}<br>
+                                                {{'+'.number_format($gst,1).'%'}}<br>
+                                                {{'+'.number_format($service_tax,1).'%'}}
+                                            </li>
                                         </ul>
                                     </td>
                                     <td>
                                         <!-- <input type="number" name="number_{{$roomCategory->id}}" id="number_{{$roomCategory->id}}" class="floatLabel form-control" min="0" max="{{$roomCategory->available_room_count}}"> -->
                                         <select class="form-control" name="number_{{$roomCategory->id}}" id="number_{{$roomCategory->id}}">
-                                          <option value="0">0</option>
-                                          @for($i = 1; $i <= $roomCategory->available_room_count; $i++)
-                                            <option value="{{$i}}">{{$i}}</option>
-                                          @endfor
+                                            <option value="0">0</option>
+                                            @for($i = 1; $i <= $roomCategory->available_room_count; $i++)
+                                                <option value="{{$i}}">{{$i}}</option>
+                                            @endfor
                                         </select>
                                     </td>
 
