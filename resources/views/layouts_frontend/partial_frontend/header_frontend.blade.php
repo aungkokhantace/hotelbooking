@@ -184,7 +184,7 @@ $companyLogo    = \App\Core\Check::companyLogo();
                                         <a href="#"><img src="/assets/shared/images/jp.png"></a>
                                     </li>
                                     <li style="text-decoration:underline;">
-                                        <a href="#"><img src="/assets/shared/images/my_MM.png"></a>
+                                        <a href="#"><img src="/assets/shared/images/en_US.png"></a>
                                     </li>
                                 </ul>
                             </div>
