@@ -21,6 +21,10 @@ $companyLogo    = \App\Core\Check::companyLogo();
 
     <title>Myanmar Polestar</title>
 
+    <!-- for entire site font -->
+    <link media="all" type="text/css" rel="stylesheet" href="/assets/shared/css/font-style.css">
+    <!-- for entire site font -->
+
     <!-- Bootstrap Core CSS -->
     <link href="/assets/shared/css/bootstrap.min.css" rel="stylesheet">
 
@@ -116,14 +120,14 @@ $companyLogo    = \App\Core\Check::companyLogo();
                                     <li>
                                         <div class="dropdown">
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                                Services 
+                                                Services
                                             </a>
                                             <ul class="dropdown-menu">
                                                 <li><a href="/transportation_information">Transportation Information</a></li>
                                                 <li><a href="/tour_information">Tour Information</a></li>
                                             </ul>
                                         </div>
-                                       
+
                                     </li>
                                 </ul>
                             </div>
