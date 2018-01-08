@@ -258,6 +258,13 @@ class HotelDetailController extends Controller
                 else{
                     $roomCategory->extra_bed_allowed = "N/V";
                 }
+
+                if($roomCategory->breakfast_included == 1){
+                    $roomCategory->breakfast_included = "A/V";
+                }
+                else{
+                    $roomCategory->breakfast_included = "N/V";
+                }
             }
 
             // To show government tax and service tax on available room table

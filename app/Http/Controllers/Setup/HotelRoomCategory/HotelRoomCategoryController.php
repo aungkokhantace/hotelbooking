@@ -153,12 +153,13 @@ class HotelRoomCategoryController extends Controller
         $square_metre       = Input::get('square_metre');
         $capacity           = Input::get('capacity');
         $booking_cutoff_day = Input::get('booking_cutoff_day');
-        $extra_bed_allowed  = Input::get('extra_bed_allowed') == "true"? 1: 0;
+        $extra_bed_allowed  = Input::get('extra_bed_allowed') == "true"? 1 : 0;
         $extra_bed_price    = Input::get('extra_bed_price');
         $bed_type           = Input::get('bed_type');
         $description        = Input::get('description');
         $price              = Input::get('price');
         $remark             = Input::get('remark');
+        $breakfast_included = Input::get('breakfast_included') == "true"? 1 : 0;
 
         //get Room Amenity Data
         $amenities = Input::get('amenity_id');
@@ -172,7 +173,7 @@ class HotelRoomCategoryController extends Controller
             }
 
         }
-        // dd($amenityAry);
+       
         //End get Room Amenity Data
 
         //get Room Facilities Data
@@ -204,6 +205,7 @@ class HotelRoomCategoryController extends Controller
             $paramObj->description          = $description;
             $paramObj->price                = $price;
             $paramObj->remark               = $remark;
+            $paramObj->breakfast_included   = $breakfast_included;
 
             $result                         = $this->repo->create($paramObj);
             $lastRoomCategoryId             = $result['lastId'];    //get last h_room_category id
@@ -219,10 +221,10 @@ class HotelRoomCategoryController extends Controller
             if(Input::hasFile('file'))
             {
                 $roomCategoryImageRepo          = new RoomCategoryImageRepository();
-                $firstRoomCategoryImage = $roomCategoryImageRepo->getFirstRoomCategoryImageByHotelRoomCategoryId($id);
-                
-                $images                     = Input::file('file');
-                $count                      = 1;
+                $firstRoomCategoryImage         = $roomCategoryImageRepo->getFirstRoomCategoryImageByHotelRoomCategoryId($lastRoomCategoryId);
+                // dd($firstRoomCategoryImage);
+                $images                         = Input::file('file');
+                $count                          = 1;
                 foreach($images as $image){
 
                     if (! is_null($image)) {

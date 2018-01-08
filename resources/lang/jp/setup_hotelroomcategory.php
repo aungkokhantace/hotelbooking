@@ -13,7 +13,7 @@ return [
     'room-type'             => 'Room Type - JP',
     'name'                  => 'Name - JP',
     'price'                 => 'Price - JP',
-    'sqm'                   => 'S.Q.M - JP',
+    'sqm'                   => 'Room Area - JP',
     'booking'               => 'Booking CutOff Day - JP',
     'extra-allow'           => 'Extra Bed Allowed - JP',
     'extra-price'           => 'Extra Bed Price - JP',

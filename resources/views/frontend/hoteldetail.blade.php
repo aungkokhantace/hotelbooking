@@ -296,6 +296,7 @@
                                             <li><img class="fa-lis" src="/assets/shared/images/16sqm.png">{{$roomCategory->square_metre}} s.q.m</li>
                                             <li><img class="fa-lis" src="/assets/shared/images/signlebed.png">Bed : {{$roomCategory->bed_types->name}}</li>
                                             <li><img class="fa-lis" src="/assets/shared/images/signlebed.png">Extra Bed : {{$roomCategory->extra_bed_allowed}}</li>
+                                            <li><img class="fa-lis" src="/assets/shared/images/breakfast.png">Breakfast : {{$roomCategory->breakfast_included}}</li>
                                         </ul>
                                     </td>
                                     <td>

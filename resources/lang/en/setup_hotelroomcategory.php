@@ -13,7 +13,7 @@ return [
     'room-type'             => 'Room Type',
     'name'                  => 'Name',
     'price'                 => 'Price',
-    'sqm'                   => 'S.Q.M',
+    'sqm'                   => 'Room Area',
     'booking'               => 'Booking CutOff Day',
     'extra-allow'           => 'Extra Bed Allowed',
     'extra-price'           => 'Extra Bed Price',
