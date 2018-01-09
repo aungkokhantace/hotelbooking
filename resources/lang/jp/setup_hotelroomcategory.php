@@ -15,6 +15,7 @@ return [
     'price'                 => 'Price - JP',
     'sqm'                   => 'Room Area - JP',
     'booking'               => 'Booking CutOff Day - JP',
+    'breakfast-include'     => 'Breakfast Included - JP',
     'extra-allow'           => 'Extra Bed Allowed - JP',
     'extra-price'           => 'Extra Bed Price - JP',
     'capacity'              => 'Capacity - JP',

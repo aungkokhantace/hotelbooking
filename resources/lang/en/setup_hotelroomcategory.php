@@ -15,6 +15,7 @@ return [
     'price'                 => 'Price',
     'sqm'                   => 'Room Area',
     'booking'               => 'Booking CutOff Day',
+    'breakfast-include'     => 'Breakfast Included',
     'extra-allow'           => 'Extra Bed Allowed',
     'extra-price'           => 'Extra Bed Price',
     'capacity'              => 'Capacity',

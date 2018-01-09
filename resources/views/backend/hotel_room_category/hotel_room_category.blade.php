@@ -224,8 +224,8 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            {{--  <label for="extra_bed_allowed">{{trans('setup_hotelroomcategory.extra-allow')}}</label>  --}}
-            <label for="breakfast_included">Breakfast Included</label>
+            <label for="extra_bed_allowed">{{trans('setup_hotelroomcategory.breakfast-include')}}</label>
+            {{--  <label for="breakfast_included">Breakfast Included</label>  --}}
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             @if(isset($hotel_room_category))
