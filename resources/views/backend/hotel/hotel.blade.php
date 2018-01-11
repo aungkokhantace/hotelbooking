@@ -7,12 +7,13 @@
     <h1 class="page-header">{{isset($hotel) ? trans('setup_hotel.title-edit') : trans('setup_hotel.title-entry') }}</h1>
 
     @if(isset($hotel))
-        {!! Form::open(array('url' => '/backend_mps/hotel/update','files'=>true, 'id'=>'hotel', 'onsubmit'=>'return validate()', 'class'=> 'form-horizontal user-form-border')) !!}
+        {{--  {!! Form::open(array('url' => '/backend_mps/hotel/update','files'=>true, 'id'=>'hotel', 'onsubmit'=>'return validate()', 'class'=> 'form-horizontal user-form-border')) !!}  --}}
+        {!! Form::open(array('url' => '/backend_mps/hotel/update','files'=>true, 'id'=>'hotel', 'class'=> 'form-horizontal user-form-border')) !!}
 
     @else
         {!! Form::open(array('url' => '/backend_mps/hotel/store','files'=>true, 'id'=>'hotel', 'class'=> 'form-horizontal user-form-border')) !!}
     @endif
-    <input type="hidden" name="id" value="{{isset($hotel)? $hotel->id:''}}"/>
+    <input type="hidden" name="id" value="{{isset($hotel)? $hotel->id:''}}" id="hidden_id"/>
     <br/>
 
     <div class="row">
@@ -945,7 +946,7 @@
         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="submit" name="submit" value="{{isset($hotel)? trans('setup_hotel.btn-update') : trans('setup_hotel.btn-add')}}" class="form-control btn-primary">
+            <input type="submit" value="{{isset($hotel)? trans('setup_hotel.btn-update') : trans('setup_hotel.btn-add')}}" class="form-control btn-primary">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <input type="button" value="{{trans('setup_hotel.btn-cancel')}}" class="form-control cancel_btn" onclick="cancel_setup('hotel')">
@@ -1097,10 +1098,6 @@
                     phone                   : 'required',
                     photo                   : 'required',
                     star                    : 'required',
-//                    email: {
-//                        required: true,
-//                        email: true
-//                    },
                     country_id              : 'required',
                     city_id                 : 'required',
                     township_id             : 'required',
@@ -1116,7 +1113,21 @@
 
                     user_name               : 'required',
                     display_name            : 'required',
-                    user_email              : 'required',
+                    user_email   	        : {
+                        required 	: true,
+                        email	 	: true,
+                        remote: {
+                            url: "/backend_mps/hotel/check_user_email/"+$("#hidden_id").val(),
+                            type: "get",
+                            data:
+                            {
+                                email: function()
+                                {
+                                    return $('#user_email').val();
+                                }
+                            }
+                        }
+                    },
                     password                : 'required',
                     conpassword             : {
                         required: "true",
@@ -1157,10 +1168,6 @@
                     phone                   : 'Phone is required',
                     photo                   : 'Photo is required',
                     star                    : 'Star is required',
-//                    email: {
-//                        required:'Email is required',
-//                        email   : 'Email is not valid'
-//                    },
                     country_id              : 'Country is required',
                     city_id                 : 'City is required',
                     township_id             : 'Township is required',
@@ -1174,32 +1181,36 @@
 
                     user_name               : 'User Name is required',
                     display_name            : 'Display Name is required',
-                    user_email              : 'User Email is required',
+                    user_email     	        : {
+                        required 	: 'Email is required',
+                        email 	 	: 'Email is invalid format',
+                        remote		: jQuery.validator.format("{0} is already taken.")
+                    },
                     password                : 'Password is required',
                     conpassword             : {
-                        required: "Confirm Password is required",
-                        equalTo: "Password and Confirm Password must match.",
+                        required    : "Confirm Password is required",
+                        equalTo     : "Password and Confirm Password must match.",
                     },
                     first_cancellation_day  : {
-                        required   : 'First Cancellation Day Count is required',
-                        greaterThan: "First Cancellation Day Count must be greater than Second Cancellation Day Count"
+                        required    : 'First Cancellation Day Count is required',
+                        greaterThan : "First Cancellation Day Count must be greater than Second Cancellation Day Count"
                     },
                     second_cancellation_day  : {
-                        required   : 'Second Cancellation Day is required',
-                        lessThan   : "Second Cancellation Day Count must be less than First Cancellation Day Count"
+                        required    : 'Second Cancellation Day is required',
+                        lessThan    : "Second Cancellation Day Count must be less than First Cancellation Day Count"
                     },
                     breakfast_fees          : {
-                        required: 'Breakfast Fee is required',
-                        number  : 'Breakfast Fee must be numeric',
+                        required    : 'Breakfast Fee is required',
+                        number      : 'Breakfast Fee must be numeric',
                     },
                     extrabed_fees           : {
-                        required: 'Extrabed Fee is required',
-                        number  : 'Extrabed Fee must be numeric',
+                        required    : 'Extrabed Fee is required',
+                        number      : 'Extrabed Fee must be numeric',
                     },
                     tax                     : {
-                        required: 'Tax is required',
-                        number  : 'Tax must be numeric',
-                        max     : 'Tax percentage should not be more than 100',
+                        required    : 'Tax is required',
+                        number      : 'Tax must be numeric',
+                        max         : 'Tax percentage should not be more than 100',
                     },
                    /* 'qty[]'           : 'Quantity is required',
                     'capacity[]'      : 'Capacity is required',

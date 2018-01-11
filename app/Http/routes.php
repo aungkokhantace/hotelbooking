@@ -126,6 +126,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('room/get_room/{id}', ['as' => 'backend_mps/room/get_room', 'uses' => 'Setup\Room\RoomController@getRoom']);
     Route::get('hotel/get_cities/{country_id}', ['as' => 'backend_mps/hotel/get_cities', 'uses' => 'Setup\Hotel\HotelController@getCities']);
     Route::get('hotel/get_townships/{city_id}', ['as' => 'backend_mps/hotel/get_townships', 'uses' => 'Setup\Hotel\HotelController@getTownships']);
+    // Route::get('hotel/check_user_email/{hotel_id}', ['as' => 'backend_mps/hotel/check_user_email', 'uses' => 'Setup\Hotel\HotelController@check_user_email']);
+    Route::get('hotel/check_user_email/{hotel_id}', ['as' => 'backend_mps/hotel/check_user_email', 'uses' => 'Setup\Hotel\HotelController@check_user_email']);    
 
     });
 

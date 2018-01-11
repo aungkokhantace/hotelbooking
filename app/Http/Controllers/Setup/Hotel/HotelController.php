@@ -1125,4 +1125,17 @@ class HotelController extends Controller
         $townships = DB::table('townships')->where('city_id', $city_id)->whereNull('deleted_at')->get();
         return \Response::json($townships);
     }
+
+    public function check_user_email($hotel_id){
+        $email      = Input::get('user_email');
+        $hotel      = Hotel::find($hotel_id);
+        
+        $users      = User::where('email','=',$email)->where('id', '!=', $hotel->admin_id)->whereNull('deleted_at')->get();
+        $result     = false;
+        if(count($users) == 0 ){
+            $result = true;
+        }
+
+        return \Response::json($result);
+    }
 }
