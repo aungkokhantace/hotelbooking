@@ -87,6 +87,16 @@
             <input type="button" class="form-control image_remove_btn" value="Remove Image" id="removeImage" name="removeImage">
         </div>
     </div>
+    <!-- for photo validation error -->
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label></label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+          <p class="text-danger">{{$errors->first('photo')}}</p>
+        </div>
+    </div>
+    <!-- for photo validation error -->
     <br /><br />
     {{--End File Upload--}}
 
@@ -94,7 +104,7 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="submit" name="submit" value="{{isset($amenities)? trans('setup_amenity.btn-update') : trans('setup_amenity.btn-add')}}" class="form-control btn-primary">
+            <input type="submit" name="submit_btn" value="{{isset($amenities)? trans('setup_amenity.btn-update') : trans('setup_amenity.btn-add')}}" class="form-control btn-primary">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <input type="button" value="{{trans('setup_amenity.btn-cancel')}}" class="form-control cancel_btn" onclick="cancel_setup('amenities')">
@@ -223,28 +233,6 @@
 @section('page_script')
     <script type="text/javascript">
         $(document).ready(function(){
-//            $('INPUT[type="file"]').change(function () {
-//                var ext = this.value.match(/\.(.+)$/)[1];
-//                var f=this.files[0];
-//                var fileSize = (f.size||f.fileSize);
-//                var imgkbytes = Math.round(parseInt(fileSize)/1024);
-//
-//                if(imgkbytes > 5000){
-//                    $('#image_error_fileSize').modal('show');
-//                    $('#site_logoPopUp').attr('src') = '';
-//                }
-//
-//                switch (ext) {
-//                    case 'jpg':
-//                    case 'jpeg':
-//                    case 'png':
-//                    case 'gif':
-//                        break;
-//                    default:
-//                        $('#image_error_fileFormat').modal('show');
-//                        $('#site_logoPopUp').attr('src') = '';
-//                }
-//            });
 
             //            Start fileupload js
             $(".add_image_div").click(function(){
@@ -271,6 +259,7 @@
                 // else{
                 switch (ext) {
                     case 'jpg':
+                    case 'JPG':
                     case 'jpeg':
                     case 'png':
                     case 'gif':

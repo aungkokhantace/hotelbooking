@@ -57,7 +57,7 @@
                                                 </div>
                                                 <div>
                                                     <div class="col-md-8 listing_left">
-                                                        
+
                                                         <div class="listing_tableright pull-right">
                                                             <h4>status-{{$booking->status_txt}}</h4>
                                                             <h3>{{$currency.' '.$booking->total_payable_amt}}</h3>
@@ -66,7 +66,7 @@
                                                         <p>&nbsp;</p>
                                                         <p class="lead">
                                                             <img src="/assets/shared/images/map.png">{{$booking->hotel->address}}
-                                                        </p>                                                        
+                                                        </p>
                                                         <table>
                                                             <tr>
                                                                 <td>Booking</td>
@@ -123,7 +123,7 @@
                                                 </div>
                                                 <div>
                                                     <div class="col-md-8 listing_left">
-                                                        
+
                                                         <div class="listing_tableright pull-right">
                                                             <h4>status-{{$b_cancel->status_txt}}</h4>
                                                             <h3>{{$currency.' '.number_format($b_cancel->total_payable_amt,2)}}</h3>
@@ -132,7 +132,7 @@
                                                         <p>&nbsp;</p>
                                                         <p class="lead">
                                                             <img src="/assets/shared/images/map.png">{{$b_cancel->hotel->address}}
-                                                        </p>                                                        
+                                                        </p>
                                                         <table>
                                                             <tr>
                                                                 <td>Booking</td>
@@ -156,7 +156,7 @@
                                                             </tr>
                                                         </table>
                                                         <p>&nbsp;</p>
-                                                        <a class="bookinglist-primary" href="/hotel_detail/{!! $b_cancel->hotel_id!!}">BOOKING AGAIN</a>
+                                                        <a class="bookinglist-primary" href="/hotel_detail/{!! $b_cancel->hotel_id!!}">BOOK AGAIN</a>
                                                     </div>
                                                 </div>
                                             </div>

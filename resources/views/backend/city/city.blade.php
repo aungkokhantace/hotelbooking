@@ -261,6 +261,7 @@
                 // else{
                 switch (ext) {
                     case 'jpg':
+                    case 'JPG':
                     case 'jpeg':
                     case 'png':
                     case 'gif':

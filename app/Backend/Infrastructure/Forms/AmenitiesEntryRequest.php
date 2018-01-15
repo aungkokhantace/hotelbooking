@@ -23,13 +23,14 @@ class AmenitiesEntryRequest extends Request
     {
         return [
             'name'   => 'required',
+            'photo'   => 'required',
         ];
     }
     public function messages()
     {
         return [
             'name.required' => 'Name is required',
-
+            'photo.required' => 'Icon is required',
         ];
     }
 }

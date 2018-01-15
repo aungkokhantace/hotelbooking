@@ -49,7 +49,8 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        if(!($e instanceof NotFoundHttpException)){         //for email format validation case, if email format is not valid, redirect to create form
+        // if(!($e instanceof NotFoundHttpException)){         //for email format validation case, if email format is not valid, redirect to create form
+        if(!($e instanceof NotFoundHttpException) && !($e instanceof HttpResponseException)){         //for email format validation case, if email format is not valid, redirect to create form
             if (Auth::guard('User')->check()) {
                 return response()->view('core.error.pagenotfound', ['e'=>$e], 404);
             }
@@ -57,7 +58,7 @@ class Handler extends ExceptionHandler
                 if ($e instanceof \Illuminate\Session\TokenMismatchException)
                 {
                     return redirect()
-                        ->back()    
+                        ->back()
                         ->withInput($request->except('_token'))
                         ->with([
                             'session_expired' => true

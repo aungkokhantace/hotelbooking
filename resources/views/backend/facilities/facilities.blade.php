@@ -96,7 +96,7 @@
     {{--Start File Upload--}}
     <div class="row">
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <label for="photo" class="text_bold_black">{{trans('setup_facility.icon')}}<span class="require">*</span></label>
+            <label for="photo" class="text_bold_black">{{trans('setup_facility.icon')}}</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
             <label class="notice">(Image must be 24*24 pixels)</label>
@@ -164,7 +164,7 @@
                             <span class="fileinput-exists">Change</span>
 
                             <input id="photo" type="file" name="photo" accept="image.*" />
-                            {{--{{ Form::file('nric_front_img') }}--}}
+
                         </span>
                                 {{--<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>--}}
                             </div>
@@ -258,28 +258,6 @@
 @section('page_script')
     <script type="text/javascript">
         $(document).ready(function(){
-//            $('INPUT[type="file"]').change(function () {
-//                var ext = this.value.match(/\.(.+)$/)[1];
-//                var f=this.files[0];
-//                var fileSize = (f.size||f.fileSize);
-//                var imgkbytes = Math.round(parseInt(fileSize)/1024);
-//
-//                if(imgkbytes > 5000){
-//                    $('#image_error_fileSize').modal('show');
-//                    $('#site_logoPopUp').attr('src') = '';
-//                }
-//
-//                switch (ext) {
-//                    case 'jpg':
-//                    case 'jpeg':
-//                    case 'png':
-//                    case 'gif':
-//                        break;
-//                    default:
-//                        $('#image_error_fileFormat').modal('show');
-//                        $('#site_logoPopUp').attr('src') = '';
-//                }
-//            });
 
             //            Start fileupload js
             $(".add_image_div").click(function(){
@@ -306,6 +284,7 @@
                 // else{
                 switch (ext) {
                     case 'jpg':
+                    case 'JPG':
                     case 'jpeg':
                     case 'png':
                     case 'gif':
@@ -316,7 +295,7 @@
                         $('#user_image_PopUp').attr('src','');
                         $('#user_image').val(null);
                 }
-                //}
+              // }
 
             });
 //            End fileupload js

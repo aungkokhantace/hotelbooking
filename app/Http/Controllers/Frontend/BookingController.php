@@ -89,7 +89,7 @@ class BookingController extends Controller
                 }
                 if($b->status == 3){
                     $b->status_txt      = "Cancel";
-                    $b->button_status   = "BOOKING AGAIN";
+                    $b->button_status   = "BOOK AGAIN";
                     array_push($booking_cancel,$b);
                 }
                 if($b->status == 5){
@@ -98,15 +98,15 @@ class BookingController extends Controller
                 }
                 if($b->status == 7){
                     $b->status_txt      = "Cancel";
-                    $b->button_status   = "BOOKING AGAIN";
+                    $b->button_status   = "BOOK AGAIN";
                 }
                 if($b->status == 8){
                     $b->status_txt      = "Void";
-                    $b->button_status   = "BOOKING AGAIN";
+                    $b->button_status   = "BOOK AGAIN";
                 }
                 if($b->status == 9){
                     $b->status_txt      = "Cancel";
-                    $b->button_status   = "BOOKING AGAIN";
+                    $b->button_status   = "BOOK AGAIN";
                 }
 
             }
@@ -153,11 +153,9 @@ class BookingController extends Controller
                 $bRooms             = $bRoomRepo->getBookingRoomAndRoomByBookingId($b_id);
 
                 $book_rooms = $bRoomRepo->getActiveBookingRoom($b_id);
-                // dd($book_rooms);
 
                 $room_count         = count($book_rooms);
                 $booking->room_count= $room_count; //Add Number of Room to booking
-                // dd($bRooms);
 
                 if(isset($bRooms) && count($bRooms) > 0){
                     foreach($bRooms as $bRoom){
@@ -465,7 +463,7 @@ class BookingController extends Controller
                     foreach($bookRooms as $bRoom){
                         $bRoom->status                      = 3;
                         $bRoomResult                        = $bookRoomRepo->update($bRoom);
-                        // dd($bRoomResult);   
+                        // dd($bRoomResult);
                         if($bRoomResult['aceplusStatusCode'] != ReturnMessage::OK){
                             DB::rollback();
                             return \Response::json($response);
@@ -590,7 +588,7 @@ class BookingController extends Controller
                                     //create Retrieve Balance Transaction error log
                                     $currentUser                        = Utility::getCurrentCustomerID();
                                     $date                               = date("Y-m-d H:i:s");
-                                    
+
                                     $message                            = '['. $date .'] '. 'error: ' . 'Customer id - '.$currentUser.' retrieve balance transaction '.$stripe_balance_transaction.' and got error'. PHP_EOL;
                                     LogCustom::create($date,$message);
 
@@ -620,7 +618,7 @@ class BookingController extends Controller
                                     //create Booking Payment Stripe error log
                                     $currentUser                        = Utility::getCurrentCustomerID();
                                     $date                               = date("Y-m-d H:i:s");
-                                    
+
                                     $message                            = '['. $date .'] '. 'error: ' . 'Customer id - '.$currentUser.' create booking payment stripe '.$stripe_balance_transaction.' and got error'. PHP_EOL;
                                     LogCustom::create($date,$message);
                                     return \Response::json($response);
@@ -1724,7 +1722,7 @@ class BookingController extends Controller
                         //create Booking Payment Stripe error log
                         $currentUser                        = Utility::getCurrentCustomerID();
                         $date                               = date("Y-m-d H:i:s");
-                        
+
                         $message                            = '['. $date .'] '. 'error: ' . 'Customer id - '.$currentUser.' start booking payment stripe '.$stripe_balance_transaction.' and got error'. PHP_EOL;
                         LogCustom::create($date,$message);
 

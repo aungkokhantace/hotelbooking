@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-headers">
                 <button type="button" class="closed" data-dismiss="modal">⨂</button>
-                <h4 class="modal-title">Cancellation Your Booking</h4>
+                <h4 class="modal-title">Cancel Your Booking</h4>
             </div>
             {!! Form::open(array('url'=>'/booking/cancel','id'=>'booking_cancel', 'method'=>'post')) !!}
             <div class="modalcancel-body">
@@ -112,5 +112,3 @@
     });
 </script>
 <!-- end login ajax-->
-
-

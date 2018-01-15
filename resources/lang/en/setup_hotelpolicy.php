@@ -6,8 +6,8 @@
  */
 
 return [
-    'title-entry'           => 'Hotel Policy Image Entry',
-    'title-edit'            => 'Hotel Policy Image Edit',
+    'title-entry'           => 'Hotel Policy Entry',
+    'title-edit'            => 'Hotel Policy Edit',
     'hotel'                 => 'Hotel',
     'place-hotel'           => 'Select Hotel',
     'btn-add'               => 'ADD',

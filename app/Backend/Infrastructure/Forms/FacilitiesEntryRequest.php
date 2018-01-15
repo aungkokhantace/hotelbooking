@@ -25,7 +25,7 @@ class FacilitiesEntryRequest extends Request
             'name'              => 'required',
             'type'              => 'required',
             'facility_group'    => 'required',
-            'photo'             => 'required'
+            // 'photo'             => 'required'
         ];
     }
     public function messages()
@@ -34,7 +34,7 @@ class FacilitiesEntryRequest extends Request
             'name.required'             => 'Facilities Name is required',
             'type.required'             => 'Type is required',
             'facility_group.required'   => 'Facility Group is required',
-            'photo.required'            => 'Icon is required'
+            // 'photo.required'            => 'Icon is required'
         ];
     }
 }

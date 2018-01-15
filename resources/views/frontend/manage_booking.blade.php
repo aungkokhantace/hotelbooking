@@ -352,7 +352,7 @@
                             <div class="payment_formtitle">
                                 <!-- First Blog Post Left -->
                                 <div class="payment_list">
-                                    <h4>Book for Transporation</h4>
+                                    <h4>Book for Transportation</h4>
                                 </div>
                             </div>
                             <div class="payment_form">
@@ -363,7 +363,7 @@
                                         >
                                     </label>
                                     <img src="/assets/shared/images/transporation.png">
-                                    <span style="font-size:15px;">I'm interest in booking a taxi in advance</span>
+                                    <span style="font-size:15px;">I'm interested in booking a taxi in advance</span>
                                 </div>
                             </div>
                             <div class="payment_formtitle">
@@ -380,7 +380,7 @@
                                         >
                                     </label>
                                     <img src="/assets/shared/images/tour.png">
-                                    <span style="font-size:15px;">I'm interest in booking tour guide.</span>
+                                    <span style="font-size:15px;">I'm interested in booking tour guide.</span>
                                 </div>
                             </div>
                             <div class="payment_formtitle">
