@@ -83,7 +83,8 @@
                         <th class="search-col" con-id="township">Township</th> -->
                         {{--<th class="search-col" con-id="description">Description</th>--}}
                         <!-- <th class="search-col" con-id="number_of_floors">Number of Floors</th> -->
-                        <th class="search-col" con-id="class">Class</th>
+                        <!-- <th class="search-col" con-id="class">Class</th> -->
+                        <th class="search-col" con-id="category">Category</th>
                         <th class="search-col" con-id="website">Website</th>
                         <!-- <th class="search-col" con-id="check_in_time">Check-in Time</th>
                         <th class="search-col" con-id="check_out_time">Check-out Time</th>
