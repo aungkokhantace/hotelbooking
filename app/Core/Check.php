@@ -16,6 +16,7 @@ use App\Setup\FrontedClient\FrontedClient;
 use App\Setup\Backend\Backend;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use App\Core\Permission\PermissionRepository;
 
 class Check
 {
@@ -144,6 +145,21 @@ class Check
             $result['aceplusStatusCode']    = ReturnMessage::OK;
         }
         return $result;
+    }
+
+    public static function getPermissionByRoleId($role_id) {
+        if($role_id) {
+            $permissionRepo = new PermissionRepository();
+            $permissions = $permissionRepo->getPermissionsByRoleId($role_id);
+            if($permissions){
+              $permission_url_array = array();
+              foreach($permissions as $permission){
+                array_push($permission_url_array,$permission['url']);
+              }
+              return $permission_url_array;
+            }
+        }
+        return null;
     }
 
 

@@ -99,13 +99,13 @@ class AuthController extends Controller
     {
      if(Auth::guard('User')->check()){
         if(!$this->validSession) {
-           
+
             return view('auth.login');
         }
      }
         $aplusRedirect = new AceplusRedirect();
         return $aplusRedirect->firstRedirect();
-     
+
     }
 
     public function dofirstLogin(LoginFormRequest $request){
@@ -120,7 +120,7 @@ class AuthController extends Controller
             return redirect()->back()->withErrors($this->getFailedLoginMessage());
         }
         else{
-            
+
 
             return redirect('/backend_mps/login');
         }
@@ -150,11 +150,11 @@ class AuthController extends Controller
             else{
                 $id = Auth::guard('User')->id();
                 Check::createSession($id);
-            
+
                 return redirect('/backend_mps/userAuth');
             }
         } else {
-            return redirect()->back()->withErrors($this->getFailedLoginMessage());   
+            return redirect()->back()->withErrors($this->getFailedLoginMessage());
         }
     }
     protected function getFailedLoginMessage()
@@ -174,11 +174,11 @@ class AuthController extends Controller
         $result     = false;
         $roleAttr   = User::where('user_name','=',$username)->where('role_id','!=',4)->first();
         if (count($roleAttr) >= 1) {
-            $result     = true;   
+            $result     = true;
         } else {
             $roleAttr   = User::where('email','=',$username)->where('role_id','!=',4)->first();
             if (count($roleAttr) >= 1) {
-                $result     = true;   
+                $result     = true;
             }
         }
 
