@@ -13,18 +13,18 @@
             {!! Form::open(array('url' => '/login', 'class'=> 'form-horizontal', 'id'=>'login')) !!}
                 <div class="formgroup">
                     <div class="col-sm-12 pd_lf_5">
-                        <input type="email" class="formcontrols" id="email" placeholder="Email" name="email">
+                        <input type="email" class="formcontrols" id="login_email" placeholder="Email" name="email">
                     </div>
                 </div>
                 <div class="formgroup">
                     <div class="col-sm-12 pd_lf_5">
-                        <input type="password" class="formcontrols" id="password" placeholder="Password" name="password">
-                    </div> 
+                        <input type="password" class="formcontrols" id="login_password" placeholder="Password" name="password">
+                    </div>
                 </div>
                 <div class="col-sm-12 pd_lf_5">
-                   <!-- <button type="submit" class="btn btn-default formcontrolnew">Login</button> -->   
-                   <button type="button" class="btn btn-default formcontrols login-btn">Login</button>                         
-                </div> 
+                   <!-- <button type="submit" class="btn btn-default formcontrolnew">Login</button> -->
+                   <button type="button" class="btn btn-default formcontrols login-btn">Login</button>
+                </div>
                 {{--  <div class="col-sm-12 pd_lf_5 form_text">
                     <span class="psw"><a href="#">Forgot password?</a></span>
                 </div>  --}}
@@ -37,7 +37,7 @@
                 </div>
             <!-- </form> -->
             {!! Form::close() !!}
-        </div>  
+        </div>
         </div>
         <div class="modal-footer"></div>
       </div>
@@ -53,7 +53,7 @@
         $('#sign_up').click(function(){
             showRegister();
         });
-    
+
     });
 </script>
 <script>
@@ -99,5 +99,3 @@
     });
 </script>
 <!-- end login ajax-->
-
-
