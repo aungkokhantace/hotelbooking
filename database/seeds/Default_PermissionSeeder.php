@@ -331,6 +331,9 @@ class Default_PermissionSeeder extends Seeder
            //Visa Information
             ['id'=>640,'module'=>'Visa Information','name'=>'View and Store','description'=>'Visa Information View and Store','url'=>'backend_mps/visa_information'],
 
+            //Faq Information
+             ['id'=>660,'module'=>'Faq Information','name'=>'View and Store','description'=>'Faq Information View and Store','url'=>'backend_mps/faq_information'],
+
         );
 
 //        DB::table('core_permissions')->insert($permissions);

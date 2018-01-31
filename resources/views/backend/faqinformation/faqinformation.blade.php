@@ -5,16 +5,16 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">VISA Information Edit</h1>
-    {!! Form::open(array('url' => '/backend_mps/visa_information', 'class'=> 'form-horizontal user-form-border','files' => true)) !!}
+    <h1 class="page-header">FAQ Information Edit</h1>
+    {!! Form::open(array('url' => '/backend_mps/faq_information', 'class'=> 'form-horizontal user-form-border','files' => true)) !!}
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="description" class="text_bold_black">VISA Information Text</label>
+            <label for="description" class="text_bold_black">FAQ Information Text</label>
         </div>
         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-            <textarea class="form-control" id="description" name="description" placeholder="Enter Transportation Information Text" rows="5" cols="50">{{ isset($visaInformation)? $visaInformation["description"]:Request::old('description') }}</textarea>
+            <textarea class="form-control" id="description" name="description" placeholder="Enter Transportation Information Text" rows="5" cols="50">{{ isset($faqInformation)? $faqInformation["description"]:Request::old('description') }}</textarea>
             <p class="text-danger">{{$errors->first('description')}}</p>
         </div>
     </div>
@@ -23,10 +23,10 @@
         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="submit" name="submit" value="{{isset($visaInformation)? 'UPDATE' : 'ADD'}}" class="form-control btn-primary">
+            <input type="submit" name="submit" value="{{isset($faqInformation)? 'UPDATE' : 'ADD'}}" class="form-control btn-primary">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('visa_information')">
+            <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('faq_information')">
         </div>
     </div>
     {!! Form::close() !!}

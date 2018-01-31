@@ -28,7 +28,9 @@ $permissions = \App\Core\Check::getPermissionByRoleId($role_id);
             (in_array("backend_mps/township", $permissions)) ||
             (in_array("backend_mps/transportation_information", $permissions)) ||
             (in_array("backend_mps/visa_information", $permissions)) ||
-            (in_array("backend_mps/tour_information", $permissions)))
+            (in_array("backend_mps/tour_information", $permissions)) ||
+            (in_array("backend_mps/faq_information", $permissions))
+            )
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
@@ -127,6 +129,14 @@ $permissions = \App\Core\Check::getPermissionByRoleId($role_id);
                     <li nav-id="">
                         <a href="/backend_mps/visa_information">
                             <span>VISA Information</span>
+                        </a>
+                    </li>
+                    @endif
+
+                     @if(in_array("backend_mps/faq_information", $permissions))
+                    <li nav-id="">
+                        <a href="/backend_mps/faq_information">
+                            <span>FAQ Information</span>
                         </a>
                     </li>
                     @endif

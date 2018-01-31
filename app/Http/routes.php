@@ -95,6 +95,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('tour_information', array('as'=>'/tour_information', 'uses'=>'Frontend\TourInformationController@index'));
     //Display VISA Information
     Route::get('visa_information',array('as'=>'/visa_information','uses'=>'Frontend\VisaInformationController@index'));
+    //Display FAQ Information
+    Route::get('faq_information',array('as'=>'/faq_information','uses'=>'Frontend\FaqInformationController@index'));
     //Email function test
     Route::get('/email_test', 'Payment\PaymentTestController@emailTest');
 
@@ -487,6 +489,10 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('visa_information',array('as'=>'backend_mps/visa_information','uses'=>'Setup\VisaInformation\VisaInformationController@edit'));
 
             Route::post('visa_information',array('as'=>'backend_mps/visa_information','uses'=>'Setup\VisaInformation\VisaInformationController@update'));
+
+            //FAQ Information
+            Route::get('faq_information',array('as'=>'backend_mps/faq_information','uses'=>'Setup\FaqInformation\FaqInformationController@edit'));
+             Route::post('faq_information',array('as'=>'backend_mps/faq_information','uses'=>'Setup\FaqInformation\FaqInformationController@update'));
 
             //Tour Information
             Route::get('tour_information', array('as'=>'backend_mps/tour_information', 'uses'=>'Setup\TourInformation\TourInformationController@edit'));

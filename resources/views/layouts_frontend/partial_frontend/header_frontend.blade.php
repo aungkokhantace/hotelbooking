@@ -137,7 +137,7 @@ $companyLogo    = \App\Core\Check::companyLogo();
                             <a href="/aboutus">About Us</a>
                         </li>
                         <li>
-                            <a href="/comingsoon">FAQ</a>
+                            <a href="/faq_information">FAQ</a>
                         </li>
                          <li>
                             <a href="/visa_information">VISA</a>
