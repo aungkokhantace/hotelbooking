@@ -49,6 +49,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+       
         // if(!($e instanceof NotFoundHttpException)){         //for email format validation case, if email format is not valid, redirect to create form
         if(!($e instanceof NotFoundHttpException) && !($e instanceof HttpResponseException)){         //for email format validation case, if email format is not valid, redirect to create form
             if (Auth::guard('User')->check()) {

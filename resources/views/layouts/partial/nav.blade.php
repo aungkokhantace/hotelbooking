@@ -27,6 +27,7 @@ $permissions = \App\Core\Check::getPermissionByRoleId($role_id);
             (in_array("backend_mps/popular_city/create", $permissions)) ||
             (in_array("backend_mps/township", $permissions)) ||
             (in_array("backend_mps/transportation_information", $permissions)) ||
+            (in_array("backend_mps/visa_information", $permissions)) ||
             (in_array("backend_mps/tour_information", $permissions)))
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
@@ -118,6 +119,14 @@ $permissions = \App\Core\Check::getPermissionByRoleId($role_id);
                     <li nav-id="">
                         <a href="/backend_mps/tour_information">
                             <span>Tour Guide Information</span>
+                        </a>
+                    </li>
+                    @endif
+
+                    @if(in_array("backend_mps/visa_information", $permissions))
+                    <li nav-id="">
+                        <a href="/backend_mps/visa_information">
+                            <span>VISA Information</span>
                         </a>
                     </li>
                     @endif

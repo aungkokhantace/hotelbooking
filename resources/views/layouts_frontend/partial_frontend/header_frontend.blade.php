@@ -25,6 +25,7 @@ $companyLogo    = \App\Core\Check::companyLogo();
     <link media="all" type="text/css" rel="stylesheet" href="/assets/shared/css/font-style.css">
     <!-- for entire site font -->
 
+
     <!-- Bootstrap Core CSS -->
     <link href="/assets/shared/css/bootstrap.min.css" rel="stylesheet">
 
@@ -137,6 +138,9 @@ $companyLogo    = \App\Core\Check::companyLogo();
                         </li>
                         <li>
                             <a href="/comingsoon">FAQ</a>
+                        </li>
+                         <li>
+                            <a href="/visa_information">VISA</a>
                         </li>
                         <li>
                             <a href="/comingsoon">Contact Us</a>

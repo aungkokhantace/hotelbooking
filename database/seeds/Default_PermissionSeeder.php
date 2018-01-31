@@ -328,6 +328,9 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>635,'module'=>'Hotel Policy','name'=>'Destroy','description'=>'Hotel Policy Destroy','url'=>'backend_mps/hotel_policy/destroy'],
             ['id'=>636,'module'=>'Hotel Policy','name'=>'Filter','description'=>'Hotel Policy Filter','url'=>'backend_mps/hotel_policy/{hotel_id?}'],
 
+           //Visa Information
+            ['id'=>640,'module'=>'Visa Information','name'=>'View and Store','description'=>'Visa Information View and Store','url'=>'backend_mps/visa_information'],
+
         );
 
 //        DB::table('core_permissions')->insert($permissions);
