@@ -103,7 +103,7 @@
                                     @for($i = 0; $i <= 100; $i++)
                                         <option value="{{$i}}">{{$i}}</option>
                                     @endfor
-                                </select>    
+                                </select>
                             </div>
                             <div class="col-3">
                                 <label class="control-label" for="check_out">Adults</label>
@@ -112,7 +112,7 @@
                                     @for($i = 0; $i <= 100; $i++)
                                         <option value="{{$i}}">{{$i}}</option>
                                     @endfor
-                                </select>    
+                                </select>
                             </div>
                             <div class="col-3">
                                 <label class="control-label" for="check_out">Children</label>
@@ -121,7 +121,7 @@
                                     @for($i = 0; $i <= 100; $i++)
                                         <option value="{{$i}}">{{$i}}</option>
                                     @endfor
-                                </select>    
+                                </select>
                             </div>
                         </div>
                     </div>

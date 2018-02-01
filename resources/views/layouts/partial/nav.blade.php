@@ -170,6 +170,13 @@ $permissions = \App\Core\Check::getPermissionByRoleId($role_id);
                         <a href="/backend_mps/hotel_policy">Hotel Policy</a>
                     </li>
                     @endif
+
+                     <!-- Disabled Hotels -->
+                     <!-- @if(in_array("backend_mps/hotel/disabled_hotels", $permissions))
+                     <li nav-id="modifier-create" class="has-sub">
+                        <a href="/backend_mps/hotel/disabled_hotels">Disabled Hotels</a>
+                    </li>
+                    @endif -->
                 </ul>
             </li>
             @endif

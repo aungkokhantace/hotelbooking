@@ -89,8 +89,7 @@
                     <div class="col-md-12 text-center">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 380px; height: 220px;">
-
-                                <img id='site_logoPopUp' src="" alt="Load Image"/>
+                                <img id='site_logoPopUp' src="{{ $configs['SETTING_LOGO'] }}" alt="Load Image"/>
                             </div>
                             <div data-provides="fileinput">
                         <span class="btn btn-default btn-file">

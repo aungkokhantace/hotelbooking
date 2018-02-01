@@ -30,7 +30,7 @@ class CityEntryRequest extends Request
     public function messages()
     {
         return [
-            'country_id'         => 'Country is required',
+            'country_id.required'=> 'Country is required',
             'name.required'      => 'City Name is required!',
             'name.unique'        => 'City Name is already occupied!',
             'photo.required'     => 'Photo is required!'

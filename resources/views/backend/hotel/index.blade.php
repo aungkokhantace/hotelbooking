@@ -20,7 +20,11 @@
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </button>
                  @if($role != 3)
-                <button type="button" onclick="delete_setup('hotel');" class="btn btn-default btn-md third_btn">
+                <!-- <button type="button" onclick="delete_setup('hotel');" class="btn btn-default btn-md third_btn">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button> -->
+                <!-- <button type="button" onclick="delete_setup('hotel');" class="btn btn-default btn-md third_btn"> -->
+                <button type="button" onclick="disable_setup('hotel');" class="btn btn-default btn-md third_btn">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 </button>
                  @endif
@@ -29,7 +33,8 @@
 
     </div>
 
-    {!! Form::open(array('id'=> 'frm_hotel' ,'url' => 'backend_mps/hotel/destroy', 'class'=> 'form-horizontal user-form-border')) !!}
+    <!-- {!! Form::open(array('id'=> 'frm_hotel' ,'url' => 'backend_mps/hotel/destroy', 'class'=> 'form-horizontal user-form-border')) !!} -->
+    {!! Form::open(array('id'=> 'frm_disable_hotel' ,'url' => 'backend_mps/hotel/disable', 'class'=> 'form-horizontal user-form-border')) !!}
     {{ csrf_field() }}
     <input type="hidden" id="selected_checkboxes" name="selected_checkboxes" value="">
 
