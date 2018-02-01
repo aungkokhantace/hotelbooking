@@ -57,9 +57,9 @@
                 <label for="description">Description<span class="require">*</span></label>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                <input type="text" class="form-control" id="description" name="description"
+                <textarea rows="5" cols="50" class="form-control" id="description" name="description"
                        placeholder="{{ trans('setup_nearby.Description')}}"
-                       value="{{ isset($hotel_nearby)? $hotel_nearby->description:Request::old('description') }}"/>
+                       value="{{ isset($hotel_nearby)? $hotel_nearby->description:Request::old('description') }}"></textarea>
                 <p class="text-danger">{{$errors->first('description')}}</p>
             </div>
         </div>
