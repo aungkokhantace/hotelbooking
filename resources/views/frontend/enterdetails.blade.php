@@ -163,7 +163,8 @@
                                                 {{--</div>--}}
 
                                                 @foreach($available_room_category_array as $available_room_category)
-                                                    <input type="hidden" id="available_room_categories" name="available_room_categories[]" value="{{$available_room_category}}">
+                                                <!-- <input type="hidden" id="available_room_categories" name="available_room_categories[]" value="{{$available_room_category}}"> -->
+                                                <input type="hidden" name="available_room_categories[]" value="{{$available_room_category}}">
                                                     @if(isset($available_room_category->number) && $available_room_category->number > 0)
                                                         @for($i = 0; $i < $available_room_category->number; $i++)
                                                         <div class="payment_form">

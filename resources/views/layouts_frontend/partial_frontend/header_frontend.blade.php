@@ -106,7 +106,8 @@ $companyLogo    = \App\Core\Check::companyLogo();
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/"><img src="/assets/shared/images/mplogo.png"></a>
+                    <!-- <a class="navbar-brand" href="/"><img src="/assets/shared/images/mplogo.png"></a> -->
+                    <a class="navbar-brand" href="/"><img src="{{$companyLogo}}"></a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

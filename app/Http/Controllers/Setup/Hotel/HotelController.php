@@ -619,7 +619,7 @@ class HotelController extends Controller
             //     $h_room_types = DB::select("SELECT * FROM h_room_type WHERE hotel_id = '$h_id'");
             //     $hotel_room_type->hotel_room_type_id = $h_room_types;
             // }
-    
+
             $admin_id = $hotel->admin_id;
             $userRepo = new UserRepository();
             $hotel_admin = $userRepo->getObjByID($admin_id);
@@ -1129,7 +1129,7 @@ class HotelController extends Controller
     public function check_user_email($hotel_id){
         $email      = Input::get('user_email');
         $hotel      = Hotel::find($hotel_id);
-        
+
         $users      = User::where('email','=',$email)->where('id', '!=', $hotel->admin_id)->whereNull('deleted_at')->get();
         $result     = false;
         if(count($users) == 0 ){
@@ -1137,5 +1137,33 @@ class HotelController extends Controller
         }
 
         return \Response::json($result);
+    }
+
+    public function disable(){
+        if (Auth::guard('User')->check()) {
+            $id = Input::get('selected_checkboxes');
+            $new_string = explode(',', $id);
+
+            DB::beginTransaction();
+            foreach ($new_string as $id) {
+                $disable_result = $this->repo->disable_hotel($id);
+
+                //something wrong
+                if($disable_result['aceplusStatusCode'] !=  ReturnMessage::OK){
+                    DB::rollback();
+                    return redirect()->action('Setup\Hotel\HotelController@index')->withMessage(FormatGenerator::message('Fail', 'Hotel is not disabled ...'));
+                }
+            }
+
+            //action successful
+            DB::commit();
+            return redirect()->action('Setup\Hotel\HotelController@index')
+                ->withMessage(FormatGenerator::message('Success', 'Hotel disabled ...'));
+        }
+        return redirect('/');
+    }
+
+    public function disabled_hotels(){
+      dd('disabled_hotels');
     }
 }

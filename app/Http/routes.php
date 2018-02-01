@@ -131,7 +131,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('hotel/get_cities/{country_id}', ['as' => 'backend_mps/hotel/get_cities', 'uses' => 'Setup\Hotel\HotelController@getCities']);
     Route::get('hotel/get_townships/{city_id}', ['as' => 'backend_mps/hotel/get_townships', 'uses' => 'Setup\Hotel\HotelController@getTownships']);
     // Route::get('hotel/check_user_email/{hotel_id}', ['as' => 'backend_mps/hotel/check_user_email', 'uses' => 'Setup\Hotel\HotelController@check_user_email']);
-    Route::get('hotel/check_user_email/{hotel_id}', ['as' => 'backend_mps/hotel/check_user_email', 'uses' => 'Setup\Hotel\HotelController@check_user_email']);    
+    Route::get('hotel/check_user_email/{hotel_id}', ['as' => 'backend_mps/hotel/check_user_email', 'uses' => 'Setup\Hotel\HotelController@check_user_email']);
 
     });
 
@@ -254,6 +254,11 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('hotel/edit/{id}', array('as'=>'backend_mps/hotel/edit', 'uses'=>'Setup\Hotel\HotelController@edit'));
             Route::post('hotel/update', array('as'=>'backend_mps/hotel/update', 'uses'=>'Setup\Hotel\HotelController@update'));
             Route::post('hotel/destroy', array('as'=>'backend_mps/hotel/destroy', 'uses'=>'Setup\Hotel\HotelController@destroy'));
+
+            //Hotel Disable/Enable
+            Route::post('hotel/disable', array('as'=>'backend_mps/hotel/disable', 'uses'=>'Setup\Hotel\HotelController@disable'));
+            Route::get('hotel/disabled_hotels', array('as'=>'backend_mps/hotel/disabled_hotels', 'uses'=>'Setup\Hotel\HotelController@disabled_hotels'));
+            Route::post('hotel/enable', array('as'=>'backend_mps/hotel/enable', 'uses'=>'Setup\Hotel\HotelController@enable'));
 
             //Hotel Nearby Category
             Route::get('nearby_category', array('as'=>'backend_mps/nearby_category', 'uses'=>'Setup\HotelNearbyCategory\HotelNearbyCategoryController@index'));

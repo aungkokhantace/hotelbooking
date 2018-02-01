@@ -26,14 +26,19 @@ class HotelRepository implements HotelRepositoryInterface
 {
     public function getObjs()
     {
-        $objs = Hotel::whereNull('deleted_at')->get();
+        // $objs = Hotel::whereNull('deleted_at')->get();
+
+        //get all active and not deleted hotels
+        $objs = Hotel::whereNull('deleted_at')->where('status','=',1)->get();
         return $objs;
     }
 
     public function getArrays()
     {
         $tbName = (new Hotel())->getTable();
-        $arr = DB::select("SELECT * FROM $tbName WHERE deleted_at IS NULL");
+        // $arr = DB::select("SELECT * FROM $tbName WHERE deleted_at IS NULL");
+        //get all active and not deleted hotels
+        $arr = DB::select("SELECT * FROM $tbName WHERE deleted_at IS NULL AND status = 1");
         return $arr;
     }
 
@@ -432,5 +437,36 @@ class HotelRepository implements HotelRepositoryInterface
         return $objs;
     }
 
-}
+    public function disable_hotel($id){
+      $returnedObj = array();
+      $returnedObj['aceplusStatusCode'] = ReturnMessage::INTERNAL_SERVER_ERROR;
 
+      $currentUser = Utility::getCurrentUserID(); //get currently logged in user
+      try{
+              //DB::table('core_users')->where('id',$id)->update(['deleted_at'=> date('Y-m-d H:m:i')]);
+              $tempObj = Hotel::find($id);
+              $tempObj = Utility::addUpdatedBy($tempObj);
+              $tempObj->status = 0;   //change status to 0; i.e. inactive
+              $tempObj->updated_at = date('Y-m-d H:m:i');
+              $tempObj->save();
+
+              //disable info log
+              $date = $tempObj->updated_at;
+              $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' disabled hotel_id = '.$tempObj->id . PHP_EOL;
+              LogCustom::create($date,$message);
+
+              $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
+              return $returnedObj;
+          }
+      catch(\Exception $e){
+          //disable error log
+          $date    = date("Y-m-d H:i:s");
+          $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' disabled  hotel_id = ' .$tempObj->id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+          LogCustom::create($date,$message);
+
+          $returnedObj['aceplusStatusMessage'] = $e->getMessage();
+          return $returnedObj;
+      }
+  }
+
+}
