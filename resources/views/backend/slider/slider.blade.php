@@ -69,8 +69,8 @@
             <label for="name">{{trans('setup_slider.description')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <input type="text" class="form-control" id="Description" name="Description"
-                   placeholder="{{trans('setup_slider.slider-description')}}" value="{{ isset($slider)? $slider->description:Request::old('Description') }}"/>
+            <textarea  rows="5" cols="50" class="form-control" id="Description" name="Description"
+                   placeholder="{{trans('setup_slider.slider-description')}}" value="{{ isset($slider)? $slider->description:Request::old('Description') }}"></textarea>
             <p class="text-danger">{{$errors->first('Description')}}</p>
         </div>
     </div>

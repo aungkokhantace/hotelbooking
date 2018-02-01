@@ -33,9 +33,9 @@
                 <label for="description">{{trans('setup_nearbycategory.description')}}<span class="require">*</span></label>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                <input type="text" class="form-control" id="description" name="description"
+                <textarea rows="5" cols="50" class="form-control" id="description" name="description"
                        placeholder="{{trans('setup_nearbycategory.place-description')}}"
-                       value="{{ isset($hotel_category)? $hotel_category->description:Request::old('description') }}"/>
+                       value="{{ isset($hotel_category)? $hotel_category->description:Request::old('description') }}"></textarea>
                 <p class="text-danger">{{$errors->first('description')}}</p>
             </div>
         </div>
