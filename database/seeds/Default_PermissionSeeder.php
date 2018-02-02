@@ -331,6 +331,12 @@ class Default_PermissionSeeder extends Seeder
            //Visa Information
             ['id'=>640,'module'=>'Visa Information','name'=>'View and Store','description'=>'Visa Information View and Store','url'=>'backend_mps/visa_information'],
 
+           // Hotel Disable
+            ['id'=>650,'module'=>'Hotel','name'=>'Disable','description'=>'Hotel Disable','url'=>'backend_mps/hotel/disable'],
+            ['id'=>651,'module'=>'Hotel','name'=>'Disabled Hotel List','description'=>'Disabled Hotel List','url'=>'backend_mps/hotel/disabled_hotels'],
+            ['id'=>652,'module'=>'Hotel','name'=>'Enable Hotel','description'=>'Hotel Enable','url'=>'backend_mps/hotel/enable'],
+            ['id'=>653,'module'=>'Hotel','name'=>'Active Booking List','description'=>'Hotel active booking list','url'=>'backend_mps/hotel/active_booking_list{hotel_id}'],
+
             //Faq Information
              ['id'=>660,'module'=>'Faq Information','name'=>'View and Store','description'=>'Faq Information View and Store','url'=>'backend_mps/faq_information'],
 

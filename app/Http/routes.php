@@ -259,6 +259,7 @@ Route::group(['middleware' => 'web'], function () {
             Route::post('hotel/disable', array('as'=>'backend_mps/hotel/disable', 'uses'=>'Setup\Hotel\HotelController@disable'));
             Route::get('hotel/disabled_hotels', array('as'=>'backend_mps/hotel/disabled_hotels', 'uses'=>'Setup\Hotel\HotelController@disabled_hotels'));
             Route::post('hotel/enable', array('as'=>'backend_mps/hotel/enable', 'uses'=>'Setup\Hotel\HotelController@enable'));
+            Route::get('hotel/active_booking_list/{hotel_id}', array('as'=>'backend_mps/hotel/active_booking_list{hotel_id}', 'uses'=>'Setup\Hotel\HotelController@activeBookingList'));
 
             //Hotel Nearby Category
             Route::get('nearby_category', array('as'=>'backend_mps/nearby_category', 'uses'=>'Setup\HotelNearbyCategory\HotelNearbyCategoryController@index'));

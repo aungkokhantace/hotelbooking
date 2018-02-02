@@ -259,4 +259,16 @@ class BookingRepository implements BookingRepositoryInterface
         return $result;
 
     }
+
+    public function checkBookingByHotelId($hotel_id){
+      $booking_status_array = [1,2]; //pending and confirm
+
+      //get bookings with $hotel_id and status is pending and confirm (not completed nor cancel)
+      //if exists user is not allowed to disable this hotel
+      $result = Booking::where('hotel_id','=',$hotel_id)
+                    ->whereIn('status',$booking_status_array)
+                    ->get();
+
+      return $result;
+    }
 }
