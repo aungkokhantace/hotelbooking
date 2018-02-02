@@ -73,5 +73,13 @@ return [
     'title-recommend'       => 'Set Recommend Hotel - JP',
     'place-order'           => 'Select Order - JP',
     'btn-set'               => 'SET - JP',
+    'active-booking-title'  => 'Active Booking List for - JP ',
+    'active-booking-user'   => 'User Name - JP',
+    'active-booking-email'  => 'Email - JP',
+    'active-booking-number' => 'Booking Number - JP',
+    'active-booking-status' => 'Booking Status - JP',
+    'active-booking-check-in' => 'Check In - JP',
+    'active-booking-check-out' => 'Check Out - JP',
+    'active-booking-phone'  => 'Phone - JP',
 
 ];

@@ -34,13 +34,14 @@ use App\Http\Controllers\Controller;
 use App\Backend\Infrastructure\Forms\HotelEntryRequest;
 use App\Backend\Infrastructure\Forms\HotelEditRequest;
 use App\Setup\Hotel\HotelRepositoryInterface;
-
+use App\Setup\Booking\BookingRepository;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use App\Core\FormatGenerator As FormatGenerator;
 use App\Core\ReturnMessage As ReturnMessage;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class HotelController extends Controller
 {
@@ -1144,9 +1145,22 @@ class HotelController extends Controller
             $id = Input::get('selected_checkboxes');
             $new_string = explode(',', $id);
 
+            $bookingRepo = new BookingRepository();
             DB::beginTransaction();
             foreach ($new_string as $id) {
-                $disable_result = $this->repo->disable_hotel($id);
+                //check whether this hotel has ongoing bookings
+                $bookings = $bookingRepo->checkBookingByHotelId($id);
+                //this hotel has ongoing booking and so cannot be disabled, notify user
+                if(isset($bookings) && count($bookings) > 0){
+                    DB::rollback();
+                    alert()->warning('This hotel has active bookings! It cannot be disabled!!')->persistent('VIEW BOOKINGS');
+                    // return redirect()->action('Setup\Hotel\HotelController@activeBookingList');
+                    return redirect()->action('Setup\Hotel\HotelController@activeBookingList', ['hotel_id' => $id]);
+                }
+                //this hotel is free to be disabled
+                else{
+                    $disable_result = $this->repo->disable_hotel($id);
+                }
 
                 //something wrong
                 if($disable_result['aceplusStatusCode'] !=  ReturnMessage::OK){
@@ -1165,5 +1179,52 @@ class HotelController extends Controller
 
     public function disabled_hotels(){
       dd('disabled_hotels');
+    }
+
+    public function activeBookingList($hotel_id){
+      $hotel = $this->repo->getObjByID($hotel_id);
+
+      $bookingRepo = new BookingRepository();
+      $bookings = $bookingRepo->checkBookingByHotelId($hotel_id);
+
+      //display bookings
+      if(isset($bookings) && count($bookings) > 0){
+          foreach($bookings as $b){
+              switch($b->status){
+                case 2:
+                    $b->status_text = 'Confirm';
+                    break;
+                case 3:
+                    $b->status_text = 'Cancel by Customer';
+                    break;
+                case 4:
+                    $b->status_text = 'Cancel by Admin';
+                    break;
+                case 5:
+                    $b->status_text = 'Complete';
+                    break;
+                case 6:
+                    $b->status_text = 'Transaction Fail';
+                    break;
+                case 7:
+                    $b->status_text = 'Refund by System';
+                    break;
+                case 8:
+                    $b->status_text = 'Refund by Admin';
+                    break;
+                case 9:
+                    $b->status_text = 'Cancel within second cancellation days';
+                    break;
+                default:
+                    $b->status_text = '';
+            }
+          }
+          
+        return view('backend.hotel.active_booking_list')->with('bookings',$bookings)->with('hotel',$hotel);
+      }
+      //error page
+      else{
+        return view('core.error.404');
+      }
     }
 }

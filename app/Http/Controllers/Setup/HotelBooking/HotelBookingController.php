@@ -66,11 +66,17 @@ class HotelBookingController extends Controller
                         case 5:
                             $b->status_text = 'Complete';
                             break;
+                        case 6:
+                            $b->status_text = 'Transaction Fail';
+                            break;
                         case 7:
                             $b->status_text = 'Refund by System';
                             break;
                         case 8:
                             $b->status_text = 'Refund by Admin';
+                            break;
+                        case 9:
+                            $b->status_text = 'Cancel within second cancellation days';
                             break;
                         default:
                             $b->status_text = '';
@@ -155,7 +161,7 @@ class HotelBookingController extends Controller
                         }
                     }
                 }
-                
+
                 /* START booking payment */
                 $oldBookPayment                                  = $bPaymentRepo->getObjsByBookingId($b_id);
                 $newBookPayment                                  = new BookingPayment();
@@ -210,7 +216,7 @@ class HotelBookingController extends Controller
                         alert()->error('Refund Operation is unsuccessful.')->persistent('Close');
                         return redirect()->back();
                     }
-                    
+
                     $refund_balance_transaction             = $refundResult['stripe']['stripe_balance_transaction'];
                     $stripeBalanceRes                       = $stripePaymentObj->retrieveBalance($refund_balance_transaction);
 
@@ -221,7 +227,7 @@ class HotelBookingController extends Controller
                     $stripeBalanceRes['stripe']['stripe_payment_amt'] = -84.8;
                     $stripeBalanceRes['stripe']['stripe_payment_fee'] = -2.76;
                     $stripeBalanceRes['stripe']['stripe_payment_net'] = -82.04;*/
-                    
+
                     if($stripeBalanceRes['aceplusStatusCode'] != ReturnMessage::OK){
                         // shouldn't rollback, write log or do something bcz refundPayment method is already executed.
                         DB::rollback();
@@ -229,10 +235,10 @@ class HotelBookingController extends Controller
                         //create refundPayment error log
                         $currentUser                        = Utility::getCurrentUserID();
                         $date                               = date("Y-m-d H:i:s");
-                        
+
                         $message                            = '['. $date .'] '. 'error: ' . 'Customer id - '.$currentUser.' create refundPayment '.$refund_balance_transaction.' and got error'. PHP_EOL;
                         LogCustom::create($date,$message);
-                        
+
                         alert()->error('Refund Operation is unsuccessful.')->persistent('Close');
                         return redirect()->back();
                     }
@@ -249,7 +255,7 @@ class HotelBookingController extends Controller
                     $stripe_payment_fee                             = $stripeBalanceRes['stripe']['stripe_payment_fee'];
                     $stripe_payment_net                             = $stripeBalanceRes['stripe']['stripe_payment_net'];
                     $stripe_balance_transaction                     = $stripeBalanceRes['stripe']['stripe_balance_transaction'];
-                    
+
                     /* Create Stripe Payment */
                     $newStripePayment                               = new BookingPaymentStripe();
                     $newStripePayment->stripe_user_id               = $customer_id;
@@ -278,7 +284,7 @@ class HotelBookingController extends Controller
                         //create Booking Payment Stripe error log
                         $currentUser                        = Utility::getCurrentUserID();
                         $date                               = date("Y-m-d H:i:s");
-                        
+
                         $message                            = '['. $date .'] '. 'error: ' . 'Customer id - '.$currentUser.' create booking payment stripe '.$stripe_balance_transaction.' and got error'. PHP_EOL;
                         LogCustom::create($date,$message);
 
@@ -291,12 +297,12 @@ class HotelBookingController extends Controller
                     $date     = date('Y-m-d H:i:s');
                     $message  = '['. $date .'] '. 'info: ' . 'Admin '. $currentUser.' refund booking no. = '.$booking->booking_no.' is successful'. PHP_EOL;
                     LogCustom::create($date,$message);
-                    
+
                     DB::commit();
                     alert()->success('Refund Operation is successful.')->persistent('Close');
                     return redirect()->action('Setup\HotelBooking\HotelBookingController@index');
-                    
-                    
+
+
                 }
                 else{
                     //create RefundByHotelAdmin error log
@@ -312,7 +318,7 @@ class HotelBookingController extends Controller
                     alert()->warning("Oppp!!!There\'s no payment for this booking.")->persistent('Close');
                     return redirect()->back();
                 }
-                
+
                 /* Refund */
             }
         }

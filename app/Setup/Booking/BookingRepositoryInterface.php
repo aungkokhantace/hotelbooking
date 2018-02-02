@@ -24,5 +24,5 @@ interface BookingRepositoryInterface
     public function changeBookingStatus($paramObj);
 //    public function sendMail($template,$emails,$subject,$logMessage);
     public function getAvailableRoom($check_in,$check_out,$room_id_arr);
-
+    public function checkBookingByHotelId($hotel_id);
 }

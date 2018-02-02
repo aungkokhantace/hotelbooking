@@ -75,5 +75,13 @@ return [
     'title-recommend'       => 'Set Recommend Hotel',
     'place-order'           => 'Select Order',
     'btn-set'               => 'SET',
+    'active-booking-title'  => 'Active Booking List for ',
+    'active-booking-user'   => 'User Name',
+    'active-booking-email'  => 'Email',
+    'active-booking-number' => 'Booking Number',
+    'active-booking-status' => 'Booking Status',
+    'active-booking-check-in' => 'Check In',
+    'active-booking-check-out' => 'Check Out',
+    'active-booking-phone'  => 'Phone',
 
 ];
