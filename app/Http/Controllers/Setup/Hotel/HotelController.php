@@ -1177,8 +1177,66 @@ class HotelController extends Controller
         return redirect('/');
     }
 
+    public function enable(){
+        if (Auth::guard('User')->check()) {
+            $id = Input::get('enable_hotel_id');
+
+            DB::beginTransaction();
+            $enable_result = $this->repo->enable_hotel($id);
+
+            //something wrong
+            if($enable_result['aceplusStatusCode'] !=  ReturnMessage::OK){
+                DB::rollback();
+                return redirect()->action('Setup\Hotel\HotelController@index')->withMessage(FormatGenerator::message('Fail', 'Hotel is not enabled ...'));
+            }
+
+            //action successful
+            DB::commit();
+            return redirect()->action('Setup\Hotel\HotelController@disabled_hotels')
+                ->withMessage(FormatGenerator::message('Success', 'Hotel enabled ...'));
+        }
+        return redirect('/');
+    }
+
     public function disabled_hotels(){
-      dd('disabled_hotels');
+          if (Auth::guard('User')->check()) {
+
+              //Get Login User Info
+              $user               = $this->repo->getUserObjs();
+              $id                 = $user->id;
+              $role               = $user->role_id;
+              $email              = $user->email;
+
+              if ($role == 3) {
+                  //Get Hotel ID
+                  $hotels             = $this->repo->getHotelByUserEmail($email);
+                  // dd($hotels);
+              } else {
+                   $hotels = $this->repo->getDisabledObjs();
+              }
+
+
+              foreach($hotels as $hotel){
+                  if($hotel->h_type_id == 1){
+                      $hotel->h_type_id = "Hotel";
+                  }
+                  elseif($hotel->h_type_id == 2){
+                      $hotel->h_type_id = "Motel";
+                  }
+                  elseif($hotel->h_type_id == 3){
+                      $hotel->h_type_id = "Guest House";
+                  }
+                  elseif($hotel->h_type_id == 4){
+                      $hotel->h_type_id = "Inn";
+                  }
+                  else{
+                      $hotel->h_type_id = "Hostel";
+                  }
+              }
+
+              return view('backend.hotel.disabled_hotels')->with('hotels',$hotels)->with('role',$role);
+          }
+          return redirect('/');
     }
 
     public function activeBookingList($hotel_id){
@@ -1219,7 +1277,7 @@ class HotelController extends Controller
                     $b->status_text = '';
             }
           }
-          
+
         return view('backend.hotel.active_booking_list')->with('bookings',$bookings)->with('hotel',$hotel);
       }
       //error page

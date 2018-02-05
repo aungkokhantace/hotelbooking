@@ -16,5 +16,11 @@ interface UserRepositoryInterface
     public function getRoles();
     public function changeDisableToEnable($id,$cur);
     public function changeEnableToDisable($id);
-
+    public function getPermissionByUserId($userId);
+    public function getUsersWithExceptRoles($current_user_role, $except_role_array);
+    public function getRolesWithExceptRoles($current_user_role, $except_role_array);
+    public function getRolesForUserProfile($current_user_role, $except_role_array);
+    public function disable_user($id);
+    public function enable_user($id);
+    public function getDisabledUsersWithExceptRoles($current_user_role, $except_role_array);
 }

@@ -162,6 +162,11 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('user/profile/{id}', array('as'=>'backend_mps/user/profile','uses'=>'Core\UserController@profile'));
             Route::get('userAuth', array('as'=>'backend_mps/userAuth','uses'=>'Core\UserController@getAuthUser'));
 
+            //User disable/enable
+            Route::post('user/disable', array('as'=>'backend_mps/user/disable','uses'=>'Core\UserController@disable'));
+            Route::post('user/enable', array('as'=>'backend_mps/user/enable','uses'=>'Core\UserController@enable'));
+            Route::get('user/disabled_users', array('as'=>'backend_mps/user/disabled_users','uses'=>'Core\UserController@disabledUsers'));
+
             //Role
             Route::get('role', array('as'=>'backend_mps/role','uses'=>'Core\RoleController@index'));
             Route::get('role/create',  array('as'=>'backend_mps/role/create','uses'=>'Core\RoleController@create'));

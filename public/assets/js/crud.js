@@ -110,7 +110,7 @@ function disable_setup(type) {
     else {
         swal({
                 title: "Are you sure?",
-                text: "You will not be able to recover!",
+                text: "Do you want to disable this record!",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55 ",
@@ -122,7 +122,7 @@ function disable_setup(type) {
             function (isConfirm) {
                 if (isConfirm) {
                     //window.location = "/" + type + "/destroy/" + data;
-                    //route path to do deletion in controller
+                    //route path to do disable action in controller
 
                     $("#selected_checkboxes").val(data);
                     $("#frm_disable_" + type).submit();
@@ -131,4 +131,48 @@ function disable_setup(type) {
                 }
             });
     }
+}
+
+function enable_user(id) {
+    swal({
+            title: "Are you sure?",
+            text: "Do you want to enable this user?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55 ",
+            confirmButtonText: "Confirm",
+            cancelButtonText: "Cancel",
+            closeOnConfirm: false,
+            closeOnCancel: true
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+                $("#frm_enable_user_" + id).submit();
+            } else {
+                return;
+            }
+        });
+
+}
+
+function enable_hotel(id) {
+    swal({
+            title: "Are you sure?",
+            text: "Do you want to enable this hotel?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55 ",
+            confirmButtonText: "Confirm",
+            cancelButtonText: "Cancel",
+            closeOnConfirm: false,
+            closeOnCancel: true
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+                $("#frm_enable_hotel_" + id).submit();
+            } else {
+                return;
+            }
+        });
+
 }

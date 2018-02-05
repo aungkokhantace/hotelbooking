@@ -662,6 +662,14 @@ class Default_RolePermissionSeeder extends Seeder
             ['role_id'=>1, 'permission_id'=>660],
             ['role_id'=>2, 'permission_id'=>660],
 
+            //User disable/enable
+            ['role_id'=>1, 'permission_id'=>24],
+            ['role_id'=>2, 'permission_id'=>24],
+            ['role_id'=>1, 'permission_id'=>25],
+            ['role_id'=>2, 'permission_id'=>25],
+            ['role_id'=>1, 'permission_id'=>26],
+            ['role_id'=>2, 'permission_id'=>26],
+
         );
 
         DB::table('core_permission_role')->insert($roles);
