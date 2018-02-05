@@ -469,4 +469,42 @@ class HotelRepository implements HotelRepositoryInterface
       }
   }
 
+    public function getDisabledObjs()
+    {
+        //get all inactive and not deleted hotels
+        $objs = Hotel::whereNull('deleted_at')->where('status','=',0)->get();
+        return $objs;
+    }
+
+    public function enable_hotel($id){
+        $returnedObj = array();
+        $returnedObj['aceplusStatusCode'] = ReturnMessage::INTERNAL_SERVER_ERROR;
+
+        $currentUser = Utility::getCurrentUserID(); //get currently logged in user
+        try{
+          $hotelObj = Hotel::find($id);
+          $hotelObj = Utility::addUpdatedBy($hotelObj);
+          $hotelObj->status = 1; //change status to 1; i.e. active
+          $hotelObj->updated_at = date('Y-m-d H:m:i');
+
+          $hotelObj->save();
+          //enable info log
+          $date = $hotelObj->updated_at;
+          $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' enabled hotel_id = '.$hotelObj->id . PHP_EOL;
+          LogCustom::create($date,$message);
+
+          $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
+          return $returnedObj;
+        }
+        catch(\Exception $e){
+          //enable error log
+          $date    = date("Y-m-d H:i:s");
+          $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' enabled  hotel_id = ' .$hotelObj->id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+          LogCustom::create($date,$message);
+
+          $returnedObj['aceplusStatusMessage'] = $e->getMessage();
+          return $returnedObj;
+        }
+    }
+
 }

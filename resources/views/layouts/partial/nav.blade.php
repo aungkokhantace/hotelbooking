@@ -361,7 +361,7 @@ $permissions = \App\Core\Check::getPermissionByRoleId($role_id);
 
                     @if(in_array("backend_mps/user", $permissions))
                     <li nav-id="modifier-create" class="has-sub">
-                        <a href="/backend_mps/user">Staff</a>
+                        <a href="/backend_mps/user">User</a>
                     </li>
                     @endif
 

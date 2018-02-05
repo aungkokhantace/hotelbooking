@@ -31,5 +31,9 @@ interface HotelRepositoryInterface
     public function getLandMarkByHotelID($landmark_id);
     public function getHotelByAdminId($admin_id);
     public function getUserObjs();
+    public function getSuggestedHotelsByDestinationWithLimit($hotelIdArr,$countryIdArr,$cityIdArr,$townshipIdArr,$limitNum);
+    public function disable_hotel($id);
+    public function getDisabledObjs();
+    public function enable_hotel($id);
 
 }

@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\DB;
 use App\User;
 use Carbon\Carbon;
 use App\Core\Utility;
+use App\Core\FormatGenerator;
+use App\Core\ReturnMessage;
 
 class UserController extends Controller
 {
@@ -35,11 +37,10 @@ class UserController extends Controller
                 // $users      = $this->userRepository->getUsers();
                 // $roles      = $this->userRepository->getRoles();
                 $current_user_role = Utility::getCurrentUserRole();
-                $except_role_array = [9999];
+                $except_role_array = [9999]; //for first login
                 $users      = $this->userRepository->getUsersWithExceptRoles($current_user_role, $except_role_array);
 
-
-                $except_role_array = [9999];
+                $except_role_array = [9999]; //for first login
                 $roles      = $this->userRepository->getRolesWithExceptRoles($current_user_role, $except_role_array);
 
                 $cur_time   = Carbon::now();
@@ -57,7 +58,7 @@ class UserController extends Controller
         if (Auth::guard('User')->check()) {
             // $roles = $this->userRepository->getRoles();
             $current_user_role = Utility::getCurrentUserRole();
-            $except_role_array = [9999];
+            $except_role_array = [9999]; //for first login
             $roles      = $this->userRepository->getRolesWithExceptRoles($current_user_role, $except_role_array);
             return view('core.user.user')->with('roles', $roles);
         }
@@ -92,7 +93,7 @@ class UserController extends Controller
                 $user = $this->userRepository->getObjByID($id);
                 // $roles = DB::table('core_roles')->get();
                 $current_user_role = Utility::getCurrentUserRole();
-                $except_role_array = [9999];
+                $except_role_array = [9999]; //for first login
                 $roles      = $this->userRepository->getRolesWithExceptRoles($current_user_role, $except_role_array);
                 return view('core.user.user')->with('user', $user)->with('roles', $roles);
         }
@@ -137,8 +138,10 @@ class UserController extends Controller
                 $user = $this->userRepository->getObjByID($id);
                 // $roles = DB::table('core_roles')->get();
                 $current_user_role = Utility::getCurrentUserRole();
-                $except_role_array = [9999];
-                $roles      = $this->userRepository->getRolesWithExceptRoles($current_user_role, $except_role_array);
+                $except_role_array = [9999]; //for first login
+
+                // $roles      = $this->userRepository->getRolesWithExceptRoles($current_user_role, $except_role_array);
+                $roles      = $this->userRepository->getRolesForUserProfile($current_user_role, $except_role_array);
                 return view('core.user.user')->with('user', $user)->with('roles', $roles)->with('profile',true);
             }
             else{
@@ -179,5 +182,58 @@ class UserController extends Controller
                 return redirect('/backend_mps');
             }
         }
+    }
+
+    public function disable(){
+        if (Auth::guard('User')->check()) {
+            $id = Input::get('selected_checkboxes');
+            $new_string = explode(',', $id);
+            foreach ($new_string as $id) {
+                $this->userRepository->disable_user($id);
+            }
+            return redirect()->action('Core\UserController@index')
+                ->withMessage(FormatGenerator::message('Success', 'User disabled ...'));
+        }
+        return redirect('/');
+    }
+
+    public function enable(){
+        if (Auth::guard('User')->check()) {
+            $id = Input::get('enable_user_id');
+            DB::beginTransaction();
+            $enable_result = $this->userRepository->enable_user($id);
+
+            //something wrong
+            if($enable_result['aceplusStatusCode'] !=  ReturnMessage::OK){
+                DB::rollback();
+                return redirect()->action('Core\UserController@index')->withMessage(FormatGenerator::message('Fail', 'User is not enabled ...'));
+            }
+
+            //action successful
+            DB::commit();
+
+            return redirect()->action('Core\UserController@disabledUsers')
+                ->withMessage(FormatGenerator::message('Success', 'User enabled ...'));
+        }
+        return redirect('/');
+    }
+
+    public function disabledUsers(){
+      if (Auth::guard('User')->check()) {
+              $current_user_role = Utility::getCurrentUserRole();
+              $except_role_array = [9999]; //for first login
+              $users      = $this->userRepository->getDisabledUsersWithExceptRoles($current_user_role, $except_role_array);
+
+              $except_role_array = [9999]; //for first login
+              $roles      = $this->userRepository->getRolesWithExceptRoles($current_user_role, $except_role_array);
+
+              $cur_time   = Carbon::now();
+
+              return view('core.user.disabled_users')
+                          ->with('users', $users)
+                          ->with('roles', $roles)
+                          ->with('cur_time', $cur_time);
+      }
+      return redirect('/backend_mps/login');
     }
 }

@@ -9,7 +9,7 @@
         @if(isset($profile))
             Update Profile
         @else
-            {{ isset($user) ?  'Staff Edit' : 'Staff Entry' }}
+            {{ isset($user) ?  'User Edit' : 'User Entry' }}
         @endif
     </h1>
 
