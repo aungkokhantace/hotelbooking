@@ -107,7 +107,7 @@ $companyLogo    = \App\Core\Check::companyLogo();
                         <span class="icon-bar"></span>
                     </button>
                     <!-- <a class="navbar-brand" href="/"><img src="/assets/shared/images/mplogo.png"></a> -->
-                    <a class="navbar-brand" href="/"><img src="{{$companyLogo}}"></a>
+                    <a class="navbar-brand" href="/"><img class="frontend-header-logo" src="{{$companyLogo}}"></a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -198,14 +198,14 @@ $companyLogo    = \App\Core\Check::companyLogo();
                                     </li>
                                  {{ csrf_field() }}
                                      </form>
-                                   
-                                   
+
+
                                 </ul>
                             </div>
                         </li>
-                         
-                
-            </div> 
+
+
+            </div>
 
                     </ul>
                 </div>

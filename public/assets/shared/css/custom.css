@@ -332,6 +332,12 @@ button.closed {
   font-family: BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif !important;
 } */
 
+/* for frontend header logo */
+.frontend-header-logo{
+  height:inherit;
+}
+/* for frontend header logo */
+
 @media only screen and (max-width: 414px) {
 #bookingmanage_blog{
     border-bottom: 1px solid #ccc;
