@@ -22,12 +22,12 @@
                             <div style="border-bottom:1px solid #ccc;">
                                 <ul id="myTab" class="nav nav-tabs nav-justified nav-ff">
                                     {{--<li class=""><a href="#" data-toggle="tab"> 1.Choose your rooms </a>--}}
-                                    <li class=""><a href="#"> 1.Choose your rooms </a>
+                                    <li class=""><a href="#"> 1.{{trans('frontend_details.choose_your_room')}} </a>
                                     </li>
-                                    <li class="active"><a href="#service-one" data-toggle="tab"> 2.Enter your details </a>
+                                    <li class="active"><a href="#service-one" data-toggle="tab"> 2.{{trans('frontend_details.enter_your_details')}} </a>
                                     </li>
                                     {{--<li class=""><a href="#service-two" data-toggle="tab"> 3.Confirm your reservation </a>--}}
-                                    <li class=""><a href="#service-two"> 3.Confirm your reservation </a>
+                                    <li class=""><a href="#service-two"> 3.{{trans('frontend_details.confirm_your_reservation')}} </a>
                                     </li>
                                 </ul>
                             </div>
@@ -53,19 +53,19 @@
                                                 </p>
                                                 <table>
                                                     <tr>
-                                                        <td>Check In</td>
+                                                        <td>{{trans('frontend_search.check_in')}}</td>
                                                         <td class="table_right">@if(Session::has('check_in')) {{session('check_in')}} (d-m-Y) @endif</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Check Out</td>
+                                                        <td>{{trans('frontend_search.check_out')}}</td>
                                                         <td class="table_right">@if(Session::has('check_out')) {{session('check_out')}} (d-m-Y) @endif</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Total Length of Stay</td>
+                                                        <td>{{trans('frontend_details.total_length')}}</td>
                                                         @if(isset($nights) && $nights > 1)
-                                                            <td class="table_right">{{$nights}} nights</td>
+                                                            <td class="table_right"> {{$nights}} {{trans('frontend_details.nights')}}</td>
                                                         @else
-                                                            <td class="table_right">{{$nights}} night</td>
+                                                            <td class="table_right">{{$nights}} {{trans('frontend_details.night')}}</td>
                                                         @endif
                                                     </tr>
                                                 </table>
@@ -80,9 +80,9 @@
                                             <!-- First Blog Post Left -->
                                             <div class="payment_list">
                                                 @if(\Illuminate\Support\Facades\Session::has('customer'))
-                                                    <h4>Enter Your Details</h4>
+                                                    <h4>{{trans('frontend_details.enter_your_details')}}</h4>
                                                 @else
-                                                    <h4>Enter Your Details (Please sign in to continue!!)</h4>
+                                                    <h4>{{trans('frontend_details.enter_your_details')}} ({{trans('frontend_details.please_sign')}})</h4>
                                                 @endif
                                             </div>
                                             <!-- First Blog Post Right -->
@@ -90,10 +90,10 @@
                                                 <ul>
                                                     <li style="padding-right:15px;"><img src="/assets/shared/images/people.png"></li>
                                                     @if(\Illuminate\Support\Facades\Session::has('customer'))
-                                                        <li>You are signed in</li>
+                                                        <li>{{trans('frontend_details.you_sing_in')}}</li>
                                                     @else
                                                         <a href="#" data-toggle="modal" data-target="#loginModal">
-                                                            Login
+                                                           {{trans('frontend_header.login')}}
                                                             <span class="glyphicon glyphicon-arrow-right"></span>
                                                         </a>
                                                     @endif
@@ -103,27 +103,27 @@
                                         <div class="payment">
                                             <div class="payment_form">
                                                 <div class="formtitle_left">
-                                                    <span>Are you travelling for work</span>
+                                                    <span>{{trans('frontend_details.are_you_travelling_for_work')}}</span>
                                                 </div>
                                                 <div class="formtitle_right">
-                                                    <span>Almost done! Just fill in the * required info</span>
+                                                    <span>{{trans('frontend_details.almost_done')}}{{trans('frontend_details.fill in_the_required')}}</span>
                                                 </div>
                                                 <div class="paymentformgroup">
                                                     <div class="col-sm-2 pd_rg_10">
                                                         <label>
-                                                            <input class="form-check-input" type="radio" name="travel_for_work" id="inlineRadio1" value="1"> Yes
+                                                            <input class="form-check-input" type="radio" name="travel_for_work" id="inlineRadio1" value="1"> {{trans('frontend_details.yes')}}
                                                         </label>
                                                     </div>
                                                     <div class="col-sm-2 pd_rg_10">
                                                         <label>
-                                                            <input class="form-check-input" type="radio" name="travel_for_work" id="inlineRadio2" value="0" checked> No
+                                                            <input class="form-check-input" type="radio" name="travel_for_work" id="inlineRadio2" value="0" checked> {{trans('frontend_details.no')}}
                                                         </label>
                                                     </div>
                                                 </div>
 
                                                 <div class="payment_formgroup">
                                                     <div class="col-sm-3 pd_rg_10">
-                                                        <label>First Name <span style="color:red;">*</span></label>
+                                                        <label>{{trans('frontend_header.first_name')}} <span style="color:red;">*</span></label>
                                                         @if(\Illuminate\Support\Facades\Session::has('customer'))
                                                             <input type="text" class="formcontrols" id="first_name" name="first_name" autocomplete="off" value="{{session('customer')['first_name']}}" readonly>
                                                         @else
@@ -131,7 +131,7 @@
                                                         @endif
                                                     </div>
                                                     <div class="col-sm-3 pd_lf_5">
-                                                        <label>Last Name <span style="color:red;">*</span></label>
+                                                        <label>{{trans('frontend_header.last_name')}} <span style="color:red;">*</span></label>
                                                         @if(\Illuminate\Support\Facades\Session::has('customer'))
                                                             <input type="text" class="formcontrols" id="last_name" name="last_name" autocomplete="off" value="{{session('customer')['last_name']}}" readonly>
                                                         @else
@@ -142,7 +142,7 @@
 
                                                 <div class="payment_formgroup">
                                                     <div class="col-sm-6 pd_rg_10">
-                                                        <label>Email Address <span style="color:red;">*</span></label>
+                                                        <label>{{trans('frontend_header.email_address')}} <span style="color:red;">*</span></label>
                                                         @if(\Illuminate\Support\Facades\Session::has('customer'))
                                                             <input type="email" class="formcontrols" id="email_address" name="email" autocomplete="off" value="{{session('customer')['email']}}" readonly>
                                                         @else
@@ -174,7 +174,7 @@
                                                         </div>
                                                         <div class="payment_formgroup">
                                                             <div class="col-sm-4 pd_rg_10">
-                                                                <label class="col-sm-4 col-form-labels">Guests</label>
+                                                                <label class="col-sm-4 col-form-labels">{{trans('frontend_details.guests')}}</label>
                                                                 <div class="col-sm-8 pd_rg_10">
                                                                     <select class="col-sm-12 pd_rg_12 formcontrols" name="{{$available_room_category->id."_".($i+1)."_guest"}}">
                                                                         @for($j=0; $j<$available_room_category->capacity; $j++)
@@ -184,27 +184,27 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-4 pd_lf_5">
-                                                                <label class="col-sm-4 col-form-labels">Smoking</label>
+                                                                <label class="col-sm-4 col-form-labels">{{trans('frontend_details.smoking')}}</label>
                                                                 <div class="col-sm-8 pd_rg_10">
                                                                     <select class="col-sm-12 pd_rg_12 formcontrols" name="{{$available_room_category->id."_".($i+1)."_smoking"}}">
-                                                                        <option value="yes">Yes</option>
-                                                                        <option value="no">No</option>
+                                                                        <option value="yes">{{trans('frontend_details.yes')}}</option>
+                                                                        <option value="no">{{trans('frontend_details.no')}}</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
                                                             @if($available_room_category->extra_bed_allowed == 1)
                                                             <div class="col-sm-4 pd_lf_5">
-                                                                <label class="col-sm-4 col-form-labels">Extrabed</label>
+                                                                <label class="col-sm-4 col-form-labels">{{trans('frontend_details.extra_bed')}}</label>
                                                                 <div class="col-sm-8 pd_rg_10">
                                                                     <!-- <select class="col-sm-12 pd_rg_12 formcontrols extrabed" name="{{$available_room_category->id."_".($i+1)."_extrabed"}}" id="extra-{{$i}}"> -->
                                                                     <select class="col-sm-12 pd_rg_12 formcontrols extrabed" name="{{$available_room_category->id."_".($i+1)."_extrabed"}}" id="extra-{{$available_room_category->id."_".($i+1)}}">
-                                                                        <option value="no">No</option>
-                                                                        <option value="yes">Yes</option>
+                                                                        <option value="no">{{trans('frontend_details.no')}}</option>
+                                                                        <option value="yes">{{trans('frontend_details.yes')}}</option>
                                                                     </select>
                                                                 </div>
                                                                 <!-- <label class="col-sm-12 col-form-labels" style="visibility:hidden" id="extra-price-{{$i}}"> -->
                                                                 <label class="col-sm-12 col-form-labels" style="visibility:hidden" id="extra-price-{{$available_room_category->id."_".($i+1)}}">
-                                                                    Extrabed Price: $ {{$available_room_category->extra_bed_price}}
+                                                                   {{trans('frontend_details.extra_bed_price')}}: $ {{$available_room_category->extra_bed_price}}
                                                                 </label>
                                                             </div>
                                                             @endif
@@ -219,21 +219,21 @@
                                                         <div class="payment_formgroup">
                                                             <div class="col-sm-3 pd_rg_10 flast">
                                                                 {{--<input type="text" class="formcontrols" id="name" placeholder="First name, Last name">--}}
-                                                                <input type="text" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_firstname"}}" name="{{$available_room_category->id."_".($i+1)."_firstname"}}" placeholder="First name" autocomplete="off">
+                                                                <input type="text" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_firstname"}}" name="{{$available_room_category->id."_".($i+1)."_firstname"}}" placeholder="{{trans('frontend_header.first_name')}}" autocomplete="off">
                                                             </div>
                                                              <div class="col-sm-3 pd_rg_10 flast">
                                                                 {{--<input type="text" class="formcontrols" id="name" placeholder="First name, Last name">--}}
-                                                                <input type="text" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_lastname"}}" name="{{$available_room_category->id."_".($i+1)."_lastname"}}" placeholder="Last name" autocomplete="off">
+                                                                <input type="text" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_lastname"}}" name="{{$available_room_category->id."_".($i+1)."_lastname"}}" placeholder="{{trans('frontend_header.last_name')}}" autocomplete="off">
                                                             </div>
                                                             <div class="col-sm-6 pd_lf_5 flast">
-                                                                <input type="email" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_email"}}" name="{{$available_room_category->id."_".($i+1)."_email"}}" placeholder="Email Address" >
+                                                                <input type="email" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_email"}}" name="{{$available_room_category->id."_".($i+1)."_email"}}" placeholder="{{trans('frontend_header.email_address')}}" >
                                                             </div>
                                                         </div>
                                                         <div class="checkbox">
                                                             <i class="fa fa-check-square-o" aria-hidden="true"></i>
-                                                             <span class="included">INCLUDED</span><span style="padding-left:30px;"><strong>Breakfast</strong><br></span>
+                                                             <span class="included">{{trans('frontend_details.included')}}</span><span style="padding-left:30px;"><strong>{{trans('frontend_details.breakfast')}}</strong><br></span>
                                                             <span style="padding-left: 148px;">
-                                                            Yes,we'd like breakfast during our stay at no additional cost.
+                                                            {{trans('frontend_details.yes_we_like_breakfast_no_addition_cost')}}
                                                             </span>
                                                         </div>
                                                     </div>
@@ -246,7 +246,7 @@
                                             <div class="payment_formtitle">
                                                 <!-- First Blog Post Left -->
                                                 <div class="payment_list">
-                                                    <h4>Book for Transportation</h4>
+                                                    <h4>{{trans('frontend_details.book_for_transportation')}}</h4>
                                                 </div>
                                             </div>
                                             <div class="payment_form">
@@ -255,13 +255,13 @@
                                                         <input type="checkbox" name="booking_taxi" value="1">
                                                     </label>
                                                     <a target="_blank" href="/transportation_information"><img src="/assets/shared/images/transporation.png"></a>
-                                                    <span style="font-size:15px;">I'm interested in booking a taxi in advance</span>
+                                                    <span style="font-size:15px;">{{trans('frontend_details.inserted_booking_taxi')}}</span>
                                                 </div>
                                             </div>
                                             <div class="payment_formtitle">
                                                 <!-- First Blog Post Left -->
                                                 <div class="payment_list">
-                                                    <h4>Book for Tour Guide</h4>
+                                                    <h4>{{trans('frontend_details.book_for_guide')}}</h4>
                                                 </div>
                                             </div>
                                             <div class="payment_form">
@@ -270,54 +270,54 @@
                                                         <input type="checkbox" name="booking_tour_guide" value="1">
                                                     </label>
                                                     <a target="_blank" href="/tour_information"><img src="/assets/shared/images/tour.png"></a>
-                                                    <span style="font-size:15px;">I'm interested in booking tour guide.</span>
+                                                    <span style="font-size:15px;">{{trans('frontend_details.inserted_in_tour_guid')}}</span>
                                                 </div>
                                             </div>
                                             &nbsp;
                                             <div class="payment_formtitle">
                                                 <!-- First Blog Post Left -->
                                                 <div class="payment_list">
-                                                    <h4>Ask a Question</h4>
+                                                    <h4>{{trans('frontend_details.ask_a_question')}}</h4>
                                                 </div>
                                             </div>
                                             <div class="last_form">
                                                 <div class="formtitle_left">
-                                                    <span>Special Requests</span>
+                                                    <span>{{trans('frontend_details.special_request')}}</span>
                                                 </div>
                                                 <div class="formtitle_left">
-                                                    <span>We'll forward these to your hotel or host immediately upon booking.</span>
+                                                    <span>{{trans('frontend_details.we_forward_upon_booking')}}</span>
                                                 </div>
                                                 <div>
                                                     <textarea class="col-xs-7" id="special_request" name="special_request"></textarea>
                                                 </div>
                                                 <div class="clearfix"></div>
                                                 <div class="formtitle_text">
-                                                    <span>Please be aware that all requests are subject to availability.</span>
+                                                    <span>{{trans('frontend_details.please_aware_subject')}}.</span>
                                                 </div>
                                                 <div class="list_style" style="float:left;">
-                                                    <input type="checkbox" name="non_smoking_request" value="1"> <span>I'd like a non-smoking room</span><br>
-                                                    <input type="checkbox" name="late_check_in_request" value="1"> <span>I'd like a late check-in</span><br>
-                                                    <input type="checkbox" name="high_floor_request" value="1"> <span>I'd like a room on a high floor</span><br>
-                                                    <input type="checkbox" name="large_bed_request" value="1"> <span>I'd like a large bed</span><br>
-                                                    <input type="checkbox" name="early_check_in_request" value="1"> <span>I'd like an early check-in</span><br>
+                                                    <input type="checkbox" name="non_smoking_request" value="1"> <span>{{trans('frontend_details.non_like_smoking')}}</span><br>
+                                                    <input type="checkbox" name="late_check_in_request" value="1"> <span>{{trans('frontend_details.non_like_late_check')}}</span><br>
+                                                    <input type="checkbox" name="high_floor_request" value="1"> <span>{{trans('frontend_details.non_like_late_check')}}</span><br>
+                                                    <input type="checkbox" name="large_bed_request" value="1"> <span>{{trans('frontend_details.non_like_bed')}}</span><br>
+                                                    <input type="checkbox" name="early_check_in_request" value="1"> <span>{{trans('frontend_details.non_like_check')}}</span><br>
                                                 </div>
                                                 <div class="list_style">
-                                                    <input type="checkbox" name="twin_bed_request" value="1"> <span>I'd like twin beds</span><br>
-                                                    <input type="checkbox" name="quiet_room_request" value="1"> <span>I'd like a quiet room</span><br>
-                                                    <input type="checkbox" name="airport_transfer_request" value="1"> <span>I'd like an airport transfer</span><br>
-                                                    <input type="checkbox" name="private_parking_request" value="1"> <span>I'd like a private parking</span><br>
-                                                    <input type="checkbox" name="baby_cot_request" value="1"> <span>I'd like to have a baby cot <br>(additional charges may apply)</span>
+                                                    <input type="checkbox" name="twin_bed_request" value="1"> <span>{{trans('frontend_details.like_twin_bed')}}</span><br>
+                                                    <input type="checkbox" name="quiet_room_request" value="1"> <span>{{trans('frontend_details.like_quiet_room')}}</span><br>
+                                                    <input type="checkbox" name="airport_transfer_request" value="1"> <span>{{trans('frontend_details.like_ariport_transfer')}}</span><br>
+                                                    <input type="checkbox" name="private_parking_request" value="1"> <span>{{trans('frontend_details.like_private_parking')}}</span><br>
+                                                    <input type="checkbox" name="baby_cot_request" value="1"> <span>{{trans('frontend_details.have_baby_cot')}} <br>({{trans('frontend_details.additional_charge_may_apply')}})</span>
                                                 </div>
                                                 <br>
 
                                             </div>
                                             <div class="continue">
                                                 @if(\Illuminate\Support\Facades\Session::has('customer'))
-                                                    <button class="btn btn-primary">CONTINUE</button>
+                                                    <button class="btn btn-primary">{{trans('frontend_details.continue')}}</button>
                                                 @else
-                                                    <label>Please sign in to continue!</label>
+                                                    <label>{{trans('frontend_details.login_continue')}}</label>
                                                 @endif
-                                                <P>Don't worry - you won't be charged yet!</P>
+                                                <P>{{trans('frontend_details.not_be_charged')}}</P>
                                             </div>
                                     {{--</form>--}}
                                     {!! Form::close() !!}
@@ -339,15 +339,15 @@
                                                     </p>
                                                     <table>
                                                         <tr>
-                                                            <td>Check In</td>
+                                                            <td>{{trans('frontend_details.check_in')}}</td>
                                                             <td class="table_right">Thuesday, March 2, 2017</td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Check Out</td>
+                                                            <td>{{trans('frontend_details.check_out')}}</td>
                                                             <td class="table_right">Wednesday, March 3, 2017 until 12:00 from 14:00</td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Total Length of Stay</td>
+                                                            <td>{{trans('frontend_details.total_length')}}</td>
                                                             <td class="table_right">1 night</td>
                                                         </tr>
                                                     </table>
@@ -359,7 +359,7 @@
                                         <form>
                                             <div class="paymentformgroups">
                                                 <div class="col-sm-6 pd_rg_10">
-                                                    <label>Country<span style="color:red;">*</span></label>
+                                                    <label>{{trans('frontend_details.country')}}<span style="color:red;">*</span></label>
                                                     <input type="text" class="formcontrols" id="country" autocomplete="off">
                                                     <span style="padding:5px;">No address needed for this reservation</span>
                                                 </div>

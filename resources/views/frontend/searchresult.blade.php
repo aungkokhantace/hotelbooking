@@ -17,7 +17,7 @@
                     <!-- Blog Search Well -->
                     <div class="bg_block_sm pd_10">
                         <div class="side_title">
-                            <h5>Search Hotel</h5>
+                            <h5>{{trans('frontend_search.search_hotel')}}</h5>
                         </div>
                         <p></p>
                         @include('layouts_frontend.partial_frontend.search_form')
@@ -30,7 +30,7 @@
                         <input type="hidden" id="token" name="token" value="{{ csrf_token() }}">
 
                         <div class="side_title">
-                            <h5>Search Hotel</h5>
+                            <h5>{{trans('frontend_search.search_hotel')}}</h5>
                         </div>
                         <div class="list_style">
                             {{--@if(Session::has('room'))--}}
@@ -53,11 +53,11 @@
                                 @foreach($price_filters as $filter)
                                 <input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="{{$filter->id}}" {{Session::has('price_filter') && session('price_filter')[0]==$filter->id?'checked':''}}>
                                 @if($filter->type == 'between')
-                                    <span>{{$currency.' '.number_format($filter->from).'-'.number_format($filter->to).' per night'}}</span><br>
+                                    <span>{{$currency.' '.number_format($filter->from).'-'.number_format($filter->to). trans('frontend_details.per_night')}}</span><br>
                                 @elseif($filter->type == 'under')
-                                    <span>{{ucwords($filter->type).' '.$currency.' '.number_format($filter->to).' per night'}}</span><br>
+                                    <span>{{ucwords($filter->type).' '.$currency.' '.number_format($filter->to).trans('frontend_details.per_night')}}</span><br>
                                 @else
-                                    <span>{{ucwords($filter->type).' '.$currency.' '.number_format($filter->from).' per night'}}</span><br>
+                                    <span>{{ucwords($filter->type).' '.$currency.' '.number_format($filter->from).trans('frontend_details.per_night')}}</span><br>
                                 @endif
                                 @endforeach
                             @endif    
@@ -67,22 +67,22 @@
                     <!-- Blog Star Rating Well -->
                     <div class="bg_block_sm pd_10">
                         <div class="side_title">
-                            <h5>Star Rating</h5>
+                            <h5>{{trans('frontend_search.star_rating')}}</h5>
                         </div>
                         <div class="list_style">
-                            <input type="checkbox" class="filter_checkbox one_check" name="star_filter[]" value="1" @if(Session::has('star_filter') && session('star_filter')[0]=="1") checked @endif> <span> 1 Star</span><br>
-                            <input type="checkbox" class="filter_checkbox one_check" name="star_filter[]" value="2" @if(Session::has('star_filter') && session('star_filter')[0]=="2") checked @endif> <span> 2 Stars</span><br>
-                            <input type="checkbox" class="filter_checkbox one_check" name="star_filter[]" value="3" @if(Session::has('star_filter') && session('star_filter')[0]=="3") checked @endif> <span> 3 Stars</span><br>
-                            <input type="checkbox" class="filter_checkbox one_check" name="star_filter[]" value="4" @if(Session::has('star_filter') && session('star_filter')[0]=="4") checked @endif> <span> 4 Stars</span><br>
-                            <input type="checkbox" class="filter_checkbox one_check" name="star_filter[]" value="5" @if(Session::has('star_filter') && session('star_filter')[0]=="5") checked @endif> <span> 5 Stars</span><br>
-                            <input type="checkbox" class="filter_checkbox one_check" name="star_filter[]" value="6" @if(Session::has('star_filter') && session('star_filter')[0]=="6") checked @endif> <span> 6 Stars</span><br>
-                            <input type="checkbox" class="filter_checkbox one_check" name="star_filter[]" value="7" @if(Session::has('star_filter') && session('star_filter')[0]=="7") checked @endif> <span> 7 Stars</span><br>
+                            <input type="checkbox" class="filter_checkbox one_check" name="star_filter[]" value="1" @if(Session::has('star_filter') && session('star_filter')[0]=="1") checked @endif> <span>{{trans('frontend_search.1star')}}</span><br>
+                            <input type="checkbox" class="filter_checkbox one_check" name="star_filter[]" value="2" @if(Session::has('star_filter') && session('star_filter')[0]=="2") checked @endif> <span> {{trans('frontend_search.2star')}}</span><br>
+                            <input type="checkbox" class="filter_checkbox one_check" name="star_filter[]" value="3" @if(Session::has('star_filter') && session('star_filter')[0]=="3") checked @endif> <span> {{trans('frontend_search.3star')}}</span><br>
+                            <input type="checkbox" class="filter_checkbox one_check" name="star_filter[]" value="4" @if(Session::has('star_filter') && session('star_filter')[0]=="4") checked @endif> <span> {{trans('frontend_search.4star')}}</span><br>
+                            <input type="checkbox" class="filter_checkbox one_check" name="star_filter[]" value="5" @if(Session::has('star_filter') && session('star_filter')[0]=="5") checked @endif> <span> {{trans('frontend_search.5star')}}</span><br>
+                            <input type="checkbox" class="filter_checkbox one_check" name="star_filter[]" value="6" @if(Session::has('star_filter') && session('star_filter')[0]=="6") checked @endif> <span> {{trans('frontend_search.6star')}}</span><br>
+                            <input type="checkbox" class="filter_checkbox one_check" name="star_filter[]" value="7" @if(Session::has('star_filter') && session('star_filter')[0]=="7") checked @endif> <span>{{trans('frontend_details.address')}}</span><br>
                         </div>
                     </div>
                     <!-- Blog Facility Well -->
                     <div class="bg_block_sm pd_10">
                         <div class="side_title">
-                            <h5>Facility</h5>
+                            <h5>{{trans('frontend_search.facility')}}</h5>
                         </div>
                         <div class="list_style">
                             @foreach($facilities as $facility)
@@ -94,7 +94,7 @@
                     <!-- Blog Popular Places Well -->
                     <div class="bg_block_sm pd_10">
                         <div class="side_title">
-                            <h5>Popular Places</h5>
+                            <h5>{{trans('frontend_search.popular_places')}}</h5>
                         </div>
                         <div class="list_style">
                             @foreach($landmarks as $landmark)
@@ -112,9 +112,9 @@
                 <div class="col-md-9 search_list">
                     <!-- First Blog Post -->
                     @if(count($hotels)>1)
-                        <h2>{{isset($destination) && $destination != "" ? $destination:'Destination'}} : {{$countHotel}} properties found</h2>
+                        <h2>{{isset($destination) && $destination != "" ? $destination:'Destination'}} : {{$countHotel}} {{trans('frontend_search.property_found')}}</h2>
                     @else
-                        <h2>{{isset($destination) && $destination != "" ? $destination:'Destination'}} : {{$countHotel}} property found</h2>
+                        <h2>{{isset($destination) && $destination != "" ? $destination:'Destination'}} : {{$countHotel}} {{trans('frontend_search.property_found')}}</h2>
                     @endif
 
                     <p class="lead">
@@ -125,9 +125,9 @@
                         <div class="col-lg-12">
                             <div style="border-bottom:1px solid #ccc;">
                                 <ul id="myTab" class="nav nav-tabs nav-justified">
-                                    <li class="active"><a href="#service-one" data-toggle="tab"> Hotels </a>
+                                    <li class="active"><a href="#service-one" data-toggle="tab"> {{trans('frontend_search.hotels')}} </a>
                                     </li>
-                                    <li class=""><a href="#service-two" data-toggle="tab"> Map View </a>
+                                    <li class=""><a href="#service-two" data-toggle="tab"> {{trans('frontend_search.map_view')}} </a>
                                     </li>
                                 </ul>
                             </div>
@@ -181,7 +181,7 @@
                                                         {{--<li>MMK {{$hotel->min_price}}</li>--}}
                                                         <li>{{ isset($hotel->min_price)? $currency.' '.number_format($hotel->min_price,2):'' }}</li>
                                                         <li>
-                                                            <a class="btn btn-primary" href="/hotel_detail/{{$hotel->id}}">BOOK NOW</a>
+                                                            <a class="btn btn-primary" href="/hotel_detail/{{$hotel->id}}">{{trans('frontend_search.book_now')}} </a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -197,7 +197,7 @@
                                     <!--Suggested Hotels are shown if search result count is less than 10 -->
                                     @if(isset($suggestedHotels) && count($suggestedHotels)>0 && count($hotels)<10)
                                     <br><br>
-                                    <h2>Suggested Hotels</h2>
+                                    <h2>{{trans('frontend_search.suggested_hotels')}}</h2>
                                     <!--Suggested Hotels-->
                                     @foreach($suggestedHotels as $suggestedHotelhotel)
                                         <div class="blog">
@@ -243,7 +243,7 @@
                                                         {{--<li>MMK {{$suggestedHotelhotel->min_price}}</li>--}}
                                                         <li>{{ isset($suggestedHotelhotel->min_price)? $currency.' '.number_format($suggestedHotelhotel->min_price):'' }}</li>
                                                         <li>
-                                                            <a class="btn btn-primary" href="/hotel_detail/{{$suggestedHotelhotel->id}}">BOOK NOW</a>
+                                                            <a class="btn btn-primary" href="/hotel_detail/{{$suggestedHotelhotel->id}}">{{trans('frontend_search.book_now')}}</a>
                                                         </li>
                                                     </ul>
                                                 </div>

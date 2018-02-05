@@ -21,11 +21,11 @@
                         <div class="col-lg-12">
                             <div style="border-bottom:1px solid #ccc;">
                                 <ul id="myTab" class="nav nav-tabs nav-justified nav-ff">
-                                    <li class=""><a href="#"> 1.Choose your rooms </a>
+                                    <li class=""><a href="#"> 1.{{trans('frontend_details.choose_your_room')}}  </a>
                                     </li>
-                                    <li class=""><a href="#service-one"> 2.Enter your details </a>
+                                    <li class=""><a href="#service-one"> 2.{{trans('frontend_details.enter_your_details')}} </a>
                                     </li>
-                                    <li class="active"><a href="#service-two" data-toggle="tab"> 3.Confirm your reservation </a>
+                                    <li class="active"><a href="#service-two" data-toggle="tab"> 3.{{trans('frontend_details.confirm_your_reservation')}} </a>
                                     {{--<li class=""><a href="#service-two"> 3.Confirm your reservation </a>--}}
                                     </li>
                                 </ul>
@@ -89,19 +89,19 @@
                                                 </p>
                                                 <table>
                                                     <tr>
-                                                        <td>Check In</td>
+                                                        <td>{{trans('frontend_details.check_in')}}</td>
                                                         <td class="table_right">@if(Session::has('check_in')) {{session('check_in')}} (d-m-Y) @endif</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Check Out</td>
+                                                        <td>{{trans('frontend_details.check_out')}}</td>
                                                         <td class="table_right">@if(Session::has('check_out')) {{session('check_out')}} (d-m-Y) @endif</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Total Length of Stay</td>
+                                                        <td>{{trans('frontend_details.total_length')}}</td>
                                                         @if(isset($nights) && $nights > 1)
-                                                            <td class="table_right">{{$nights}} nights</td>
+                                                            <td class="table_right"> {{$nights}} {{trans('frontend_details.nights')}}</td>
                                                         @else
-                                                            <td class="table_right">{{$nights}} night</td>
+                                                            <td class="table_right"> {{$nights}} {{trans('frontend_details.night')}}</td>
                                                         @endif
                                                     </tr>
                                                 </table>
@@ -113,21 +113,21 @@
                                         <input type="hidden" id="payable" name="payable" value="{{session('payable_amount')}}">
                                             <div class="paymentformgroups">
                                                 <div class="col-sm-6 pd_rg_10">
-                                                    <label>Country<span style="color:red;">*</span></label>
+                                                    <label>{{trans('frontend_details.country')}}<span style="color:red;">*</span></label>
                                                     {{--<input type="text" class="formcontrols" id="country" name="country">--}}
                                                     <select class="form-control" name="country" id="country">
-                                                        <option value="" disabled selected>Select Country</option>
+                                                        <option value="" disabled selected>{{trans('frontend_details.select_country')}}</option>
                                                         @foreach($countries as $country)
                                                             <option value="{{$country->id}}">{{$country->name}}</option>
                                                         @endforeach
                                                     </select>
                                                     <br>
-                                                    <span style="padding:5px;">No address needed for this reservation</span>
+                                                    <span style="padding:5px;">{{trans('frontend_details.no_address_this_reservation')}}</span>
                                                 </div>
                                             </div>
                                             <div class="paymentformgroups">
                                                 <div class="col-sm-6 pd_rg_10">
-                                                    <label>Telephone (mobile number preferred) <span style="color:red;">*</span></label>
+                                                    <label>{{trans('frontend_details.telephone')}} ({{trans('frontend_details.mobile_number_preferred')}}) <span style="color:red;">*</span></label>
                                                     <div class="col-10 input-group">
                                                         <input id="phone" class="formcontrols font_sz_11" type="text" value="" name="phone">
                                                         <div class="input-group-addons">
@@ -137,7 +137,7 @@
                                                 </div>
                                                 <div class="col-sm-12 pd_rg_10">
                                                     <div class="button_paynow">
-                                                        <button type="button" class="btn btn-info btn-sm" id="book_and_pay_button" name="book_and_pay_button"><i class="fa fa-lock" aria-hidden="true"></i> &nbsp;BOOK & PAY NOW!</button>
+                                                        <button type="button" class="btn btn-info btn-sm" id="book_and_pay_button" name="book_and_pay_button"><i class="fa fa-lock" aria-hidden="true"></i> &nbsp;{{trans('frontend_details.book_pay')}}!</button>
                                                     </div>
                                                 </div>
                                             </div>

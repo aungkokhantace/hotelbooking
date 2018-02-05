@@ -36,7 +36,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('register/check_email', ['as' => 'register/check_email', 'uses' => 'Frontend\UserRegistrationController@check_email']);
     Route::get('register/verify/{confirmationCode}','Frontend\UserRegistrationController@verify');
     //Authentication
-//    Route::get('login','Frontend\LoginController@showLogin');
+//    Route::get('login','Frontend\LogianController@showLogin');
     Route::any('login','Frontend\LoginController@doLogin');
     Route::get('logout','Frontend\LoginController@logout');
     Route::get('test','Frontend\HomeController@test');
@@ -99,6 +99,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('faq_information',array('as'=>'/faq_information','uses'=>'Frontend\FaqInformationController@index'));
     //Email function test
     Route::get('/email_test', 'Payment\PaymentTestController@emailTest');
+   //Fronted Language
+    Route::get('lang/{lang}','FrontendLanguage\FrontendLanguageController@getLanguage');
+    Route::post('frontend/language', ['as' => 'frontend/language', 'uses' => 'FrontendLanguage\FrontendLanguageController@changeLanguage']);
 
 
     //Backend
@@ -493,7 +496,7 @@ Route::group(['middleware' => 'web'], function () {
             Route::post('transportation_information', array('as'=>'backend_mps/transportation_information', 'uses'=>'Setup\TransportationInformation\TransportationInformationController@update'));
             //Visa Information
             Route::get('visa_information',array('as'=>'backend_mps/visa_information','uses'=>'Setup\VisaInformation\VisaInformationController@edit'));
-
+           
             Route::post('visa_information',array('as'=>'backend_mps/visa_information','uses'=>'Setup\VisaInformation\VisaInformationController@update'));
 
             //FAQ Information

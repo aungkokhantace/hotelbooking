@@ -17,7 +17,7 @@
                     <!-- Blog Search Well -->
                     <div class="bg_block_sm pd_10">
                         <div class="side_title">
-                            <h5>Search Hotel</h5>
+                            <h5>{{trans('frontend_search.search_hotel')}}</h5>
                         </div>
                         <p></p>
                         @include('layouts_frontend.partial_frontend.search_form')
@@ -114,7 +114,7 @@
                             <div class="service">
                                 <img class="fa fa-university service-icon" src="/assets/shared/images/main.jpg">
                                 <div class="desc">
-                                    <h4>Features</h4>
+                                    <h4>{{trans('frontend_details.features')}}</h4>
                                     <ul>
                                         @foreach($hFeatures as $hFeature)
                                             <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$hFeature->feature->name}}</li>
@@ -128,7 +128,7 @@
                             <div class="service">
                                 <img class="fa fa-university service-icon" src="/assets/shared/images/around.jpg">
                                 <div class="desc">
-                                    <h4>What's around</h4>
+                                    <h4>{{trans('frontend_details.whats_around')}}</h4>
                                     <ul>
                                         @foreach($nearby_array as $nearby)
                                         <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$nearby["name"]}} ({{$nearby["category"]}}) - {{$nearby["distance"]}}</li>
@@ -145,7 +145,7 @@
                                 <!-- <img class="fa fa-university service-icon" src="/assets/shared/images/knife_fork.png"> -->
                                 <span class="fa fa-cutlery service-icon"></span>
                                 <div class="desc">
-                                    <h4>Restaurants</h4>
+                                    <h4>{{trans('frontend_details.restaurants')}}</h4>
                                     <ul>
                                         @foreach($restaurantCategoryArr as $category)
                                             <li>
@@ -168,16 +168,16 @@
                     <!-- End Hotel Restaurant Block -->
                     <hr>
                     <div class="table-responsive room_table">
-                        <h3>Available Rooms</h3>
+                        <h3>{{trans('frontend_details.available_rooms')}}</h3>
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th width="150px">Room Category</th>
-                                <th width="220px">Included</th>
-                                <th width="65px">Capacity</th>
-                                <th width="130px">Price Per Night</th>
-                                <th width="80px">Rooms</th>
-                                <th width="110px">Booking</th>
+                                <th width="150px">{{trans('frontend_details.room_category')}}</th>
+                                <th width="220px">{{trans('frontend_details.included')}}</th>
+                                <th width="65px">{{trans('frontend_details.capacity')}}</th>
+                                <th width="130px">{{trans('frontend_details.price_per_night')}}</th>
+                                <th width="80px">{{trans('frontend_details.rooms')}}</th>
+                                <th width="110px">{{trans('frontend_details.booking')}}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -244,17 +244,17 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="detailmodal_text">
-                                                                    <h4>Category Name : {{$roomCategory->name}}</h4>
-                                                                    <h4>Price Per Night : USD {{$roomCategory->price}}</h4>
-                                                                    <h4>Room size : {{$roomCategory->square_metre}} m<sup>2</sup></h4>
-                                                                    <h4>Bed Type : {{$roomCategory->bed_types->name}}</h4>
-                                                                    <h4>Extra Bed : {{$roomCategory->extra_bed_allowed}}</h4>
-                                                                    <h5>Description</h5>
+                                                                    <h4>{{trans('frontend_details.category_name')}} : {{$roomCategory->name}}</h4>
+                                                                    <h4>{{trans('frontend_details.price_per_night')}} : USD {{$roomCategory->price}}</h4>
+                                                                    <h4>{{trans('frontend_details.room_size')}} : {{$roomCategory->square_metre}} m<sup>2</sup></h4>
+                                                                    <h4>{{trans('frontend_details.bed_type')}} : {{$roomCategory->bed_types->name}}</h4>
+                                                                    <h4>{{trans('frontend_details.extra_bed')}} : {{$roomCategory->extra_bed_allowed}}</h4>
+                                                                    <h5>{{trans('frontend_details.description')}}</h5>
                                                                     <p>{{$roomCategory->description}}</p>
                                                                 </div>
                                                                 <div class="detailmodal_text row">
                                                                     <div class="col-md-12">
-                                                                      <h4>Room Facilities</h4>
+                                                                      <h4>{{trans('frontend_details.room_facilties')}}</h4>
                                                                       <ul class="room_facilities">
                                                                           @if(isset($roomCategory->facilities) && count($roomCategory->facilities) > 0)
                                                                               @foreach($roomCategory->facilities as $room_category_facility)
@@ -270,7 +270,7 @@
                                                                 <hr>
                                                                 <div class="detailmodal_text row">
                                                                     <div class="col-md-12">
-                                                                      <h4>Room Amenities</h4>
+                                                                      <h4>{{trans('frontend_details.room_amenities')}}</h4>
                                                                       <ul class="room_facilities">
                                                                           @if(isset($roomCategory->room_amenities) && count($roomCategory->room_amenities) > 0)
                                                                               @foreach($roomCategory->room_amenities as $room_amenity)
@@ -294,9 +294,9 @@
                                             </li>
                                             <!-- <li><img class="fa-lis" src="/assets/shared/images/cityview.png">View</li> -->
                                             <li><img class="fa-lis" src="/assets/shared/images/16sqm.png">{{$roomCategory->square_metre}} s.q.m</li>
-                                            <li><img class="fa-lis" src="/assets/shared/images/signlebed.png">Bed : {{$roomCategory->bed_types->name}}</li>
-                                            <li><img class="fa-lis" src="/assets/shared/images/signlebed.png">Extra Bed : {{$roomCategory->extra_bed_allowed}}</li>
-                                            <li><img class="fa-lis" src="/assets/shared/images/breakfast.png">Breakfast : {{$roomCategory->breakfast_included}}</li>
+                                            <li><img class="fa-lis" src="/assets/shared/images/signlebed.png">{{trans('frontend_details.bed')}} : {{$roomCategory->bed_types->name}}</li>
+                                            <li><img class="fa-lis" src="/assets/shared/images/signlebed.png">{{trans('frontend_details.extra_bed')}}: {{$roomCategory->extra_bed_allowed}}</li>
+                                            <li><img class="fa-lis" src="/assets/shared/images/breakfast.png">{{trans('frontend_details.breakfast')}} : {{$roomCategory->breakfast_included}}</li>
                                         </ul>
                                     </td>
                                     <td>
@@ -305,7 +305,7 @@
                                                 <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$display_room_amenity->amenity->name}}</li>
                                             @endforeach
                                             @if($roomCategory->room_amenities_count > 5)
-                                              <li><a href="#myModal-{{$roomCategory->id}}" data-toggle="modal" id="{{ $roomCategory->id }}" class="insertcolumn" onclick="myFunction({{ $roomCategory->id }})">MORE>></a></li>
+                                              <li><a href="#myModal-{{$roomCategory->id}}" data-toggle="modal" id="{{ $roomCategory->id }}" class="insertcolumn" onclick="myFunction({{ $roomCategory->id }})">{{trans('frontend_details.more')}}>></a></li>
                                             @endif
                                         </ul>
                                     </td>
@@ -336,7 +336,7 @@
 
                                     @if(isset($book_now_flag) && $book_now_flag == 1)
                                         <td rowspan="{{count($roomCategories)}}">
-                                            <input type="button" class="btn btn-primary" value="BOOK NOW" onclick="book();">
+                                            <input type="button" class="btn btn-primary" value="{{trans('frontend_search.book_now')}}" onclick="book();">
                                             <?php $book_now_flag = 0; ?>
                                         </td>
                                     @endif
@@ -376,14 +376,14 @@
                     </div>
                     <hr>
                     <div class="room_table">
-                        <h3>Area Info : </h3>
+                        <h3>{{trans('frontend_details.area_info')}} : </h3>
                         <!-- Service Blocks -->
                         <div class="row margin-bottom-30">
                             <div class="col-md-6">
                                 <div class="service">
                                     <img class="service-icon" src="/assets/shared/images/closet.png">
                                     <div class="desc">
-                                        <h4> Closest Landmarks</h4>
+                                        <h4> {{trans('frontend_details.closest_landmarks')}}</h4>
                                         <ul class="fa-ul-li">
                                             @foreach($landmarks as $landmark)
                                                 <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$landmark->landmark->name}}</li>
@@ -397,7 +397,7 @@
                                 <div class="service">
                                     <img class="service-icon" src="/assets/shared/images/popu.png">
                                     <div class="desc">
-                                        <h4>Most Popular LandMarks</h4>
+                                        <h4>{{trans('frontend_details.most_popular_landmarks')}}</h4>
                                         <ul class="fa-ul-li">
                                             @foreach($popularLandmarks as $popularLandmark)
                                             @if($hotel->township_id == $popularLandmark->township_id)
@@ -414,16 +414,16 @@
                     </div>	 <!-- /.room-tabel -->
                     <hr>
                     <div class="room_table" id="good_to_know">
-                        <h3>Good to Know</h3>
+                        <h3>{{trans('frontend_details.good_to_know')}}</h3>
                         <div class="hc_m_content">
-                            <h4>Check-in</h4>
-                            <p>From {{$hotel->check_in_time}}</p>
-                            <h4>Check-out</h4>
-                            <p>Until {{$hotel->check_out_time}}</p>
-                            <h4>Breakfast Start Time</h4>
-                            <p>From {{$hotel->breakfast_start_time}}</p>
-                            <h4>Breakfast End Time</h4>
-                            <p>Until {{$hotel->breakfast_end_time}}</p>
+                            <h4>{{trans('frontend_details.check_in')}}</h4>
+                            <p>{{trans('frontend_details.from')}} {{$hotel->check_in_time}}</p>
+                            <h4>{{trans('frontend_details.check_out')}}</h4>
+                            <p>{{trans('frontend_details.until')}} {{$hotel->check_out_time}}</p>
+                            <h4>{{trans('frontend_details.breakfast_start_time')}}</h4>
+                            <p>{{trans('frontend_details.from')}} {{$hotel->breakfast_start_time}}</p>
+                            <h4>{{trans('frontend_details.breakfast_end_time')}}</h4>
+                            <p>{{trans('frontend_details.until')}} {{$hotel->breakfast_end_time}}</p>
                         </div>
                     </div>	 <!-- /.room-tabel -->
                 </div><!-- /.row -->

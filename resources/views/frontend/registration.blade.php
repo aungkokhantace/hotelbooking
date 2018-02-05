@@ -9,39 +9,39 @@
             <div class="imgcontainer">
                 <img src="/assets/shared/images/Edit.png">
             </div>
-            <h2>Create Account</h2>
+            <h2>{{trans('frontend_header.create_account')}}</h2>
                 {!! Form::open(array('url' => '/register', 'class'=> 'form-horizontal', 'id'=>'registration')) !!}
 
                 <div class="formgroup">
                     <div class="col-sm-6 pd_rg_10">
-                        <input type="text" class="formcontrols" id="first_name" placeholder="First Name" name="first_name">
+                        <input type="text" class="formcontrols" id="first_name" placeholder="{{trans('frontend_header.first_name')}}" name="first_name">
                     </div>
                     <div class="col-sm-6 pd_lf_5">
-                        <input type="text" class="formcontrols" id="last_name" placeholder="Last Name" name="last_name">
+                        <input type="text" class="formcontrols" id="last_name" placeholder="{{trans('frontend_header.last_name')}}" name="last_name">
                     </div>
                 </div>
                 <div class="formgroup">
                     <div class="col-sm-12 pd_lf_5">
-                        <input type="email" class="formcontrols" id="email" placeholder="Email Address" name="email">
+                        <input type="email" class="formcontrols" id="email" placeholder="{{trans('frontend_header.email_address')}} " name="email">
                     </div>
                 </div>
                 <div class="formgroup">
                     <div class="col-sm-12 pd_lf_5">
-                        <input type="password" class="formcontrols" id="password" placeholder="Password" name="password">
+                        <input type="password" class="formcontrols" id="password" placeholder="{{trans('frontend_header.password')}}" name="password">
                     </div>
                 </div>
                 <div class="formgroup">
                     <div class="col-sm-12 pd_lf_5">
-                        <input type="password" class="formcontrols" id="confirm_password" placeholder="Retype Password" name="confirm_password">
+                        <input type="password" class="formcontrols" id="confirm_password" placeholder="{{trans('frontend_header.retype_password')}}" name="confirm_password">
                     </div>
                 </div>
                 <div class="col-sm-12 pd_lf_5">
-                    <button type="button" class="btn btn-default formcontrols register-btn" id="create-btn">CREATE ACCOUNT</button>
+                    <button type="button" class="btn btn-default formcontrols register-btn" id="create-btn">{{trans('frontend_header.create_account')}}</button>
                 </div>
                 <div class="formgroup">
                     <div class="col-md-12 control">
                         <div class="form_text text-center">
-                            <span>By creating an account, you agree to our</span>
+                            <span>{{trans('frontend_header.by_creating_an_account')}}, </span>
                             <a href="#"> Terms </a>
                         </div>
                     </div>
@@ -49,8 +49,8 @@
                 <div class="formgroup text-center">
                     <div class="col-md-12 control">
                         <div class="form_textone">
-                            <span>Already a member?</span>
-                            <a href="#" id="sign_in"> Login Here </a>
+                            <span>{{trans('frontend_header.already_a_member')}}</span>
+                            <a href="#" id="sign_in"> {{trans('frontend_header.login_here')}} </a>
                         </div>
                     </div>
                 </div>

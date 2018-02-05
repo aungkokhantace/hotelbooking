@@ -70,7 +70,7 @@
                     <option value="5">Hostel</option>
                 @endif
             </select>
-            <p class="text-danger">{{$errors->first('country_id')}}</p>
+            <p class="text-danger">{{$errors->first('h_type_id')}}</p>
         </div>
     {{-- </div>
 

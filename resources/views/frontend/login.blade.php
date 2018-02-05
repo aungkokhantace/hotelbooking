@@ -7,31 +7,31 @@
                 <img src="/assets/shared/images/Edit.png">
                 <button type="button" class="close" data-dismiss="modal">⨂</button>
             </div>
-            <h2 style="text-align:center;">Login</h2>
+            <h2 style="text-align:center;">{{trans('frontend_header.login')}}</h2>
             <div id="show-error" class="col-sm-12"></div>
             <!-- <form class="form-horizontal"> -->
             {!! Form::open(array('url' => '/login', 'class'=> 'form-horizontal', 'id'=>'login')) !!}
                 <div class="formgroup">
                     <div class="col-sm-12 pd_lf_5">
-                        <input type="email" class="formcontrols" id="login_email" placeholder="Email" name="email">
+                        <input type="email" class="formcontrols" id="login_email" placeholder="{{trans('frontend_header.email_address')}}" name="email">
                     </div>
                 </div>
                 <div class="formgroup">
                     <div class="col-sm-12 pd_lf_5">
-                        <input type="password" class="formcontrols" id="login_password" placeholder="Password" name="password">
+                        <input type="password" class="formcontrols" id="login_password" placeholder="{{trans('frontend_header.password')}}" name="password">
                     </div>
                 </div>
                 <div class="col-sm-12 pd_lf_5">
                    <!-- <button type="submit" class="btn btn-default formcontrolnew">Login</button> -->
-                   <button type="button" class="btn btn-default formcontrols login-btn">Login</button>
+                   <button type="button" class="btn btn-default formcontrols login-btn">{{trans('frontend_header.login')}}</button>
                 </div>
                 {{--  <div class="col-sm-12 pd_lf_5 form_text">
-                    <span class="psw"><a href="#">Forgot password?</a></span>
+                    <span class="psw"><a href="#">{{trans('frontend_header.forget_password')}}</a></span>
                 </div>  --}}
                 <div class="formgroup text-center">
                     <div class="col-md-12 control">
                         <div class="form_textone">
-                            <a href="#" style="text-decoration:underline;" id="sign_up"> Not a member? Create Account </a>
+                            <a href="#" style="text-decoration:underline;" id="sign_up"> {{trans('frontend_header.not_a_member')}} {{trans('frontend_header.create_account')}} </a>
                         </div>
                     </div>
                 </div>

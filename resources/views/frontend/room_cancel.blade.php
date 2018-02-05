@@ -3,23 +3,23 @@
         <div class="col-md-offset-2 modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&bigotimes;</button>
-                <h4>Cancel this room</h4>
+                <h4>{{trans('frontend_details.cancel_this_room')}}</h4>
             </div>
             <div class="modal-body">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-7 col-md-7">
-                            <h5><b>Cancellation Policy</b></h5>
+                            <h5><b>{{trans('frontend_details.cancle_policy')}}</b></h5>
                             {{$booking->room_count.' Rooms  .................   '}}<b>{{$booking->charge}}</b>
                             {!! Form::open(array('url'=>'/booking/room/cancel','class'=> 'form-horizontal', 'id'=>'room_cancel')) !!}
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="id" value="{{$booking->id}}">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <button type="button" class="btn btn-success btn-cancel-yes">Yes, Cancel this room.</button>
+                                    <button type="button" class="btn btn-success btn-cancel-yes">{{trans('frontend_details.yes_cancel_room')}}.</button>
                                 </div>
                                 <div class="col-md-4">
-                                    <button type="button" class="btn btn-cancel-no">No, I don't want to cancel.</button>
+                                    <button type="button" class="btn btn-cancel-no">{{trans('frontend_details.no_i_want_cancel')}}.</button>
                                 </div>
                             </div>
                             {!! Form::close() !!}

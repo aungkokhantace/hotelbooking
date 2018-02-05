@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-headers">
                 <button type="button" class="closed" data-dismiss="modal">⨂</button>
-                <h4 class="modal-title">Cancel Your Booking</h4>
+                <h4 class="modal-title">{{trans('frontend_details.cancel_your_booking')}}</h4>
             </div>
             {!! Form::open(array('url'=>'/booking/cancel','id'=>'booking_cancel', 'method'=>'post')) !!}
             <div class="modalcancel-body">
@@ -37,14 +37,14 @@
                     <button type="button"
                             class="btn btn-defaulted1 btn-yes"
                             data-dismiss="modal">
-                        Yes, Cancel this booking
+                       {{trans('frontend_details.cancel_booking')}}
                     </button>
                 </div>
                 <div class="col-sm-6 pd_lf_5">
                     <button type="button"
                             class="btn btn-defaulted2 btn-no"
                             data-dismiss="modal">
-                        No,I don't want to cancel
+                       {{trans('frontend_details.no_i_want_cancel')}}
                     </button>
                 </div>
             </div>

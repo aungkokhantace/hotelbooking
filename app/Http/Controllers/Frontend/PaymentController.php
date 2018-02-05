@@ -755,7 +755,7 @@ class PaymentController extends Controller
             $stripeCustomerResult['stripe']['stripe_payment_amt'] = '';*/
             if($stripeCustomerResult['aceplusStatusCode'] != ReturnMessage::OK){
                 DB::rollback();
-                alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                alert()->warning(trans('frontend_details.unsuccessful_alert'))->persistent('OK');
                 return redirect('/');
             }
             // Get Stripe Customer Id
@@ -776,7 +776,7 @@ class PaymentController extends Controller
 
                 if($stripePaymentResult['aceplusStatusCode'] != ReturnMessage::OK){
                     DB::rollback();
-                    alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                    alert()->warning(trans('frontend_details.unsuccessful_alert'))->persistent('OK');
                     return redirect('/');
                 }
                 $stripe_user_id                             = $stripePaymentResult["stripe"]["stripe_user_id"];
@@ -792,7 +792,7 @@ class PaymentController extends Controller
 
                 if($stripeBalanceResult['aceplusStatusCode'] != ReturnMessage::OK){
                     DB::rollback();
-                    alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                    alert()->warning(trans('frontend_details.unsuccessful_alert'))->persistent('OK');
                     return redirect('/');
                 }
                 $stripe_payment_fee                         = $stripeBalanceResult['stripe']['stripe_payment_fee'];
@@ -846,7 +846,7 @@ class PaymentController extends Controller
             //if booking creation fails, alert and redirect to homepage
             if ($booking_result['aceplusStatusCode'] != ReturnMessage::OK){
                 DB::rollback();
-                alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                alert()->warning(trans('frontend_details.unsuccessful_alert'))->persistent('OK');
                 return redirect('/');
             }
             //if booking creation was successful, start booking room creation
@@ -986,7 +986,7 @@ class PaymentController extends Controller
                 //if booking room creation fails, alert and redirect to homepage
                 if ($booking_room_result['aceplusStatusCode'] != ReturnMessage::OK){
                     DB::rollback();
-                    alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                    alert()->warning(trans('frontend_details.unsuccessful_alert'))->persistent('OK');
                     return redirect('/');
                 }
                 /* End creating booking room */
@@ -1031,7 +1031,7 @@ class PaymentController extends Controller
             // dd('booking request',$booking_request_result);
             if ($booking_request_result['aceplusStatusCode'] != ReturnMessage::OK){
                 DB::rollback();
-                alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                alert()->warning(trans('frontend_details.unsuccessful_alert'))->persistent('OK');
                 return redirect('/');
             }
             /* END Operation for Booking Request */
@@ -1056,7 +1056,7 @@ class PaymentController extends Controller
             //if communication creation fails, alert and redirect to homepage
             if ($communication_result['aceplusStatusCode'] != ReturnMessage::OK){
                 DB::rollback();
-                alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                alert()->warning(trans('frontend_details.unsuccessful_alert'))->persistent('OK');
                 return redirect('/');
             }
             /* END Operation for communication */
@@ -1081,7 +1081,7 @@ class PaymentController extends Controller
             // dd('booking payment res',$booking_payment_result);
             if ($booking_payment_result['aceplusStatusCode'] != ReturnMessage::OK){
                 DB::rollback();
-                alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                alert()->warning(trans('frontend_details.unsuccessful_alert'))->persistent('OK');
                 return redirect('/');
             }
             /* END Operation for Booking Payment */
@@ -1117,7 +1117,7 @@ class PaymentController extends Controller
             if($booking_payment_stripe_result['aceplusStatusCode'] != ReturnMessage::OK){
                 //
                 DB::rollback();
-                alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+                alert()->warning(trans('frontend_details.unsuccessful_alert'))->persistent('OK');
                 return redirect('/');
             }
             //if all insertions were successful, commit DB and redirect to congratulation page
@@ -1144,7 +1144,7 @@ class PaymentController extends Controller
                     alert()->success('Your Booking was successful, but there was a problem in sending email to you!')->persistent('OK');
                 }
                 else{
-                    alert()->success('Congratulations! Your Booking was successful!')->persistent('OK');
+                    alert()->success(trans('frontend_details.successful_alert'))->persistent('OK');
                 }
                 //End sending complete email
             }
@@ -1164,7 +1164,7 @@ class PaymentController extends Controller
                     alert('Your Booking was successful, but there was a problem in sending email to you!');
                 }
                 else{
-                    alert('Congratulations! Your Booking was successful!');
+                    alert(trans('frontend_details.successful_alert'));
                 }
                 //End sending confirm email
             }
@@ -1173,7 +1173,7 @@ class PaymentController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
+            alert()->warning(trans('frontend_details.unsuccessful_alert'))->persistent('OK');
             return redirect('/');
         }
     }

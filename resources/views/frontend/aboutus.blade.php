@@ -11,10 +11,10 @@
         <section id="aboutus">
             <div class="container">
                 <div class="row">
-                    <h1>About Us</h1>
+                    <h1>{{trans('frontend_header.about_us')}}</h1>
                     <hr>
                     <div class="aboutus">
-                        <p><span>Our Story : </span>sit amet, consectetur adipisicing elit, sed do eiusmod
+                        <p><span>{{trans('frontend_header.our_story')}} : </span>sit amet, consectetur adipisicing elit, sed do eiusmod
                             tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                             quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
                             consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
@@ -27,7 +27,7 @@
                             proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                     </div><!-- /.aboutus -->
                     <div class="aboutus">
-                        <p><span>Our Strengths : </span>sit amet, consectetur adipisicing elit, sed do eiusmod
+                        <p><span>{{trans('frontend_header.our_strengths')}}s : </span>sit amet, consectetur adipisicing elit, sed do eiusmod
                             tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                             quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
                             consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
@@ -40,7 +40,7 @@
                             proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                     </div><!-- /.aboutus -->
                     <div class="aboutus">
-                        <p><span>Our Products : </span>sit amet, consectetur adipisicing elit, sed do eiusmod
+                        <p><span>{{trans('frontend_header.our_products')}} : </span>sit amet, consectetur adipisicing elit, sed do eiusmod
                             tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                             quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
                             consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
@@ -59,7 +59,7 @@
                             proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                     </div><!-- /.aboutus -->
                     <div class="aboutus">
-                        <p><span>Our Vision : </span>sit amet, consectetur adipisicing elit, sed do eiusmod reprehenderit in voluptate velit esse
+                        <p><span>{{trans('frontend_header.our_products')}} : </span>sit amet, consectetur adipisicing elit, sed do eiusmod reprehenderit in voluptate velit esse
                             cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</p>
                         <p>proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                             tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,

@@ -4,19 +4,19 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="title">
-                    <h5>Term & Conditions</h5>
+                    <h5>{{trans('frontend_header.term_condition')}}</h5>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elitconsectetur adipisicing elit........</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="title">
-                    <h5>Accepted Cards</h5>
+                    <h5>{{trans('frontend_header.accepted_carts')}}</h5>
                     <img src="/assets/shared/images/visa.jpg">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="title">
-                    <h5>Follow us</h5>
+                    <h5>{{trans('frontend_header.follow_us')}}</h5>
                     <ul class="list-inline">
                         <li>
                             <a href="#">
@@ -63,7 +63,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <p>All right reserved</p>
+                <p>{{trans('frontend_details.all_right_reserved')}}</p>
             </div>
         </div>
     </div>

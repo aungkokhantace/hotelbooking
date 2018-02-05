@@ -1,7 +1,7 @@
 @extends('layouts_frontend.master_frontend')
 @section('title','Manage Booking')
 @section('content')
-    <h5><b>Cancellation Policy</b></h5>
+    <h5><b>{{trans('frontend_details.cancle_policy')}}</b></h5>
 
     {!! Form::open(array('url'=>'/booking/cancel','class'=> 'form-horizontal', 'id'=>'booking_cancel','method'=>'post')) !!}
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -17,10 +17,10 @@
     </div>
     <div class="row">
         <div class="col-md-4">
-            <button type="submit" class="btn btn-success btn-cancel">Yes, Cancel this booking.</button>
+            <button type="submit" class="btn btn-success btn-cancel">{{trans('frontend_details.cancel_booking')}}</button>
         </div>
         <div class="col-md-4">
-            <button type="button" class="btn">No, I don't want to cancel.</button>
+            <button type="button" class="btn">{{trans('frontend_details.no_i_want_cancel')}}.</button>
         </div>
     </div>
     {!! Form::close() !!}

@@ -15,11 +15,11 @@
             <div class="row hotel_info">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="row">
-                        <span class="glyphicon glyphicon-map-marker"></span>Directions to...<br>
+                        <span class="glyphicon glyphicon-map-marker"></span>{{trans('frontend_details.direction_to')}}<br>
                         <span>{{$hotel->name}}</span><br>
                         <img src="/images/upload/{{$hotel->logo}}"><br>
                         {{$hotel->address}}<br>
-                        Latitude : {{$hotel->latitude}}, Longitude : {{$hotel->longitude}}
+                        {{trans('frontend_details.latitude')}} : {{$hotel->latitude}}, {{trans('frontend_details.longitude')}} : {{$hotel->longitude}}
                     </div>
                 </div>
             </div>
