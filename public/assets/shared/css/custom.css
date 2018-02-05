@@ -338,6 +338,12 @@ button.closed {
 }
 /* for frontend header logo */
 
+/* for frontend header service dropdown */
+.header-service-dropdown{
+  padding-left:0px;
+}
+/* for frontend header service dropdown */
+
 @media only screen and (max-width: 414px) {
 #bookingmanage_blog{
     border-bottom: 1px solid #ccc;

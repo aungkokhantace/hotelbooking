@@ -116,9 +116,8 @@ $companyLogo    = \App\Core\Check::companyLogo();
                             <a href="/">{{trans('frontend_header.home')}}</a>
                         </li>
                         <li>
-                            {{--  <a href="/comingsoon"></a> Services --}}
                             <div class="login">
-                                <ul>
+                                <ul class="header-service-dropdown">
                                     <li>
                                         <div class="dropdown">
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -132,7 +131,7 @@ $companyLogo    = \App\Core\Check::companyLogo();
 
                                     </li>
                                 </ul>
-                            </div>
+                            <!-- </div> -->
                         </li>
                         <li>
                             <a href="/aboutus">{{trans('frontend_header.about_us')}}</a>
