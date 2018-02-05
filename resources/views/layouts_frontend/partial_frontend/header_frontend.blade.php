@@ -188,26 +188,23 @@ $companyLogo    = \App\Core\Check::companyLogo();
                         <li>
                             <div class="language">
                                 <ul>
+                                    <form action="/frontend/language" method="post"  id="change_lang">
                                     <li>
                                         <!-- <a href="#"><img src="/assets/shared/images/en_US.png"></a> -->
-                                        <a href="#"><img src="/assets/shared/images/jp.png"></a>
+                                        <input type="image" value="jp" id="img" name="locale" src="/assets/shared/images/jp.png">
                                     </li>
                                     <li style="text-decoration:underline;">
-                                        <a href="#"><img src="/assets/shared/images/en_US.png"></a>
+                                        <input type="image" value="en" id="img" name="locale" src="/assets/shared/images/en_US.png">
                                     </li>
+                                 {{ csrf_field() }}
+                                     </form>
+                                   
+                                   
                                 </ul>
                             </div>
                         </li>
                          
-                <div class="navbar-header center">
-                <form action="/frontend/language" method="post">
-                    <select name="locale">
-                        <option value="en" {{App::getLocale() == 'en'? 'selected':''}}>English</option>
-                        <option value="jp" {{App::getLocale() == 'jp'? 'selected':''}}>Japan</option>
-                    </select>
-                    {{ csrf_field() }}
-                    <input type="submit" value="Submit">
-                </form>
+                
             </div> 
 
                     </ul>
@@ -217,3 +214,11 @@ $companyLogo    = \App\Core\Check::companyLogo();
             <!-- /.container -->
         </nav>
     </div>
+
+    <script>
+
+   $( "#img" ).click(function() {
+  $( "#change_lang" ).submit();
+});
+
+   </script>

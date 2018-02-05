@@ -125,7 +125,7 @@ return[
     "check_your_details"=>"Check Your Details",
     "booking_details"=>"Booking Details",
     "you_pay_stay_at"=>"You'll pay when you stay at",
-    "you_pay_USD"=>"You'll pay in the USD",
+    "you_pay_USD"=>"You'll pay in  USD",
     "the_amount_show_net_price"=>"The amount shown is the net price. Additional applicable taxes may be charged by the property if you don't show up or if you cancel",
     "is_everything_correct"=>"Is everything correct?",
     "you_can_always_view_change_booking"=>"You can always view or change your booking online - no registration required.",
@@ -203,7 +203,9 @@ return[
     "per_night"=>"per night",
     "unsuccessful_alert"=>"Your payment and booking was unsuccessful!",
     "successful_alert"=>"Congratulations! Your Booking was successful!",
-    "manage_booking"=>"MANAGE BOOKING"
+    "manage_booking"=>"MANAGE BOOKING",
+    "complete"=>"Complete",
+    "void"=>"Void",
 
 
 ]

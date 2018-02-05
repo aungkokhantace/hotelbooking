@@ -3,10 +3,10 @@ return[
 
     "home" => "Home",
     "services" =>"Services",
-    "about_us"=>"Aboout Us",
+    "about_us"=>"About Us",
     "faq"=>"FAQ",
     "visa"=>"VISA",
-    "contact_us"=>"Contact_Us",
+    "contact_us"=>"Contact Us",
     "register"=>"Register",
     "login"=>"Login",
     "profile"=>"Profile",
