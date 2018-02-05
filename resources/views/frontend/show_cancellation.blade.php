@@ -23,8 +23,8 @@
                         </div>
                         <div class="left_menu">
                             <ul>
-                                <li><a class="active"href="#">Booking List</a></li>
-                                <li><a href="/profile">My Profile</a></li>
+                                <li><a class="active"href="#">{{trans('frontend_details.booking_list')}}</a></li>
+                                <li><a href="/profile">{{trans('frontend_details.my_profile')}}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -32,9 +32,9 @@
                 </div><!-- Blog Entries Column -->
                 <div class="col-md-9 user_list"><!-- Booking Cancellation Show Column-->
                     <div class="search_list">
-                        <h2>Bookings</h2>
+                        <h2>{{trans('frontend_details.bookings')}}</h2>
                         <h4 style="margin-top: 30px;">
-                            <a href="/bookingList" style="color: #626262;">Back to all bookings</a>
+                            <a href="/bookingList" style="color: #626262;">{{trans('frontend_details.back_all_bookings')}}</a>
                         </h4>
                     </div>
                     <div class="row">
@@ -42,7 +42,7 @@
                             <div class="booking_manage">
                                 <h3>Hi {{$customer['first_name']}}, your reservation at {{$hotel->name}} has been cancelled.</h3>
                                 <p><strong>We have sent an email confirming your cancellation to {{$customer['email']}}.</strong></p>
-                                <p>We are in the process of updating your information. This change will soon be visible erverywhere.</p>
+                                <p>{{trans('frontend_details.we_are_in_the_process')}}</p>
                             </div>
                         </div>
                     </div>
@@ -53,11 +53,11 @@
                             </div>
                             <div class="col-md-8">
                                 <h4>{{$hotel->name}} <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></h4>
-                                <p>{{$hotel->address}} <a href="#">Show map</a></p>
+                                <p>{{$hotel->address}} <a href="#">{{trans('frontend_details.show_map')}}</a></p>
                                 <div class="col-md-12">
                                     <div class="col-md-4">
                                         <ul class="cancel_ul price_night">
-                                            <li class="text-center">CHECK-IN</li>
+                                            <li class="text-center">{{trans('frontend_details.check_in')}}</li>
                                             <li class="text-center">{{$booking->check_in_date_fmt}}</li>
                                             {{--<li class="text-center"><h3>2</h3></li>--}}
                                             {{--<li class="text-center">FEB 2017</li>--}}
@@ -66,7 +66,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <ul class="cancel_ul1 price_night">
-                                            <li class="text-center">CHECK-IN</li>
+                                            <li class="text-center">{{trans('frontend_details.check_in')}}</li>
                                             <li class="text-center">{{$booking->check_out_date_fmt}}</li>
                                             {{--<li class="text-center"><h3>3</h3></li>--}}
                                             {{--<li class="text-center">FEB 2017</li>--}}
@@ -74,11 +74,11 @@
                                         </ul>
                                     </div>
                                     <div class="col-md-4 cancelled">
-                                        <h3>Cancelled</h3>
+                                        <h3>{{trans('frontend_details.cancelled')}}</h3>
                                     </div>
                                     <div class="col-md-8 text-center">
                                         <div class="nroom">
-                                            <p>{{$booking->total_day}} night, {{$booking->room_count}} room</p>
+                                            <p>{{$booking->total_day}}{{trans('frontend_details.night')}}, {{$booking->room_count}} {{trans('frontend_details.rooms')}}</p>
                                         </div>
                                     </div>
                                 </div>

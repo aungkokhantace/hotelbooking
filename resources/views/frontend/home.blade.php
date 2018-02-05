@@ -34,23 +34,23 @@
                 <div class="item active">
                     <div class="fill"><img src="/assets/shared/images/slider.png"></div>
                     <div class="carousel-caption">
-                        <h1 class="container">Where your journey begins.</h1>
-                        <p class="container">Discover your next great adventure, become an explorer to get started!</p>
+                        <h1 class="container">{{trans('frontend_home.your_journey_begin')}}</h1>
+                        <p class="container">{{trans('frontend_home.discovery_jounery')}}</p>
                     </div>
                 </div>
                 <div class="item">
                     <div class="fill"><img src="/assets/shared/images/slider.png"></div>
                     <div class="carousel-caption">
-                        <h1 class="container">Where your journey begins.</h1>
-                        <p class="container">Discover your next great adventure, become an explorer to get started!</p>
+                        <h1 class="container">{{trans('frontend_home.your_journey_begin')}}</h1>
+                        <p class="container">{{trans('frontend_home.discovery_jounery')}}</p>
                     </div>
                 </div>
                 <div class="item">
                     <div class="fill"><img src="/assets/shared/images/slider.png">
                     </div>
                     <div class="carousel-caption">
-                        <h1 class="container">Where your journey begins.</h1>
-                        <p class="container">Discover your next great adventure, become an explorer to get started!</p>
+                        <h1 class="container">{{trans('frontend_home.your_journey_begin')}}</h1>
+                        <p class="container">{{trans('frontend_home.discovery_jounery')}}</p>
                     </div>
                 </div>
                 @endif
@@ -61,11 +61,11 @@
     <div id="form_id">
         <div class="container">
             <div class="col-md-4 form">
-                <h2>Search Hotel</h2>
+                <h2>{{trans('frontend_search.search_hotel')}}</h2>
 
                 {!! Form::open(array('url' => '/search','files'=>true, 'id'=>'search', 'class'=> 'form-horizontal user-form-border')) !!}
                     <div class="form-group row">
-                        <label class="control-label" for="destination">Destination / Property Name</label>
+                        <label class="control-label" for="destination">{{trans('frontend_search.destinatin_property')}}</label>
                         <div class="col-10 input-group">
                             <input class="form-control font_sz_11" type="text" value="" id="destination" name="destination" autocomplete="off">
                             <div class="input-group-addon">
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label" for="check_in">Check In</label>
+                        <label class="control-label" for="check_in">{{trans('frontend_search.check_in')}}</label>
                         <div class="col-10 input-group date" data-provide="datepicker" id="check_in">
                             <input type="text" class="form-control" name="check_in" autocomplete="off">
                             <div class="input-group-addon">
@@ -85,7 +85,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label" for="check_out">Check Out</label>
+                        <label class="control-label" for="check_out">{{trans('frontend_search.check_out')}}</label>
                         <div class="col-10 input-group date" data-provide="datepicker" id="check_out" autocomplete="off">
                             <input type="text" class="form-control" name="check_out">
                             <div class="input-group-addon">
@@ -97,7 +97,7 @@
                     <div class="form-group row">
                         <div class="col-10">
                             <div class="col-3">
-                                <label for="street-number" class="control-label">Room</label>
+                                <label for="street-number" class="control-label">{{trans('frontend_search.room')}}</label>
                                 {{--  <input type="number" id="room" class="floatLabel form-control remove_arrow" min="1" name="room">  --}}
                                 <select class="form-control" name="room" id="room">
                                     @for($i = 0; $i <= 100; $i++)
@@ -106,7 +106,7 @@
                                 </select>
                             </div>
                             <div class="col-3">
-                                <label class="control-label" for="check_out">Adults</label>
+                                <label class="control-label" for="check_out">{{trans('frontend_search.adults')}}</label>
                                 {{--  <input type="number" id="adults" class="floatLabel form-control remove_arrow" min="1" name="adults">  --}}
                                 <select class="form-control" name="adults" id="adults">
                                     @for($i = 0; $i <= 100; $i++)
@@ -115,7 +115,7 @@
                                 </select>
                             </div>
                             <div class="col-3">
-                                <label class="control-label" for="check_out">Children</label>
+                                <label class="control-label" for="check_out">{{trans('frontend_search.children')}}</label>
                                 {{--  <input type="number" id="children" class="floatLabel form-control remove_arrow" min="1" name="children">  --}}
                                 <select class="form-control" name="children" id="children">
                                     @for($i = 0; $i <= 100; $i++)
@@ -126,7 +126,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <button type="submit" class="btn btn-default">Search Hotel Now</button>
+                        <button type="submit" class="btn btn-default">{{trans('frontend_search.search_hotel_now')}}</button>
                     </div>
                 {{--<!--  @include('layouts_frontend.partial_frontend.search_form')-->--}}
                 {!! Form::close() !!}
@@ -160,7 +160,7 @@
     <section id="popular">
         <div class="container">
             <div class="row destination">
-                <h1>Popular Destinations</h1>
+                <h1>{{trans('frontend_home.popular_destination')}}</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                     tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
             </div>
@@ -221,7 +221,7 @@
     <section>
         <div class="container">
             <div class="row destination">
-                <h1>Recommended Hotels</h1>
+                <h1>{{trans('frontend_home.recommended_hotels')}}</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                     tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
             </div>
@@ -273,7 +273,7 @@
     <section>
         <div class="container">
             <div class="row destination">
-                <h1>Promotions for this month</h1>
+                <h1>{{trans('frontend_home.promotions_for_month')}}</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                     tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
             </div>

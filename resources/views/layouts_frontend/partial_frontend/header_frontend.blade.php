@@ -113,20 +113,20 @@ $companyLogo    = \App\Core\Check::companyLogo();
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="/">Home</a>
+                            <a href="/">{{trans('frontend_header.home')}}</a>
                         </li>
                         <li>
-                            {{--  <a href="/comingsoon">Service</a>  --}}
+                            {{--  <a href="/comingsoon"></a> Services --}}
                             <div class="login">
                                 <ul>
                                     <li>
                                         <div class="dropdown">
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                                Services
+                                               {{trans('frontend_header.services')}}
                                             </a>
                                             <ul class="dropdown-menu">
-                                                <li><a href="/transportation_information">Transportation Information</a></li>
-                                                <li><a href="/tour_information">Tour Information</a></li>
+                                                <li><a href="/transportation_information">{{trans('frontend_header.transportation_information')}}</a></li>
+                                                <li><a href="/tour_information">{{trans('frontend_header.tour_information')}}</a></li>
                                             </ul>
                                         </div>
 
@@ -135,7 +135,7 @@ $companyLogo    = \App\Core\Check::companyLogo();
                             </div>
                         </li>
                         <li>
-                            <a href="/aboutus">About Us</a>
+                            <a href="/aboutus">{{trans('frontend_header.about_us')}}</a>
                         </li>
                         <li>
                             <a href="/faq_information">FAQ</a>
@@ -144,11 +144,11 @@ $companyLogo    = \App\Core\Check::companyLogo();
                             <a href="/visa_information">VISA</a>
                         </li>
                         <li>
-                            <a href="/comingsoon">Contact Us</a>
+                            <a href="/comingsoon">{{trans('frontend_header.contact_us')}}</a>
                         </li>
                         @if(!\Illuminate\Support\Facades\Session::has('customer'))
                         <li>
-                            <a href="#" data-toggle="modal" data-target="#registerModal">Register</a>
+                            <a href="#" data-toggle="modal" data-target="#registerModal">{{trans('frontend_header.register')}}</a>
                             @include('frontend.registration')
                         </li>
                         @endif
@@ -169,14 +169,14 @@ $companyLogo    = \App\Core\Check::companyLogo();
                                                     </span>
                                                 </a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="\profile">Profile</a></li>
-                                                    <li><a href="\bookingList">Booking List</a></li>
-                                                    <li><a href="\logout">Logout</a></li>
+                                                    <li><a href="\profile">{{trans('frontend_header.profile')}}</a></li>
+                                                    <li><a href="\bookingList">{{trans('frontend_header.booking_list')}}</a></li>
+                                                    <li><a href="\logout">{{trans('frontend_header.logout')}}</a></li>
                                                 </ul>
                                             </div>
                                         @else
                                             <a href="#" data-toggle="modal" data-target="#loginModal">
-                                                Login
+                                               {{trans('frontend_header.login')}}
                                                 <span class="glyphicon glyphicon-arrow-right"></span>
                                             </a>
                                             @include('frontend.login')
@@ -198,6 +198,18 @@ $companyLogo    = \App\Core\Check::companyLogo();
                                 </ul>
                             </div>
                         </li>
+                         
+                <div class="navbar-header center">
+                <form action="/frontend/language" method="post">
+                    <select name="locale">
+                        <option value="en" {{App::getLocale() == 'en'? 'selected':''}}>English</option>
+                        <option value="jp" {{App::getLocale() == 'jp'? 'selected':''}}>Japan</option>
+                    </select>
+                    {{ csrf_field() }}
+                    <input type="submit" value="Submit">
+                </form>
+            </div> 
+
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->

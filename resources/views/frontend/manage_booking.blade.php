@@ -21,8 +21,8 @@
                         </div>
                         <div class="left_menu">
                             <ul>
-                                <li><a class="active"href="#">Booking List</a></li>
-                                <li><a href="/profile">My Profile</a></li>
+                                <li><a class="active"href="#">{{trans('frontend_details.booking_list')}}</a></li>
+                                <li><a href="/profile">{{trans('frontend_details.my_profile')}}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -31,13 +31,13 @@
                 <!-- Manage Booking Column -->
                 <div class="col-md-9 user_list">
                     <div class="search_list">
-                        <h2>Bookings</h2>
-                        <h4 style="margin-top: 30px;"><a href="/bookingList" style="color: #626262;">Back to all bookings</a></h4>
+                        <h2>{{trans('frontend_details.bookings')}}</h2>
+                        <h4 style="margin-top: 30px;"><a href="/bookingList" style="color: #626262;">{{trans('frontend_details.back_all_bookings')}}</a></h4>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="table-responsive room_table">
-                                <h3 style="color:#D63090;">Your confirmed booking at
+                                <h3 style="color:#D63090;">{{trans('frontend_details.you_confirmed_booking_at')}}
                                     <a href="#" style="color: #626262;">{{$hotel->name}}</a>
                                     @while($hotel->star != 0)
                                         <i class="fa fa-star" aria-hidden="true"></i>
@@ -60,7 +60,7 @@
                                                     </div>
                                                 </li>
                                                 {{--<li style="float:right;">--}}
-                                                    {{--<a href="#">show map</a>--}}
+                                                    {{--<a href="#">{{trans('frontend_details.show_map')}}</a>--}}
                                                 {{--</li>--}}
                                                 <li>
                                                     {{$hotel->address}}
@@ -76,26 +76,26 @@
                                         </td>
                                         <td>
                                             <ul class="fa-uls price_night manage-form">
-                                                <li class="text_fa">BOOKING NUMBER: <strong>{{$booking->booking_no}}</strong> </li>
+                                                <li class="text_fa">{{trans('frontend_details.booking_number')}}: <strong>{{$booking->booking_no}}</strong> </li>
                                                 {{--<li class="text_fa">PIN code: <strong>3050</strong></li>--}}
                                             </ul>
                                             <ul class="fa-uls price_night">
-                                                <li class="text_fa">Check-in </li>
+                                                <li class="text_fa">{{trans('frontend_details.check_in')}} </li>
                                                 <li class="text_fa">
                                                     <strong>
                                                         {{Carbon\Carbon::parse($booking->check_in_date)->format('M d, Y')}}
                                                     </strong>
                                                 </li>
-                                                <li class="text_fa">from {{$booking->check_in_time}}</li>
+                                                <li class="text_fa">{{trans('frontend_details.from')}} {{$booking->check_in_time}}</li>
                                             </ul>
                                             <ul class="fa-uls price_night manage-form">
-                                                <li class="text_fa">Check-out </li>
+                                                <li class="text_fa">{{trans('frontend_details.check_out')}} </li>
                                                 <li class="text_fa">
                                                     <strong>
                                                         {{Carbon\Carbon::parse($booking->check_out_date)->format('M d, Y')}}
                                                     </strong>
                                                 </li>
-                                                <li class="text_fa">until {{$booking->check_out_time}}</li>
+                                                <li class="text_fa">{{trans('frontend_details.until')}} {{$booking->check_out_time}}</li>
                                             </ul>
                                             <ul class="fa-uls price_night">
                                                 {{--<li style="float:right;">--}}
@@ -104,7 +104,7 @@
                                                 <li class="text_fa">Price</li>
                                                 <li class="text_fa">
                                                     <strong>
-                                                        {{$booking->total_day}} night, {{$booking->room_count}} room
+                                                        {{$booking->total_day}} {{trans('frontend_details.night')}} {{$booking->check_out_time}}, {{$booking->room_count}} {{trans('frontend_details.room')}} {{$booking->check_out_time}}
                                                     </strong>
                                                 </li>
                                                 <li class="text_fa"><h4>{{$currency.' '.$booking->total_payable_amt}}</h4></li>
@@ -113,21 +113,21 @@
                                         <td class="manageform_right">
                                             <ul class="fa-ul price_night">
                                                 <li class="text_fa">
-                                                    <a href="#" data-toggle="modal" data-target="#change_date" class="change_date_link">Change Date</a>
+                                                    <a href="#" data-toggle="modal" data-target="#change_date" class="change_date_link">{{trans('frontend_details.chage_date')}}</a>
                                                     <!-- Modal for Change Date -->
                                                     @include('frontend.change_date')
                                                     <!-- Modal for Change Date -->
                                                 </li>
                                                 <li class="text_fa">
-                                                    <a href="/congratulations/{{$booking->id}}">View Confirmation</a>
+                                                    <a href="/congratulations/{{$booking->id}}">{{trans('frontend_details.view_confirmation')}}</a>
                                                 </li>
                                                 <li class="text_fa">
                                                     <a href="/booking/manage/print/{{$booking->id}}" target="_blank">
-                                                        Print Confirmation
+                                                       {{trans('frontend_details.print_confirmation')}}
                                                     </a>
                                                 </li>
                                                 <li class="text_fa">
-                                                    <a href="#" data-toggle="modal" data-target="#cancelbooking" class="cancel_link">Cancel Booking</a>
+                                                    <a href="#" data-toggle="modal" data-target="#cancelbooking" class="cancel_link">{{trans('frontend_details.cancel_booking')}}</a>
                                                     <!-- Modal for Cancel Booking -->
                                                     @include('frontend.booking_cancel')
                                                     <!-- Modal for Cancel Booking -->
@@ -184,7 +184,7 @@
                                                <i>for </i> <span>{{$room->guest_name}}</span>
                                                ({{$room->guest_count>1?$room->guest_count.'guests':$room->guest_count.'guest'}})
                                                <button type="button" class="btn-four btn-primary-four btn-edit" id="{{$room->id}}">
-                                                   <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>Edit
+                                                   <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>{{trans('frontend_details.edit')}}
                                                </button>
                                            </div>
                                            {!! Form::open(array('url'=>'/booking/room/edit',
@@ -215,41 +215,41 @@
                                                    <div class="col-2 text-center">
                                                        <button type="button" class="btn btn-primary btn-success saveEdit"
                                                                id="saveEdit-{{$room->id}}">
-                                                           &nbsp; Save &nbsp;
+                                                           &nbsp; {{trans('frontend_details.save')}} &nbsp;
                                                        </button>
                                                    </div>
                                                    <div class="col-2">
                                                        <button type="button" class="btn btn-primary cancelEdit" id="cancelEdit-{{$room->id}}">
-                                                           Cancel
+                                                           {{trans('frontend_details.cancel')}}
                                                        </button>
                                                    </div>
                                                </div>
                                            </div>
                                            {!! Form::close() !!}
                                            <div class="manageform">
-                                               <h4>Amenities</h4>
+                                               <h4>{{trans('frontend_details.amenities')}}</h4>
                                                @foreach($room->amenities as $amenity)
                                                    <p>{{"* ".$amenity->name}}</p>
                                                @endforeach
                                            </div>
                                            <div class="clearfix"></div>
                                            <div class="manageform">
-                                               <h4>Room Facilities</h4>
+                                               <h4>{{trans('frontend_details.room_facilties')}}</h4>
                                                @foreach($room->facilities as $facility)
                                                    <p>{{"* ".$facility->name}}</p>
                                                @endforeach
                                            </div>
                                            <div class="clearfix"></div>
                                            <div class="manageform">
-                                               <h4>Hotel Facilities</h4>
+                                               <h4>{{trans('frontend_details.hotel_facilities')}}</h4>
                                                @foreach($hotel->h_facilities as $h_facility)
                                                    <p>{{"* ".$h_facility->facility->name}}</p>
                                                @endforeach
                                            </div>
                                            <div class="clearfix"></div>
                                            <!-- <a class="cancelbooking" href="/booking/room/cancel/{{$booking->id}}/{{$room->id}}"> -->
-                                           <a class="cancelbooking" id="cancelbooking" href="#" onclick="cancel_room('{{$booking->id}}','{{$room->id}}','{{$booking->charge}}');">
-                                               ⨂ Cancel your room
+                                           <a class="cancelbooking" id="cancelbooking" href="#" onclick="cancel_room('{{$booking->id}}','{{$room->id}}','{{$booking->charge}}','{{trans('frontend_details.are_you_sure')}}','{{trans('frontend_details.you_will_not_recover')}}','{{trans('frontend_details.cancel')}}','{{trans('frontend_details.confirm')}}');">
+                                               ⨂ {{trans('frontend_details.cancel_your_room')}}
                                            </a>
                                            <div class="clearfix"></div>
                                            </div>
@@ -352,7 +352,7 @@
                             <div class="payment_formtitle">
                                 <!-- First Blog Post Left -->
                                 <div class="payment_list">
-                                    <h4>Book for Transportation</h4>
+                                    <h4>{{trans('frontend_details.book_for_transportation')}}</h4>
                                 </div>
                             </div>
                             <div class="payment_form">
@@ -363,13 +363,13 @@
                                         >
                                     </label>
                                     <img src="/assets/shared/images/transporation.png">
-                                    <span style="font-size:15px;">I'm interested in booking a taxi in advance</span>
+                                    <span style="font-size:15px;">{{trans('frontend_details.inserted_booking_taxi')}}</span>
                                 </div>
                             </div>
                             <div class="payment_formtitle">
                                 <!-- First Blog Post Left -->
                                 <div class="payment_list">
-                                    <h4>Book for Tour Guide</h4>
+                                    <h4>{{trans('frontend_details.book_for_guide')}}</h4>
                                 </div>
                             </div>
                             <div class="payment_form">
@@ -380,67 +380,67 @@
                                         >
                                     </label>
                                     <img src="/assets/shared/images/tour.png">
-                                    <span style="font-size:15px;">I'm interested in booking tour guide.</span>
+                                    <span style="font-size:15px;">{{trans('frontend_details.inserted_in_tour_guid')}}.</span>
                                 </div>
                             </div>
                             <div class="payment_formtitle">
                                 <!-- First Blog Post Left -->
                                 <div class="payment_list">
-                                    <h4>Talk Here</h4>
+                                    <h4>{{trans('frontend_details.talk_here')}}</h4>
                                 </div>
                             </div>
                             <div class="last_form">
                                 <div class="formtitle_left">
-                                    <span>Special Requests</span>
+                                    <span>{{trans('frontend_details.special_request')}}</span>
                                 </div>
                                 <div class="formtitle_left">
-                                    <span>We'll forward these to your hotel or host immediately upon booking.</span>
+                                    <span>{{trans('frontend_details.we_forward_upon_booking')}}.</span>
                                 </div>
                                 <div class="formtitles_text">
-                                    <span>Please be aware that all requests are subject to availability.</span>
+                                    <span>{{trans('frontend_details.please_aware_subject')}}.</span>
                                 </div>
                                 <div class="list_style" style="float:left;">
                                     <input type="checkbox" name="non_smoking_request"
                                            value="1" {!! $b_request->non_smoking_room==1?'checked':'' !!} disabled
                                     >
-                                    <span>I'd like a non-smoking room</span><br>
+                                    <span>{{trans('frontend_details.non_like_smoking')}}</span><br>
                                     <input type="checkbox" name="late_check_in_request"
                                            value="1" {!! $b_request->late_check_in==1?'checked':'' !!} disabled
                                     >
-                                    <span>I'd like a late check-in</span><br>
+                                    <span>{{trans('frontend_details.non_like_late_check')}}</span><br>
                                     <input type="checkbox" name="high_floor_request"
                                            value="1" {!! $b_request->high_floor_room==1?'checked':'' !!} disabled
                                     >
-                                    <span>I'd like a room on a high floor</span><br>
+                                    <span>{{trans('frontend_details.non_like_room_high')}}</span><br>
                                     <input type="checkbox" name="large_bed_request"
                                            value="1" {!! $b_request->large_bed==1?'checked':'' !!} disabled
                                     >
-                                    <span>I'd like a large bed</span><br>
+                                    <span>{{trans('frontend_details.non_like_bed')}}</span><br>
                                     <input type="checkbox" name="early_check_in_request"
                                            value="1" {!! $b_request->early_check_in==1?'checked':'' !!} disabled
                                     >
-                                    <span>I'd like an early check-in</span><br>
+                                    <span>{{trans('frontend_details.non_like_check')}}</span><br>
                                 </div>
                                 <div class="list_style">
                                     <input type="checkbox" name="twin_bed_request"
                                            value="1" {!! $b_request->twin_bed==1?'checked':'' !!} disabled>
-                                    <span>I'd like twin beds</span><br>
+                                    <span>{{trans('frontend_details.like_twin_bed')}}</span><br>
                                     <input type="checkbox" name="quiet_room_request"
                                            value="1" {!! $b_request->quiet_room==1?'checked':'' !!} disabled>
-                                    <span>I'd like a quiet room</span><br>
+                                    <span>{{trans('frontend_details.like_quiet_room')}}</span><br>
                                     <input type="checkbox" name="airport_transfer_request"
                                            value="1" {!! $b_request->airport_transfer==1?'checked':'' !!} disabled>
-                                    <span>I'd like an airport transfer</span><br>
+                                    <span>{{trans('frontend_details.like_ariport_transfer')}}</span><br>
                                     <input type="checkbox" name="private_parking_request"
                                            value="1" {!! $b_request->private_parking==1?'checked':'' !!} disabled>
-                                    <span>I'd like a private parking</span><br>
+                                    <span>{{trans('frontend_details.like_private_parking')}}</span><br>
                                     <input type="checkbox" name="baby_cot_request"
                                            value="1" {!! $b_request->baby_cot==1?'checked':'' !!} disabled>
-                                    <span>I'd like to have a baby cot <br>(additional charges may apply)</span>
+                                    <span>{{trans('frontend_details.have_baby_cot')}} <br>({{trans('frontend_details.additional_charge_may_apply')}})</span>
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="formtitle_left">
-                                    <span>Special Requests</span>
+                                    <span>{{trans('frontend_details.special_request')}}</span>
                                 </div>
 
                                 @if(isset($communications) && count($communications) > 0)
@@ -477,7 +477,7 @@
                                     <textarea class="textarea_p special_request_textarea" id="special_request" name="special_request"></textarea>
                                 </div>
                                 <div class="clearfix"></div>
-                                <button type="button" class="btn btn-primary btn-success communication_btn" id="communication-btn">Say</button>
+                                <button type="button" class="btn btn-primary btn-success communication_btn" id="communication-btn">{{trans('frontend_details.say')}}</button>
                                 {!! Form::close() !!}
                             </div>
                         </div>
@@ -618,23 +618,23 @@
 
         });
 
-        function cancel_room(booking_id,room_id,booking_charge) {
+        function cancel_room(booking_id,room_id,booking_charge,cancel_room,recover,cancel,confirm) {
             if(booking_charge == "free"){
-              var alert_text = "You will not be able to recover!";
+              var alert_text = recover;
             }
             else{
               var alert_text = booking_charge;
             }
 
             swal({
-                    title: "Are you sure to cancel your room?",
+                    title: cancel_room,
                     // text: "You will not be able to recover!",
                     text: alert_text,
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55 ",
-                    confirmButtonText: "Confirm",
-                    cancelButtonText: "Cancel",
+                    confirmButtonText: confirm,
+                    cancelButtonText: cancel,
                     closeOnConfirm: false,
                     closeOnCancel: true
                 },

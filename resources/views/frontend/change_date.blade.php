@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-headers">
                 <button type="button" class="closed" data-dismiss="modal">⨂</button>
-                <h4 class="modal-title">Change Dates</h4>
+                <h4 class="modal-title">{{trans('frontend_details.cancel_your_booking')}}</h4>
             </div>
             {!! Form::open(array('url'=>'/booking/change_date','id'=>'change_date_form', 'method'=>'post')) !!}
             <div class="modalcancel-body">
@@ -13,7 +13,7 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="id" value="{{$booking->id}}">
                         <div class="form-group row">
-                            <label class="control-label" for="check_in">Check In</label>
+                            <label class="control-label" for="check_in">{{trans('frontend_details.check_in')}}</label>
                             <div class="col-10 input-group date" data-provide="datepicker" id="check_in">
                                 <input type="text" class="form-control" name="check_in" autocomplete="off">
                                 <div class="input-group-addon">
@@ -24,7 +24,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="control-label" for="check_out">Check Out</label>
+                            <label class="control-label" for="check_out">{{trans('frontend_details.check_out')}}</label>
                             <div class="col-10 input-group date" data-provide="datepicker" id="check_out" autocomplete="off">
                                 <input type="text" class="form-control" name="check_out">
                                 <div class="input-group-addon">
@@ -45,7 +45,7 @@
                 </div>
                 <div class="col-sm-6 pd_lf_5 form-group">
                     <button type="button" class="btn btn-defaulted2 btn-change-cancel" data-dismiss="modal">
-                        Cancel
+                        {{trans('frontend_details.Cancel')}}
                     </button>
                 </div>
             </div>

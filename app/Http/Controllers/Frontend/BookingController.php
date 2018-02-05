@@ -84,29 +84,29 @@ class BookingController extends Controller
                     $b->button_status   = "BOOKING PAYMENT";
                 }*/
                 if($b->status == 2){
-                    $b->status_txt      = "Confirm";
-                    $b->button_status   = "MANAGE BOOKING";
+                    $b->status_txt      = trans('frontend_details.confirm');
+                    $b->button_status   = trans('frontend_details.manage_booking');
                 }
                 if($b->status == 3){
-                    $b->status_txt      = "Cancel";
-                    $b->button_status   = "BOOK AGAIN";
+                    $b->status_txt      = trans('frontend_details.Cancel');
+                    $b->button_status   = trans('frontend_details.book_again');
                     array_push($booking_cancel,$b);
                 }
                 if($b->status == 5){
-                    $b->status_txt      = "Complete";
-                    $b->button_status   = "MANAGE BOOKING";
+                    $b->status_txt      = "trans('frontend_details.complete')";
+                    $b->button_status   = trans('frontend_details.manage_booking');
                 }
                 if($b->status == 7){
-                    $b->status_txt      = "Cancel";
-                    $b->button_status   = "BOOK AGAIN";
+                    $b->status_txt      = trans('frontend_details.Cancel');
+                    $b->button_status   = trans('frontend_details.book_again');
                 }
                 if($b->status == 8){
-                    $b->status_txt      = "Void";
-                    $b->button_status   = "BOOK AGAIN";
+                    $b->status_txt      = trans('frontend_details.void');
+                    $b->button_status   = trans('frontend_details.book_again');
                 }
                 if($b->status == 9){
-                    $b->status_txt      = "Cancel";
-                    $b->button_status   = "BOOK AGAIN";
+                    $b->status_txt      = trans('frontend_details.Cancel');
+                    $b->button_status   = trans('frontend_details.book_again');
                 }
 
             }

@@ -11,7 +11,7 @@
         <section id="aboutus">
             <div class="container">
                 <div class="row">
-                    <h1>Transportation Information</h1>
+                    <h1>{{trans('frontend_header.transportation_information')}}</h1>
                     {!! $page_data !!}
                 </div><!-- /.row -->
             </div><!-- /.container -->

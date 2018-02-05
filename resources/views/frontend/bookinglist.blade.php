@@ -23,8 +23,8 @@
                         </div>
                         <div class="left_menu">
                             <ul>
-                                <li><a class="active"href="#">Booking List</a></li>
-                                <li><a href="/profile">My Profile</a></li>
+                                <li><a class="active"href="#">{{trans('frontend_header.booking_list')}}</a></li>
+                                <li><a href="/profile">{{trans('frontend_details.my_profile')}}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -37,10 +37,10 @@
                                 <ul id="myTab" class="nav nav-tabs nav-justified">
                                     <li class="active">
                                         <a href="#service-one" data-toggle="tab">
-                                            Total Booking({{isset($bookings)?count($bookings):0}})
+                                            {{trans('frontend_details.total_booking')}}({{isset($bookings)?count($bookings):0}})
                                         </a>
                                     </li>
-                                    <li class=""><a href="#service-two" data-toggle="tab"> Cancelled ({{isset($booking_cancel)?count($booking_cancel):0}}) </a>
+                                    <li class=""><a href="#service-two" data-toggle="tab"> {{trans('frontend_details.cancelled')}}({{isset($booking_cancel)?count($booking_cancel):0}}) </a>
                                     </li>
                                 </ul>
                             </div>
@@ -69,23 +69,23 @@
                                                         </p>
                                                         <table>
                                                             <tr>
-                                                                <td>Booking</td>
+                                                                <td>{{trans('frontend_details.booking')}}</td>
                                                                 <td>{{$booking->booking_no}}</td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Check In</td>
+                                                                <td>{{trans('frontend_details.check_in')}}</td>
                                                                 <td>
                                                                     {{Carbon\Carbon::parse($booking->check_in_date)->format('M d, Y')}}
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Check Out</td>
+                                                                <td>{{trans('frontend_details.check_out')}}</td>
                                                                 <td>
                                                                     {{Carbon\Carbon::parse($booking->check_out_date)->format('M d, Y')}}
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Number of Rooms</td>
+                                                                <td>{{trans('frontend_details.number_of_room')}}</td>
                                                                 <td>{{$booking->number_of_room}}</td>
                                                             </tr>
                                                         </table>
@@ -135,28 +135,28 @@
                                                         </p>
                                                         <table>
                                                             <tr>
-                                                                <td>Booking</td>
+                                                                <td>{{trans('frontend_details.booking')}}</td>
                                                                 <td>{{$b_cancel->booking_no}}</td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Check In</td>
+                                                                <td>{{trans('frontend_details.check_in')}}</td>
                                                                 <td>
                                                                     {{Carbon\Carbon::parse($b_cancel->check_in_date)->format('M d, Y')}}
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Check Out</td>
+                                                                <td>{{trans('frontend_details.check_out')}}</td>
                                                                 <td>
                                                                     {{Carbon\Carbon::parse($b_cancel->check_out_date)->format('M d, Y')}}
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Number of Rooms</td>
+                                                                <td>{{trans('frontend_details.number_of_room')}}</td>
                                                                 <td>{{$b_cancel->number_of_room}}</td>
                                                             </tr>
                                                         </table>
                                                         <p>&nbsp;</p>
-                                                        <a class="bookinglist-primary" href="/hotel_detail/{!! $b_cancel->hotel_id!!}">BOOK AGAIN</a>
+                                                        <a class="bookinglist-primary" href="/hotel_detail/{!! $b_cancel->hotel_id!!}">{{trans('frontend_details.book_again')}}</a>
                                                     </div>
                                                 </div>
                                             </div>

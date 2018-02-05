@@ -12,8 +12,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-offset-3 col-md-6 right underconstruction">
-                    <h1><strong>COMING SOON!</strong></h1>
-                    <h2>Page is under construction!</h2>
+                    <h1><strong>{{trans('frontend_details.coming_soon')}}</strong></h1>
+                    <h2>{{trans('frontend_details.page_is_under_construction')}}</h2>
                     {{--<img src="/images/construction.gif">--}}
                 </div>
             </div>
