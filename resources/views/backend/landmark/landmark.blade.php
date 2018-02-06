@@ -141,8 +141,10 @@
             //End Validation for Entry and Edit Form
 
             $(':checkbox').checkboxpicker();
+             //For selectbox with search function
+            $("#township").select2();
         });
 
-
+     
     </script>
 @stop

@@ -240,6 +240,11 @@
 @section('page_script')
     <script type="text/javascript">
         $(document).ready(function(){
+
+           //Select box for search function
+          $("#template_id").select2();
+
+
             //Start Validation for Entry and Edit Form
             $('#slider').validate({
 

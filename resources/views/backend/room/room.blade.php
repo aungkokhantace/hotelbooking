@@ -253,6 +253,19 @@
 @section('page_script')
     <script type="text/javascript">
         $(document).ready(function(){
+
+        //Select box for search function
+          $("#hotel_id").select2();
+
+        //Select box for search function
+          $("#h_room_category_id").select2();
+
+
+        //Select box for search function
+          $("#room_view_id").select2();
+
+
+
             //if isset hotelId Load Room Type
             var hotelId    = $('#hotel_id').val();
             var room       = $('input[type="hidden"][name="id"]').val();

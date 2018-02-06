@@ -1333,6 +1333,12 @@
             //For selectbox with search function
             $("#country_id").select2();
 
+            //For selectbox with search function
+            $("#city_id").select2();
+
+             //For selectbox with search function
+            $("#township_id").select2();
+
             /* Muti text box for hotel facilities */
             $('#add_more_btn').click(function() {
                 var i = $('.room_type').size();

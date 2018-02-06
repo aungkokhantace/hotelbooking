@@ -142,6 +142,15 @@
 
     <script type="text/javascript">
         $(document).ready(function(){
+           
+
+          //Select box for search function
+          $("#hotel_id").select2();
+
+
+          //Select box for search function
+          $("#room_id").select2();
+
 
             $('#hotel_id').change(function(e){
                 loadRoom($(this).val());

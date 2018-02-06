@@ -255,6 +255,12 @@
     <script type="text/javascript">
         var count = 0;      // Declaring and defining global increment variable.
         $(document).ready(function(){
+             //For selectbox with search function
+            $("#hotel_id").select2();
+
+            //For selectbox with search function
+            $("#hotel_restaurant_category").select2();
+
 
             //Start Validation for Entry and Edit Form
             $('#hotel_restaurant').validate({

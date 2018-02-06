@@ -300,6 +300,10 @@
             });
 //            End fileupload js
 
+             //For selectbox with search function
+            $("#facility_group").select2();
+
+
 
             //Start Validation for Entry and Edit Form
             $('#facilities').validate({

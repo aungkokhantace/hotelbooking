@@ -9,7 +9,7 @@
 
     <div class="row">
         @if(isset($all_hotels))
-            <div class="col-md-2">               
+            <div class="col-md-4">               
                 @if($role !== 3)
                 <select class="form-control" name="hotel_id" id="hotel_id">
                     <option value="All">All</option>
@@ -27,7 +27,7 @@
             </div>
             
         @endif
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div class="buttons pull-right">
                 @if(isset($all_hotels))
                 <button type="button" {{--onclick='create_setup("hotel_gallery");'--}} class="btn btn-default btn-md first_btn" data-toggle="modal" data-target="#hotel_modal">
@@ -97,7 +97,7 @@
             </div>
             <div class="modal-body">
                 @if( $role == 3)
-                <select class="form-control" name="all_hotel_id" id="all_hotel_id">
+                <select class="form-control" name="all_hotel_id" id="all_hotel_id" >
                     @foreach($hotels as $hotel)
                         <option value="{{$hotel->id}}" selected>{{$hotel->name}}</option>
                     @endforeach
@@ -122,6 +122,12 @@
 @section('page_script')
     <script type="text/javascript" language="javascript" class="init">
         $(document).ready(function() {
+         //$('.modal-body select').css('width', '100%');
+
+          //Select box for search function
+          $('#hotel_id').select2();
+
+           
 
             $('#list-table tfoot th.search-col').each( function () {
                 var title = $('#list-table thead th').eq( $(this).index() ).text();
