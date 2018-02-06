@@ -481,7 +481,14 @@
     <script type="text/javascript">
         var count = 0;      // Declaring and defining global increment variable.
         $(document).ready(function(){
+          //Select box for search function
+          $("#hotel_id").select2();
 
+          //Select box for search function
+          $("#h_room_type_id").select2();
+
+          //Select box for search function
+          $("bed_type").select2();
             var hotel_id    = document.getElementById('hotel_id').value;
             var room        = $('input[type="hidden"][name="id"]').val();
 

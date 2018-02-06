@@ -9,7 +9,7 @@
 
     <div class="row">
         @if(isset($all_hotels))
-            <div class="col-md-2">
+            <div class="col-md-4">
                 @if($role == 3)
                 <select class="form-control" name="hotel_id" id="hotel_id">
                     @foreach($hotels as $hotel)
@@ -30,7 +30,7 @@
                 <button type="button" onclick="filter_by_hotel_id('backend_mps/hotel_room_category');" class="form-control btn-primary">Filter</button>
             </div>
         @endif
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div class="buttons pull-right">
                 @if(isset($all_hotels))
                 <button type="button" {{--onclick='create_setup("hotel_room_category");'--}} class="btn btn-default btn-md first_btn" data-toggle="modal" data-target="#hotel_modal">
@@ -140,7 +140,9 @@
 @section('page_script')
     <script type="text/javascript" language="javascript" class="init">
         $(document).ready(function() {
-
+        //Select box for search function
+          $('#hotel_id').select2();
+          
             $('#list-table tfoot th.search-col').each( function () {
                 var title = $('#list-table thead th').eq( $(this).index() ).text();
                 $(this).html( '<input type="text" placeholder="Search '+title+'" />' );

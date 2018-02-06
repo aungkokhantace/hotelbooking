@@ -85,6 +85,11 @@
     <script type="text/javascript">
         var count = 0;      // Declaring and defining global increment variable.
         $(document).ready(function(){
+
+
+          //Select box for search function
+          $("#hotel_id").select2();
+
           $('#policy').summernote({
               height:300,
               toolbar: [

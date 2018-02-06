@@ -81,6 +81,11 @@
 @section('page_script')
     <script type="text/javascript">
         $(document).ready(function(){
+
+            //Select box for search function
+          $("#hotel_category").select2();
+
+
             //Start Validation for Entry and Edit Form
             $('#hotel_nearby').validate({
                 rules: {
@@ -100,5 +105,8 @@
             });
             //End Validation for Entry and Edit Form
         });
+
+        //For selectbox with search function
+            $("#hotel_category").select2();
     </script>
 @stop

@@ -234,6 +234,14 @@
 
     <script type="text/javascript">
         $(document).ready(function(){
+          
+           
+        //Select box for search function
+          $("#hotel_id").select2();
+
+          //Select box for search function
+          $("#h_room_category_id").select2();
+
 
             var hotelId    = $('#hotel_id').val();
 

@@ -70,6 +70,11 @@
 @section('page_script')
     <script type="text/javascript">
         $(document).ready(function() {
+
+             //For selectbox with search function
+              $("#city_id").select2();
+
+
             //Start Validation for Entry and Edit Form
             $('#township').validate({
                 rules: {
