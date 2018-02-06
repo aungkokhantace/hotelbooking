@@ -30,7 +30,7 @@
                                     <div class="col-md-4">
                                         <div class="paymentfour_left pull-right">
                                             {{--<h4>PRINT CONFIRMATION</h4>--}}
-                                            <a target="_blank" href="/booking/manage/mprint/{{$booking->id}}"><button type="button" class="btn btn-primary">{{trans('frontend_details.print_confirmation')}}</button></a>
+                                            <a target="_blank" href="/booking/manage/print/{{$booking->id}}"><button type="button" class="btn btn-primary">{{trans('frontend_details.print_confirmation')}}</button></a>
                                         </div>
                                     </div>
                                 </div>
