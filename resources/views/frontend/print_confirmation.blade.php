@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Test Print</title>
+    <title>Print</title>
 </head>
 <body>
     <table style="padding-bottom: 2px;">
@@ -122,7 +122,11 @@
         @foreach($booking->rooms as $room)
         <tr>
             <td width="25%" style="border-top: 2px solid black;">
-                <img style="width:150px;height:90px;" src="{!! $room->category_image !!}" alt="hotel_logo">
+                @if(isset($room->category_image) && $room->category_image != null)
+                  <img style="width:150px;height:90px;" src="{!! $room->category_image !!}" alt="hotel_logo">
+                @else
+                  <img style="width:150px;height:90px;" src="/images/upload/{!! $hotel->logo !!}" alt="hotel_logo">
+                @endif
             </td>
             <td width="75%" style="border-top: 2px solid black;">
                 <span style="font-size:13pt;font-weight:bold;">{{$room->room_category}}</span><br>

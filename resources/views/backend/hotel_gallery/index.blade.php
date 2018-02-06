@@ -9,7 +9,7 @@
 
     <div class="row">
         @if(isset($all_hotels))
-            <div class="col-md-2">               
+            <div class="col-md-2">
                 @if($role !== 3)
                 <select class="form-control" name="hotel_id" id="hotel_id">
                     <option value="All">All</option>
@@ -17,15 +17,15 @@
                         <option value="{{$hotel->id}}"{{($hotel_id == $hotel->id)? 'selected' : ''}}>{{$hotel->name}}</option>
                     @endforeach
                 </select>
-                @endif                
+                @endif
             </div>
-            
+
             <div class="col-md-2">
             @if($role !== 3)
                 <button type="button" onclick="filter_by_hotel_id('backend_mps/hotel_gallery');" class="form-control btn-primary">Filter</button>
             @endif
             </div>
-            
+
         @endif
         <div class="col-md-8">
             <div class="buttons pull-right">
@@ -77,7 +77,8 @@
                         <tr>
                             <td><input type="checkbox" class="check_source" name="edit_check" value="{{$hotel_gallery->id }}" id="all"></td>
                             <td><a href="/backend_mps/hotel_gallery/edit/{{$hotel_gallery->hotel_id}}">{{$hotel_gallery->hotel->name}}</a></td>
-                            <td><a href="/backend_mps/hotel_gallery/edit/{{$hotel_gallery->hotel_id}}"><img src="/images/upload/{{$hotel_gallery->image}}" class="list-item-image"></a></td>
+                            <!-- <td><a href="/backend_mps/hotel_gallery/edit/{{$hotel_gallery->hotel_id}}"><img src="/images/upload/{{$hotel_gallery->image}}" class="list-item-image"></a></td> -->
+                            <td>/images/upload/{{$hotel_gallery->image}}</td>
                         </tr>
                     @endforeach
                     </tbody>

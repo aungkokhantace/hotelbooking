@@ -32,7 +32,7 @@
                 <div class="col-md-9 user_list">
                     <div class="search_list">
                         <h2>{{trans('frontend_details.bookings')}}</h2>
-                        <h4 style="margin-top: 30px;"><a href="/bookingList" style="color: #626262;">{{trans('frontend_details.back_all_bookings')}}</a></h4>
+                        <h4 style="margin-top: 30px;"><a href="/bookingList" style="color: #626262;"><< {{trans('frontend_details.back_all_bookings')}}</a></h4>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -172,9 +172,11 @@
                                         <tbody>
                                         <tr>
                                             <td class="b-manage-table booking_manage_table" width="40%" >
-                                                <img class="img-hover img-responsive"
-                                                src="/images/upload/{{$room->category_image}}"
-                                                alt="">
+                                                @if(isset($room->category_image) && $room->category_image != null)
+                                                  <img class="img-hover img-responsive" src="/images/upload/{{$room->category_image}}" alt="">
+                                                @else
+                                                  <img class="img-hover img-responsive" src="/images/upload/{{$hotel->logo}}" alt="">
+                                                @endif
                                             </td>
                                             <td class="lead_left booking_manage_table">
                                            <div class="booking_data_fix">
