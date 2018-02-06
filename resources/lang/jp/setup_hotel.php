@@ -81,5 +81,6 @@ return [
     'active-booking-check-in' => 'Check In - JP',
     'active-booking-check-out' => 'Check Out - JP',
     'active-booking-phone'  => 'Phone - JP',
+    'tb-col-category'       => 'Category - JP',
 
 ];

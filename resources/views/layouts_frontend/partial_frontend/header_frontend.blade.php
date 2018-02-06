@@ -190,10 +190,10 @@ $companyLogo    = \App\Core\Check::companyLogo();
                                     <form action="/frontend/language" method="post"  id="change_lang">
                                     <li>
                                         <!-- <a href="#"><img src="/assets/shared/images/en_US.png"></a> -->
-                                        <input type="image" value="jp" id="img" name="locale" src="/assets/shared/images/jp.png">
+                                        <input type="image" value="jp" class="flag-img" name="locale" src="/assets/shared/images/jp.png">
                                     </li>
                                     <li style="text-decoration:underline;">
-                                        <input type="image" value="en" id="img" name="locale" src="/assets/shared/images/en_US.png">
+                                        <input type="image" value="en" class="flag-img" name="locale" src="/assets/shared/images/en_US.png">
                                     </li>
                                  {{ csrf_field() }}
                                      </form>
@@ -202,8 +202,6 @@ $companyLogo    = \App\Core\Check::companyLogo();
                                 </ul>
                             </div>
                         </li>
-
-
             </div>
 
                     </ul>
@@ -216,8 +214,8 @@ $companyLogo    = \App\Core\Check::companyLogo();
 
     <script>
 
-   $( "#img" ).click(function() {
-  $( "#change_lang" ).submit();
-});
+    $( ".flag-img" ).click(function() {
+       $( "#change_lang" ).submit();
+    });
 
    </script>

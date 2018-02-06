@@ -83,5 +83,6 @@ return [
     'active-booking-check-in' => 'Check In',
     'active-booking-check-out' => 'Check Out',
     'active-booking-phone'  => 'Phone',
+    'tb-col-category'          => 'Category',
 
 ];

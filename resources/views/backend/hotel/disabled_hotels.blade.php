@@ -27,7 +27,7 @@
                         <th>{{trans('setup_hotel.tb-col-address')}}</th>
                         <th>{{trans('setup_hotel.tb-col-phone')}}</th>
                         <th>{{trans('setup_hotel.tb-col-email')}}</th>
-                        <th>{{trans('setup_hotel.tb-col-class')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-category')}}</th>
                         <!-- <th>{{trans('setup_hotel.tb-col-website')}}</th> -->
                         <th></th>
                     </tr>
@@ -50,7 +50,7 @@
                             <td>{{$hotel->address}}</td>
                             <td>{{$hotel->phone}}</td>
                             <td>{{$hotel->email}}</td>
-                            <td>{{$hotel->class}}</td>
+                            <td>{{$hotel->h_type_id}}</td>
                             <!-- <td>{{$hotel->website}}</td> -->
                             <td>
                               <form id="frm_enable_hotel_{{$hotel->id}}" method="post" action="/backend_mps/hotel/enable">

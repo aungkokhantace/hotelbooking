@@ -68,7 +68,7 @@
                         <th>{{trans('setup_hotel.tb-col-township')}}</th> -->
                         {{--<th>{{trans('setup_hotel.tb-col-description')}}</th>--}}
                         <!-- <th>{{trans('setup_hotel.tb-col-floor')}}</th> -->
-                        <th>{{trans('setup_hotel.tb-col-class')}}</th>
+                        <th>{{trans('setup_hotel.tb-col-category')}}</th>
                         <th>{{trans('setup_hotel.tb-col-website')}}</th>
                         <!-- <th>{{trans('setup_hotel.tb-col-check-in')}}</th>
                         <th>{{trans('setup_hotel.tb-col-check-out')}}</th>
@@ -122,7 +122,7 @@
                             <td>{{$hotel->township->name}}</td> -->
                             {{--<td>{{$hotel->description}}</td>--}}
                             <!-- <td>{{$hotel->number_of_floors}}</td> -->
-                            <td>{{$hotel->class}}</td>
+                            <td>{{$hotel->h_type_id}}</td>
                             <td>{{$hotel->website}}</td>
                             <!-- <td>{{$hotel->check_in_time}}</td>
                             <td>{{$hotel->check_out_time}}</td>
