@@ -13,7 +13,7 @@ return [
     'category'              => 'Hotel Restaurant Category',
     'name'                  => 'Name',
     'capacity'              => 'Capacity',
-    'area'                  => 'Area(A.Q.M)',
+    'area'                  => 'Area(S.Q.M)',
     'floor'                 => 'Floor',
     'private'               => 'Private Room(Included Room)',
     'open-hr'               => 'Open Hour',
