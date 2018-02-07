@@ -13,7 +13,7 @@ return [
     'category'              => 'Hotel Restaurant Category - JP',
     'name'                  => 'Name - JP',
     'capacity'              => 'Capacity - JP',
-    'area'                  => 'Area(A.Q.M) - JP',
+    'area'                  => 'Area(S.Q.M) - JP',
     'floor'                 => 'Floor - JP',
     'private'               => 'Private Room(Included Room) - JP',
     'open-hr'               => 'Open Hour - JP',

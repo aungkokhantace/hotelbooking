@@ -140,7 +140,7 @@
                     </div><!-- End Service Blocks -->
                     <!-- Start Hotel Restaurant Block -->
                     <div class="row margin-bottom-30">
-                        <div class="col-md-6">
+                        <div class="col-md-11">
                             <div class="service">
                                 <!-- <img class="fa fa-university service-icon" src="/assets/shared/images/knife_fork.png"> -->
                                 <span class="fa fa-cutlery service-icon"></span>
@@ -148,14 +148,88 @@
                                     <h4>{{trans('frontend_details.restaurants')}}</h4>
                                     <ul>
                                         @foreach($restaurantCategoryArr as $category)
-                                            <li>
-                                                {{$category->name}}
-                                                <ul>
+                                            <li style="text-align:left; float:left">
+                                               <h4> {{$category->name}}</h4>
+                                                <ul >
                                                 @foreach($category->restaurants as $res)
-                                                    <li>
-                                                        <i class="fa fa-check-square-o" aria-hidden="true"></i>
-                                                        {{$res->name}} (Open {{$res->opening_hours}} - Close {{$res->closing_hours}})
-                                                    </li>
+                                                <li> <h6 class="res_name"> <i class="fa fa-check-square-o" aria-hidden="true"></i> {{$res->name}}</h6></li>
+                                                <table>
+                                                
+                                                 </tr>
+                                                 <tr>
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>   Open
+                                                    </td>
+                                                    <td> <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->opening_hours}}
+                                                    </td>
+                                                 </tr>
+                                                 <tr>
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  Close
+                                                    </td>
+                                                    <td><i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->closing_hours}} 
+                                                    </td>
+                                                 </tr>
+                                                 <tr>
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  Open Days
+                                                    </td>
+                                                     <td> 
+                                                        <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->opening_days}} 
+                                                    </td>
+                                                </tr>
+                                                   
+                                                <tr>
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  Capacity
+                                                    </td>
+                                                     <td> 
+                                                        <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->capacity}} persons
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  Area 
+                                                    </td>
+                                                     <td> 
+                                                        <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->area}} sqm
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  Floor
+                                                    </td>
+                                                     <td> 
+                                                        <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->floor}} 
+                                                    </td>
+                                                </tr>
+                                             @if(count($res->private_room )> 0 && $res->private_room==1)
+                                                <tr>
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  Private Room
+                                                    </td>
+                                                     <td> 
+                                                        <i class="fa fa-arrow-circle-right" style="color:pink"></i> Included 
+                                                    </td>
+                                                </tr>
+                                             @endif
+
+                                             @if(str_word_count($res->description) > 0 && str_word_count($res->description)!=0)
+                                                <tr>
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  Description
+                                                    </td>
+                                                     <td> 
+                                                        <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->description}}
+                                                    </td>
+                                                </tr>
+                                              @endif
+                                              @if(str_word_count($res->remark) > 0 && str_word_count($res->remark)!=0)
+                                               <tr>
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>   Remark
+                                                    </td>
+                                                     <td> 
+                                                        <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->remark}}
+                                                    </td>
+                                                </tr>
+                                               @endif
+                                                  </table>
+                                                    
+                                                        
                                                 @endforeach
                                                 </ul>
                                             </li>

@@ -373,3 +373,20 @@ remove_arrow::-webkit-outer-spin-button{
     -webkit-appearance: none;
     margin: 0;
 }
+
+.resdetail{
+    width:200px;
+    vertical-align:top;
+   
+}
+
+}
+.res_info{
+    text-align:left;
+}
+.res_name{
+    font-size:14px;
+    color:#f384AA;
+    font-weight: bold;
+    
+}
