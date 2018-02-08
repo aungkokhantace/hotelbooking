@@ -102,7 +102,9 @@ Route::group(['middleware' => 'web'], function () {
    //Fronted Language
     Route::get('lang/{lang}','FrontendLanguage\FrontendLanguageController@getLanguage');
     Route::post('frontend/language', ['as' => 'frontend/language', 'uses' => 'FrontendLanguage\FrontendLanguageController@changeLanguage']);
-
+     
+     // Ajax for hotel search result page view hotel policy
+    Route::get('view/hotelpolicy/{id}',['as'=>'view/hotelplicy','uses'=>'Frontend\SearchController@gethotelpolicy']);
 
     //Backend
     // Route::get('backend_myanmarpolestar', 'Auth\AuthController@showLogin');
@@ -136,6 +138,8 @@ Route::group(['middleware' => 'web'], function () {
     // Route::get('hotel/check_user_email/{hotel_id}', ['as' => 'backend_mps/hotel/check_user_email', 'uses' => 'Setup\Hotel\HotelController@check_user_email']);
     Route::get('hotel/check_user_email/{hotel_id}', ['as' => 'backend_mps/hotel/check_user_email', 'uses' => 'Setup\Hotel\HotelController@check_user_email']);
 
+    
+    
     });
 
     Route::group(['middleware' => 'right'], function () {

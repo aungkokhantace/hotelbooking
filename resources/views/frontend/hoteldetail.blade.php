@@ -426,6 +426,8 @@
                             </tbody>
                         </table>
                     </div>
+                    
+
                     <div class="room_table">
                         <h3>Facilities of {{$hotel->name}}</h3>
                         <div class="row margin-bottom-30">
@@ -504,7 +506,9 @@
             </div><!-- /.container -->
         </div>
     </section>
+
 @stop
+
 @section('page_script')
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyAJLUg2IEbAOp4gMqRoXpSnjV0w1FDfYNk&sensor=false" type="text/javascript"></script>
     <script type="text/javascript" language="javascript" class="init">

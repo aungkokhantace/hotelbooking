@@ -135,14 +135,22 @@ $companyLogo = \App\Core\Check::companyLogo();
 
             <!-- MULTI LANGUAGE -->
             <div class="navbar-header center">
-                <form action="/backend_mps/language" method="post">
-                    <select name="locale">
-                        <option value="en" {{App::getLocale() == 'en'? 'selected':''}}>English</option>
-                        <option value="jp" {{App::getLocale() == 'jp'? 'selected':''}}>Japan</option>
-                    </select>
-                    {{ csrf_field() }}
-                    <input type="submit" value="Submit">
-                </form>
+                 
+                                
+                                    <form action="/backend_mps/language" method="post"  id="change_lang" class="form-inline">
+                                    
+                                        <!-- <a href="#"><img src="/assets/shared/images/en_US.png"></a> -->
+                                        <input type="image" value="jp" class="flag-img" name="locale" src="/assets/shared/images/jp.png" style="margin-right:10px">
+                                    
+                                
+                                        <input type="image" value="en" class="flag-img" name="locale" src="/assets/shared/images/en_US.png">
+                                    
+                                         {{ csrf_field() }}
+                                     </form>
+
+
+                               
+                            
 
             </div> 
 
@@ -168,3 +176,10 @@ $companyLogo = \App\Core\Check::companyLogo();
         </div>
         <!-- end container-fluid -->
     </div>
+<script>
+
+    $( ".flag-img" ).click(function() {
+       $( "#change_lang" ).submit();
+    });
+
+   </script>

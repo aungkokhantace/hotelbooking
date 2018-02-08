@@ -390,3 +390,22 @@ remove_arrow::-webkit-outer-spin-button{
     font-weight: bold;
     
 }
+.scrollToTop{
+    border-radius: 50%;
+    width:40px;
+    height:40px;
+    background-color:#D63090;
+    position:fixed;
+    bottom:40px;
+    right:40px;
+    color:white;
+    display:none;    
+}
+
+.scrollToTop:hover{
+    text-decoration:none;
+}
+
+.policyModal li{
+   list-style:disc !important;
+}

@@ -13,9 +13,11 @@ use App\Payment\PaymentConstance;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
+use App\Setup\HotelPolicy\HotelPolicyRepositoryInterface;
 use App\Setup\Facilities\FacilitiesRepository;
 use App\Setup\Hotel\Hotel;
 use App\Setup\Hotel\HotelRepository;
+use App\Setup\HotelPolicy\HotelPolicyRepository;
 use App\Setup\HotelFacility\HotelFacilityRepository;
 use App\Setup\HotelRoomCategory\HotelRoomCategoryRepository;
 use App\Setup\Landmark\LandmarkRepository;
@@ -31,15 +33,19 @@ use App\Core\Utility;
 
 class SearchController extends Controller
 {
+    private $repo;
 
     public function __construct()
     {
+        
     }
+    
 
     public function index()
     {
         $hotelRepo  = new HotelRepository();
         $hotels     = $hotelRepo->getObjs();
+
         return view('frontend.searchresult')->with('hotels', $hotels);
     }
 
@@ -303,6 +309,13 @@ class SearchController extends Controller
         //end hotel search result
 
         return response()->json($result);
+    }
+    public function gethotelpolicy($id){
+        $result = new HotelPolicyRepository();
+        $hotel_policy = $result->getObjByID($id);
+      
+       return \Response::json($hotel_policy->policy);
+
     }
 
 }

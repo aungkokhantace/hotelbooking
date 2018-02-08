@@ -145,7 +145,8 @@
                                                 <div class="lead_left">
                                                     <a href="/hotel_detail/{{$hotel->id}}"><h4>{{$hotel->name}}</h4></a>
                                                     <p class="lead">
-                                                        <i class="fa fa-map-marker" aria-hidden="true"></i>   {{$hotel->township->name}}, {{$hotel->city->name}}
+                                                        <i class="fa fa-map-marker" aria-hidden="true"></i>   {{$hotel->township->name}}, {{$hotel->city->name}}<br><br>
+                                                        <h5> <a href="#myPolicyModal-{{$hotel->id}}" data-toggle="modal" id="{{ $hotel->id }}"  onclick="hotelpolicy({{$hotel->id}})" class="hotel_policy">View Hotel Policy</a></h5>
                                                     </p>
                                                 </div>
                                                 <div class="lead_right pull-right">
@@ -169,6 +170,24 @@
                                                                             </td>
                                                                             <td>&nbsp;</td>
                                                                         @endif
+
+<div class="modal fade policyModal " id="myPolicyModal-{{$hotel->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Hotel Policy</h4>
+      </div>
+      <div class="modal-body">
+        <div id="hotel_policy"></div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
                                                                     @endforeach
                                                                 </tr>
                                                             </table>
@@ -209,6 +228,9 @@
                                                     <a href="/hotel_detail/{{$suggestedHotelhotel->id}}"><h4>{{$suggestedHotelhotel->name}}</h4></a>
                                                     <p class="lead">
                                                         <i class="fa fa-map-marker" aria-hidden="true"></i>   {{$suggestedHotelhotel->township->name}}, {{$suggestedHotelhotel->city->name}}
+
+                                                        <br><br>
+                                                        <h5> <a href="#mysuggestModal-{{$suggestedHotelhotel->id}}" data-toggle="modal" id="{{ $suggestedHotelhotel->id }}"  onclick="suggestHotel({{$suggestedHotelhotel->id}})" class="hotel_policy">View Hotel Policy</a></h5>
                                                     </p>
                                                 </div>
                                                 <div class="lead_right pull-right">
@@ -249,6 +271,24 @@
                                                 </div>
                                             </div>
                                         </div>
+
+
+   <div class="modal fade policyModal " id="mysuggestModal-{{$suggestedHotelhotel->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+     <div class="modal-dialog modal-lg" role="document">
+       <div class="modal-content">
+         <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Hotel Policy</h4>
+      </div>
+        <div class="modal-body">
+        <div id="suggestHotel"></div>
+      </div>
+      
+      </div>
+    </div>
+  </div>
+
+
                                         @endforeach
                                     <!--Suggested Hotels-->
                                     @endif
@@ -273,18 +313,56 @@
         </div>
         <!-- /.container -->
     </section>
+
+
+
+
+    
 @stop
 
 @section('page_script')
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyAJLUg2IEbAOp4gMqRoXpSnjV0w1FDfYNk&sensor=false" type="text/javascript"></script>
     <script type="text/javascript" language="javascript" class="init">
-        $(document).ready(function() {
 
+        function hotelpolicy(hotelId){
+            
+            $.ajax({
+
+                type:"GET",
+                url:"/view/hotelpolicy/"+hotelId,
+                data:'_token=<?php echo csrf_token() ?>',
+                success:function(data){
+                    //console.log(data);
+                    $("#hotel_policy").html(data);
+                }
+            });
+
+            }
+
+            function suggestHotel(hotelId){
+            
+            $.ajax({
+
+                type:"GET",
+                url:"/view/hotelpolicy/"+hotelId,
+                data:'_token=<?php echo csrf_token() ?>',
+                success:function(data){
+                    //console.log(data);
+                    $("#suggestHotel").html(data);
+                }
+            });
+
+            }
+        $(document).ready(function() {
+              
+            
+         
+            
             //to display google map after changing bootstrap tab
             $("a[href='#service-two']").on('shown.bs.tab', function(){
                 google.maps.event.trigger(map, 'resize');
 
-                //init function after tab opens
+                //init function after tab open
                 var destination = $("#searched_destination").val(); //get destination
 
                 //get price filter

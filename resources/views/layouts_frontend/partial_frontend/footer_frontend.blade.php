@@ -68,13 +68,29 @@
         </div>
     </div>
 </footer>
+<a href="#" class="scrollToTop btn btn-icon btn-circle "><i class="fa fa-angle-double-up"></i></a>
 
-
-{{-- <script>
+<script>
     $(document).ready(function() {
+        
+
+      //for scroll to top
+            $(window).scroll(function(){
+              if($(this).scrollTop() > 100){
+                 $('.scrollToTop').fadeIn();
+              } else {
+            $('.scrollToTop').fadeOut();
+             }
+           });
+
+          //Click event to scroll to top
+         $('.scrollToTop').click(function(){
+         $('html, body').animate({scrollTop : 0},800);
+        return false;
+    });
 
     });
-</script> --}}
+</script> 
 
 <!-- Script to Activate the Carousel -->
 <script>
