@@ -210,7 +210,7 @@ $permissions = \App\Core\Check::getPermissionByRoleId($role_id);
                 <ul class="sub-menu">
                     @if(in_array("backend_mps/hotel_room_type", $permissions))
                     <li nav-id="modifier-create">
-                        <a href="/backend_mps/hotel_room_type">Hotel Room Type</a>
+                        <a href="/backend_mps/hotel_room_type">Building Type</a>
                     </li>
                     @endif
 
