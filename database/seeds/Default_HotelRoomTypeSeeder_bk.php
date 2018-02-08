@@ -1,7 +1,7 @@
 <?php
 use Illuminate\Database\Seeder;
 
-class Default_HotelRoomTypeSeeder extends Seeder
+class Default_HotelRoomTypeSeeder_bk extends Seeder
 {
     /**
      * Run the database seeds.
