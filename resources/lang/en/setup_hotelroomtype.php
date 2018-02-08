@@ -7,18 +7,18 @@
  */
 
 return [
-    'title-entry'           => 'Hotel Room Type Entry',
-    'title-edit'            => 'Hotel Room Type Edit',
+    'title-entry'           => 'Building Type Entry',
+    'title-edit'            => 'Building Type Edit',
     'hotel'                 => 'Hotel',
     'name'                  => 'Name',
     'description'           => 'Description',
     'place-hotel'           => 'Select Hotel',
-    'place-name'            => 'Enter Hotel Room Type Name',
+    'place-name'            => 'Enter Building Type Name',
     'place-description'     => 'Enter Description',
     'btn-add'               => 'ADD',
     'btn-update'            => 'UPDATE',
     'btn-cancel'            => 'CANCEL',
-    'title-list'            => 'Hotel Room Type Listing',
+    'title-list'            => 'Building Type Listing',
     'tb-col-name'           => 'Name',
     'tb-col-hotel'          => 'Hotel',
     'tb-col-description'    => 'Description',
