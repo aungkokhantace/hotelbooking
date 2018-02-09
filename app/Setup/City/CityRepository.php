@@ -118,7 +118,8 @@ class CityRepository implements CityRepositoryInterface
     }
 
     public function getCityByCountryId($country_id){
-        $result = DB::table('cities')->where('country_id', $country_id)->whereNull('deleted_at')->get();
+        // $result = DB::table('cities')->where('country_id', $country_id)->whereNull('deleted_at')->get();
+        $result=City::where('country_id', $country_id)->whereNull('deleted_at')->get();
         return $result;
     }
 
@@ -126,4 +127,6 @@ class CityRepository implements CityRepositoryInterface
         $result = DB::select("SELECT * FROM townships WHERE city_id = $id AND deleted_at IS NULL");
         return $result;
     }
+
+  
 }

@@ -26,4 +26,7 @@ class City extends Model
     {
         return $this->hasMany('App\Setup\Hotel\Hotel');
     }
+    public function landmarks(){
+        return $this->hasManyThrough('App\Setup\Landmark\Landmark','App\Setup\Township\Township','city_id','township_id' );
+    }
 }

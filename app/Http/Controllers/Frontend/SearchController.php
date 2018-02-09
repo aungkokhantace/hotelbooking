@@ -313,9 +313,7 @@ class SearchController extends Controller
     public function gethotelpolicy($id){
         $result = new HotelPolicyRepository();
         $hotel_policy = $result->getObjByID($id);
-      
-       return \Response::json($hotel_policy->policy);
-
+        return \Response::json($hotel_policy->policy);      
     }
 
 }

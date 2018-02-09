@@ -146,7 +146,7 @@
                                                     <a href="/hotel_detail/{{$hotel->id}}"><h4>{{$hotel->name}}</h4></a>
                                                     <p class="lead">
                                                         <i class="fa fa-map-marker" aria-hidden="true"></i>   {{$hotel->township->name}}, {{$hotel->city->name}}<br><br>
-                                                        <h5> <a href="#myPolicyModal-{{$hotel->id}}" data-toggle="modal" id="{{ $hotel->id }}"  onclick="hotelpolicy({{$hotel->id}})" class="hotel_policy">View Hotel Policy</a></h5>
+                                                        <h4> <a href="#myPolicyModal-{{$hotel->id}}" data-toggle="modal" id="{{ $hotel->id }}"  onclick="hotelpolicy({{$hotel->id}})" class="hotel_policy">View Hotel Policy</a></h4>
                                                     </p>
                                                 </div>
                                                 <div class="lead_right pull-right">
@@ -179,7 +179,7 @@
         <h4 class="modal-title" id="myModalLabel">Hotel Policy</h4>
       </div>
       <div class="modal-body">
-        <div id="hotel_policy"></div>
+        <div id="hotel_policy"><h3 style="text-align:center;color:#ea9fca;">Hotel Policy is not avaliable</h3></div>
       </div>
       
     </div>
@@ -220,17 +220,20 @@
                                     <!--Suggested Hotels-->
                                     @foreach($suggestedHotels as $suggestedHotelhotel)
                                         <div class="blog">
+                                         
                                             <div class="left_img">
                                                 <a href="/hotel_detail/{{$suggestedHotelhotel->id}}"><img class="img-responsive img-hover" src="/images/upload/{{$suggestedHotelhotel->logo}}" alt=""></a>
                                             </div>
+                                        
+                                         
                                             <div class="left_blog">
                                                 <div class="lead_left">
                                                     <a href="/hotel_detail/{{$suggestedHotelhotel->id}}"><h4>{{$suggestedHotelhotel->name}}</h4></a>
                                                     <p class="lead">
                                                         <i class="fa fa-map-marker" aria-hidden="true"></i>   {{$suggestedHotelhotel->township->name}}, {{$suggestedHotelhotel->city->name}}
 
-                                                        <br><br>
-                                                        <h5> <a href="#mysuggestModal-{{$suggestedHotelhotel->id}}" data-toggle="modal" id="{{ $suggestedHotelhotel->id }}"  onclick="suggestHotel({{$suggestedHotelhotel->id}})" class="hotel_policy">View Hotel Policy</a></h5>
+                                                        <br>
+                                                        <h4> <a href="#mysuggestModal-{{$suggestedHotelhotel->id}}" data-toggle="modal" id="{{ $suggestedHotelhotel->id }}"  onclick="suggestHotel({{$suggestedHotelhotel->id}})" class="hotel_policy">View Hotel Policy</a></h4>
                                                     </p>
                                                 </div>
                                                 <div class="lead_right pull-right">
@@ -238,6 +241,7 @@
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                     @endfor
                                                 </div>
+
                                             </div>
                                             <div class="right_blog">
                                                 <div class="lead-left">
@@ -281,7 +285,7 @@
           <h4 class="modal-title" id="myModalLabel">Hotel Policy</h4>
       </div>
         <div class="modal-body">
-        <div id="suggestHotel"></div>
+        <div id="suggestHotel"><h3 style="text-align:center;color:#ea9fca">Hotel Policy is not avaliable</h3></div>
       </div>
       
       </div>
@@ -331,13 +335,14 @@
                 type:"GET",
                 url:"/view/hotelpolicy/"+hotelId,
                 data:'_token=<?php echo csrf_token() ?>',
-                success:function(data){
-                    //console.log(data);
-                    $("#hotel_policy").html(data);
+                success:function(response){
+                   
+                     $("#hotel_policy").html(response);
+                     
                 }
-            });
+                });
 
-            }
+             }
 
             function suggestHotel(hotelId){
             
@@ -346,11 +351,12 @@
                 type:"GET",
                 url:"/view/hotelpolicy/"+hotelId,
                 data:'_token=<?php echo csrf_token() ?>',
-                success:function(data){
-                    //console.log(data);
-                    $("#suggestHotel").html(data);
+                success:function(response){
+                          
+                     $("#suggestHotel").html(response);
+                   
                 }
-            });
+                });
 
             }
         $(document).ready(function() {
