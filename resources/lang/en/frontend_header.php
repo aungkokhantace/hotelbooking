@@ -14,7 +14,7 @@ return[
     "logout"=>"logout",
     "create_account"=>"Create Account",
     "first_name"=>"First Name",
-    "last_name"=>"Last_Name",
+    "last_name"=>"Last Name",
     "email_address"=>"Email Address",
     "password"=>"Password",
     "retype_password"=>"Retype Password",
