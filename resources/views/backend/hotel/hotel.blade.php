@@ -635,7 +635,72 @@
                                 </div>
                         </div>
                     </div>
-                <div class="tab-pane row" id="2">
+       <div class="tab-pane row" id="2">
+          @if(isset($hotel))
+             @if(isset($h_landmarks))
+                   
+                    @foreach($cities as $city)
+                    <div class="panel panel-default">
+
+                        @if(count($city->landmarks)>0)
+                        <div class="panel-heading">
+                         <h4 style="color:blue">{{$city->name}}</h4>
+                        </div>
+                        <div class="panel-body">
+                          @foreach($city->landmarks as $landmark)
+                             <div class="col-md-4"> 
+                               <input type="checkbox" name="landmark[]" value="{{$landmark->id}}" @foreach($h_landmarks as $land) @if($land->landmark_id == $landmark->id)checked @endif @endforeach>&nbsp &nbsp{{$landmark->name}}
+                                 <br><br>
+                              </div>
+                          @endforeach
+                        </div>
+                        @endif
+                    </div>
+                    @endforeach
+             @else
+                    @foreach($cities as $city)
+                    <div class="panel panel-default">
+
+                        @if(count($city->landmarks)>0)
+                        <div class="panel-heading">
+                         <h4 style="color:blue">{{$city->name}}</h4>
+                        </div>
+                        <div class="panel-body">
+                          @foreach($city->landmarks as $landmark)
+                             <div class="col-md-4"> 
+                               <input type="checkbox" name="landmark[]" value="{{$landmark->id}}" >&nbsp &nbsp{{$landmark->name}}
+                                 <br><br>
+                              </div>
+                          @endforeach
+                        </div>
+                        @endif
+                    </div>
+                    @endforeach
+             @endif
+        @else
+             @foreach($cities as $city)
+                    <div class="panel panel-default">
+
+                        @if(count($city->landmarks)>0)
+                        <div class="panel-heading">
+                         <h4 style="color:blue">{{$city->name}}</h4>
+                        </div>
+                        <div class="panel-body">
+                          @foreach($city->landmarks as $landmark)
+                             <div class="col-md-4"> 
+                               <input type="checkbox" name="landmark[]" value="{{$landmark->id}}"  >&nbsp &nbsp{{$landmark->name}}
+                                 <br><br>
+                              </div>
+                          @endforeach
+                        </div>
+                        @endif
+                    </div>
+                    @endforeach
+        @endif
+                   
+                </div>
+
+   <!--   <div class="tab-pane row" id="2">
                     @if(isset($hotel))
                         @if(isset($h_landmarks))
                                 @foreach($landmarks as $landmark)
@@ -660,7 +725,10 @@
                             </div>
                         @endforeach
                     @endif
-                </div>
+                </div> -->
+
+
+
                 <div class="tab-pane row" id="3">
                     @if(isset($hotel))
                         @if(isset($h_nearby_places))
