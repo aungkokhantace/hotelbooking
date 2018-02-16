@@ -112,7 +112,7 @@
                 <div class="col-md-9 search_list">
                     <!-- First Blog Post -->
                     @if(count($hotels)>1)
-                        <h2>{{isset($destination) && $destination != "" ? $destination:'Destination'}} : {{$countHotel}} {{trans('frontend_search.property_found')}}</h2>
+                        <h2>{{isset($destination) && $destination != "" ? $destination:'Destination'}} : {{$countHotel}} {{trans('frontend_search.property_founds')}}</h2>
                     @else
                         <h2>{{isset($destination) && $destination != "" ? $destination:'Destination'}} : {{$countHotel}} {{trans('frontend_search.property_found')}}</h2>
                     @endif
@@ -548,7 +548,7 @@
                     map: map
                 });
 
-                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
                     return function () {
                         infowindow.setContent(locations[i][0]);
                         infowindow.open(map, marker);
