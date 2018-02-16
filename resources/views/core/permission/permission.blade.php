@@ -51,7 +51,7 @@
             <label for="description">Description</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <textarea rows="5" cols="50" class="form-control" id="description" name="description" placeholder="Enter Role Description" value="{{ isset($permission)? $permission->description:Request::old('description') }}"></textarea>
+            <textarea rows="5" cols="50" class="form-control" id="description" name="description" placeholder="Enter Role Description" >{{ isset($permission)? $permission->description:Request::old('description') }}</textarea>
             <p class="text-danger">{{$errors->first('description')}}</p>
         </div>
     </div>

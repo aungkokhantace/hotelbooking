@@ -59,7 +59,7 @@
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                 <textarea rows="5" cols="50" class="form-control" id="description" name="description"
                        placeholder="{{ trans('setup_nearby.Description')}}"
-                       value="{{ isset($hotel_nearby)? $hotel_nearby->description:Request::old('description') }}"></textarea>
+                       {{ isset($hotel_nearby)? $hotel_nearby->description:Request::old('description') }}>{{ isset($hotel_nearby)? $hotel_nearby->description:Request::old('description') }}</textarea>
                 <p class="text-danger">{{$errors->first('description')}}</p>
             </div>
         </div>
