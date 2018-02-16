@@ -20,17 +20,17 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="GST">Government Service Tax</label>
+            <label for="GST">Government Tax</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <input type="text" required class="form-control" id="GST" name="GST" placeholder="Enter Government Service Tax" value="{{ isset($configs['GST'])? $configs['GST']:Request::old('GST') }}"/>
+            <input type="text" required class="form-control" id="GST" name="GST" placeholder="Enter Government Tax" value="{{ isset($configs['GST'])? $configs['GST']:Request::old('GST') }}"/>
             <p class="text-danger">{{$errors->first('GST')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="SERVICE_TAX">Service Tax</label>
+            <label for="SERVICE_TAX">Service Charge</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" required class="form-control" id="SERVICE_TAX" name="SERVICE_TAX" placeholder="Enter Service Tax" value="{{ isset($configs['SERVICE_TAX'])? $configs['SERVICE_TAX']:Request::old('SERVICE_TAX') }}"/>

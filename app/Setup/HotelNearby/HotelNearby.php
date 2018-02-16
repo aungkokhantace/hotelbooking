@@ -20,4 +20,6 @@ class HotelNearby extends Model
     public function nearby_category(){
         return $this->belongsTo('App\Setup\HotelNearbyCategory\HotelNearbyCategory','h_nearby_category_id','id');
     }
+
+   
 }

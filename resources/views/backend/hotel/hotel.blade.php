@@ -14,6 +14,7 @@
         {!! Form::open(array('url' => '/backend_mps/hotel/store','files'=>true, 'id'=>'hotel', 'class'=> 'form-horizontal user-form-border')) !!}
     @endif
     <input type="hidden" name="id" value="{{isset($hotel)? $hotel->id:''}}" id="hidden_id"/>
+    
     <br/>
 
     <div class="row">
@@ -194,7 +195,7 @@
         </div>
 
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <label for="latitude">{{trans('setup_hotel.latitude')}}</label>
+            <label for="latitude">{{trans('setup_hotel.latitude')}}<span class="require">*</span></label>
             <input type="text" class="form-control" id="latitude" name="latitude"
                    placeholder="{{trans('setup_hotel.place-latitude')}}" value="{{ isset($hotel)? $hotel->latitude:Request::old('latitude') }}"/>
             <p class="text-danger">{{$errors->first('latitude')}}</p>
@@ -203,10 +204,10 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="longitude">{{trans('setup_hotel.longitude')}}</label>
+            <label for="longitude">{{trans('setup_hotel.longitude')}}<span class="require">*</span></label>
         </div> --}}
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <label for="longitude">{{trans('setup_hotel.longitude')}}</label>
+            <label for="longitude">{{trans('setup_hotel.longitude')}}<span class="require">*</span></label>
             <input type="text" class="form-control" id="longitude" name="longitude"
                    placeholder="{{trans('setup_hotel.place-longitude')}}" value="{{ isset($hotel)? $hotel->longitude:Request::old('longitude') }}"/>
             <p class="text-danger">{{$errors->first('longitude')}}</p>
@@ -730,7 +731,83 @@
 
 
                 <div class="tab-pane row" id="3">
-                    @if(isset($hotel))
+                
+              @if(isset($hotel))
+              @if(isset($h_nearby_places) && $h_nearby_places !==null && $h_nearby_places !=="")
+                     @foreach($hotel_nearbyCate as $nearby_cate)
+                       <div class="panel panel-default">
+                        @if(count($nearby_cate->nearby)>0)
+                        <div class="panel-heading">
+                         <h4 style="color:blue">{{$nearby_cate->name}}</h4>
+                        </div>
+                        <div class="panel-body">
+
+                          @foreach($nearby_cate->nearby as $nearby)
+                          <div class ="col-md-4">
+                            <input type="checkbox" name="nearby_place[]" value="{{$nearby->id}}"  @foreach($h_nearby_places as $near) @if($near->nearby_id == $nearby->id) checked @endif @endforeach><strong>
+                            &nbsp;{{$nearby->name}}</strong><br><br>
+
+                            <input type="text" name="nearby_distance_{{$nearby->id}}"  class="form-control"
+                             @foreach($h_nearby_places as $near) @if($near->nearby_id == $nearby->id) value="{{$near->km}}" @else placeholder="{{trans('setup_hotel.nearby-distance')}}" @endif @endforeach>
+                                        <br><br>
+                             </div>
+                          @endforeach
+                           </div>
+                        @endif
+                    </div>
+                     @endforeach
+                   @else
+
+                         @foreach($hotel_nearbyCate as $nearby_cate)
+
+                        <div class="panel panel-default">
+                        @if(count($nearby_cate->nearby)>0)
+                        <div class="panel-heading">
+                         <h4 style="color:blue">{{$nearby_cate->name}}</h4>
+                        </div>
+                        <div class="panel-body">
+
+                          @foreach($nearby_cate->nearby as $nearby)
+                          <div class ="col-md-4">
+                            <input type="checkbox" name="nearby_place[]" value="{{$nearby->id}}" ><strong>
+                            &nbsp;{{$nearby->name}}</strong><br><br>
+
+                            <input type="text" name="nearby_distance_{{$nearby->id}}"  class="form-control" placeholder="Enter Distance Kilometer">
+                            <br><br>
+                          </div>
+                          @endforeach
+                         </div>
+                        @endif
+                    </div>
+                     @endforeach
+                  @endif
+                  @else
+                      @foreach($hotel_nearbyCate as $nearby_cate)
+
+                        <div class="panel panel-default">
+                        @if(count($nearby_cate->nearby)>0)
+                        <div class="panel-heading">
+                         <h4 style="color:blue">{{$nearby_cate->name}}</h4>
+                        </div>
+                        <div class="panel-body">
+
+
+                          @foreach($nearby_cate->nearby as $nearby)
+                          <div class ="col-md-4">
+                            <input type="checkbox" name="nearby_place[]" value="{{$nearby->id}}" ><strong>
+                            &nbsp;{{$nearby->name}}</strong><br><br>
+
+                            <input type="text" name="nearby_distance_{{$nearby->id}}"  class="form-control" placeholder="Enter Distance Kilometer">
+                            <br><br>
+                          </div>
+                          @endforeach
+                          </div>
+                        @endif
+                    </div>
+                     @endforeach
+
+                    @endif
+                     <!-- @if(isset($hotel))
                         @if(isset($h_nearby_places))
 {{--                            @foreach($h_nearby_places as $h_nearby_place)--}}
                                 @foreach($hotel_nearby as $nearby)
@@ -760,8 +837,8 @@
                                         <br><br>
                                     </div>
                             @endforeach
-                            @endif
-                </div>
+                            @endif-->
+                </div> 
                 <div class="tab-pane row" id="4">
                     @if(isset($hotel))
                         @if(!empty($h_feature))
@@ -914,31 +991,66 @@
                         @endif
 
                 </div>
-                <div class="tab-pane row" id="5">
+               <div class="tab-pane row" id="5">
                     @if(isset($hotel))
                         @if(isset($h_facility))
-                            @foreach($facilities as $facility)
+                       @foreach($facilitiesBygroup as $facilitiesGroup )
+                        <div class="panel panel-default">
+                        @if(count($facilitiesGroup->facility)>0)
+                        <div class="panel-heading">
+                         <h4 style="color:blue">{{$facilitiesGroup->name}}</h4>
+                        </div>
+                        <div class="panel-body">
+                            @foreach($facilitiesGroup->facility as $facility)
                                 <div class="col-md-4">
-                                    <input type="checkbox" name="facility_id[]" value="{{$facility->id}}" @foreach($facility->facility_id as $fac) @if($fac->facility_id == $facility->id)checked @endif @endforeach><strong>
-                                        &nbsp;{{$facility->name}}</strong>
+                                    <input type="checkbox" name="facility_id[]" value="{{$facility->id}}" @foreach($h_facility as $fac) @if($fac->facility_id == $facility->id)checked @endif @endforeach><strong>
+                                        {{$facility->name}}</strong>
                                     <br><br>
                                 </div>
                             @endforeach
-                            @else
-                            @foreach($facilities as $facility)
-                                <div class="col-md-4">
-                                        <input type="checkbox" name="facility_id[]" value="{{$facility->id}}">{{$facility->name}}
-                                    <br><br>
-                                </div>
-                            @endforeach
-                            @endif
+                        </div>
+                        @endif
+                      </div>
+                      @endforeach
                     @else
-                        @foreach($facilities as $facility)
-                            <div class="col-md-4">
-                                <input type="checkbox" name="facility_id[]" value="{{$facility->id}}">{{$facility->name}}
-                                <br><br>
-                            </div>
-                        @endforeach
+                            @foreach($facilitiesBygroup as $facilitiesGroup )
+                        <div class="panel panel-default">
+                        @if(count($facilitiesGroup->facility)>0)
+                        <div class="panel-heading">
+                         <h4 style="color:blue">{{$facilitiesGroup->name}}</h4>
+                        </div>
+                        <div class="panel-body">
+                            @foreach($facilitiesGroup->facility as $facility)
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="facility_id[]" value="{{$facility->id}}"><strong>
+                                        {{$facility->name}}</strong>
+                                    <br><br>
+                                </div>
+                            @endforeach
+                        </div>
+                        @endif
+                      </div>
+                      @endforeach
+                @endif
+                    @else
+                        @foreach($facilitiesBygroup as $facilitiesGroup )
+                        <div class="panel panel-default">
+                        @if(count($facilitiesGroup->facility)>0)
+                        <div class="panel-heading">
+                         <h4 style="color:blue">{{$facilitiesGroup->name}}</h4>
+                        </div>
+                        <div class="panel-body">
+                            @foreach($facilitiesGroup->facility as $facility)
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="facility_id[]" value="{{$facility->id}}"><strong>
+                                        {{$facility->name}}</strong>
+                                    <br><br>
+                                </div>
+                            @endforeach
+                        </div>
+                        @endif
+                      </div>
+                      @endforeach
                     @endif
                 </div>
                 <!--
@@ -1144,6 +1256,7 @@
     <script type="text/javascript">
 
         $(document).ready(function(){
+            //console.log($('#user_email').val());
             $(':checkbox').checkboxpicker();
             //Start Validation for Entry and Edit Form
             $.validator.addMethod("greaterThan",
@@ -1157,6 +1270,8 @@
                         var $otherElement = $(param);
                         return parseInt(value, 10) < parseInt($otherElement.val(), 10);
                     });
+           
+           
 
             $('#hotel').validate({
                 rules: {
@@ -1178,24 +1293,54 @@
                     check_out_time          : 'required',
                     breakfast_start_time    : 'required',
                     breakfast_end_time      : 'required',
-
+                    latitude                : 'required',
+                    longitude               : 'required',
+              
                     user_name               : 'required',
                     display_name            : 'required',
-                    user_email   	        : {
-                        required 	: true,
-                        email	 	: true,
-                        remote: {
-                            url: "/backend_mps/hotel/check_user_email/"+$("#hidden_id").val(),
-                            type: "get",
-                            data:
-                            {
-                                email: function()
-                                {
-                                    return $('#user_email').val();
-                                }
-                            }
-                        }
-                    },
+                    
+                    // user_email   	        : {
+                    //     required 	: true,
+                    //     email	 	: true,
+                        
+                    //     remote: {
+                    //         url: "{{route('backend_mps/hotel/check_user_email')}}",
+                    //         type: "get",
+                    //         data:
+                    //         {
+                    //             email: function()
+                    //             {
+                                    
+                    //                $('#user_email').val();
+                    //             }
+                    //         }
+                    //     }
+                     
+                        
+                    // },
+                    
+
+                    //  id             : {
+                    //     required    : true,
+                    //     email       : true,
+                        
+                    //     remote: {
+                    //         url: "{{route('backend_mps/hotel/check_user_email')}}",
+                    //         type: "get",
+                    //         data:
+                    //         {
+                    //             hidden: function()
+                    //             {
+                                    
+                    //                $('#hidden_id').val();
+                    //             }
+                    //         }
+                    //     }
+                     
+                        
+                    // },
+
+                     
                     password                : 'required',
                     conpassword             : {
                         required: "true",
@@ -1246,6 +1391,8 @@
                     check_out_time          : 'Check-out Time is required',
                     breakfast_start_time    : 'Breakfast Start Time is required',
                     breakfast_end_time      : 'Breakfast End Time is required',
+                    latitude                : 'Latitude is required',
+                    longitude               : 'Longitude is required',
 
                     user_name               : 'User Name is required',
                     display_name            : 'Display Name is required',
@@ -1433,7 +1580,7 @@
                             value: 'Remove',
                             class: 'btn btn-danger hotel_remove_btn'
                         }).click(function(){
-                            console.log($(this).parent());
+                            //console.log($(this).parent());
                             $(this).parent().remove();
                         })
                     )

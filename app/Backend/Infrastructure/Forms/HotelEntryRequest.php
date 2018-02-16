@@ -36,6 +36,24 @@ class HotelEntryRequest extends Request
             'check_out_time'            => 'required',
             'breakfast_start_time'      => 'required',
             'breakfast_end_time'        => 'required',
+            'latitude'                  => 'required',
+            'longitude'                 => 'required',
+
+
+            'user_name'                 => 'required|string|unique:core_users',
+            'display_name'              => 'required|string',
+            'user_email'                => "required|email|unique:core_users,email",
+            'password'                  => 'required|min:8',
+            'conpassword'               => 'required|same:password',
+            //'role_id'                   => 'required',
+
+
+           // 'hotel_id'              => 'required',
+            'first_cancellation_day' => 'required',
+            'second_cancellation_day'=> 'required', 
+            'breakfast_fees'        => 'required',
+//            'extrabed_fees'         => 'required|numeric',
+            'tax'                   => 'required|numeric',
         ];
     }
 
@@ -59,6 +77,27 @@ class HotelEntryRequest extends Request
             'check_out_time.required'   => 'Check-out time is required!',
             'breakfast_start_time.required'=> 'Breakfast start time is required!',
             'breakfast_end_time.required'  => 'Breakfast end time is required!',
+            'latitude.required'            =>'Latitude is required',
+            'longitude.required'                    =>'Longitude is required', 
+
+            'user_name.required'         => 'User Login Name is required!',
+            'display_name.required'      => 'User Display Name is required',
+            'user_email.required'             => 'Email is required',
+            'password.required'          => 'Password is required',
+            'conpassword.required'       => 'Confirm Password is required',
+            'conpassword.same'           => 'Password and Confirm Password must match',
+            //'role_id.required'           => 'Staff Role is required',
+
+
+            //'hotel_id.required'             => 'Hotel is required!',
+            'first_cancellation_day.required'    => 'First Cancellation Day is required!',
+            'second_cancellation_day.required'    => 'Second Cancellation Day is required!',
+            'breakfast_fees.required'       => 'Breakfast Fees is required!',
+            'breakfast_fees.numeric'        => 'Breakfast Fees must be numeric!',
+//            'extrabed_fees.required'        => 'Extrabed Fees is required!',
+//            'extrabed_fees.numeric'         => 'Extrabed Fees must be numeric!',
+            'tax.required'                  => 'Tax is required!',
+            'tax.numeric'                   => 'Tax must be numeric!',
         ];
     }
 }

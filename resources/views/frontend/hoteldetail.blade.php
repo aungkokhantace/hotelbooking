@@ -333,7 +333,7 @@
                                                                           @if(isset($roomCategory->facilities) && count($roomCategory->facilities) > 0)
                                                                               @foreach($roomCategory->facilities as $room_category_facility)
                                                                                   <div class="col-md-3">
-                                                                                      <li class="text_fa">{{$room_category_facility->facility->name}}</li>
+                                                                                      <li class="text_fa"><a href="#" data-toggle="tooltip" data-placement="top" title="{{$room_category_facility->facility}}">{{$room_category_facility->facility->name}}</a></li>
                                                                                   </div>
                                                                               @endforeach
                                                                           @endif
@@ -440,7 +440,7 @@
                                                 <h5>{{$facilityGroup->name}}</h5>
                                                 <ul class="fa-ul-li">
                                                     @foreach($facilityGroup->facilities as $facility)
-                                                        <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$facility->facility->name}}</li>
+                                                        <li  data-toggle="tooltip" data-placement="top" title="{{$facility->facility->description}}"><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$facility->facility->name}}</li>
                                                     @endforeach
                                                 </ul>
                                             </div>
@@ -462,7 +462,7 @@
                                         <h4> {{trans('frontend_details.closest_landmarks')}}</h4>
                                         <ul class="fa-ul-li">
                                             @foreach($landmarks as $landmark)
-                                                <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$landmark->landmark->name}}</li>
+                                                <li data-toggle="tooltip" data-placement="top" title="{{$landmark->landmark->description}}"><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$landmark->landmark->name}}</li>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -477,7 +477,7 @@
                                         <ul class="fa-ul-li">
                                             @foreach($popularLandmarks as $popularLandmark)
                                             @if($hotel->township_id == $popularLandmark->township_id)
-                                                <li><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$popularLandmark->name}}</li>
+                                                <li data-toggle="tooltip" data-placement="top" title="{{$popularLandmark->description}}"><i class="fa fa-check-square-o" aria-hidden="true"></i>{{$popularLandmark->name}}</li>
                                             @endif
                                             @endforeach
                                         </ul>
@@ -513,6 +513,13 @@
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyAJLUg2IEbAOp4gMqRoXpSnjV0w1FDfYNk&sensor=false" type="text/javascript"></script>
     <script type="text/javascript" language="javascript" class="init">
         $(document).ready(function() {
+
+            //for tootip 
+             $('[data-toggle="tooltip"]').tooltip();   
+
+
+
+
             var numslider   = $('.slider_two').length;
             //init function
             google.maps.event.trigger(map, 'resize');

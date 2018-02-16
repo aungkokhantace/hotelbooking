@@ -124,6 +124,7 @@ $companyLogo = \App\Core\Check::companyLogo();
         <!-- begin container-fluid -->
         <div class="container-fluid">
             <!-- begin mobile sidebar expand / collapse button -->
+            <div class="col-md-5">
             <div class="navbar-header center">
                 <a href="#" class="navbar-brand overflow-hidden"><img src="{{$companyLogo}}" class="pull-left height-full m-r-5">{{$companyName}}</a>
                 <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
@@ -132,11 +133,12 @@ $companyLogo = \App\Core\Check::companyLogo();
                     <span class="icon-bar"></span>
                 </button>
             </div>
-
+            </div>
             <!-- MULTI LANGUAGE -->
+            <div class="col-md-2">
             <div class="navbar-header center">
                  
-                                
+                          
                                     <form action="/backend_mps/language" method="post"  id="change_lang" class="form-inline">
                                     
                                         <!-- <a href="#"><img src="/assets/shared/images/en_US.png"></a> -->
@@ -148,7 +150,7 @@ $companyLogo = \App\Core\Check::companyLogo();
                                          {{ csrf_field() }}
                                      </form>
 
-
+            </div>
                                
                             
 
@@ -157,6 +159,7 @@ $companyLogo = \App\Core\Check::companyLogo();
             <!-- end mobile sidebar expand / collapse button -->
 
             <!-- begin header navigation right -->
+            <div class="col-md-5">
             <ul class="nav navbar-nav navbar-right center">
 
                 <li class="dropdown navbar-user">
@@ -172,6 +175,7 @@ $companyLogo = \App\Core\Check::companyLogo();
                     </ul>
                 </li>
             </ul>
+        </div>
             <!-- end header navigation right -->
         </div>
         <!-- end container-fluid -->
