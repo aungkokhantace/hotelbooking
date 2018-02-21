@@ -37,9 +37,9 @@ class SearchController extends Controller
 
     public function __construct()
     {
-        
+
     }
-    
+
 
     public function index()
     {
@@ -85,10 +85,10 @@ class SearchController extends Controller
             $children           = Session::get('children');
             $price_filter       = Session::get('price_filter');
             $star_filter        = Session::get('star_filter');
-            $facility_filter    = Session::get('facility_filter'); 
+            $facility_filter    = Session::get('facility_filter');
             $landmark_filter    = Session::get('landmark_filter');
         }
-        
+
         if(isset($destination) && $destination != null && $destination != ""){
             // session(['destination' => $destination]);
             Session::put('destination',$destination);
@@ -169,7 +169,7 @@ class SearchController extends Controller
         $hotelEntries->appends($request->except(['page']));
         $limitNum                       = $perPage - $countHotel;
         // End Rendering Pagination
-        
+
         //start suggested hotels
 
         //create hotel_id array
@@ -203,7 +203,7 @@ class SearchController extends Controller
             foreach($suggestedHotels  as $sugg_hotel){
                 $minRoomCategoryPrice = $hRoomCategoryRepo->getMinPriceByHotelId($sugg_hotel->id);
                 $sugg_hotel->min_price = $minRoomCategoryPrice; //get mininum price to show in search result
-    
+
                 if(isset($minRoomCategoryPrice) && $minRoomCategoryPrice != null){
     //                $minRoomCategoryPrice = $hRoomCategoryRepo->getRoomTypeByHotelIdAndPrice($sugg_hotel->id,$minRoomCategoryPrice);
                     $roomCategoryWithMinPrice = $hRoomCategoryRepo->getRoomTypeByHotelIdAndPrice($sugg_hotel->id,$minRoomCategoryPrice);
@@ -214,7 +214,7 @@ class SearchController extends Controller
                 }
             }
         }
-        
+
         //end suggested hotels
 
         //start getting facilities
@@ -230,7 +230,7 @@ class SearchController extends Controller
         //start getting hotel facility
         $hotelFacilityRepo  = new HotelFacilityRepository();
         $hotelFacilities    = $hotelFacilityRepo->getHotelFacilitiesByHotelIDArr($hotelIdArr);
-    
+
 
         foreach($hotels as $hotel){
             $count = 0;
@@ -290,7 +290,7 @@ class SearchController extends Controller
             //start getting minimum price for each hotel
             $minRoomCategoryPrice = $hRoomCategoryRepo->getMinPriceByHotelId($hotel->id);
             if(isset($minRoomCategoryPrice) && $minRoomCategoryPrice != null){
-                $hotel->min_price = 'MMK '.$minRoomCategoryPrice; //get mininum price to show in search result
+                $hotel->min_price = 'USD '.$minRoomCategoryPrice; //get mininum price to show in search result
             }
             else{
                 $hotel->min_price = null; //set minimum price null
@@ -313,7 +313,7 @@ class SearchController extends Controller
     public function gethotelpolicy($id){
         $result = new HotelPolicyRepository();
         $hotel_policy = $result->getObjByID($id);
-        return \Response::json($hotel_policy->policy);      
+        return \Response::json($hotel_policy->policy);
     }
 
 }

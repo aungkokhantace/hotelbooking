@@ -292,21 +292,21 @@
 
     <div class="row"> -->
         <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="bed_type">
+            <label for="bed_types">
                 {{trans('setup_hotelroomcategory.bed-type')}}
                 <span class="require">*</span>
             </label>
         </div> -->
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-             <label for="bed_type">
+             <label for="bed_types">
                 {{trans('setup_hotelroomcategory.bed-type')}}
                 <span class="require">*</span>
             </label>
-            <!-- <input type="text" required class="form-control" id="bed_type" name="bed_type"
+            <!-- <input type="text" required class="form-control" id="bed_types" name="bed_types"
                    placeholder="{{trans('setup_hotelroomcategory.bed-type')}}"
                    value="{{ isset($hotel_room_category)? $hotel_room_category->bed_type:Request::old('bed_type') }}"/> -->
 
-            <select class="form-control" name="bed_type" id="bed_type">
+            <!-- <select class="form-control" name="bed_types" id="bed_types">
                    @if(isset($hotel_room_category))
                         @foreach($bed_types as $bed_type)
                             @if($bed_type->id == $hotel_room_category->bed_type)
@@ -321,11 +321,47 @@
                             <option value="{{$bed_type->id}}">{{$bed_type->name}}</option>
                         @endforeach
                    @endif
+               </select> -->
+
+            <select class="form-control" name="bed_types[]" id="bed_types" multiple="multiple">
+                   @if(isset($hotel_room_category))
+                        <!-- @foreach($bed_types as $bed_type)
+                            @if($bed_type->id == $hotel_room_category->bed_type)
+                                <option value="{{$bed_type->id}}" selected>{{$bed_type->name}}</option>
+                            @else
+                                <option value="{{$bed_type->id}}">{{$bed_type->name}}</option>
+                            @endif
+                        @endforeach -->
+
+                        @foreach($hotel_room_category['bedTypes'] as $bedType)
+                          @if($bedType->selected == 1)
+                              <option value="{{$bedType->id}}" selected>{{$bedType->name}}</option>
+                          @else
+                              <option value="{{$bedType->id}}">{{$bedType->name}}</option>
+                          @endif
+                        @endforeach
+                   @else
+                    <!-- <option value="" selected disabled>Select Bed Type</option> -->
+                        @foreach($bed_types as $bed_type)
+                            <option value="{{$bed_type->id}}">{{$bed_type->name}}</option>
+                        @endforeach
+                   @endif
                </select>
 
-            <p class="text-danger">{{$errors->first('bed_type')}}</p>
+            <p class="text-danger">{{$errors->first('bed_types')}}</p>
+            <!-- For Bed Type error placement -->
+            <div id="beforeBedTypeError" style="margin-right: 10px; margin-top:0px;">
+            <!-- For Bed Type error placement -->
+            </div>
         </div>
     </div>
+
+    <!-- For Bed Type error placement -->
+    <!-- <div class="row"> -->
+        <!-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" id="beforeBedTypeError" style="margin-right: 10px; margin-top:0px;">
+        </div> -->
+    <!-- </div> -->
+    <!-- For Bed Type error placement -->
 
     <div class="row">
         <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -481,6 +517,14 @@
     <script type="text/javascript">
         var count = 0;      // Declaring and defining global increment variable.
         $(document).ready(function(){
+
+          $("#bed_types").multiselect({
+                show: ["bounce", 100],
+                hide: ["explode", 600]
+            }).multiselectfilter().on('change',function(){
+                $('#hotel_room_category').valid();
+            });
+
           //Select box for search function
           $("#hotel_id").select2();
 
@@ -488,7 +532,7 @@
           $("#h_room_type_id").select2();
 
           //Select box for search function
-          $("bed_type").select2();
+          $("bed_types").select2();
             var hotel_id    = document.getElementById('hotel_id').value;
             var room        = $('input[type="hidden"][name="id"]').val();
 
@@ -540,7 +584,7 @@
                         number    : true
 
                     },
-                    bed_type            : 'required',
+                    'bed_types[]'        : 'required',
                     extra_bed_price     : 'required',
 //                    'file[]'            : {
 //                        required: true,
@@ -565,8 +609,16 @@
                         required    : 'Capacity is required!',
                         number      : 'Please enter a valid number!'
                     },
-                    bed_type            : 'Bed Type is required!',
+                    'bed_types[]'        : 'Bed Types are required!',
                     extra_bed_price     : 'Extra bed price is required!'
+                },
+                ignore: ':hidden:not("#bed_types")', // Tells the validator to check the hidden select
+                errorPlacement: function (error, element) { //Positioning Jquery Validation Errors after checkbox value
+                    if (element.attr("id") == "bed_types") {
+                        error.insertAfter($('#beforeBedTypeError'));
+                    }else {
+                        error.insertAfter( element ); // standard behaviour
+                    }
                 },
                 submitHandler: function(form) {
                     $('input[type="submit"]').attr('disabled','disabled');

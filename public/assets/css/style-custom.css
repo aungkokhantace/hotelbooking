@@ -162,3 +162,9 @@
 #fof p{margin:25px 0 0 0; padding:0; font-size:16px;}
 #fof p:first-child{margin-top:0;}
 /*end 404 page template css*/
+
+/* for multiselect height */
+#bed_type_ms{
+  height:35px;
+}
+/* for multiselect height */

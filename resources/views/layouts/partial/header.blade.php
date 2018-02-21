@@ -55,6 +55,11 @@ $companyLogo = \App\Core\Check::companyLogo();
     <!-- for select box with search function -->
     <link media="all" type="text/css" rel="stylesheet" href="/assets/css/select2.min.css">
 
+    <!-- for multiselect -->
+    <link media="all" type="text/css" rel="stylesheet" href="/assets/plugins/jquery-multiselect-filter/jquery.multiselect.css">
+    <link media="all" type="text/css" rel="stylesheet" href="/assets/plugins/jquery-multiselect-filter/jquery.multiselect.filter.css">
+    <!-- for multiselect -->
+
 
     <script src="/assets/js/jquery.js"></script>
     <script src="/assets/js/apps.min.js"></script>
@@ -135,24 +140,24 @@ $companyLogo = \App\Core\Check::companyLogo();
 
             <!-- MULTI LANGUAGE -->
             <div class="navbar-header center">
-                 
-                                
+
+
                                     <form action="/backend_mps/language" method="post"  id="change_lang" class="form-inline">
-                                    
+
                                         <!-- <a href="#"><img src="/assets/shared/images/en_US.png"></a> -->
                                         <input type="image" value="jp" class="flag-img" name="locale" src="/assets/shared/images/jp.png" style="margin-right:10px">
-                                    
-                                
+
+
                                         <input type="image" value="en" class="flag-img" name="locale" src="/assets/shared/images/en_US.png">
-                                    
+
                                          {{ csrf_field() }}
                                      </form>
 
 
-                               
-                            
 
-            </div> 
+
+
+            </div>
 
             <!-- end mobile sidebar expand / collapse button -->
 
