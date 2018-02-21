@@ -29,7 +29,7 @@ class HotelRoomCategoryEditRequest extends Request
             'name'                  => 'required',
             'capacity'              => 'required',
             'booking_cutoff_day'    => 'required',
-            'bed_type'              => 'required',
+            'bed_types'              => 'required',
             'price'                 => 'required',
             'square_metre'          => 'required',
         ];
@@ -43,7 +43,7 @@ class HotelRoomCategoryEditRequest extends Request
             'name.required'                 => 'Name is required!',
             'capacity.required'             => 'Capacity is required!',
             'booking_cutoff_day.required'   => 'Booking CutOff Day is required!',
-            'bed_type.required'             => 'Bed Type is required!',
+            'bed_types.required'             => 'Bed Types are required!',
             'price.required'                => 'Price is required!',
             'square_metre.required'         => 'S.Q.M is required!',
         ];

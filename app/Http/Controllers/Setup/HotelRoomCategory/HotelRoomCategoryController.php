@@ -155,12 +155,12 @@ class HotelRoomCategoryController extends Controller
         $booking_cutoff_day = Input::get('booking_cutoff_day');
         $extra_bed_allowed  = Input::get('extra_bed_allowed') == "true"? 1 : 0;
         $extra_bed_price    = Input::get('extra_bed_price');
-        $bed_type           = Input::get('bed_type');
+        $bed_types          = Input::get('bed_types');
         $description        = Input::get('description');
         $price              = Input::get('price');
         $remark             = Input::get('remark');
         $breakfast_included = Input::get('breakfast_included') == "true"? 1 : 0;
-
+        // dd('bed_types',$bed_types);
         //get Room Amenity Data
         $amenities = Input::get('amenity_id');
         $amenityAry = array();
@@ -173,7 +173,7 @@ class HotelRoomCategoryController extends Controller
             }
 
         }
-       
+
         //End get Room Amenity Data
 
         //get Room Facilities Data
@@ -201,13 +201,13 @@ class HotelRoomCategoryController extends Controller
             $paramObj->booking_cutoff_day   = $booking_cutoff_day;
             $paramObj->extra_bed_allowed    = $extra_bed_allowed;
             $paramObj->extra_bed_price      = $extra_bed_price;
-            $paramObj->bed_type             = $bed_type;
+            // $paramObj->bed_type             = $bed_type;
             $paramObj->description          = $description;
             $paramObj->price                = $price;
             $paramObj->remark               = $remark;
             $paramObj->breakfast_included   = $breakfast_included;
 
-            $result                         = $this->repo->create($paramObj);
+            $result                         = $this->repo->create($paramObj,$bed_types);
             $lastRoomCategoryId             = $result['lastId'];    //get last h_room_category id
 // dd($result);
             if($result['aceplusStatusCode'] !=  ReturnMessage::OK){
@@ -399,7 +399,6 @@ class HotelRoomCategoryController extends Controller
     }
 
     public function update(HotelRoomCategoryEditRequest $request){
-
         $request->validate();
         $id                 = Input::get('id');
         $hotel_id           = Input::get('hotel_id');
@@ -410,7 +409,7 @@ class HotelRoomCategoryController extends Controller
         $booking_cutoff_day = Input::get('booking_cutoff_day');
         $extra_bed_allowed  = Input::get('extra_bed_allowed') == "true"? 1: 0;
         $extra_bed_price    = Input::get('extra_bed_price');
-        $bed_type           = Input::get('bed_type');
+        $bed_types          = Input::get('bed_types');
         $description        = Input::get('description');
         $price              = Input::get('price');
         $remark             = Input::get('remark');
@@ -456,7 +455,8 @@ class HotelRoomCategoryController extends Controller
 
         try{
             DB::beginTransaction();
-            $paramObj                       = $this->repo->getObjByID($id);
+            // $paramObj                       = $this->repo->getObjByID($id);
+            $paramObj = HotelRoomCategory::find($id);
             $paramObj->hotel_id             = $hotel_id;
             $paramObj->h_room_type_id       = $h_room_type_id;
             $paramObj->name                 = $name;
@@ -465,12 +465,13 @@ class HotelRoomCategoryController extends Controller
             $paramObj->booking_cutoff_day   = $booking_cutoff_day;
             $paramObj->extra_bed_allowed    = $extra_bed_allowed;
             $paramObj->extra_bed_price      = $extra_bed_price;
-            $paramObj->bed_type             = $bed_type;
+            // $paramObj->bed_type             = $bed_type;
             $paramObj->description          = $description;
             $paramObj->price                = $price;
             $paramObj->remark               = $remark;
 
-            $result = $this->repo->update($paramObj);
+            $result = $this->repo->update($paramObj,$bed_types);
+            
             if($result['aceplusStatusCode'] !=  ReturnMessage::OK){
 
                 DB::rollback();
@@ -505,7 +506,7 @@ class HotelRoomCategoryController extends Controller
             if(Input::hasFile('file'))
             {
                 $firstRoomCategoryImage = $roomCategoryImageRepo->getFirstRoomCategoryImageByHotelRoomCategoryId($id);
-              
+
                 $images                         = Input::file('file');
                 $count                          = 1;
                 foreach($images as $image) {

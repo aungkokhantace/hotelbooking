@@ -14,8 +14,8 @@ interface HotelRoomCategoryRepositoryInterface
     public function getObjs();
     public function getArrays();
     public function getObjByID($id);
-    public function create($paramObj);
-    public function update($paramObj);
+    public function create($paramObj,$childArray);
+    public function update($paramObj,$childArray);
     public function getHotelRoomCategoryWithRoomTypeId($h_room_type_id);
     public function getMinPriceByHotelId($hotel_id);
     public function getRoomTypeByHotelIdAndPrice($hotel_id,$price);

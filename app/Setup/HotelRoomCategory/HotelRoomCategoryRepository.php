@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 use Auth;
 use App\User;
 use App\Setup\Hotel\Hotel;
+use App\Setup\BedType\BedTypeRepository;
 
 class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterface
 {
@@ -36,13 +37,54 @@ class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterfac
         return $arr;
     }
 
+    // public function getObjByID($id)
+    // {
+    //     $obj = HotelRoomCategory::find($id);
+    //     return $obj;
+    // }
+
     public function getObjByID($id)
     {
         $obj = HotelRoomCategory::find($id);
+        $childArray = DB::select("SELECT bed_type_id FROM r_category_bed_type WHERE room_category_id = $id");
+
+        $bedTypeRepo = new BedTypeRepository();
+        $bedTypes      = $bedTypeRepo->getArrays();
+
+        if(isset($childArray) && count($childArray)>0){
+
+            $tempArray = array();
+            foreach($childArray as $bed_type){
+                $bedTypeId = $bed_type->bed_type_id;
+                array_push($tempArray,$bedTypeId);
+            }
+
+            if(isset($bedTypes) && count($bedTypes)>0){
+                foreach($bedTypes as $key => $value){
+                    if (in_array($value->id, $tempArray)) {
+                        $bedTypes[$key]->selected = 1;
+                    }
+                }
+
+                foreach($bedTypes as $key2 => $value2){
+
+                    if (!array_key_exists('selected', $value2)) {
+                        $bedTypes[$key2]->selected = 0;
+                    }
+                }
+            }
+            $obj['bedTypes'] = $bedTypes;
+        }
+        else{
+            foreach($bedTypes as $key3 => $value3){
+                $bedTypes[$key3]->selected = 0;
+            }
+            $obj['bedTypes'] = $bedTypes;
+        }
         return $obj;
     }
 
-    public function create($paramObj)
+    public function create($paramObj,$childArray)
     {
         $returnedObj = array();
         $returnedObj['aceplusStatusCode'] = ReturnMessage::INTERNAL_SERVER_ERROR;
@@ -50,20 +92,32 @@ class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterfac
         $currentUser = Utility::getCurrentUserID(); //get currently logged in user
 
         try {
+            DB::beginTransaction();
             $tempObj = Utility::addCreatedBy($paramObj);
-            $tempObj->save();
+            // $tempObj->save();
 
-            //create info log
-            $date = $tempObj->created_at;
-            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' created hotel_room_category_id = '.$tempObj->id . PHP_EOL;
-            LogCustom::create($date,$message);
+            if($tempObj->save()){
+                $room_category_id = $tempObj->id;
+                if(isset($childArray) && count($childArray)>0){
+                    foreach($childArray as $bed_type_id){
+                        DB::table('r_category_bed_type')->insert([
+                            ['room_category_id' => $room_category_id, 'bed_type_id' => $bed_type_id]
+                        ]);
+                    }
+                }
+                DB::commit();
+                //create info log
+                $date = $tempObj->created_at;
+                $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' created hotel_room_category_id = '.$tempObj->id . PHP_EOL;
+                LogCustom::create($date,$message);
 
-
-            $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
-            $returnedObj['lastId']            = $tempObj->id;
-            return $returnedObj;
+                $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
+                $returnedObj['lastId']            = $tempObj->id;
+                return $returnedObj;
+            }
         }
         catch(\Exception $e){
+            DB::rollBack();
             //create error log
             $date    = date("Y-m-d H:i:s");
             $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a hotel_room_category and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
@@ -74,7 +128,7 @@ class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterfac
         }
     }
 
-    public function update($paramObj)
+    public function update($paramObj,$childArray)
     {
         $returnedObj = array();
         $returnedObj['aceplusStatusCode'] = ReturnMessage::INTERNAL_SERVER_ERROR;
@@ -82,18 +136,36 @@ class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterfac
         $currentUser = Utility::getCurrentUserID(); //get currently logged in user
 
         try {
+            DB::beginTransaction();
             $tempObj = Utility::addUpdatedBy($paramObj);
-            $tempObj->save();
+            // $tempObj->save();
+            if($tempObj->save()){
+                $room_category_id = $tempObj->id;
+                
+                //clear old detail data
+                DB::table('r_category_bed_type')->where('room_category_id', '=', $room_category_id)->delete();
 
-            //update info log
-            $date = $tempObj->updated_at;
-            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' updated hotel_room_category_id = '.$tempObj->id . PHP_EOL;
-            LogCustom::create($date,$message);
+                if(isset($childArray) && count($childArray)>0){
+                    foreach($childArray as $bed_type_id){
+                        DB::table('r_category_bed_type')->insert([
+                            ['room_category_id' => $room_category_id, 'bed_type_id' => $bed_type_id]
+                        ]);
+                    }
+                }
+                DB::commit();
 
-            $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
-            return $returnedObj;
+                //update info log
+                $date = $tempObj->updated_at;
+                $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' updated hotel_room_category_id = '.$tempObj->id . PHP_EOL;
+                LogCustom::create($date,$message);
+
+                $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
+                return $returnedObj;
+            }
         }
         catch(\Exception $e){
+          dd('except',$e);
+            DB::rollBack();
             //update error log
             $date    = date("Y-m-d H:i:s");
             $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' updated hotel_room_category_id = ' .$tempObj->id. ' and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;

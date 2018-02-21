@@ -38,7 +38,10 @@
 {{--<script src="/assets/js/downloadexcel_redirect.js"></script>--}}
 {{--<script src="/assets/js/date.js"></script>--}}
 
+<!-- for multiselect -->
+<script src="/assets/plugins/jquery-multiselect-filter/jquery.multiselect.js"></script>
+<script src="/assets/plugins/jquery-multiselect-filter/jquery.multiselect.filter.js"></script>
+<!-- for multiselect -->
 
 </body>
 </html>
-
