@@ -26,4 +26,5 @@ interface HotelRoomCategoryRepositoryInterface
     public function getRoomCategories($hotel_id);
     public function getRoomCategoryAmenityByID($id);
     public function getRoomCategoryFacilityByID($id);
+    public function getBedTypesByRoomCategoryId($room_category_id);
 }

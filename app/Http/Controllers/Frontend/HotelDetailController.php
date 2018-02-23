@@ -94,12 +94,10 @@ class HotelDetailController extends Controller
             $room_availableRepo = new RoomAvailablePeriodRepository();
             $room_availables = $room_availableRepo->getObjByH_Id($hotel_id);
             $room_availables_count = count($room_availables);
-            // dd($room_availables_count);
 
             //start hotel images
             $roomCategoryRepo = new HotelRoomCategoryRepository();
             $roomCategories = $roomCategoryRepo->getRoomCategoriesByHotelId($hotel_id);
-            // dd($roomCategories);
 
             $roomCategoryIdArray = array();
             foreach($roomCategories as $roomCategoryId){
@@ -181,7 +179,6 @@ class HotelDetailController extends Controller
 
                 $r_category->available_room_count   = count($rooms);
                 $total_available_room               += count($rooms);
-                // dd($r_category->available_room_count);
             }
 
             //end room count for each room category
@@ -243,7 +240,7 @@ class HotelDetailController extends Controller
             //get hotel gallery images
             $hotelGalleryRepo   = new HotelGalleryRepository();
             $hotelGalleryImages = $hotelGalleryRepo->getObjsByHotelID($hotel_id);
-          
+
             //change to desired time formats (eg. 02:00 PM) to display in Good to Know
             $hotel->check_in_time = date("h:i A", strtotime($hotel->check_in_time));
             $hotel->check_out_time = date("h:i A", strtotime($hotel->check_out_time));
@@ -271,9 +268,33 @@ class HotelDetailController extends Controller
             $configRepo             = new ConfigRepository();
             $config_gov             = $configRepo->getGST();
             $gst                    = $config_gov[0]->value;
-            
+
             $service_tax            = Utility::getServiceTax($hotel_id);
 
+            //start getting room category bed types
+            //declare bed type repository
+            $bedTypeRepo = new BedTypeRepository();
+
+            foreach($roomCategories as $room_category_for_bed_type){
+              $r_category_bed_types = $roomCategoryRepo->getBedTypesByRoomCategoryId($room_category_for_bed_type->id);
+
+              $r_category_bed_type_array = array();
+              $r_category_bed_type_string = "";
+              foreach($r_category_bed_types as $bed_type){
+                $bedTypeObj = $bedTypeRepo->getObjByID($bed_type->bed_type_id);
+                array_push($r_category_bed_type_array,$bedTypeObj);
+                $r_category_bed_type_string .= ','.$bedTypeObj->name;
+              }
+              //bind bed type array to room category object
+
+              //trim leftmost comma
+              $r_category_bed_type_string = ltrim($r_category_bed_type_string,",");
+
+              $room_category_for_bed_type->bed_types = $r_category_bed_type_array;
+              $room_category_for_bed_type->bed_types_string = $r_category_bed_type_string;
+            }
+            //end getting room category bed types
+            // dd('roomCategories',$roomCategories);
             return view('frontend.hoteldetail')
                 ->with('hotel', $hotel)
                 ->with('roomCategoryImages',$roomCategoryImages)

@@ -118,7 +118,6 @@ class HotelRoomCategoryController extends Controller
             $hotelRepo          = new HotelRepository();
             if ($role == 3) {
                 $hotels         = $hotelRepo->getHotelByUserEmail($email);
-                // dd($hotels);
             } else {
                 $hotels         = $hotelRepo->getObjs();
             }
@@ -144,7 +143,6 @@ class HotelRoomCategoryController extends Controller
 
     public function store(HotelRoomCategoryEntryRequest $request)
     {
-//             dd(Input::all());
         $request->validate();
 
         $hotel_id           = Input::get('hotel_id');
@@ -160,7 +158,7 @@ class HotelRoomCategoryController extends Controller
         $price              = Input::get('price');
         $remark             = Input::get('remark');
         $breakfast_included = Input::get('breakfast_included') == "true"? 1 : 0;
-        // dd('bed_types',$bed_types);
+
         //get Room Amenity Data
         $amenities = Input::get('amenity_id');
         $amenityAry = array();
@@ -209,7 +207,7 @@ class HotelRoomCategoryController extends Controller
 
             $result                         = $this->repo->create($paramObj,$bed_types);
             $lastRoomCategoryId             = $result['lastId'];    //get last h_room_category id
-// dd($result);
+
             if($result['aceplusStatusCode'] !=  ReturnMessage::OK){
                 DB::rollback();
 
@@ -222,7 +220,7 @@ class HotelRoomCategoryController extends Controller
             {
                 $roomCategoryImageRepo          = new RoomCategoryImageRepository();
                 $firstRoomCategoryImage         = $roomCategoryImageRepo->getFirstRoomCategoryImageByHotelRoomCategoryId($lastRoomCategoryId);
-                // dd($firstRoomCategoryImage);
+
                 $images                         = Input::file('file');
                 $count                          = 1;
                 foreach($images as $image){
@@ -254,7 +252,7 @@ class HotelRoomCategoryController extends Controller
                         }
                         $roomCategoryImageRepo          = new RoomCategoryImageRepository();
                         $roomCategoryImageResult        = $roomCategoryImageRepo->create($imageObj);
-// dd($roomCategoryImageResult);
+
                         if($roomCategoryImageResult['aceplusStatusCode'] !=  ReturnMessage::OK){
                             DB::rollback();
 
@@ -275,7 +273,6 @@ class HotelRoomCategoryController extends Controller
             $cutoffHistoryObj->cutoff_date_count        = $booking_cutoff_day;
             $cutoffHistoryRepo                          = new RoomCutOffDateHistoryRepository();
             $cutoffHistoryResult                        = $cutoffHistoryRepo->create($cutoffHistoryObj);
-// dd($cutoffHistoryResult);
 
             if($cutoffHistoryResult['aceplusStatusCode'] != ReturnMessage::OK) {
 
@@ -431,7 +428,6 @@ class HotelRoomCategoryController extends Controller
             }
 
         }
-        // dd($amenityAry);
         //End get Room Amenity Data
 
         //get Room Facilities Data
@@ -471,7 +467,7 @@ class HotelRoomCategoryController extends Controller
             $paramObj->remark               = $remark;
 
             $result = $this->repo->update($paramObj,$bed_types);
-            
+
             if($result['aceplusStatusCode'] !=  ReturnMessage::OK){
 
                 DB::rollback();

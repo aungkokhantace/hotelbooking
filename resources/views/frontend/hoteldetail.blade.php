@@ -154,7 +154,7 @@
                                                 @foreach($category->restaurants as $res)
                                                 <li> <h6 class="res_name"> <i class="fa fa-check-square-o" aria-hidden="true"></i> {{$res->name}}</h6></li>
                                                 <table>
-                                                
+
                                                  </tr>
                                                  <tr>
                                                     <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>   Open
@@ -165,29 +165,29 @@
                                                  <tr>
                                                     <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  Close
                                                     </td>
-                                                    <td><i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->closing_hours}} 
+                                                    <td><i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->closing_hours}}
                                                     </td>
                                                  </tr>
                                                  <tr>
                                                     <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  Open Days
                                                     </td>
-                                                     <td> 
-                                                        <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->opening_days}} 
+                                                     <td>
+                                                        <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->opening_days}}
                                                     </td>
                                                 </tr>
-                                                   
+
                                                 <tr>
                                                     <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  Capacity
                                                     </td>
-                                                     <td> 
+                                                     <td>
                                                         <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->capacity}} persons
                                                     </td>
                                                 </tr>
 
                                                 <tr>
-                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  Area 
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  Area
                                                     </td>
-                                                     <td> 
+                                                     <td>
                                                         <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->area}} sqm
                                                     </td>
                                                 </tr>
@@ -195,16 +195,16 @@
                                                 <tr>
                                                     <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  Floor
                                                     </td>
-                                                     <td> 
-                                                        <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->floor}} 
+                                                     <td>
+                                                        <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->floor}}
                                                     </td>
                                                 </tr>
                                              @if(count($res->private_room )> 0 && $res->private_room==1)
                                                 <tr>
                                                     <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  Private Room
                                                     </td>
-                                                     <td> 
-                                                        <i class="fa fa-arrow-circle-right" style="color:pink"></i> Included 
+                                                     <td>
+                                                        <i class="fa fa-arrow-circle-right" style="color:pink"></i> Included
                                                     </td>
                                                 </tr>
                                              @endif
@@ -213,7 +213,7 @@
                                                 <tr>
                                                     <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  Description
                                                     </td>
-                                                     <td> 
+                                                     <td>
                                                         <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->description}}
                                                     </td>
                                                 </tr>
@@ -222,14 +222,14 @@
                                                <tr>
                                                     <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>   Remark
                                                     </td>
-                                                     <td> 
+                                                     <td>
                                                         <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->remark}}
                                                     </td>
                                                 </tr>
                                                @endif
                                                   </table>
-                                                    
-                                                        
+
+
                                                 @endforeach
                                                 </ul>
                                             </li>
@@ -319,9 +319,13 @@
                                                                 </div>
                                                                 <div class="detailmodal_text">
                                                                     <h4>{{trans('frontend_details.category_name')}} : {{$roomCategory->name}}</h4>
-                                                                    <h4>{{trans('frontend_details.price_per_night')}} : USD {{$roomCategory->price}}</h4>
+                                                                    <h4>{{trans('frontend_details.price_per_night')}} : {{$currency.' '.number_format($roomCategory->price,2)}}
+                                                                    {{' + '.number_format($gst,1).'%'.'(Government Tax)'}}{{' + '.number_format($service_tax,1).'%'.'(Service Charge)'}}</h4>
                                                                     <h4>{{trans('frontend_details.room_size')}} : {{$roomCategory->square_metre}} m<sup>2</sup></h4>
-                                                                    <h4>{{trans('frontend_details.bed_type')}} : {{$roomCategory->bed_types->name}}</h4>
+                                                                    <h4>{{trans('frontend_details.bed_type')}} : {{$roomCategory->bed_types_string}}</h4>
+                                                                    <!-- @foreach($roomCategory->bed_types as $bed_type)
+                                                                      <h4>{{trans('frontend_details.bed_type')}} : {{$bed_type->name}}</h4>
+                                                                    @endforeach -->
                                                                     <h4>{{trans('frontend_details.extra_bed')}} : {{$roomCategory->extra_bed_allowed}}</h4>
                                                                     <h5>{{trans('frontend_details.description')}}</h5>
                                                                     <p>{{$roomCategory->description}}</p>
@@ -368,7 +372,9 @@
                                             </li>
                                             <!-- <li><img class="fa-lis" src="/assets/shared/images/cityview.png">View</li> -->
                                             <li><img class="fa-lis" src="/assets/shared/images/16sqm.png">{{$roomCategory->square_metre}} s.q.m</li>
-                                            <li><img class="fa-lis" src="/assets/shared/images/signlebed.png">{{trans('frontend_details.bed')}} : {{$roomCategory->bed_types->name}}</li>
+                                            @foreach($roomCategory->bed_types as $bed_type)
+                                              <li><img class="fa-lis" src="/assets/shared/images/signlebed.png">{{trans('frontend_details.bed')}} : {{$bed_type->name}}</li>
+                                            @endforeach
                                             <li><img class="fa-lis" src="/assets/shared/images/signlebed.png">{{trans('frontend_details.extra_bed')}}: {{$roomCategory->extra_bed_allowed}}</li>
                                             <li><img class="fa-lis" src="/assets/shared/images/breakfast.png">{{trans('frontend_details.breakfast')}} : {{$roomCategory->breakfast_included}}</li>
                                         </ul>
@@ -393,8 +399,8 @@
                                         <ul class="fa-ul price_night">
                                             <li>
                                                 {{$currency.' '.number_format($roomCategory->price,2)}}<br>
-                                                {{'+'.number_format($gst,1).'%'}}<br>
-                                                {{'+'.number_format($service_tax,1).'%'}}
+                                                {{'+'.number_format($gst,1).'%'.'(Government Tax)'}}<br>
+                                                {{'+'.number_format($service_tax,1).'%'.'(Service Charge)'}}
                                             </li>
                                         </ul>
                                     </td>
@@ -426,7 +432,7 @@
                             </tbody>
                         </table>
                     </div>
-                    
+
 
                     <div class="room_table">
                         <h3>Facilities of {{$hotel->name}}</h3>
@@ -514,8 +520,8 @@
     <script type="text/javascript" language="javascript" class="init">
         $(document).ready(function() {
 
-            //for tootip 
-             $('[data-toggle="tooltip"]').tooltip();   
+            //for tootip
+             $('[data-toggle="tooltip"]').tooltip();
 
 
 

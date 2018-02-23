@@ -212,7 +212,6 @@ class BookingController extends Controller
                     }
                 }
                 $booking->rooms                     = $bRooms; //Add Rooms Array to booking
-                // dd($booking->rooms);
 
                 if($booking->status == 2){
                     $booking->charge                = 'free';
@@ -463,7 +462,7 @@ class BookingController extends Controller
                     foreach($bookRooms as $bRoom){
                         $bRoom->status                      = 3;
                         $bRoomResult                        = $bookRoomRepo->update($bRoom);
-                        // dd($bRoomResult);
+
                         if($bRoomResult['aceplusStatusCode'] != ReturnMessage::OK){
                             DB::rollback();
                             return \Response::json($response);
@@ -778,7 +777,6 @@ class BookingController extends Controller
                     }
                     /* For 2nd Cancellation Day */
                     else{
-                        // dd('second cancellation day');
                         $bookRooms                                      = $bookRoomRepo->getBookingRoomByBookingId($id);
                         foreach($bookRooms as $bRoom){
                             /* Update Booking Room */
@@ -1084,7 +1082,7 @@ class BookingController extends Controller
                     }
                     $h_id                       = $booking->hotel_id;
                     $r_available                = $this->repo->getAvailableRoom($new_check_in,$new_check_out,$room_id_arr);
-                    // dd($r_available);
+
                     $r_available_arr            = array();
                     $r_category_arr             = array();
 
@@ -1605,7 +1603,6 @@ class BookingController extends Controller
                 $second_cancel_date                             = Carbon::parse($booking->check_in_date)->subDays($second_cancel_days);
                 $today_date                                     = Carbon::now();
                 if($today_date >= $first_cancel_date && $today_date < $second_cancel_date){
-                    // dd('first');
                     // first cancellation
                     // refund 50% of room payable amount with tax
                     $cancel_room_refund_amt                     = round($cancel_room_payable_amt_w_tax/2,2);
@@ -1679,7 +1676,6 @@ class BookingController extends Controller
 
                     // $test = abs($stripe_payment_amt);
                     // $te = $cancel_room_payable_amt_w_tax - $test;
-                    // dd($test);
 
                     $newBookPayment                                 = new BookingPayment();
                     $newBookPayment->payment_amount_wo_tax          = abs($stripe_payment_amt);
@@ -1885,7 +1881,6 @@ class BookingController extends Controller
                     return redirect()->action('Frontend\BookingController@booking_list');
                 }
                 else{
-                    // dd('second');
                     /*
                      * Update booking room with refund amount 0.00 and status 9.
                      * Update booking.
@@ -2007,7 +2002,6 @@ class BookingController extends Controller
             }
         }
         catch(\Exception $e){
-            // dd('catch',$e);
             $currentUser                        = Utility::getCurrentCustomerID();
             $date                               = date("Y-m-d H:i:s");
             $message                            = '['. $date .'] '. 'error: ' . 'Customer - '.$currentUser.

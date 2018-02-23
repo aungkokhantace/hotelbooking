@@ -139,7 +139,7 @@ class HotelBookingController extends Controller
                 /* Refund */
                 $booking->status                                = 8;
                 $result                                         = $this->repo->changeBookingStatus($booking);
-                // dd($result);
+
                 /* Change Booking Status */
                 if($result['aceplusStatusCode'] != ReturnMessage::OK){
                     DB::rollback();
@@ -153,7 +153,7 @@ class HotelBookingController extends Controller
                     foreach($b_rooms as $b_room){
                         $b_room->status                         = 8;
                         $bRoomRes                               = $bRoomRepo->updateBookingRoom($b_room);
-                        // dd($bRoomRes);
+
                         if($bRoomRes['aceplusStatusCode'] != ReturnMessage::OK){
                             DB::rollback();
                             alert()->error('Refund Operation is unsuccessful.')->persistent('Close');
@@ -178,7 +178,7 @@ class HotelBookingController extends Controller
                 $newBookPayment->total_payable_amt               = $oldBookPayment->total_payable_amt;
                 $newBookPayment->payment_reference_no            = null;
                 $bookPaymentResult                               = $bPaymentRepo->createBookingPayment($newBookPayment);
-                // dd($bookPaymentResult);
+                
                 if($bookPaymentResult['aceplusStatusCode'] != ReturnMessage::OK){
                     DB::rollback();
                     alert()->error('Refund Operation is unsuccessful.')->persistent('Close');

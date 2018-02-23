@@ -69,7 +69,6 @@ class HotelController extends Controller
             if ($role == 3) {
                 //Get Hotel ID
                 $hotels             = $this->repo->getHotelByUserEmail($email);
-                // dd($hotels);
             } else {
                  $hotels = $this->repo->getObjs();
             }
@@ -120,7 +119,7 @@ class HotelController extends Controller
 
             $hotel_nearbyCategoryRepo       = new HotelNearbyCategoryRepository();
             $hotel_nearbyCate               = $hotel_nearbyCategoryRepo->getObjs();
-             
+
 
             $hotel_configsRepo      =  new HotelConfigRepository();
             $hotel_configs          = $hotel_configsRepo->getObjs();
@@ -131,7 +130,6 @@ class HotelController extends Controller
 
             $facilities_group       = new FacilityGroupRepository();
             $facilitiesBygroup      = $facilities_group->getObjs();
-            //dd($facilitiesBygroup);
 
             $facilityRepo           = new FacilitiesRepository();
             $facilities             = $facilityRepo->getObjsForHotel();
@@ -155,7 +153,7 @@ class HotelController extends Controller
 
     public function store(HotelEntryRequest $request)
     {
-        
+
         $request->validate();
         try{
             $input                      = $request->all();
@@ -358,7 +356,7 @@ class HotelController extends Controller
 
             //start getting hotel facility
             $facility                   = (Input::has('facility_id')) ? Input::get('facility_id') : "";
-            //dd(Input::get('facility_id'));
+
             $facility_mainAry           = array();
             $facility_count             = count($facility);
 
@@ -417,7 +415,6 @@ class HotelController extends Controller
 
             $result                             = $this->repo->create($paramObj);
             if($result['aceplusStatusCode'] !=  ReturnMessage::OK){
-                // dd('did not create hotel');
                 DB::rollback();
              return redirect()->action('Setup\Hotel\HotelController@index')
                                  ->withMessage(FormatGenerator::message('Fail', 'Hotel did not create ...'));
@@ -434,7 +431,6 @@ class HotelController extends Controller
             $hotel_configsRepo                              = new HotelConfigRepository;
             $hotel_configResult                             = $hotel_configsRepo->create($hotel_configObj);
             if($hotel_configResult['aceplusStatusCode'] !=  ReturnMessage::OK){
-                // dd('hotel config did not create');
                 DB::rollback();
                 return redirect()->action('Setup\Hotel\HotelController@index')
                                  ->withMessage(FormatGenerator::message('Fail', 'Hotel did not create ...'));
@@ -456,7 +452,7 @@ class HotelController extends Controller
                     }
                 }
             }
-            // dd('landmark',$landmarkResult);
+
             /********** End creating Landmark Object  **********/
 
             /********** Start creating Hotel Nearby Object  **********/
@@ -469,7 +465,6 @@ class HotelController extends Controller
                     $hotel_nearbyRepo           = new HotelNearbyRepository;
                     $h_nearby_result            = $hotel_nearbyRepo->create($h_nearbyObj);
                     if($h_nearby_result['aceplusStatusCode'] != ReturnMessage::OK){
-                        // dd('h_nearby did not create');
                         DB::rollback();
                         return redirect()->action('Setup\Hotel\HotelController@index')
                                          ->withMessage(FormatGenerator::message('Fail', 'Hotel did not create ...'));
@@ -493,7 +488,6 @@ class HotelController extends Controller
                     $h_featureRepo              = new HotelFeatureRepository;
                     $h_feature_result           = $h_featureRepo->create($h_featureObj);
                     if($h_feature_result['aceplusStatusCode'] != ReturnMessage::OK){
-                        // dd('h_feature did not create');
                         DB::rollback();
                         return redirect()->action('Setup\Hotel\HotelController@index')
                                          ->withMessage(FormatGenerator::message('Fail', 'Hotel did not create ...'));
@@ -511,7 +505,6 @@ class HotelController extends Controller
                     $h_facilityRepo             = new HotelFacilityRepository;
                     $h_facility_result          = $h_facilityRepo->create($h_facilityObj);
                     if($h_facility_result['aceplusStatusCode'] != ReturnMessage::OK){
-                        // dd('h_facility did not create');
                         DB::rollback();
                         return redirect()->action('Setup\Hotel\HotelController@index')
                                          ->withMessage(FormatGenerator::message('Fail', 'Hotel did not create ...'));
@@ -531,7 +524,6 @@ class HotelController extends Controller
                     $hotel_room_typeRepo                = new HotelRoomTypeRepository;
                     $hotel_room_type_result             = $hotel_room_typeRepo->create($hotel_room_typeObj);
                     if($hotel_room_type_result['aceplusStatusCode'] != ReturnMessage::OK){
-                        // dd('h_room_type did not create');
                         DB::rollback();
                         return redirect()->action('Setup\Hotel\HotelController@index')
                                          ->withMessage(FormatGenerator::message('Fail', 'Hotel did not create ...'));
@@ -617,7 +609,7 @@ class HotelController extends Controller
                 $hotel_config->hotel_config_id = $h_configs;
             }
 
-          
+
             // if(!isset($hotel_nearby)){
             //     $h_nearby_places = "";
             // }else{
@@ -657,7 +649,7 @@ class HotelController extends Controller
             $admin_id = $hotel->admin_id;
             $userRepo = new UserRepository();
             $hotel_admin = $userRepo->getObjByID($admin_id);
-            
+
             return view('backend.hotel.hotel')
                 ->with('hotel', $hotel)
                 ->with('countries',$countries)
@@ -682,8 +674,6 @@ class HotelController extends Controller
     }
 
     public function update(HotelEditRequest $request){
-        // dd(Input::all());
-        
         $request->validate();
         try{
 
@@ -726,7 +716,7 @@ class HotelController extends Controller
 
             $star                   = (Input::has('star')) ? Input::get('star') : "";
             // $email                  = (Input::has('email')) ? Input::get('email') : "";
-            // dd($email);
+
             $country_id             = (Input::has('country_id')) ? Input::get('country_id') : "";
             $city_id                = (Input::has('city_id')) ? Input::get('city_id') : "";
             $township_id            = (Input::has('township_id')) ? Input::get('township_id') : "";
@@ -755,7 +745,6 @@ class HotelController extends Controller
             $tax                        = (Input::has('tax')) ? Input::get('tax') : "";
             //end getting hotel config info
             $hotel_config               =  $this->repo->getHConfigByID($id);
-            // dd($hotel_config);
             $hotel_config_count = count($hotel_config);
 
 
@@ -778,7 +767,7 @@ class HotelController extends Controller
                 }
 
             }
-            // dd($landmarkAry);
+
             //end getting landmark
 
             //start getting hotel nearby
@@ -915,7 +904,7 @@ class HotelController extends Controller
                 HotelFacility::where('hotel_id',$hotel_id)->delete();
             }
             $facility = (Input::has('facility_id')) ? Input::get('facility_id') : "";
-            
+
             $facility_mainAry = array();
             $facility_count = count($facility);
 
@@ -926,7 +915,6 @@ class HotelController extends Controller
                     $facility_mainAry[$f]['facility'] = "";
                 }
             }
-            // dd($facility);
             //end getting hotel facility
 
             //start getting hotel room type
@@ -1061,7 +1049,7 @@ class HotelController extends Controller
                                 }else{
                                     $h_facility_result['aceplusStatusCode'] = ReturnMessage::OK;
                                 }
-                                // dd('facility');
+
                                 if($h_facility_result['aceplusStatusCode'] ==  ReturnMessage::OK){
                                     DB::commit();
                                     return redirect()->action('Setup\Hotel\HotelController@index')
@@ -1164,15 +1152,15 @@ class HotelController extends Controller
     }
 
     public function check_user_email(){
-      
+
             $temp_email = Input::get('user_email');
             $hotel_id =Input::get('hidden_id');
 
-           
+
       if($hotel_id = ''){
-            
+
             $result     = false;
-           
+
             }
         else{
             $email     = User::where('email','=',$temp_email)->whereNull('deleted_at')->get();
@@ -1181,7 +1169,7 @@ class HotelController extends Controller
                 $result = true;
                }
          }
-        
+
         return \Response::json($result);
     }
 
@@ -1255,7 +1243,6 @@ class HotelController extends Controller
               if ($role == 3) {
                   //Get Hotel ID
                   $hotels             = $this->repo->getHotelByUserEmail($email);
-                  // dd($hotels);
               } else {
                    $hotels = $this->repo->getDisabledObjs();
               }

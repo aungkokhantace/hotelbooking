@@ -16,13 +16,12 @@ class CheckSession
     public function handle($request, Closure $next)
     {
         if(!$request->session()->has('check_in')){
-            // dd('session middleware');
             return redirect('/')
                 ->withInput($request->except('_token'))
                 ->with([
                     'session_expired' => true
-                ]); 
-        }        
+                ]);
+        }
         return $next($request);
     }
 }

@@ -657,7 +657,6 @@ class PaymentController extends Controller
         }
         catch(\Exception $e){
             // write log here
-            // dd('catch',$e);
             Session::flush(); // destroy all session.
             return redirect('/');
         }
@@ -747,7 +746,6 @@ class PaymentController extends Controller
             // Create a customer in stripe
             $stripePaymentObj                               = new PaymentUtility();
             $stripeCustomerResult                           = $stripePaymentObj->createCustomer($_POST);
-            // dd('stripe customer',$stripeCustomerResult);
             /*
             $stripeCustomerResult['aceplusStatusCode'] = ReturnMessage::OK;
             $stripeCustomerResult['stripe']['stripe_user_id'] = 'cus_BjGveSLGYFVUgb';
@@ -772,7 +770,6 @@ class PaymentController extends Controller
             if($today_date >= $charge_date){
                 // Capture payment
                 $stripePaymentResult                        = $stripePaymentObj->capturePayment($customer_id, $payable_amount);
-                // dd('capturepayment res',$stripePaymentResult);
 
                 if($stripePaymentResult['aceplusStatusCode'] != ReturnMessage::OK){
                     DB::rollback();
@@ -788,7 +785,6 @@ class PaymentController extends Controller
 
                 // Retrieve Balance
                 $stripeBalanceResult                        = $stripePaymentObj->retrieveBalance($stripe_balance_transaction);
-                // dd('stripe balance res',$stripeBalanceResult);
 
                 if($stripeBalanceResult['aceplusStatusCode'] != ReturnMessage::OK){
                     DB::rollback();
@@ -808,7 +804,6 @@ class PaymentController extends Controller
             }
             /* END Operation for stripe */
 
-            // dd('before begin transaction');
             DB::beginTransaction();
             $bookingObj                                     = new Booking();
             $bookingObj->booking_no                         = $booking_number;
@@ -841,7 +836,6 @@ class PaymentController extends Controller
             $bookingObj->card_type                          = $stripe_card_type;
             $bookingRepo                                    = new BookingRepository();
             $booking_result                                 = $bookingRepo->create($bookingObj);
-            // dd('booking',$booking_result);
 
             //if booking creation fails, alert and redirect to homepage
             if ($booking_result['aceplusStatusCode'] != ReturnMessage::OK){
@@ -982,7 +976,7 @@ class PaymentController extends Controller
                 $bookingRoomObj->room_net_amt_af            = 0.00;
                 $bookingRoomRepo                            = new BookingRoomRepository();
                 $booking_room_result                        = $bookingRoomRepo->create($bookingRoomObj);
-                // dd('booking room',$booking_room_result);
+
                 //if booking room creation fails, alert and redirect to homepage
                 if ($booking_room_result['aceplusStatusCode'] != ReturnMessage::OK){
                     DB::rollback();
@@ -1028,7 +1022,7 @@ class PaymentController extends Controller
 
             $bookingRequestRepo                     = new BookingRequestRepository();
             $booking_request_result                 = $bookingRequestRepo->create($bookingRequestObj);
-            // dd('booking request',$booking_request_result);
+
             if ($booking_request_result['aceplusStatusCode'] != ReturnMessage::OK){
                 DB::rollback();
                 alert()->warning(trans('frontend_details.unsuccessful_alert'))->persistent('OK');
@@ -1052,7 +1046,7 @@ class PaymentController extends Controller
 
             $communicationRepo                      = new CommunicationRepository();
             $communication_result                   = $communicationRepo->createForFrontend($communicationObj);
-            // dd('communication',$communication_result);
+
             //if communication creation fails, alert and redirect to homepage
             if ($communication_result['aceplusStatusCode'] != ReturnMessage::OK){
                 DB::rollback();
@@ -1078,7 +1072,7 @@ class PaymentController extends Controller
 
             $bookingPaymentRepo                                 = new BookingPaymentRepository();
             $booking_payment_result                             = $bookingPaymentRepo->create($bookingPaymentObj);
-            // dd('booking payment res',$booking_payment_result);
+
             if ($booking_payment_result['aceplusStatusCode'] != ReturnMessage::OK){
                 DB::rollback();
                 alert()->warning(trans('frontend_details.unsuccessful_alert'))->persistent('OK');
@@ -1113,7 +1107,7 @@ class PaymentController extends Controller
             $bookingPaymentStripeObj->booking_payment_id        = $booking_payment_id;
             $bookingPaymentStripeRepo                           = new BookingPaymentStripeRepository();
             $booking_payment_stripe_result                      = $bookingPaymentStripeRepo->create($bookingPaymentStripeObj);
-            // dd('stripe res',$booking_payment_stripe_result);
+
             if($booking_payment_stripe_result['aceplusStatusCode'] != ReturnMessage::OK){
                 //
                 DB::rollback();

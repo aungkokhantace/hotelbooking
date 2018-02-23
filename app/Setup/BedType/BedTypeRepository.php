@@ -115,7 +115,7 @@ class BedTypeRepository implements BedTypeRepositoryInterface
     }
 
     public function getObjByID($id){
-        $role = BedType::find($id);
-        return $role;
+        $result = BedType::find($id);
+        return $result;
     }
 }

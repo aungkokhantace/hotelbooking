@@ -141,7 +141,7 @@ class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterfac
             // $tempObj->save();
             if($tempObj->save()){
                 $room_category_id = $tempObj->id;
-                
+
                 //clear old detail data
                 DB::table('r_category_bed_type')->where('room_category_id', '=', $room_category_id)->delete();
 
@@ -287,5 +287,10 @@ class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterfac
 //        $hotel_config  =  DB::select("SELECT * FROM h_config WHERE hotel_id = '$id'");
         $r_facility = RoomCategoryFacility::where('h_room_category_id',$id)->get();
         return $r_facility;
+    }
+
+    public function getBedTypesByRoomCategoryId($room_category_id){
+        $result = DB::table('r_category_bed_type')->where('room_category_id','=',$room_category_id)->get();
+        return $result;
     }
 }

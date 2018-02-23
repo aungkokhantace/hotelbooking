@@ -146,7 +146,6 @@ class HotelGalleryController extends Controller
 
     public function store(HotelGalleryEntryRequest $request)
     {
-            // dd(Input::all());
         $request->validate();
 
         $hotel_id           = Input::get('hotel_id');
