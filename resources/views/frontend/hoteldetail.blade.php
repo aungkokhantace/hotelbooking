@@ -319,8 +319,8 @@
                                                                 </div>
                                                                 <div class="detailmodal_text">
                                                                     <h4>{{trans('frontend_details.category_name')}} : {{$roomCategory->name}}</h4>
-                                                                    <h4>{{trans('frontend_details.price_per_night')}} : {{$currency.' '.number_format($roomCategory->price,2)}}
-                                                                    {{' + '.number_format($gst,1).'%'.'(Government Tax)'}}{{' + '.number_format($service_tax,1).'%'.'(Service Charge)'}}</h4>
+                                                                    <h4>{{trans('frontend_details.price_per_night')}} : {{$currency.' '.$roomCategory->price}}
+                                                                    {{' + '.$gst.'%'.'(Government Tax)'}}{{' + '.$service_tax.'%'.'(Service Charge)'}}</h4>
                                                                     <h4>{{trans('frontend_details.room_size')}} : {{$roomCategory->square_metre}} m<sup>2</sup></h4>
                                                                     <h4>{{trans('frontend_details.bed_type')}} : {{$roomCategory->bed_types_string}}</h4>
                                                                     <!-- @foreach($roomCategory->bed_types as $bed_type)
@@ -398,9 +398,9 @@
                                     <td>
                                         <ul class="fa-ul price_night">
                                             <li>
-                                                {{$currency.' '.number_format($roomCategory->price,2)}}<br>
-                                                {{'+'.number_format($gst,1).'%'.'(Government Tax)'}}<br>
-                                                {{'+'.number_format($service_tax,1).'%'.'(Service Charge)'}}
+                                                {{$currency.' '.$roomCategory->price}}<br>
+                                                {{'+'.$gst.'%'.'(Government Tax)'}}<br>
+                                                {{'+'.$service_tax.'%'.'(Service Charge)'}}
                                             </li>
                                         </ul>
                                     </td>
