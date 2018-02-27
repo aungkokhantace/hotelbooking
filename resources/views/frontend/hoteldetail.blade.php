@@ -373,7 +373,7 @@
                                             <!-- <li><img class="fa-lis" src="/assets/shared/images/cityview.png">View</li> -->
                                             <li><img class="fa-lis" src="/assets/shared/images/16sqm.png">{{$roomCategory->square_metre}} s.q.m</li>
                                             @foreach($roomCategory->bed_types as $bed_type)
-                                              <li><img class="fa-lis" src="/assets/shared/images/signlebed.png">{{trans('frontend_details.bed')}} : {{$bed_type->name}}</li>
+                                              <li><img class="fa-lis bed_type_icon" src="{{$bed_type->icon}}">{{trans('frontend_details.bed')}} : {{$bed_type->name}}</li>
                                             @endforeach
                                             <li><img class="fa-lis" src="/assets/shared/images/signlebed.png">{{trans('frontend_details.extra_bed')}}: {{$roomCategory->extra_bed_allowed}}</li>
                                             <li><img class="fa-lis" src="/assets/shared/images/breakfast.png">{{trans('frontend_details.breakfast')}} : {{$roomCategory->breakfast_included}}</li>

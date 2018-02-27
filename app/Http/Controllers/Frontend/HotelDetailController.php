@@ -294,7 +294,7 @@ class HotelDetailController extends Controller
               $room_category_for_bed_type->bed_types_string = $r_category_bed_type_string;
             }
             //end getting room category bed types
-            // dd('roomCategories',$roomCategories);
+            
             return view('frontend.hoteldetail')
                 ->with('hotel', $hotel)
                 ->with('roomCategoryImages',$roomCategoryImages)

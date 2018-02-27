@@ -208,7 +208,9 @@ class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterfac
     }
 
     public function getHotelRoomCategoryWithHotelId($hotel_id){
-        $objs   = HotelRoomCategory::where('hotel_id','=',$hotel_id)
+        // $objs   = HotelRoomCategory::where('hotel_id','=',$hotel_id)
+        //                              ->get();
+        $objs   = HotelRoomCategory::where('hotel_id','=',$hotel_id)->whereNull('deleted_at')
                                      ->get();
 
         return $objs;

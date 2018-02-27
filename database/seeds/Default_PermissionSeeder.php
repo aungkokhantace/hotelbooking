@@ -87,8 +87,8 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>73,'module'=>'City','name'=>'Edit','description'=>'City Edit','url'=>'backend_mps/city/edit'],
             ['id'=>74,'module'=>'City','name'=>'Update','description'=>'City Update','url'=>'backend_mps/city/update'],
             ['id'=>75,'module'=>'City','name'=>'Destroy','description'=>'City Destroy','url'=>'backend_mps/city/destroy'],
-            ['id'=>76,'module'=>'Popular City','name'=>'New','description'=>'Popular City New','url'=>'backend_mps/popular_city/create'],
-            ['id'=>77,'module'=>'Popular City','name'=>'Store','description'=>'Popular City Store','url'=>'backend_mps/popular_city/store'],
+            ['id'=>76,'module'=>'PopularCity','name'=>'New','description'=>'Popular City New','url'=>'backend_mps/popular_city/create'],
+            ['id'=>77,'module'=>'PopularCity','name'=>'Store','description'=>'Popular City Store','url'=>'backend_mps/popular_city/store'],
 
             ['id'=>80,'module'=>'Features','name'=>'Listing','description'=>'Features Listing','url'=>'backend_mps/feature'],
             ['id'=>81,'module'=>'Features','name'=>'New','description'=>'Features New','url'=>'backend_mps/feature/create'],
@@ -128,12 +128,12 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>130,'module'=>'Country','name'=>'Jquery Validation','description'=>'Country Jquery Validation','url'=>'backend_mps/country/check_country_name'],
             ['id'=>131,'module'=>'City','name'=>'Jquery Validation','description'=>'City Jquery Validation','url'=>'backend_mps/city/check_city_name'],
 
-            ['id'=>140,'module'=>'Room View','name'=>'Listing','description'=>'Room View Listing','url'=>'backend_mps/room_view'],
-            ['id'=>141,'module'=>'Room View','name'=>'New','description'=>'Room View New','url'=>'backend_mps/room_view/create'],
-            ['id'=>142,'module'=>'Room View','name'=>'store','description'=>'Room View Store','url'=>'backend_mps/room_view/store'],
-            ['id'=>143,'module'=>'Room View','name'=>'Edit','description'=>'Room View Edit','url'=>'backend_mps/room_view/edit'],
-            ['id'=>144,'module'=>'Room View','name'=>'Update','description'=>'Room View Update','url'=>'backend_mps/room_view/update'],
-            ['id'=>145,'module'=>'Room View','name'=>'Destroy','description'=>'Room View Destroy','url'=>'backend_mps/room_view/destroy'],
+            ['id'=>140,'module'=>'RoomView','name'=>'Listing','description'=>'Room View Listing','url'=>'backend_mps/room_view'],
+            ['id'=>142,'module'=>'RoomView','name'=>'store','description'=>'Room View Store','url'=>'backend_mps/room_view/store'],
+            ['id'=>141,'module'=>'RoomView','name'=>'New','description'=>'Room View New','url'=>'backend_mps/room_view/create'],
+            ['id'=>143,'module'=>'RoomView','name'=>'Edit','description'=>'Room View Edit','url'=>'backend_mps/room_view/edit'],
+            ['id'=>144,'module'=>'RoomView','name'=>'Update','description'=>'Room View Update','url'=>'backend_mps/room_view/update'],
+            ['id'=>145,'module'=>'RoomView','name'=>'Destroy','description'=>'Room View Destroy','url'=>'backend_mps/room_view/destroy'],
 
             ['id'=>150,'module'=>'Hotel','name'=>'Listing','description'=>'Hotel Listing','url'=>'backend_mps/hotel'],
             ['id'=>151,'module'=>'Hotel','name'=>'New','description'=>'Hotel New','url'=>'backend_mps/hotel/create'],
@@ -141,8 +141,8 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>153,'module'=>'Hotel','name'=>'Edit','description'=>'Hotel Edit','url'=>'backend_mps/hotel/edit'],
             ['id'=>154,'module'=>'Hotel','name'=>'Update','description'=>'Hotel Update','url'=>'backend_mps/hotel/update'],
             ['id'=>155,'module'=>'Hotel','name'=>'Destroy','description'=>'Hotel Destroy','url'=>'backend_mps/hotel/destroy'],
-            ['id'=>156,'module'=>'Recommend Hotel','name'=>'New','description'=>'Recommend Hotel New','url'=>'backend_mps/recommend_hotel/create'],
-            ['id'=>157,'module'=>'Recommend Hotel','name'=>'Store','description'=>'Recommend Hotel Store','url'=>'backend_mps/recommend_hotel/store'],
+            ['id'=>156,'module'=>'RecommendHotel','name'=>'New','description'=>'Recommend Hotel New','url'=>'backend_mps/recommend_hotel/create'],
+            ['id'=>157,'module'=>'RecommendHotel','name'=>'Store','description'=>'Recommend Hotel Store','url'=>'backend_mps/recommend_hotel/store'],
 
             ['id'=>160,'module'=>'HotelRoomType','name'=>'Listing','description'=>'Hotel Room Type Listing','url'=>'backend_mps/hotel_room_type'],
             ['id'=>161,'module'=>'HotelRoomType','name'=>'New','description'=>'Hotel Room Type New','url'=>'backend_mps/hotel_room_type/create'],
@@ -344,7 +344,7 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>581,'module'=>'Communication','name'=>'Edit','description'=>'Communication Edit','url'=>'backend_mps/communication/reply/{id}'],
             ['id'=>582,'module'=>'Communication','name'=>'Store','description'=>'Communication Store','url'=>'backend_mps/communication/reply/store'],
             ['id'=>590,'module'=>'Transportation Information','name'=>'View and Store','description'=>'Transportation Information View and  Store','url'=>'backend_mps/transportation_information'],
-            ['id'=>591,'module'=>'Tour Information','name'=>'View and Store','description'=>'Tour Information View and  Store','url'=>'backend_mps/tour_information'],
+            ['id'=>591,'module'=>'TourInformation','name'=>'View and Store','description'=>'Tour Information View and  Store','url'=>'backend_mps/tour_information'],
 
             //CSVImport
             ['id'=>600,'module'=>'CSVImport','name'=>'Listing','description'=>'CSVImport Listing','url'=>'backend_mps/import'],
@@ -366,16 +366,16 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>620,'module'=>'Activity Log','name'=>'Activity Log','description'=>'Activity Log','url'=>'backend_mps/activities'],
 
             //Hotel Policy
-            ['id'=>630,'module'=>'Hotel Policy','name'=>'Listing','description'=>'Hotel Policy Listing','url'=>'backend_mps/hotel_policy'],
-            ['id'=>631,'module'=>'Hotel Policy','name'=>'Create','description'=>'Hotel Policy Create','url'=>'backend_mps/hotel_policy/create/{hotel_id?}'],
-            ['id'=>632,'module'=>'Hotel Policy','name'=>'Store','description'=>'Hotel Policy Store','url'=>'backend_mps/hotel_policy/store'],
-            ['id'=>633,'module'=>'Hotel Policy','name'=>'Edit','description'=>'Hotel Policy Edit','url'=>'backend_mps/hotel_policy/edit'],
-            ['id'=>634,'module'=>'Hotel Policy','name'=>'Update','description'=>'Hotel Policy Update','url'=>'backend_mps/hotel_policy/update'],
-            ['id'=>635,'module'=>'Hotel Policy','name'=>'Destroy','description'=>'Hotel Policy Destroy','url'=>'backend_mps/hotel_policy/destroy'],
-            ['id'=>636,'module'=>'Hotel Policy','name'=>'Filter','description'=>'Hotel Policy Filter','url'=>'backend_mps/hotel_policy/{hotel_id?}'],
+            ['id'=>630,'module'=>'HotelPolicy','name'=>'Listing','description'=>'Hotel Policy Listing','url'=>'backend_mps/hotel_policy'],
+            ['id'=>631,'module'=>'HotelPolicy','name'=>'Create','description'=>'Hotel Policy Create','url'=>'backend_mps/hotel_policy/create/{hotel_id?}'],
+            ['id'=>632,'module'=>'HotelPolicy','name'=>'Store','description'=>'Hotel Policy Store','url'=>'backend_mps/hotel_policy/store'],
+            ['id'=>633,'module'=>'HotelPolicy','name'=>'Edit','description'=>'Hotel Policy Edit','url'=>'backend_mps/hotel_policy/edit'],
+            ['id'=>634,'module'=>'HotelPolicy','name'=>'Update','description'=>'Hotel Policy Update','url'=>'backend_mps/hotel_policy/update'],
+            ['id'=>635,'module'=>'HotelPolicy','name'=>'Destroy','description'=>'Hotel Policy Destroy','url'=>'backend_mps/hotel_policy/destroy'],
+            ['id'=>636,'module'=>'HotelPolicy','name'=>'Filter','description'=>'Hotel Policy Filter','url'=>'backend_mps/hotel_policy/{hotel_id?}'],
 
            //Visa Information
-            ['id'=>640,'module'=>'Visa Information','name'=>'View and Store','description'=>'Visa Information View and Store','url'=>'backend_mps/visa_information'],
+            ['id'=>640,'module'=>'VisaInformation','name'=>'View and Store','description'=>'Visa Information View and Store','url'=>'backend_mps/visa_information'],
 
            // Hotel Disable
             ['id'=>650,'module'=>'Hotel','name'=>'Disable','description'=>'Hotel Disable','url'=>'backend_mps/hotel/disable'],
@@ -384,7 +384,7 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>653,'module'=>'Hotel','name'=>'Active Booking List','description'=>'Hotel active booking list','url'=>'backend_mps/hotel/active_booking_list{hotel_id}'],
 
             //Faq Information
-             ['id'=>660,'module'=>'Faq Information','name'=>'View and Store','description'=>'Faq Information View and Store','url'=>'backend_mps/faq_information'],
+             ['id'=>660,'module'=>'FaqInformation','name'=>'View and Store','description'=>'Faq Information View and Store','url'=>'backend_mps/faq_information'],
 
         );
 
