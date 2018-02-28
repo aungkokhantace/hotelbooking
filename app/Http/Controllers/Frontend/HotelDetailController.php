@@ -48,6 +48,8 @@ use App\Setup\HotelGallery\HotelGalleryRepository;
 use App\Setup\BedType\BedType;
 use App\Setup\BedType\BedTypeRepository;
 use App\Setup\BedType\BedTypeRepositoryInterface;
+use App\Setup\RoomView\RoomViewRepository;
+use App\Setup\RoomView\RoomViewRepositoryInterface;
 
 //use Redirect;
 
@@ -172,6 +174,10 @@ class HotelDetailController extends Controller
             //get check-out date from session
             $check_out = session('check_out');
             $total_available_room = 0;
+
+            $roomViewRepo = new RoomViewRepository;
+            $roomViews = $roomViewRepo->getObjs();
+
             foreach($roomCategories as $r_category){
                 $roomRepo                           = New RoomRepository();
                 //get rooms that are within available_period and not within black_out period and not booked and not in cutoff date
@@ -179,8 +185,33 @@ class HotelDetailController extends Controller
 
                 $r_category->available_room_count   = count($rooms);
                 $total_available_room               += count($rooms);
-            }
 
+                // get room views by room IDs
+                //declare array to store room_views
+                $room_view_obj_array = array();
+                $room_view_id_array = array();
+                foreach($rooms as $room){
+                  array_push($room_view_id_array,$room->room_view_id);
+                }
+                // if($r_category->id == 2){
+                //   dd($room_view_id_array);
+                // }
+                //remove duplicated room_view_ids from array
+                $room_view_id_array = array_unique($room_view_id_array);
+                // $r_category->room_views = $room_view_id_array;
+
+                // $r_category_bed_type_array = array();
+                $r_category_room_view_string = "";
+                foreach($room_view_id_array as $room_view_id){
+                  $roomViewObj = $roomViewRepo->getObjByID($room_view_id);
+                  array_push($room_view_obj_array,$roomViewObj);
+                  $r_category_room_view_string .= ','.$roomViewObj->name;
+                }
+                //trim leftmost comma
+                $r_category_room_view_string = ltrim($r_category_room_view_string,",");
+
+                $r_category->r_category_room_view_string = $r_category_room_view_string;
+            }
             //end room count for each room category
 
             //start images for each room category
