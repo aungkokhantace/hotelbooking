@@ -33,7 +33,6 @@ class RoomAvailablePeriodController extends Controller
           //Get Loggin User Info
           $hotelRepo          = new HotelRepository();
           $user               = $hotelRepo->getUserObjs();
-          $id                 = $user->id;
           $role               = $user->role_id;
           $email              = $user->email;
           if ($role == 3) {

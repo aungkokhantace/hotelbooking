@@ -30,8 +30,20 @@ class RoomBlackoutPeriodController extends Controller
     public function index(Request $request)
     {
         if (Auth::guard('User')->check()) {
-            $room_blackout_period = $this->repo->getObjs();
-            return view('backend.room_blackout_period.index')->with('room_blackout_period',$room_blackout_period);
+          //Get Loggin User Info
+          $hotelRepo          = new HotelRepository();
+          $user               = $hotelRepo->getUserObjs();
+          $role               = $user->role_id;
+          $email              = $user->email;
+          if ($role == 3) {
+              //Get Hotel ID
+              $hotel = $hotelRepo->getFirstHotelByUserEmail($email);
+              $room_blackout_period             = $this->repo->getObjByHotelId($hotel->id);
+          } else {
+               $room_blackout_period = $this->repo->getObjs();
+          }
+          // $room_blackout_period = $this->repo->getObjs();
+          return view('backend.room_blackout_period.index')->with('room_blackout_period',$room_blackout_period);
         }
         return redirect('/');
     }

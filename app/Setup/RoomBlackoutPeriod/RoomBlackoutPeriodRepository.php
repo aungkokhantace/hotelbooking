@@ -119,4 +119,12 @@ class RoomBlackoutPeriodRepository implements RoomBlackoutPeriodRepositoryInterf
         }
     }
 
+    public function getObjByHotelId($hotel_id){
+        $res    = RoomBlackoutPeriod::where('hotel_id',$hotel_id)
+                                    ->whereNull('deleted_at')
+                                    ->get();
+
+        return $res;
+    }
+
 }
