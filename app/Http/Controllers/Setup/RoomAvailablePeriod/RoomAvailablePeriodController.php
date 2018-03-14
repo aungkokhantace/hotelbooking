@@ -30,8 +30,20 @@ class RoomAvailablePeriodController extends Controller
     public function index(Request $request)
     {
         if (Auth::guard('User')->check()) {
-            $room_available_period = $this->repo->getObjs();
-            return view('backend.room_available_period.index')->with('room_available_period',$room_available_period);
+          //Get Loggin User Info
+          $hotelRepo          = new HotelRepository();
+          $user               = $hotelRepo->getUserObjs();
+          $id                 = $user->id;
+          $role               = $user->role_id;
+          $email              = $user->email;
+          if ($role == 3) {
+              //Get Hotel ID
+              $hotel = $hotelRepo->getFirstHotelByUserEmail($email);
+              $room_available_period             = $this->repo->getObjByH_Id($hotel->id);
+          } else {
+               $room_available_period = $this->repo->getObjs();
+          }
+          return view('backend.room_available_period.index')->with('room_available_period',$room_available_period);
         }
         return redirect('/');
     }
