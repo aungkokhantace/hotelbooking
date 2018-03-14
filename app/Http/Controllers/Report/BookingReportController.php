@@ -32,7 +32,7 @@ class BookingReportController extends Controller
             $bookings           = $this->repo->bookingReport($type,$from_date,$to_date);
             $bookingRoomRepo    = new BookingRoomRepository();
             $booking_room       = $bookingRoomRepo->getAllBookingRoom();
-            // dd('bookings',$bookings);
+            
             if(isset($bookings) && count($bookings) > 0){
                 foreach($bookings as $booking){
                     if($booking->booking_room_status == 3){
@@ -92,7 +92,7 @@ class BookingReportController extends Controller
             $bookings           = $this->repo->bookingReport($type, $from, $to,$status);
             $bookingRoomRepo    = new BookingRoomRepository();
             $booking_room       = $bookingRoomRepo->getAllBookingRoom();
-            // dd('searched',$bookings);
+
             if(isset($bookings) && count($bookings) > 0){
                 foreach($bookings as $booking){
                     if($booking->booking_room_status == 3){
