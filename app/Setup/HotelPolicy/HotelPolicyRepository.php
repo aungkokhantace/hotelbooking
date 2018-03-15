@@ -69,7 +69,7 @@ class HotelPolicyRepository implements HotelPolicyRepositoryInterface
     }
 
     public function getObjsByHotelID($hotel_id){
-        $objs   = HotelPolicy::where('hotel_id','=',$hotel_id)->get();
+        $objs   = HotelPolicy::where('hotel_id','=',$hotel_id)->whereNull('deleted_at')->first();
         return $objs;
     }
 

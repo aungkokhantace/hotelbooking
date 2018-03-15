@@ -312,8 +312,15 @@ class SearchController extends Controller
     }
     public function gethotelpolicy($id){
         $result = new HotelPolicyRepository();
-        $hotel_policy = $result->getObjByID($id);
-        return \Response::json($hotel_policy->policy);
+        // $hotel_policy = $result->getObjByID($id);
+        $hotel_policy = $result->getObjsByHotelID($id);
+        if(count($hotel_policy)>0){
+          return \Response::json($hotel_policy->policy);
+        }
+        else{
+          return \Response::json("<h3 style='text-align:center;color:#ea9fca'>Hotel Policy is not avaliable</h3>");
+        }
+
     }
 
 }

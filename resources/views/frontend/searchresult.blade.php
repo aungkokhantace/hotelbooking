@@ -60,7 +60,7 @@
                                     <span>{{ucwords($filter->type).' '.$currency.' '.number_format($filter->from).trans('frontend_details.per_night')}}</span><br>
                                 @endif
                                 @endforeach
-                            @endif    
+                            @endif
                         </div>
                     </div>
 
@@ -179,9 +179,9 @@
         <h4 class="modal-title" id="myModalLabel">Hotel Policy</h4>
       </div>
       <div class="modal-body">
-        <div id="hotel_policy"><h3 style="text-align:center;color:#ea9fca;">Hotel Policy is not avaliable</h3></div>
+        <div id="hotel_policy-{{$hotel->id}}"><h3 style="text-align:center;color:#ea9fca;">Hotel Policy is not avaliable</h3></div>
       </div>
-      
+
     </div>
   </div>
 </div>
@@ -220,12 +220,12 @@
                                     <!--Suggested Hotels-->
                                     @foreach($suggestedHotels as $suggestedHotelhotel)
                                         <div class="blog">
-                                         
+
                                             <div class="left_img">
                                                 <a href="/hotel_detail/{{$suggestedHotelhotel->id}}"><img class="img-responsive img-hover" src="/images/upload/{{$suggestedHotelhotel->logo}}" alt=""></a>
                                             </div>
-                                        
-                                         
+
+
                                             <div class="left_blog">
                                                 <div class="lead_left">
                                                     <a href="/hotel_detail/{{$suggestedHotelhotel->id}}"><h4>{{$suggestedHotelhotel->name}}</h4></a>
@@ -285,9 +285,9 @@
           <h4 class="modal-title" id="myModalLabel">Hotel Policy</h4>
       </div>
         <div class="modal-body">
-        <div id="suggestHotel"><h3 style="text-align:center;color:#ea9fca">Hotel Policy is not avaliable</h3></div>
+        <div id="suggestHotel-{{$suggestedHotelhotel->id}}"><h3 style="text-align:center;color:#ea9fca">Hotel Policy is not avaliable</h3></div>
       </div>
-      
+
       </div>
     </div>
   </div>
@@ -321,49 +321,44 @@
 
 
 
-    
+
 @stop
 
 @section('page_script')
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyAJLUg2IEbAOp4gMqRoXpSnjV0w1FDfYNk&sensor=false" type="text/javascript"></script>
     <script type="text/javascript" language="javascript" class="init">
 
-        function hotelpolicy(hotelId){
-            
-            $.ajax({
+            function hotelpolicy(hotelId){
+                $.ajax({
+                    type:"GET",
+                    url:"/view/hotelpolicy/"+hotelId,
+                      success:function(response){
+                           $("#hotel_policy-"+hotelId).html(response);
+                      },
+                      error: function(errorThrown){
+                           console.log("Error Thrown:"+errorThrown);
+                      }
+                    });
+           }
 
-                type:"GET",
-                url:"/view/hotelpolicy/"+hotelId,
-                data:'_token=<?php echo csrf_token() ?>',
+          function suggestHotel(hotelId){
+          $.ajax({
+              type:"GET",
+              url:"/view/hotelpolicy/"+hotelId,
                 success:function(response){
-                   
-                     $("#hotel_policy").html(response);
-                     
+                   $("#suggestHotel-"+hotelId).html(response);
+                },
+                error: function(errorThrown){
+                     console.log("Error Thrown:"+errorThrown);
                 }
-                });
+              });
+          }
 
-             }
-
-            function suggestHotel(hotelId){
-            
-            $.ajax({
-
-                type:"GET",
-                url:"/view/hotelpolicy/"+hotelId,
-                data:'_token=<?php echo csrf_token() ?>',
-                success:function(response){
-                          
-                     $("#suggestHotel").html(response);
-                   
-                }
-                });
-
-            }
         $(document).ready(function() {
-              
-            
-         
-            
+
+
+
+
             //to display google map after changing bootstrap tab
             $("a[href='#service-two']").on('shown.bs.tab', function(){
                 google.maps.event.trigger(map, 'resize');
