@@ -12,10 +12,10 @@
     <div class="row">
             <div class="col-md-3">
                 <div class="info-box">
-                    <span class="info-box-icon bg-light-blue"><i class="ion ion-android-person"></i></span>
+                    <span class="info-box-icon bg-light-blue"><i class="ion ion-home"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Total Hotel</span>
+                        <span class="info-box-text">NUMBER OF HOTELS</span>
                         <span class="info-box-number">{{ $hotel_count }}</span>
                     </div>
                     <!-- /.info-box-content -->
@@ -24,10 +24,10 @@
 
             <div class="col-md-3">
                 <div class="info-box">
-                    <span class="info-box-icon bg-light-blue"><i class="ion ion-android-person"></i></span>
+                    <span class="info-box-icon bg-light-blue"><i class="ion ion-key"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Total Room Type</span>
+                        <span class="info-box-text">NUMBER OF ROOM TYPES</span>
                         <span class="info-box-number">{{ $room_type_count }}</span>
                     </div>
                     <!-- /.info-box-content -->
@@ -36,10 +36,10 @@
 
             <div class="col-md-3">
                 <div class="info-box">
-                    <span class="info-box-icon bg-light-blue"><i class="ion ion-android-person"></i></span>
+                    <span class="info-box-icon bg-light-blue"><i class="ion ion-key"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Total Rooms</span>
+                        <span class="info-box-text">NUMBER OF ROOMS</span>
                         <span class="info-box-number">{{ $rooms_count }}</span>
                     </div>
                     <!-- /.info-box-content -->
@@ -48,10 +48,10 @@
 
             <div class="col-md-3">
                 <div class="info-box">
-                    <span class="info-box-icon bg-light-blue"><i class="ion ion-android-person"></i></span>
+                    <span class="info-box-icon bg-light-blue"><i class="ion ion-ios-telephone"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Total Booking</span>
+                        <span class="info-box-text">NUMBER OF BOOKINGS</span>
                         <span class="info-box-number">{{ $bookings_count }}</span>
                     </div>
                     <!-- /.info-box-content -->

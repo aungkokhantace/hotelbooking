@@ -29,7 +29,7 @@ class RoomDiscountEditRequest extends Request
             // 'h_room_type_id'    => 'required',
             'h_room_category_id'=> 'required',
             'type'              => 'required',
-            'discount_amount'   => 'required',
+            'discount_amount'   => 'required|numeric',
             'from_date'         => 'required',
             'to_date'           => 'required',
         ];
@@ -44,6 +44,7 @@ class RoomDiscountEditRequest extends Request
             'h_room_category_id.required'=> 'Room Category is required!',
             'type.required'              => 'Type is required!',
             'discount_amount.required'   => 'Discount Amount is required!',
+            'discount_amount.numeric'   => 'Discount Amount must be a number!',
             'from_date.required'         => 'From Date is required!',
             'to_date.required'           => 'To Date is required!',
         ];

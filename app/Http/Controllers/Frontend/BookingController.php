@@ -93,7 +93,7 @@ class BookingController extends Controller
                     array_push($booking_cancel,$b);
                 }
                 if($b->status == 5){
-                    $b->status_txt      = "trans('frontend_details.complete')";
+                    $b->status_txt      = trans('frontend_details.complete');
                     $b->button_status   = trans('frontend_details.manage_booking');
                 }
                 if($b->status == 7){
@@ -110,7 +110,6 @@ class BookingController extends Controller
                 }
 
             }
-
             return view('frontend.bookinglist')->with('customer',$customer)
                                                ->with('bookings',$bookings)
                                                ->with('booking_cancel',$booking_cancel);

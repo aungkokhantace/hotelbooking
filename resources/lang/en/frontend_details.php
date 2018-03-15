@@ -14,7 +14,7 @@ return[
 	"price_per_night"=>"Price Per Night",
 	"rooms"=>"Rooms",
 	"booking"=>"Booking",
-	
+
 	"category_name"=>"Category Name",
 	"room_size"=>"Room size",
 	"bed_type"=>"Bed Type",
@@ -79,7 +79,7 @@ return[
 	"not_be_charged"=>"Don't worry - you won't be charged yet!",
 	"total_length"=>"Total Length of Stay",
 	"no_address_this_reservation"=>"No address needed for this reservation",
-	"country"=>"Country-jp",
+	"country"=>"Country",
 	"select_country"=>"Select Country",
 	"telephone"=>"Telephone",
 	"mobile_number_preferred"=>"mobile number preferred",

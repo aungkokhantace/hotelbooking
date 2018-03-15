@@ -234,8 +234,8 @@
 
     <script type="text/javascript">
         $(document).ready(function(){
-          
-           
+
+
         //Select box for search function
           $("#hotel_id").select2();
 
@@ -279,7 +279,10 @@
                     // h_room_type_id      : 'required',
                     h_room_category_id  : 'required',
                     type                : 'required',
-                    discount_amount     : 'required',
+                    discount_amount     : {
+                        required    : true,
+                        number      : true
+                    },
                     from_date           : 'required',
                     to_date             : {
                         required    : true,
@@ -293,7 +296,10 @@
                     // h_room_type_id      : 'Room Type is required!',
                     h_room_category_id  : 'Room Category is required!',
                     type                : 'Type is required!',
-                    discount_amount     : 'Discount Amount is required!',
+                    discount_amount     : {
+                        required    : 'Discount Amount is required',
+                        number      : 'Discount Amount must be a number'
+                    },
                     from_date           : 'From Date is required!',
                     to_date             : {
                         required    : 'To Date is required!',
