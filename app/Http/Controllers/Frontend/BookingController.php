@@ -123,6 +123,7 @@ class BookingController extends Controller
             $b_id                   = $id;
             $u_id                   = Auth::guard('Customer')->id();
             $status                 = Check::checkBookingByUserId($b_id,$u_id);
+
             if($status['aceplusStatusCode'] == ReturnMessage::OK){
                 $hotelRepo          = new HotelRepository();
                 $h_facilityRepo     = new HotelFacilityRepository();
@@ -150,7 +151,7 @@ class BookingController extends Controller
                 $booking->total_day = $total_day; //Add total booked days to booking
 
                 $bRooms             = $bRoomRepo->getBookingRoomAndRoomByBookingId($b_id);
-
+                
                 $book_rooms = $bRoomRepo->getActiveBookingRoom($b_id);
 
                 $room_count         = count($book_rooms);
@@ -165,6 +166,7 @@ class BookingController extends Controller
                 $amenities          = $amenityRepo->getAmenitiesByRoomCategoryId($r_category_id);
                 $facilities         = $facilityRepo->getFacilitiesByRoomCategoryId($r_category_id);
                 $r_categories       = $r_categoryRepo->getObjsByIdArr($r_category_id);
+
                 if(isset($bRooms) && count($bRooms) > 0){
                     foreach($bRooms as $bRoom){
 
@@ -210,6 +212,7 @@ class BookingController extends Controller
                         }
                     }
                 }
+
                 $booking->rooms                     = $bRooms; //Add Rooms Array to booking
 
                 if($booking->status == 2){
@@ -296,10 +299,10 @@ class BookingController extends Controller
             $booking->total_day             = $total_day; //Add total booked days to booking
 
             $bRooms                         = $bRoomRepo->getBookingRoomAndRoomByBookingId($b_id);
+
             $room_count                     = count($bRooms);
 
             $booking->room_count            = $room_count; //Add Number of Room to booking
-
             /* Calculate Cancellation Cost */
             $h_config                       = $h_configRepo->getConfigByHotel($booking->hotel_id);
             $first_cancel_days              = 0;
@@ -543,7 +546,7 @@ class BookingController extends Controller
                     $today_date                                     = Carbon::now();
                     /* For 1st Cancellation Day */
                     if($today_date >= $first_cancel_date && $today_date < $second_cancel_date){
-                    //    dd('first cancellation day');
+
                         /* Refund */
                         $stripePayment                              = $paymentStripeRepo->getStripePaymentId($id);
                         $stripePaymentId                            = '';
@@ -1895,7 +1898,7 @@ class BookingController extends Controller
                     $bCancelRoom->room_payable_amt_w_tax_af     = $cancel_room_payable_amt_w_tax;
                     $bCancelRoom->stripe_fee_percent_af         = $cancel_room_stripe_fee_percent;
                     $bCancelRoom->room_net_amt_af               = $cancel_room_net_amt;
-                //    dd('booking cancel room within second',$bCancelRoom);
+
                     $bRoomUpdateRes                             = $bRoomRepo->update($bCancelRoom);
                     if($bRoomUpdateRes['aceplusStatusCode'] != ReturnMessage::OK){
                         DB::rollback();
@@ -1917,7 +1920,6 @@ class BookingController extends Controller
                     $bookingStatus                                  = 9;
                     $active                                         = 0;
                     if(isset($bActiveRoom) && count($bActiveRoom) > 0){
-//                        dd('active');
                         // If the canceled room is not the last room, booking status doesn't change.
                         $bookingStatus                              = $bStatus;
                         $active                                     = 1;

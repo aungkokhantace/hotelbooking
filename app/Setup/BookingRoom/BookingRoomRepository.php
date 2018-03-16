@@ -55,7 +55,7 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
         return $result;
     }
 
-    public function getBookingRoomByBookingId($id){    
+    public function getBookingRoomByBookingId($id){
         $result     = BookingRoom::whereNull('deleted_at')->where('booking_id','=',$id)->get();
 
         return $result;
@@ -81,7 +81,7 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
                               WHERE booking_room.booking_id = $id
                               AND r_category_image.default_image = 1
                             ");*/
-        $statusArr  = array(2,5);
+        $statusArr  = array(2,5); //confirm and complete
         $result     = BookingRoom::where('booking_id',$id)
                                  ->leftJoin('rooms','rooms.id','=','booking_room.room_id')
                                  ->leftJoin('h_room_type','h_room_type.id','=','rooms.h_room_type_id')
@@ -95,11 +95,11 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
                                             'r_category_image.default_image as default_image'
                                  )
                                  ->where('booking_id',$id)
-                                 // ->where('r_category_image.default_image',1)
+                                 ->where('r_category_image.default_image',1)
                                  // ->orwhereNull('r_category_image.default_image')
                                  ->whereIn('booking_room.status',$statusArr)
                                  ->get();
-
+        
         return $result;
     }
     public function getObjectById($id){

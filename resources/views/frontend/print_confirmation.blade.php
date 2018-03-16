@@ -123,7 +123,7 @@
         <tr>
             <td width="25%" style="border-top: 2px solid black;">
                 @if(isset($room->category_image) && $room->category_image != null)
-                  <img style="width:150px;height:90px;" src="{!! $room->category_image !!}" alt="hotel_logo">
+                  <img style="width:150px;height:90px;" src="/images/upload/{!! $room->category_image !!}" alt="hotel_logo">
                 @else
                   <img style="width:150px;height:90px;" src="/images/upload/{!! $hotel->logo !!}" alt="hotel_logo">
                 @endif
