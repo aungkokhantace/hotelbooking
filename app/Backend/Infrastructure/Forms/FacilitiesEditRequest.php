@@ -21,7 +21,7 @@ class FacilitiesEditRequest extends Request
     public function rules()
     {
         return [
-            'name'              => 'required',
+            'name'              => 'required|unique:facilities,name,'.$this->get('id').',id,deleted_at,NULL',
             'type'              => 'required',
             'facility_group'    => 'required',
             // 'photo'             => 'required'
@@ -31,6 +31,7 @@ class FacilitiesEditRequest extends Request
     {
         return [
             'name.required'             => 'Facilities Name is required',
+            'name.unique'               => 'The name has already been taken!',
             'type.required'             => 'Type is required',
             'facility_group.required'   => 'Facility Group is required',
             // 'photo.required'            => 'Icon is required'

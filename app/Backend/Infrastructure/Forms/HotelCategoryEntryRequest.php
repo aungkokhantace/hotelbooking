@@ -24,7 +24,7 @@ class HotelCategoryEntryRequest extends Request
     public function rules()
     {
         return [
-            'category'      => 'required|unique:h_nearby_category,name,' . $this->get('id'),
+            'category'      => 'required|unique:h_nearby_category,name,NULL,id,deleted_at,NULL',
             'description'      => 'required',
         ];
     }
@@ -33,7 +33,7 @@ class HotelCategoryEntryRequest extends Request
     {
         return [
             'category.required'     => 'Category is required!',
-            'category.unique'       => 'This Category already exit!',
+            'category.unique'       => 'The name has already been taken!',
             'description.required'  => 'Description is required!',
         ];
     }

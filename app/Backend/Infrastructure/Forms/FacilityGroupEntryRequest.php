@@ -24,14 +24,14 @@ class FacilityGroupEntryRequest extends Request
     public function rules()
     {
         return [
-            'name'   => 'required',
-
+            'name'              => 'required|unique:facility_group,name,NULL,id,deleted_at,NULL',
         ];
     }
     public function messages()
     {
         return [
             'name.required' => 'Facility Group Name is required!',
+            'name.unique'   => 'The name has already been taken!',
 
 
         ];

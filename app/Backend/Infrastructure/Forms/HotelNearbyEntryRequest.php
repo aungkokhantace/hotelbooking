@@ -24,7 +24,8 @@ class HotelNearbyEntryRequest extends Request
     public function rules()
     {
         return [
-            'name'              => 'required',
+            // 'name'              => 'required',
+            'name'              => 'required|unique:nearby,name,NULL,id,deleted_at,NULL',
             'hotel_category'    => 'required',
             'description'       => 'required',
         ];
@@ -34,6 +35,7 @@ class HotelNearbyEntryRequest extends Request
     {
         return [
             'name.required'               => 'Name is required!',
+            'name.unique'                 => 'The name has already been taken!',
             'hotel_category.required'     => 'Hotel Category is required!',
             'description.required'        => 'Description is required!',
         ];

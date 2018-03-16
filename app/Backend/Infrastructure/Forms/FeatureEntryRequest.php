@@ -22,13 +22,14 @@ class FeatureEntryRequest extends Request
     public function rules()
     {
         return [
-            'name'   => 'required',
+            'name'           => 'required|unique:features,name,NULL,id,deleted_at,NULL',
         ];
     }
     public function messages()
     {
         return [
             'name.required' => 'Name is required',
+            'name.unique'   => 'The name has already been taken!',
         ];
     }
 }
