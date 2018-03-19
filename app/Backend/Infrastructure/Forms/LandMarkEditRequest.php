@@ -3,6 +3,7 @@
 namespace App\Backend\Infrastructure\Forms;
 
 use App\Http\Requests\Request;
+use App\Setup\Landmark\LandmarkRepository;
 
 class LandMarkEditRequest extends Request
 {
@@ -23,11 +24,14 @@ class LandMarkEditRequest extends Request
      */
     public function rules()
     {
+        $landmarkRepo = new LandmarkRepository();
+        $landmarkObj  = $landmarkRepo->getObjByID($this->get('id'));
+
         return [
-            'name'          => 'required',
-            'township'      => 'required',
-            'latitude'      => 'required',
-            'longitude'     => 'required',
+          'name'          => 'required|unique:landmarks,name,'.$this->get('id').',id,township_id,'.$landmarkObj->township_id.',latitude,'.$landmarkObj->latitude.',longitude,'.$landmarkObj->longitude.',deleted_at,NULL',
+          'township'      => 'required',
+          'latitude'      => 'required|numeric',
+          'longitude'     => 'required|numeric',
         ];
     }
 
@@ -35,9 +39,12 @@ class LandMarkEditRequest extends Request
     {
         return [
             'name.required'          => 'Name is required!',
+            'name.unique'            => 'The township already exists!',
             'township.required'      => 'Township is required!',
             'latitude.required'      => 'Latitude is required!',
+            'latitude.numeric'      => 'Latitude must be numeric!',
             'longitude.required'     => 'Longitude is required!',
+            'longitude.numeric'     => 'Longitude must be numeric!',
         ];
     }
 }

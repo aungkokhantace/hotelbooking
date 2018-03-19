@@ -63,7 +63,7 @@
     {{--Start File Upload--}}
     <div class="row">
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <label for="photo" class="text_bold_black">{{trans('setup_amenity.icon')}}</label>
+            <label for="photo" class="text_bold_black">{{trans('setup_amenity.icon')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
             <label class="notice">(Image must be 24x24 pixels)</label>
@@ -262,6 +262,7 @@
                     case 'JPG':
                     case 'jpeg':
                     case 'png':
+                    case 'PNG':
                     case 'gif':
                         break;
                     default:
@@ -280,9 +281,17 @@
             $('#amenities').validate({
                 rules: {
                     name          : 'required',
+                    photo: {
+                      required: true,
+                      accept: "image/*"
+                    }
                 },
                 messages: {
                     name          : 'Name is required',
+                    photo: {
+                      required: 'Icon is required - client side',
+                      accept: "Icon must be an image"
+                    }
                 },
                 submitHandler: function(form) {
                     $('input[type="submit"]').attr('disabled','disabled');

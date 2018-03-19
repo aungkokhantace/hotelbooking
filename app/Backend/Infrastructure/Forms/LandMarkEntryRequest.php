@@ -3,6 +3,7 @@
 namespace App\Backend\Infrastructure\Forms;
 
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Input;
 
 class LandMarkEntryRequest extends Request
 {
@@ -24,10 +25,10 @@ class LandMarkEntryRequest extends Request
     public function rules()
     {
         return [
-            'name'          => 'required',
+            'name'          => 'required|unique:landmarks,name,NULL,id,township_id,'.Input::get('township').',latitude,'.Input::get('latitude').',longitude,'.Input::get('longitude').',deleted_at,NULL',
             'township'      => 'required',
-            'latitude'      => 'required',
-            'longitude'     => 'required',
+            'latitude'      => 'required|numeric',
+            'longitude'     => 'required|numeric',
         ];
     }
 
@@ -35,9 +36,12 @@ class LandMarkEntryRequest extends Request
     {
         return [
             'name.required'          => 'Name is required!',
+            'name.unique'            => 'The township already exists!',
             'township.required'      => 'Township is required!',
             'latitude.required'      => 'Latitude is required!',
+            'latitude.numeric'      => 'Latitude must be numeric!',
             'longitude.required'     => 'Longitude is required!',
+            'longitude.numeric'     => 'Longitude must be numeric!',
         ];
     }
 }

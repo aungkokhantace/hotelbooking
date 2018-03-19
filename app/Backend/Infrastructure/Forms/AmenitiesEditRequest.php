@@ -22,7 +22,7 @@ class AmenitiesEditRequest extends Request
     public function rules()
     {
         return [
-            'name'          => 'required|unique:features,name,'.$this->get('id').',id,deleted_at,NULL',
+            'name'          => 'required|unique:amenities,name,'.$this->get('id').',id,deleted_at,NULL',
         ];
     }
     public function messages()

@@ -123,15 +123,26 @@
                 rules: {
                     name        : 'required',
                     township    : 'required',
-                    latitude    : 'required',
-                    longitude   : 'required',
-
+                    latitude: {
+                      required: true,
+                      number: true
+                    },
+                    longitude: {
+                      required: true,
+                      number: true
+                    },
                 },
                 messages: {
                     name        : 'Name is required!',
                     township    : 'Township is required!',
-                    latitude    : 'Latitude is required!',
-                    longitude   : 'Longitude is required!',
+                    latitude: {
+                      required: 'Latitude is required!',
+                      number: 'Latitude must be numeric!'
+                    },
+                    longitude: {
+                      required: 'Longitude is required!',
+                      number: 'Longitude must be numeric!'
+                    },
                 },
                 submitHandler: function(form) {
                     $('input[type="submit"]').attr('disabled','disabled');
@@ -145,6 +156,6 @@
             $("#township").select2();
         });
 
-     
+
     </script>
 @stop

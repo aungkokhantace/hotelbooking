@@ -14,7 +14,7 @@
         {!! Form::open(array('url' => '/backend_mps/hotel/store','files'=>true, 'id'=>'hotel', 'class'=> 'form-horizontal user-form-border')) !!}
     @endif
     <input type="hidden" name="id" value="{{isset($hotel)? $hotel->id:''}}" id="hidden_id"/>
-    
+
     <br/>
 
     <div class="row">
@@ -639,7 +639,7 @@
        <div class="tab-pane row" id="2">
           @if(isset($hotel))
              @if(isset($h_landmarks))
-                   
+
                     @foreach($cities as $city)
                     <div class="panel panel-default">
 
@@ -649,7 +649,7 @@
                         </div>
                         <div class="panel-body">
                           @foreach($city->landmarks as $landmark)
-                             <div class="col-md-4"> 
+                             <div class="col-md-4">
                                <input type="checkbox" name="landmark[]" value="{{$landmark->id}}" @foreach($h_landmarks as $land) @if($land->landmark_id == $landmark->id)checked @endif @endforeach>&nbsp &nbsp{{$landmark->name}}
                                  <br><br>
                               </div>
@@ -668,7 +668,7 @@
                         </div>
                         <div class="panel-body">
                           @foreach($city->landmarks as $landmark)
-                             <div class="col-md-4"> 
+                             <div class="col-md-4">
                                <input type="checkbox" name="landmark[]" value="{{$landmark->id}}" >&nbsp &nbsp{{$landmark->name}}
                                  <br><br>
                               </div>
@@ -688,7 +688,7 @@
                         </div>
                         <div class="panel-body">
                           @foreach($city->landmarks as $landmark)
-                             <div class="col-md-4"> 
+                             <div class="col-md-4">
                                <input type="checkbox" name="landmark[]" value="{{$landmark->id}}"  >&nbsp &nbsp{{$landmark->name}}
                                  <br><br>
                               </div>
@@ -698,7 +698,7 @@
                     </div>
                     @endforeach
         @endif
-                   
+
                 </div>
 
    <!--   <div class="tab-pane row" id="2">
@@ -731,7 +731,7 @@
 
 
                 <div class="tab-pane row" id="3">
-                
+
               @if(isset($hotel))
               @if(isset($h_nearby_places) && $h_nearby_places !==null && $h_nearby_places !=="")
                      @foreach($hotel_nearbyCate as $nearby_cate)
@@ -838,7 +838,7 @@
                                     </div>
                             @endforeach
                             @endif-->
-                </div> 
+                </div>
                 <div class="tab-pane row" id="4">
                     @if(isset($hotel))
                         @if(!empty($h_feature))
@@ -1270,8 +1270,8 @@
                         var $otherElement = $(param);
                         return parseInt(value, 10) < parseInt($otherElement.val(), 10);
                     });
-           
-           
+
+
 
             $('#hotel').validate({
                 rules: {
@@ -1295,14 +1295,14 @@
                     breakfast_end_time      : 'required',
                     latitude                : 'required',
                     longitude               : 'required',
-              
+
                     user_name               : 'required',
                     display_name            : 'required',
-                    
+
                     // user_email   	        : {
                     //     required 	: true,
                     //     email	 	: true,
-                        
+
                     //     remote: {
                     //         url: "{{route('backend_mps/hotel/check_user_email')}}",
                     //         type: "get",
@@ -1310,20 +1310,20 @@
                     //         {
                     //             email: function()
                     //             {
-                                    
+
                     //                $('#user_email').val();
                     //             }
                     //         }
                     //     }
-                     
-                        
+
+
                     // },
-                    
+
 
                     //  id             : {
                     //     required    : true,
                     //     email       : true,
-                        
+
                     //     remote: {
                     //         url: "{{route('backend_mps/hotel/check_user_email')}}",
                     //         type: "get",
@@ -1331,16 +1331,16 @@
                     //         {
                     //             hidden: function()
                     //             {
-                                    
+
                     //                $('#hidden_id').val();
                     //             }
                     //         }
                     //     }
-                     
-                        
+
+
                     // },
 
-                     
+
                     password                : 'required',
                     conpassword             : {
                         required: "true",
@@ -1519,6 +1519,7 @@
                     case 'JPG':
                     case 'jpeg':
                     case 'png':
+                    case 'PNG':
                     case 'gif':
                         break;
                     default:

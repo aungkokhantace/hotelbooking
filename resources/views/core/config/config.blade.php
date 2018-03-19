@@ -215,6 +215,7 @@
                 case 'JPG':
                 case 'jpeg':
                 case 'png':
+                case 'PNG':
                 case 'gif':
                     break;
                 default:

@@ -23,7 +23,7 @@ class AmenitiesEntryRequest extends Request
     {
         return [
             'name'    => 'required|unique:amenities,name,NULL,id,deleted_at,NULL',
-            'photo'   => 'required',
+            'photo'   => 'required|mimes:jpeg,bmp,png,JPG,PNG,jpg',
         ];
     }
     public function messages()
@@ -32,6 +32,7 @@ class AmenitiesEntryRequest extends Request
             'name.required' => 'Name is required',
             'name.unique'   => 'The name has already been taken',
             'photo.required' => 'Icon is required',
+            'photo.mimes' => 'Icon must be an image',
         ];
     }
 }
