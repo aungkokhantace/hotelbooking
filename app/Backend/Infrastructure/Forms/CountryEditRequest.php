@@ -22,14 +22,15 @@ class CountryEditRequest extends Request
     public function rules()
     {
         return [
-            'name'          => "required|string|unique:countries,name,".$this->get('id'),
+            // 'name'          => "required|string|unique:countries,name,".$this->get('id'),
+            'name'          => 'required|unique:countries,name,'.$this->get('id').',id,deleted_at,NULL',
         ];
     }
     public function messages()
     {
         return [
             'name.required'         => 'Country Name is required!',
-            'name.unique'           => 'Country Name is already occupied!',
+            'name.unique'           => 'The name has already been taken!',
             'name.string'           => 'Country Name must be a string!',
         ];
     }

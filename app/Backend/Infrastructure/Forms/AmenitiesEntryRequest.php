@@ -22,7 +22,7 @@ class AmenitiesEntryRequest extends Request
     public function rules()
     {
         return [
-            'name'   => 'required',
+            'name'    => 'required|unique:amenities,name,NULL,id,deleted_at,NULL',
             'photo'   => 'required',
         ];
     }
@@ -30,6 +30,7 @@ class AmenitiesEntryRequest extends Request
     {
         return [
             'name.required' => 'Name is required',
+            'name.unique'   => 'The name has already been taken',
             'photo.required' => 'Icon is required',
         ];
     }

@@ -23,8 +23,9 @@ class CityEditRequest extends Request
     {
         return [
             'country_id'         => 'required',
-            'name'               => "required|string|unique:cities,name,".$this->get('id'),
-//            'photo'              => 'required'
+            // 'name'               => "required|string|unique:cities,name,".$this->get('id'),
+            'name'          => 'required|string|unique:cities,name,'.$this->get('id').',id,deleted_at,NULL',
+           // 'photo'              => 'required'
         ];
     }
     public function messages()
@@ -32,8 +33,8 @@ class CityEditRequest extends Request
         return [
             'country_id'         => 'Country is required',
             'name.required'      => 'City Name is required!',
-            'name.unique'        => 'City Name is already occupied!',
-//            'photo.required'     => 'Photo is required!'
+            'name.unique'        => 'The name has already been taken!',
+           // 'photo.required'     => 'Photo is required!'
         ];
     }
 }

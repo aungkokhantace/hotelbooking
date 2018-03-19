@@ -23,7 +23,7 @@ class TownshipEditRequest extends Request
     {
         return [
             'city_id'                => 'required',
-            'name'                   => "required|string|unique:townships,name,".$this->get('id'),
+            'name'                   => 'required|string|unique:townships,name,'.$this->get('id').',id,deleted_at,NULL',
         ];
     }
     public function messages()
@@ -31,7 +31,7 @@ class TownshipEditRequest extends Request
         return [
             'city_id'                => 'City is required',
             'name.required'          => 'Township Name is required!',
-            'name.unique'            => 'Township Name is already occupied!'
+            'name.unique'            => 'The name has already been taken!'
 
         ];
     }

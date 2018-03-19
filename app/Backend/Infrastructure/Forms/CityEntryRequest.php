@@ -23,7 +23,7 @@ class CityEntryRequest extends Request
     {
         return [
             'country_id'         => 'required',
-            'name'               => 'required|string|unique:cities',
+            'name'               => 'required|string|unique:cities,name,NULL,id,deleted_at,NULL',
             'photo'              => 'required'
         ];
     }
@@ -32,7 +32,7 @@ class CityEntryRequest extends Request
         return [
             'country_id.required'=> 'Country is required',
             'name.required'      => 'City Name is required!',
-            'name.unique'        => 'City Name is already occupied!',
+            'name.unique'        => 'The name has already been taken!',
             'photo.required'     => 'Photo is required!'
         ];
     }

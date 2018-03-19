@@ -173,11 +173,11 @@ class CityController extends Controller
         }
         if($delete_flag){
             return redirect()->action('Setup\City\CityController@index') //to redirect listing page
-                ->withMessage(FormatGenerator::message('Success', 'Country deleted ...'));
+                ->withMessage(FormatGenerator::message('Success', 'City deleted ...'));
         }
         else{
             return redirect()->action('Setup\City\CityController@index') //to redirect listing page
-                ->withMessage(FormatGenerator::message('Fail', 'Country did not delete ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'City did not delete ...'));
         }
     }
 
