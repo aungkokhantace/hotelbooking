@@ -9,6 +9,7 @@
 namespace App\Backend\Infrastructure\Forms;
 
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Input;
 
 class TownshipEntryRequest extends Request
 {
@@ -22,8 +23,9 @@ class TownshipEntryRequest extends Request
     public function rules()
     {
         return [
-            'city_id'                => 'required',
-            'name'                   => 'required|string|unique:townships,name,NULL,id,deleted_at,NULL',
+            'city_id'       => 'required',
+            // 'name'          => 'required|string|unique:townships,name,NULL,id,deleted_at,NULL',
+            'name'          => 'required|unique:townships,name,NULL,id,city_id,'.Input::get('city_id').',deleted_at,NULL',
         ];
     }
     public function messages()

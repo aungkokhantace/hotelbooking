@@ -120,7 +120,7 @@ $permissions = \App\Core\Check::getPermissionByRoleId($role_id);
                     @if(in_array("backend_mps/tour_information", $permissions))
                     <li nav-id="">
                         <a href="/backend_mps/tour_information">
-                            <span>Tour Guide Information</span>
+                            <span>Tour Information</span>
                         </a>
                     </li>
                     @endif

@@ -4,6 +4,7 @@ namespace App\Backend\Infrastructure\Forms;
 
 use App\Http\Requests\Request;
 use App\Setup\Landmark\LandmarkRepository;
+use Illuminate\Support\Facades\Input;
 
 class LandMarkEditRequest extends Request
 {
@@ -28,7 +29,7 @@ class LandMarkEditRequest extends Request
         $landmarkObj  = $landmarkRepo->getObjByID($this->get('id'));
 
         return [
-          'name'          => 'required|unique:landmarks,name,'.$this->get('id').',id,township_id,'.$landmarkObj->township_id.',latitude,'.$landmarkObj->latitude.',longitude,'.$landmarkObj->longitude.',deleted_at,NULL',
+          'name'          => 'required|unique:landmarks,name,'.$this->get('id').',id,township_id,'.Input::get('township').',latitude,'.Input::get('latitude').',longitude,'.Input::get('longitude').',deleted_at,NULL',
           'township'      => 'required',
           'latitude'      => 'required|numeric',
           'longitude'     => 'required|numeric',

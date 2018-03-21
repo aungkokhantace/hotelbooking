@@ -9,6 +9,8 @@
 namespace App\Backend\Infrastructure\Forms;
 
 use App\Http\Requests\Request;
+use App\Setup\City\CityRepository;
+use Illuminate\Support\Facades\Input;
 
 class CityEditRequest extends Request
 {
@@ -23,8 +25,7 @@ class CityEditRequest extends Request
     {
         return [
             'country_id'         => 'required',
-            // 'name'               => "required|string|unique:cities,name,".$this->get('id'),
-            'name'          => 'required|string|unique:cities,name,'.$this->get('id').',id,deleted_at,NULL',
+            'name'          => 'required|unique:cities,name,'.$this->get('id').',id,country_id,'.Input::get('country_id').',deleted_at,NULL',
            // 'photo'              => 'required'
         ];
     }
@@ -33,7 +34,7 @@ class CityEditRequest extends Request
         return [
             'country_id'         => 'Country is required',
             'name.required'      => 'City Name is required!',
-            'name.unique'        => 'The name has already been taken!',
+            'name.unique'        => 'City already exists!',
            // 'photo.required'     => 'Photo is required!'
         ];
     }

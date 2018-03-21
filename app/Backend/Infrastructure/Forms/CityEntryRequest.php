@@ -9,6 +9,7 @@
 namespace App\Backend\Infrastructure\Forms;
 
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Input;
 
 class CityEntryRequest extends Request
 {
@@ -23,7 +24,7 @@ class CityEntryRequest extends Request
     {
         return [
             'country_id'         => 'required',
-            'name'               => 'required|string|unique:cities,name,NULL,id,deleted_at,NULL',
+            'name'          => 'required|unique:cities,name,NULL,id,country_id,'.Input::get('country_id').',deleted_at,NULL',
             'photo'              => 'required'
         ];
     }
@@ -32,7 +33,7 @@ class CityEntryRequest extends Request
         return [
             'country_id.required'=> 'Country is required',
             'name.required'      => 'City Name is required!',
-            'name.unique'        => 'The name has already been taken!',
+            'name.unique'        => 'City already exists!',
             'photo.required'     => 'Photo is required!'
         ];
     }

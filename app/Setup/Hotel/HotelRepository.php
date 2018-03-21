@@ -225,6 +225,10 @@ class HotelRepository implements HotelRepositoryInterface
                 $query->where('townships.name', 'LIKE', '%'.$destination.'%');
             });
             $query = $query->orWhere('name','LIKE','%'.$destination.'%');
+
+            //for excluding disabled hotels
+            //get only enabled hotels
+            $query = $query->where('status','=', 1);
         });
         //end condition group for destination_name
 
