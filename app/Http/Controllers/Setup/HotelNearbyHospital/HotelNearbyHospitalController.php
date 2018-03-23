@@ -63,11 +63,11 @@ class HotelNearbyHospitalController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelNearbyHospital\HotelNearbyHospitalController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Nearby Hospital created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Nearby Hospital is created ...'));
         }
         else{
             return redirect()->action('Setup\HotelNearbyHospital\HotelNearbyHospitalController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Nearby Hospital did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Nearby Hospital is not created ...'));
         }
     }
 
@@ -101,11 +101,11 @@ class HotelNearbyHospitalController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelNearbyHospital\HotelNearbyHospitalController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Nearby Hospital updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Nearby Hospital is updated ...'));
         }
         else{
             return redirect()->action('Setup\HotelNearbyHospital\HotelNearbyHospitalController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Nearby Hospital did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Nearby Hospital is not updated ...'));
         }
 
     }

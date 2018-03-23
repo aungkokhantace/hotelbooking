@@ -188,7 +188,7 @@ class HotelGalleryController extends Controller
                             DB::rollback();
 
                             return redirect()->action('Setup\HotelGallery\HotelGalleryController@index')
-                                ->withMessage(FormatGenerator::message('Fail', 'Hotel Gallery Image did not create ...'));
+                                ->withMessage(FormatGenerator::message('Fail', 'Hotel Gallery Image is not created ...'));
                         }
                         // $count++;
                     }
@@ -204,7 +204,7 @@ class HotelGalleryController extends Controller
             DB::rollback();
 
             return redirect()->action('Setup\HotelGallery\HotelGalleryController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Gallery Image did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Gallery Image is not created ...'));
         }
     }
 
@@ -328,7 +328,7 @@ class HotelGalleryController extends Controller
                             DB::rollback();
 
                             return redirect()->action('Setup\HotelGallery\HotelGalleryController@index')
-                                ->withMessage(FormatGenerator::message('Fail', 'Hotel Gallery Image did not update ...'));
+                                ->withMessage(FormatGenerator::message('Fail', 'Hotel Gallery Image is not updated ...'));
                         }
                     }
                 }
@@ -336,14 +336,14 @@ class HotelGalleryController extends Controller
 
             DB::commit();
             return redirect()->action('Setup\HotelGallery\HotelGalleryController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Gallery Image updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Gallery Image is updated ...'));
 
         }
         catch(\Exception $e){
             DB::rollback();
 
             return redirect()->action('Setup\HotelGallery\HotelGalleryController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Gallery Image did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Gallery Image is not updated ...'));
         }
 
     }

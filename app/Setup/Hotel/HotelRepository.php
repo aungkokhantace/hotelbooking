@@ -33,6 +33,13 @@ class HotelRepository implements HotelRepositoryInterface
         return $objs;
     }
 
+    public function getObjsWithNoPolicy($hotel_id_array_with_policies)
+    {
+        //get all active and not deleted hotels
+        $objs = Hotel::whereNull('deleted_at')->where('status','=',1)->whereNotIn('id',$hotel_id_array_with_policies)->get();
+        return $objs;
+    }
+
     public function getArrays()
     {
         $tbName = (new Hotel())->getTable();

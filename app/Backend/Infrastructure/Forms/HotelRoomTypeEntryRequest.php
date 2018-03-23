@@ -24,14 +24,12 @@ class HotelRoomTypeEntryRequest extends Request
     public function rules()
     {
         return [
-            // 'hotel_id'      => 'required',
-            'name'          => 'required'
+            'name'          => 'required|unique:h_room_type,name,NULL,id,deleted_at,NULL',
         ];
     }
     public function messages()
     {
         return [
-            // 'hotel_id.required'     => 'Hotel is required!',
             'name.required'         => 'Name is required!',
         ];
     }

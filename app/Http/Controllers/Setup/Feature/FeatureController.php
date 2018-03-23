@@ -82,12 +82,12 @@ class FeatureController extends Controller
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
 
             return redirect()->action('Setup\Feature\FeatureController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Feature created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Feature is created ...'));
         }
         else{
 
             return redirect()->action('Setup\Feature\FeatureController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Feature did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Feature is not created ...'));
         }
 
     }
@@ -140,12 +140,12 @@ class FeatureController extends Controller
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
 
             return redirect()->action('Setup\Feature\FeatureController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Feature updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Feature is updated ...'));
         }
         else{
 
             return redirect()->action('Setup\Feature\FeatureController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Feature did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Feature is not updated ...'));
         }
     }
 
@@ -158,4 +158,3 @@ class FeatureController extends Controller
         return redirect()->action('Setup\Feature\FeatureController@index'); //to redirect listing page
     }
 }
-

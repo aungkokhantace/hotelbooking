@@ -124,6 +124,7 @@ class HotelRoomTypeRepository implements HotelRoomTypeRepositoryInterface
     public function getHotelRoomTypeWithHotelId($hotel_id){
         $objs   = HotelRoomType::select('id','name','description')
                                 // ->where('hotel_id','=',$hotel_id)
+                                ->whereNull('deleted_at')
                                 ->get();
 
         return $objs;
@@ -155,14 +156,14 @@ class HotelRoomTypeRepository implements HotelRoomTypeRepositoryInterface
         $returnedObj['aceplusStatusCode']   = ReturnMessage::INTERNAL_SERVER_ERROR;
         try{
             $result                             = DB::delete("delete from h_room_type where hotel_id = ?",[$h_id]);
-            
+
             $returnedObj['aceplusStatusCode']   = ReturnMessage::OK;
-            return $returnedObj;            
+            return $returnedObj;
         }
         catch(\Exception $e){
             $returnedObj['aceplusStatusMessage'] = $e->getMessage();
             return $returnedObj;
         }
-        
+
     }
 }

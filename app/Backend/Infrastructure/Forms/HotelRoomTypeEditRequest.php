@@ -24,14 +24,12 @@ class HotelRoomTypeEditRequest extends Request
     public function rules()
     {
         return [
-            // 'hotel_id'      => 'required',
-            'name'          => 'required'
+            'name'          => 'required|unique:h_room_type,name,'.$this->get('id').',id,deleted_at,NULL',
         ];
     }
     public function messages()
     {
         return [
-            // 'hotel_id.required'     => 'Hotel is required!',
             'name.required'         => 'Name is required!',
         ];
     }

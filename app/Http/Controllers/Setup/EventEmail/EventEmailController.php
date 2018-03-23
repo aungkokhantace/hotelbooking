@@ -61,11 +61,11 @@ class EventEmailController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\EventEmail\EventEmailController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Event created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Event is created ...'));
         }
         else{
             return redirect()->action('Setup\EventEmail\EventEmailController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Event did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Event is not created ...'));
         }
     }
 
@@ -99,11 +99,11 @@ class EventEmailController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\EventEmail\EventEmailController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Event updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Event is updated ...'));
         }
         else{
             return redirect()->action('Setup\EventEmail\EventEmailController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Event did not updated ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Event is not updatedd ...'));
         }
 
     }

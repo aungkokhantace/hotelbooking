@@ -93,12 +93,12 @@ class FacilitiesController extends Controller
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
 
             return redirect()->action('Setup\Facilities\FacilitiesController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Facility created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Facility is created ...'));
         }
         else{
 
             return redirect()->action('Setup\Facilities\FacilitiesController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Facility did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Facility is not created ...'));
         }
     }
 
@@ -166,12 +166,12 @@ class FacilitiesController extends Controller
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
 
             return redirect()->action('Setup\Facilities\FacilitiesController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Facility updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Facility is updated ...'));
         }
         else{
 
             return redirect()->action('Setup\Facilities\FacilitiesController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Facility did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Facility is not updated ...'));
         }
     }
 
@@ -187,4 +187,3 @@ class FacilitiesController extends Controller
 
 
 }
-

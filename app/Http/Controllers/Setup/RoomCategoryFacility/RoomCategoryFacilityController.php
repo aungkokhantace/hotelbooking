@@ -81,11 +81,11 @@ class RoomCategoryFacilityController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\RoomCategoryFacility\RoomCategoryFacilityController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Room Category Facility created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Room Category Facility is created ...'));
         }
         else{
             return redirect()->action('Setup\RoomCategoryFacility\RoomCategoryFacilityController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Room Category Facility did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Room Category Facility is not created ...'));
         }
     }
 
@@ -142,11 +142,11 @@ class RoomCategoryFacilityController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\RoomCategoryFacility\RoomCategoryFacilityController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Room Category Facility updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Room Category Facility is updated ...'));
         }
         else{
             return redirect()->action('Setup\RoomCategoryFacility\RoomCategoryFacilityController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Room Category Facility did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Room Category Facility is not updated ...'));
         }
 
     }

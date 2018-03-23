@@ -74,11 +74,11 @@ class HotelFeatureController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelFeature\HotelFeatureController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Feature created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Feature is created ...'));
         }
         else{
             return redirect()->action('Setup\HotelFeature\HotelFeatureController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Feature did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Feature is not created ...'));
         }
     }
 
@@ -124,11 +124,11 @@ class HotelFeatureController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelFeature\HotelFeatureController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Feature updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Feature is updated ...'));
         }
         else{
             return redirect()->action('Setup\HotelFeature\HotelFeatureController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Feature did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Feature is not updated ...'));
         }
 
     }

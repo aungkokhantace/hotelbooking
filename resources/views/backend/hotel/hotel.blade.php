@@ -1293,9 +1293,14 @@
                     check_out_time          : 'required',
                     breakfast_start_time    : 'required',
                     breakfast_end_time      : 'required',
-                    latitude                : 'required',
-                    longitude               : 'required',
-
+                    latitude: {
+                      required: true,
+                      number: true
+                    },
+                    longitude: {
+                      required: true,
+                      number: true
+                    },
                     user_name               : 'required',
                     display_name            : 'required',
 
@@ -1391,8 +1396,14 @@
                     check_out_time          : 'Check-out Time is required',
                     breakfast_start_time    : 'Breakfast Start Time is required',
                     breakfast_end_time      : 'Breakfast End Time is required',
-                    latitude                : 'Latitude is required',
-                    longitude               : 'Longitude is required',
+                    latitude: {
+                      required: 'Latitude is required!',
+                      number: 'Latitude must be numeric!'
+                    },
+                    longitude: {
+                      required: 'Longitude is required!',
+                      number: 'Longitude must be numeric!'
+                    },
 
                     user_name               : 'User Name is required',
                     display_name            : 'Display Name is required',

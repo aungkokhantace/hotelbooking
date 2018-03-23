@@ -40,8 +40,8 @@ class HotelEditRequest extends Request
             'check_out_time'            => 'required',
             'breakfast_start_time'      => 'required',
             'breakfast_end_time'        => 'required',
-            'latitude'                  => 'required',
-            'longitude'                 => 'required',
+            'latitude'                  => 'required|numeric',
+            'longitude'                 => 'required|numeric',
 
             'display_name'      => 'required',
             'user_name'         => 'required|unique:core_users,user_name,'.$user->id,
@@ -76,8 +76,10 @@ class HotelEditRequest extends Request
             'check_out_time.required'   => 'Check-out time is required!',
             'breakfast_start_time.required'=> 'Breakfast start time is required!',
             'breakfast_end_time.required'  => 'Breakfast end time is required!',
-            'latitude.required'            =>'Latitude is required',
-            'longitude.required'                    =>'Longitude is required', 
+            'latitude.required'       => 'Latitude is required!',
+            'latitude.numeric'        => 'Latitude must be numeric!',
+            'longitude.required'      => 'Longitude is required!',
+            'longitude.numeric'       => 'Longitude must be numeric!',
 
 
             "user_name.required"        => "User Login Name is required",

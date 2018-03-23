@@ -271,10 +271,18 @@
                     opening_hours               : 'required',
                     closing_hours               : 'required',
                     opening_days                : 'required',
-                    capacity                    : 'required',
-                    area                        : 'required',
-                    floor                       : 'required',
-
+                    capacity: {
+                      required: true,
+                      number: true
+                    },
+                    area: {
+                      required: true,
+                      number: true
+                    },
+                    floor: {
+                      required: true,
+                      number: true
+                    },
                 },
                 messages: {
                     hotel_id                    : 'Hotel is required!',
@@ -283,9 +291,18 @@
                     opening_hours               : 'Opening Hours is required!',
                     closing_hours               : 'Closing Hours is required!',
                     opening_days                : 'Opening Days is required!',
-                    capacity                    : 'Capacity is required!',
-                    area                        : 'Area is required!',
-                    floor                       : 'Floor is required!',
+                    capacity: {
+                      required: 'Capacity is required!',
+                      number: 'Capacity must be numeric!'
+                    },
+                    area: {
+                      required: 'Area is required!',
+                      number: 'Area must be numeric!'
+                    },
+                    floor: {
+                      required: 'Floor is required!',
+                      number: 'Floor must be numeric!'
+                    },
                 },
                 submitHandler: function(form) {
                     $('input[type="submit"]').attr('disabled','disabled');

@@ -80,11 +80,11 @@ class RoomAvailablePeriodController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\RoomAvailablePeriod\RoomAvailablePeriodController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Room Available Period created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Room Available Period is created ...'));
         }
         else{
             return redirect()->action('Setup\RoomAvailablePeriod\RoomAvailablePeriodController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Room Available Period did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Room Available Period is not created ...'));
         }
     }
 
@@ -126,11 +126,11 @@ class RoomAvailablePeriodController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\RoomAvailablePeriod\RoomAvailablePeriodController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Room Available Period updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Room Available Period is updated ...'));
         }
         else{
             return redirect()->action('Setup\RoomAvailablePeriod\RoomAvailablePeriodController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Room Available Period did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Room Available Period is not updated ...'));
         }
 
     }

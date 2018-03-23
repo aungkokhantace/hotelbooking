@@ -60,16 +60,16 @@ class PageController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\Page\PageController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Page updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Page is updated ...'));
         }
         else{
             return redirect()->action('Setup\Page\PageController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Page did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Page is not updated ...'));
         }
 
     }
 
     public function upload(Request $request) {
-        
+
     }
 }

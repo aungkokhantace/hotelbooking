@@ -157,6 +157,9 @@ class Utility
         $height     = $imgData[1];
         $imgHeight  = $height * $rHeight;
 
+        //to avoid "allowed memory size of 134217728 bytes exhausted" issue
+        ini_set('memory_limit','256M');
+
         $image      = InterventionImage::make(sprintf($path . '/%s', $photo_name))
                       ->resize($imgWidth,$imgHeight)->save();
 

@@ -78,11 +78,11 @@ class HotelConfigController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelConfig\HotelConfigController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Config created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Config is created ...'));
         }
         else{
             return redirect()->action('Setup\HotelConfig\HotelConfigController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Config did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Config is not created ...'));
         }
     }
 
@@ -117,11 +117,11 @@ class HotelConfigController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelConfig\HotelConfigController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Config updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Config is updated ...'));
         }
         else{
             return redirect()->action('Setup\HotelConfig\HotelConfigController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Config did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Config is not updated ...'));
         }
 
     }

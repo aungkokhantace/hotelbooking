@@ -78,11 +78,11 @@ class SliderController extends Controller
         $result                 = $this->repo->create($paramObj);
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\Slider\SliderController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Slider created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Slider is created ...'));
         }
         else{
             return redirect()->action('Setup\Slider\SliderController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Slider did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Slider is not created ...'));
         }
     }
 

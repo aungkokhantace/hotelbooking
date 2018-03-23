@@ -417,7 +417,7 @@ class HotelController extends Controller
             if($result['aceplusStatusCode'] !=  ReturnMessage::OK){
                 DB::rollback();
              return redirect()->action('Setup\Hotel\HotelController@index')
-                                 ->withMessage(FormatGenerator::message('Fail', 'Hotel did not create ...'));
+                                 ->withMessage(FormatGenerator::message('Fail', 'Hotel is not created ...'));
             }
             /********** End creating Hotel Object  **********/
 
@@ -433,7 +433,7 @@ class HotelController extends Controller
             if($hotel_configResult['aceplusStatusCode'] !=  ReturnMessage::OK){
                 DB::rollback();
                 return redirect()->action('Setup\Hotel\HotelController@index')
-                                 ->withMessage(FormatGenerator::message('Fail', 'Hotel did not create ...'));
+                                 ->withMessage(FormatGenerator::message('Fail', 'Hotel is not created ...'));
             }
             /********** End creating Hotel Config Object  **********/
 
@@ -448,7 +448,7 @@ class HotelController extends Controller
                     if($landmarkResult['aceplusStatusCode'] != ReturnMessage::OK){
                         DB::rollback();
                         return redirect()->action('Setup\Hotel\HotelController@index')
-                                         ->withMessage(FormatGenerator::message('Fail', 'Hotel did not create ...'));
+                                         ->withMessage(FormatGenerator::message('Fail', 'Hotel is not created ...'));
                     }
                 }
             }
@@ -467,7 +467,7 @@ class HotelController extends Controller
                     if($h_nearby_result['aceplusStatusCode'] != ReturnMessage::OK){
                         DB::rollback();
                         return redirect()->action('Setup\Hotel\HotelController@index')
-                                         ->withMessage(FormatGenerator::message('Fail', 'Hotel did not create ...'));
+                                         ->withMessage(FormatGenerator::message('Fail', 'Hotel is not created ...'));
                     }
                 }
             }
@@ -490,7 +490,7 @@ class HotelController extends Controller
                     if($h_feature_result['aceplusStatusCode'] != ReturnMessage::OK){
                         DB::rollback();
                         return redirect()->action('Setup\Hotel\HotelController@index')
-                                         ->withMessage(FormatGenerator::message('Fail', 'Hotel did not create ...'));
+                                         ->withMessage(FormatGenerator::message('Fail', 'Hotel is not created ...'));
                     }
                 }
             }
@@ -507,7 +507,7 @@ class HotelController extends Controller
                     if($h_facility_result['aceplusStatusCode'] != ReturnMessage::OK){
                         DB::rollback();
                         return redirect()->action('Setup\Hotel\HotelController@index')
-                                         ->withMessage(FormatGenerator::message('Fail', 'Hotel did not create ...'));
+                                         ->withMessage(FormatGenerator::message('Fail', 'Hotel is not created ...'));
                     }
                 }
             }
@@ -526,7 +526,7 @@ class HotelController extends Controller
                     if($hotel_room_type_result['aceplusStatusCode'] != ReturnMessage::OK){
                         DB::rollback();
                         return redirect()->action('Setup\Hotel\HotelController@index')
-                                         ->withMessage(FormatGenerator::message('Fail', 'Hotel did not create ...'));
+                                         ->withMessage(FormatGenerator::message('Fail', 'Hotel is not created ...'));
                     }
                 }
             }*/
@@ -534,12 +534,12 @@ class HotelController extends Controller
 
             DB::commit();
             return redirect()->action('Setup\Hotel\HotelController@index')
-                             ->withMessage(FormatGenerator::message('Success', 'Hotel created ...'));
+                             ->withMessage(FormatGenerator::message('Success', 'Hotel is created ...'));
         }
         catch(\Exception $e){
             DB::rollback();
             return redirect()->action('Setup\Hotel\HotelController@index')
-                             ->withMessage(FormatGenerator::message('Fail', 'Hotel did not create ...'));
+                             ->withMessage(FormatGenerator::message('Fail', 'Hotel is not created ...'));
         }
     }
 
@@ -1053,7 +1053,7 @@ class HotelController extends Controller
                                 if($h_facility_result['aceplusStatusCode'] ==  ReturnMessage::OK){
                                     DB::commit();
                                     return redirect()->action('Setup\Hotel\HotelController@index')
-                                        ->withMessage(FormatGenerator::message('Success', 'Hotel updated ...'));
+                                        ->withMessage(FormatGenerator::message('Success', 'Hotel is updated ...'));
                                 }
                                 /*
                                 // Room Type
@@ -1067,7 +1067,7 @@ class HotelController extends Controller
                                             if($delete_r_types_res['aceplusStatusCode'] != ReturnMessage::OK){
                                                 DB::rollback();
                                                 return redirect()->action('Setup\Hotel\HotelController@index')
-                                                                 ->withMessage(FormatGenerator::message('Fail', 'Hotel did not update ...'));
+                                                                 ->withMessage(FormatGenerator::message('Fail', 'Hotel is not updated ...'));
                                             }
                                         }
 
@@ -1080,54 +1080,54 @@ class HotelController extends Controller
                                             if($hotel_room_typeResult['aceplusStatusCode'] != ReturnMessage::OK){
                                                 DB::rollback();
                                                 return redirect()->action('Setup\Hotel\HotelController@index')
-                                                                 ->withMessage(FormatGenerator::message('Fail', 'Hotel did not update ...'));
+                                                                 ->withMessage(FormatGenerator::message('Fail', 'Hotel is not updated ...'));
                                             }
                                         }
                                     }
 
                                     DB::commit();
                                     return redirect()->action('Setup\Hotel\HotelController@index')
-                                        ->withMessage(FormatGenerator::message('Success', 'Hotel updated ...'));
+                                        ->withMessage(FormatGenerator::message('Success', 'Hotel is updated ...'));
                                 }else{
                                     DB::rollback();
                                     return redirect()->action('Setup\Hotel\HotelController@index')
-                                        ->withMessage(FormatGenerator::message('Fail', 'Hotel did not update ...'));
+                                        ->withMessage(FormatGenerator::message('Fail', 'Hotel is not updated ...'));
                                 }*/
 
                             }else{
                                 DB::rollback();
                                 return redirect()->action('Setup\Hotel\HotelController@index')
-                                    ->withMessage(FormatGenerator::message('Fail', 'Hotel did not update ...'));
+                                    ->withMessage(FormatGenerator::message('Fail', 'Hotel is not updated ...'));
                             }
 
                         }else{
                             DB::rollback();
                             return redirect()->action('Setup\Hotel\HotelController@index')
-                                ->withMessage(FormatGenerator::message('Fail', 'Hotel did not update ...'));
+                                ->withMessage(FormatGenerator::message('Fail', 'Hotel is not updated ...'));
                         }
 
                     }else{
                         DB::rollback();
                         return redirect()->action('Setup\Hotel\HotelController@index')
-                            ->withMessage(FormatGenerator::message('Fail', 'Hotel did not update ...'));
+                            ->withMessage(FormatGenerator::message('Fail', 'Hotel is not updated ...'));
                     }
 
                 }else{
                     DB::rollback();
                     return redirect()->action('Setup\Hotel\HotelController@index')
-                        ->withMessage(FormatGenerator::message('Fail', 'Hotel did not update ...'));
+                        ->withMessage(FormatGenerator::message('Fail', 'Hotel is not updated ...'));
                 }
 
             }
             else{
                 DB::rollback();
                 return redirect()->action('Setup\Hotel\HotelController@index')
-                    ->withMessage(FormatGenerator::message('Fail', 'Hotel did not update ...'));
+                    ->withMessage(FormatGenerator::message('Fail', 'Hotel is not updated ...'));
             }
         }catch(\Exception $e){
             DB::rollback();
             return redirect()->action('Setup\Hotel\HotelController@index')
-                             ->withMessage(FormatGenerator::message('Fail', 'Hotel did not update ...'));
+                             ->withMessage(FormatGenerator::message('Fail', 'Hotel is not updated ...'));
         }
 
     }

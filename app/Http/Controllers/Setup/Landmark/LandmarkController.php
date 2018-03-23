@@ -66,11 +66,11 @@ class LandmarkController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\Landmark\LandmarkController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Landmark created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Landmark is created ...'));
         }
         else{
             return redirect()->action('Setup\Landmark\LandmarkController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Landmark did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Landmark is not created ...'));
         }
     }
 
@@ -108,11 +108,11 @@ class LandmarkController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\Landmark\LandmarkController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Landmark updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Landmark is updated ...'));
         }
         else{
             return redirect()->action('Setup\Landmark\LandmarkController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Landmark did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Landmark is not updated ...'));
         }
 
     }

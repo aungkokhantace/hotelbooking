@@ -42,7 +42,7 @@ class HotelRoomTypeController extends Controller
             } else {
                 $hotel_room_type = $this->repo->getObjs();
             }
-            
+
             return view('backend.hotel_room_type.index')->with('hotel_room_type',$hotel_room_type)->with('role',$role);
         }
         return redirect('/');
@@ -62,7 +62,7 @@ class HotelRoomTypeController extends Controller
             // } else {
             //     $hotels     = $hotelRepo->getObjs();
             // }
-            
+
             return view('backend.hotel_room_type.hotel_room_type');
                             // ->with('hotels',$hotels)
                             // ->with('role',$role);
@@ -86,11 +86,11 @@ class HotelRoomTypeController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelRoomType\HotelRoomTypeController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Room Type created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Building Type is created ...'));
         }
         else{
             return redirect()->action('Setup\HotelRoomType\HotelRoomTypeController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Type did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Building Type is not created ...'));
         }
     }
 
@@ -148,11 +148,11 @@ class HotelRoomTypeController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelRoomType\HotelRoomTypeController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Room Type updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Room Type is updated ...'));
         }
         else{
             return redirect()->action('Setup\HotelRoomType\HotelRoomTypeController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Type did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Type is not updated ...'));
         }
 
     }

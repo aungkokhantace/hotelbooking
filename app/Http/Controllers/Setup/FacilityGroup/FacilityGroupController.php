@@ -79,12 +79,12 @@ class FacilityGroupController extends Controller
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
 
             return redirect()->action('Setup\FacilityGroup\FacilityGroupController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Facility Group created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Facility Group is created ...'));
         }
         else{
 
             return redirect()->action('Setup\FacilityGroup\FacilityGroupController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Facility Group did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Facility Group is not created ...'));
         }
     }
 
@@ -139,12 +139,12 @@ class FacilityGroupController extends Controller
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
 
             return redirect()->action('Setup\FacilityGroup\FacilityGroupController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Facility Group updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Facility Group is updated ...'));
         }
         else{
 
             return redirect()->action('Setup\FacilityGroup\FacilityGroupController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Facility Group did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Facility Group is not updated ...'));
         }
     }
 

@@ -82,11 +82,11 @@ class CityController extends Controller
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
 
             return redirect()->action('Setup\City\CityController@index')
-                ->withMessage(FormatGenerator::message('Success', 'City created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'City is created ...'));
         }
         else{
             return redirect()->action('Setup\City\CityController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'City did not created ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'City is not created ...'));
         }
 
     }
@@ -147,12 +147,12 @@ class CityController extends Controller
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
 
             return redirect()->action('Setup\City\CityController@index')
-                ->withMessage(FormatGenerator::message('Success', 'City updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'City is updated ...'));
         }
         else{
 
             return redirect()->action('Setup\City\CityController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'City did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'City is not updated ...'));
         }
     }
 

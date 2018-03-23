@@ -57,11 +57,11 @@ class HotelRestaurantCategoryController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelRestaurantCategory\HotelRestaurantCategoryController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Restaurant Category created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Restaurant Category is created ...'));
         }
         else{
             return redirect()->action('Setup\HotelRestaurantCategory\HotelRestaurantCategoryController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Restaurant Category did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Restaurant Category is not created ...'));
         }
     }
 
@@ -89,11 +89,11 @@ class HotelRestaurantCategoryController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelRestaurantCategory\HotelRestaurantCategoryController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Restaurant Category updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Restaurant Category is updated ...'));
         }
         else{
             return redirect()->action('Setup\HotelRestaurantCategory\HotelRestaurantCategoryController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Restaurant Category did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Restaurant Category is not updated ...'));
         }
 
     }

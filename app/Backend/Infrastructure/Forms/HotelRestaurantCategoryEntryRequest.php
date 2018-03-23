@@ -22,13 +22,14 @@ class HotelRestaurantCategoryEntryRequest extends Request
     public function rules()
     {
         return [
-            'name'          => 'required'
+            'name'          => 'required|string|unique:h_restaurant_categories,name,NULL,id,deleted_at,NULL',
         ];
     }
     public function messages()
     {
         return [
             'name.required'         => 'Name is required!',
+            'name.unique'           => 'The name has already been taken!',
         ];
     }
 }

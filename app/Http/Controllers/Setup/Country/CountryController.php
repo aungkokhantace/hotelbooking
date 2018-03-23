@@ -59,11 +59,11 @@ class CountryController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\Country\CountryController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Country created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Country is created ...'));
         }
         else{
             return redirect()->action('Setup\Country\CountryController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Country did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Country is not created ...'));
         }
     }
 
@@ -88,11 +88,11 @@ class CountryController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\Country\CountryController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Country updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Country is updated ...'));
         }
         else{
             return redirect()->action('Setup\Country\CountryController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Country did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Country is not updated ...'));
         }
     }
 

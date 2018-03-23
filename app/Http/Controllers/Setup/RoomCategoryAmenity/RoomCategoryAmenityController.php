@@ -71,11 +71,11 @@ class RoomCategoryAmenityController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\RoomCategoryAmenity\RoomCategoryAmenityController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Room Category Amenity created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Room Category Amenity is created ...'));
         }
         else{
             return redirect()->action('Setup\RoomCategoryFacility\RoomCategoryAmenityController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Room Category Amenity did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Room Category Amenity is not created ...'));
         }
     }
 
@@ -117,11 +117,11 @@ class RoomCategoryAmenityController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\RoomCategoryAmenity\RoomCategoryAmenityController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Room Category Amenity updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Room Category Amenity is updated ...'));
         }
         else{
             return redirect()->action('Setup\RoomCategoryAmenity\RoomCategoryAmenityController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Room Category Amenity did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Room Category Amenity is not updated ...'));
         }
 
     }

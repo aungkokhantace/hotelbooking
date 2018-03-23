@@ -128,8 +128,7 @@ class HotelRoomCategoryController extends Controller
             $facilities = $facilityRepo->getObjsForRoom();
 
             $bed_types = DB::select('SELECT * FROM bed_types WHERE deleted_at IS NULL');
-
-
+            
             return view('backend.hotel_room_category.hotel_room_category')
                 ->with('hotels',$hotels)
                 ->with('role',$role)
@@ -212,7 +211,7 @@ class HotelRoomCategoryController extends Controller
                 DB::rollback();
 
                 return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
-                    ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category did not create ...'));
+                    ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category is not created ...'));
             }
 
             //RoomCategoryImage
@@ -257,7 +256,7 @@ class HotelRoomCategoryController extends Controller
                             DB::rollback();
 
                             return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
-                                ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category did not create ...'));
+                                ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category is not created ...'));
                         }
                         $count++;
                     }
@@ -278,7 +277,7 @@ class HotelRoomCategoryController extends Controller
 
                 DB::rollback();
                 return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
-                    ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category did not create ...'));
+                    ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category is not created ...'));
             }
             $r_cat_amenityResult = array();
             if($amenities != ""){
@@ -296,7 +295,7 @@ class HotelRoomCategoryController extends Controller
             if($r_cat_amenityResult['aceplusStatusCode'] != ReturnMessage::OK) {
                 DB::rollback();
                 return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
-                    ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category did not create ...'));
+                    ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category is not created ...'));
             }
 
             $r_cat_facilityResult = array();
@@ -315,7 +314,7 @@ class HotelRoomCategoryController extends Controller
             if($r_cat_facilityResult['aceplusStatusCode'] != ReturnMessage::OK) {
                 DB::rollback();
                 return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
-                    ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category did not create ...'));
+                    ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category is not created ...'));
             }
             DB::commit();
             return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
@@ -326,7 +325,7 @@ class HotelRoomCategoryController extends Controller
             DB::rollback();
 
             return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category is not created ...'));
         }
     }
 
@@ -472,7 +471,7 @@ class HotelRoomCategoryController extends Controller
 
                 DB::rollback();
                 return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
-                    ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category did not update ...'));
+                    ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category is not updated ...'));
             }
 
             //RoomCategoryImage
@@ -535,7 +534,7 @@ class HotelRoomCategoryController extends Controller
 
                             DB::rollback();
                             return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
-                                ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category did not update ...'));
+                                ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category is not updated ...'));
                         }
                         $count++;
                     }
@@ -556,7 +555,7 @@ class HotelRoomCategoryController extends Controller
 
                 DB::rollback();
                 return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
-                    ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category did not update ...'));
+                    ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category is not updated ...'));
             }
             $r_cat_amenityResult = array();
             if($amenities != ""){
@@ -574,7 +573,7 @@ class HotelRoomCategoryController extends Controller
             if($r_cat_amenityResult['aceplusStatusCode'] != ReturnMessage::OK) {
                 DB::rollback();
                 return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
-                    ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category did not update ...'));
+                    ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category is not updated ...'));
             }
             $r_cat_facilityResult = array();
             if($facilities != ""){
@@ -592,7 +591,7 @@ class HotelRoomCategoryController extends Controller
             if($r_cat_facilityResult['aceplusStatusCode'] != ReturnMessage::OK) {
                 DB::rollback();
                 return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
-                    ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category did not update ...'));
+                    ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category is not updated ...'));
             }
 
             DB::commit();
@@ -604,7 +603,7 @@ class HotelRoomCategoryController extends Controller
             DB::rollback();
 
             return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Room Category is not updated ...'));
         }
 
     }

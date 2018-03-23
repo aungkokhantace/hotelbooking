@@ -29,9 +29,9 @@ class HotelRestaurantEntryRequest extends Request
             'name'                      => 'required',
             'opening_hours'             => 'required',
             'opening_days'              => 'required',
-            'capacity'                  => 'required',
-            'area'                      => 'required',
-            'floor'                     => 'required',
+            'capacity'                  => 'required|numeric',
+            'area'                      => 'required|numeric',
+            'floor'                     => 'required|numeric',
         ];
     }
 
@@ -44,8 +44,11 @@ class HotelRestaurantEntryRequest extends Request
             'opening_hours.required'                => 'Opening Hours is required!',
             'opening_days.required'                 => 'Opening Days is required!',
             'capacity.required'                     => 'Capacity is required!',
+            'capacity.numeric'                      => 'Capacity must be numeric!',
             'area.required'                         => 'Area is required!',
+            'area.numeric'                          => 'Area must be numeric!',
             'floor.required'                        => 'Floor is required!',
+            'floor.numeric'                         => 'Floor must be numeric!',
         ];
     }
 }

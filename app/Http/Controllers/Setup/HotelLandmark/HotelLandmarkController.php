@@ -67,7 +67,7 @@ class HotelLandmarkController extends Controller
         }
         else{
             return redirect()->action('Setup\HotelLandmark\HotelLandmarkController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Landmark did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Landmark is not created ...'));
         }
     }
 
@@ -101,11 +101,11 @@ class HotelLandmarkController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelLandmark\HotelLandmarkController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Landmark updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Landmark is updated ...'));
         }
         else{
             return redirect()->action('Setup\HotelLandmark\HotelLandmarkController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Landmark did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Landmark is not updated ...'));
         }
 
     }

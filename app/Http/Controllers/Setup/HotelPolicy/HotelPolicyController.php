@@ -46,6 +46,7 @@ class HotelPolicyController extends Controller
             $email              = $user->email;
 
             $hotelRepo          = new HotelRepository();
+            $hotelPolicyRepo    = new HotelPolicyRepository();
             if ($role == 3) {
                 //Get Hotel ID
                 $hotels             = $hotelRepo->getHotelByUserEmail($email);
@@ -58,7 +59,23 @@ class HotelPolicyController extends Controller
             }
             else {
             $all_hotel_policy = $this->repo->getObjs();
-            $hotels = $hotelRepo->getObjs();
+
+            //get all hotels with policy
+            $hotels_with_policies = $hotelPolicyRepo->getObjs();
+
+            //to store hotel_id that has policy
+            $hotel_id_array_with_policies = array();
+            foreach($hotels_with_policies as $hotel_with_policy){
+              //push to array
+              array_push($hotel_id_array_with_policies,$hotel_with_policy->hotel_id);
+            }
+
+            //remove duplicated ids from array
+            $hotel_id_array_with_policies = array_unique($hotel_id_array_with_policies);
+
+            //get hotels without policies (except ids from arary)
+            //shows in hotel select box at frontend when "ADD" button is clicked
+            $hotels = $hotelRepo->getObjsWithNoPolicy($hotel_id_array_with_policies);
             }
             $all_hotels = $hotelRepo->getObjs();
 
@@ -155,11 +172,11 @@ class HotelPolicyController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelPolicy\HotelPolicyController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Policy created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Policy is created ...'));
         }
         else{
             return redirect()->action('Setup\HotelPolicy\HotelPolicyController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Policy did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Policy is not created ...'));
         }
     }
 
@@ -232,11 +249,11 @@ class HotelPolicyController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelPolicy\HotelPolicyController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Policy updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Policy is updated ...'));
         }
         else{
             return redirect()->action('Setup\HotelPolicy\HotelPolicyController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Policy did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Policy is not updated ...'));
         }
     }
 

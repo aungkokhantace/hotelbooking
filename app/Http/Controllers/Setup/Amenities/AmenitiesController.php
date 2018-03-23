@@ -84,12 +84,12 @@ class AmenitiesController extends Controller
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
 
             return redirect()->action('Setup\Amenities\AmenitiesController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Amenity created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Amenity is created ...'));
         }
         else{
 
             return redirect()->action('Setup\Amenities\AmenitiesController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Amenity did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Amenity is not created ...'));
         }
     }
 
@@ -144,11 +144,11 @@ class AmenitiesController extends Controller
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
 
             return redirect()->action('Setup\Amenities\AmenitiesController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Amenity updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Amenity is updated ...'));
         }
         else{
             return redirect()->action('Setup\Amenities\AmenitiesController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Amenity did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Amenity is not updated ...'));
         }
     }
 
@@ -161,4 +161,3 @@ class AmenitiesController extends Controller
         return redirect()->action('Setup\Amenities\AmenitiesController@index');//to redirect listing page
     }
 }
-

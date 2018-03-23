@@ -88,11 +88,11 @@ class RoomDiscountController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\RoomDiscount\RoomDiscountController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Room Discount created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Room Discount is created ...'));
         }
         else{
             return redirect()->action('Setup\RoomDiscount\RoomDiscountController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Room Discount did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Room Discount is not created ...'));
         }
     }
 
@@ -160,11 +160,11 @@ class RoomDiscountController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\RoomDiscount\RoomDiscountController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Room Discount updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Room Discount is updated ...'));
         }
         else{
             return redirect()->action('Setup\RoomDiscount\RoomDiscountController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Room Discount did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Room Discount is not updated ...'));
         }
 
     }

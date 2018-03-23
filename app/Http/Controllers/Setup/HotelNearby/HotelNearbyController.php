@@ -61,11 +61,11 @@ class HotelNearbyController extends Controller
         $result                 = $this->repo->create($paramObj);
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelNearby\HotelNearbyController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Nearby created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Nearby is created ...'));
         }
         else{
             return redirect()->action('Setup\HotelNearby\HotelNearbyController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Nearby did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Nearby is not created ...'));
         }
     }
 
@@ -99,11 +99,11 @@ class HotelNearbyController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelNearby\HotelNearbyController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Nearby updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Nearby is updated ...'));
         }
         else{
             return redirect()->action('Setup\HotelNearby\HotelNearbyController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Nearby did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Nearby is not updated ...'));
         }
 
     }

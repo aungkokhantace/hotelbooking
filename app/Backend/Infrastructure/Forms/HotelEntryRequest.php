@@ -36,8 +36,8 @@ class HotelEntryRequest extends Request
             'check_out_time'            => 'required',
             'breakfast_start_time'      => 'required',
             'breakfast_end_time'        => 'required',
-            'latitude'                  => 'required',
-            'longitude'                 => 'required',
+            'latitude'                  => 'required|numeric',
+            'longitude'                 => 'required|numeric',
 
 
             'user_name'                 => 'required|string|unique:core_users',
@@ -50,7 +50,7 @@ class HotelEntryRequest extends Request
 
            // 'hotel_id'              => 'required',
             'first_cancellation_day' => 'required',
-            'second_cancellation_day'=> 'required', 
+            'second_cancellation_day'=> 'required',
             'breakfast_fees'        => 'required',
 //            'extrabed_fees'         => 'required|numeric',
             'tax'                   => 'required|numeric',
@@ -77,8 +77,10 @@ class HotelEntryRequest extends Request
             'check_out_time.required'   => 'Check-out time is required!',
             'breakfast_start_time.required'=> 'Breakfast start time is required!',
             'breakfast_end_time.required'  => 'Breakfast end time is required!',
-            'latitude.required'            =>'Latitude is required',
-            'longitude.required'                    =>'Longitude is required', 
+            'latitude.required'         => 'Latitude is required!',
+            'latitude.numeric'          => 'Latitude must be numeric!',
+            'longitude.required'        => 'Longitude is required!',
+            'longitude.numeric'         => 'Longitude must be numeric!',
 
             'user_name.required'         => 'User Login Name is required!',
             'display_name.required'      => 'User Display Name is required',

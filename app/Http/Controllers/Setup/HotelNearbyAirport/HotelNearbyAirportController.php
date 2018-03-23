@@ -62,11 +62,11 @@ class HotelNearbyAirportController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelNearbyAirport\HotelNearbyAirportController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Nearby Airport created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Nearby Airport is created ...'));
         }
         else{
             return redirect()->action('Setup\HotelNearbyAirport\HotelNearbyAirportController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Nearby Airport did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Nearby Airport is not created ...'));
         }
     }
 
@@ -100,11 +100,11 @@ class HotelNearbyAirportController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelNearbyAirport\HotelNearbyAirportController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Nearby Airport updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Nearby Airport is updated ...'));
         }
         else{
             return redirect()->action('Setup\HotelNearbyAirport\HotelNearbyAirportController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Nearby Airport did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Nearby Airport is not updated ...'));
         }
 
     }

@@ -112,11 +112,11 @@ class CommunicationController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelBooking\CommunicationController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Communication create ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Communication is created ...'));
         }
         else{
             return redirect()->action('Setup\HotelBooking\CommunicationController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Communication did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Communication is not created ...'));
         }
     }
 

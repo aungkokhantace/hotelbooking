@@ -57,11 +57,11 @@ class RoomViewController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\RoomView\RoomViewController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Room View created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Room View is created ...'));
         }
         else{
             return redirect()->action('Setup\RoomView\RoomViewController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Room View did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Room View is not created ...'));
         }
     }
 
@@ -89,11 +89,11 @@ class RoomViewController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\RoomView\RoomViewController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Room View updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Room View is updated ...'));
         }
         else{
             return redirect()->action('Setup\RoomView\RoomViewController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Room View did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Room View is not updated ...'));
         }
 
     }

@@ -55,11 +55,11 @@ class HotelNearbyCategoryController extends Controller
         $result                 = $this->repo->create($paramObj);
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelNearbyCategory\HotelNearbyCategoryController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Nearby Category created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Nearby Category is created ...'));
         }
         else{
             return redirect()->action('Setup\HotelNearbyCategory\HotelNearbyCategoryController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Nearby Category did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Nearby Category is not created ...'));
         }
     }
 
@@ -88,11 +88,11 @@ class HotelNearbyCategoryController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelNearbyCategory\HotelNearbyCategoryController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Nearby Category updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Nearby Category is updated ...'));
         }
         else{
             return redirect()->action('Setup\HotelNearbyCategory\HotelNearbyCategoryController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Nearby Category did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Nearby Category is not updated ...'));
         }
 
     }

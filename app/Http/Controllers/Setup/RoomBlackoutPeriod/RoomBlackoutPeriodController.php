@@ -81,11 +81,11 @@ class RoomBlackoutPeriodController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\RoomBlackoutPeriod\RoomBlackoutPeriodController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Room Blackout Period created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Room Blackout Period is created ...'));
         }
         else{
             return redirect()->action('Setup\RoomBlackoutPeriod\RoomBlackoutPeriodController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Room Blackout Period did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Room Blackout Period is not created ...'));
         }
     }
 
@@ -127,11 +127,11 @@ class RoomBlackoutPeriodController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\RoomBlackoutPeriod\RoomBlackoutPeriodController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Room Blackout Period updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Room Blackout Period is updated ...'));
         }
         else{
             return redirect()->action('Setup\RoomBlackoutPeriod\RoomBlackoutPeriodController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Room Blackout Period did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Room Blackout Period is not updated ...'));
         }
 
     }

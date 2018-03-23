@@ -82,11 +82,11 @@ class HotelRestaurantController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelRestaurant\HotelRestaurantController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Restaurant created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Restaurant is created ...'));
         }
         else{
             return redirect()->action('Setup\HotelRestaurant\HotelRestaurantController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Restaurant did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Restaurant is not created ...'));
         }
     }
 
@@ -140,11 +140,11 @@ class HotelRestaurantController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\HotelRestaurant\HotelRestaurantController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Hotel Restaurant updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Restaurant is updated ...'));
         }
         else{
             return redirect()->action('Setup\HotelRestaurant\HotelRestaurantController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Hotel Restaurant did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Restaurant is not updated ...'));
         }
 
     }

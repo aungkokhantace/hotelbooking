@@ -40,7 +40,7 @@ class TownshipController extends Controller
               $country  = $countryRepo->getObjByID($city->country_id);
               $township->country_name = $country->name;
             }
-            
+
             return view('backend.township.index')->with('townships',$townships);
         }
         return redirect('/');
@@ -71,12 +71,12 @@ class TownshipController extends Controller
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
 
             return redirect()->action('Setup\Township\TownshipController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Township created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Township is created ...'));
         }
         else{
 
             return redirect()->action('Setup\Township\TownshipController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Township did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Township is not created ...'));
         }
     }
 
@@ -106,12 +106,12 @@ class TownshipController extends Controller
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
 
             return redirect()->action('Setup\Township\TownshipController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Township updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Township is updated ...'));
         }
         else{
 
             return redirect()->action('Setup\Township\TownshipController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Township did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Township is not updated ...'));
         }
 
     }

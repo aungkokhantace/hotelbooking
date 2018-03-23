@@ -114,19 +114,19 @@ class RoomController extends Controller
 
             if($result['aceplusStatusCode'] != ReturnMessage::OK){
                 return redirect()->action('Setup\Room\RoomController@index')
-                    ->withMessage(FormatGenerator::message('Fail', 'Room did not create ...'));
+                    ->withMessage(FormatGenerator::message('Fail', 'Room is not created ...'));
             }
 
         }
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\Room\RoomController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Room created ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Room is created ...'));
         }
         /*
         else{
             return redirect()->action('Setup\Room\RoomController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Room did not create ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Room is not created ...'));
         }*/
     }
 
@@ -212,11 +212,11 @@ class RoomController extends Controller
 
         if($result['aceplusStatusCode'] ==  ReturnMessage::OK){
             return redirect()->action('Setup\Room\RoomController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Room updated ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Room is updated ...'));
         }
         else{
             return redirect()->action('Setup\Room\RoomController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Room did not update ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Room is not updated ...'));
         }
 
     }
