@@ -578,7 +578,10 @@
                         required    : true,
                         number      : true
                     },
-                    booking_cutoff_day  : 'required',
+                    booking_cutoff_day  : {
+                        required    : true,
+                        number      : true
+                    },
                     capacity            : {
                         required  : true,
                         number    : true
@@ -604,7 +607,10 @@
                         required    : 'S.Q.M is required!',
                         number      : 'Please enter a valid number!'
                     },
-                    booking_cutoff_day  : 'Booking CutOff Day is required!',
+                    booking_cutoff_day  : {
+                        required    : 'Booking cutoff day is required!',
+                        number      : 'Please enter a valid number!'
+                    },
                     capacity            : {
                         required    : 'Capacity is required!',
                         number      : 'Please enter a valid number!'
