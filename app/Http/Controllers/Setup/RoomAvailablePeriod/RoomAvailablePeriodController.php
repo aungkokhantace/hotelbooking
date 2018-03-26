@@ -50,10 +50,21 @@ class RoomAvailablePeriodController extends Controller
     public function create()
     {
         if(Auth::guard('User')->check()){
+            //Get Loggin User Info
             $hotelRepo          = new HotelRepository();
-            $hotels             = $hotelRepo->getObjs();
+            $user               = $hotelRepo->getUserObjs();
+            $role               = $user->role_id;
+            $email              = $user->email;
+            if ($role == 3) {
+                //Get Hotel ID
+              $hotels[0]        = $hotelRepo->getFirstHotelByUserEmail($email);
+            } else {
+              $hotels           = $hotelRepo->getObjs();
+            }
+
             $roomRepo           = new RoomRepository();
             $rooms              = $roomRepo->getObjs();
+
             return view('backend.room_available_period.room_available_period')->with('hotels',$hotels)
                                                                               ->with('rooms',$rooms);
         }

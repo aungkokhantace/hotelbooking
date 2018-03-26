@@ -3,6 +3,8 @@
 namespace App\Backend\Infrastructure\Forms;
 
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Input;
+use Carbon\Carbon;
 
 class RoomBlackoutPeriodEntryRequest extends Request
 {
@@ -25,7 +27,7 @@ class RoomBlackoutPeriodEntryRequest extends Request
     {
         return [
             'hotel_id'      => 'required',
-            'room_id'       => 'required',
+            'room_id'       => 'required|unique:r_blackout_period,room_id,NULL,id,hotel_id,'.Input::get('hotel_id').',room_id,'.Input::get('room_id').',from_date,'.Carbon::parse(Input::get('from_date'))->format('Y-m-d').',to_date,'.Carbon::parse(Input::get('to_date'))->format('Y-m-d').',deleted_at,NULL',
             'from_date'     => 'required',
             'to_date'       => 'required',
         ];
@@ -36,6 +38,7 @@ class RoomBlackoutPeriodEntryRequest extends Request
         return [
             'hotel_id.required'      => 'Hotel is required!',
             'room_id.required'       => 'Room is required!',
+            'room_id.unique'         => 'Room already exists!',
             'from_date.required'     => 'Unavailable From Date is required!',
             'to_date.required'       => 'Unavailable To Date is required!',
         ];

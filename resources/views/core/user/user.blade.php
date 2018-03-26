@@ -28,7 +28,7 @@
             <label for="user_name">Staff Name<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <input required type="text" class="form-control" id="user_name" name="user_name" placeholder="Enter Staff Login User Name" value="{{ isset($user)? $user->user_name:Request::old('name') }}"/>
+            <input required type="text" class="form-control" id="user_name" name="user_name" placeholder="Enter Staff Login User Name" value="{{ isset($user)? $user->user_name:Request::old('user_name') }}"/>
             <p class="text-danger">{{$errors->first('user_name')}}</p>
         </div>
     </div>

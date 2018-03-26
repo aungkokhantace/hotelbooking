@@ -30,12 +30,14 @@ class UserEntryFormRequest extends Request
     public function rules()
     {
         return [
-            'user_name'          => 'required|string|unique:core_users',
+            // 'user_name'     => 'required|string|unique:core_users',
+            'user_name'     => 'required|string|unique:core_users,user_name,NULL,id,deleted_at,NULL',
             'display_name'  => 'required|string',
-            'email'         => "required|email|unique:core_users",
+            // 'email'         => "required|email|unique:core_users",
+            'email'         => 'required|string|unique:core_users,email,NULL,id,deleted_at,NULL',
             'password'      => 'required|min:8',
             'conpassword'   => 'required|same:password',
-            'role_id'      => 'required'
+            'role_id'       => 'required',
         ];
     }
     public function messages()
@@ -47,7 +49,7 @@ class UserEntryFormRequest extends Request
             'password.required'     => 'Password is required',
             'conpassword.required'  => 'Confirm Password is required',
             'conpassword.same'      => 'Password and Confirm Password must match',
-            'role_id.required'     => 'Staff Role is required'
+            'role_id.required'     => 'Staff Role is required',
         ];
     }
 }

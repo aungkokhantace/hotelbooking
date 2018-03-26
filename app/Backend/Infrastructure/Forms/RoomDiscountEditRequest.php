@@ -3,6 +3,8 @@
 namespace App\Backend\Infrastructure\Forms;
 
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Input;
+use Carbon\Carbon;
 
 class RoomDiscountEditRequest extends Request
 {
@@ -24,7 +26,8 @@ class RoomDiscountEditRequest extends Request
     public function rules()
     {
         return [
-            'name'              => 'required',
+
+              'name'              => 'required|unique:room_discount,name,'.$this->get('id').',id,hotel_id,'.Input::get('hotel_id').',h_room_category_id,'.Input::get('h_room_category_id').',from_date,'.Carbon::parse(Input::get('from_date'))->format('Y-m-d').',to_date,'.Carbon::parse(Input::get('to_date'))->format('Y-m-d').',deleted_at,NULL',
             'hotel_id'          => 'required',
             // 'h_room_type_id'    => 'required',
             'h_room_category_id'=> 'required',
@@ -39,6 +42,7 @@ class RoomDiscountEditRequest extends Request
     {
         return [
             'name.required'              => 'Name is required!',
+            'name.unique'                => 'Room discount already exists!',
             'hotel_id.required'          => 'Hotel is required!',
             // 'h_room_type_id.required'    => 'Room Type is required!',
             'h_room_category_id.required'=> 'Room Category is required!',

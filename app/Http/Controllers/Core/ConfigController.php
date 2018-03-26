@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use InterventionImage;
+use App\Core\FormatGenerator As FormatGenerator;
+use App\Backend\Infrastructure\Forms\ConfigEditRequest;
 
 class ConfigController extends Controller
 {
@@ -26,7 +28,7 @@ class ConfigController extends Controller
         if (Auth::guard('User')->check()) {
 
             $configs      = $this->ConfigRepository->getSiteConfigs();
-            
+
             if (is_null($configs) || count($configs) == 0)
             {
                 $configs = array();
@@ -67,7 +69,8 @@ class ConfigController extends Controller
         return redirect('/backend_mps/login');
     }
 
-    public function update(){
+    public function update(ConfigEditRequest $request){
+        $request->validate();
         if (Auth::guard('User')->check()) {
 
             $SETTING_COMPANY_NAME = Input::get('SETTING_COMPANY_NAME');
@@ -132,7 +135,8 @@ class ConfigController extends Controller
                     DB::statement("DELETE FROM `$this->tbConfig` WHERE `code` = 'SETTING_LOGO'");
                     $result = DB::statement("INSERT INTO `$this->tbConfig` (code,type,value,description,updated_by,updated_at) VALUES ('SETTING_LOGO','SETTING','','Company Logo',$loginUserId,'$updated_at')");
                 }
-                return redirect()->action('Core\ConfigController@edit');
+                return redirect()->action('Core\ConfigController@edit')
+                    ->withMessage(FormatGenerator::message('Success', 'Config is updated ...'));
 
             }
             catch(Exception $ex){
