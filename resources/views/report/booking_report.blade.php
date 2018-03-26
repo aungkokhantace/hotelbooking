@@ -52,11 +52,11 @@
                 <option value=2 {{isset($status)&&$status== 2?'selected':''}}>Confirm</option>
                 <option value=3 {{isset($status)&&$status== 3?'selected':''}}>Cancel(Cancel By User)</option>
                 <option value=4 {{isset($status)&&$status== 4?'selected':''}}>Void(Cancel By System Admin)</option>
-                <option value=4 {{isset($status)&&$status== 5?'selected':''}}>Complete</option>
-                <option value=4 {{isset($status)&&$status== 6?'selected':''}}>Transaction Fail</option>
-                <option value=4 {{isset($status)&&$status== 7?'selected':''}}>Refund by Customer(Cancel within first cancellation days)</option>
-                <option value=4 {{isset($status)&&$status== 8?'selected':''}}>Refund by Admin</option>
-                <option value=4 {{isset($status)&&$status== 9?'selected':''}}>Cancel within second cancellation days</option>
+                <option value=5 {{isset($status)&&$status== 5?'selected':''}}>Complete</option>
+                <option value=6 {{isset($status)&&$status== 6?'selected':''}}>Transaction Fail</option>
+                <option value=7 {{isset($status)&&$status== 7?'selected':''}}>Refund by Customer(Cancel within first cancellation days)</option>
+                <option value=8 {{isset($status)&&$status== 8?'selected':''}}>Refund by Admin</option>
+                <option value=9 {{isset($status)&&$status== 9?'selected':''}}>Cancel within second cancellation days</option>
             </select>
         </div>
 

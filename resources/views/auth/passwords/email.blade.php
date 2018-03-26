@@ -22,7 +22,8 @@
                     Reset Password
                 </div>
                 <!-- Starting Form -->
-                <form class="form-horizontal" role="form" method="POST" action="{{ url('/backend_mps/password/email') }}">
+                <!-- <form class="form-horizontal" role="form" method="POST" action="{{ url('/backend_mps/password/email') }}"> -->
+                <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
                     {{ csrf_field() }}
                 @if (session('status'))
                     <p class="alert alert-danger">

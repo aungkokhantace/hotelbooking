@@ -106,6 +106,11 @@ Route::group(['middleware' => 'web'], function () {
      // Ajax for hotel search result page view hotel policy
     Route::get('view/hotelpolicy/{id}',['as'=>'view/hotelpolicy','uses'=>'Frontend\SearchController@gethotelpolicy']);
 
+    // Password Reset Routes...
+    Route::get('password/reset/{token?}', ['as' => 'auth.password.reset', 'uses' => 'Auth\PasswordController@showResetForm']);
+    Route::post('password/email', ['as' => 'auth.password.email', 'uses' => 'Auth\PasswordController@sendResetLinkEmail']);
+    Route::post('password/reset', ['as' => 'auth.password.reset', 'uses' => 'Auth\PasswordController@reset']);
+
     //Backend
     // Route::get('backend_myanmarpolestar', 'Auth\AuthController@showLogin');
     Route::group(['prefix' => 'backend_mps'], function () {
@@ -124,10 +129,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('systemreference', array('as'=>'backend_mps/systemreference',
             'uses'=>'Backend\SystemReferenceController@index'));
 
-    // Password Reset Routes...
-    Route::get('password/reset/{token?}', ['as' => 'auth.password.reset', 'uses' => 'Auth\PasswordController@showResetForm']);
-    Route::post('password/email', ['as' => 'auth.password.email', 'uses' => 'Auth\PasswordController@sendResetLinkEmail']);
-    Route::post('password/reset', ['as' => 'auth.password.reset', 'uses' => 'Auth\PasswordController@reset']);
 
     //Ajax
     Route::get('hotel_room_type/get_room_type/{id}', ['as' => 'backend_mps/hotel_room_type/get_room_type', 'uses' => 'Setup\HotelRoomType\HotelRoomTypeController@getHotelRoomType']);
