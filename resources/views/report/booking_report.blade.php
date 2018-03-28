@@ -214,6 +214,7 @@
                         <th>Date</th>
                         <th>Booking Number</th>
                         <th>Customer Name</th>
+                        <th>Hotel</th>
                         <th>Check In</th>
                         <th>Check Out</th>
                         <th>Status</th>
@@ -230,6 +231,7 @@
                         <th class="search-col" con-id="date">Date</th>
                         <th class="search-col" con-id="booking_number">Booking Number</th>
                         <th class="search-col" con-id="customer_name">Customer Name</th>
+                        <th class="search-col" con-id="hotel">Hotel</th>
                         <th class="search-col" con-id="check_in">Check In</th>
                         <th class="search-col" con-id="check_out">Check Out</th>
                         <th class="search-col" con-id="status">Status</th>
@@ -249,6 +251,7 @@
                                 <td>{{$booking->date}}</td>
                                 <td><a href="/backend_mps/bookingreport/room_detail/{{$booking->id}}">{{$booking->booking_no}}</a></td>
                                 <td>{{ucwords($booking->first_name.' '.$booking->last_name)}}</td>
+                                <td>{{$booking->hotel->name}}</td>
                                 <td>{{$booking->check_in_date}}</td>
                                 <td>{{$booking->check_out_date}}</td>
                                 <td>
@@ -281,6 +284,7 @@
                     </tbody>
                     <tr bgcolor="#AE3D8D" style = "color:white">
                         <td>Grand Total</td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
