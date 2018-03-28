@@ -1155,10 +1155,10 @@ class PaymentController extends Controller
                 $logMessage         = "created a booking";
                 $mailResult         = Utility::sendMail($template,$emails,$subject,$logMessage);
                 if ($mailResult['aceplusStatusCode'] != ReturnMessage::OK){
-                    alert('Your Booking was successful, but there was a problem in sending email to you!');
+                    alert('Your Booking was successful, but there was a problem in sending email to you!')->persistent('OK');
                 }
                 else{
-                    alert(trans('frontend_details.successful_alert'));
+                    alert(trans('frontend_details.successful_alert'))->persistent('OK');
                 }
                 //End sending confirm email
             }

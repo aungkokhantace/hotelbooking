@@ -5,7 +5,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">Booking Report</h1>
+    <h1 class="page-header"><a href="/backend_mps/bookingreport">Booking Report</a></h1>
     @if(count(Session::get('message')) != 0)
         <div>
         </div>
@@ -190,7 +190,7 @@
         </div>
     </div> -->
 
-    <br class="staus">
+    <br class="status">
 
     <!-- <div class="row">
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
@@ -214,8 +214,14 @@
                         <th>Date</th>
                         <th>Booking Number</th>
                         <th>Customer Name</th>
+                        <th>Check In</th>
+                        <th>Check Out</th>
                         <th>Status</th>
                         <th>Total Room</th>
+                        <th>Price Without Tax</th>
+                        <th>Government Tax</th>
+                        <th>Service Charge</th>
+                        <th>Discount Amount</th>
                         <th>Total Amount</th>
                     </tr>
                     </thead>
@@ -224,8 +230,14 @@
                         <th class="search-col" con-id="date">Date</th>
                         <th class="search-col" con-id="booking_number">Booking Number</th>
                         <th class="search-col" con-id="customer_name">Customer Name</th>
+                        <th class="search-col" con-id="check_in">Check In</th>
+                        <th class="search-col" con-id="check_out">Check Out</th>
                         <th class="search-col" con-id="status">Status</th>
                         <th class="search-col" con-id="total_room">Total Room</th>
+                        <th class="search-col" con-id="price_wo_tax">Price Without Tax</th>
+                        <th class="search-col" con-id="gst">Government Tax</th>
+                        <th class="search-col" con-id="service_charge">Service Charge</th>
+                        <th class="search-col" con-id="discount_amount">Discount Amount</th>
                         <th class="search-col" con-id="total_amount">Total Amount</th>
                     </tr>
                     </tfoot>
@@ -237,6 +249,8 @@
                                 <td>{{$booking->date}}</td>
                                 <td><a href="/backend_mps/bookingreport/room_detail/{{$booking->id}}">{{$booking->booking_no}}</a></td>
                                 <td>{{ucwords($booking->first_name.' '.$booking->last_name)}}</td>
+                                <td>{{$booking->check_in_date}}</td>
+                                <td>{{$booking->check_out_date}}</td>
                                 <td>
                                     <!-- @if($booking->status == 1) {{'Pending'}}
                                     @elseif($booking->status == 2) {{'Confirm'}}
@@ -255,6 +269,10 @@
                                     @endif
                                 </td>
                                 <td>{{$booking->total_room}}</td>
+                                <td>{{number_format($booking->price_wo_tax,2)}}</td>
+                                <td>{{number_format($booking->total_government_tax_amt,2)}}</td>
+                                <td>{{number_format($booking->total_service_tax_amt,2)}}</td>
+                                <td>{{number_format($booking->total_discount_amt,2)}}</td>
                                 <td>{{number_format($booking->total_payable_amt,2)}}</td>
                             </tr>
                         @endforeach
@@ -263,6 +281,12 @@
                     </tbody>
                     <tr bgcolor="#AE3D8D" style = "color:white">
                         <td>Grand Total</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -292,7 +316,7 @@
                     [5,25, 50, 100, 200, "All"]
                 ],
                 iDisplayLength: 5,
-//                "order": [[ 2, "desc" ]],
+               "order": [[ 0, "desc" ]],
                 stateSave: false,
                 "pagingType": "full",
                 "paging":   false,

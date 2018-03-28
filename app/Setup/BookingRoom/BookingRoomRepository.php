@@ -51,7 +51,6 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
 
     public function getAllBookingRoom(){
         $result     = BookingRoom::whereNull('deleted_at')->get();
-
         return $result;
     }
 
@@ -86,16 +85,16 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
                                  ->leftJoin('rooms','rooms.id','=','booking_room.room_id')
                                  ->leftJoin('h_room_type','h_room_type.id','=','rooms.h_room_type_id')
                                  ->leftJoin('h_room_category','h_room_category.id','=','rooms.h_room_category_id')
-                                 ->leftJoin('r_category_image','r_category_image.h_room_category_id','=','h_room_category.id')
+                                 // ->leftJoin('r_category_image','r_category_image.h_room_category_id','=','h_room_category.id')
                                  ->select('booking_room.*',
-                                          'rooms.h_room_category_id',
+                                          // 'rooms.h_room_category_id',
                                           'h_room_type.name as room_type',
-                                          'h_room_category.name as room_category',
-                                            'r_category_image.img_path as category_image',
-                                            'r_category_image.default_image as default_image'
+                                          'h_room_category.name as room_category'
+                                            // 'r_category_image.img_path as category_image',
+                                            // 'r_category_image.default_image as default_image'
                                  )
                                  ->where('booking_id',$id)
-                                 ->where('r_category_image.default_image',1)
+                                 // ->where('r_category_image.default_image',1)
                                  // ->orwhereNull('r_category_image.default_image')
                                  ->whereIn('booking_room.status',$statusArr)
                                  ->get();

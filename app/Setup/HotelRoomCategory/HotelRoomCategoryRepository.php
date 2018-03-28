@@ -222,12 +222,14 @@ class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterfac
     }
 
     public function getRoomTypeByHotelIdAndPrice($hotel_id,$price){
-        $room_type = HotelRoomCategory::whereNull('deleted_at')
+        $result = HotelRoomCategory::whereNull('deleted_at')
                     ->where('hotel_id','=',$hotel_id)
                     ->where('price','=',$price)
                     ->first();
-        $room_type_name = $room_type->h_room_type->name;
-        return $room_type_name;
+                    // dd('type',$hotel_id,$price,$room_type);
+        // $room_type_name = $room_type->h_room_type->name;
+        $name = $result->name;
+        return $name;
     }
 
     public function getRoomCategoriesByHotelId($hotel_id){

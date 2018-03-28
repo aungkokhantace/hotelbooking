@@ -5,7 +5,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">Sale Summary Report</h1>
+    <h1 class="page-header"><a href="/backend_mps/salesummaryreport">Sale Summary Report</a></h1>
     @if(count(Session::get('message')) != 0)
         <div>
         </div>

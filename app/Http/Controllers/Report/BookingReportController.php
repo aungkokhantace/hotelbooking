@@ -13,6 +13,8 @@ use App\Http\Controllers\Controller;
 use Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
+use App\Setup\Hotel\HotelRepository;
+
 class BookingReportController extends Controller
 {
     private $repo;
@@ -30,24 +32,45 @@ class BookingReportController extends Controller
             $grandTotal         = 0.00;
 
             $bookings           = $this->repo->bookingReport($type,$from_date,$to_date);
+
             $bookingRoomRepo    = new BookingRoomRepository();
             $booking_room       = $bookingRoomRepo->getAllBookingRoom();
-            
+
+            // Start original Code
+            // if(isset($bookings) && count($bookings) > 0){
+            //     foreach($bookings as $booking){
+            //         // Cancel(Cancel By User)
+            //         if($booking->booking_room_status == 3){
+            //             $booking->total_payable_amt = 0;
+            //         }
+            //         // Refund by Customer(Cancel within first cancellation days)
+            //         elseif($booking->booking_room_status == 7){
+            //             $room_payable_amt_w_tax = $booking->room_payable_amt_w_tax;
+            //             $amount = $room_payable_amt_w_tax/2;
+            //             $booking->total_payable_amt = number_format($amount,2);
+            //         }
+            //         else{
+            //             $room_payable_amt_w_tax = $booking->room_payable_amt_w_tax;
+            //             $refund_amt             = $booking->refund_amt;
+            //             $amount = $room_payable_amt_w_tax - $refund_amt;
+            //             $booking->total_payable_amt = $amount;
+            //         }
+            //
+            //         $room_count     = 0;
+            //         foreach($booking_room as $b_room){
+            //             if($booking->id == $b_room->booking_id){
+            //                 $room_count++;
+            //             }
+            //         }
+            //         $booking->total_room    = $room_count;
+            //         $grandTotal            += $booking->total_payable_amt;
+            //     }
+            // }
+            // End original Code
+
+            //Start new code(Added by AKK at 2018-03-28 01:32 PM)
             if(isset($bookings) && count($bookings) > 0){
                 foreach($bookings as $booking){
-                    if($booking->booking_room_status == 3){
-                        $booking->total_payable_amt = 0;
-                    }elseif($booking->booking_room_status == 7){
-                        $room_payable_amt_w_tax = $booking->room_payable_amt_w_tax;
-                        $amount = $room_payable_amt_w_tax/2;
-                        $booking->total_payable_amt = number_format($amount,2);
-                    }else{
-                        $room_payable_amt_w_tax = $booking->room_payable_amt_w_tax;
-                        $refund_amt             = $booking->refund_amt;
-                        $amount = $room_payable_amt_w_tax - $refund_amt;
-                        $booking->total_payable_amt = $amount;
-                    }
-
                     $room_count     = 0;
                     foreach($booking_room as $b_room){
                         if($booking->id == $b_room->booking_id){
@@ -58,7 +81,7 @@ class BookingReportController extends Controller
                     $grandTotal            += $booking->total_payable_amt;
                 }
             }
-
+            //end new code(Added by AKK at 2018-03-28 01:32 PM)
             return view('report.booking_report')->with('bookings',$bookings)
                                                 ->with('grandTotal',$grandTotal);
         }
@@ -90,24 +113,41 @@ class BookingReportController extends Controller
             }
 
             $bookings           = $this->repo->bookingReport($type, $from, $to,$status);
+
             $bookingRoomRepo    = new BookingRoomRepository();
             $booking_room       = $bookingRoomRepo->getAllBookingRoom();
 
+            //Start old code
+            // if(isset($bookings) && count($bookings) > 0){
+            //     foreach($bookings as $booking){
+            //         if($booking->booking_room_status == 3){
+            //             $booking->total_payable_amt = 0;
+            //         }elseif($booking->booking_room_status == 7){
+            //             $room_payable_amt_w_tax = $booking->room_payable_amt_w_tax;
+            //             $amount = $room_payable_amt_w_tax/2;
+            //             $booking->total_payable_amt = number_format($amount,2);
+            //         }else{
+            //             $room_payable_amt_w_tax = $booking->room_payable_amt_w_tax;
+            //             $refund_amt             = $booking->refund_amt;
+            //             $amount = $room_payable_amt_w_tax - $refund_amt;
+            //             $booking->total_payable_amt = $amount;
+            //         }
+            //
+            //         $room_count     = 0;
+            //         foreach($booking_room as $b_room){
+            //             if($booking->id == $b_room->booking_id){
+            //                 $room_count++;
+            //             }
+            //         }
+            //         $booking->total_room    = $room_count;
+            //         $grandTotal            += $booking->total_payable_amt;
+            //     }
+            // }
+            //End old code
+
+            //Start new code(Added by AKK at 2018-03-28 01:32 PM)
             if(isset($bookings) && count($bookings) > 0){
                 foreach($bookings as $booking){
-                    if($booking->booking_room_status == 3){
-                        $booking->total_payable_amt = 0;
-                    }elseif($booking->booking_room_status == 7){
-                        $room_payable_amt_w_tax = $booking->room_payable_amt_w_tax;
-                        $amount = $room_payable_amt_w_tax/2;
-                        $booking->total_payable_amt = number_format($amount,2);
-                    }else{
-                        $room_payable_amt_w_tax = $booking->room_payable_amt_w_tax;
-                        $refund_amt             = $booking->refund_amt;
-                        $amount = $room_payable_amt_w_tax - $refund_amt;
-                        $booking->total_payable_amt = $amount;
-                    }
-
                     $room_count     = 0;
                     foreach($booking_room as $b_room){
                         if($booking->id == $b_room->booking_id){
@@ -118,6 +158,7 @@ class BookingReportController extends Controller
                     $grandTotal            += $booking->total_payable_amt;
                 }
             }
+            //end new code(Added by AKK at 2018-03-28 01:32 PM)
 
             return view('report.booking_report')->with('bookings',$bookings)
                 ->with('from_year',$from_year)
@@ -137,38 +178,90 @@ class BookingReportController extends Controller
         if(Auth::guard('User')->check()){
             ob_end_clean();
             ob_start();
-
             $bookings           = $this->repo->bookingReport($type, $from, $to, $status);
+
             $bookingRoomRepo    = new BookingRoomRepository();
             $booking_room       = $bookingRoomRepo->getAllBookingRoom();
             $grandTotal         = 0.00;
 
+            // start old code
+            // if(isset($bookings) && count($bookings) > 0){
+            //     foreach($bookings as $booking){
+            //         // $room_count     = 0;
+            //         foreach($booking_room as $b_room){
+            //             // if($booking->id == $b_room->booking_id){
+            //             //     $room_count++;
+            //             // }
+            //             //Change integer status to text status
+            //             // if($booking->status == 1) $booking->b_status_text = 'Pending';
+            //             // elseif($booking->status == 2) $booking->b_status_text = 'Confirm';
+            //             // elseif($booking->status == 3) $booking->b_status_text = 'Cancel';
+            //             // else $booking->b_status_text = 'Void';
+            //
+            //             if($booking->status == 1) $booking->b_status_text = 'Pending';
+            //             elseif($booking->status == 2) $booking->b_status_text = 'Confirm';
+            //             elseif($booking->status == 3) $booking->b_status_text = 'Cancel(Cancel By User)';
+            //             elseif($booking->status == 4) $booking->b_status_text = 'Void (Cancel By System Admin)';
+            //             elseif($booking->status == 5) $booking->b_status_text = 'Complete';
+            //             elseif($booking->status == 6) $booking->b_status_text = 'Transaction Fail';
+            //             elseif($booking->status == 7) $booking->b_status_text = 'Refund by Customer(Cancel within first cancellation days)';
+            //             elseif($booking->status == 8) $booking->b_status_text = 'Refund by Admin';
+            //             else $booking->b_status_text = 'Cancel within second cancellation days';
+            //
+            //             // //start amount
+            //             // if($booking->booking_room_status == 3){
+            //             //     $booking->total_payable_amt = 0;
+            //             // }elseif($booking->booking_room_status == 7){
+            //             //     $room_payable_amt_w_tax = $booking->room_payable_amt_w_tax;
+            //             //     $amount = $room_payable_amt_w_tax/2;
+            //             //     $booking->total_payable_amt = number_format($amount,2);
+            //             // }else{
+            //             //     $room_payable_amt_w_tax = $booking->room_payable_amt_w_tax;
+            //             //     $refund_amt             = $booking->refund_amt;
+            //             //     $amount = $room_payable_amt_w_tax - $refund_amt;
+            //             //     $booking->total_payable_amt = $amount;
+            //             // }
+            //
+            //             $room_count     = 0;
+            //             foreach($booking_room as $b_room){
+            //                 if($booking->id == $b_room->booking_id){
+            //                     $room_count++;
+            //                 }
+            //             }
+            //             $booking->total_room    = $room_count;
+            //             $grandTotal            += $booking->total_payable_amt;
+            //             //end amount
+            //         }
+            //         // $booking->total_room    = $room_count;
+            //         // $grandTotal            += $booking->total_payable_amt;
+            //     }
+            // }
+            // End old code
+
+            // Start new code (Added by AKK at 2018-03-28 01:32 PM)
             if(isset($bookings) && count($bookings) > 0){
                 foreach($bookings as $booking){
-                    $room_count     = 0;
-                    foreach($booking_room as $b_room){
-                        if($booking->id == $b_room->booking_id){
-                            $room_count++;
-                        }
-                        //Change integer status to text status
-                        // if($booking->status == 1) $booking->b_status_text = 'Pending';
-                        // elseif($booking->status == 2) $booking->b_status_text = 'Confirm';
-                        // elseif($booking->status == 3) $booking->b_status_text = 'Cancel';
-                        // else $booking->b_status_text = 'Void';
-                        if($booking->status == 1) $booking->b_status_text = 'Pending';
-                        elseif($booking->status == 2) $booking->b_status_text = 'Confirm';
-                        elseif($booking->status == 3) $booking->b_status_text = 'Cancel(Cancel By User)';
-                        elseif($booking->status == 4) $booking->b_status_text = 'Void (Cancel By System Admin)';
-                        elseif($booking->status == 5) $booking->b_status_text = 'Complete';
-                        elseif($booking->status == 6) $booking->b_status_text = 'Transaction Fail';
-                        elseif($booking->status == 7) $booking->b_status_text = 'Refund by Customer(Cancel within first cancellation days)';
-                        elseif($booking->status == 8) $booking->b_status_text = 'Refund by Admin';
-                        else $booking->b_status_text = 'Cancel within second cancellation days';
-                    }
-                    $booking->total_room    = $room_count;
-                    $grandTotal            += $booking->total_payable_amt;
+                  if($booking->status == 1) $booking->b_status_text = 'Pending';
+                  elseif($booking->status == 2) $booking->b_status_text = 'Confirm';
+                  elseif($booking->status == 3) $booking->b_status_text = 'Cancel(Cancel By User)';
+                  elseif($booking->status == 4) $booking->b_status_text = 'Void (Cancel By System Admin)';
+                  elseif($booking->status == 5) $booking->b_status_text = 'Complete';
+                  elseif($booking->status == 6) $booking->b_status_text = 'Transaction Fail';
+                  elseif($booking->status == 7) $booking->b_status_text = 'Refund by Customer(Cancel within first cancellation days)';
+                  elseif($booking->status == 8) $booking->b_status_text = 'Refund by Admin';
+                  else $booking->b_status_text = 'Cancel within second cancellation days';
+
+                  $room_count     = 0;
+                  foreach($booking_room as $b_room){
+                      if($booking->id == $b_room->booking_id){
+                          $room_count++;
+                      }
+                  }
+                  $booking->total_room    = $room_count;
+                  $grandTotal            += $booking->total_payable_amt;
                 }
             }
+            // End new code (Added by AKK at 2018-03-28 01:32 PM)
 
             Excel::create('BookingReport', function($excel)use($bookings,$grandTotal) {
                 $excel->sheet('BookingReport', function($sheet)use($bookings,$grandTotal) {
@@ -178,23 +271,30 @@ class BookingReportController extends Controller
                     if(isset($bookings) && count($bookings) > 0){
                         foreach($bookings as $value){
                             $count++;
-                            $displayArray[$value->id]['Date']           = $value->date;
-                            $displayArray[$value->id]['Booking Number'] = $value->booking_no;
-                            $displayArray[$value->id]['Customer Name']  = $value->first_name.' '.$value->last_name;
-                            $displayArray[$value->id]['Status']         = $value->b_status_text;
-                            $displayArray[$value->id]['Total Room']     = $value->total_room;
-                            $displayArray[$value->id]['Total Amount']   = number_format($value->total_payable_amt,2);
+                            $displayArray[$value->id]['Date']               = $value->date;
+                            $displayArray[$value->id]['Booking Number']     = $value->booking_no;
+                            $displayArray[$value->id]['Customer Name']      = $value->first_name.' '.$value->last_name;
+                            $displayArray[$value->id]['Check In']           = $value->check_in_date;
+                            $displayArray[$value->id]['Check Out']          = $value->check_out_date;
+                            $displayArray[$value->id]['Status']             = $value->b_status_text;
+                            $displayArray[$value->id]['Total Room']         = $value->total_room;
+                            $displayArray[$value->id]['Price Without Tax']  = number_format($value->price_wo_tax,2);
+                            $displayArray[$value->id]['Government Tax']     = number_format($value->total_government_tax_amt,2);
+                            $displayArray[$value->id]['Service Charge']     = number_format($value->total_service_tax_amt,2);
+                            $displayArray[$value->id]['Discount Amount']    = number_format($value->total_discount_amt,2);
+                            $displayArray[$value->id]['Total Amount']       = number_format($value->total_payable_amt,2);
                         }
                     }
+
                     $count          = $count +2;
                     $sheet->fromArray($displayArray);
-                    $sheet->appendRow(array('Grand Total','','','','',number_format($grandTotal,2)));
+                    $sheet->appendRow(array('Grand Total','','','','','','','','','','',number_format($grandTotal,2)));
                     $sheet->row(1,function($row){
                         $row->setBackground('#D63090');
                         $row->setFontSize(13);
                         $row->setFontColor('#ffffff');
                     });
-                    $sheet->cells('A'.$count.':F'.$count, function($cells) {
+                    $sheet->cells('A'.$count.':L'.$count, function($cells) {
                         $cells->setBackground('#D63090');
                         $cells->setFontColor('#ffffff');
                     });
@@ -210,11 +310,17 @@ class BookingReportController extends Controller
     public function booking_room_detail($id){
         if(Auth::guard('User')->check()){
             $bookingRoomRepo    = new BookingRoomRepository();
-            $booking_room       = $bookingRoomRepo->getBookingRoomByBookingId($id);
             $bookingRepo        = new BookingRepository();
+            $hotelRepo          = new HotelRepository();
+
+            $booking_room       = $bookingRoomRepo->getBookingRoomByBookingId($id);
             $booking            = $bookingRepo->getBookingById($id);
+
             $booking_no         = $booking->booking_no;
+
             $customer_name      = $booking->user->first_name.' '.$booking->user->last_name;
+
+            $hotel              = $hotelRepo->getObjByID($booking->hotel_id);
 
             foreach($booking_room as $b_room){
                 /* Change date format for created_at and add date field to BookingRoom Obj */
@@ -247,6 +353,7 @@ class BookingReportController extends Controller
 
             return view('report.booking_room_detail')->with('booking_room',$booking_room)
                                                      ->with('booking_no',$booking_no)
+                                                     ->with('hotel',$hotel)
                                                      ->with('customer_name',$customer_name);
         }
     }

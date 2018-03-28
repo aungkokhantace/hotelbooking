@@ -104,4 +104,9 @@ class RoomCategoryImageRepository implements RoomCategoryImageRepositoryInterfac
         $result   = RoomCategoryImage::whereIn('h_room_category_id', $h_room_category_id_array)->get();
         return $result;
     }
+
+    public function getDefaultRoomCategoryImageByHotelRoomCategoryId($h_room_category_id){
+        $objs   = RoomCategoryImage::where('h_room_category_id','=',$h_room_category_id)->where('default_image','=',1)->first();
+        return $objs;
+    }
 }

@@ -46,6 +46,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use PDF;
 use Mail;
+use App\Setup\RoomCategoryImage\RoomCategoryImageRepository;
 
 class BookingController extends Controller
 {
@@ -135,6 +136,8 @@ class BookingController extends Controller
                 $r_categoryRepo     = new HotelRoomCategoryRepository();
                 $b_requestRepo      = new BookingRequestRepository();
                 $communicationRepo  = new CommunicationRepository();
+                $roomRepo           = new RoomRepository();
+                $rCatImageRepo      = new RoomCategoryImageRepository();
 
                 $r_category_id      = array();
                 $amenity_arr        = array();
@@ -151,7 +154,7 @@ class BookingController extends Controller
                 $booking->total_day = $total_day; //Add total booked days to booking
 
                 $bRooms             = $bRoomRepo->getBookingRoomAndRoomByBookingId($b_id);
-                
+
                 $book_rooms = $bRoomRepo->getActiveBookingRoom($b_id);
 
                 $room_count         = count($book_rooms);
@@ -210,6 +213,19 @@ class BookingController extends Controller
                                 $bRoom->max_count   = $max_count;
                             }
                         }
+
+                        // start room category default image
+                        $room_id = $bRoom->room_id;
+                        $roomObj = $roomRepo->getObjByID($room_id);
+                        $room_category_id = $roomObj->h_room_category_id;
+                        $categoryImageObj = $rCatImageRepo->getDefaultRoomCategoryImageByHotelRoomCategoryId($room_category_id);
+                        if(isset($categoryImageObj) && count($categoryImageObj) > 0){
+                          $bRoom->category_image = $categoryImageObj->img_path;
+                        }
+                        else{
+                          $bRoom->category_image = null;
+                        }
+                        //end room category default image
                     }
                 }
 
@@ -355,6 +371,8 @@ class BookingController extends Controller
             }
             // $booking->total_room_price      = $total_room_price;
     //        $booking->total_extra_bed_price = $total_extra_bed_price;
+
+
             $booking->rooms                 = $bRooms; //Add Rooms Array to booking
 
             /* get booking request to know special request */

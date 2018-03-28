@@ -16,12 +16,13 @@
             <a href="/backend_mps/bookingreport">
                 <h5>
                     <span class="glyphicon glyphicon-arrow-left"></span>
-                    Back to Booking Detail
+                    Back to Booking Report
                 </h5>
             </a>
         </div>
     </div>
 
+    <!-- Booking Number -->
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <h5>Booking ID : </h5>
@@ -30,12 +31,24 @@
             <h5>{{isset($booking_no)?$booking_no:''}}</h5>
         </div>
     </div>
+
+    <!-- Customer Name -->
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <h5>Customer Name : </h5>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <h5>{{isset($customer_name)?ucwords($customer_name):''}}</h5>
+        </div>
+    </div>
+
+    <!-- Hotel Name -->
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <h5>Hotel Name : </h5>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <h5>{{isset($hotel)?ucwords($hotel->name):''}}</h5>
         </div>
     </div>
 
@@ -48,27 +61,30 @@
                     <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Hotel</th>
+                        <!-- <th>Hotel</th> -->
                         <th>Room</th>
                         <th>Status</th>
                         <th>Room Price</th>
+                        <th>Number of Nights</th>
                         <th>Extra Bed</th>
                         <th>Extra Bed Price</th>
                         <th>Guest Count</th>
                         <th>Smoking</th>
+                        <th>Room Payable Amount</th>
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
                         <th class="search-col" con-id="date">Date</th>
-                        <th class="search-col" con-id="hotel">Hotel</th>
                         <th class="search-col" con-id="room">Room</th>
                         <th class="search-col" con-id="status">Status</th>
                         <th class="search-col" con-id="room_price">Room Price</th>
+                        <th class="search-col" con-id="number_of_nights">Number of Nights</th>
                         <th class="search-col" con-id="extra_bed">Extra Bed</th>
                         <th class="search-col" con-id="extra_bed_price">Extra Bed Price</th>
                         <th class="search-col" con-id="guest_count">Guest Count</th>
                         <th class="search-col" con-id="smoking">Smoking</th>
+                        <th class="search-col" con-id="room_payable_amt_wo_tax">Room Payable Amount</th>
                     </tr>
                     </tfoot>
                     <tbody>
@@ -77,14 +93,15 @@
                         @foreach($booking_room as $b_room)
                             <tr>
                                 <td>{{$b_room->date}}</td>
-                                <td>{{$b_room->hotel->name}}</td>
                                 <td>{{$b_room->room->name}}</td>
                                 <td>{{$b_room->status_text}}</td>
-                                <td>{{number_format($b_room->room_price,2)}}</td>
+                                <td>{{number_format($b_room->room_price_per_night,2)}}</td>
+                                <td>{{$b_room->number_of_night}}</td>
                                 <td>{{$b_room->added_extra_bed_status}}</td>
                                 <td>{{number_format($b_room->extra_bed_price,2)}}</td>
                                 <td>{{$b_room->guest_count}}</td>
                                 <td>{{$b_room->smoking_status}}</td>
+                                <td>{{$b_room->room_payable_amt_wo_tax}}</td>
                             </tr>
                         @endforeach
                     @endif
