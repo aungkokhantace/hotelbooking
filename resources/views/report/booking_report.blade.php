@@ -66,9 +66,11 @@
             <button type="button" onclick="report_search_with_type('bookingreport');" class="form-control btn-primary">Preview By List</button>
         </div>
 
+        @if(isset($bookings) && count($bookings) > 0)
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <button type="button" onclick="report_export_with_type('bookingreport');" class="form-control btn-primary">Export Excel</button>
         </div>
+        @endif
         <!-- end status filter -->
     </div>
     <br>
