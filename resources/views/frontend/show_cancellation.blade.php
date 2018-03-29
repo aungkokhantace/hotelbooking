@@ -34,7 +34,7 @@
                     <div class="search_list">
                         <h2>{{trans('frontend_details.bookings')}}</h2>
                         <h4 style="margin-top: 30px;">
-                            <a href="/bookingList" style="color: #626262;">{{trans('frontend_details.back_all_bookings')}}</a>
+                            <a href="/bookingList" style="color: #626262;"><< {{trans('frontend_details.back_all_bookings')}}</a>
                         </h4>
                     </div>
                     <div class="row">
@@ -49,11 +49,19 @@
                     <div>
                         <div class="blog_booking">
                             <div class="col-md-4">
-                                <img class="img-hover" src="/images/upload/{{$hotel->logo}}" alt="">
+                                <img class="img-responsive img-hover" src="/images/upload/{{$hotel->logo}}" alt="">
                             </div>
                             <div class="col-md-8">
-                                <h4>{{$hotel->name}} <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></h4>
-                                <p>{{$hotel->address}} <a href="#">{{trans('frontend_details.show_map')}}</a></p>
+                                <!-- <h4>{{$hotel->name}} <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></h4> -->
+                                <h4>
+                                {{$hotel->name}}
+                                @for ($i = 1; $i <= $hotel->star; $i++)
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                @endfor
+                                </h4>
+
+                                <!-- <p>{{$hotel->address}} <a href="#">{{trans('frontend_details.show_map')}}</a></p> -->
+                                <p>{{$hotel->address}}</p>
                                 <div class="col-md-12">
                                     <div class="col-md-4">
                                         <ul class="cancel_ul price_night">

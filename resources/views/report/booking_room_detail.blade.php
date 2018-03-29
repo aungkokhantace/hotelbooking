@@ -70,6 +70,7 @@
                         <th>Extra Bed Price</th>
                         <th>Guest Count</th>
                         <th>Smoking</th>
+                        <th>Discount Amount</th>
                         <th>Room Payable Amount</th>
                     </tr>
                     </thead>
@@ -84,6 +85,7 @@
                         <th class="search-col" con-id="extra_bed_price">Extra Bed Price</th>
                         <th class="search-col" con-id="guest_count">Guest Count</th>
                         <th class="search-col" con-id="smoking">Smoking</th>
+                        <th class="search-col" con-id="discount_amt">Discount Amount</th>
                         <th class="search-col" con-id="room_payable_amt_wo_tax">Room Payable Amount</th>
                     </tr>
                     </tfoot>
@@ -101,6 +103,7 @@
                                 <td>{{number_format($b_room->extra_bed_price,2)}}</td>
                                 <td>{{$b_room->guest_count}}</td>
                                 <td>{{$b_room->smoking_status}}</td>
+                                <td>{{$b_room->discount_amt}}</td>
                                 <td>{{$b_room->room_payable_amt_wo_tax}}</td>
                             </tr>
                         @endforeach
