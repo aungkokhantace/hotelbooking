@@ -15,7 +15,7 @@
             <tbody>
             <tr>
                 @if(isset($totalRooms) && $totalRooms > 1)
-                    <td width="80%">{{$totalRooms}} {{trans('frontend_details.room')}}</td>
+                    <td width="80%">{{$totalRooms}} @if($totalRooms>1){{trans('frontend_details.rooms')}} @else {{trans('frontend_details.room')}} @endif</td>
                 @else
                     <td width="80%">{{$totalRooms}} {{trans('frontend_details.room')}}</td>
                 @endif
@@ -46,7 +46,7 @@
             </tr>
             @endif
             <tr>
-                <td width="80%">{{session('service_tax')}}%{{trans('frontend_details.service_tax')}} </td>
+                <td width="80%">{{session('service_tax')}}% {{trans('frontend_details.service_tax')}} </td>
                 <td>{{session('service_tax_amount').' '.$currency}}</td>
             </tr>
 

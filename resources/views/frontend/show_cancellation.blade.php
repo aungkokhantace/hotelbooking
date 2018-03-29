@@ -60,8 +60,8 @@
                                 @endfor
                                 </h4>
 
-                                <!-- <p>{{$hotel->address}} <a href="#">{{trans('frontend_details.show_map')}}</a></p> -->
-                                <p>{{$hotel->address}}</p>
+                                <p>{{$hotel->address}} <a target="_blank" href="/get_directions/{{$hotel->id}}"> >> {{trans('frontend_details.show_map')}}</a></p>
+                                <!-- <p>{{$hotel->address}}</p> -->
                                 <div class="col-md-12">
                                     <div class="col-md-4">
                                         <ul class="cancel_ul price_night">

@@ -87,7 +87,7 @@ return[
 
 
     "your_booking_includes"=>"Your Booking Includes",
-    "room"=>"room",
+    "room"=>"Room",
     "discount"=>"Discount",
     "amount_after_discount"=>"Amount after Discount",
     "extra_bed_price"=>"Extrabed Price",
