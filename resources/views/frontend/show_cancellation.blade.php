@@ -74,7 +74,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <ul class="cancel_ul1 price_night">
-                                            <li class="text-center">{{trans('frontend_details.check_in')}}</li>
+                                            <li class="text-center">{{trans('frontend_details.check_out')}}</li>
                                             <li class="text-center">{{$booking->check_out_date_fmt}}</li>
                                             {{--<li class="text-center"><h3>3</h3></li>--}}
                                             {{--<li class="text-center">FEB 2017</li>--}}
@@ -86,7 +86,7 @@
                                     </div>
                                     <div class="col-md-8 text-center">
                                         <div class="nroom">
-                                            <p>{{$booking->total_day}}{{trans('frontend_details.night')}}, {{$booking->room_count}} {{trans('frontend_details.rooms')}}</p>
+                                            <p>{{$booking->total_day}} @if($booking->total_day>1){{trans('frontend_details.nights')}}@else{{trans('frontend_details.night')}}@endif, {{$booking->room_count}} @if($booking->room_count>1){{trans('frontend_details.rooms')}}@else{{trans('frontend_details.room')}}@endif</p>
                                         </div>
                                     </div>
                                 </div>

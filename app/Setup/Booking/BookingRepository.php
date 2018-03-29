@@ -23,7 +23,9 @@ use Mail;
 class BookingRepository implements BookingRepositoryInterface
 {
     public function getBookingByCustomerId($id){
-        $bookings   = Booking::where('user_id','=',$id)->get();
+        $bookings   = Booking::where('user_id','=',$id)
+                              ->whereNull('deleted_at')
+                              ->get();
         return $bookings;
     }
 

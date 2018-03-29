@@ -57,16 +57,17 @@
                                                 </div>
                                                 <div>
                                                     <div class="col-md-8 listing_left">
-
                                                         <div class="listing_tableright pull-right">
-                                                            <h4>status-{{$booking->status_txt}}</h4>
+                                                            <!-- <h4>status-{{$booking->status_txt}}</h4> -->
                                                             <h3>{{$currency.' '.$booking->total_payable_amt}}</h3>
                                                         </div>
                                                         <h4>{{$booking->hotel->name}}</h4>
                                                         <p>&nbsp;</p>
                                                         <p class="lead">
-                                                            <img src="/assets/shared/images/map.png">{{$booking->hotel->address}}
+                                                          <img src="/assets/shared/images/map.png">{{$booking->hotel->address}}
                                                         </p>
+                                                        <h4>Status - {{$booking->status_txt}}</h4>
+
                                                         <table>
                                                             <tr>
                                                                 <td>{{trans('frontend_details.booking')}}</td>
@@ -125,7 +126,7 @@
                                                     <div class="col-md-8 listing_left">
 
                                                         <div class="listing_tableright pull-right">
-                                                            <h4>status-{{$b_cancel->status_txt}}</h4>
+                                                            <!-- <h4>status-{{$b_cancel->status_txt}}</h4> -->
                                                             <h3>{{$currency.' '.number_format($b_cancel->total_payable_amt,2)}}</h3>
                                                         </div>
                                                         <h4>{{$b_cancel->hotel->name}}</h4>
@@ -133,6 +134,8 @@
                                                         <p class="lead">
                                                             <img src="/assets/shared/images/map.png">{{$b_cancel->hotel->address}}
                                                         </p>
+                                                        <h4>Status - {{$b_cancel->status_txt}}</h4>
+                                                        <!-- <h3>{{$currency.' '.number_format($b_cancel->total_payable_amt,2)}}</h3> -->
                                                         <table>
                                                             <tr>
                                                                 <td>{{trans('frontend_details.booking')}}</td>

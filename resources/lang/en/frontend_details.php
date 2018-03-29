@@ -2,7 +2,7 @@
 
 return[
 
-    "all_right_reserved"=>"All right reserved",
+  "all_right_reserved"=>"All rights reserved",
 
 	"features"=>"Features",
 	"whats_around"=>"What's around",
@@ -18,7 +18,7 @@ return[
 	"category_name"=>"Category Name",
 	"room_size"=>"Room size",
 	"bed_type"=>"Bed Type",
-	"extra_bed"=>"ExtraBed",
+	"extra_bed"=>"Extra Bed",
 	"bed"=>"Bed",
 	"description"=>"Description",
 	"room_facilties"=>"Room Facilities",
@@ -138,7 +138,7 @@ return[
     "policies"=>"Policies",
     "show_directions"=>"Show Directions",
     "change_room"=>"Change your room",
-    "guest_name"=>"Guest name",
+    "guest_name"=>"guest name",
     "edit"=>"Edit",
     "edit_number_of_guest"=>"Edit number of guest",
     "meal_plan"=>"Meal Plan",
@@ -162,7 +162,7 @@ return[
     "bookings"=>"Bookings",
     "show_map"=>"show map",
     "back_all_bookings"=>"Back to all bookings",
-    "booking_number"=>"BOOKING NUMBER:",
+    "booking_number"=>"BOOKING NUMBER",
     "chage_date"=>"Change Date",
     "view_confirmation"=>"View Confirmation",
     "print_confirmation"=>"Print Confirmation",
@@ -177,7 +177,7 @@ return[
     "additional_charge_may_apply"=>"additional charges may apply",
     "booking_confirmation"=>"Booking Confirmation",
     "fax"=>"Fax",
-    "rooms"=>"ROOMS",
+    // "rooms"=>"ROOMS",
     "night"=>"NIGHTS",
     "price"=>"PRICE",
     "goverment_tax"=>"Government Tax",
@@ -206,6 +206,13 @@ return[
     "manage_booking"=>"MANAGE BOOKING",
     "complete"=>"Complete",
     "void"=>"Void",
+
+    "cancel_by_user"=>"Cancel(Cancel By User)",
+    "cancel_by_admin"=>"Void (Cancel By System Admin)",
+    "transaction_fail"=>"Transaction Fail",
+    "cancel_first_cancellation"=>"Refund by Customer(Cancel within first cancellation days)",
+    "refund_by_admin"=>"Refund by Admin",
+    "cancel_second_cancellation"=>"Cancel within second cancellation days",
 
 
 ]

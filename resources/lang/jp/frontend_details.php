@@ -1,7 +1,7 @@
 <?php
 
 return[
-    "all_right_reserved"=>"© 2018 Myanmar Polestar Travels & Tours Co., Ltd. ",
+  "all_right_reserved"=>"All rights reserved",
 
 	"features"=>"特徴",
 	"whats_around"=>"周りに何があるか",
@@ -202,7 +202,7 @@ return[
 
 
 
-	
+
 
 ]
 

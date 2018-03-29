@@ -290,7 +290,9 @@
                         <?php $counter++; ?>
                         <div class="col-sm-4">
                             <div class="thumbnail">
-                                <img class="img-responsive" src="/images/upload/{{$percent_promotion->logo}}" alt="">
+                                <a href="/hotel_detail/{{$percent_promotion->id}}">
+                                  <img class="img-responsive" src="/images/upload/{{$percent_promotion->logo}}" alt="">
+                                </a>
                                 <div class="caption">
                                     <h5>{{$percent_promotion->name}}<samp>{{$percent_promotion->discount_percent}}%</samp><br>
                                         <small>{{$percent_promotion->city->name}}, {{$percent_promotion->country->name}}</small><br>
@@ -299,8 +301,10 @@
                                             <small><span class="glyphicon glyphicon-star" aria-hidden="true"></span></small>
                                         @endfor
                                     </h5>
+                                    <div class="row">
+                                    <a href="/hotel_detail/{{$percent_promotion->id}}" class="caption_link"><button class="btn btn-primary">{{trans('frontend_search.book_now')}} >></button></a>
+                                    </div>
                                     <p>{{$percent_promotion->address}}</p>
-                                    <a href="#" class="caption_link">.......</a>
                                 </div>
                             </div>
                         </div>
@@ -314,7 +318,9 @@
                         <?php $counter++; ?>
                         <div class="col-sm-4">
                             <div class="thumbnail">
-                                <img class="img-responsive" src="/images/upload/{{$percent_promotion->logo}}" alt="">
+                                <a href="/hotel_detail/{{$percent_promotion->id}}">
+                                  <img class="img-responsive" src="/images/upload/{{$percent_promotion->logo}}" alt="">
+                                </a>
                                 <div class="caption">
                                     <h5>{{$percent_promotion->name}}<samp>{{$percent_promotion->discount_percent}}%</samp><br>
                                         <small>{{$percent_promotion->city->name}}, {{$percent_promotion->country->name}}</small><br>
@@ -323,8 +329,10 @@
                                             <small><span class="glyphicon glyphicon-star" aria-hidden="true"></span></small>
                                         @endfor
                                     </h5>
+                                    <div class="row">
+                                      <a href="/hotel_detail/{{$percent_promotion->id}}" class="caption_link"><button class="btn btn-primary">{{trans('frontend_search.book_now')}} >></button></a>
+                                    </div>
                                     <p>{{$percent_promotion->address}}</p>
-                                    <a href="#" class="caption_link">.......</a>
                                 </div>
                             </div>
                         </div>
@@ -345,7 +353,9 @@
                         <?php $counter++; ?>
                         <div class="col-sm-4">
                             <div class="thumbnail">
-                                <img class="img-responsive" src="/images/upload/{{$amount_promotion->logo}}" alt="">
+                                <a href="/hotel_detail/{{$amount_promotion->id}}">
+                                  <img class="img-responsive" src="/images/upload/{{$amount_promotion->logo}}" alt="">
+                                </a>
                                 <div class="caption">
                                     <h5>{{$amount_promotion->name}}<samp class="amount_promotion">{{$amount_promotion->discount_amount}}</samp><br>
                                         <small>{{$amount_promotion->city->name}}, {{$amount_promotion->country->name}}</small><br>
@@ -354,8 +364,10 @@
                                             <small><span class="glyphicon glyphicon-star" aria-hidden="true"></span></small>
                                         @endfor
                                     </h5>
+                                    <div class="row">
+                                      <a href="/hotel_detail/{{$amount_promotion->id}}" class="caption_link"><button class="btn btn-primary">{{trans('frontend_search.book_now')}} >></button></a>
+                                    </div>
                                     <p>{{$amount_promotion->address}}</p>
-                                    <a href="#" class="caption_link">.......</a>
                                 </div>
                             </div>
                         </div>
@@ -369,7 +381,9 @@
                         <?php $counter++; ?>
                         <div class="col-sm-4">
                             <div class="thumbnail">
-                                <img class="img-responsive" src="/images/upload/{{$amount_promotion->logo}}" alt="">
+                                <a href="/hotel_detail/{{$amount_promotion->id}}">
+                                  <img class="img-responsive" src="/images/upload/{{$amount_promotion->logo}}" alt="">
+                                </a>
                                 <div class="caption">
                                     <h5>{{$amount_promotion->name}}<samp class="amount_promotion">{{$amount_promotion->discount_amount}}</samp><br>
                                         <small>{{$amount_promotion->city->name}}, {{$amount_promotion->country->name}}</small><br>
@@ -378,8 +392,10 @@
                                             <small><span class="glyphicon glyphicon-star" aria-hidden="true"></span></small>
                                         @endfor
                                     </h5>
+                                    <div class="row">
+                                      <a href="/hotel_detail/{{$amount_promotion->id}}" class="caption_link"><button class="btn btn-primary">{{trans('frontend_search.book_now')}} >></button></a>
+                                    </div>
                                     <p>{{$amount_promotion->address}}</p>
-                                    <a href="#" class="caption_link">.......</a>
                                 </div>
                             </div>
                         </div>

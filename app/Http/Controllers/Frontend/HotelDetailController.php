@@ -84,7 +84,7 @@ class HotelDetailController extends Controller
                 $discount_amount = $discountRepo->getMaximumDiscountAmountByHotelID($hotel_id);
                 //if there is any amount discount, assign it to $hotel->discount
                 if(isset($discount_amount) && count($discount_amount)>0){
-                    $hotel->discount = $discount_amount->discount_amount." MMK";
+                    $hotel->discount = $discount_amount->discount_amount." USD";
                 }
                 //else, set $hotel->discount to null
                 else{
@@ -193,9 +193,7 @@ class HotelDetailController extends Controller
                 foreach($rooms as $room){
                   array_push($room_view_id_array,$room->room_view_id);
                 }
-                // if($r_category->id == 2){
-                //   dd($room_view_id_array);
-                // }
+
                 //remove duplicated room_view_ids from array
                 $room_view_id_array = array_unique($room_view_id_array);
                 // $r_category->room_views = $room_view_id_array;

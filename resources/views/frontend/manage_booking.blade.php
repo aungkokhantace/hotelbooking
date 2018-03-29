@@ -21,7 +21,7 @@
                         </div>
                         <div class="left_menu">
                             <ul>
-                                <li><a class="active"href="#">{{trans('frontend_details.booking_list')}}</a></li>
+                                <li><a class="active"href="/bookingList">{{trans('frontend_details.booking_list')}}</a></li>
                                 <li><a href="/profile">{{trans('frontend_details.my_profile')}}</a></li>
                             </ul>
                         </div>

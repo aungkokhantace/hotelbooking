@@ -11,7 +11,7 @@ return[
     "login"=>"Login",
     "profile"=>"Profile",
     "booking_list"=>"Booking List",
-    "logout"=>"logout",
+    "logout"=>"Logout",
     "create_account"=>"Create Account",
     "first_name"=>"First Name",
     "last_name"=>"Last Name",
@@ -28,7 +28,7 @@ return[
     "page_is_under_construction"=>"Page is under construction!",
 
     "transportation_information"=>"Transportation Information",
-    "term_condition"=>"Tearm & Condition",
+    "term_condition"=>"Terms & Condition",
     "accepted_carts"=>"Accepted Cards",
     "follow_us" =>"Follow us",
 

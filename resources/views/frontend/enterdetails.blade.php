@@ -297,7 +297,7 @@
                                                 <div class="list_style" style="float:left;">
                                                     <input type="checkbox" name="non_smoking_request" value="1"> <span>{{trans('frontend_details.non_like_smoking')}}</span><br>
                                                     <input type="checkbox" name="late_check_in_request" value="1"> <span>{{trans('frontend_details.non_like_late_check')}}</span><br>
-                                                    <input type="checkbox" name="high_floor_request" value="1"> <span>{{trans('frontend_details.non_like_late_check')}}</span><br>
+                                                    <input type="checkbox" name="high_floor_request" value="1"> <span>{{trans('frontend_details.non_like_room_high')}}</span><br>
                                                     <input type="checkbox" name="large_bed_request" value="1"> <span>{{trans('frontend_details.non_like_bed')}}</span><br>
                                                     <input type="checkbox" name="early_check_in_request" value="1"> <span>{{trans('frontend_details.non_like_check')}}</span><br>
                                                 </div>

@@ -76,7 +76,7 @@
                             <input type="checkbox" class="filter_checkbox one_check" name="star_filter[]" value="4" @if(Session::has('star_filter') && session('star_filter')[0]=="4") checked @endif> <span> {{trans('frontend_search.4star')}}</span><br>
                             <input type="checkbox" class="filter_checkbox one_check" name="star_filter[]" value="5" @if(Session::has('star_filter') && session('star_filter')[0]=="5") checked @endif> <span> {{trans('frontend_search.5star')}}</span><br>
                             <input type="checkbox" class="filter_checkbox one_check" name="star_filter[]" value="6" @if(Session::has('star_filter') && session('star_filter')[0]=="6") checked @endif> <span> {{trans('frontend_search.6star')}}</span><br>
-                            <input type="checkbox" class="filter_checkbox one_check" name="star_filter[]" value="7" @if(Session::has('star_filter') && session('star_filter')[0]=="7") checked @endif> <span>{{trans('frontend_details.address')}}</span><br>
+                            <input type="checkbox" class="filter_checkbox one_check" name="star_filter[]" value="7" @if(Session::has('star_filter') && session('star_filter')[0]=="7") checked @endif> <span>{{trans('frontend_search.7star')}}</span><br>
                         </div>
                     </div>
                     <!-- Blog Facility Well -->

@@ -194,9 +194,9 @@
                                                     </td>
                                                     <td>
                                                         @if($booking_room->user_first_name == "" && $booking_room->user_last_name == "")
-                                                        {{$booking->user->first_name}} {{$booking->user->last_name}} <a href="/booking/manage/{{$booking->id}}"><button type="button" class="btn-four btn-primary-four"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i>{{trans('frontend_details.edit')}}{{trans('frontend_details.guest_name')}}</button></a>
+                                                        {{$booking->user->first_name}} {{$booking->user->last_name}} <a href="/booking/manage/{{$booking->id}}"><button type="button" class="btn-four btn-primary-four"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i>{{trans('frontend_details.edit')}} {{trans('frontend_details.guest_name')}}</button></a>
                                                         @else
-                                                        {{$booking_room->user_first_name}} {{$booking_room->user_last_name}} <a href="/booking/manage/{{$booking->id}}"><button type="button" class="btn-four btn-primary-four"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i>{{trans('frontend_details.edit')}}{{trans('frontend_details.guest_name')}}</button></a>
+                                                        {{$booking_room->user_first_name}} {{$booking_room->user_last_name}} <a href="/booking/manage/{{$booking->id}}"><button type="button" class="btn-four btn-primary-four"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i>{{trans('frontend_details.edit')}} {{trans('frontend_details.guest_name')}}</button></a>
                                                         @endif
                                                     </td>
                                                 </tr>

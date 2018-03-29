@@ -164,18 +164,20 @@
     <br style="line-height: 50px;">
     <table>
         <tr>
-            <td width="50%">
-                <span style="font-size:13px;font-weight:bold;">{{trans('frontend_details.hotel_policies')}}</span>
-                <div style="width: 45%">
-                    {!! !is_null($h_config) && !is_null($h_config->hotel_policies)?$h_config->hotel_policies:'' !!}
-                </div>
-            </td>
+            <!-- <td width="50%"> -->
+                <!-- <span style="font-size:13px;font-weight:bold;">{{trans('frontend_details.hotel_policies')}}</span> -->
+                <!-- <div style="width: 45%"> -->
+                    <!-- {!! !is_null($h_config) && !is_null($h_config->hotel_policies)?$h_config->hotel_policies:'' !!} -->
+                    <!-- {!! !is_null($hotel->policy) ? $hotel->policy:'' !!} -->
+                <!-- </div> -->
+            <!-- </td> -->
             <td width="50%">
                 <b>{{trans('frontend_details.special_request')}}</b><br>
                 @foreach($b_request_arr as $request)
                     {!! '-'.$request !!}<br>
                 @endforeach
             </td>
+            <td></td>
         </tr>
     </table>
 </body>

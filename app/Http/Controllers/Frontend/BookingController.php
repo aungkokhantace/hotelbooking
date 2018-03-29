@@ -47,6 +47,7 @@ use Illuminate\Support\Facades\Session;
 use PDF;
 use Mail;
 use App\Setup\RoomCategoryImage\RoomCategoryImageRepository;
+use App\Setup\HotelPolicy\HotelPolicyRepository;
 
 class BookingController extends Controller
 {
@@ -89,7 +90,12 @@ class BookingController extends Controller
                     $b->button_status   = trans('frontend_details.manage_booking');
                 }
                 if($b->status == 3){
-                    $b->status_txt      = trans('frontend_details.Cancel');
+                    $b->status_txt      = trans('frontend_details.cancel_by_user');
+                    $b->button_status   = trans('frontend_details.book_again');
+                    array_push($booking_cancel,$b);
+                }
+                if($b->status == 4){
+                    $b->status_txt      = trans('frontend_details.cancel_by_admin');
                     $b->button_status   = trans('frontend_details.book_again');
                     array_push($booking_cancel,$b);
                 }
@@ -97,20 +103,28 @@ class BookingController extends Controller
                     $b->status_txt      = trans('frontend_details.complete');
                     $b->button_status   = trans('frontend_details.manage_booking');
                 }
-                if($b->status == 7){
-                    $b->status_txt      = trans('frontend_details.Cancel');
+                if($b->status == 6){
+                    $b->status_txt      = trans('frontend_details.transaction_fail');
                     $b->button_status   = trans('frontend_details.book_again');
                 }
+                if($b->status == 7){
+                    $b->status_txt      = trans('frontend_details.cancel_first_cancellation');
+                    $b->button_status   = trans('frontend_details.book_again');
+                    array_push($booking_cancel,$b);
+                }
                 if($b->status == 8){
-                    $b->status_txt      = trans('frontend_details.void');
+                    $b->status_txt      = trans('frontend_details.refund_by_admin');
                     $b->button_status   = trans('frontend_details.book_again');
                 }
                 if($b->status == 9){
-                    $b->status_txt      = trans('frontend_details.Cancel');
+                    $b->status_txt      = trans('frontend_details.cancel_second_cancellation');
                     $b->button_status   = trans('frontend_details.book_again');
+                    array_push($booking_cancel,$b);
                 }
 
             }
+            // dd('bookings',$bookings);
+            // dd('booking_cancel',$booking_cancel);
             return view('frontend.bookinglist')->with('customer',$customer)
                                                ->with('bookings',$bookings)
                                                ->with('booking_cancel',$booking_cancel);
@@ -299,6 +313,7 @@ class BookingController extends Controller
             $facilityRepo                   = new FacilitiesRepository();
             $h_configRepo                   = new HotelConfigRepository();
             $b_requestRepo                  = new BookingRequestRepository();
+            $hotelPolicyRepo                = new HotelPolicyRepository();
 
             $r_category_id                  = array();
             $amenity_arr                    = array();
@@ -306,6 +321,17 @@ class BookingController extends Controller
 
             $booking                        = $this->repo->getBookingById($b_id);
             $hotel                          = $hotelRepo->getObjByID($booking->hotel_id);
+
+            //get Hotel Policy
+            $h_policy = $hotelPolicyRepo->getObjsByHotelID($hotel->id);
+
+            if(isset($h_policy) && count($h_policy)>0){
+              $hotel->policy = $h_policy->policy;
+            }
+            else{
+              $hotel->policy = null;
+            }
+            
             $h_facilities                   = $h_facilityRepo->getHotelFacilitiesByHotelID($booking->hotel_id);
             $hotel->h_facilities            = $h_facilities;
 
