@@ -22,6 +22,7 @@ return[
 	"description"=>"記述",
 	"room_facilties"=>"お部屋の設備",
 	"room_amenities"=>"お部屋のアメニティ",
+  "added_extra_bed_text"=>"エクストラベッド",
 	"area_info"=>"エリア情報",
 	"closest_landmarks"=>"ランドマークス付近",
 	"more"=>"続きを見る",

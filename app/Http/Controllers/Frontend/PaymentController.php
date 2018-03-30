@@ -1184,7 +1184,13 @@ class PaymentController extends Controller
         $booking_rooms = $bookingRoomRepo->getBookingRoomByBookingId($booking_id);
 
         $number_of_rooms = count($booking_rooms);
-        $number_of_nights = $booking_rooms[0]->number_of_night; //all number_of_nights for the same booking_id are the same, so take the number_of_nights of the first booking_room
+
+        if(isset($booking_rooms) && count($booking_rooms)>0){
+          $number_of_nights = $booking_rooms[0]->number_of_night; //all number_of_nights for the same booking_id are the same, so take the number_of_nights of the first booking_room
+        }else{
+          $number_of_nights = 0;
+        }
+
         /*
         $r_cat_array = array();
         foreach($booking_rooms as $booking_room){

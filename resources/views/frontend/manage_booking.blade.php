@@ -97,17 +97,22 @@
                                                 </li>
                                                 <li class="text_fa">{{trans('frontend_details.until')}} {{$booking->check_out_time}}</li>
                                             </ul>
+
+                                            <ul class="fa-uls price_night manage-form">
+                                                <li class="text_fa">
+                                                    <strong>{{$booking->total_day}} @if($booking->total_day>1){{trans('frontend_details.nights')}}@else {{trans('frontend_details.night')}} @endif</strong><br>
+                                                    <strong>{{$booking->room_count}} @if($booking->room_count>1) {{trans('frontend_details.rooms')}} @else {{trans('frontend_details.room')}} @endif</strong>
+                                                </li>
+                                            </ul>
+
                                             <ul class="fa-uls price_night">
-                                                {{--<li style="float:right;">--}}
-                                                    {{--<a href="#">Price details</a>--}}
-                                                {{--</li>--}}
+                                                <!--<li style="float:right;">
+                                                    <a href="#">Price details</a>
+                                                </li> -->
                                                 <li class="text_fa">Price</li>
                                                 <li class="text_fa">
-                                                    <strong>
-                                                        {{$booking->total_day}} {{trans('frontend_details.night')}} {{$booking->check_out_time}}, {{$booking->room_count}} {{trans('frontend_details.room')}} {{$booking->check_out_time}}
-                                                    </strong>
+                                                    <h4>{{$currency.' '.$booking->total_payable_amt}}</h4>
                                                 </li>
-                                                <li class="text_fa"><h4>{{$currency.' '.$booking->total_payable_amt}}</h4></li>
                                             </ul>
                                         </td>
                                         <td class="manageform_right">
@@ -228,19 +233,36 @@
                                                </div>
                                            </div>
                                            {!! Form::close() !!}
+
+                                           <!-- start extrabed information -->
+                                           <div class="manageform">
+                                               <h4>{{trans('frontend_details.added_extra_bed_text')}} : {{$room->added_extra_bed_text}}</h4>
+                                               @if($room->added_extra_bed == 1)
+                                               <h4>{{trans('frontend_details.extra_bed_price')}} : ${{$room->extra_bed_price}}</h4>
+                                               @endif
+                                           </div>
+                                           <!-- end extrabed information -->
+
+                                           @if(isset($room->amenities) && count($room->amenities)>0)
                                            <div class="manageform">
                                                <h4>{{trans('frontend_details.amenities')}}</h4>
-                                               @foreach($room->amenities as $amenity)
-                                                   <p>{{"* ".$amenity->name}}</p>
-                                               @endforeach
+                                                 @foreach($room->amenities as $amenity)
+                                                     <p>{{"* ".$amenity->name}}</p>
+                                                 @endforeach
                                            </div>
+                                           @endif
+
+                                           @if(isset($room->facilities) && count($room->facilities)>0)
                                            <div class="clearfix"></div>
                                            <div class="manageform">
-                                               <h4>{{trans('frontend_details.room_facilties')}}</h4>
-                                               @foreach($room->facilities as $facility)
-                                                   <p>{{"* ".$facility->name}}</p>
-                                               @endforeach
+                                                 <h4>{{trans('frontend_details.room_facilties')}}</h4>
+                                                 @foreach($room->facilities as $facility)
+                                                     <p>{{"* ".$facility->name}}</p>
+                                                 @endforeach
                                            </div>
+                                           @endif
+
+                                           @if(isset($hotel->h_facilities) && count($hotel->h_facilities)>0)
                                            <div class="clearfix"></div>
                                            <div class="manageform">
                                                <h4>{{trans('frontend_details.hotel_facilities')}}</h4>
@@ -248,6 +270,7 @@
                                                    <p>{{"* ".$h_facility->facility->name}}</p>
                                                @endforeach
                                            </div>
+                                           @endif
                                            <div class="clearfix"></div>
                                            <!-- <a class="cancelbooking" href="/booking/room/cancel/{{$booking->id}}/{{$room->id}}"> -->
                                            <a class="cancelbooking" id="cancelbooking" href="#" onclick="cancel_room('{{$booking->id}}','{{$room->id}}','{{$booking->charge}}','{{trans('frontend_details.are_you_sure')}}','{{trans('frontend_details.you_will_not_recover')}}','{{trans('frontend_details.cancel')}}','{{trans('frontend_details.confirm')}}');">

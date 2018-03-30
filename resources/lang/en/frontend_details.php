@@ -171,6 +171,7 @@ return[
     "edit"=>"Edit",
     "cancel"=>"Cancel",
     "amenities"=>"Amenities",
+    "added_extra_bed_text"=>"Extrabed",
     "hotel_facilities"=>"Hotel Facilities",
     "cancel_your_room"=>"Cancel your room",
     "talk_here"=>"Talk Here",

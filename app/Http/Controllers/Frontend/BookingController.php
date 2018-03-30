@@ -123,8 +123,7 @@ class BookingController extends Controller
                 }
 
             }
-            // dd('bookings',$bookings);
-            // dd('booking_cancel',$booking_cancel);
+
             return view('frontend.bookinglist')->with('customer',$customer)
                                                ->with('bookings',$bookings)
                                                ->with('booking_cancel',$booking_cancel);
@@ -240,9 +239,19 @@ class BookingController extends Controller
                           $bRoom->category_image = null;
                         }
                         //end room category default image
+
+                        //start booking room extrabed flag and price
+                        if($bRoom->added_extra_bed == 1){
+                          $bRoom->added_extra_bed_text = "Added";
+                        }
+                        else{
+                          $bRoom->added_extra_bed_text = "No";
+                        }
+                        // dd('bRoom',$bRoom);
+                        //end booking room extrabed flag and price
                     }
                 }
-
+                // dd('bRooms',$bRooms);
                 $booking->rooms                     = $bRooms; //Add Rooms Array to booking
 
                 if($booking->status == 2){
@@ -331,7 +340,7 @@ class BookingController extends Controller
             else{
               $hotel->policy = null;
             }
-            
+
             $h_facilities                   = $h_facilityRepo->getHotelFacilitiesByHotelID($booking->hotel_id);
             $hotel->h_facilities            = $h_facilities;
 
@@ -397,7 +406,6 @@ class BookingController extends Controller
             }
             // $booking->total_room_price      = $total_room_price;
     //        $booking->total_extra_bed_price = $total_extra_bed_price;
-
 
             $booking->rooms                 = $bRooms; //Add Rooms Array to booking
 
