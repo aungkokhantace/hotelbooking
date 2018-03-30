@@ -190,9 +190,11 @@
                                            <div class="manageform-edit" id="rowEdit{{$room->id}}">
                                                <i>for </i> <span>{{$room->guest_name}}</span>
                                                ({{$room->guest_count>1?$room->guest_count.'guests':$room->guest_count.'guest'}})
+                                               @if($allow_edit == 1)
                                                <button type="button" class="btn-four btn-primary-four btn-edit" id="{{$room->id}}">
                                                    <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>{{trans('frontend_details.edit')}}
                                                </button>
+                                               @endif
                                            </div>
                                            {!! Form::open(array('url'=>'/booking/room/edit',
                                                                 'id'=>'form'.$room->id)) !!}

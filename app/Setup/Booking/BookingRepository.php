@@ -25,6 +25,7 @@ class BookingRepository implements BookingRepositoryInterface
     public function getBookingByCustomerId($id){
         $bookings   = Booking::where('user_id','=',$id)
                               ->whereNull('deleted_at')
+                              ->orderBy('updated_at','desc')
                               ->get();
         return $bookings;
     }

@@ -247,11 +247,10 @@ class BookingController extends Controller
                         else{
                           $bRoom->added_extra_bed_text = "No";
                         }
-                        // dd('bRoom',$bRoom);
                         //end booking room extrabed flag and price
                     }
                 }
-                // dd('bRooms',$bRooms);
+
                 $booking->rooms                     = $bRooms; //Add Rooms Array to booking
 
                 if($booking->status == 2){
@@ -285,11 +284,23 @@ class BookingController extends Controller
                 /*get Cancel Reason */
                 $reasons                = $settingRepo->getCancelReason('REASON');
 
+                //get date flag (for showing or hiding of edit button in booking manage)
+                $today            = Carbon::now();
+                $today_date       = $today->toDateString();
+
+                $allow_edit       = 1;  // 0 is not allowed, 1 is allowed
+                //check whether today date is equal
+                if($today_date >= $booking->check_in_date){
+                  //edit not allowed
+                  $allow_edit = 0;
+                }
+
                 return view('frontend.manage_booking')->with('customer',$customer)
                                                       ->with('booking',$booking)
                                                       ->with('hotel',$hotel)
                                                       ->with('reasons',$reasons)
                                                       ->with('b_request',$b_request)
+                                                      ->with('allow_edit',$allow_edit)
                                                       ->with('communications',$communications);
             }
             else{
@@ -298,7 +309,6 @@ class BookingController extends Controller
             }
         }
         return redirect('/');
-
     }
 
     public function say_congratulation($id){
@@ -1123,6 +1133,7 @@ class BookingController extends Controller
                  * So, check booking status.
                  */
 
+               //status is confirm
                 if($booking->status == 2){
                     $new_check_in               = date('Y-m-d', strtotime($check_in));
                     $new_check_out              = date('Y-m-d', strtotime($check_out));
