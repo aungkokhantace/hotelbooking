@@ -22,7 +22,7 @@
             @if (count($errors) <= 0)
             <div class="alert fade in text-center isa_info" style="max-width:550px;margin:0 auto;">
                 <a href="#" class="close" data-dismiss="alert">×</a>
-                <strong>Note:</strong> Image width must be 1600 pixels <br />and Height must be 874 pixels
+                <strong>Note:</strong> Image width must be 1600 pixels <br />and Height must be 675 pixels
             </div><br />
             @endif
         </div>

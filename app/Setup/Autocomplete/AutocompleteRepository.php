@@ -20,8 +20,11 @@ class AutocompleteRepository implements AutocompleteRepositoryInterface
     {
         $term = Input::get('term');
         $results = array();
-        $hotels = DB::select("SELECT * FROM hotels WHERE name like  '%$term%'");
         // $hotels = DB::select("SELECT * FROM hotels WHERE name like  '$term%'");
+        // $hotels = DB::select("SELECT * FROM hotels WHERE name like  '%$term%'");
+
+        $hotels = DB::select("SELECT * FROM hotels WHERE name like  '%$term%' AND status = 1");
+
         foreach($hotels as $hotel){
             array_push($results,$hotel->name);
         }

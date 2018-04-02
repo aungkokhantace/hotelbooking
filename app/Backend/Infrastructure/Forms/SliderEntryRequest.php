@@ -38,7 +38,7 @@ class SliderEntryRequest extends Request
             'Title.required'             => 'Title is required!',
             'Description.required'       => 'Description is required!',
             'photo.required'             => 'Photo is required!',
-            'photo.dimensions'           => 'Image width must be 1600 pixels and Height must be 874 pixels ',
+            'photo.dimensions'           => 'Image width must be 1600 pixels and Height must be 675 pixels ',
         ];
     }
 }

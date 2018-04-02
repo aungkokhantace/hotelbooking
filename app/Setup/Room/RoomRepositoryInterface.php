@@ -22,4 +22,5 @@ interface RoomRepositoryInterface
     public function getRoomArrayByRoomCategoryId($r_category_id,$check_in,$check_out);
     public function getUserObjs();
     public function getRoomWithDiscount($category_arr,$r_available_arr);
+    public function checkToDelete($id);
 }

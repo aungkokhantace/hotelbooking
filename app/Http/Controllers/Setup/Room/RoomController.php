@@ -224,10 +224,26 @@ class RoomController extends Controller
     public function destroy(){
         $id         = Input::get('selected_checkboxes');
         $new_string = explode(',', $id);
+        $delete_flag = true;
         foreach($new_string as $id){
-            $this->repo->delete($id);
+            $check = $this->repo->checkToDelete($id);
+
+            if(isset($check) && count($check)>0){
+                alert()->warning('This room is booked and you cannot delete it!')->persistent('OK');
+                $delete_flag = false;
+            }
+            else{
+                $this->repo->delete($id);
+            }
         }
-        return redirect()->action('Setup\Room\RoomController@index'); //to redirect listing page
+        if($delete_flag){
+            return redirect()->action('Setup\Room\RoomController@index')
+                ->withMessage(FormatGenerator::message('Success', 'Room is deleted ...'));
+        }
+        else{
+            return redirect()->action('Setup\Room\RoomController@index')
+                ->withMessage(FormatGenerator::message('Fail', 'Room is not deleted ...'));
+        }
     }
 
     public function getRoom($hotel_id){

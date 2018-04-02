@@ -14,6 +14,7 @@ $permissions = \App\Core\Check::getPermissionByRoleId($role_id);
             <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
             <!-- end sidebar minify button -->
 
+            @if(isset($permissions) && count($permissions)>0)
             <!--Only Admin and Super Admin Access -->
             @if((in_array("backend_mps/nearby_category", $permissions)) ||
             (in_array("backend_mps/hotel_nearby", $permissions)) ||
@@ -443,6 +444,7 @@ $permissions = \App\Core\Check::getPermissionByRoleId($role_id);
             @endif
         </ul>
         <!-- end sidebar nav -->
+        @endif
     </div>
     <!-- end sidebar scrollbar -->
 </div>
