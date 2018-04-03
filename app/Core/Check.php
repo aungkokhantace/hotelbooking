@@ -162,5 +162,9 @@ class Check
         return null;
     }
 
+    public static function checkToDelete($table,$column,$id){
+      $result = DB::select("SELECT * FROM $table WHERE $column = $id AND deleted_at IS NULL");
+      return $result;
+    }
 
 }

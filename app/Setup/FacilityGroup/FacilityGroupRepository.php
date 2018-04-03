@@ -118,4 +118,9 @@ class FacilityGroupRepository implements FacilityGroupRepositoryInterface
         $role = FacilityGroup::find($id);
         return $role;
     }
+
+    public function checkToDelete($id){
+        $result = DB::select("SELECT * FROM facilities WHERE facility_group_id = $id AND deleted_at IS NULL");
+        return $result;
+    }
 }

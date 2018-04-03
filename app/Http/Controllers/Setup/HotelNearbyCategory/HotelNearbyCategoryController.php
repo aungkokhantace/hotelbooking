@@ -15,6 +15,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 use Auth;
+use App\Core\Check;
 
 class HotelNearbyCategoryController extends Controller
 {
@@ -100,9 +101,26 @@ class HotelNearbyCategoryController extends Controller
     public function destroy(){
         $id         = Input::get('selected_checkboxes');
         $new_string = explode(',', $id);
+        $delete_flag = true;
         foreach($new_string as $id){
-            $this->repo->delete($id);
+          // $check = $this->repo->checkToDelete($id);
+          $check = Check::checkToDelete("nearby","h_nearby_category_id",$id);
+
+          if(isset($check) && count($check)>0){
+              alert()->warning('There is hotel nearby under this nearby category and you cannot delete it!')->persistent('OK');
+              $delete_flag = false;
+          }
+          else{
+              $this->repo->delete($id);
+          }
         }
-        return redirect()->action('Setup\HotelNearbyCategory\HotelNearbyCategoryController@index'); //to redirect listing page
+        if($delete_flag){
+            return redirect()->action('Setup\HotelNearbyCategory\HotelNearbyCategoryController@index')
+                ->withMessage(FormatGenerator::message('Success', 'Hotel Nearby Category is deleted ...'));
+        }
+        else{
+            return redirect()->action('Setup\HotelNearbyCategory\HotelNearbyCategoryController@index')
+                ->withMessage(FormatGenerator::message('Fail', 'Hotel Nearby Category is not deleted ...'));
+        }
     }
 }

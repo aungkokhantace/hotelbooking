@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use App\Core\FormatGenerator As FormatGenerator;
 use App\Core\ReturnMessage As ReturnMessage;
+use App\Core\Check;
 
 class CountryController extends Controller
 {
@@ -102,10 +103,19 @@ class CountryController extends Controller
         $new_string = explode(',', $id);
         $delete_flag = true;
         foreach($new_string as $id){
+            //check for cities under country
             $check = $this->repo->checkToDelete($id);
+
+            //check in hotel setup whether this country is used or not
+            $hotel_setup_check = Check::checkToDelete("hotels","country_id",$id);
+
             if(isset($check) && count($check)>0){
                 alert()->warning('There are cities under this country!')->persistent('OK');
                 $delete_flag = false;
+            }
+            else if(isset($hotel_setup_check) && count($hotel_setup_check)>0){
+              alert()->warning('This country is used in hotel setup and you cannot delete it!')->persistent('OK');
+              $delete_flag = false;
             }
             else{
                 $this->repo->delete($id);
@@ -113,11 +123,11 @@ class CountryController extends Controller
         }
         if($delete_flag){
             return redirect()->action('Setup\Country\CountryController@index')
-                ->withMessage(FormatGenerator::message('Success', 'Country deleted ...'));
+                ->withMessage(FormatGenerator::message('Success', 'Country is deleted ...'));
         }
         else{
             return redirect()->action('Setup\Country\CountryController@index')
-                ->withMessage(FormatGenerator::message('Fail', 'Country did not delete ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'Country is not deleted ...'));
         }
     }
 

@@ -119,4 +119,8 @@ class HotelNearbyCategoryRepository implements HotelNearbyCategoryRepositoryInte
         }
     }
 
+    public function checkToDelete($id){
+        $result = DB::select("SELECT * FROM nearby WHERE h_nearby_category_id = $id AND deleted_at IS NULL");
+        return $result;
+    }
 }

@@ -17,4 +17,5 @@ interface FacilityGroupRepositoryInterface
     public function getObjByID($id);
     public function delete($id);
     public function getArrays();
+    public function checkToDelete($id);
 }

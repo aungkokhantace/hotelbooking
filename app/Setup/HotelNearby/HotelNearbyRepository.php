@@ -120,4 +120,9 @@ class HotelNearbyRepository implements HotelNearbyRepositoryInterface
         }
     }
 
+    public function checkToDelete($id){
+        $result = DB::select("SELECT * FROM h_nearby WHERE nearby_id = $id AND deleted_at IS NULL");
+        return $result;
+    }
+
 }

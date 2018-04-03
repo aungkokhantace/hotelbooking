@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use App\Core\FormatGenerator As FormatGenerator;
 use App\Core\ReturnMessage As ReturnMessage;
+use App\Core\Check;
+
 class CityController extends Controller
 {
     private $repo;
@@ -162,10 +164,19 @@ class CityController extends Controller
         $new_string = explode(',', $id);
         $delete_flag = true;
         foreach($new_string as $id){
+            //check for townships under city
             $check = $this->repo->checkToDelete($id);
+
+            //check in hotel setup whether this city is used or not
+            $hotel_setup_check = Check::checkToDelete("hotels","city_id",$id);
+
             if(isset($check) && count($check)>0){
-                alert()->warning('There are townships under this city!')->persistent('OK');
+                alert()->warning('There are townships under this city and you cannot delete it!')->persistent('OK');
                 $delete_flag = false;
+            }
+            else if(isset($hotel_setup_check) && count($hotel_setup_check)>0){
+              alert()->warning('This city is used in hotel setup and you cannot delete it!')->persistent('OK');
+              $delete_flag = false;
             }
             else{
                 $this->repo->delete($id);
@@ -173,11 +184,11 @@ class CityController extends Controller
         }
         if($delete_flag){
             return redirect()->action('Setup\City\CityController@index') //to redirect listing page
-                ->withMessage(FormatGenerator::message('Success', 'City deleted ...'));
+                ->withMessage(FormatGenerator::message('Success', 'City is deleted ...'));
         }
         else{
             return redirect()->action('Setup\City\CityController@index') //to redirect listing page
-                ->withMessage(FormatGenerator::message('Fail', 'City did not delete ...'));
+                ->withMessage(FormatGenerator::message('Fail', 'City is not deleted ...'));
         }
     }
 

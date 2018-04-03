@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Input;
 use InterventionImage;
 use App\Core\FormatGenerator As FormatGenerator;
 use App\Core\ReturnMessage As ReturnMessage;
+use App\Core\Check;
 
 class FacilitiesController extends Controller
 {
@@ -178,10 +179,27 @@ class FacilitiesController extends Controller
     public function destroy(){
         $id         = Input::get('selected_checkboxes');
         $new_string = explode(',', $id);
+        $delete_flag = true;
         foreach($new_string as $id){
-            $this->repo->delete($id);
+          $check = Check::checkToDelete("h_facility","facility_id",$id);
+
+          if(isset($check) && count($check)>0){
+              alert()->warning('This facility is used in hotel setup and you cannot delete it!')->persistent('OK');
+              $delete_flag = false;
+          }
+          else{
+              $this->repo->delete($id);
+          }
         }
-        return redirect()->action('Setup\Facilities\FacilitiesController@index'); //to redirect listing page
+        if($delete_flag){
+            return redirect()->action('Setup\Facilities\FacilitiesController@index')
+                ->withMessage(FormatGenerator::message('Success', 'Facility is deleted ...'));
+        }
+        else{
+            return redirect()->action('Setup\Facilities\FacilitiesController@index')
+                ->withMessage(FormatGenerator::message('Fail', 'Facility is not deleted ...'));
+        }
+        // return redirect()->action('Setup\Facilities\FacilitiesController@index'); //to redirect listing page
     }
 
 

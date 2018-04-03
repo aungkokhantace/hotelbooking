@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Input;
 use InterventionImage;
 use App\Core\FormatGenerator As FormatGenerator;
 use App\Core\ReturnMessage As ReturnMessage;
+use App\Core\Check;
 
 class AmenitiesController extends Controller
 {
@@ -155,9 +156,26 @@ class AmenitiesController extends Controller
     public function destroy(){
         $id         = Input::get('selected_checkboxes');
         $new_string = explode(',', $id);
+        $delete_flag = true;
         foreach($new_string as $id){
-            $this->repo->delete($id);
+          $check = Check::checkToDelete("r_category_amenities","amenity_id",$id);
+
+          if(isset($check) && count($check)>0){
+              alert()->warning('This amenity is used in room category setup and you cannot delete it!')->persistent('OK');
+              $delete_flag = false;
+          }
+          else{
+              $this->repo->delete($id);
+          }
         }
-        return redirect()->action('Setup\Amenities\AmenitiesController@index');//to redirect listing page
+        if($delete_flag){
+            return redirect()->action('Setup\Amenities\AmenitiesController@index')
+                ->withMessage(FormatGenerator::message('Success', 'Amenity is deleted ...'));
+        }
+        else{
+            return redirect()->action('Setup\Amenities\AmenitiesController@index')
+                ->withMessage(FormatGenerator::message('Fail', 'Amenity is not deleted ...'));
+        }
+        // return redirect()->action('Setup\Amenities\AmenitiesController@index');//to redirect listing page
     }
 }

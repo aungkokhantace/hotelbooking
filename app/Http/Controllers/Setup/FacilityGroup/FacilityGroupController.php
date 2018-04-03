@@ -15,6 +15,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
 use Illuminate\Support\Facades\Input;
+use App\Core\Check;
 
 class FacilityGroupController extends Controller
 {
@@ -151,9 +152,27 @@ class FacilityGroupController extends Controller
     public function destroy(){
         $id         = Input::get('selected_checkboxes');
         $new_string = explode(',', $id);
+        $delete_flag = true;
         foreach($new_string as $id){
-            $this->repo->delete($id);
+          // $check = $this->repo->checkToDelete($id);
+          $check = Check::checkToDelete("facilities","facility_group_id",$id);
+
+          if(isset($check) && count($check)>0){
+              alert()->warning('There is facility under this facility group and you cannot delete it!')->persistent('OK');
+              $delete_flag = false;
+          }
+          else{
+              $this->repo->delete($id);
+          }
         }
-        return redirect()->action('Setup\FacilityGroup\FacilityGroupController@index'); //to redirect listing page
+        if($delete_flag){
+            return redirect()->action('Setup\FacilityGroup\FacilityGroupController@index')
+                ->withMessage(FormatGenerator::message('Success', 'Facility Group is deleted ...'));
+        }
+        else{
+            return redirect()->action('Setup\FacilityGroup\FacilityGroupController@index')
+                ->withMessage(FormatGenerator::message('Fail', 'Facility Group is not deleted ...'));
+        }
+        // return redirect()->action('Setup\FacilityGroup\FacilityGroupController@index'); //to redirect listing page
     }
 }
