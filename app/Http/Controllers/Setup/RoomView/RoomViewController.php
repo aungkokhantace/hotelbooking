@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use App\Core\FormatGenerator As FormatGenerator;
 use App\Core\ReturnMessage As ReturnMessage;
+use App\Core\Check;
 
 class RoomViewController extends Controller
 {
@@ -101,9 +102,25 @@ class RoomViewController extends Controller
     public function destroy(){
         $id         = Input::get('selected_checkboxes');
         $new_string = explode(',', $id);
+        $delete_flag = true;
         foreach($new_string as $id){
-            $this->repo->delete($id);
+          $check = Check::checkToDelete("rooms","room_view_id",$id);
+          if(isset($check) && count($check)>0){
+              alert()->warning('This room view is used in hotel room setup and you cannot delete it!')->persistent('OK');
+              $delete_flag = false;
+          }
+          else{
+              $this->repo->delete($id);
+          }
         }
-        return redirect()->action('Setup\RoomView\RoomViewController@index'); //to redirect listing page
+        if($delete_flag){
+            return redirect()->action('Setup\RoomView\RoomViewController@index')
+                ->withMessage(FormatGenerator::message('Success', 'Room View is deleted ...'));
+        }
+        else{
+            return redirect()->action('Setup\RoomView\RoomViewController@index')
+                ->withMessage(FormatGenerator::message('Fail', 'Room View is not deleted ...'));
+        }
+        // return redirect()->action('Setup\RoomView\RoomViewController@index'); //to redirect listing page
     }
 }

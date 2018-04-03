@@ -299,7 +299,7 @@ class RoomRepository implements RoomRepositoryInterface
     public function checkToDelete($id){
       // pending and confirm
         $not_to_delete_status_arr = [1,2];
-        $result = DB::select("SELECT * FROM booking_room WHERE room_id = $id AND status NOT IN ( '" . implode( "', '" , $not_to_delete_status_arr ) . "' ) AND deleted_at IS NULL");
+        $result = DB::select("SELECT * FROM booking_room WHERE room_id = $id AND status IN ( '" . implode( "', '" , $not_to_delete_status_arr ) . "' ) AND deleted_at IS NULL");
         return $result;
     }
 }

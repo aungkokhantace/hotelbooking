@@ -226,6 +226,7 @@ class RoomController extends Controller
         $new_string = explode(',', $id);
         $delete_flag = true;
         foreach($new_string as $id){
+            //check whether this room is booked (with status pending or confirm) or not
             $check = $this->repo->checkToDelete($id);
 
             if(isset($check) && count($check)>0){

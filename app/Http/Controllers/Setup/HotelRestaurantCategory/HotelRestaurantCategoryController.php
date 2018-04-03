@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use App\Core\FormatGenerator As FormatGenerator;
 use App\Core\ReturnMessage As ReturnMessage;
+use App\Core\Check;
 
 class HotelRestaurantCategoryController extends Controller
 {
@@ -101,9 +102,26 @@ class HotelRestaurantCategoryController extends Controller
     public function destroy(){
         $id         = Input::get('selected_checkboxes');
         $new_string = explode(',', $id);
+        $delete_flag = true;
         foreach($new_string as $id){
-            $this->repo->delete($id);
+          $check = Check::checkToDelete("h_restaurant","h_restaurant_category_id",$id);
+
+          if(isset($check) && count($check)>0){
+              alert()->warning('There is restaurant under this restaurant category and you cannot delete it!')->persistent('OK');
+              $delete_flag = false;
+          }
+          else{
+              $this->repo->delete($id);
+          }
         }
-        return redirect()->action('Setup\HotelRestaurantCategory\HotelRestaurantCategoryController@index'); //to redirect listing page
+        if($delete_flag){
+            return redirect()->action('Setup\HotelRestaurantCategory\HotelRestaurantCategoryController@index')
+                ->withMessage(FormatGenerator::message('Success', 'Restaurant Category is deleted ...'));
+        }
+        else{
+            return redirect()->action('Setup\HotelRestaurantCategory\HotelRestaurantCategoryController@index')
+                ->withMessage(FormatGenerator::message('Fail', 'Restaurant Category is not deleted ...'));
+        }
+        // return redirect()->action('Setup\HotelRestaurantCategory\HotelRestaurantCategoryController@index'); //to redirect listing page
     }
 }

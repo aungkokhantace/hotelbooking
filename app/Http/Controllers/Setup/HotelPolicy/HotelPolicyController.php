@@ -264,7 +264,8 @@ class HotelPolicyController extends Controller
         foreach($new_string as $id){
             $this->repo->delete($id);
         }
-        return redirect()->action('Setup\HotelPolicy\HotelPolicyController@index'); //to redirect listing page
+        return redirect()->action('Setup\HotelPolicy\HotelPolicyController@index')
+            ->withMessage(FormatGenerator::message('Success', 'Hotel Policy is deleted ...'));
     }
 
     public function getHotelRoomCategory($h_room_type_id){

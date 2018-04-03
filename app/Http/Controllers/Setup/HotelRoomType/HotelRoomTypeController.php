@@ -15,6 +15,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
 use Illuminate\Support\Facades\Input;
+use App\Core\Check;
 
 class HotelRoomTypeController extends Controller
 {
@@ -160,10 +161,26 @@ class HotelRoomTypeController extends Controller
     public function destroy(){
         $id         = Input::get('selected_checkboxes');
         $new_string = explode(',', $id);
+        $delete_flag = true;
         foreach($new_string as $id){
-            $this->repo->delete($id);
+          $check = Check::checkToDelete("h_room_category","h_room_type_id",$id);
+          if(isset($check) && count($check)>0){
+              alert()->warning('This building type is used in hotel room category setup and you cannot delete it!')->persistent('OK');
+              $delete_flag = false;
+          }
+          else{
+              $this->repo->delete($id);
+          }
         }
-        return redirect()->action('Setup\HotelRoomType\HotelRoomTypeController@index'); //to redirect listing page
+        if($delete_flag){
+            return redirect()->action('Setup\HotelRoomType\HotelRoomTypeController@index')
+                ->withMessage(FormatGenerator::message('Success', 'Building Type is deleted ...'));
+        }
+        else{
+            return redirect()->action('Setup\HotelRoomType\HotelRoomTypeController@index')
+                ->withMessage(FormatGenerator::message('Fail', 'Building Type is not deleted ...'));
+        }
+        // return redirect()->action('Setup\HotelRoomType\HotelRoomTypeController@index'); //to redirect listing page
     }
 
     public function getHotelRoomType($hotel_id){
