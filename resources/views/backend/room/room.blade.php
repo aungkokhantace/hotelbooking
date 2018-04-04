@@ -296,7 +296,7 @@
                     count += 1;
                     html  += '<input type="text" class="form-control" name="room_name[' + count + ']" class="multi" placeholder="{{trans('setup_room.place-name')}}"/>';
                 }
-                html       += '<p class="text-danger">{{$errors->first('room_name[]')}}</p>';
+                html       += '<p class="text-danger">{{$errors->first("room_name[]")}}</p>';
                 $('.multi_name').append(html);
                 $("[name*=room_name]").each(function() {
                     $(this).rules('add', {
@@ -306,6 +306,22 @@
                         }
                     });
                 });
+
+                // //for unique validation
+                // $("[name*=room_name]").each(function() {
+                //   console.log($("[name*=room_name]").val());
+                //     $(this).rules('add', {
+                //       "remote" :
+                //           {
+                //               url: '/backend_mps/check_unique',
+                //               type: "get",
+                //               data:
+                //               {
+                //                 room_name : $("[name*=room_name]").val(),
+                //               }
+                //           }
+                //     });
+                // });
 
             });
 

@@ -139,6 +139,8 @@ Route::group(['middleware' => 'web'], function () {
     // Route::get('hotel/check_user_email/{hotel_id}', ['as' => 'backend_mps/hotel/check_user_email', 'uses' => 'Setup\Hotel\HotelController@check_user_email']);
     Route::get('hotel/check_user_email', ['as' => 'backend_mps/hotel/check_user_email', 'uses' => 'Setup\Hotel\HotelController@check_user_email']);
 
+    // Route::get('check_unique', ['as' => 'backend_mps/check_unique', 'uses' => 'Setup\Room\RoomController@check_unique']);
+
 
 
     });

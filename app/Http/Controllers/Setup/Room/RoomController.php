@@ -253,4 +253,19 @@ class RoomController extends Controller
         return \Response::json($result);
     }
 
+    // public function check_unique(){
+    //     $room_names      = Input::get('room_name');
+    //     $validation_result = true;
+    //
+    //     foreach($room_names as $room_name){
+    //         $has_room_result = $this->repo->checkRoomName($room_name);
+    //         if(isset($has_room_result) && count($has_room_result)>0){
+    //           // if there is a room with input room name, validation fails
+    //           $validation_result = false;
+    //         }
+    //     }
+    //
+    //     return \Response::json($validation_result);
+    // }
+
 }

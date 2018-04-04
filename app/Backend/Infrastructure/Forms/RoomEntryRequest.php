@@ -24,6 +24,7 @@ class RoomEntryRequest extends Request
     public function rules()
     {
         $rules  = [
+            // "room_name.*"       => "required",
             'hotel_id'          => 'required',
             // 'h_room_type_id'    => 'required',
             'h_room_category_id'=> 'required',
@@ -41,6 +42,7 @@ class RoomEntryRequest extends Request
     public function messages()
     {
         $messages = [
+            // "room_name.*.required"          => "Each room name is required",
             'hotel_id.required'             => 'Hotel is required!',
             // 'h_room_type_id.required'       => 'Room Type is required!',
             'h_room_category_id.required'   => 'Room Category is required!',

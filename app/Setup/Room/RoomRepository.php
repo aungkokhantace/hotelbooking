@@ -302,4 +302,9 @@ class RoomRepository implements RoomRepositoryInterface
         $result = DB::select("SELECT * FROM booking_room WHERE room_id = $id AND status IN ( '" . implode( "', '" , $not_to_delete_status_arr ) . "' ) AND deleted_at IS NULL");
         return $result;
     }
+
+    // public function checkRoomName($name){
+    //   $result = $objs = Room::whereNull('deleted_at')->where('name',$name)->get();
+    //   return $result;
+    // }
 }
