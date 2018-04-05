@@ -141,21 +141,21 @@ $companyLogo = \App\Core\Check::companyLogo();
             </div>
             <!-- MULTI LANGUAGE -->
             <div class="col-md-2">
-              <div class="navbar-header center">
+              <!-- <div class="navbar-header center">
 
 
                                       <form action="/backend_mps/language" method="post"  id="change_lang" class="form-inline">
 
-                                          <!-- <a href="#"><img src="/assets/shared/images/en_US.png"></a> -->
-                                          <input type="image" value="jp" class="flag-img" name="locale" src="/assets/shared/images/jp.png" style="margin-right:10px">
+                                          <! <a href="#"><img src="/assets/shared/images/en_US.png"></a> -->
+                                          <!-- <input type="image" value="jp" class="flag-img" name="locale" src="/assets/shared/images/jp.png" style="margin-right:10px">
 
 
                                           <input type="image" value="en" class="flag-img" name="locale" src="/assets/shared/images/en_US.png">
 
                                            {{ csrf_field() }}
-                                       </form>
+                                       </form> -->
 
-             </div>
+             <!-- </div> -->
             </div>
 
             <!-- end mobile sidebar expand / collapse button -->
