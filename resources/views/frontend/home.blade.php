@@ -17,6 +17,13 @@
                                   <p class="container">{{ $slider->description }}</p>
                               </div>
                           </div>
+                          <div class="item">
+                              <div class="fill"><img src="/assets/shared/images/{{ $slider->image_url }}"></div>
+                              <div class="carousel-caption">
+                                  <h1 class="container">{{ $slider->title }}</h1>
+                                  <p class="container">{{ $slider->description }}</p>
+                              </div>
+                          </div>
                           <?php
                             $first_slider = 0; //clear first_slider flag
                             ?>
