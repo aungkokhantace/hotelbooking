@@ -79,7 +79,6 @@ class ConfigController extends Controller
             $removeImageFlag = Input::get('removeImageFlag');
 
             try{
-
                 $loginUserId = 1;
                 $sessionObj = session('user');
                 if(isset($sessionObj)){
@@ -111,7 +110,9 @@ class ConfigController extends Controller
                     $img_name = 'logo'.'.' .$extension;
 
                     $SETTING_LOGO = '/images/' .$img_name;
+
                     DB::statement("DELETE FROM `$this->tbConfig` WHERE `code` = 'SETTING_LOGO'");
+
                     $result = DB::statement("INSERT INTO `$this->tbConfig` (code,type,value,description,updated_by,updated_at) VALUES ('SETTING_LOGO','SETTING','$SETTING_LOGO','Company Logo',$loginUserId,'$updated_at')");
 
                     // moving image into image folder
@@ -122,13 +123,14 @@ class ConfigController extends Controller
 
                     // getting image width and height
                     $imgData = getimagesize($path . '/' . $img_name);
+
                     $width = $imgData[0];
                     $imgWidth = $width * $rWidth;
                     $height = $imgData[1];
                     $imgHeight = $height * $rHeight;
 
-                    // resizing image
-                    $image = InterventionImage::make(sprintf($path .'/%s', $img_name))->resize($imgWidth, $imgHeight)->save();
+                    // // resizing image
+                    // $image = InterventionImage::make(sprintf($path .'/%s', $img_name))->resize($imgWidth, $imgHeight)->save();
 
                 }
                 if($removeImageFlag == 1){

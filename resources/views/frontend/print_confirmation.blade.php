@@ -1,3 +1,7 @@
+<?php
+$companyLogo = \App\Core\Check::companyLogo();
+?>
+
 <html>
 <head>
     <title>Print</title>
@@ -6,7 +10,8 @@
     <table style="padding-bottom: 2px;">
         <tr>
             <td width="40%">
-                <img style="width:120px;height:50px;" src="/assets/shared/images/mplogo.png" alt="logo">
+                <!-- <img style="width:120px;height:50px;" src="/assets/shared/images/mplogo.png" alt="logo"> -->
+                <img style="width:120px;height:50px;" src="{{$companyLogo}}" alt="logo">
             </td>
             <td width="10%"></td>
             <td width="50%" align="right">
@@ -58,11 +63,11 @@
                 <span style="font-size:14pt;font-weight: bold;">
                     {{$booking->room_count}}
                 </span><br>
-                <span style="font-size:8pt;">{{trans('frontend_details.rooms')}}</span><br>
+                <span style="font-size:8pt;">@if($booking->room_count>1) {{trans('frontend_details.rooms')}} @else {{trans('frontend_details.room')}} @endif</span><br>
                 <span style="font-size:14pt;font-weight: bold;">
                     {{$booking->total_day}}
                 </span><br>
-                <span style="font-size:8pt;">{{trans('frontend_details.night')}}</span>
+                <span style="font-size:8pt;">@if($booking->total_day>1){{trans('frontend_details.nights')}}@else {{trans('frontend_details.night')}} @endif</span>
             </td>
             <td width="40%" align="right">
                 {{--<span style="font-size:8pt;">{{trans('frontend_details.price')}}</span><br>--}}
@@ -131,21 +136,35 @@
             <td width="75%" style="border-top: 2px solid black;">
                 <span style="font-size:13pt;font-weight:bold;">{{$room->room_category}}</span><br>
                 <span style="font-size:10pt;"> {{trans('frontend_details.guests')}} : {{$room->guest_count}}</span><br>
-                <span style="font-size:11pt;font-weight:bold;">{{trans('frontend_details.amenities')}}</span><br>
-                @foreach($room->amenities as $amenity)
-                    <span style="font-size:10pt;">{{"* ".$amenity->name}}</span>
-                @endforeach
-                <br>
-                <span style="font-size:11pt;font-weight:bold;">{{trans('frontend_details.room_facilties')}}</span><br>
-                @foreach($room->facilities as $facility)
-                    <span style="font-size:10pt;">{{"* ".$facility->name}}</span>
-                @endforeach
-                <br>
-                <span style="font-size:11pt;font-weight:bold;">{{trans('frontend_details.room_facilties')}}</span><br>
-                @foreach($hotel->h_facilities as $h_facility)
-                    <span style="font-size:10pt;">{{"* ".$h_facility->facility->name}}</span>
-                @endforeach
-                <br>
+
+                <!-- start extrabed information -->
+                <span style="font-size:10pt;"> {{trans('frontend_details.added_extra_bed_text')}} : {{$room->added_extra_bed_text}}</span><br>
+                @if($room->added_extra_bed == 1)
+                <span style="font-size:10pt;"> {{trans('frontend_details.extra_bed_price')}} : {{$room->extra_bed_price}}</span><br>
+                @endif
+                <!-- end extrabed information -->
+
+                @if(isset($room->amenities) && count($room->amenities)>0)
+                  <span style="font-size:11pt;font-weight:bold;">{{trans('frontend_details.amenities')}}</span><br>
+                  @foreach($room->amenities as $amenity)
+                      <span style="font-size:10pt;">{{"* ".$amenity->name}}</span>
+                  @endforeach
+                  <br>
+                @endif
+                @if(isset($room->facilities) && count($room->facilities)>0)
+                  <span style="font-size:11pt;font-weight:bold;">{{trans('frontend_details.room_facilties')}}</span><br>
+                  @foreach($room->facilities as $facility)
+                      <span style="font-size:10pt;">{{"* ".$facility->name}}</span>
+                  @endforeach
+                  <br>
+                @endif
+                @if(isset($room->h_facilities) && count($room->h_facilities)>0)
+                  <span style="font-size:11pt;font-weight:bold;">{{trans('frontend_details.hotel_facilties')}}</span><br>
+                  @foreach($hotel->h_facilities as $h_facility)
+                      <span style="font-size:10pt;">{{"* ".$h_facility->facility->name}}</span>
+                  @endforeach
+                  <br>
+                @endif
             </td>
         </tr>
         @endforeach
@@ -171,12 +190,15 @@
                     <!-- {!! !is_null($hotel->policy) ? $hotel->policy:'' !!} -->
                 <!-- </div> -->
             <!-- </td> -->
+
+            @if(isset($b_request_arr) && count($b_request_arr)>0)
             <td width="50%">
                 <b>{{trans('frontend_details.special_request')}}</b><br>
                 @foreach($b_request_arr as $request)
                     {!! '-'.$request !!}<br>
                 @endforeach
             </td>
+            @endif
             <td></td>
         </tr>
     </table>

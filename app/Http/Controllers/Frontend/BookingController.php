@@ -333,6 +333,8 @@ class BookingController extends Controller
             $h_configRepo                   = new HotelConfigRepository();
             $b_requestRepo                  = new BookingRequestRepository();
             $hotelPolicyRepo                = new HotelPolicyRepository();
+            $roomRepo                       = new RoomRepository();
+            $rCatImageRepo                  = new RoomCategoryImageRepository();
 
             $r_category_id                  = array();
             $amenity_arr                    = array();
@@ -412,6 +414,30 @@ class BookingController extends Controller
                     }
                     $bRoom->facilities      = $facility_arr;
                     $facility_arr           = array();
+
+
+                    // start room category default image
+                    $room_id = $bRoom->room_id;
+                    $roomObj = $roomRepo->getObjByID($room_id);
+                    $room_category_id = $roomObj->h_room_category_id;
+
+                    $categoryImageObj = $rCatImageRepo->getDefaultRoomCategoryImageByHotelRoomCategoryId($room_category_id);
+                    if(isset($categoryImageObj) && count($categoryImageObj) > 0){
+                      $bRoom->category_image = $categoryImageObj->img_path;
+                    }
+                    else{
+                      $bRoom->category_image = null;
+                    }
+                    //end room category default image
+
+                    //start booking room extrabed flag and price
+                    if($bRoom->added_extra_bed == 1){
+                      $bRoom->added_extra_bed_text = "Added";
+                    }
+                    else{
+                      $bRoom->added_extra_bed_text = "No";
+                    }
+                    //end booking room extrabed flag and price
                 }
             }
             // $booking->total_room_price      = $total_room_price;

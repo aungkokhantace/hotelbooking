@@ -22,6 +22,7 @@ return[
 	"bed"=>"Bed",
 	"description"=>"Description",
 	"room_facilties"=>"Room Facilities",
+	"hotel_facilties"=>"Hotel Facilities",
 	"room_amenities"=>"Room Amenities",
 	"play"=>"Play",
 	"food_drink"=>"Food & Drink",

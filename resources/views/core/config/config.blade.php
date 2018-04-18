@@ -43,7 +43,7 @@
             <label for="code">Site Logo</label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <div class="add_image_div add_image_div_red" style="background-image: url({{ $configs['SETTING_LOGO'] }});">
+            <div class="add_image_div add_image_div_red" style="background-image: url({{ $configs['SETTING_LOGO'] }});background-position:center;background-size:cover">
             </div>
             <input type="hidden" id="removeImageFlag" value="0" name="removeImageFlag">
         </div>
