@@ -105,6 +105,7 @@
 
             });
 
+            //to prevent enter key in search box of country list
             $(window).keydown(function(event){
               if(event.keyCode == 13) {
                 event.preventDefault();
