@@ -183,15 +183,16 @@
                 @if($counter <3)
                     <!--Plus 1 to counter for each element rendered-->
                     <?php $counter++; ?>
-                    <div class="col-md-4 img-portfolio">
-                        {{--<a href="#">--}}
-                            <img class="img-responsive img-hover" src="/images/upload/{{$popular_city->image}}" alt="">
-                            <div class="portfolio-caption">
-                                <!--<h4>HOT</h4>-->
-                                <h3><strong>{{$popular_city->name}}</strong><small>, {{$popular_city->country->name}}</small></h3>
-                            </div>
-                        {{--</a>--}}
-                    </div>
+                    <form id="frm_search_{{$popular_city->id}}" method="post" action="/search" class="form-horizontal user-form-border">
+                      <div class="col-md-4 img-portfolio" onclick="submit_search('{{$popular_city->id}}');">
+                              {{ csrf_field() }}
+                              <input type="hidden" name="destination_name" value="{{$popular_city->name}}">
+                              <img class="img-responsive img-hover" src="/images/upload/{{$popular_city->image}}" alt="">
+                              <div class="portfolio-caption">
+                                  <h3><strong>{{$popular_city->name}}</strong><small>, {{$popular_city->country->name}}</small></h3>
+                              </div>
+                      </div>
+                    </form>
                 @else
                     <!--For the fourth element, reset the counter to 0 and close the current row-->
                     </div>
@@ -200,15 +201,17 @@
                     <div class="row">
                         <!--Plus 1 to counter for each element rendered-->
                         <?php $counter++; ?>
-                        <div class="#">
-                            <a href="portfolio-item.html">
+                        <form id="frm_search_{{$popular_city->id}}" method="post" action="/search" class="form-horizontal user-form-border">
+                            <div class="col-md-4 img-portfolio" onclick="submit_search('{{$popular_city->id}}');">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="destination_name" value="{{$popular_city->name}}">
                                 <img class="img-responsive img-hover" src="/images/upload/{{$popular_city->image}}" alt="">
                                 <div class="portfolio-caption">
-                                    <!--<h4>HOT</h4>-->
                                     <h3><strong>{{$popular_city->name}}</strong><small>, {{$popular_city->country->name}}</small></h3>
                                 </div>
-                            </a>
-                        </div>
+                            </div>
+                        </form>
+
                 @endif
                 @endforeach
 
@@ -497,6 +500,8 @@
             $("#destination").autocomplete({
                 source: "/autocompletedestination"
             });
+
         });
+
     </script>
 @stop

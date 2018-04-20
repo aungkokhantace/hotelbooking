@@ -176,3 +176,8 @@ function enable_hotel(id) {
         });
 
 }
+
+function submit_search(id) {
+    console.log('hello');
+    $("#frm_search_" + id).submit();
+}

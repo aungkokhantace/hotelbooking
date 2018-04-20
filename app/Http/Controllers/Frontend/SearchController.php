@@ -63,7 +63,12 @@ class SearchController extends Controller
         $facility_filter        = (Input::has('facility_filter')) ? Input::get('facility_filter') : "";
         $landmark_filter        = (Input::has('landmark_filter')) ? Input::get('landmark_filter') : "";
 
-        if($request->isMethod('post')){
+        //to search from popular city of homepage
+        // if(Input::has('destination_name')){
+        //     $destination        = (Input::has('destination_name')) ? Input::get('destination_name') : "";
+        // }
+
+        if($request->isMethod('post') && !(Input::has('destination_name'))){
             Session::forget('destination');
             Session::forget('check_in');
             Session::forget('check_out');
@@ -74,7 +79,6 @@ class SearchController extends Controller
             Session::forget('star_filter');
             Session::forget('facility_filter');
             Session::forget('landmark_filter');
-
         }
         else{
             $destination        = Session::get('destination');
@@ -87,6 +91,11 @@ class SearchController extends Controller
             $star_filter        = Session::get('star_filter');
             $facility_filter    = Session::get('facility_filter');
             $landmark_filter    = Session::get('landmark_filter');
+        }
+
+        //to search from popular city of homepage
+        if(Input::has('destination_name')){
+            $destination        = (Input::has('destination_name')) ? Input::get('destination_name') : "";
         }
 
         if(isset($destination) && $destination != null && $destination != ""){
