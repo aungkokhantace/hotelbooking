@@ -130,6 +130,7 @@ class AuthController extends Controller
         $request->validate();
         $username       = $request->user_name;
         $checkRole      = $this->checkRoleId($username);
+        $validation     = false;
         if ($checkRole == true) {
             if(filter_var($request->user_name, FILTER_VALIDATE_EMAIL)){
                 $validation = Auth::guard('User')->attempt([
@@ -176,11 +177,11 @@ class AuthController extends Controller
 
     protected function checkRoleId($username) {
         $result     = false;
-        $roleAttr   = User::where('user_name','=',$username)->where('role_id','!=',4)->first();
+        $roleAttr   = User::where('user_name','=',$username)->where('role_id','!=',4)->where('role_id','!=',9999)->first();
         if (count($roleAttr) >= 1) {
             $result     = true;
         } else {
-            $roleAttr   = User::where('email','=',$username)->where('role_id','!=',4)->first();
+            $roleAttr   = User::where('email','=',$username)->where('role_id','!=',4)->where('role_id','!=',9999)->first();
             if (count($roleAttr) >= 1) {
                 $result     = true;
             }

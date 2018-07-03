@@ -84,7 +84,11 @@
                                 <label for="submit" class="col-sm-2 col-form-labels"></label>
                                 <div class="col-sm-10">
                                     <button type="submit" class="btn profile-btn-default1">{{trans('frontend_details.update')}}</button>
+                                    <!-- <button type="submit" class="btn">{{trans('frontend_details.update')}}</button> -->
+                                    <!-- <button type="button" onclick="cancel_profile()" class="btn profile-btn-default2">{{trans('frontend_details.Cancel')}}</button> -->
+
                                     <button type="button" onclick="cancel_profile()" class="btn profile-btn-default2">{{trans('frontend_details.Cancel')}}</button>
+                                    <!-- <button type="button" class="btn">{{trans('frontend_details.Cancel')}}</button> -->
                                 </div>
                             </div>
                         {!! Form::close() !!}

@@ -82,7 +82,7 @@
     margin-left: 9px;
     border-radius: 0px;
 }
-.profile-btn-default1:hover {
+/* .profile-btn-default1:hover {
     color: #fff;
     background-color: #D63090;
     border-color: #D63090;
@@ -95,7 +95,7 @@
     width: 23%;
     margin-left: 9px;
     border-radius: 0px;
-}
+} */
 .profile-btn-default2 {
     color: #fff;
     background-color: #545454;
@@ -110,7 +110,7 @@
     margin-left: 9px;
     border-radius: 0px;
 }
-.profile-btn-default2:hover {
+/* .profile-btn-default2:hover {
     color: #fff;
     background-color: #545454;
     border-color: #545454;
@@ -123,7 +123,7 @@
     width: 23%;
     margin-left: 9px;
     border-radius: 0px;
-}
+} */
 
 .profile-form-labels {
     /*padding-top: 13px;*/

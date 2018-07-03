@@ -85,8 +85,8 @@
                     password          : 'required'
                 },
                 messages: {
-                    user_name     : 'Please Type User Name!',
-                    password      : 'Forgot to type password'
+                    user_name     : 'Username is required',
+                    password      : 'Password is required'
                 },
                 submitHandler: function(form) {
                     $('input[type="submit"]').attr('disabled','disabled');
