@@ -18,7 +18,6 @@ $companyLogo = \App\Core\Check::companyLogo();
                 <h3>{{trans('frontend_details.booking_confirmation')}}</h3>{{trans('frontend_details.booking_number')}} : {{$booking->booking_no}}
             </td>
         </tr>
-
     </table>
     <br>
     <table style="width:100%;border-collapse: collapse;border: 2px solid black;padding:7px 0 4px 4px;">
@@ -70,7 +69,7 @@ $companyLogo = \App\Core\Check::companyLogo();
                 <span style="font-size:8pt;">@if($booking->total_day>1){{trans('frontend_details.nights')}}@else {{trans('frontend_details.night')}} @endif</span>
             </td>
             <td width="40%" align="right">
-                {{--<span style="font-size:8pt;">{{trans('frontend_details.price')}}</span><br>--}}
+                <!-- <span style="font-size:8pt;">{{trans('frontend_details.price')}}</span><br> -->
                 <span style="font-size:11pt;text-align: center;">
                     {{number_format($booking->price_wo_tax,2)}}
                 </span>
@@ -97,16 +96,16 @@ $companyLogo = \App\Core\Check::companyLogo();
             </td>
         </tr>
 
-        {{--<tr>--}}
-            {{--<td colspan="3" width="60%" align="center" style="border-right: 1px solid grey;">--}}
-                {{--<span style="font-size:8pt;">Total Extra Bed Price</span>--}}
-            {{--</td>--}}
-            {{--<td width="40%" align="right">--}}
-                {{--<span style="font-size:11pt;">--}}
-                    {{--{{number_format($booking->total_extra_bed_price,2)}}--}}
-                {{--</span>--}}
-            {{--</td>--}}
-        {{--</tr> --}}
+        <!--<tr>
+            <td colspan="3" width="60%" align="center" style="border-right: 1px solid grey;">
+                <span style="font-size:8pt;">Total Extra Bed Price</span>
+            </td>
+            <td width="40%" align="right">
+                <span style="font-size:11pt;">
+                    {{number_format($booking->total_extra_bed_price,2)}}
+                </span>
+            </td>
+        </tr> -->
         <tr>
             <td colspan="3" width="60%" align="center" style="border-right: 1px solid grey;border-top: 2px solid grey;border-bottom: 2px solid grey;">
                 <span style="font-size:14pt;font-weight: bold;">{{trans('frontend_details.total_price')}}</span>
@@ -183,14 +182,13 @@ $companyLogo = \App\Core\Check::companyLogo();
     <br style="line-height: 50px;">
     <table>
         <tr>
-            <!-- <td width="50%"> -->
-                <!-- <span style="font-size:13px;font-weight:bold;">{{trans('frontend_details.hotel_policies')}}</span> -->
-                <!-- <div style="width: 45%"> -->
-                    <!-- {!! !is_null($h_config) && !is_null($h_config->hotel_policies)?$h_config->hotel_policies:'' !!} -->
-                    <!-- {!! !is_null($hotel->policy) ? $hotel->policy:'' !!} -->
-                <!-- </div> -->
-            <!-- </td> -->
-
+            <td width="50%">
+                <span style="font-size:13px;font-weight:bold;">{{trans('frontend_details.hotel_policies')}}</span>
+                <div style="width: 45%">
+                    {!! !is_null($h_config) && !is_null($h_config->hotel_policies)?$h_config->hotel_policies:'' !!}
+                    {!! !is_null($hotel->policy) ? $hotel->policy:'' !!}
+                </div>
+            </td>
             @if(isset($b_request_arr) && count($b_request_arr)>0)
             <td width="50%">
                 <b>{{trans('frontend_details.special_request')}}</b><br>
