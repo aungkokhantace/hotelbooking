@@ -60,6 +60,16 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
         return $result;
     }
 
+    public function getNotCancelledBookingRoomByBookingId($id){
+        $cancel_status_array = [3,4,6,7,8,9];
+        $result     = BookingRoom::whereNull('deleted_at')
+                                    ->where('booking_id','=',$id)
+                                    ->whereNotIn('status',$cancel_status_array)
+                                    ->get();
+
+        return $result;
+    }
+
 
     public function getBookingRoomAndRoomByBookingId($id){
         /*
@@ -98,7 +108,7 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
                                  // ->orwhereNull('r_category_image.default_image')
                                  ->whereIn('booking_room.status',$statusArr)
                                  ->get();
-        
+
         return $result;
     }
     public function getObjectById($id){

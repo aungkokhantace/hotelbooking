@@ -1181,7 +1181,9 @@ class PaymentController extends Controller
         $hotel      = $hotelRepo->getObjByID($hotel_id);
 
         $bookingRoomRepo = new BookingRoomRepository();
-        $booking_rooms = $bookingRoomRepo->getBookingRoomByBookingId($booking_id);
+        // $booking_rooms = $bookingRoomRepo->getBookingRoomByBookingId($booking_id);
+        //show only uncancelled rooms
+        $booking_rooms = $bookingRoomRepo->getNotCancelledBookingRoomByBookingId($booking_id);
 
         $number_of_rooms = count($booking_rooms);
 

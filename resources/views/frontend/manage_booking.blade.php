@@ -214,7 +214,7 @@
                                                    </div>
                                                    <div class="col-2">
                                                        <select class="floatLabel form-control" name="g_count">
-                                                           @for($i=1;$i<=$room->max_count;$i++){
+                                                           @for($i=1;$i<=$room->guest_count;$i++){
                                                            <option value="{{$i}}" {{$i==$room->guest_count?'selected':''}}>
                                                                {{$i>1?$i.' guests':$i.' guest'}}
                                                            </option>
