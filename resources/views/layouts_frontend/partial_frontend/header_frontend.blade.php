@@ -134,7 +134,8 @@ $companyLogo    = \App\Core\Check::companyLogo();
                             <!-- </div> -->
                         </li>
                         <li>
-                            <a href="/aboutus">{{trans('frontend_header.about_us')}}</a>
+                            <!-- <a href="/aboutus">{{trans('frontend_header.about_us')}}</a> -->
+                            <a href="/about_us">{{trans('frontend_header.about_us')}}</a>
                         </li>
                         <li>
                             <a href="/faq_information">FAQ</a>

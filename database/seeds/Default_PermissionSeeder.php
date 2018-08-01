@@ -386,6 +386,12 @@ class Default_PermissionSeeder extends Seeder
             //Faq Information
              ['id'=>660,'module'=>'FaqInformation','name'=>'View and Store','description'=>'Faq Information View and Store','url'=>'backend_mps/faq_information'],
 
+            //About Us Information
+             ['id'=>665,'module'=>'About_Us','name'=>'View and Store','description'=>'About Us View and Store','url'=>'backend_mps/about_us'],
+
+            //Contact Us Information
+             ['id'=>670,'module'=>'Contact_Us','name'=>'View and Store','description'=>'Contact Us View and Store','url'=>'backend_mps/contact_us'],
+
         );
 
 //        DB::table('core_permissions')->insert($permissions);

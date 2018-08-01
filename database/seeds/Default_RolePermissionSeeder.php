@@ -17,7 +17,7 @@ class Default_RolePermissionSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('core_permission_role')->delete();
+        DB::table('core_permission_role')->truncate();
 
         $roles = array(
             ['role_id'=>1, 'permission_id'=>1],
@@ -669,6 +669,12 @@ class Default_RolePermissionSeeder extends Seeder
             ['role_id'=>2, 'permission_id'=>25],
             ['role_id'=>1, 'permission_id'=>26],
             ['role_id'=>2, 'permission_id'=>26],
+
+            ['role_id'=>1, 'permission_id'=>665],
+            ['role_id'=>2, 'permission_id'=>665],
+
+            ['role_id'=>1, 'permission_id'=>670],
+            ['role_id'=>2, 'permission_id'=>670],
 
         );
 
