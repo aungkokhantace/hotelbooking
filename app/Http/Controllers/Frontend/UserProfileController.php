@@ -39,10 +39,18 @@ class UserProfileController extends Controller
         $email                  = trim(Input::get('email'));
         $address                = trim(Input::get('address'));
 
+        $password               = trim(Input::get('password'));
+
         $paramObj               = $this->repo->getObjByID($id);
+
         $paramObj->first_name   = $f_name;
         $paramObj->last_name    = $l_name;
         $paramObj->email        = $email;
+
+        //if password is changed
+        if(isset($password) && $password !== null && $password !== ""){
+          $paramObj->password     = bcrypt($password);
+        }
         $paramObj->address      = $address;
 
         $result                 = $this->repo->update($paramObj);

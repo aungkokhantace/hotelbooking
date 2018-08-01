@@ -63,6 +63,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="my_profile">
                                 <div class="profile row">
                                     <label for="email" class="col-sm-2 profile-form-labels">{{trans('frontend_header.email_address')}}</label>
@@ -72,6 +73,42 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- start password change -->
+                            <div class="my_profile">
+                                <div class="profile row">
+                                    <label for="change_password" class="col-sm-2 profile-form-labels">Change Password</label>
+                                    <div class="col-sm-10">
+                                        <!-- <input type="checkbox" class="profile-form-controls" name="change_password" id="change_password" value="1" @if(Input::old('change_password')=="1")checked @endif> -->
+                                        <select name="change_password" id="change_password" class="profile-form-controls">
+                                          <option value="0" selected>No</option>
+                                          <option value="1">Yes</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="my_profile password_field">
+                              <div class="profile row">
+                                <label for="password" class="col-sm-2 profile-form-labels">New Password<span class="require">*</span></label>
+                                <div class="col-sm-10">
+                                  <input type="password" class="profile-form-controls" id="password" name="password" placeholder="Enter Password"/>
+                                  <p class="text-danger">{{$errors->first('password')}}</p>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="my_profile password_field">
+                                <div class="profile row">
+                                    <label for="conpassword" class="col-sm-2 profile-form-labels">Confirm New Password<span class="require">*</span></label>
+                                    <div class="col-sm-10">
+                                      <input type="password" class="profile-form-controls" id="conpassword" name="conpassword" placeholder="Enter Confirm Password"/>
+                                      <p class="text-danger">{{$errors->first('conpassword')}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end password change -->
+
                             <div class="my_profile">
                                 <div class="profile row">
                                     <label for="address" class="col-sm-2 profile-form-labels">{{trans('frontend_details.address')}}</label>
@@ -109,6 +146,15 @@
                 rules: {
                     first_name      : 'required',
                     last_name       : 'required',
+                    password        : {
+                      required  :true,
+                      minlength :8,
+
+                    },
+                    conpassword     : {
+                      required :true,
+                      equalTo  :"#password",
+                    },
                     email   	        : {
                         required 	: true,
                         email	 	: true,
@@ -126,8 +172,17 @@
                     }
                 },
                 messages: {
-                    first_name      : 'Require!',
-                    last_name       : 'Require!',
+                    first_name      : 'First name is required!',
+                    last_name       : 'Last name is required!',
+                    password        : {
+                      required:'Password is required!',
+                      minlength:'Password length must be at least 8 characters!',
+
+                    },
+                    conpassword     : {
+                      required:'Confirm password is required!',
+                      equalTo: 'Passwords do not match!',
+                    },
                     email     	        : {
                         required 	: 'Require!',
                         email 	 	: 'Email is invalid format',
@@ -137,6 +192,15 @@
                 submitHandler: function(form) {
                     $('input[type="submit"]').attr('disabled','disabled');
                     form.submit();
+                }
+            });
+
+            $('#change_password').change(function() {
+                console.log(document.getElementById('change_password').value);
+                if (document.getElementById('change_password').value == "1"){
+                    $(".password_field").show();
+                } else{
+                    $(".password_field").hide();
                 }
             });
         });

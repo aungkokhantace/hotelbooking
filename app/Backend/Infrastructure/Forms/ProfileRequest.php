@@ -33,9 +33,9 @@ class ProfileRequest extends Request
     public function messages()
     {
         return [
-            "first_name.required"       => "Require!",
-            "last_name.required"        => "Require!",
-            "email.required"            => "Require!"
+            "first_name.required"       => "First name is required!",
+            "last_name.required"        => "Last name is required!",
+            "email.required"            => "Email is required!",
         ];
     }
 }
