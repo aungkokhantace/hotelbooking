@@ -11,11 +11,21 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="description" class="text_bold_black">FAQ Information Text</label>
+            <label for="description_en" class="text_bold_black">FAQ Information Text [English]</label>
         </div>
         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-            <textarea class="form-control" id="description" name="description" placeholder="Enter Transportation Information Text" rows="5" cols="50">{{ isset($faqInformation)? $faqInformation["description"]:Request::old('description') }}</textarea>
-            <p class="text-danger">{{$errors->first('description')}}</p>
+            <textarea class="form-control text-area" id="description_en" name="description_en" placeholder="Enter Transportation Information Text in English" rows="5" cols="50">{{ isset($faqInformation)? $faqInformation["description_en"]:Request::old('description_en') }}</textarea>
+            <p class="text-danger">{{$errors->first('description_en')}}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="description_jp" class="text_bold_black">FAQ Information Text [Japanese]</label>
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+            <textarea class="form-control text-area" id="description_jp" name="description_jp" placeholder="Enter Transportation Information Text in Japanese" rows="5" cols="50">{{ isset($faqInformation)? $faqInformation["description_jp"]:Request::old('description_jp') }}</textarea>
+            <p class="text-danger">{{$errors->first('description_jp')}}</p>
         </div>
     </div>
 
@@ -40,7 +50,8 @@
 //            height:300
 //        });
 
-            $('#description').summernote({
+            // $('#description').summernote({
+            $('.text-area').summernote({
                 height:300,
                 toolbar: [
                     // [groupName, [list of button]]
@@ -59,7 +70,8 @@
                     ['undo', ['undo']],
                     ['redo', ['redo']],
 //                ['help', ['help']],
-                ]
+                ],
+                placeholder:'Enter text here...'
             });
         });
 

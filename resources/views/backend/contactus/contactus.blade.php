@@ -1,30 +1,30 @@
 @extends('layouts.master')
-@section('title','Transportation Information Edit')
+@section('title','Contact Us Edit')
 @section('content')
 
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">Transportation Information Edit</h1>
-    {!! Form::open(array('url' => '/backend_mps/transportation_information', 'class'=> 'form-horizontal user-form-border','files' => true)) !!}
+    <h1 class="page-header">Contact Us Edit</h1>
+    {!! Form::open(array('url' => '/backend_mps/contact_us', 'class'=> 'form-horizontal user-form-border','files' => true)) !!}
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="description_en" class="text_bold_black">Transportation Information Text [English]</label>
+            <label for="description" class="text_bold_black">Contact Us Text [English]</label>
         </div>
         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-            <textarea class="form-control text-area" id="description_en" name="description_en" placeholder="Enter Transportation Information Text in English" rows="5" cols="50">{{ isset($transportationInformation)? $transportationInformation["description_en"]:Request::old('description_en') }}</textarea>
+            <textarea class="form-control text-area" id="description_en" name="description_en" placeholder="Enter Contact Us Text in English" rows="5" cols="50">{{ isset($contactUs)? $contactUs["description_en"]:Request::old('description_en') }}</textarea>
             <p class="text-danger">{{$errors->first('description_en')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="description_jp" class="text_bold_black">Transportation Information Text [Japanese]</label>
+            <label for="description" class="text_bold_black">Contact Us Text [Japanese]</label>
         </div>
         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-            <textarea class="form-control text-area" id="description_jp" name="description_jp" placeholder="Enter Transportation Information Text in Japanese" rows="5" cols="50">{{ isset($transportationInformation)? $transportationInformation["description_jp"]:Request::old('description_jp') }}</textarea>
+            <textarea class="form-control text-area" id="description_jp" name="description_jp" placeholder="Enter Contact Us Text in Japanese" rows="5" cols="50">{{ isset($contactUs)? $contactUs["description_jp"]:Request::old('description_jp') }}</textarea>
             <p class="text-danger">{{$errors->first('description_jp')}}</p>
         </div>
     </div>
@@ -33,10 +33,10 @@
         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="submit" name="submit" value="{{isset($transportationInformation)? 'UPDATE' : 'ADD'}}" class="form-control btn-primary">
+            <input type="submit" name="submit" value="{{isset($contactUs)? 'UPDATE' : 'ADD'}}" class="form-control btn-primary">
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-            <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('transportation_information')">
+            <input type="button" value="CANCEL" class="form-control cancel_btn" onclick="cancel_setup('contact_us')">
         </div>
     </div>
     {!! Form::close() !!}
@@ -69,8 +69,8 @@
                     ['undo', ['undo']],
                     ['redo', ['redo']],
 //                ['help', ['help']],
-                ],
-                placeholder: 'Enter text here...'
+              ],
+              placeholder: 'Enter text here...'
             });
         });
 

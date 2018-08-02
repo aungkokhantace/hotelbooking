@@ -94,6 +94,9 @@ Route::group(['middleware' => 'web'], function () {
     //Display About Us Information
     Route::get('about_us', array('as'=>'/about_us', 'uses'=>'Frontend\AboutUsController@index'));
 
+    //Display Contact Us Information
+    Route::get('contact_us', array('as'=>'/contact_us', 'uses'=>'Frontend\ContactUsController@index'));
+
     //Display Tour Information
     Route::get('tour_information', array('as'=>'/tour_information', 'uses'=>'Frontend\TourInformationController@index'));
     //Display VISA Information
@@ -506,6 +509,12 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('communication/reply/{id}', array('as'=>'backend_mps/communication/reply/{id}', 'uses'=>'Setup\HotelBooking\CommunicationController@show'));
             Route::post('communication/reply/store', array('as'=>'backend_mps/communication/reply/store', 'uses'=>'Setup\HotelBooking\CommunicationController@store'));
 
+            //stored in service_price table
+            // //Transportation Information
+            // Route::get('transportation_information', array('as'=>'backend_mps/transportation_information', 'uses'=>'Setup\TransportationInformation\TransportationInformationController@edit'));
+            // Route::post('transportation_information', array('as'=>'backend_mps/transportation_information', 'uses'=>'Setup\TransportationInformation\TransportationInformationController@update'));
+
+            //stored in display_information table [updated]
             //Transportation Information
             Route::get('transportation_information', array('as'=>'backend_mps/transportation_information', 'uses'=>'Setup\TransportationInformation\TransportationInformationController@edit'));
             Route::post('transportation_information', array('as'=>'backend_mps/transportation_information', 'uses'=>'Setup\TransportationInformation\TransportationInformationController@update'));
@@ -525,6 +534,10 @@ Route::group(['middleware' => 'web'], function () {
             //About Us Information
             Route::get('about_us', array('as'=>'backend_mps/about_us', 'uses'=>'Setup\AboutUs\AboutUsController@edit'));
             Route::post('about_us', array('as'=>'backend_mps/about_us', 'uses'=>'Setup\AboutUs\AboutUsController@update'));
+
+            //Contact Us Information
+            Route::get('contact_us', array('as'=>'backend_mps/contact_us', 'uses'=>'Setup\ContactUs\ContactUsController@edit'));
+            Route::post('contact_us', array('as'=>'backend_mps/contact_us', 'uses'=>'Setup\ContactUs\ContactUsController@update'));
 
             //Activities
             Route::get('activities', array('as'=>'backend_mps/activities','uses'=>'Setup\Activities\ActivitiesController@index'));

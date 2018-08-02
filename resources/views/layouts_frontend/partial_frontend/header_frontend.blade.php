@@ -144,7 +144,8 @@ $companyLogo    = \App\Core\Check::companyLogo();
                             <a href="/visa_information">VISA</a>
                         </li>
                         <li>
-                            <a href="/comingsoon">{{trans('frontend_header.contact_us')}}</a>
+                            <!-- <a href="/comingsoon">{{trans('frontend_header.contact_us')}}</a> -->
+                            <a href="/contact_us">{{trans('frontend_header.contact_us')}}</a>
                         </li>
                         @if(!\Illuminate\Support\Facades\Session::has('customer'))
                         <li>

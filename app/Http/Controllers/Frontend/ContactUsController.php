@@ -1,10 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: william
- * Author: Wai Yan Aung
- * Date: 1/14/2017
- * Time: 10:55 AM
+ * Author: Aung Ko Khant
+ * Date: 2018-08-02
+ * Time: 09:44 AM
  */
 
 namespace App\Http\Controllers\Frontend;
@@ -19,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Redirect;
 use Illuminate\Support\Facades\Session;
 
-class TransportationInformationController extends Controller
+class ContactUsController extends Controller
 {
 
     public function __construct()
@@ -28,8 +26,9 @@ class TransportationInformationController extends Controller
 
     public function index(Request $request)
     {
-        // $temp_data = DB::select("SELECT * FROM `service_price` WHERE `type` = 'TRANSPORTATION' LIMIT 1");
-        $temp_data = DB::select("SELECT * FROM `display_information` WHERE `type` = 'TRANSPORTATION' LIMIT 1");
+        // $temp_data = DB::select("SELECT * FROM `service_price` WHERE `type` = 'CONTACTUS' LIMIT 1");
+        $temp_data = DB::select("SELECT * FROM `display_information` WHERE `type` = 'CONTACTUS' LIMIT 1");
+
         if(isset($temp_data) && count($temp_data)>0){
           //check locale [language]
           if(Session::has('locale') && Session::get('locale') == "jp"){
@@ -43,7 +42,7 @@ class TransportationInformationController extends Controller
             $page_data = "";
         }
 
-        return view('frontend.transportationinformation')->with('page_data',$page_data);
+        return view('frontend.contactus')->with('page_data',$page_data);
     }
 
 }

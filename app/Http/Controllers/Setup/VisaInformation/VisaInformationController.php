@@ -19,7 +19,7 @@ use Stripe\Util\Util;
 
 class VisaInformationController extends Controller
 {
-    
+
        private $repo;
 
     public function __construct()
@@ -29,15 +29,18 @@ class VisaInformationController extends Controller
 
     public function edit(){
         if (Auth::guard('User')->check()) {
-            $VisaInfo     = DB::select("SELECT * FROM `service_price` WHERE `type` = 'VISA' LIMIT 1");
+            // $VisaInfo     = DB::select("SELECT * FROM `service_price` WHERE `type` = 'VISA' LIMIT 1");
+            $VisaInfo     = DB::select("SELECT * FROM `display_information` WHERE `type` = 'VISA' LIMIT 1");
 
             $visaInformation = array();
             if (is_null($VisaInfo) || count($VisaInfo) == 0)
             {
-                $visaInformation['description']   = "";
+                $visaInformation['description_en']   = "";
+                $visaInformation['description_jp']   = "";
                 return view('backend.visainformation.visainformation')->with('visaInformation', $visaInformation);
             }
-            $visaInformation["description"] = $VisaInfo[0]->text;
+            $visaInformation["description_en"] = $VisaInfo[0]->text_en;
+            $visaInformation["description_jp"] = $VisaInfo[0]->text_jp;
             return view('backend.visainformation.visainformation')->with('visaInformation', $visaInformation);
         }
         return redirect('/');
@@ -47,12 +50,17 @@ class VisaInformationController extends Controller
         $currentUserID = Utility::getCurrentUserID();
         $date = date("Y-m-d H:i:s");
 
-        $tempDescription    = (Input::has('description')) ? Input::get('description') : "";
+        $tempDescription_en    = (Input::has('description_en')) ? Input::get('description_en') : "";
+        $tempDescription_jp    = (Input::has('description_jp')) ? Input::get('description_jp') : "";
 
-        DB::statement("DELETE FROM `service_price` WHERE `type` = 'VISA'");
+        // DB::statement("DELETE FROM `service_price` WHERE `type` = 'VISA'");
+        DB::statement("DELETE FROM `display_information` WHERE `type` = 'VISA'");
 
-        DB::table('service_price')->insert([
-            ['type' => 'VISA', 'text' => $tempDescription, 'created_by' => $currentUserID, 'updated_by' => $currentUserID, 'created_at' => $date, 'updated_at' => $date]
+        // DB::table('service_price')->insert([
+        //     ['type' => 'VISA', 'text' => $tempDescription, 'created_by' => $currentUserID, 'updated_by' => $currentUserID, 'created_at' => $date, 'updated_at' => $date]
+        // ]);
+        DB::table('display_information')->insert([
+            ['type' => 'VISA', 'text_en' => $tempDescription_en, 'text_jp' => $tempDescription_jp, 'created_by' => $currentUserID, 'updated_by' => $currentUserID, 'created_at' => $date, 'updated_at' => $date]
         ]);
 
         return redirect()->action('Setup\VisaInformation\VisaInformationController@edit');

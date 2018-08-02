@@ -28,15 +28,19 @@ class TourInformationController extends Controller
 
     public function edit(){
         if (Auth::guard('User')->check()) {
-            $tempTourInfo      = DB::select("SELECT * FROM `service_price` WHERE `type` = 'TOUR' LIMIT 1");
+            // $tempTourInfo      = DB::select("SELECT * FROM `service_price` WHERE `type` = 'TOUR' LIMIT 1");
+
+            $tempTourInfo      = DB::select("SELECT * FROM `display_information` WHERE `type` = 'TOUR' LIMIT 1");
 
             $tourInformation = array();
             if (is_null($tempTourInfo) || count($tempTourInfo) == 0)
             {
-                $tourInformation['description']   = "";
+                $tourInformation['description_en']   = "";
+                $tourInformation['description_jp']   = "";
                 return view('backend.tourinformation.tourinformation')->with('tourInformation', $tourInformation);
             }
-            $tourInformation["description"] = $tempTourInfo[0]->text;
+            $tourInformation["description_en"] = $tempTourInfo[0]->text_en;
+            $tourInformation["description_jp"] = $tempTourInfo[0]->text_jp;
             return view('backend.tourinformation.tourinformation')->with('tourInformation', $tourInformation);
         }
         return redirect('/');
@@ -46,12 +50,17 @@ class TourInformationController extends Controller
         $currentUserID = Utility::getCurrentUserID();
         $date = date("Y-m-d H:i:s");
 
-        $tempDescription    = (Input::has('description')) ? Input::get('description') : "";
+        $tempDescription_en    = (Input::has('description_en')) ? Input::get('description_en') : "";
+        $tempDescription_jp    = (Input::has('description_jp')) ? Input::get('description_jp') : "";
 
-        DB::statement("DELETE FROM `service_price` WHERE `type` = 'TOUR'");
+        // DB::statement("DELETE FROM `service_price` WHERE `type` = 'TOUR'");
+        DB::statement("DELETE FROM `display_information` WHERE `type` = 'TOUR'");
 
-        DB::table('service_price')->insert([
-            ['type' => 'TOUR', 'text' => $tempDescription, 'created_by' => $currentUserID, 'updated_by' => $currentUserID, 'created_at' => $date, 'updated_at' => $date]
+        // DB::table('service_price')->insert([
+        //     ['type' => 'TOUR', 'text' => $tempDescription, 'created_by' => $currentUserID, 'updated_by' => $currentUserID, 'created_at' => $date, 'updated_at' => $date]
+        // ]);
+        DB::table('display_information')->insert([
+            ['type' => 'TOUR', 'text_en' => $tempDescription_en,'text_jp' => $tempDescription_jp, 'created_by' => $currentUserID, 'updated_by' => $currentUserID, 'created_at' => $date, 'updated_at' => $date]
         ]);
 
         return redirect()->action('Setup\TourInformation\TourInformationController@edit');
