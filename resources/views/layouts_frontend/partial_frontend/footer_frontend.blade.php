@@ -1,3 +1,7 @@
+<?php
+$terms_and_condition_text    = \App\Core\Utility::getTermsAndCondition();
+
+?>
 <hr>
 <section id="section_four">
     <div class="container">

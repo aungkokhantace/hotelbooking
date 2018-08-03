@@ -326,4 +326,22 @@ class Utility
         $role_id = Auth::guard('User')->user()->role_id;
         return $role_id;
     }
+
+    public static function getTermsAndCondition(){
+      $temp_data = DB::select("SELECT * FROM `display_information` WHERE `type` = 'TERMS_AND_CONDITION' LIMIT 1");
+      if(isset($temp_data) && count($temp_data)>0){
+        //check locale [language]
+        if(Session::has('locale') && Session::get('locale') == "jp"){
+          $terms_and_condition_text = $temp_data[0]->text_jp;
+        }
+        else{
+          $terms_and_condition_text = $temp_data[0]->text_en;
+        }
+      }
+      else{
+          $terms_and_condition_text = "";
+      }
+
+      return $terms_and_condition_text;
+    }
 }

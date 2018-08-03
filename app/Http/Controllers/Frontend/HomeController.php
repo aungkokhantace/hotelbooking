@@ -185,21 +185,6 @@ class HomeController extends Controller
         }
         //end display information text for promotion for this month
 
-        //start display information text for Terms and Condition
-        $temp_data = DB::select("SELECT * FROM `display_information` WHERE `type` = 'TERMS_AND_CONDITION' LIMIT 1");
-        if(isset($temp_data) && count($temp_data)>0){
-          //check locale [language]
-          if(Session::has('locale') && Session::get('locale') == "jp"){
-            $terms_and_condition_text = $temp_data[0]->text_jp;
-          }
-          else{
-            $terms_and_condition_text = $temp_data[0]->text_en;
-          }
-        }
-        else{
-            $terms_and_condition_text = "";
-        }
-        //end display information text for Terms and Condition
         //end display information text
 
         return view('frontend.home')
@@ -212,8 +197,8 @@ class HomeController extends Controller
             ->with('sliders',$sliders)
             ->with('popular_destination_text',$popular_destination_text)
             ->with('recommended_hotel_text',$recommended_hotel_text)
-            ->with('promotion_text',$promotion_text)
-            ->with('terms_and_condition_text',$terms_and_condition_text);
+            ->with('promotion_text',$promotion_text);
+            // ->with('terms_and_condition_text',$terms_and_condition_text);
     }
 
     public function autocompleteDestination(){
