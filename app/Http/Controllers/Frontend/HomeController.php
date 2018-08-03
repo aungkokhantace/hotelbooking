@@ -28,6 +28,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Redirect;
 use App\Setup\Slider\SliderRepository;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -135,6 +136,72 @@ class HomeController extends Controller
         Utility::createSession('check_in',$check_in);
         Utility::createSession('check_out',$check_out);
 
+        //start display information text
+        //start display information text for popular destination
+        $temp_data = DB::select("SELECT * FROM `display_information` WHERE `type` = 'POPULARDESTINATION' LIMIT 1");
+        if(isset($temp_data) && count($temp_data)>0){
+          //check locale [language]
+          if(Session::has('locale') && Session::get('locale') == "jp"){
+            $popular_destination_text = $temp_data[0]->text_jp;
+          }
+          else{
+            $popular_destination_text = $temp_data[0]->text_en;
+          }
+        }
+        else{
+            $popular_destination_text = "";
+        }
+        //end display information text for popular destination
+
+        //start display information text for recommended hotels
+        $temp_data = DB::select("SELECT * FROM `display_information` WHERE `type` = 'RECOMMENDEDHOTEL' LIMIT 1");
+        if(isset($temp_data) && count($temp_data)>0){
+          //check locale [language]
+          if(Session::has('locale') && Session::get('locale') == "jp"){
+            $recommended_hotel_text = $temp_data[0]->text_jp;
+          }
+          else{
+            $recommended_hotel_text = $temp_data[0]->text_en;
+          }
+        }
+        else{
+            $recommended_hotel_text = "";
+        }
+        //end display information text for recommended hotels
+
+        //start display information text for promotion for this month
+        $temp_data = DB::select("SELECT * FROM `display_information` WHERE `type` = 'PROMOTION' LIMIT 1");
+        if(isset($temp_data) && count($temp_data)>0){
+          //check locale [language]
+          if(Session::has('locale') && Session::get('locale') == "jp"){
+            $promotion_text = $temp_data[0]->text_jp;
+          }
+          else{
+            $promotion_text = $temp_data[0]->text_en;
+          }
+        }
+        else{
+            $promotion_text = "";
+        }
+        //end display information text for promotion for this month
+
+        //start display information text for Terms and Condition
+        $temp_data = DB::select("SELECT * FROM `display_information` WHERE `type` = 'TERMS_AND_CONDITION' LIMIT 1");
+        if(isset($temp_data) && count($temp_data)>0){
+          //check locale [language]
+          if(Session::has('locale') && Session::get('locale') == "jp"){
+            $terms_and_condition_text = $temp_data[0]->text_jp;
+          }
+          else{
+            $terms_and_condition_text = $temp_data[0]->text_en;
+          }
+        }
+        else{
+            $terms_and_condition_text = "";
+        }
+        //end display information text for Terms and Condition
+        //end display information text
+
         return view('frontend.home')
 //            ->with('popular_cities',$popularCityArray)
             ->with('popular_cities',$popularCityEntries)
@@ -142,7 +209,11 @@ class HomeController extends Controller
             ->with('percent_promotions',$percentPromotionArray)
             ->with('amount_promotions',$amountPromotionArray)
             ->with('first_slider',$first_slider)
-            ->with('sliders',$sliders);
+            ->with('sliders',$sliders)
+            ->with('popular_destination_text',$popular_destination_text)
+            ->with('recommended_hotel_text',$recommended_hotel_text)
+            ->with('promotion_text',$promotion_text)
+            ->with('terms_and_condition_text',$terms_and_condition_text);
     }
 
     public function autocompleteDestination(){

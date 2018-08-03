@@ -5,7 +5,7 @@
             <div class="col-md-4">
                 <div class="title">
                     <h5>{{trans('frontend_header.term_condition')}}</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elitconsectetur adipisicing elit........</p>
+                    <p>{!! $terms_and_condition_text !!}</p>
                 </div>
             </div>
             <div class="col-md-4">
@@ -72,7 +72,7 @@
 
 <script>
     $(document).ready(function() {
-        
+
 
       //for scroll to top
             $(window).scroll(function(){
@@ -90,7 +90,7 @@
     });
 
     });
-</script> 
+</script>
 
 <!-- Script to Activate the Carousel -->
 <script>

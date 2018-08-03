@@ -539,6 +539,24 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('contact_us', array('as'=>'backend_mps/contact_us', 'uses'=>'Setup\ContactUs\ContactUsController@edit'));
             Route::post('contact_us', array('as'=>'backend_mps/contact_us', 'uses'=>'Setup\ContactUs\ContactUsController@update'));
 
+            //start Home Page display information text setup
+            //Popular Destination
+            Route::get('popular_destination_information', array('as'=>'backend_mps/popular_destination_information', 'uses'=>'Setup\PopularDestinationInformation\PopularDestinationInformationController@edit'));
+            Route::post('popular_destination_information', array('as'=>'backend_mps/popular_destination_information', 'uses'=>'Setup\PopularDestinationInformation\PopularDestinationInformationController@update'));
+
+            //Recommended Hotels
+            Route::get('recommended_hotel_information', array('as'=>'backend_mps/recommended_hotel_information', 'uses'=>'Setup\RecommendedHotelInformation\RecommendedHotelInformationController@edit'));
+            Route::post('recommended_hotel_information', array('as'=>'backend_mps/recommended_hotel_information', 'uses'=>'Setup\RecommendedHotelInformation\RecommendedHotelInformationController@update'));
+
+            //Promotions for this month
+            Route::get('promotion_information', array('as'=>'backend_mps/promotion_information', 'uses'=>'Setup\PromotionInformation\PromotionInformationController@edit'));
+            Route::post('promotion_information', array('as'=>'backend_mps/promotion_information', 'uses'=>'Setup\PromotionInformation\PromotionInformationController@update'));
+
+            //Promotions for this month
+            Route::get('terms_and_condition', array('as'=>'backend_mps/terms_and_condition', 'uses'=>'Setup\TermsAndCondition\TermsAndConditionController@edit'));
+            Route::post('terms_and_condition', array('as'=>'backend_mps/terms_and_condition', 'uses'=>'Setup\TermsAndCondition\TermsAndConditionController@update'));
+            //end Home Page display information text setup
+
             //Activities
             Route::get('activities', array('as'=>'backend_mps/activities','uses'=>'Setup\Activities\ActivitiesController@index'));
 

@@ -168,8 +168,7 @@
         <div class="container">
             <div class="row destination">
                 <h1>{{trans('frontend_home.popular_destination')}}</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+                <p>{!! $popular_destination_text !!}</p>
             </div>
         </div>
 
@@ -232,8 +231,7 @@
         <div class="container">
             <div class="row destination">
                 <h1>{{trans('frontend_home.recommended_hotels')}}</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+                <p>{!! $recommended_hotel_text !!}</p>
             </div>
         </div>
         <div class="container">
@@ -284,8 +282,7 @@
         <div class="container">
             <div class="row destination">
                 <h1>{{trans('frontend_home.promotions_for_month')}}</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+                <p>{!! $promotion_text !!}</p>
             </div>
         </div>
         <div class="container">

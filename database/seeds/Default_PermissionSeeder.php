@@ -392,6 +392,18 @@ class Default_PermissionSeeder extends Seeder
             //Contact Us Information
              ['id'=>670,'module'=>'Contact_Us','name'=>'View and Store','description'=>'Contact Us View and Store','url'=>'backend_mps/contact_us'],
 
+            //Popular Destination Information
+             ['id'=>675,'module'=>'Popular_Destination_Information','name'=>'View and Store','description'=>'Popular Destination Information View and Store','url'=>'backend_mps/popular_destination_information'],
+
+            //Recommended Hotel Information
+             ['id'=>680,'module'=>'Recommended_Hotel_Information','name'=>'View and Store','description'=>'Recommended Hotel Information View and Store','url'=>'backend_mps/recommended_hotel_information'],
+
+            //Promotion Information
+             ['id'=>685,'module'=>'Promotion_Information','name'=>'View and Store','description'=>'Promotion Information View and Store','url'=>'backend_mps/promotion_information'],
+
+            //Terms and Condition
+             ['id'=>690,'module'=>'Terms_and_Condition','name'=>'View and Store','description'=>'Terms and Condition Information View and Store','url'=>'backend_mps/terms_and_condition'],
+
         );
 
 //        DB::table('core_permissions')->insert($permissions);

@@ -32,7 +32,11 @@ $permissions = \App\Core\Check::getPermissionByRoleId($role_id);
             (in_array("backend_mps/tour_information", $permissions)) ||
             (in_array("backend_mps/faq_information", $permissions)) ||
             (in_array("backend_mps/about_us", $permissions)) ||
-            (in_array("backend_mps/contact_us", $permissions))
+            (in_array("backend_mps/contact_us", $permissions)) ||
+            (in_array("backend_mps/popular_destination_information", $permissions)) ||
+            (in_array("backend_mps/recommended_hotel_information", $permissions)) ||
+            (in_array("backend_mps/promotion_information", $permissions)) ||
+            (in_array("backend_mps/terms_and_condition", $permissions))
             )
             <li  nav-id='modifier'  class="has-sub">
                 <a href="javascript:;">
@@ -89,6 +93,7 @@ $permissions = \App\Core\Check::getPermissionByRoleId($role_id);
                     </li>
                     @endif
 
+                    @if(in_array("backend_mps/city", $permissions) || in_array("backend_mps/popular_city/create", $permissions))
                     <li nav-id="modifier-create" class="has-sub">
                         <a href="javascript:;">
                             <b class="caret pull-right"></b>
@@ -105,6 +110,7 @@ $permissions = \App\Core\Check::getPermissionByRoleId($role_id);
                             @endif
                         </ul>
                     </li>
+                    @endif
 
                     @if(in_array("backend_mps/township", $permissions))
                     <li nav-id="modifier-manage" class="has-sub">
@@ -112,51 +118,97 @@ $permissions = \App\Core\Check::getPermissionByRoleId($role_id);
                     </li>
                     @endif
 
-                    @if(in_array("backend_mps/transportation_information", $permissions))
-                    <li nav-id="">
-                        <a href="/backend_mps/transportation_information">
-                            <span>Transportation Information</span>
+                    @if(in_array("backend_mps/transportation_information", $permissions) ||
+                        in_array("backend_mps/tour_information", $permissions) ||
+                        in_array("backend_mps/visa_information", $permissions) ||
+                        in_array("backend_mps/faq_information", $permissions) ||
+                        in_array("backend_mps/about_us", $permissions) ||
+                        in_array("backend_mps/contact_us", $permissions) ||
+                        in_array("backend_mps/popular_destination_information", $permissions) ||
+                        in_array("backend_mps/recommended_hotel_information", $permissions) ||
+                        in_array("backend_mps/promotion_information", $permissions) ||
+                        in_array("backend_mps/terms_and_condition", $permissions)
+                    )
+                    <li nav-id="modifier-create" class="has-sub">
+                        <a href="javascript:;">
+                            <b class="caret pull-right"></b>
+                            <span>Display Information Text</span>
                         </a>
-                    </li>
-                    @endif
 
-                    @if(in_array("backend_mps/tour_information", $permissions))
-                    <li nav-id="">
-                        <a href="/backend_mps/tour_information">
-                            <span>Tour Information</span>
-                        </a>
-                    </li>
-                    @endif
+                        <ul class="sub-menu">
+                          @if(in_array("backend_mps/popular_destination_information", $permissions) ||
+                              in_array("backend_mps/recommended_hotel_information", $permissions) ||
+                              in_array("backend_mps/promotion_information", $permissions) ||
+                              in_array("backend_mps/terms_and_condition", $permissions))
+                          <li nav-id="modifier-create" class="has-sub">
+                              <a href="javascript:;">
+                                  <b class="caret pull-right"></b>
+                                  <span>Home Page Text</span>
+                              </a>
+                              <ul class="sub-menu">
+                                @if(in_array("backend_mps/popular_destination_information", $permissions))
+                                <li nav-id="">
+                                   <a href="/backend_mps/popular_destination_information"><span>Popular Destinations</span></a>
+                                </li>
+                                @endif
 
-                    @if(in_array("backend_mps/visa_information", $permissions))
-                    <li nav-id="">
-                        <a href="/backend_mps/visa_information">
-                            <span>VISA Information</span>
-                        </a>
-                    </li>
-                    @endif
+                                @if(in_array("backend_mps/recommended_hotel_information", $permissions))
+                                <li nav-id="">
+                                   <a href="/backend_mps/recommended_hotel_information"><span>Recommended Hotels</span></a>
+                                </li>
+                                @endif
 
-                     @if(in_array("backend_mps/faq_information", $permissions))
-                    <li nav-id="">
-                        <a href="/backend_mps/faq_information">
-                            <span>FAQ Information</span>
-                        </a>
-                    </li>
-                    @endif
+                                @if(in_array("backend_mps/promotion_information", $permissions))
+                                <li nav-id="">
+                                   <a href="/backend_mps/promotion_information"><span>Promotions for this month</span></a>
+                                </li>
+                                @endif
 
-                     @if(in_array("backend_mps/about_us", $permissions))
-                    <li nav-id="">
-                        <a href="/backend_mps/about_us">
-                            <span>About Us</span>
-                        </a>
-                    </li>
-                    @endif
+                                @if(in_array("backend_mps/terms_and_condition", $permissions))
+                                <li nav-id="">
+                                   <a href="/backend_mps/terms_and_condition"><span>Terms & Condition</span></a>
+                                </li>
+                                @endif
+                              </ul>
+                          </li>
+                          @endif
 
-                     @if(in_array("backend_mps/contact_us", $permissions))
-                    <li nav-id="">
-                        <a href="/backend_mps/contact_us">
-                            <span>Contact Us</span>
-                        </a>
+                          @if(in_array("backend_mps/about_us", $permissions))
+                          <li nav-id="">
+                             <a href="/backend_mps/about_us"><span>About Us</span></a>
+                          </li>
+                          @endif
+
+                          @if(in_array("backend_mps/contact_us", $permissions))
+                          <li nav-id="">
+                              <a href="/backend_mps/contact_us"><span>Contact Us</span></a>
+                          </li>
+                          @endif
+
+                          @if(in_array("backend_mps/faq_information", $permissions))
+                         <li nav-id="">
+                             <a href="/backend_mps/faq_information"><span>FAQ Information</span></a>
+                         </li>
+                         @endif
+
+                         @if(in_array("backend_mps/tour_information", $permissions))
+                         <li nav-id="">
+                           <a href="/backend_mps/tour_information"><span>Tour Information</span></a>
+                         </li>
+                         @endif
+
+                          @if(in_array("backend_mps/transportation_information", $permissions))
+                          <li nav-id="">
+                              <a href="/backend_mps/transportation_information"><span>Transportation Information</span></a>
+                          </li>
+                          @endif
+
+                          @if(in_array("backend_mps/visa_information", $permissions))
+                          <li nav-id="">
+                              <a href="/backend_mps/visa_information"><span>VISA Information</span></a>
+                          </li>
+                          @endif
+                        </ul>
                     </li>
                     @endif
                 </ul>
@@ -488,6 +540,9 @@ $permissions = \App\Core\Check::getPermissionByRoleId($role_id);
                 $(this).closest('li').addClass('active');
                 $(this).closest('.has-sub').addClass('active');
                 $(this).parents(".has-sub:eq(1)").toggleClass("active");
+
+                //make main parent (general tab) active
+                $(this).parents(".has-sub:eq(2)").toggleClass("active");
             }
         });
     });
