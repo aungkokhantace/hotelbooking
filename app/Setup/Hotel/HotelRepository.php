@@ -220,6 +220,12 @@ class HotelRepository implements HotelRepositoryInterface
 
     public function getHotelsByFilters($destination,$price_filter = null,$star_filter = null,$facility_filter = null,$landmark_filter = null){
         $query = Hotel::query();
+
+        //for excluding disabled hotels
+        //get only enabled hotels
+        $query = $query->where('hotels.status','=','1');
+        $query = $query->whereNull('hotels.deleted_at');
+
         //start condition group for destination_name
         $query = $query->where(function ($query) use($destination) {
             $query = $query->whereHas('country', function($query) use($destination) {
@@ -232,10 +238,6 @@ class HotelRepository implements HotelRepositoryInterface
                 $query->where('townships.name', 'LIKE', '%'.$destination.'%');
             });
             $query = $query->orWhere('name','LIKE','%'.$destination.'%');
-
-            //for excluding disabled hotels
-            //get only enabled hotels
-            $query = $query->where('status','=', 1);
         });
         //end condition group for destination_name
 

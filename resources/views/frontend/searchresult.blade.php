@@ -53,11 +53,14 @@
                                 @foreach($price_filters as $filter)
                                 <input type="checkbox" class="filter_checkbox one_check" name="price_filter[]" value="{{$filter->id}}" {{Session::has('price_filter') && session('price_filter')[0]==$filter->id?'checked':''}}>
                                 @if($filter->type == 'between')
-                                    <span>{{$currency.' '.number_format($filter->from).'-'.number_format($filter->to). trans('frontend_details.per_night')}}</span><br>
+                                    <!-- <span>{{$currency.' '.number_format($filter->from).'-'.number_format($filter->to). trans('frontend_details.per_night')}}</span><br> -->
+                                    <span>{{trans('frontend_search.usd').' '.number_format($filter->from).'-'.number_format($filter->to). trans('frontend_search.per_night')}}</span><br>
                                 @elseif($filter->type == 'under')
-                                    <span>{{ucwords($filter->type).' '.$currency.' '.number_format($filter->to).trans('frontend_details.per_night')}}</span><br>
+                                    <!-- <span>{{ucwords($filter->type).' '.$currency.' '.number_format($filter->to).trans('frontend_details.per_night')}}</span><br> -->
+                                    <span>{{trans('frontend_search.under_sud_50_per_night')}}</span><br>
                                 @else
-                                    <span>{{ucwords($filter->type).' '.$currency.' '.number_format($filter->from).trans('frontend_details.per_night')}}</span><br>
+                                    <!-- <span>{{ucwords($filter->type).' '.$currency.' '.number_format($filter->from).trans('frontend_details.per_night')}}</span><br> -->
+                                    <span>{{trans('frontend_search.above_usd_300_per_night')}}</span><br>
                                 @endif
                                 @endforeach
                             @endif
@@ -112,13 +115,15 @@
                 <div class="col-md-9 search_list">
                     <!-- First Blog Post -->
                     @if(count($hotels)>1)
-                        <h2>{{isset($destination) && $destination != "" ? $destination:'Destination'}} : {{$countHotel}} {{trans('frontend_search.property_founds')}}</h2>
+                        <!-- <h2>{{isset($destination) && $destination != "" ? $destination:'Destination'}} : {{$countHotel}} {{trans('frontend_search.property_founds')}}</h2> -->
+                        <h2>{{isset($destination) && $destination != "" ? $destination:'Destination'}} : {{$countHotel}} {{trans('frontend_search.properties_found')}}</h2>
                     @else
                         <h2>{{isset($destination) && $destination != "" ? $destination:'Destination'}} : {{$countHotel}} {{trans('frontend_search.property_found')}}</h2>
                     @endif
 
                     <p class="lead">
-                        3 Reasons to Visit: people watching, local food & shopping
+                        <!-- 3 Reasons to Visit: people watching, local food & shopping -->
+                        {{trans('frontend_search.reasons_to_visit')}}
                     </p>
                     <!-- Service Tabs -->
                     <div class="row">

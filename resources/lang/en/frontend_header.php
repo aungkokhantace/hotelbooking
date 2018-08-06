@@ -40,7 +40,7 @@ return[
 
     "our_products"=>"Our Products",
     "our_vision"=>"Our Vision ",
-    "faq_information"=>"FAQ Information",
+    "faq_information"=>"Q＆A",
     "visa_information"=>"VISA Information",
 
 

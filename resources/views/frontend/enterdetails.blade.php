@@ -311,10 +311,26 @@
                                                 <br>
 
                                             </div>
-                                            <div class="continue">
+                                            <div class="continue payment_right">
                                                 @if(\Illuminate\Support\Facades\Session::has('customer'))
                                                     <button class="btn btn-primary">{{trans('frontend_details.continue')}}</button>
                                                 @else
+
+                                                    <!-- <div class="payment_right">
+
+                                                    </div><br> -->
+
+                                                    <ul>
+                                                        <li style="padding-right:15px;"><img src="/assets/shared/images/people.png"></li>
+                                                        @if(\Illuminate\Support\Facades\Session::has('customer'))
+                                                            <li>{{trans('frontend_details.you_sing_in')}}</li>
+                                                        @else
+                                                            <a href="#" data-toggle="modal" data-target="#loginModal">
+                                                               {{trans('frontend_header.login')}}
+                                                                <span class="glyphicon glyphicon-arrow-right"></span>
+                                                            </a>
+                                                        @endif
+                                                    </ul>
                                                     <label>{{trans('frontend_details.login_continue')}}</label>
                                                 @endif
                                                 <P>{{trans('frontend_details.not_be_charged')}}</P>

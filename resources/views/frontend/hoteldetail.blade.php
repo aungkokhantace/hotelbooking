@@ -160,13 +160,17 @@
 
                                                  </tr>
                                                  <tr>
-                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>   Open
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>
+                                                      <!-- Open -->
+                                                      {{trans('frontend_details.open')}}
                                                     </td>
                                                     <td> <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->opening_hours}}
                                                     </td>
                                                  </tr>
                                                  <tr>
-                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  Close
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>
+                                                      <!-- Close -->
+                                                      {{trans('frontend_details.close')}}
                                                     </td>
                                                     <td><i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->closing_hours}}
                                                     </td>
@@ -438,7 +442,8 @@
 
 
                     <div class="room_table">
-                        <h3>Facilities of {{$hotel->name}}</h3>
+                        <!-- <h3>Facilities of {{$hotel->name}}</h3> -->
+                        <h3>{{trans('frontend_search.facility')}}</h3>
                         <div class="row margin-bottom-30">
                             @foreach($facilityGroupArray as $facilityGroup)
                                 @if(isset($facilityGroup->facilities) && count($facilityGroup->facilities)>0)

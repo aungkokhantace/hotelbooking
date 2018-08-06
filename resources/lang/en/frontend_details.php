@@ -2,11 +2,13 @@
 
 return[
 
-  "all_right_reserved"=>"All rights reserved",
+  "all_right_reserved"=>"© 2018 Myanmar Polestar Travels & Tours Co., Ltd. ",
 
 	"features"=>"Features",
 	"whats_around"=>"What's around",
 	"restaurants"=>"Restaurants",
+  "open" => "Open",
+  "close" => "Close",
 	"available_rooms"=>"Available Rooms",
 	"room_category"=>"Room Category",
 	"included"=>"Included",
@@ -205,6 +207,7 @@ return[
     "per_night"=>"per night",
     "unsuccessful_alert"=>"Your payment and booking was unsuccessful!",
     "successful_alert"=>"Congratulations! Your Booking was successful!",
+    "successful_but_email_fail_alert"=>"Your Booking was successful, but there was a problem in sending email to you!",
     "manage_booking"=>"MANAGE BOOKING",
     "complete"=>"Complete",
     "void"=>"Void",

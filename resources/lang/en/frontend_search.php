@@ -10,8 +10,10 @@ return [
     "adults"=>"Adults",
     "children"=>"Children",
     "search_hotel_now"=>"SEARCH HOTEL NOW",
-    "property_founds"=>"properties founds",
+    "properties_found"=>"properties found",
     "property_found" =>"property found",
+    "reasons_to_visit" => "3 Reasons to Visit: people watching, local food & shopping",
+
     "hotels"=>"Hotels",
     "map_view"=>"Map View",
     "superior_room_type"=>"Superior Room type",
@@ -20,7 +22,7 @@ return [
     "book_now"=>"BOOK NOW",
     "grand_deluxe_room_type"=>"Grand Deluxe Room Type",
     "standard_room_type"=>"Standard Room Type",
-    
+
 
     "under_sud_50_per_night"=>"Under USD 50 per night",
     "usd_50_100_per_night"=>"USD 50-100 per night",
@@ -29,6 +31,9 @@ return [
     "usd_200_250_per_night"=>"USD 200-250 per night",
     "usd_250_300_per_night"=>"USD 250-300 per night",
     "above_usd_300_per_night"=>"Above USD 300 per night",
+
+    "usd" => "USD ",
+    "per_night" => " per night",
 
     "star_rating"=>"Star Rating",
     "1star"=>"1 Star ",
@@ -41,7 +46,7 @@ return [
     "facility"=>"Facility",
     "popular_places"=>"Popular Places",
 
-    
+
 ]
 
 ?>

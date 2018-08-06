@@ -1228,6 +1228,7 @@ i.fa-td.fa.fa-user {
 .continue{
     float: right;
     padding: 15px 0px;
+    padding-top:50px;
 }
 .continue button{
     padding: 10px 35px;
@@ -1340,7 +1341,7 @@ button.closes {
     background: 0 0;
     border: 0;
 }
-#payment_blogone{    
+#payment_blogone{
     border-bottom: 1px solid #ccc;
     padding-bottom: 43px;
 }
@@ -1560,12 +1561,12 @@ button.closes {
 }*/
 .modalbody {
     position: relative;
-     padding: 0px; 
+     padding: 0px;
 }
 .modal-footer {
     padding-bottom: 35px;
     text-align: right;
-    border-top: none; 
+    border-top: none;
 }
 .login-btn, .register-btn {
     background-color: #D63090;
@@ -1689,7 +1690,7 @@ button.closes {
 @media only screen and (max-width: 414px) {
 .booking_manage_table{
     display: table-row;
-    background-color:#E1E1E1; 
+    background-color:#E1E1E1;
 }
 .booking_data_fix{
     padding-left: 10px;
@@ -2119,4 +2120,3 @@ button.closes {
 }
 
 /*********Booking List End********/
-

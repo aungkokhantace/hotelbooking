@@ -138,7 +138,7 @@ $companyLogo    = \App\Core\Check::companyLogo();
                             <a href="/about_us">{{trans('frontend_header.about_us')}}</a>
                         </li>
                         <li>
-                            <a href="/faq_information">FAQ</a>
+                            <a href="/faq_information">Q & A</a>
                         </li>
                          <li>
                             <a href="/visa_information">VISA</a>

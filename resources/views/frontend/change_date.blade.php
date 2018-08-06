@@ -97,6 +97,7 @@
                     success: function(data){
                         $('#change_date').modal('hide');
                         if(data.aceplusStatusCode == '200'){
+                            // swal({title: "Success", text: "An updated confirmation has been sent to your email.Please check your email.", type: "success"},
                             swal({title: "Success", text: "An updated confirmation has been sent to your email.Please check your email.", type: "success"},
                                     function(){
 //                                        window.location = '/booking/cancel/show/'+data.param;
