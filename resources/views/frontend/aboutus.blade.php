@@ -11,7 +11,7 @@
         <section id="aboutus">
             <div class="container">
                 <div class="row">
-                    <h1>{{trans('frontend_header.about_us')}}</h1>
+                    <!-- <h1>{{trans('frontend_header.about_us')}}</h1> -->
                     {!! $page_data !!}
                 </div><!-- /.row -->
             </div><!-- /.container -->
