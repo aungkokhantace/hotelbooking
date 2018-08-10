@@ -186,7 +186,7 @@
                       <div class="col-md-4 img-portfolio" onclick="submit_search('{{$popular_city->id}}');">
                               {{ csrf_field() }}
                               <input type="hidden" name="destination_name" value="{{$popular_city->name}}">
-                              <img class="img-responsive img-hover" src="/images/upload/{{$popular_city->image}}" alt="">
+                              <img class="img-responsive img-hover adjust-img-height" src="/images/upload/{{$popular_city->image}}" alt="">
                               <div class="portfolio-caption">
                                   <h3><strong>{{$popular_city->name}}</strong><small>, {{$popular_city->country->name}}</small></h3>
                               </div>
@@ -204,7 +204,7 @@
                             <div class="col-md-4 img-portfolio" onclick="submit_search('{{$popular_city->id}}');">
                                 {{ csrf_field() }}
                                 <input type="hidden" name="destination_name" value="{{$popular_city->name}}">
-                                <img class="img-responsive img-hover" src="/images/upload/{{$popular_city->image}}" alt="">
+                                <img class="img-responsive img-hover adjust-img-height" src="/images/upload/{{$popular_city->image}}" alt="">
                                 <div class="portfolio-caption">
                                     <h3><strong>{{$popular_city->name}}</strong><small>, {{$popular_city->country->name}}</small></h3>
                                 </div>
@@ -246,7 +246,7 @@
                         <?php $counter++; ?>
                         <div class="col-md-4 img-portfolio">
                             <a href="/hotel_detail/{{$recommended_hotel->id}}">
-                                <img class="img-responsive img-hover" src="/images/upload/{{$recommended_hotel->logo}}" alt="">
+                                <img class="img-responsive img-hover adjust-img-height" src="/images/upload/{{$recommended_hotel->logo}}" alt="">
                                 <div class="portfolio-caption2">
                                     <h5><strong>{{$recommended_hotel->name}}</strong><small> > {{$recommended_hotel->city->name}}</small></h5>
                                 </div>
@@ -262,7 +262,7 @@
                         <?php $counter++; ?>
                         <div class="col-md-4 img-portfolio">
                             <a href="/hotel_detail/{{$recommended_hotel->id}}">
-                                <img class="img-responsive img-hover" src="/images/upload/{{$recommended_hotel->logo}}" alt="">
+                                <img class="img-responsive img-hover adjust-img-height" src="/images/upload/{{$recommended_hotel->logo}}" alt="">
                                 <div class="portfolio-caption2">
                                     <h5><strong>{{$recommended_hotel->name}}</strong><small> > {{$recommended_hotel->city->name}}</small></h5>
                                 </div>
@@ -298,7 +298,7 @@
                         <div class="col-sm-4">
                             <div class="thumbnail">
                                 <a href="/hotel_detail/{{$percent_promotion->id}}">
-                                  <img class="img-responsive" src="/images/upload/{{$percent_promotion->logo}}" alt="">
+                                  <img class="img-responsive adjust-img-height" src="/images/upload/{{$percent_promotion->logo}}" alt="">
                                 </a>
                                 <div class="caption">
                                     <h5>{{$percent_promotion->name}}<samp>{{$percent_promotion->discount_percent}}%</samp><br>
@@ -326,7 +326,7 @@
                         <div class="col-sm-4">
                             <div class="thumbnail">
                                 <a href="/hotel_detail/{{$percent_promotion->id}}">
-                                  <img class="img-responsive" src="/images/upload/{{$percent_promotion->logo}}" alt="">
+                                  <img class="img-responsive adjust-img-height" src="/images/upload/{{$percent_promotion->logo}}" alt="">
                                 </a>
                                 <div class="caption">
                                     <h5>{{$percent_promotion->name}}<samp>{{$percent_promotion->discount_percent}}%</samp><br>
@@ -361,7 +361,7 @@
                         <div class="col-sm-4">
                             <div class="thumbnail">
                                 <a href="/hotel_detail/{{$amount_promotion->id}}">
-                                  <img class="img-responsive" src="/images/upload/{{$amount_promotion->logo}}" alt="">
+                                  <img class="img-responsive adjust-img-height" src="/images/upload/{{$amount_promotion->logo}}" alt="">
                                 </a>
                                 <div class="caption">
                                     <h5>{{$amount_promotion->name}}<samp class="amount_promotion">{{$amount_promotion->discount_amount}}</samp><br>
@@ -389,7 +389,7 @@
                         <div class="col-sm-4">
                             <div class="thumbnail">
                                 <a href="/hotel_detail/{{$amount_promotion->id}}">
-                                  <img class="img-responsive" src="/images/upload/{{$amount_promotion->logo}}" alt="">
+                                  <img class="img-responsive adjust-img-height" src="/images/upload/{{$amount_promotion->logo}}" alt="">
                                 </a>
                                 <div class="caption">
                                     <h5>{{$amount_promotion->name}}<samp class="amount_promotion">{{$amount_promotion->discount_amount}}</samp><br>

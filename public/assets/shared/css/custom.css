@@ -418,3 +418,8 @@ remove_arrow::-webkit-outer-spin-button{
 .justify-paragraph{
   text-align: justify;
 }
+
+.adjust-img-height{
+  width: 100%;
+  height: 200px !important;
+}

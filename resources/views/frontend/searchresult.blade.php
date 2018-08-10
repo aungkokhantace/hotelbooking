@@ -2,7 +2,7 @@
 @section('title','Search Result')
 @section('content')
         <div id="header_id">
-            <img class="img-responsive img-hover" src="/assets/shared/images/slider1.png">
+            <img class="img-responsive img-hover adjust-img-height" src="/assets/shared/images/slider1.png">
         </div>
     </div>
 
@@ -144,7 +144,7 @@
                                     @foreach($hotels as $hotel)
                                         <div class="blog">
                                             <div class="left_img">
-                                                <a href="/hotel_detail/{{$hotel->id}}"><img class="img-responsive img-hover" src="/images/upload/{{$hotel->logo}}" alt=""></a>
+                                                <a href="/hotel_detail/{{$hotel->id}}"><img class="img-responsive img-hover adjust-img-height" src="/images/upload/{{$hotel->logo}}" alt=""></a>
                                             </div>
                                             <div class="left_blog">
                                                 <div class="lead_left">
@@ -227,7 +227,7 @@
                                         <div class="blog">
 
                                             <div class="left_img">
-                                                <a href="/hotel_detail/{{$suggestedHotelhotel->id}}"><img class="img-responsive img-hover" src="/images/upload/{{$suggestedHotelhotel->logo}}" alt=""></a>
+                                                <a href="/hotel_detail/{{$suggestedHotelhotel->id}}"><img class="img-responsive img-hover adjust-img-height" src="/images/upload/{{$suggestedHotelhotel->logo}}" alt=""></a>
                                             </div>
 
 
