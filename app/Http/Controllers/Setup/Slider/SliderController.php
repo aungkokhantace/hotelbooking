@@ -53,6 +53,8 @@ class SliderController extends Controller
         $template_id            = Input::get('template_id');
         $title                  = Input::get('Title');
         $description            = Input::get('Description');
+        $title_jp               = Input::get('title_jp');
+        $description_jp         = Input::get('description_jp');
 
         //Start Saving Image
         $removeImageFlag        = (Input::has('removeImageFlag')) ? Input::get('removeImageFlag') : 0;
@@ -71,8 +73,10 @@ class SliderController extends Controller
         $paramObj                        = new Slider();
         $paramObj->image_url             = $photo_name;
         $paramObj->title                 = $title;
+        $paramObj->title_jp              = $title_jp;
         $paramObj->description           = $description;
-        $paramObj->template_id         = $template_id;
+        $paramObj->description_jp        = $description_jp;
+        $paramObj->template_id           = $template_id;
         $paramObj->status                = 1;
 
         $result                 = $this->repo->create($paramObj);

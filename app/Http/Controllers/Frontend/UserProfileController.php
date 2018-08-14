@@ -38,6 +38,7 @@ class UserProfileController extends Controller
         $l_name                 = trim(Input::get('last_name'));
         $email                  = trim(Input::get('email'));
         $address                = trim(Input::get('address'));
+        $gender                 = trim(Input::get('gender'));
 
         $password               = trim(Input::get('password'));
 
@@ -52,6 +53,7 @@ class UserProfileController extends Controller
           $paramObj->password     = bcrypt($password);
         }
         $paramObj->address      = $address;
+        $paramObj->gender       = $gender;
 
         $result                 = $this->repo->update($paramObj);
 

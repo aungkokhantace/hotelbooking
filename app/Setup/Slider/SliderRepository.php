@@ -95,7 +95,7 @@ class SliderRepository implements SliderRepositoryInterface
     }
 
     public function getSlidersByTemplateId($template_id){
-      $result = Slider::select('image_url','title','description')
+      $result = Slider::select('image_url','title','description','title_jp','description_jp')
                                   ->where('template_id',$template_id)
                                   ->whereNull('deleted_at')
                                   ->get();

@@ -1,7 +1,7 @@
 <!-- Modal -->
   <div class="modal fade" id="registerModal" role="dialog">
     <div class="modal-dialog">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-body create_form">
@@ -20,6 +20,7 @@
                         <input type="text" class="formcontrols" id="last_name" placeholder="{{trans('frontend_header.last_name')}}" name="last_name">
                     </div>
                 </div>
+
                 <div class="formgroup">
                     <div class="col-sm-12 pd_lf_5">
                         <input type="email" class="formcontrols" id="email" placeholder="{{trans('frontend_header.email_address')}} " name="email">
@@ -35,6 +36,18 @@
                         <input type="password" class="formcontrols" id="confirm_password" placeholder="{{trans('frontend_header.retype_password')}}" name="confirm_password">
                     </div>
                 </div>
+
+                <div class="formgroup">
+                    <div class="col-sm-6 gender-radio">
+                        <input type="radio" id="male" class="" name="gender" value="1" checked />
+                        <label for="male">Male</label>
+                    </div>
+                    <div class="col-sm-6 gender-radio">
+                        <input type="radio" id="female" class="" name="gender"  value="2" />
+                        <label for="female">Female</label>
+                    </div>
+                </div>
+
                 <div class="col-sm-12 pd_lf_5">
                     <button type="button" class="btn btn-default formcontrols register-btn" id="create-btn">{{trans('frontend_header.create_account')}}</button>
                 </div>
@@ -66,7 +79,7 @@
             $("#registerModal").removeClass("fade").modal("hide");
             $("#loginModal").modal("show").addClass("fade");
         }
-        
+
         $('#sign_in').click(function(){
             showLogin();
         });
@@ -135,7 +148,7 @@
                     $.ajax({
                         url: '/register',
                         type: 'POST',
-                        data: serializedData, 
+                        data: serializedData,
                         success: function(data){
                             if(data.aceplusStatusCode == '200'){
                                 /*location.reload(true);*/
@@ -187,5 +200,3 @@
     });
 </script>
 <!-- end login ajax-->
-
-

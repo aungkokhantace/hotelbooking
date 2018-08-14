@@ -375,7 +375,8 @@ remove_arrow::-webkit-outer-spin-button{
 }
 
 .resdetail{
-    width:200px;
+    /* width:200px; */
+    width:150px;
     vertical-align:top;
 
 }
@@ -422,4 +423,9 @@ remove_arrow::-webkit-outer-spin-button{
 .adjust-img-height{
   width: 100%;
   height: 200px !important;
+}
+
+.gender-radio{
+  padding-left: 15%;
+  padding-right: 15%;
 }

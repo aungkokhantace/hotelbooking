@@ -52,8 +52,12 @@ class HotelRestaurantController extends Controller
     {
         $request->validate();
         $name                               = Input::get('name');
-        $opening_hours                      = Input::get('opening_hours');
-        $closing_hours                      = Input::get('closing_hours');
+        $breakfast_opening_hours            = Input::get('breakfast_opening_hours');
+        $breakfast_closing_hours            = Input::get('breakfast_closing_hours');
+        $lunch_opening_hours                = Input::get('lunch_opening_hours');
+        $lunch_closing_hours                = Input::get('lunch_closing_hours');
+        $dinner_opening_hours               = Input::get('dinner_opening_hours');
+        $dinner_closing_hours               = Input::get('dinner_closing_hours');
         $opening_days                       = Input::get('opening_days');
         $capacity                           = Input::get('capacity');
         $area                               = Input::get('area');
@@ -66,8 +70,12 @@ class HotelRestaurantController extends Controller
 
         $paramObj                           = new HotelRestaurant();
         $paramObj->name                     = $name;
-        $paramObj->opening_hours            = $opening_hours;
-        $paramObj->closing_hours            = $closing_hours;
+        $paramObj->breakfast_opening_hours  = $breakfast_opening_hours;
+        $paramObj->breakfast_closing_hours  = $breakfast_closing_hours;
+        $paramObj->lunch_opening_hours      = $lunch_opening_hours;
+        $paramObj->lunch_closing_hours      = $lunch_closing_hours;
+        $paramObj->dinner_opening_hours     = $dinner_opening_hours;
+        $paramObj->dinner_closing_hours     = $dinner_closing_hours;
         $paramObj->opening_days             = $opening_days;
         $paramObj->capacity                 = $capacity;
         $paramObj->area                     = $area;
@@ -98,6 +106,7 @@ class HotelRestaurantController extends Controller
             $categoryRepo               = new HotelRestaurantCategoryRepository();
             $hotel_restaurant_category  = $categoryRepo->getObjs();
             $hotel_restaurant           = $this->repo->getObjByID($id);
+            
             return view('backend.hotel_restaurant.hotel_restaurant')->with('hotel_restaurant', $hotel_restaurant)
                                                                     ->with('hotels',$hotels)
                                                                     ->with('hotel_restaurant_category',$hotel_restaurant_category);
@@ -110,8 +119,12 @@ class HotelRestaurantController extends Controller
         $request->validate();
         $id                                 = Input::get('id');
         $name                               = Input::get('name');
-        $opening_hours                      = Input::get('opening_hours');
-        $closing_hours                      = Input::get('closing_hours');
+        $breakfast_opening_hours            = Input::get('breakfast_opening_hours');
+        $breakfast_closing_hours            = Input::get('breakfast_closing_hours');
+        $lunch_opening_hours                = Input::get('lunch_opening_hours');
+        $lunch_closing_hours                = Input::get('lunch_closing_hours');
+        $dinner_opening_hours               = Input::get('dinner_opening_hours');
+        $dinner_closing_hours               = Input::get('dinner_closing_hours');
         $opening_days                       = Input::get('opening_days');
         $capacity                           = Input::get('capacity');
         $area                               = Input::get('area');
@@ -124,8 +137,12 @@ class HotelRestaurantController extends Controller
 
         $paramObj                           = $this->repo->getObjByID($id);
         $paramObj->name                     = $name;
-        $paramObj->opening_hours            = $opening_hours;
-        $paramObj->closing_hours            = $closing_hours;
+        $paramObj->breakfast_opening_hours  = $breakfast_opening_hours;
+        $paramObj->breakfast_closing_hours  = $breakfast_closing_hours;
+        $paramObj->lunch_opening_hours      = $lunch_opening_hours;
+        $paramObj->lunch_closing_hours      = $lunch_closing_hours;
+        $paramObj->dinner_opening_hours     = $dinner_opening_hours;
+        $paramObj->dinner_closing_hours     = $dinner_closing_hours;
         $paramObj->opening_days             = $opening_days;
         $paramObj->capacity                 = $capacity;
         $paramObj->area                     = $area;

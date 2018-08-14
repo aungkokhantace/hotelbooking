@@ -5,9 +5,25 @@ return[
 
 	"features"=>"特徴",
 	"whats_around"=>"周りに何があるか",
+
 	"restaurants"=>"飲食店/レストラン",
   "open" => "オープン",
   "close" => "クローズ",
+
+  "open-days" => "営業日",
+  "capacity" => "容量",
+  "area" => "エリア",
+  "floor" => "階",
+  "private-room" => "個室",
+  "description" => "説明",
+  "remark" => "リマーク",
+
+  "breakfast-open-hour" => "朝食の開始時間",
+  "breakfast-close-hour" => "朝食終了時間",
+  "lunch-open-hour" => "ランチスタートタイム",
+  "lunch-close-hour" => "ランチ終了時間",
+  "dinner-open-hour" => "ディナー開始時間",
+  "dinner-close-hour" => "ディナー終了時間",
 	"available_rooms"=>"宿泊可能なお部屋",
 	"room_category"=>"ルームタイプ",
 	"included"=>"含まれる（〜込み）",

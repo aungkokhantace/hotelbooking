@@ -123,6 +123,14 @@ class HomeController extends Controller
         $sliderRepo         = new SliderRepository();
         $sliders            = $sliderRepo->getSlidersByTemplateId($template_id);
 
+        //check for language, if jp, show jp title and description
+        foreach($sliders as $slider){
+          if(Session::has('locale') && Session::get('locale') == "jp"){
+            $slider->title        = $slider->title_jp;
+            $slider->description  = $slider->description_jp;
+          }
+        }
+
         //flag for first slider image(to be active)
         $first_slider       = 1;
 

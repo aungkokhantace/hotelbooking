@@ -13,6 +13,7 @@
             <li><a data-toggle="tab" href="#facility_type"><b>Facility Type</b></a></li>
             <li><a data-toggle="tab" href="#booking_status"><b>Booking Status</b></a></li>
             <li><a data-toggle="tab" href="#booking_payment_stripe_status"><b>Booking Payment Stripe Status</b></a></li>
+            <li><a data-toggle="tab" href="#user_gender"><b>Registration > User Gender</b></a></li>
         </ul>
 
         <div class="tab-content">
@@ -152,6 +153,26 @@
                     </tr>
                 </table>
             </div>
+
+            <!-- start user gender -->
+            <div id="user_gender" class="tab-pane fade">
+                <h3>Registration > User Gender</h3>
+                <table border="2" width="300px" style="text-align: center">
+                    <tr>
+                        <td><strong>Name</strong></td>
+                        <td><strong>Value</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Male</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>Female</td>
+                        <td>2</td>
+                    </tr>
+                </table>
+            </div>
+            <!-- end user gender -->
         </div>
     </div>
 

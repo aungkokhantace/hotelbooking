@@ -59,7 +59,7 @@
             <select class="form-control" name="hotel_restaurant_category" id="hotel_restaurant_category">
                 @if(isset($hotel_restaurant))
                     @foreach($hotel_restaurant_category as $category)
-                        @if($category->id == $hotel_restaurant->hotel_id)
+                        @if($category->id == $hotel_restaurant->h_restaurant_category_id)
                             <option value="{{$category->id}}" selected>{{$category->name}}</option>
                         @else
                             <option value="{{$category->id}}">{{$category->name}}</option>
@@ -93,43 +93,125 @@
         </div>
     </div>
 
+    <!-- start breakfast hour -->
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="from_date">
-                {{trans('setup_hotelrestaurant.open-hr')}}
+                {{trans('setup_hotelrestaurant.breakfast-open-hr')}}
                 <span class="require">*</span>
             </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <div class="input-group bootstrap-timepicker timepicker">
-                <input type="text" class="form-control time-value-box" id="opening_hours" name="opening_hours"
-                       placeholder="{{trans('setup_hotelrestaurant.place-open-hr')}}" value="{{ isset($hotel_restaurant)? $hotel_restaurant->opening_hours:Request::old('opening_hours') }}"/>
+                <input type="text" class="form-control time-value-box" id="breakfast_opening_hours" name="breakfast_opening_hours"
+                       placeholder="{{trans('setup_hotelrestaurant.place-breakfast-open-hr')}}" value="{{ isset($hotel_restaurant)? $hotel_restaurant->breakfast_opening_hours:Request::old('breakfast_opening_hours') }}"/>
                 <div class="input-group-addon">
                     <span class="glyphicon glyphicon-time"></span>
                 </div>
             </div>
-            <p class="text-danger">{{$errors->first('opening_hours')}}</p>
+            <p class="text-danger">{{$errors->first('breakfast_opening_hours')}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="from_date">
-                {{trans('setup_hotelrestaurant.close-hr')}}
+                {{trans('setup_hotelrestaurant.breakfast-close-hr')}}
                 <span class="require">*</span>
             </label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <div class="input-group bootstrap-timepicker timepicker">
-                <input type="text" class="form-control time-value-box" id="closing_hours" name="closing_hours"
-                       placeholder="{{trans('setup_hotelrestaurant.place-close-hr')}}" value="{{ isset($hotel_restaurant)? $hotel_restaurant->closing_hours:Request::old('closing_hours') }}"/>
+                <input type="text" class="form-control time-value-box" id="breakfast_closing_hours" name="breakfast_closing_hours"
+                       placeholder="{{trans('setup_hotelrestaurant.place-breakfast-close-hr')}}" value="{{ isset($hotel_restaurant)? $hotel_restaurant->breakfast_closing_hours:Request::old('breakfast_closing_hours') }}"/>
                 <div class="input-group-addon">
                     <span class="glyphicon glyphicon-time"></span>
                 </div>
             </div>
-            <p class="text-danger">{{$errors->first('closing_hours')}}</p>
+            <p class="text-danger">{{$errors->first('breakfast_closing_hours')}}</p>
         </div>
     </div>
+    <!-- end breakfast hour -->
+
+    <!-- start lunch hour -->
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="from_date">
+                {{trans('setup_hotelrestaurant.lunch-open-hr')}}
+                <span class="require">*</span>
+            </label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <div class="input-group bootstrap-timepicker timepicker">
+                <input type="text" class="form-control time-value-box" id="lunch_opening_hours" name="lunch_opening_hours"
+                       placeholder="{{trans('setup_hotelrestaurant.place-lunch-open-hr')}}" value="{{ isset($hotel_restaurant)? $hotel_restaurant->lunch_opening_hours:Request::old('lunch_opening_hours') }}"/>
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-time"></span>
+                </div>
+            </div>
+            <p class="text-danger">{{$errors->first('lunch_opening_hours')}}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="from_date">
+                {{trans('setup_hotelrestaurant.lunch-close-hr')}}
+                <span class="require">*</span>
+            </label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <div class="input-group bootstrap-timepicker timepicker">
+                <input type="text" class="form-control time-value-box" id="lunch_closing_hours" name="lunch_closing_hours"
+                       placeholder="{{trans('setup_hotelrestaurant.place-lunch-close-hr')}}" value="{{ isset($hotel_restaurant)? $hotel_restaurant->lunch_closing_hours:Request::old('lunch_closing_hours') }}"/>
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-time"></span>
+                </div>
+            </div>
+            <p class="text-danger">{{$errors->first('lunch_closing_hours')}}</p>
+        </div>
+    </div>
+    <!-- end lunch hour -->
+
+    <!-- start dinner hour -->
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="from_date">
+                {{trans('setup_hotelrestaurant.dinner-open-hr')}}
+                <span class="require">*</span>
+            </label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <div class="input-group bootstrap-timepicker timepicker">
+                <input type="text" class="form-control time-value-box" id="dinner_opening_hours" name="dinner_opening_hours"
+                       placeholder="{{trans('setup_hotelrestaurant.place-dinner-open-hr')}}" value="{{ isset($hotel_restaurant)? $hotel_restaurant->dinner_opening_hours:Request::old('dinner_opening_hours') }}"/>
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-time"></span>
+                </div>
+            </div>
+            <p class="text-danger">{{$errors->first('dinner_opening_hours')}}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="from_date">
+                {{trans('setup_hotelrestaurant.dinner-close-hr')}}
+                <span class="require">*</span>
+            </label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <div class="input-group bootstrap-timepicker timepicker">
+                <input type="text" class="form-control time-value-box" id="dinner_closing_hours" name="dinner_closing_hours"
+                       placeholder="{{trans('setup_hotelrestaurant.place-dinner-close-hr')}}" value="{{ isset($hotel_restaurant)? $hotel_restaurant->dinner_closing_hours:Request::old('dinner_closing_hours') }}"/>
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-time"></span>
+                </div>
+            </div>
+            <p class="text-danger">{{$errors->first('dinner_closing_hours')}}</p>
+        </div>
+    </div>
+    <!-- end dinner hour -->
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -248,8 +330,12 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function(){
-            $('#opening_hours').timepicker();
-            $('#closing_hours').timepicker();
+            $('#breakfast_opening_hours').timepicker({defaultTime: false});
+            $('#breakfast_closing_hours').timepicker({defaultTime: false});
+            $('#lunch_opening_hours').timepicker({defaultTime: false});
+            $('#lunch_closing_hours').timepicker({defaultTime: false});
+            $('#dinner_opening_hours').timepicker({defaultTime: false});
+            $('#dinner_closing_hours').timepicker({defaultTime: false});
         });
     </script>
     <script type="text/javascript">
@@ -268,8 +354,8 @@
                     hotel_id                    : 'required',
                     hotel_restaurant_category   : 'required',
                     name                        : 'required',
-                    opening_hours               : 'required',
-                    closing_hours               : 'required',
+                    // breakfast_opening_hours     : 'required',
+                    // breakfast_closing_hours     : 'required',
                     opening_days                : 'required',
                     capacity: {
                       required: true,
@@ -280,8 +366,7 @@
                       number: true
                     },
                     floor: {
-                      required: true,
-                      number: true
+                      required: true
                     },
                 },
                 messages: {
@@ -300,8 +385,7 @@
                       number: 'Area must be numeric!'
                     },
                     floor: {
-                      required: 'Floor is required!',
-                      number: 'Floor must be numeric!'
+                      required: 'Floor is required!'
                     },
                 },
                 submitHandler: function(form) {

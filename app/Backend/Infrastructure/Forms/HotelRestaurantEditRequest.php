@@ -27,11 +27,11 @@ class HotelRestaurantEditRequest extends Request
              'hotel_id'                  => 'required',
              'hotel_restaurant_category' => 'required',
              'name'                      => 'required',
-             'opening_hours'             => 'required',
+             // 'opening_hours'             => 'required',
              'opening_days'              => 'required',
              'capacity'                  => 'required|numeric',
              'area'                      => 'required|numeric',
-             'floor'                     => 'required|numeric',
+             'floor'                     => 'required',
          ];
      }
 
@@ -48,7 +48,7 @@ class HotelRestaurantEditRequest extends Request
              'area.required'                         => 'Area is required!',
              'area.numeric'                          => 'Area must be numeric!',
              'floor.required'                        => 'Floor is required!',
-             'floor.numeric'                         => 'Floor must be numeric!',
+             // 'floor.numeric'                         => 'Floor must be numeric!',
          ];
      }
 }

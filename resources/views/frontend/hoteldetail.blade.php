@@ -159,24 +159,69 @@
                                                 <table>
 
                                                  </tr>
+
+                                                <!-- start breakfast -->
+                                                @if(isset($res->breakfast_opening_hours) && $res->breakfast_opening_hours !== null)
                                                  <tr>
                                                     <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>
-                                                      <!-- Open -->
-                                                      {{trans('frontend_details.open')}}
+                                                      {{trans('frontend_details.breakfast-open-hour')}}
                                                     </td>
-                                                    <td> <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->opening_hours}}
-                                                    </td>
+                                                    <td> <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->breakfast_opening_hours}}</td>
                                                  </tr>
+                                                 @endif
+
+                                                 @if(isset($res->breakfast_closing_hours) && $res->breakfast_closing_hours !== null)
                                                  <tr>
                                                     <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>
-                                                      <!-- Close -->
-                                                      {{trans('frontend_details.close')}}
+                                                      {{trans('frontend_details.breakfast-close-hour')}}
                                                     </td>
-                                                    <td><i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->closing_hours}}
-                                                    </td>
+                                                    <td><i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->breakfast_closing_hours}}</td>
                                                  </tr>
+                                                 @endif
+                                                 <!-- end breakfast -->
+
+                                                <!-- start lunch -->
+                                                @if(isset($res->lunch_opening_hours) && $res->breakfast_closing_hours !== null)
                                                  <tr>
-                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  Open Days
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>
+                                                      {{trans('frontend_details.lunch-open-hour')}}
+                                                    </td>
+                                                    <td> <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->lunch_opening_hours}}</td>
+                                                 </tr>
+                                                 @endif
+
+                                                 @if(isset($res->lunch_closing_hours) && $res->breakfast_closing_hours !== null)
+                                                 <tr>
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>
+                                                      {{trans('frontend_details.lunch-close-hour')}}
+                                                    </td>
+                                                    <td><i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->lunch_closing_hours}}</td>
+                                                 </tr>
+                                                 @endif
+                                                 <!-- end lunch -->
+
+                                                <!-- start dinner -->
+                                                @if(isset($res->dinner_opening_hours) && $res->breakfast_closing_hours !== null)
+                                                 <tr>
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>
+                                                      {{trans('frontend_details.dinner-open-hour')}}
+                                                    </td>
+                                                    <td> <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->dinner_opening_hours}}</td>
+                                                 </tr>
+                                                 @endif
+
+                                                 @if(isset($res->dinner_closing_hours) && $res->breakfast_closing_hours !== null)
+                                                 <tr>
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>
+                                                      {{trans('frontend_details.dinner-close-hour')}}
+                                                    </td>
+                                                    <td><i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->dinner_closing_hours}}</td>
+                                                 </tr>
+                                                 @endif
+                                                 <!-- end dinner -->
+
+                                                 <tr>
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  {{trans('frontend_details.open-days')}}
                                                     </td>
                                                      <td>
                                                         <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->opening_days}}
@@ -184,7 +229,7 @@
                                                 </tr>
 
                                                 <tr>
-                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  Capacity
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  {{trans('frontend_details.capacity')}}
                                                     </td>
                                                      <td>
                                                         <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->capacity}} persons
@@ -192,7 +237,7 @@
                                                 </tr>
 
                                                 <tr>
-                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  Area
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  {{trans('frontend_details.area')}}
                                                     </td>
                                                      <td>
                                                         <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->area}} sqm
@@ -200,7 +245,7 @@
                                                 </tr>
 
                                                 <tr>
-                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  Floor
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  {{trans('frontend_details.floor')}}
                                                     </td>
                                                      <td>
                                                         <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->floor}}
@@ -208,7 +253,7 @@
                                                 </tr>
                                              @if(count($res->private_room )> 0 && $res->private_room==1)
                                                 <tr>
-                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  Private Room
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  {{trans('frontend_details.private-room')}}
                                                     </td>
                                                      <td>
                                                         <i class="fa fa-arrow-circle-right" style="color:pink"></i> Included
@@ -218,7 +263,7 @@
 
                                              @if(str_word_count($res->description) > 0 && str_word_count($res->description)!=0)
                                                 <tr>
-                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  Description
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>  {{trans('frontend_details.description')}}
                                                     </td>
                                                      <td>
                                                         <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->description}}
@@ -227,7 +272,7 @@
                                               @endif
                                               @if(str_word_count($res->remark) > 0 && str_word_count($res->remark)!=0)
                                                <tr>
-                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>   Remark
+                                                    <td class="resdetail"> <i class="fa fa-hand-o-right" style="color:#f384AA"></i>   {{trans('frontend_details.remark')}}
                                                     </td>
                                                      <td>
                                                         <i class="fa fa-arrow-circle-right" style="color:pink"></i> {{$res->remark}}

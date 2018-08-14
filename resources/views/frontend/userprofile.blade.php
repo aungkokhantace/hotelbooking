@@ -109,6 +109,32 @@
                             </div>
                             <!-- end password change -->
 
+                            <!-- start gender -->
+                            <div class="my_profile">
+                                <div class="profile row">
+                                    <label for="gender" class="col-sm-2 profile-form-labels">Gender</label>
+                                    <div class="col-sm-6">
+                                      <div class="col-sm-6">
+                                        @if(isset($customer) && $customer->gender == 1)
+                                          <input type="radio" id="male" class="" name="gender" value="1" checked />
+                                        @else
+                                          <input type="radio" id="male" class="" name="gender" value="1" />
+                                        @endif
+                                          <label for="male">Male</label>
+                                      </div>
+                                      <div class="col-sm-6">
+                                          @if(isset($customer) && $customer->gender == 2)
+                                              <input type="radio" id="female" class="" name="gender"  value="2" checked />
+                                          @else
+                                              <input type="radio" id="female" class="" name="gender"  value="2" />
+                                          @endif
+                                          <label for="female">Female</label>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end gender -->
+
                             <div class="my_profile">
                                 <div class="profile row">
                                     <label for="address" class="col-sm-2 profile-form-labels">{{trans('frontend_details.address')}}</label>

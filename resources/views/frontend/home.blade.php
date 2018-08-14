@@ -93,8 +93,8 @@
                     </div>
                     <div class="form-group row">
                         <label class="control-label" for="check_out">{{trans('frontend_search.check_out')}}</label>
-                        <div class="col-10 input-group date" data-provide="datepicker" id="check_out" autocomplete="off">
-                            <input type="text" class="form-control" name="check_out">
+                        <div class="col-10 input-group date" data-provide="datepicker" id="check_out">
+                            <input type="text" class="form-control" name="check_out" autocomplete="off">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </div>

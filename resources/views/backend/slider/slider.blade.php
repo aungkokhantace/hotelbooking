@@ -39,13 +39,13 @@
                         @if($template->id == $slider->template_name)
                             <option value="{{$template->id}}" selected>{{$template->name}}</option>
                         @else
-                            <option value="{{$template->id}}">{{$template->name}}</option>
+                            <option value="{{$template->id}}" selected>{{$template->name}}</option>
                         @endif
                     @endforeach
                 @else
                     <option value="" disabled selected>{{trans('setup_slider.template-name')}}</option>
                     @foreach($templates as $template)
-                        <option value="{{$template->id}}"  @if(old('template_id') == $template->id) {{ 'selected' }} @endif>{{$template->name}}</option>
+                        <option value="{{$template->id}}"  @if(old('template_id') == $template->id) {{ 'selected' }} @endif selected>{{$template->name}}</option>
                     @endforeach
                 @endif
             </select>
@@ -66,12 +66,34 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="name">{{trans('setup_slider.title_jp')}}<span class="require">*</span></label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <input type="text" class="form-control" id="title_jp" name="title_jp"
+                   placeholder="{{trans('setup_slider.slider-title-jp')}}" value="{{ isset($slider)? $slider->title_jp:Request::old('title_jp') }}"/>
+            <p class="text-danger">{{$errors->first('title_jp')}}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="name">{{trans('setup_slider.description')}}<span class="require">*</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <textarea  rows="5" cols="50" class="form-control" id="Description" name="Description"
                    placeholder="{{trans('setup_slider.slider-description')}}" value="{{ isset($slider)? $slider->description:Request::old('Description') }}"></textarea>
             <p class="text-danger">{{$errors->first('Description')}}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="name">{{trans('setup_slider.description_jp')}}<span class="require">*</span></label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <textarea  rows="5" cols="50" class="form-control" id="description_jp" name="description_jp"
+                   placeholder="{{trans('setup_slider.slider-description-jp')}}" value="{{ isset($slider)? $slider->description_jp:Request::old('description_jp') }}"></textarea>
+            <p class="text-danger">{{$errors->first('description_jp')}}</p>
         </div>
     </div>
 
@@ -250,15 +272,43 @@
 
                 rules: {
                     template_id           : 'required',
-                    Title                 : 'required',
-                    Description           : 'required',
+                    Title                 : {
+                      required: true,
+                      maxlength: 30
+                    },
+                    title_jp: {
+                      required: true,
+                      maxlength: 30
+                    },
+                    Description           : {
+                      required: true,
+                      maxlength: 90
+                    },
+                    description_jp: {
+                      required: true,
+                      maxlength: 90
+                    },
                     photo                 : { required: true,
-                                            accept: 'jpg|jpge|png|gif'}
+                                            accept: 'jpg|jpge|png|gif|PNG|JPG'}
                 },
                 messages: {
                     template_id           : 'Page is required',
-                    Title                 : 'Title is required',
-                    Description           : 'Description is required',
+                    Title                 : {
+                      required: 'English title is required',
+                      maxlength: 'Please enter no more than 30 characters'
+                    },
+                    title_jp: {
+                      required: 'Japanese title is required',
+                      maxlength: 'Please enter no more than 30 characters'
+                    },
+                    description_jp: {
+                      required: 'Japanese description is required',
+                      maxlength: 'Please enter no more than 90 characters'
+                    },
+                    Description           : {
+                      required: 'English description is required',
+                      maxlength: 'Please enter no more than 90 characters'
+                    },
                     photo                 : 'Photo is required',
                 },
                 submitHandler: function(form) {
@@ -284,7 +334,7 @@
                 var fileSize = (f.size||f.fileSize);
                 var imgkbytes = Math.round(parseInt(fileSize)/1024);
 
-                if(imgkbytes > 5000){
+                if(imgkbytes > 10000){
                     $('#image_error_fileSize').modal('show');
                     //$('#user_image_PopUp').attr('src') = '';
                     $('#user_image_PopUp').attr('src','');

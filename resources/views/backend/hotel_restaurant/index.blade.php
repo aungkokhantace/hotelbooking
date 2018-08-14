@@ -41,7 +41,7 @@
                         <th>{{trans('setup_hotelrestaurant.tb-col-name')}}</th>
                         <th>{{trans('setup_hotelrestaurant.tb-col-hotel')}}</th>
                         <th>{{trans('setup_hotelrestaurant.tb-col-category')}}</th>
-                        <th>{{trans('setup_hotelrestaurant.tb-col-open-hr')}}</th>
+                        <!-- <th>{{trans('setup_hotelrestaurant.tb-col-open-hr')}}</th> -->
                         <th>{{trans('setup_hotelrestaurant.tb-col-open-day')}}</th>
                         <!-- <th>{{trans('setup_hotelrestaurant.tb-col-capacity')}}</th> -->
                         <!-- <th>{{trans('setup_hotelrestaurant.tb-col-area')}}</th>
@@ -56,7 +56,7 @@
                         <th class="search-col" con-id="hotel">Hotel</th>
                         <th class="search-col" con-id="hotel_restaurant_category">Hotel Restaurant Category</th>
                         <th class="search-col" con-id="opening_hours">Opening Hours</th>
-                        <th class="search-col" con-id="opening_days">Opening Days</th>
+                        <!-- <th class="search-col" con-id="opening_days">Opening Days</th> -->
                         <!-- <th class="search-col" con-id="Capacity">Capacity</th> -->
                         <!-- <th class="search-col" con-id="area">Area</th>
                         <th class="search-col" con-id="floor">Floor</th> -->
@@ -72,7 +72,7 @@
                             <td><a href="/backend_mps/hotel_restaurant/edit/{{$restaurant->id}}">{{$restaurant->name}}</a></td>
                             <td>{{$restaurant->hotel->name}}</td>
                             <td>{{$restaurant->h_restaurant_category->name}}</td>
-                            <td>{{$restaurant->opening_hours}}</td>
+                            <!-- <td>{{$restaurant->opening_hours}}</td> -->
                             <td>{{$restaurant->opening_days}}</td>
                             <!-- <td>{{$restaurant->capacity}}</td> -->
                             <!-- <td>{{$restaurant->area}}</td>

@@ -41,6 +41,8 @@ class UserRegistrationController extends Controller
                 $name                           = $f_name.' '.$l_name;
                 $activation_str                 = $activation_code.'_'.$pwd_txt;
 
+                $gender                          = Input::get('gender'); //get gender
+
                 DB::beginTransaction();
                 $paramObj                       = new User();
                 $paramObj->first_name           = $f_name;
@@ -49,6 +51,7 @@ class UserRegistrationController extends Controller
                 $paramObj->email                = $email;
                 $paramObj->password             = $pwd;
                 $paramObj->role_id              = 4;
+                $paramObj->gender               = $gender;
                 $paramObj->activation_code      = $activation_code;
 
                 $res                            = $this->repo->create($paramObj);

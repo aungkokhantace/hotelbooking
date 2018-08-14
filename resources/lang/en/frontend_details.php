@@ -6,9 +6,25 @@ return[
 
 	"features"=>"Features",
 	"whats_around"=>"What's around",
+
 	"restaurants"=>"Restaurants",
   "open" => "Open",
   "close" => "Close",
+
+  "open-days" => "Open Days",
+  "capacity" => "Capacity",
+  "area" => "Area",
+  "floor" => "Floor",
+  "private-room" => "Private Room",
+  "description" => "Description",
+  "remark" => "Remark",
+
+  "breakfast-open-hour" => "Breakfast Start Time",
+  "breakfast-close-hour" => "Breakfast End Time",
+  "lunch-open-hour" => "Lunch Start Time",
+  "lunch-close-hour" => "Lunch End Time",
+  "dinner-open-hour" => "Dinner Start Time",
+  "dinner-close-hour" => "Dinner End Time",
 	"available_rooms"=>"Available Rooms",
 	"room_category"=>"Room Category",
 	"included"=>"Included",
