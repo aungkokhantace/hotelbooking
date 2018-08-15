@@ -27,7 +27,8 @@ return[
     "comming_soon"=>"Comming Soon",
     "page_is_under_construction"=>"Page is under construction!",
 
-    "transportation_information"=>"Transportation Information",
+    "transportation_information"=>"Transportation",
+    "guide"=>"Guide",
     "term_condition"=>"Terms & Condition",
     "accepted_carts"=>"Accepted Cards",
     "follow_us" =>"Follow us",

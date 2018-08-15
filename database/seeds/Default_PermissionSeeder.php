@@ -345,6 +345,7 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>582,'module'=>'Communication','name'=>'Store','description'=>'Communication Store','url'=>'backend_mps/communication/reply/store'],
             ['id'=>590,'module'=>'Transportation Information','name'=>'View and Store','description'=>'Transportation Information View and  Store','url'=>'backend_mps/transportation_information'],
             ['id'=>591,'module'=>'TourInformation','name'=>'View and Store','description'=>'Tour Information View and  Store','url'=>'backend_mps/tour_information'],
+            ['id'=>592,'module'=>'GuideInformation','name'=>'View and Store','description'=>'Guide Information View and  Store','url'=>'backend_mps/guide_information'],
 
             //CSVImport
             ['id'=>600,'module'=>'CSVImport','name'=>'Listing','description'=>'CSVImport Listing','url'=>'backend_mps/import'],

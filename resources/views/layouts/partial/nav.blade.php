@@ -120,6 +120,7 @@ $permissions = \App\Core\Check::getPermissionByRoleId($role_id);
 
                     @if(in_array("backend_mps/transportation_information", $permissions) ||
                         in_array("backend_mps/tour_information", $permissions) ||
+                        in_array("backend_mps/guide_information", $permissions) ||
                         in_array("backend_mps/visa_information", $permissions) ||
                         in_array("backend_mps/faq_information", $permissions) ||
                         in_array("backend_mps/about_us", $permissions) ||
@@ -191,17 +192,23 @@ $permissions = \App\Core\Check::getPermissionByRoleId($role_id);
                          </li>
                          @endif
 
+                         @if(in_array("backend_mps/transportation_information", $permissions))
+                         <li nav-id="">
+                           <a href="/backend_mps/transportation_information"><span>Transportation</span></a>
+                         </li>
+                         @endif
+
                          @if(in_array("backend_mps/tour_information", $permissions))
                          <li nav-id="">
                            <a href="/backend_mps/tour_information"><span>Tour Information</span></a>
                          </li>
                          @endif
 
-                          @if(in_array("backend_mps/transportation_information", $permissions))
-                          <li nav-id="">
-                              <a href="/backend_mps/transportation_information"><span>Transportation Information</span></a>
-                          </li>
-                          @endif
+                         @if(in_array("backend_mps/guide_information", $permissions))
+                         <li nav-id="">
+                           <a href="/backend_mps/guide_information"><span>Guide</span></a>
+                         </li>
+                         @endif
 
                           @if(in_array("backend_mps/visa_information", $permissions))
                           <li nav-id="">

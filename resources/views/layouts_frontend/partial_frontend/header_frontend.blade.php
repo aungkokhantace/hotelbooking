@@ -126,6 +126,7 @@ $companyLogo    = \App\Core\Check::companyLogo();
                                             <ul class="dropdown-menu">
                                                 <li><a href="/transportation_information">{{trans('frontend_header.transportation_information')}}</a></li>
                                                 <li><a href="/tour_information">{{trans('frontend_header.tour_information')}}</a></li>
+                                                <li><a href="/guide_information">{{trans('frontend_header.guide')}}</a></li>
                                             </ul>
                                         </div>
 

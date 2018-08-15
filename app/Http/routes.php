@@ -91,6 +91,9 @@ Route::group(['middleware' => 'web'], function () {
     //Display Transportation Information
     Route::get('transportation_information', array('as'=>'/transportation_information', 'uses'=>'Frontend\TransportationInformationController@index'));
 
+    //Display Guide Information
+    Route::get('guide_information', array('as'=>'/guide_information', 'uses'=>'Frontend\GuideInformationController@index'));
+
     //Display About Us Information
     Route::get('about_us', array('as'=>'/about_us', 'uses'=>'Frontend\AboutUsController@index'));
 
@@ -518,6 +521,11 @@ Route::group(['middleware' => 'web'], function () {
             //Transportation Information
             Route::get('transportation_information', array('as'=>'backend_mps/transportation_information', 'uses'=>'Setup\TransportationInformation\TransportationInformationController@edit'));
             Route::post('transportation_information', array('as'=>'backend_mps/transportation_information', 'uses'=>'Setup\TransportationInformation\TransportationInformationController@update'));
+
+            //Guide Information
+            Route::get('guide_information', array('as'=>'backend_mps/guide_information', 'uses'=>'Setup\GuideInformation\GuideInformationController@edit'));
+            Route::post('guide_information', array('as'=>'backend_mps/guide_information', 'uses'=>'Setup\GuideInformation\GuideInformationController@update'));
+
             //Visa Information
             Route::get('visa_information',array('as'=>'backend_mps/visa_information','uses'=>'Setup\VisaInformation\VisaInformationController@edit'));
 

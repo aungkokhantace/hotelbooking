@@ -31,7 +31,8 @@ return[
     "comming_soon"=>"COMING SOON!",
     "page_is_under_construction"=>"ただいま工事中です！",
 
-    "transportation_information"=>"交通情報",
+    "transportation_information"=>"交通",
+    "guide"=>"ガイド",
     "term_condition"=>"利用規約",
     "accepted_carts"=>"使用可能なクレジットカード",
     "follow_us" =>"SNSフォローボタン",
