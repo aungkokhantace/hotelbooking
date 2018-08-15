@@ -107,7 +107,7 @@
                                 <label for="street-number" class="control-label">{{trans('frontend_search.room')}}</label>
                                 {{--  <input type="number" id="room" class="floatLabel form-control remove_arrow" min="1" name="room">  --}}
                                 <select class="form-control" name="room" id="room">
-                                    @for($i = 0; $i <= 100; $i++)
+                                    @for($i = 0; $i <= 10; $i++)
                                         <option value="{{$i}}">{{$i}}</option>
                                     @endfor
                                 </select>
@@ -116,7 +116,7 @@
                                 <label class="control-label" for="check_out">{{trans('frontend_search.adults')}}</label>
                                 {{--  <input type="number" id="adults" class="floatLabel form-control remove_arrow" min="1" name="adults">  --}}
                                 <select class="form-control" name="adults" id="adults">
-                                    @for($i = 0; $i <= 100; $i++)
+                                    @for($i = 0; $i <= 10; $i++)
                                         <option value="{{$i}}">{{$i}}</option>
                                     @endfor
                                 </select>
@@ -125,7 +125,7 @@
                                 <label class="control-label" for="check_out">{{trans('frontend_search.children')}}</label>
                                 {{--  <input type="number" id="children" class="floatLabel form-control remove_arrow" min="1" name="children">  --}}
                                 <select class="form-control" name="children" id="children">
-                                    @for($i = 0; $i <= 100; $i++)
+                                    @for($i = 0; $i <= 10; $i++)
                                         <option value="{{$i}}">{{$i}}</option>
                                     @endfor
                                 </select>

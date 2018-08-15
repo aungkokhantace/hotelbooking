@@ -7,6 +7,17 @@
         }
     </style>
 
+    @if(isset($hotel_restaurant) && ($hotel_restaurant->has_separate_open_close_hours == 1))
+    <style>
+      .separate-hour{
+        display:block;
+      }
+      .normal-hour{
+        display:none;
+      }
+    </style>
+    @endif
+
         <!-- begin #content -->
 <div id="content" class="content">
 
@@ -93,8 +104,73 @@
         </div>
     </div>
 
-    <!-- start breakfast hour -->
+    <!-- start flag for separate hours -->
     <div class="row">
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+          <label for="has_separate_open_close_hours">Has separate opening/closing hours(Breakfast/Lunch/Dinner)<span class="require">*</span></label>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+          <select class="form-control" name="has_separate_open_close_hours" id="has_separate_open_close_hours">
+          @if(isset($hotel_restaurant))
+            @if($hotel_restaurant->has_separate_open_close_hours == 1)
+            <option value="0">No</option>
+            <option value="1" selected>Yes</option>
+            @else
+            <option value="0" selected>No</option>
+            <option value="1">Yes</option>
+            @endif
+          @else
+            <option value="0" selected>No</option>
+            <option value="1">Yes</option>
+          @endif
+          </select>
+          <p class="text-danger">{{$errors->first('has_separate_open_close_hours')}}</p>
+      </div>
+    </div>
+    <!-- end flag for separate hours -->
+
+    <!-- start normal hour -->
+    <div class="row normal-hour">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="from_date">
+                {{trans('setup_hotelrestaurant.normal-open-hr')}}
+                <span class="require">*</span>
+            </label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <div class="input-group bootstrap-timepicker timepicker">
+                <input type="text" class="form-control time-value-box" id="normal_opening_hours" name="normal_opening_hours"
+                       placeholder="{{trans('setup_hotelrestaurant.place-normal-open-hr')}}" value="{{ isset($hotel_restaurant)? $hotel_restaurant->normal_opening_hours:Request::old('normal_opening_hours') }}"/>
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-time"></span>
+                </div>
+            </div>
+            <p class="text-danger">{{$errors->first('normal_opening_hours')}}</p>
+        </div>
+    </div>
+
+    <div class="row normal-hour">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="from_date">
+                {{trans('setup_hotelrestaurant.normal-close-hr')}}
+                <span class="require">*</span>
+            </label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <div class="input-group bootstrap-timepicker timepicker">
+                <input type="text" class="form-control time-value-box" id="normal_closing_hours" name="normal_closing_hours"
+                       placeholder="{{trans('setup_hotelrestaurant.place-normal-close-hr')}}" value="{{ isset($hotel_restaurant)? $hotel_restaurant->normal_closing_hours:Request::old('normal_closing_hours') }}"/>
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-time"></span>
+                </div>
+            </div>
+            <p class="text-danger">{{$errors->first('normal_closing_hours')}}</p>
+        </div>
+    </div>
+    <!-- end normal hour -->
+
+    <!-- start breakfast hour -->
+    <div class="row separate-hour">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="from_date">
                 {{trans('setup_hotelrestaurant.breakfast-open-hr')}}
@@ -113,7 +189,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row separate-hour">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="from_date">
                 {{trans('setup_hotelrestaurant.breakfast-close-hr')}}
@@ -134,7 +210,7 @@
     <!-- end breakfast hour -->
 
     <!-- start lunch hour -->
-    <div class="row">
+    <div class="row separate-hour">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="from_date">
                 {{trans('setup_hotelrestaurant.lunch-open-hr')}}
@@ -153,7 +229,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row separate-hour">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="from_date">
                 {{trans('setup_hotelrestaurant.lunch-close-hr')}}
@@ -174,7 +250,7 @@
     <!-- end lunch hour -->
 
     <!-- start dinner hour -->
-    <div class="row">
+    <div class="row separate-hour">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="from_date">
                 {{trans('setup_hotelrestaurant.dinner-open-hr')}}
@@ -193,7 +269,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row separate-hour">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="from_date">
                 {{trans('setup_hotelrestaurant.dinner-close-hr')}}
@@ -330,6 +406,9 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function(){
+            $('#normal_opening_hours').timepicker({defaultTime: false});
+            $('#normal_closing_hours').timepicker({defaultTime: false});
+
             $('#breakfast_opening_hours').timepicker({defaultTime: false});
             $('#breakfast_closing_hours').timepicker({defaultTime: false});
             $('#lunch_opening_hours').timepicker({defaultTime: false});
@@ -395,6 +474,17 @@
             });
             //End Validation for Entry and Edit Form
 
+
+            $('#has_separate_open_close_hours').change(function() {
+              // console.log(document.getElementById('teacher_role').value);
+              if (document.getElementById('has_separate_open_close_hours').value == "1"){
+                  $(".normal-hour").hide();
+                  $(".separate-hour").show();
+              } else{
+                  $(".separate-hour").hide();
+                  $(".normal-hour").show();
+              }
+            });
         });
 
 

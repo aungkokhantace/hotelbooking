@@ -135,3 +135,7 @@ textarea{
 #bed_types_ms{
   height:32px;
 }
+
+.separate-hour{
+  display:none;
+}

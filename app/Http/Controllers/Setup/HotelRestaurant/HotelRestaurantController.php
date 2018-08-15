@@ -52,6 +52,9 @@ class HotelRestaurantController extends Controller
     {
         $request->validate();
         $name                               = Input::get('name');
+        $has_separate_open_close_hours      = Input::get('has_separate_open_close_hours');
+        $normal_opening_hours               = Input::get('normal_opening_hours');
+        $normal_closing_hours               = Input::get('normal_closing_hours');
         $breakfast_opening_hours            = Input::get('breakfast_opening_hours');
         $breakfast_closing_hours            = Input::get('breakfast_closing_hours');
         $lunch_opening_hours                = Input::get('lunch_opening_hours');
@@ -70,12 +73,33 @@ class HotelRestaurantController extends Controller
 
         $paramObj                           = new HotelRestaurant();
         $paramObj->name                     = $name;
-        $paramObj->breakfast_opening_hours  = $breakfast_opening_hours;
-        $paramObj->breakfast_closing_hours  = $breakfast_closing_hours;
-        $paramObj->lunch_opening_hours      = $lunch_opening_hours;
-        $paramObj->lunch_closing_hours      = $lunch_closing_hours;
-        $paramObj->dinner_opening_hours     = $dinner_opening_hours;
-        $paramObj->dinner_closing_hours     = $dinner_closing_hours;
+        $paramObj->has_separate_open_close_hours = $has_separate_open_close_hours;
+        
+        //if restaurant has separate opening/closing hours, set normal hours to null
+        if($has_separate_open_close_hours == 1){
+          $paramObj->normal_opening_hours     = null;
+          $paramObj->normal_closing_hours     = null;
+
+          $paramObj->breakfast_opening_hours  = $breakfast_opening_hours;
+          $paramObj->breakfast_closing_hours  = $breakfast_closing_hours;
+          $paramObj->lunch_opening_hours      = $lunch_opening_hours;
+          $paramObj->lunch_closing_hours      = $lunch_closing_hours;
+          $paramObj->dinner_opening_hours     = $dinner_opening_hours;
+          $paramObj->dinner_closing_hours     = $dinner_closing_hours;
+        }
+        //if restaurant doesn't have separate opening/closing hours, set breakfast/lunch/dinner hours to null
+        else{
+          $paramObj->normal_opening_hours     = $normal_opening_hours;
+          $paramObj->normal_closing_hours     = $normal_closing_hours;
+
+          $paramObj->breakfast_opening_hours  = null;
+          $paramObj->breakfast_closing_hours  = null;
+          $paramObj->lunch_opening_hours      = null;
+          $paramObj->lunch_closing_hours      = null;
+          $paramObj->dinner_opening_hours     = null;
+          $paramObj->dinner_closing_hours     = null;
+        }
+
         $paramObj->opening_days             = $opening_days;
         $paramObj->capacity                 = $capacity;
         $paramObj->area                     = $area;
@@ -106,7 +130,7 @@ class HotelRestaurantController extends Controller
             $categoryRepo               = new HotelRestaurantCategoryRepository();
             $hotel_restaurant_category  = $categoryRepo->getObjs();
             $hotel_restaurant           = $this->repo->getObjByID($id);
-            
+
             return view('backend.hotel_restaurant.hotel_restaurant')->with('hotel_restaurant', $hotel_restaurant)
                                                                     ->with('hotels',$hotels)
                                                                     ->with('hotel_restaurant_category',$hotel_restaurant_category);
@@ -119,6 +143,9 @@ class HotelRestaurantController extends Controller
         $request->validate();
         $id                                 = Input::get('id');
         $name                               = Input::get('name');
+        $has_separate_open_close_hours      = Input::get('has_separate_open_close_hours');
+        $normal_opening_hours               = Input::get('normal_opening_hours');
+        $normal_closing_hours               = Input::get('normal_closing_hours');
         $breakfast_opening_hours            = Input::get('breakfast_opening_hours');
         $breakfast_closing_hours            = Input::get('breakfast_closing_hours');
         $lunch_opening_hours                = Input::get('lunch_opening_hours');
@@ -137,12 +164,33 @@ class HotelRestaurantController extends Controller
 
         $paramObj                           = $this->repo->getObjByID($id);
         $paramObj->name                     = $name;
-        $paramObj->breakfast_opening_hours  = $breakfast_opening_hours;
-        $paramObj->breakfast_closing_hours  = $breakfast_closing_hours;
-        $paramObj->lunch_opening_hours      = $lunch_opening_hours;
-        $paramObj->lunch_closing_hours      = $lunch_closing_hours;
-        $paramObj->dinner_opening_hours     = $dinner_opening_hours;
-        $paramObj->dinner_closing_hours     = $dinner_closing_hours;
+        $paramObj->has_separate_open_close_hours = $has_separate_open_close_hours;
+
+        //if restaurant has separate opening/closing hours, set normal hours to null
+        if($has_separate_open_close_hours == 1){
+          $paramObj->normal_opening_hours     = null;
+          $paramObj->normal_closing_hours     = null;
+
+          $paramObj->breakfast_opening_hours  = $breakfast_opening_hours;
+          $paramObj->breakfast_closing_hours  = $breakfast_closing_hours;
+          $paramObj->lunch_opening_hours      = $lunch_opening_hours;
+          $paramObj->lunch_closing_hours      = $lunch_closing_hours;
+          $paramObj->dinner_opening_hours     = $dinner_opening_hours;
+          $paramObj->dinner_closing_hours     = $dinner_closing_hours;
+        }
+        //if restaurant doesn't have separate opening/closing hours, set breakfast/lunch/dinner hours to null
+        else{
+          $paramObj->normal_opening_hours     = $normal_opening_hours;
+          $paramObj->normal_closing_hours     = $normal_closing_hours;
+
+          $paramObj->breakfast_opening_hours  = null;
+          $paramObj->breakfast_closing_hours  = null;
+          $paramObj->lunch_opening_hours      = null;
+          $paramObj->lunch_closing_hours      = null;
+          $paramObj->dinner_opening_hours     = null;
+          $paramObj->dinner_closing_hours     = null;
+        }
+
         $paramObj->opening_days             = $opening_days;
         $paramObj->capacity                 = $capacity;
         $paramObj->area                     = $area;
