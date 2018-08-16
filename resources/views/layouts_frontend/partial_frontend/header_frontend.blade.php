@@ -190,16 +190,23 @@ $companyLogo    = \App\Core\Check::companyLogo();
                         <li>
                             <div class="language">
                                 <ul>
-                                    <form action="/frontend/language" method="post"  id="change_lang">
                                     <li>
+                                      <form action="/frontend/language" method="post"  id="change_lang_jp">
+                                        {{ csrf_field() }}
                                         <!-- <a href="#"><img src="/assets/shared/images/en_US.png"></a> -->
-                                        <input type="image" value="jp" class="flag-img" name="locale" src="/assets/shared/images/jp.png">
+                                        <!-- <input type="image" value="jp" class="flag-img" name="locale" src="/assets/shared/images/jp.png"> -->
+                                        <input type="hidden" name="locale" value="jp">
+                                        <input type="image" value="jp" class="flag-img" name="locale-btn" src="/assets/shared/images/jp.png">
+                                      </form>
                                     </li>
-                                    <li style="text-decoration:underline;">
+                                    <li>
+                                      <form action="/frontend/language" method="post"  id="change_lang_en">
+                                        {{ csrf_field() }}
+                                        <!-- <input type="image" value="en" class="flag-img" name="locale" src="/assets/shared/images/en_US.png"> -->
+                                        <input type="hidden" name="locale" value="en">
                                         <input type="image" value="en" class="flag-img" name="locale" src="/assets/shared/images/en_US.png">
+                                      </form>
                                     </li>
-                                 {{ csrf_field() }}
-                                     </form>
 
 
                                 </ul>
@@ -217,8 +224,9 @@ $companyLogo    = \App\Core\Check::companyLogo();
 
     <script>
 
-    $( ".flag-img" ).click(function() {
-       $( "#change_lang" ).submit();
-    });
+    // $( ".flag-img" ).click(function() {
+    //   // console.log(this.value);
+    //    // $( "#change_lang" ).submit();
+    // });
 
    </script>
