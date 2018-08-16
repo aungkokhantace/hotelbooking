@@ -10,7 +10,7 @@
     <h1 class="page-header">{{ trans('messages.dashboard') }}</h1>
 
     <div class="row">
-            <div class="col-md-3">
+            <!-- <div class="col-md-3">
                 <div class="info-box">
                     <span class="info-box-icon bg-light-blue"><i class="ion ion-home"></i></span>
 
@@ -18,9 +18,8 @@
                         <span class="info-box-text">NUMBER OF HOTELS</span>
                         <span class="info-box-number">{{ $hotel_count }}</span>
                     </div>
-                    <!-- /.info-box-content -->
                 </div>
-            </div>
+            </div> -->
 
             <div class="col-md-3">
                 <div class="info-box">
