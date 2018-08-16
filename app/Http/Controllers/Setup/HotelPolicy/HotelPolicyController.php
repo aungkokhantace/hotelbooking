@@ -47,6 +47,7 @@ class HotelPolicyController extends Controller
 
             $hotelRepo          = new HotelRepository();
             $hotelPolicyRepo    = new HotelPolicyRepository();
+
             if ($role == 3) {
                 //Get Hotel ID
                 $hotels             = $hotelRepo->getHotelByUserEmail($email);
@@ -55,7 +56,8 @@ class HotelPolicyController extends Controller
                     $h_id = $hotel->id;
                 }
 
-                $all_hotel_policy = $this->repo->getObjsByHotelID($h_id);
+                $hotel_policy = $this->repo->getObjsByHotelID($h_id);
+                $all_hotel_policy[0] = $hotel_policy;
             }
             else {
             $all_hotel_policy = $this->repo->getObjs();
@@ -78,6 +80,8 @@ class HotelPolicyController extends Controller
             $hotels = $hotelRepo->getObjsWithNoPolicy($hotel_id_array_with_policies);
             }
             $all_hotels = $hotelRepo->getObjs();
+
+
 
             return view('backend.hotel_policy.index')
                 ->with('all_hotel_policy',$all_hotel_policy)
