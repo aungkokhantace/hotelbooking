@@ -55,7 +55,8 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="name">{{trans('setup_slider.title')}}<span class="require">*</span></label>
+            <label for="name">{{trans('setup_slider.title')}}<span class="require">*</span></label><br>
+            <label for="name"><span class="require">(Max 30 characters)</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" class="form-control" id="Title" name="Title"
@@ -66,7 +67,8 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="name">{{trans('setup_slider.title_jp')}}<span class="require">*</span></label>
+            <label for="name">{{trans('setup_slider.title_jp')}}<span class="require">*</span></label><br>
+            <label for="name"><span class="require">(Max 30 characters)</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <input type="text" class="form-control" id="title_jp" name="title_jp"
@@ -77,7 +79,8 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="name">{{trans('setup_slider.description')}}<span class="require">*</span></label>
+            <label for="name">{{trans('setup_slider.description')}}<span class="require">*</span></label><br>
+            <label for="name"><span class="require">(Max 90 characters)</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <textarea  rows="5" cols="50" class="form-control" id="Description" name="Description"
@@ -88,7 +91,8 @@
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="name">{{trans('setup_slider.description_jp')}}<span class="require">*</span></label>
+            <label for="name">{{trans('setup_slider.description_jp')}}<span class="require">*</span></label><br>
+            <label for="name"><span class="require">(Max 90 characters)</span></label>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <textarea  rows="5" cols="50" class="form-control" id="description_jp" name="description_jp"
