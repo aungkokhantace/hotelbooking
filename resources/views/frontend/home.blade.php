@@ -65,10 +65,17 @@
         </header>
     </div>
 
+    <!-- start floating icons on slider -->
     <div class="btn-gp btn-gp2 clearfix">
+        @if(!empty(Session::get('locale')) && Session::get('locale') == 'jp')
+        <a href="/transportation_information" class="clearfix"><img src="/images/floating_slider_icons/transportation_icn.png" class="img-icn"><img src="/images/floating_slider_icons/transportation_txt_jp.png" class="img-txt"></a>
+        <a href="/tour_information" class="clearfix"><img src="/images/floating_slider_icons/tour_icn.png" class="img-icn"><img src="/images/floating_slider_icons/tour_txt_jp.png" class="img-txt"></a>
+        <a href="/guide_information" class="clearfix"><img src="/images/floating_slider_icons/guide_icn.png" class="img-icn"><img src="/images/floating_slider_icons/guide_txt_jp.png" class="img-txt"></a>
+        @else
         <a href="/transportation_information" class="clearfix"><img src="/images/floating_slider_icons/transportation_icn.png" class="img-icn"><img src="/images/floating_slider_icons/transportation_txt.png" class="img-txt"></a>
         <a href="/tour_information" class="clearfix"><img src="/images/floating_slider_icons/tour_icn.png" class="img-icn"><img src="/images/floating_slider_icons/tour_txt.png" class="img-txt"></a>
         <a href="/guide_information" class="clearfix"><img src="/images/floating_slider_icons/guide_icn.png" class="img-icn"><img src="/images/floating_slider_icons/guide_txt.png" class="img-txt"></a>
+        @endif
     </div>
     <!-- end floating icons on slider -->
 
