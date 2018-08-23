@@ -429,3 +429,57 @@ remove_arrow::-webkit-outer-spin-button{
   padding-left: 15%;
   padding-right: 15%;
 }
+
+
+
+/* start floating icons on slider */
+.btn-gp2 {
+    position: absolute;
+    top: 200px;
+    /* left: 125px; */
+    left: 50px;
+    z-index: 999;
+}
+.btn-gp a {
+    width: 300px;
+    display: block;
+    text-align: center;
+    padding: 0;
+    margin-bottom: 10px;
+    position: relative;
+    cursor: pointer;
+}
+.btn-gp a>img {
+    float: left;
+}
+.btn-gp a .img-txt {
+    position: absolute;
+    left: 77px;
+    top: 15px;
+    display: none;
+}
+.btn-gp a:hover .img-txt {
+    display: block;
+}
+@media (max-width: 991px) {
+    .btn-gp2 {
+        top: 60px;
+        left: 0;
+        width: 100%;
+    }
+    .btn-gp a {
+        margin-bottom: 10px;
+        float: left;
+        width: 33%;
+    }
+    .img-icn {
+        width: 60px;
+    }
+    .btn-gp a .img-txt {
+        width: 102px;
+        position: absolute;
+        left: 52px;
+        top: 12px;
+    }
+}
+/* end floating icons on slider */

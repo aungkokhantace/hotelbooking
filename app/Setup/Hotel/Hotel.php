@@ -67,4 +67,9 @@ class Hotel extends Model
     {
         return $this->hasMany('App\Setup\HotelGallery\HotelGallery');
     }
+
+    public function h_nearby()
+    {
+        return $this->hasMany('App\Setup\Hnearby\Hnearby');
+    }
 }

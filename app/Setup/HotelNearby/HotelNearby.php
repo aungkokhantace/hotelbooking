@@ -21,5 +21,9 @@ class HotelNearby extends Model
         return $this->belongsTo('App\Setup\HotelNearbyCategory\HotelNearbyCategory','h_nearby_category_id','id');
     }
 
-   
+    public function h_nearby()
+    {
+        return $this->hasMany('App\Setup\Hnearby\Hnearby');
+    }
+
 }

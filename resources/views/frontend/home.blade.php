@@ -65,6 +65,13 @@
         </header>
     </div>
 
+    <div class="btn-gp btn-gp2 clearfix">
+        <a href="/transportation_information" class="clearfix"><img src="/images/floating_slider_icons/transportation_icn.png" class="img-icn"><img src="/images/floating_slider_icons/transportation_txt.png" class="img-txt"></a>
+        <a href="/tour_information" class="clearfix"><img src="/images/floating_slider_icons/tour_icn.png" class="img-icn"><img src="/images/floating_slider_icons/tour_txt.png" class="img-txt"></a>
+        <a href="/guide_information" class="clearfix"><img src="/images/floating_slider_icons/guide_icn.png" class="img-icn"><img src="/images/floating_slider_icons/guide_txt.png" class="img-txt"></a>
+    </div>
+    <!-- end floating icons on slider -->
+
     <div id="form_id">
         <div class="container">
             <div class="col-md-4 form">
