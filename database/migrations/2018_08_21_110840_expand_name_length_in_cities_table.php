@@ -14,7 +14,7 @@ class ExpandNameLengthInCitiesTable extends Migration
     {
         Schema::table('cities', function (Blueprint $table) {
             $table->string('name',255)->change();
-            $table->string('name_jp',255)->after('name')->change();
+            $table->string('name_jp',255)->change();
         });
     }
 

@@ -13,7 +13,7 @@ class ExpandNameLengthInNearbyTable extends Migration
     public function up()
     {
         Schema::table('nearby', function (Blueprint $table) {
-          $table->string('name_jp',255)->after('name');
+          // $table->string('name_jp',255)->after('name');
           $table->string('name',255)->change();
         });
     }
