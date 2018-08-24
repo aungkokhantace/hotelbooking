@@ -483,3 +483,14 @@ remove_arrow::-webkit-outer-spin-button{
     }
 }
 /* end floating icons on slider */
+
+
+/* For children age modal */
+.modal-backdrop{
+      z-index: 499;
+}
+
+.children-age-select-box{
+  margin-bottom: 20px;
+}
+/* For children age modal */

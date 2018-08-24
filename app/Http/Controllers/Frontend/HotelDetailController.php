@@ -323,7 +323,65 @@ class HotelDetailController extends Controller
               $room_category_for_bed_type->bed_types_string = $r_category_bed_type_string;
             }
             //end getting room category bed types
-            
+
+            //to display information about room count, adult count, children count and age
+            $room_count     = Session::get('room');
+            $adult_count    = Session::get('adults');
+            $children_count = Session::get('children');
+            $children_ages  = Session::get('children_ages');
+
+            $searched_string = "";
+
+            if($room_count > 0 || $adult_count > 0 || $children_count > 0){
+                //start converting children ages to string
+                $children_ages_string = "";
+                foreach($children_ages as $child_age){
+                  if($children_ages_string == ""){
+                    if($child_age == "1" || $child_age == "<1"){
+                      $children_ages_string = $child_age. " year";
+                    }
+                    else{
+                      $children_ages_string = $child_age. " years";
+                    }
+                  }
+                  else{
+                    if($child_age == "1" || $child_age == "<1"){
+                      $children_ages_string .= " and ".$child_age. " year";
+                    }
+                    else{
+                      $children_ages_string .= " and ".$child_age. " years";
+                    }
+                  }
+                }
+                $children_ages_string .= " old";
+                //end converting children ages to string
+
+                $searched_string = "* You searched ";
+                // room count
+                if($room_count > 1){
+                  $searched_string .= $room_count." rooms for ";
+                }
+                else{
+                  $searched_string .= $room_count." room for ";
+                }
+
+                // adult count
+                if($adult_count > 1){
+                  $searched_string .= $adult_count." adults";
+                }
+                else{
+                  $searched_string .= $adult_count." adult";
+                }
+
+                // children count
+                if($children_count > 1){
+                  $searched_string .= " and ".$children_count." children of age ".$children_ages_string;
+                }
+                else{
+                  $searched_string .= " and ".$children_count." child of age ".$children_ages_string;
+                }
+            }
+
             return view('frontend.hoteldetail')
                 ->with('hotel', $hotel)
                 ->with('roomCategoryImages',$roomCategoryImages)
@@ -341,7 +399,13 @@ class HotelDetailController extends Controller
                 ->with('total_available_room',$total_available_room)
                 ->with('hotelGalleryImages',$hotelGalleryImages)
                 ->with('gst',$gst)
-                ->with('service_tax',$service_tax);
+                ->with('service_tax',$service_tax)
+                //to display information about room count, adult count, children count and age
+                ->with('room_count',$room_count)
+                ->with('adult_count',$adult_count)
+                ->with('children_count',$children_count)
+                ->with('children_ages',$children_ages)
+                ->with('searched_string',$searched_string);
         }
         catch(\Exception $e){
             //write log here

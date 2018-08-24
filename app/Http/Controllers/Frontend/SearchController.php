@@ -58,6 +58,8 @@ class SearchController extends Controller
         $adults                 = (Input::has('adults')) ? Input::get('adults') : "";
         $children               = (Input::has('children')) ? Input::get('children') : "";
 
+        $children_ages          = (Input::has('children_ages')) ? Input::get('children_ages') : "";
+
         $price_filter           = (Input::has('price_filter')) ? Input::get('price_filter') : "";
         $star_filter            = (Input::has('star_filter')) ? Input::get('star_filter') : "";
         $facility_filter        = (Input::has('facility_filter')) ? Input::get('facility_filter') : "";
@@ -75,6 +77,7 @@ class SearchController extends Controller
             Session::forget('room');
             Session::forget('adults');
             Session::forget('children');
+            Session::forget('children_ages');
             Session::forget('price_filter');
             Session::forget('star_filter');
             Session::forget('facility_filter');
@@ -87,6 +90,7 @@ class SearchController extends Controller
             $room               = Session::get('room');
             $adults             = Session::get('adults');
             $children           = Session::get('children');
+            $children_ages      = Session::get('children_ages');
             $price_filter       = Session::get('price_filter');
             $star_filter        = Session::get('star_filter');
             $facility_filter    = Session::get('facility_filter');
@@ -122,6 +126,10 @@ class SearchController extends Controller
             // session(['children' => $children]);
             Session::put('children',$children);
         }
+        if(isset($children_ages) && $children_ages != null && $children_ages != ""){
+            // session(['children_ages' => $children_ages]);
+            Session::put('children_ages',$children_ages);
+        }
         if(isset($price_filter) && $price_filter != null && $price_filter != ""){
             // session(['price_filter' => $price_filter]);
             Session::put('price_filter',$price_filter);
@@ -140,7 +148,7 @@ class SearchController extends Controller
                 Session::push('landmark_filter',$landmark);
             }
         }
-
+        
         //start hotel search result
         $hotelRepo  = new HotelRepository();
 //        $hotels     = $hotelRepo->getHotelsByDestination($destination); //search hotel by destination keyword

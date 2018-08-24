@@ -293,6 +293,14 @@
                     </div>
                     <!-- End Hotel Restaurant Block -->
                     <hr>
+                    <!-- start displaying information about room count, adult count, children count and age -->
+                    <!-- <div class="row"> -->
+                      <div class="table-responsive room_table">
+                      <h4>{{$searched_string}}</h4>
+                      </div>
+                    <!-- </div> -->
+                    <!-- end displaying information about room count, adult count, children count and age -->
+                    <hr>
                     <div class="table-responsive room_table">
                         <h3>{{trans('frontend_details.available_rooms')}}</h3>
                         <table class="table table-bordered">

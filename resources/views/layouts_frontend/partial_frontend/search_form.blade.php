@@ -91,9 +91,68 @@
 
     </div>
 </div>
+
+<!-- Start modal for children age -->
+  <div class="modal fade" id="childrenAgeModal" tabindex="-1" role="dialog" aria-labelledby="childrenAgeModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLabel">Please specify children ages (In years)!</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row" id="children-age-select-box-row">
+            <!-- @for($i = 0; $i < 10; $i++)
+            <div class="col-md-2 children-age-select-box">
+              <select class="form-control" name="children_ages[]" id="children_ages">
+                  @for($ii = 0; $ii < 17; $ii++)
+                      <option value="{{$ii}}">{{$ii}}</option>
+                  @endfor
+              </select>
+            </div>
+            <div class="col-md-1"></div>
+            @endfor -->
+          </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- End modal for children age -->
+
 <p></p>
 <div class="row">
     <div class="col-sm-12">
         <button type="submit" class="btn btn-primary btn-xs">{{trans('frontend_search.search_hotel')}}</button>
     </div>
 </div>
+
+<script type="text/javascript" language="javascript" class="init">
+    $(document).ready(function() {
+      $("#children").on("change", function () {
+          // console.log($('#children').val());
+          $('.modal-body #children-age-select-box-row').html('');
+          var count = $('#children').val();
+
+          for (i = 1; i <= count; i++) {
+            $(".modal-body #children-age-select-box-row").append('<div class="col-md-2 children-age-select-box-div"><select class="form-control children-age-select-box" id="children-age-select-box_'+ i +'" name="children_ages[]" id="children_ages"></select></div>');
+            $("#children-age-select-box_"+i).append('<option selected value="<1"> <1 </option>')
+            for(ii = 1; ii <= 17; ii++){
+              $("#children-age-select-box_"+i).append('<option value="'+ ii +'">'+ ii +'</option>')
+            }
+            // $(".modal-body #children-age-select-box-row").append('</select></div>')
+            // $(".modal-body #children-age-select-box-row").append('<div class="col-md-1"></div>')
+          }
+
+          //append
+          // $('.modal-body #children-age-select-box-row').html(html_var);
+
+          $modal = $('#childrenAgeModal');
+          $modal.modal('show');
+      });
+    });
+</script>

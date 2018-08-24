@@ -58,6 +58,12 @@ use Stripe\Customer;
 use Stripe\Stripe;
 use App\Payment\PaymentConstance;
 use URL;
+use App\Setup\BookingPerson\BookingPerson;
+use App\Setup\BookingPerson\BookingPersonRepository;
+use App\Setup\BookingPerson\BookingPersonRepositoryInterface;
+use App\Setup\BookingChildrenAge\BookingChildrenAge;
+use App\Setup\BookingChildrenAge\BookingChildrenAgeRepository;
+use App\Setup\BookingChildrenAge\BookingChildrenAgeRepositoryInterface;
 
 class PaymentController extends Controller
 {
@@ -703,6 +709,12 @@ class PaymentController extends Controller
 
             $travel_for_work                    = session('travel_for_work');
 
+            //get information about room count, adult count, children count and age
+            $room_count                         = session('room');
+            $adult_count                        = session('adults');
+            $children_count                     = session('children');
+            $children_ages                      = session('children_ages');
+
             $first_cancellation_day_count       = 0;
             $second_cancellation_day_count      = 0;
 
@@ -1114,9 +1126,45 @@ class PaymentController extends Controller
                 alert()->warning(trans('frontend_details.unsuccessful_alert'))->persistent('OK');
                 return redirect('/');
             }
+            /* END Operation for Booking Payment Stripe */
+
+            /* START Operation for booking_person */
+            $bookingPersonObj                             = new BookingPerson();
+            $bookingPersonObj->booking_id                 = $booking_id;
+            $bookingPersonObj->adult_count                = $adult_count;
+            $bookingPersonObj->children_count             = $children_count;
+            $bookingPersonObj->room_count                 = $room_count;
+            $bookingPersonRepo                            = new BookingPersonRepository();
+            $booking_person_result                        = $bookingPersonRepo->create($bookingPersonObj);
+
+            if($booking_person_result['aceplusStatusCode'] != ReturnMessage::OK){
+                DB::rollback();
+                alert()->warning(trans('frontend_details.unsuccessful_alert'))->persistent('OK');
+                return redirect('/');
+            }
+            /* END Operation for booking_person */
+
+            /* START Operation for booking_children_ages */
+            /* loop through children_ages array for each age */
+            foreach($children_ages as $child_age){
+              $bookingChildrenAgeObj                        = new BookingChildrenAge();
+              $bookingChildrenAgeObj->booking_id            = $booking_id;
+              $bookingChildrenAgeObj->child_age             = $child_age;
+              $bookingChildrenAgeRepo                       = new BookingChildrenAgeRepository();
+              $booking_children_age_result                  = $bookingChildrenAgeRepo->create($bookingChildrenAgeObj);
+
+              if($booking_children_age_result['aceplusStatusCode'] != ReturnMessage::OK){
+                  DB::rollback();
+                  alert()->warning(trans('frontend_details.unsuccessful_alert'))->persistent('OK');
+                  return redirect('/');
+              }
+            }
+
+            /* END Operation for booking_children_ages */
+
             //if all insertions were successful, commit DB and redirect to congratulation page
             DB::commit();
-            /* END Operation for Booking Payment Stripe */
+
 
             $booking_id                                         = $bookingObj->id;
             /*
@@ -1166,6 +1214,7 @@ class PaymentController extends Controller
             return redirect('/congratulations/'.$booking_id);
         }
         catch(\Exception $e){
+            dd('except',$e);
             DB::rollback();
             alert()->warning(trans('frontend_details.unsuccessful_alert'))->persistent('OK');
             return redirect('/');

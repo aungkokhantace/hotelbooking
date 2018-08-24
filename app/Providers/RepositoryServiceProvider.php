@@ -76,5 +76,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind('App\Setup\CsvImport\CsvImportRepositoryInterface','App\Setup\CsvImport\CsvImportRepository');
         $this->app->bind('App\Setup\HotelGallery\HotelGalleryRepositoryInterface','App\Setup\HotelGallery\HotelGalleryRepository');
         $this->app->bind('App\Setup\HotelPolicy\HotelPolicyRepositoryInterface','App\Setup\HotelPolicy\HotelPolicyRepository');
+        $this->app->bind('App\Setup\BookingPerson\BookingPersonRepositoryInterface','App\Setup\BookingPerson\BookingPersonRepository');
+        $this->app->bind('App\Setup\BookingChildrenAge\BookingChildrenAgeRepositoryInterface','App\Setup\BookingChildrenAge\BookingChildrenAgeRepository');
     }
 }
