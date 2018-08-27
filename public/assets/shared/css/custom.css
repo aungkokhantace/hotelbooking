@@ -494,3 +494,7 @@ remove_arrow::-webkit-outer-spin-button{
   margin-bottom: 20px;
 }
 /* For children age modal */
+
+.space_bottom{
+  margin-bottom: 20px;
+}

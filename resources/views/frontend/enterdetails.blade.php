@@ -120,7 +120,23 @@
                                                         </label>
                                                     </div>
                                                 </div>
-
+                                                <hr>
+                                                <div class="formtitle_left">
+                                                    <span>{{trans('frontend_details.are_you_booking_for_someone_else')}}</span>
+                                                </div>
+                                                <div class="paymentformgroup">
+                                                    <div class="col-sm-2 pd_rg_10">
+                                                        <label>
+                                                            <input class="form-check-input" type="radio" name="for_other" id="inlineRadio3" value="1"> {{trans('frontend_details.yes')}}
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-2 pd_rg_10">
+                                                        <label>
+                                                            <input class="form-check-input" type="radio" name="for_other" id="inlineRadio4" value="0" checked> {{trans('frontend_details.no')}}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <hr>
                                                 <div class="payment_formgroup">
                                                     <div class="col-sm-3 pd_rg_10">
                                                         <label>{{trans('frontend_header.first_name')}} <span style="color:red;">*</span></label>
@@ -215,6 +231,12 @@
                                                                 {{--<div class="col-sm-8 pd_rg_10">--}}
                                                                 {{--</div>--}}
                                                         {{--</div>--}}
+
+                                                        <div class="row">
+                                                            <div class="col-sm-12 pd_rg_10 flast space_bottom">
+                                                              <span class="require">**{{trans('frontend_details.mention_someone_else')}}</span>
+                                                            </div>
+                                                        </div>
 
                                                         <div class="payment_formgroup">
                                                             <div class="col-sm-3 pd_rg_10 flast">

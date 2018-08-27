@@ -61,6 +61,8 @@ return[
 	"you_sing_in"=>"サインインしています",
 	"total_length"=>"滞在日数",
 	"are_you_travelling_for_work"=>"お仕事でのご旅行ですか？",
+  "are_you_booking_for_someone_else"=>"他の誰かの予約をしていますか？",
+	"mention_someone_else"=>"他の人の予約をしている場合は、名前とEメールを明記してください",
 	"yes"=>"はい",
 	"no"=>"いいえ",
 	"almost_done"=>"ほとんど完了",

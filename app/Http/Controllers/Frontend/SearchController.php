@@ -77,7 +77,7 @@ class SearchController extends Controller
             Session::forget('room');
             Session::forget('adults');
             Session::forget('children');
-            Session::forget('children_ages');
+            // Session::forget('children_ages');
             Session::forget('price_filter');
             Session::forget('star_filter');
             Session::forget('facility_filter');
@@ -148,7 +148,7 @@ class SearchController extends Controller
                 Session::push('landmark_filter',$landmark);
             }
         }
-        
+
         //start hotel search result
         $hotelRepo  = new HotelRepository();
 //        $hotels     = $hotelRepo->getHotelsByDestination($destination); //search hotel by destination keyword

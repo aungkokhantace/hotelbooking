@@ -305,7 +305,10 @@ class PaymentController extends Controller
             $hotel_id                   = Input::get('hotel_id');
             $available_room_categories  = Input::get('available_room_categories');
 
-            $travel_for_work            = (Input::has('travel_for_work')) ? 1 : 0;
+            $travel_for_work            = Input::get('travel_for_work');
+
+            $for_other                  = Input::get('for_other');
+
             $first_name                 = Input::get('first_name');
             $last_name                  = Input::get('last_name');
             $email                      = Input::get('email');
@@ -328,6 +331,7 @@ class PaymentController extends Controller
             if($request->isMethod('POST')){
                 Session::forget('hotel_id');
                 Session::forget('travel_for_work');
+                Session::forget('for_other');
                 Session::forget('first_name');
                 Session::forget('last_name');
                 Session::forget('email');
@@ -374,6 +378,7 @@ class PaymentController extends Controller
             else{
                 $hotel_id                   = Session::get('hotel_id');
                 $travel_for_work            = Session::get('travel_for_work');
+                $for_other                  = Session::get('for_other');
                 $first_name                 = Session::get('first_name');
                 $last_name                  = Session::get('last_name');
                 $email                      = Session::get('email');
@@ -406,6 +411,12 @@ class PaymentController extends Controller
                 // session(['travel_for_work' => $travel_for_work]);
                 Session::put('travel_for_work',$travel_for_work);
             }
+
+            if(isset($for_other)){
+                // session(['for_other' => $for_other]);
+                Session::put('for_other',$for_other);
+            }
+
             if(isset($first_name) && $first_name != null && $first_name != ""){
                 // session(['first_name' => $first_name]);
                 Session::put('first_name',$first_name);
@@ -708,6 +719,7 @@ class PaymentController extends Controller
             $total_discount_amount              = session('total_discount_amount');
 
             $travel_for_work                    = session('travel_for_work');
+            $for_other                          = session('for_other');
 
             //get information about room count, adult count, children count and age
             $room_count                         = session('room');
@@ -842,6 +854,7 @@ class PaymentController extends Controller
             $bookingObj->total_vendor_net_amt               = $total_vendor_net_amt;
             $bookingObj->hotel_id                           = $hotel_id;
             $bookingObj->travel_for_work                    = $travel_for_work;
+            $bookingObj->for_other                          = $for_other;
             $bookingObj->country_id                         = $country;
             $bookingObj->phone                              = $phone;
             $bookingObj->card_brand                         = $stripe_card_brand;
@@ -1214,7 +1227,6 @@ class PaymentController extends Controller
             return redirect('/congratulations/'.$booking_id);
         }
         catch(\Exception $e){
-            dd('except',$e);
             DB::rollback();
             alert()->warning(trans('frontend_details.unsuccessful_alert'))->persistent('OK');
             return redirect('/');
