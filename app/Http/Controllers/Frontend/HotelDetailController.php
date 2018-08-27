@@ -382,6 +382,50 @@ class HotelDetailController extends Controller
                 }
             }
 
+            // $promotionRepo  = new RoomDiscountRepository();
+
+            //today date
+            $today_date = Date('Y-m-d');
+            // dd('today',$today_date);
+
+            /*start operation to check room promotion*/
+            foreach($roomCategories as $room_cat){
+                //original price before discount
+                $original_price = $room_cat->price;
+
+                // has_promotion flag is initially 0
+                $room_cat->has_promotion = 0;
+
+                //initialize amount after discount (initially same with original price)
+                $amount_after_discount = $original_price;
+
+                $room_promotion = $discountRepo->getRoomCategoryDiscount($room_cat->id,$today_date);
+
+                //if there is promotion for this room category
+                if(isset($room_promotion) && count($room_promotion)){
+                  //set has_promotion flag to 1
+                  $room_cat->has_promotion = 1;
+
+                  //check if discount type is "amount"
+                  if($room_promotion->type == "amount"){
+                    //get discount amount
+                    $dis_amount = $room_promotion->discount_amount;
+                    $amount_after_discount -= $dis_amount;
+                    // $room_cat->discount = $discount;
+                  }
+                  else{
+                    //get discount percentage
+                    $dis_percent = $room_promotion->discount_percent;
+                    $dis_amount_from_percent = $discount_percent * (100/$original_price);
+                    $amount_after_discount -= $dis_amount_from_percent;
+                  }
+                }
+
+                $room_cat->amount_after_discount = number_format($amount_after_discount,2);
+            }
+
+            /*end operation to check room promotion*/
+            // dd('$roomCategories',$roomCategories[0]);
             return view('frontend.hoteldetail')
                 ->with('hotel', $hotel)
                 ->with('roomCategoryImages',$roomCategoryImages)

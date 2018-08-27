@@ -498,3 +498,7 @@ remove_arrow::-webkit-outer-spin-button{
 .space_bottom{
   margin-bottom: 20px;
 }
+
+.strike{
+  text-decoration: line-through;
+}

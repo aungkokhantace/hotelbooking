@@ -458,9 +458,15 @@
                                     <td>
                                         <ul class="fa-ul price_night">
                                             <li>
-                                                {{$currency.' '.$roomCategory->price}}<br>
+                                                <!-- {{$currency.' '.$roomCategory->price}}<br>
                                                 {{'+'.$gst.'%'.'(Government Tax)'}}<br>
-                                                {{'+'.$service_tax.'%'.'(Service Charge)'}}
+                                                {{'+'.$service_tax.'%'.'(Service Charge)'}} -->
+                                                @if($roomCategory->has_promotion == 1)
+                                                  <span class="strike">{{$currency.' '.$roomCategory->price}}</span><br>
+                                                  <span>{{$currency.' '.$roomCategory->amount_after_discount}}</span>
+                                                @else
+                                                <span>{{$currency.' '.$roomCategory->price}}</span>
+                                                @endif
                                             </li>
                                         </ul>
                                     </td>
