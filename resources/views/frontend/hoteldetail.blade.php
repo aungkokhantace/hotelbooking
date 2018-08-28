@@ -463,9 +463,10 @@
                                                 {{'+'.$service_tax.'%'.'(Service Charge)'}} -->
                                                 @if($roomCategory->has_promotion == 1)
                                                   <span class="strike">{{$currency.' '.$roomCategory->price}}</span><br>
-                                                  <span>{{$currency.' '.$roomCategory->amount_after_discount}}</span>
+                                                  <span class="italic-text red-text">({{$roomCategory->discount_text}})</span><br>
+                                                  <span class="bold-text">{{$currency.' '.$roomCategory->amount_after_discount}}</span>
                                                 @else
-                                                <span>{{$currency.' '.$roomCategory->price}}</span>
+                                                <span class="bold-text">{{$currency.' '.$roomCategory->price}}</span>
                                                 @endif
                                             </li>
                                         </ul>

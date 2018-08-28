@@ -347,7 +347,8 @@
                                   <img class="img-responsive adjust-img-height" src="/images/upload/{{$percent_promotion->logo}}" alt="">
                                 </a>
                                 <div class="caption">
-                                    <h5>{{$percent_promotion->name}}<samp>{{$percent_promotion->discount_percent}}%</samp><br>
+                                    <!-- <h5>{{$percent_promotion->name}}<samp>{{$percent_promotion->discount_percent}}% off</samp><br> -->
+                                    <h5>{{$percent_promotion->name}}<samp>{{$percent_promotion->discount_percent_text}}</samp><br>
                                         <small>{{$percent_promotion->city->name}}, {{$percent_promotion->country->name}}</small><br>
                                         <!--<small><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span><i class="fa fa-wifi" aria-hidden="true"></i><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></small>-->
                                         @for ($i = 1; $i <= $percent_promotion->star; $i++)
@@ -375,7 +376,8 @@
                                   <img class="img-responsive adjust-img-height" src="/images/upload/{{$percent_promotion->logo}}" alt="">
                                 </a>
                                 <div class="caption">
-                                    <h5>{{$percent_promotion->name}}<samp>{{$percent_promotion->discount_percent}}%</samp><br>
+                                    <!-- <h5>{{$percent_promotion->name}}<samp>{{$percent_promotion->discount_percent}} % off</samp><br> -->
+                                    <h5>{{$percent_promotion->name}}<samp>{{$percent_promotion->discount_percent_text}}</samp><br>
                                         <small>{{$percent_promotion->city->name}}, {{$percent_promotion->country->name}}</small><br>
                                         <!--<small><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span><i class="fa fa-wifi" aria-hidden="true"></i><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></small>-->
                                         @for ($i = 1; $i <= $percent_promotion->star; $i++)
@@ -410,7 +412,8 @@
                                   <img class="img-responsive adjust-img-height" src="/images/upload/{{$amount_promotion->logo}}" alt="">
                                 </a>
                                 <div class="caption">
-                                    <h5>{{$amount_promotion->name}}<samp class="amount_promotion">{{$amount_promotion->discount_amount}}</samp><br>
+                                    <!-- <h5>{{$amount_promotion->name}}<samp class="amount_promotion">{{$amount_promotion->discount_amount}}</samp><br> -->
+                                    <h5>{{$amount_promotion->name}}<samp class="amount_promotion">{{$amount_promotion->discount_amount_text}}</samp><br>
                                         <small>{{$amount_promotion->city->name}}, {{$amount_promotion->country->name}}</small><br>
                                         <!--<small><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span><i class="fa fa-wifi" aria-hidden="true"></i><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></small>-->
                                         @for ($i = 1; $i <= $amount_promotion->star; $i++)
@@ -438,7 +441,8 @@
                                   <img class="img-responsive adjust-img-height" src="/images/upload/{{$amount_promotion->logo}}" alt="">
                                 </a>
                                 <div class="caption">
-                                    <h5>{{$amount_promotion->name}}<samp class="amount_promotion">{{$amount_promotion->discount_amount}}</samp><br>
+                                    <!-- <h5>{{$amount_promotion->name}}<samp class="amount_promotion">{{$amount_promotion->discount_amount}}</samp><br> -->
+                                      <h5>{{$amount_promotion->name}}<samp class="amount_promotion">{{$amount_promotion->discount_amount_text}}</samp><br>
                                         <small>{{$amount_promotion->city->name}}, {{$amount_promotion->country->name}}</small><br>
                                         <!--<small><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span><i class="fa fa-wifi" aria-hidden="true"></i><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></small>-->
                                         @for ($i = 1; $i <= $amount_promotion->star; $i++)

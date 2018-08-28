@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Session;
 use Redirect;
 use App\Setup\Slider\SliderRepository;
 use Illuminate\Support\Facades\DB;
+use App\Payment\PaymentConstance;
 
 class HomeController extends Controller
 {
@@ -87,6 +88,7 @@ class HomeController extends Controller
             $percentPromotionHotelObj = $hotelRepo->getObjByID($percent_promotion->hotel_id);
             //bind discount percent to $promotionHotelObj
             $percentPromotionHotelObj->discount_percent = $percent_promotion->discount_percent;
+            $percentPromotionHotelObj->discount_percent_text = $percent_promotion->discount_percent.'%off';
 
             array_push($percentPromotionArray, $percentPromotionHotelObj);
         }
@@ -108,6 +110,15 @@ class HomeController extends Controller
             //bind discount percent to $promotionHotelObj
             $amountPromotionHotelObj->discount_amount = $amount_promotion->discount_amount;
 
+            $currency = strtoupper(PaymentConstance::STIRPE_CURRENCY);
+            if($currency == "USD"){
+              $discount_text = '$'.$amount_promotion->discount_amount.' off';
+            }
+            else{
+              $discount_text = $amount_promotion->discount_amount.' off';
+            }
+
+            $amountPromotionHotelObj->discount_amount_text = $discount_text;
             array_push($amountPromotionArray, $amountPromotionHotelObj);
         }
         //end amount promotions
@@ -194,7 +205,7 @@ class HomeController extends Controller
         //end display information text for promotion for this month
 
         //end display information text
-
+        
         return view('frontend.home')
 //            ->with('popular_cities',$popularCityArray)
             ->with('popular_cities',$popularCityEntries)

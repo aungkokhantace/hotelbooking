@@ -502,3 +502,15 @@ remove_arrow::-webkit-outer-spin-button{
 .strike{
   text-decoration: line-through;
 }
+
+.italic-text{
+  font-style: italic;
+}
+
+.red-text{
+  color:red;
+}
+
+.bold-text{
+  font-weight: bold;
+}

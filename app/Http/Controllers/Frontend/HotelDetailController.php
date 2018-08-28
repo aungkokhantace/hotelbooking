@@ -50,6 +50,7 @@ use App\Setup\BedType\BedTypeRepository;
 use App\Setup\BedType\BedTypeRepositoryInterface;
 use App\Setup\RoomView\RoomViewRepository;
 use App\Setup\RoomView\RoomViewRepositoryInterface;
+use App\Payment\PaymentConstance;
 
 //use Redirect;
 
@@ -386,7 +387,6 @@ class HotelDetailController extends Controller
 
             //today date
             $today_date = Date('Y-m-d');
-            // dd('today',$today_date);
 
             /*start operation to check room promotion*/
             foreach($roomCategories as $room_cat){
@@ -411,21 +411,24 @@ class HotelDetailController extends Controller
                     //get discount amount
                     $dis_amount = $room_promotion->discount_amount;
                     $amount_after_discount -= $dis_amount;
-                    // $room_cat->discount = $discount;
+                    $currency = strtoupper(PaymentConstance::STIRPE_CURRENCY);
+                    $discount_text = $currency.' '.$dis_amount.' off';
                   }
                   else{
                     //get discount percentage
                     $dis_percent = $room_promotion->discount_percent;
                     $dis_amount_from_percent = $discount_percent * (100/$original_price);
                     $amount_after_discount -= $dis_amount_from_percent;
+                    $discount_text = $discount_percent.' off';
                   }
                 }
 
                 $room_cat->amount_after_discount = number_format($amount_after_discount,2);
+                $room_cat->discount_text         = $discount_text;
             }
 
             /*end operation to check room promotion*/
-            // dd('$roomCategories',$roomCategories[0]);
+
             return view('frontend.hoteldetail')
                 ->with('hotel', $hotel)
                 ->with('roomCategoryImages',$roomCategoryImages)
