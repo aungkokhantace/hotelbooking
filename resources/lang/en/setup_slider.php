@@ -21,7 +21,7 @@ return [
     'slider-title-jp'       => 'Enter Slider Title in Japanese',
     'slider-description'    => 'Enter Slider Description in English',
     'slider-description-jp' => 'Enter Slider Description in Japanese',
-    'slider-description'    => 'Enter Slider Description',
+    // 'slider-description'    => 'Enter Slider Description',
     'title-list'            => 'Slider Listing',
     'place-hotel'           => 'Select Hotel',
     'place-facility-gp'     => 'Select Facility Group',

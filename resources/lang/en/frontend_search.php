@@ -14,6 +14,10 @@ return [
     "property_found" =>"property found",
     "reasons_to_visit" => "3 Reasons to Visit: people watching, local food & shopping",
 
+    "destination-placeholder" => "Enter Hotel/City/Nearby",
+    "check-in-placeholder" => "Select Check-in Date",
+    "check-out-placeholder" => "Select Check-out Date",
+
     "hotels"=>"Hotels",
     "map_view"=>"Map View",
     "superior_room_type"=>"Superior Room type",

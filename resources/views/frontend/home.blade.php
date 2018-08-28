@@ -88,7 +88,7 @@
                     <div class="form-group row">
                         <label class="control-label" for="destination">{{trans('frontend_search.destinatin_property')}}</label>
                         <div class="col-10 input-group">
-                            <input class="form-control font_sz_11" type="text" value="" id="destination" name="destination" autocomplete="off">
+                            <input class="form-control font_sz_11" type="text" value="" id="destination" name="destination" autocomplete="off" placeholder="{{trans('frontend_search.destination-placeholder')}}">
                             <div class="input-group-addon">
                                 <i class="fa fa-plane" aria-hidden="true"></i>
                             </div>
@@ -98,7 +98,7 @@
                     <div class="form-group row">
                         <label class="control-label" for="check_in">{{trans('frontend_search.check_in')}}</label>
                         <div class="col-10 input-group date" data-provide="datepicker" id="check_in">
-                            <input type="text" class="form-control" name="check_in" autocomplete="off">
+                            <input type="text" class="form-control" name="check_in" autocomplete="off" placeholder="{{trans('frontend_search.check-in-placeholder')}}">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </div>
@@ -108,7 +108,7 @@
                     <div class="form-group row">
                         <label class="control-label" for="check_out">{{trans('frontend_search.check_out')}}</label>
                         <div class="col-10 input-group date" data-provide="datepicker" id="check_out">
-                            <input type="text" class="form-control" name="check_out" autocomplete="off">
+                            <input type="text" class="form-control" name="check_out" autocomplete="off" placeholder="{{trans('frontend_search.check-out-placeholder')}}">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </div>

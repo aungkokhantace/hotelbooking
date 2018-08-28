@@ -14,6 +14,10 @@ return [
     "property_found"=>"のプロパティが見つかりました",
     "reasons_to_visit" => "観光する3つの理由：現地の方々との交流、伝統的料理を食事、ローカル店でのショッピング",
 
+    "destination-placeholder" => "ホテル/シティ/周辺に入る",
+    "check-in-placeholder" => "チェックイン日を選択してください",
+    "check-out-placeholder" => "チェックアウト日を選択",
+
     "hotels"=>"ホテル",
     "map_view"=>"マップ",
     "book_now"=>"今すぐ予約する",

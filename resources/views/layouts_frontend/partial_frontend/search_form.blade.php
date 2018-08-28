@@ -2,7 +2,7 @@
 <label class="control-label" for="destination">{{trans('frontend_search.destinatin_property')}}</label>
 <div class="col-10 input-group">
     @if(Session::has('destination'))
-        <input class="form-control font_sz_11" type="text" id="destination" name="destination" value="{{session('destination')}}" autocomplete="off">
+        <input class="form-control font_sz_11" type="text" id="destination" name="destination" value="{{session('destination')}}" autocomplete="off" placeholder="{{trans('frontend_search.destination-placeholder')}}">
     @else
         <input class="form-control font_sz_11" type="text" id="destination" name="destination" value="" autocomplete="off">
     @endif
@@ -15,7 +15,7 @@
 <label class="control-label" for="check_in">{{trans('frontend_search.check_in')}}</label>
 <div class="col-10 input-group date" data-provide="datepicker" id="check_in">
     @if(Session::has('check_in'))
-        <input type="text" class="form-control" name="check_in" value="{{session('check_in')}}" autocomplete="off">
+        <input type="text" class="form-control" name="check_in" value="{{session('check_in')}}" autocomplete="off" placeholder="{{trans('frontend_search.check-in-placeholder')}}">
     @else
         <input type="text" class="form-control" name="check_in" value="" autocomplete="off">
     @endif
@@ -26,7 +26,7 @@
 <label class="control-label" for="check_out">{{trans('frontend_search.check_out')}}</label>
 <div class="col-10 input-group date" data-provide="datepicker" id="check_out">
     @if(Session::has('check_out'))
-        <input type="text" class="form-control" name="check_out" value="{{session('check_out')}}" autocomplete="off">
+        <input type="text" class="form-control" name="check_out" value="{{session('check_out')}}" autocomplete="off" placeholder="{{trans('frontend_search.check-out-placeholder')}}">
     @else
         <input type="text" class="form-control" name="check_out" value="" autocomplete="off">
     @endif
