@@ -421,10 +421,10 @@ class HotelDetailController extends Controller
                     $amount_after_discount -= $dis_amount_from_percent;
                     $discount_text = $discount_percent.' off';
                   }
-                }
 
-                $room_cat->amount_after_discount = number_format($amount_after_discount,2);
-                $room_cat->discount_text         = $discount_text;
+                  $room_cat->amount_after_discount = number_format($amount_after_discount,2);
+                  $room_cat->discount_text         = $discount_text;
+                }
             }
 
             /*end operation to check room promotion*/
