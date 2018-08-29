@@ -33,11 +33,13 @@
 
     </div>
 
+    @if($role != 3)
     <div class="row">
         <div class="col-md-10">
           <h3><a href="/backend_mps/hotel/disabled_hotels"><i class="fa fa-angle-double-right"></i>&nbsp View Disabled Hotel List</a></h3>
         </div>
     </div>
+    @endif
 
     <!-- {!! Form::open(array('id'=> 'frm_hotel' ,'url' => 'backend_mps/hotel/destroy', 'class'=> 'form-horizontal user-form-border')) !!} -->
     {!! Form::open(array('id'=> 'frm_disable_hotel' ,'url' => 'backend_mps/hotel/disable', 'class'=> 'form-horizontal user-form-border')) !!}

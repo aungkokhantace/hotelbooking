@@ -3,7 +3,8 @@
 return [
 
     "search_hotel"=>"Search Hotel",
-    "destinatin_property"=>"Destination / Property Name",
+    // "destinatin_property"=>"Destination / Property Name",
+    "destinatin_property"=>"Hotel / City / Nearby",
     "check_in"=>"Check In",
     "check_out"=>"Check Out",
     "room"=>"Room",

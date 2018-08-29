@@ -3,7 +3,8 @@
 return [
 
     "search_hotel"=>"ホテルを検索する",
-    "destinatin_property"=>"目的地/物件名",
+    // "destinatin_property"=>"目的地/物件名",
+    "destinatin_property"=>"ホテル / シティ / 近所の",
     "check_in"=>"チェックイン",
     "check_out"=>"チェックアウト",
     "room"=>"お部屋",

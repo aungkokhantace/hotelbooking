@@ -323,11 +323,21 @@
                             $default    = 0;
                             ?>
                             {{--  @if($room_availables_count != 0)  --}}
+
+                            <!-- start flag whether customer is logged in or not -->
+                            @if(\Illuminate\Support\Facades\Session::has('customer'))
+                              <input type="hidden" id="logged_in_flag" name="logged_in_flag" value="1">
+                            @else
+                              <input type="hidden" id="logged_in_flag" name="logged_in_flag" value="0">
+                            @endif
+                            <!-- end flag whether customer is logged in or not -->
+
                             @if($total_available_room != 0)
                             @foreach($roomCategories as $roomCategory)
                                 @if($roomCategory->available_room_count > 0)
                                 <!-- <input type="hidden" id="available_room_categories" name="available_room_categories[]" value="{{$roomCategory->id }}"> -->
                                 <input type="hidden" name="available_room_categories[]" value="{{$roomCategory->id }}">
+
                                 <tr>
                                     <td>
                                         <ul class="fa-ul">
@@ -710,6 +720,8 @@
             });
         }
 
+        /* without login condition */
+        /*
         function book() {
             var null_value_flag = 0; //if 0, all fields are null; and if 1, there is at least a value
 
@@ -729,6 +741,41 @@
                 sweetAlert("Oops...", "Please select at least one room to book !", "error");
             }
         }
+        */
+        /* without login condition */
+
+        /* with login condition*/
+        function book() {
+            var null_value_flag = 0; //if 0, all fields are null; and if 1, there is at least a value
+
+            //get logged in flag
+            var logged_in_flag = $('#logged_in_flag').val();
+
+            // $(':input[type="number"][name^="number_"]').each(function(){
+            $('[name^="number_"]').each(function(){
+                if(this.value > 0 && this.value != "" && this.value != null){
+                    null_value_flag = 1; //set to 1 as soon as there is a value in input type = number
+                }
+            });
+
+            //there is at least a value, and it's ok to submit
+            if(null_value_flag == 1){
+                //check whether customer is logged in or not
+                if(logged_in_flag == 0){
+                  //alert customer to log in
+                  $('#loginModal').modal('show');
+                }
+                else{
+                  //submit the form
+                  $("#frm_booking").submit();
+                }
+            }
+            //room_counts are all null
+            else{
+                sweetAlert("Oops...", "Please select at least one room to book !", "error");
+            }
+        }
+        /* with login condition*/
 
     </script>
 
