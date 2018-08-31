@@ -69,12 +69,43 @@ class HotelGalleryRepository implements HotelGalleryRepositoryInterface
         }
     }
 
+    public function update($paramObj)
+    {
+        $returnedObj = array();
+        $returnedObj['aceplusStatusCode'] = ReturnMessage::INTERNAL_SERVER_ERROR;
+
+        $currentUser = Utility::getCurrentUserID(); //get currently logged in user
+
+        try {
+            $tempObj = Utility::addUpdatedBy($paramObj);
+            $tempObj->save();
+
+            //create info log
+            $date = $tempObj->created_at;
+            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' updated hotel_gallery_image_id = '.$tempObj->id . PHP_EOL;
+            LogCustom::create($date,$message);
+
+
+            $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
+            return $returnedObj;
+        }
+        catch(\Exception $e){
+            //create error log
+            $date    = date("Y-m-d H:i:s");
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' updated a hotel_gallery_image and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            LogCustom::create($date,$message);
+
+            $returnedObj['aceplusStatusMessage'] = $e->getMessage();
+            return $returnedObj;
+        }
+    }
+
     public function getObjsByHotelID($hotel_id){
         $objs   = HotelGallery::where('hotel_id','=',$hotel_id)->get();
         return $objs;
     }
 
-    public function deleteHotelGalleryImageByHotelId($hotel_id,$hotel_gallery_image_id_array){        
+    public function deleteHotelGalleryImageByHotelId($hotel_id,$hotel_gallery_image_id_array){
         $currentUser = Utility::getCurrentUserID(); //get currently logged in user
         $date    = date("Y-m-d H:i:s");
 
@@ -112,8 +143,8 @@ class HotelGalleryRepository implements HotelGalleryRepositoryInterface
                             ->delete();
 
             //actually deleting image
-            // $image_path = "/images/upload/".$image_name;  // Value is not URL but directory file path 
-            
+            // $image_path = "/images/upload/".$image_name;  // Value is not URL but directory file path
+
             // if(Storage::exists($image_path)) {
                 // Storage::delete($image_path);
             // }

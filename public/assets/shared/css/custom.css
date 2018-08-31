@@ -514,3 +514,14 @@ remove_arrow::-webkit-outer-spin-button{
 .bold-text{
   font-weight: bold;
 }
+
+.hightlight-text{
+  width: 100%;
+  display: block;
+  position: absolute;
+  bottom: -10px;
+  background: rgba(214, 48, 144, 0.7);
+  color: #fff;
+  padding: 10px 5px;
+  z-index: 1;
+}

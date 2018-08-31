@@ -71,7 +71,7 @@
                 <span class="require">*</span>
             </label>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">        
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             @if ($role == 3)
             <select class="form-control" name="hotel_id" id="hotel_id">
                 @foreach($hotels as $hotel)
@@ -86,7 +86,7 @@
                     </select>
                     @endif
                 @endforeach
-            @endif               
+            @endif
             <p class="text-danger">{{$errors->first('hotel_id')}}
         </div>
     </div>
@@ -106,12 +106,14 @@
                             <input name="file[]" type="file" id="file" value="{{$image->img_path}}" class="file-hide"/>
                             <img id='previewimg' src='/images/upload/{{$image->image}}'/>
                             <input type="button" id="remove-img{{$image->id}}" value="Remove" class="btn btn-default remove-img">
+                            <input required name="image_description[]" type="text" id="image_description" class="form-control" value="{{$image->description}}"/><hr>
                         </div>
                     </div>
                     <br/>
                 @endforeach
 
                 <div id="filediv"><input name="file[]" type="file" id="file"/></div><br/>
+                <input required name="image_description[]" type="text" id="image_description" class="form-control" value=" "/><hr>
 
                 <input type="button" id="add_more" class="upload" value="{{trans('setup_hotelgallery.btn-image')}}"/>
             </div>
@@ -123,7 +125,10 @@
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                 <label class="notice">(Image must be 500*300 pixels)</label>
-                <div id="filediv"><input name="file[]" type="file" id="file"/></div><br/>
+                <div id="filediv">
+                  <input name="file[]" type="file" id="file"/><br>
+                  <input required name="image_description[]" type="text" id="image_description" class="form-control"/><hr>
+                </div><br/>
 
                 <input type="button" id="add_more" class="upload" value="{{trans('setup_hotelgallery.btn-image')}}"/>
             </div>
@@ -131,7 +136,7 @@
     @endif
     {{-- End Image --}}
     <br>
-    
+
     <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
         </div>
@@ -184,7 +189,7 @@
 //                     booking_cutoff_day  : 'required',
 //                     capacity            : {
 //                         required  : true,
-//                         number    : true  
+//                         number    : true
 
 //                     },
 //                     bed_type            : 'required',
@@ -228,11 +233,22 @@
             $('#add_more').click(function() {
                 $(this).before($("<div/>", {
                     id: 'filediv'
-                }).fadeIn('slow').append($("<input/>", {
+                }).fadeIn('slow').append(
+                  $("<input/>", {
                     name: 'file[]',
                     type: 'file',
                     id: 'file'
-                }), $("<br/>")));
+                  }),
+                  $("<br/>"),
+                  $("<input/>", {
+                    name: 'image_description[]',
+                    type: 'text',
+                    id: 'image_description',
+                    class: 'form-control',
+                    required : true
+                  }),
+                  $("<hr/>"),
+              ));
             });
             // Following function will executes on change event of file input to select different file.
             $('body').on('change', '#file', function() {

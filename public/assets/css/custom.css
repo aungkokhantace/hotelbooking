@@ -139,3 +139,7 @@ textarea{
 .separate-hour{
   display:none;
 }
+
+.abcd > img{
+  width:300px !important;
+}

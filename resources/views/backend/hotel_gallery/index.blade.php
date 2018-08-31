@@ -63,13 +63,15 @@
                         <th><input type='checkbox' name='check' id='check_all'/></th>
                         <th>{{trans('setup_hotelgallery.tb-col-hotel')}}</th>
                         <th>{{trans('setup_hotelgallery.tb-col-image')}}</th>
+                        <th>{{trans('setup_hotelgallery.tb-col-description')}}</th>
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
                         <th></th>
                         <th class="search-col" con-id="hotel">Hotel</th>
-                        <th class="search-col" con-id="name">Image</th>
+                        <th class="search-col" con-id="image">Image</th>
+                        <th class="search-col" con-id="description">Description</th>
                     </tr>
                     </tfoot>
                     <tbody>
@@ -79,6 +81,7 @@
                             <td><a href="/backend_mps/hotel_gallery/edit/{{$hotel_gallery->hotel_id}}">{{$hotel_gallery->hotel->name}}</a></td>
                             <!-- <td><a href="/backend_mps/hotel_gallery/edit/{{$hotel_gallery->hotel_id}}"><img src="/images/upload/{{$hotel_gallery->image}}" class="list-item-image"></a></td> -->
                             <td>/images/upload/{{$hotel_gallery->image}}</td>
+                            <td>{{$hotel_gallery->description}}</td>
                         </tr>
                     @endforeach
                     </tbody>

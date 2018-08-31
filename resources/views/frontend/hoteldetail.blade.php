@@ -69,7 +69,7 @@
                                     <div>
                                         <img data-u="image" src="/images/upload/{{$hotelGalleryImage->image}}" />
                                         <img data-u="thumb" src="/images/upload/{{$hotelGalleryImage->image}}" />
-                                        <!-- <p style="width: 100%; display: block; position: absolute; bottom: -10px; background: rgba(214, 48, 144, 0.7); color: #fff; padding: 10px 5px; z-index: 1;">this is text this is text this is text this is text this is text this is text</p> -->
+                                        <p class="hightlight-text">{{$hotelGalleryImage->description}}</p>
                                     </div>
                                 @endforeach
                             @else

@@ -157,9 +157,10 @@ class HotelGalleryController extends Controller
             if(Input::hasFile('file'))
             {
                 $images                     = Input::file('file');
-                // $count                      = 1;
-                foreach($images as $image){
+                $image_descriptions         = Input::get('image_description');
 
+                // $count                      = 1;
+                foreach($images as $image_key=>$image){
                     if (! is_null($image)) {
                         $path = base_path().'/public/images/upload/';
                         if ( ! file_exists($path))
@@ -179,9 +180,14 @@ class HotelGalleryController extends Controller
                         $paramObj->hotel_id             = $hotel_id;
                         // $paramObj->image                = $image_path;
                         $paramObj->image                = $photo_name;
+
+                        //get image_description from image_description_array using $image_key as index
+                        $paramObj->description          = $image_descriptions[$image_key];
+
                         $paramObj->status               = 1; //status is 1 by default
 
                         $hotelGalleryRepo               = new HotelGalleryRepository();
+
                         $hotelGalleryResult        = $hotelGalleryRepo->create($paramObj);
 
                         if($hotelGalleryResult['aceplusStatusCode'] !=  ReturnMessage::OK){
@@ -271,6 +277,10 @@ class HotelGalleryController extends Controller
 
             //Delete RoomCategoryImage
             $file_id                        = Input::get('file_id');
+
+            //get image descriptions
+            $image_descriptions              = Input::get('image_description');
+
             $hotelGalleryRepo               = new HotelGalleryRepository();
             $hotelGalleryImages             = $hotelGalleryRepo->getObjsByHotelID($id);
             $hotel_gallery_image_id_array   = array();
@@ -282,9 +292,29 @@ class HotelGalleryController extends Controller
                     }
                 }
                 else{
-                    foreach($hotelGalleryImages as $galleryImage){
+                    foreach($hotelGalleryImages as $gallery_key=>$galleryImage){
                         if(!in_array($galleryImage->id,$file_id)){
                             array_push($hotel_gallery_image_id_array,$galleryImage->id);
+                        }
+                        else{
+                          //this galleryImage is already exists in db, so check whether we need to update or not
+                          //get hotel gallery obj by id
+                          $hotelGalleryImageObj             = $hotelGalleryRepo->getObjByID($galleryImage->id);
+
+                          //check image description from db and image description from form
+                            if($hotelGalleryImageObj->description !== $image_descriptions[$gallery_key]){
+                              // if they are not equal, then update
+                              $hotelGalleryImageObj->description = $image_descriptions[$gallery_key];
+
+                              $hotelGalleryUpdateResult        = $hotelGalleryRepo->update($hotelGalleryImageObj);
+
+                              if($hotelGalleryUpdateResult['aceplusStatusCode'] !=  ReturnMessage::OK){
+                                  DB::rollback();
+
+                                  return redirect()->action('Setup\HotelGallery\HotelGalleryController@index')
+                                      ->withMessage(FormatGenerator::message('Fail', 'Hotel Gallery Image is not updated ...'));
+                              }
+                            }
                         }
                     }
                 }
@@ -297,14 +327,15 @@ class HotelGalleryController extends Controller
             if(Input::hasFile('file'))
             {
                 $images                     = Input::file('file');
+                $image_descriptions         = Input::get('image_description');
                 // $count                      = 1;
-
-                foreach($images as $image){
+                
+                foreach($images as $image_key=>$image){
                     if (! is_null($image)) {
                         $path = base_path().'/public/images/upload/';
                         if ( ! file_exists($path))
                         {
-                            mkdir($path, 0777, true);
+                          mkdir($path, 0777, true);
                         }
 
                         $photo_name_original            = Utility::getImage($image);
@@ -318,10 +349,14 @@ class HotelGalleryController extends Controller
                         $paramObj                       = new HotelGallery();
                         $paramObj->hotel_id             = $id;
                         // $paramObj->image                = $image_path;
-                        $paramObj->image                = $photo_name;
+
+                        $paramObj->image                = $photo_name;//get image_description from image_description_array using $image_key as index
+                        $paramObj->description          = $image_descriptions[$image_key];
+
                         $paramObj->status               = 1; //status is 1 by default
 
                         // $hotelGalleryRepo               = new HotelGalleryRepository();
+
                         $hotelGalleryResult        = $hotelGalleryRepo->create($paramObj);
 
                         if($hotelGalleryResult['aceplusStatusCode'] !=  ReturnMessage::OK){
