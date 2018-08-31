@@ -10,6 +10,8 @@ return [
     "room"=>"お部屋",
     "adults"=>"大人",
     "children"=>"子供",
+    "children_ages_title"=>"子供の年齢を指定してください（年）！",
+
     "search_hotel_now"=>"検索する",
     "properties_found"=>"のプロパティが見つかりました",
     "property_found"=>"のプロパティが見つかりました",

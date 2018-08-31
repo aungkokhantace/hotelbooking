@@ -1,11 +1,11 @@
 @extends('layouts.master')
-@section('title','Sale Summary Report')
+@section('title','Sales Report')
 @section('content')
 
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header"><a href="/backend_mps/salesummaryreport">Sale Summary Report</a></h1>
+    <h1 class="page-header"><a href="/backend_mps/salesummaryreport">Sales Report</a></h1>
     @if(count(Session::get('message')) != 0)
         <div>
         </div>
@@ -172,12 +172,12 @@
                     </tr>
                     </thead>
                     <tfoot>
-                    <tr>
+                    <!-- <tr>
                         <th class="search-col" con-id="date">Date</th>
                         <th class="search-col" con-id="booking_number">Booking Number</th>
                         <th class="search-col" con-id="customer_name">Customer Name</th>
                         <th class="search-col" con-id="total">Total Amount</th>
-                    </tr>
+                    </tr> -->
                     </tfoot>
                     <tbody>
 

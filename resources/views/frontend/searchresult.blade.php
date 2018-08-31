@@ -149,6 +149,9 @@
                                             <div class="left_blog">
                                                 <div class="lead_left">
                                                     <a href="/hotel_detail/{{$hotel->id}}"><h4>{{$hotel->name}}</h4></a>
+                                                    @if(Session::has('locale') && Session::get('locale') == "jp")
+                                                    <a href="/hotel_detail/{{$hotel->id}}"><h4>{{$hotel->name_jp}}</h4></a>
+                                                    @endif
                                                     <p class="lead">
                                                         <i class="fa fa-map-marker" aria-hidden="true"></i>   {{$hotel->township->name}}, {{$hotel->city->name}}<br><br>
                                                         <h4> <a href="#myPolicyModal-{{$hotel->id}}" data-toggle="modal" id="{{ $hotel->id }}"  onclick="hotelpolicy({{$hotel->id}})" class="hotel_policy">View Hotel Policy</a></h4>
@@ -234,6 +237,9 @@
                                             <div class="left_blog">
                                                 <div class="lead_left">
                                                     <a href="/hotel_detail/{{$suggestedHotelhotel->id}}"><h4>{{$suggestedHotelhotel->name}}</h4></a>
+                                                    @if(Session::has('locale') && Session::get('locale') == "jp")
+                                                    <a href="/hotel_detail/{{$hotel->id}}"><h4>{{$hotel->name_jp}}</h4></a>
+                                                    @endif
                                                     <p class="lead">
                                                         <i class="fa fa-map-marker" aria-hidden="true"></i>   {{$suggestedHotelhotel->township->name}}, {{$suggestedHotelhotel->city->name}}
 

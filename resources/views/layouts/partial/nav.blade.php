@@ -407,11 +407,11 @@ $permissions = \App\Core\Check::getPermissionByRoleId($role_id);
 
                 <ul class="sub-menu">
                     @if(in_array("backend_mps/salesummaryreport", $permissions))
-                    <li nav-id="report-sale-summary"><a href="/backend_mps/salesummaryreport">Sale Summary Report</a></li>
+                    <li nav-id="report-sale-summary"><a href="/backend_mps/salesummaryreport">Sales Report</a></li>
                     @endif
 
                     @if(in_array("backend_mps/bookingreport", $permissions))
-                    <li nav-id="report-booking-summary"><a href="/backend_mps/bookingreport">Booking Detail Report</a></li>
+                    <li nav-id="report-booking-summary"><a href="/backend_mps/bookingreport">Booking Report</a></li>
                     @endif
                 </ul>
             </li>

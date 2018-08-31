@@ -229,7 +229,7 @@
                     </tr>
                     </thead>
                     <tfoot>
-                    <tr>
+                    <!-- <tr>
                         <th class="search-col" con-id="date">Date</th>
                         <th class="search-col" con-id="booking_number">Booking Number</th>
                         <th class="search-col" con-id="customer_name">Customer Name</th>
@@ -243,7 +243,7 @@
                         <th class="search-col" con-id="service_charge">Service Charge</th>
                         <th class="search-col" con-id="discount_amount">Discount Amount</th>
                         <th class="search-col" con-id="total_amount">Total Amount</th>
-                    </tr>
+                    </tr> -->
                     </tfoot>
                     <tbody>
 

@@ -10,6 +10,8 @@ return [
     "room"=>"Room",
     "adults"=>"Adults",
     "children"=>"Children",
+    "children_ages_title"=>"Please specify children ages (In years)!",
+
     "search_hotel_now"=>"SEARCH HOTEL NOW",
     "properties_found"=>"properties found",
     "property_found" =>"property found",

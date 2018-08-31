@@ -30,6 +30,11 @@
                     <!-- First Blog Post Left -->
                     <div class="search_list">
                         <h2>{{$hotel->name}}</h2>
+
+                        @if(Session::has('locale') && Session::get('locale') == "jp")
+                      <h2>{{$hotel->name_jp}}</h2>
+                        @endif
+
                         @for ($i = 1; $i <= $hotel->star; $i++)
                             <i class="fa fa-star" aria-hidden="true"></i>
                         @endfor

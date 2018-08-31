@@ -908,7 +908,14 @@ class PaymentController extends Controller
             $nights                             = floor($difference/(60*60*24));
             $discount_array                     = array();
 //            $reserved_date                      = $check_in_date;
+            $other_person_emails            = array();
+
             foreach($booked_rooms as $b_roomKey=>$b_roomValue){
+                //push to $other_person_emails to send email after booking completes
+                if(isset($b_roomValue['email']) && $b_roomValue['email'] !== null && $b_roomValue['email'] !== ''){
+                  array_push($other_person_emails, $b_roomValue['email']);
+                }
+
                 $category_id                    = $b_roomValue['h_room_category_id'];
                 $booking_id                     = $booking_result["object"]->id;
                 $room_id                        = $b_roomValue['id'];
@@ -1159,20 +1166,21 @@ class PaymentController extends Controller
 
             /* START Operation for booking_children_ages */
             /* loop through children_ages array for each age */
-            foreach($children_ages as $child_age){
-              $bookingChildrenAgeObj                        = new BookingChildrenAge();
-              $bookingChildrenAgeObj->booking_id            = $booking_id;
-              $bookingChildrenAgeObj->child_age             = $child_age;
-              $bookingChildrenAgeRepo                       = new BookingChildrenAgeRepository();
-              $booking_children_age_result                  = $bookingChildrenAgeRepo->create($bookingChildrenAgeObj);
+            if(count($children_ages) > 0){
+              foreach($children_ages as $child_age){
+                $bookingChildrenAgeObj                        = new BookingChildrenAge();
+                $bookingChildrenAgeObj->booking_id            = $booking_id;
+                $bookingChildrenAgeObj->child_age             = $child_age;
+                $bookingChildrenAgeRepo                       = new BookingChildrenAgeRepository();
+                $booking_children_age_result                  = $bookingChildrenAgeRepo->create($bookingChildrenAgeObj);
 
-              if($booking_children_age_result['aceplusStatusCode'] != ReturnMessage::OK){
-                  DB::rollback();
-                  alert()->warning(trans('frontend_details.unsuccessful_alert'))->persistent('OK');
-                  return redirect('/');
+                if($booking_children_age_result['aceplusStatusCode'] != ReturnMessage::OK){
+                    DB::rollback();
+                    alert()->warning(trans('frontend_details.unsuccessful_alert'))->persistent('OK');
+                    return redirect('/');
+                }
               }
             }
-
             /* END Operation for booking_children_ages */
 
             //if all insertions were successful, commit DB and redirect to congratulation page
@@ -1190,7 +1198,17 @@ class PaymentController extends Controller
                 $hotel_email        = $hotelConfigRepo->getEmailByHotelId($hotel_id);
                 $hotel_email_str    = $hotel_email->email;
                 $system_email       = "testingmps2017@gmail.com";
-                $emails             = array($email,$hotel_email_str,$system_email);
+                $emails_without_other_person = array($email,$hotel_email_str,$system_email);
+
+                if(isset($b_roomValue['email']) && $b_roomValue['email'] !== null && $b_roomValue['email'] !== ''){
+                  $merged_emails      = array_merge($emails_without_other_person, $other_person_emails);
+                }
+                else{
+                  $merged_emails = $emails_without_other_person;
+                }
+
+                $emails             = array_unique($merged_emails);
+
                 $template           = "booking_cancellation_start";
                 $subject            = "Booking Complete Email";
                 $logMessage         = "created a booking";
