@@ -247,7 +247,7 @@
                     class: 'form-control',
                     required : true
                   }),
-                  $("<hr/>"),
+                  $("<hr/>")
               ));
             });
             // Following function will executes on change event of file input to select different file.

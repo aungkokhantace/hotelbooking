@@ -385,7 +385,7 @@
         </div>
     </div>
 
-    {{-- Start Image --}}
+    <!-- Start Image  -->
     @if(isset($images) && count($images) > 0)
         <div class="row">
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -400,12 +400,14 @@
                             <input name="file[]" type="file" id="file" value="{{$image->img_path}}" class="file-hide"/>
                             <img id='previewimg' src='/images/upload/{{$image->img_path}}'/>
                             <input type="button" id="remove-img{{$image->id}}" value="Remove" class="btn btn-default remove-img">
+                            <input required name="image_description[]" type="text" id="image_description" class="form-control" value="{{$image->description}}"/><hr>
                         </div>
                     </div>
                     <br/>
                 @endforeach
 
                 <div id="filediv"><input name="file[]" type="file" id="file"/></div><br/>
+                <input required name="image_description[]" type="text" id="image_description" class="form-control" value=" "/><hr>
 
                 <input type="button" id="add_more" class="upload" value="{{trans('setup_hotelroomcategory.btn-image')}}"/>
             </div>
@@ -418,12 +420,12 @@
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                 <label class="notice">(Image must be 500*300 pixels)</label>
                 <div id="filediv"><input name="file[]" type="file" id="file"/></div><br/>
-
+                <input required name="image_description[]" type="text" id="image_description" class="form-control"/><hr>
                 <input type="button" id="add_more" class="upload" value="{{trans('setup_hotelroomcategory.btn-image')}}"/>
             </div>
         </div>
     @endif
-    {{-- End Image --}}
+    <!-- End Image  -->
     <br>
     {{--Start Tab Panel--}}
     <div class="row">
@@ -643,7 +645,17 @@
                     name: 'file[]',
                     type: 'file',
                     id: 'file'
-                }), $("<br/>")));
+                }),
+                $("<br/>"),
+                $("<input/>", {
+                  name: 'image_description[]',
+                  type: 'text',
+                  id: 'image_description',
+                  class: 'form-control',
+                  required : true
+                }),
+                $("<hr/>")
+              ));
             });
             // Following function will executes on change event of file input to select different file.
             $('body').on('change', '#file', function() {

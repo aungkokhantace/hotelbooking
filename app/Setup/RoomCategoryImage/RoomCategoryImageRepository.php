@@ -66,6 +66,37 @@ class RoomCategoryImageRepository implements RoomCategoryImageRepositoryInterfac
         }
     }
 
+    public function update($paramObj)
+    {
+        $returnedObj = array();
+        $returnedObj['aceplusStatusCode'] = ReturnMessage::INTERNAL_SERVER_ERROR;
+
+        $currentUser = Utility::getCurrentUserID(); //get currently logged in user
+
+        try {
+            $tempObj = Utility::addUpdatedBy($paramObj);
+            $tempObj->save();
+
+            //create info log
+            $date = $tempObj->created_at;
+            $message = '['. $date .'] '. 'info: ' . 'User '.$currentUser.' updated room_category_image_id = '.$tempObj->id . PHP_EOL;
+            LogCustom::create($date,$message);
+
+
+            $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
+            return $returnedObj;
+        }
+        catch(\Exception $e){
+            //create error log
+            $date    = date("Y-m-d H:i:s");
+            $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' updated a room_category_image and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            LogCustom::create($date,$message);
+
+            $returnedObj['aceplusStatusMessage'] = $e->getMessage();
+            return $returnedObj;
+        }
+    }
+
     public function getRoomCategoryImageByHotelRoomCategoryId($h_room_category_id){
         $objs   = RoomCategoryImage::where('h_room_category_id','=',$h_room_category_id)->get();
         return $objs;

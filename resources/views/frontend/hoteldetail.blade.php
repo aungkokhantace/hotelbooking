@@ -365,6 +365,7 @@
                                                                             <div>
                                                                                 <img data-u="image" src="/images/upload/{{$image->img_path}}" />
                                                                                 <img data-u="thumb" src="/images/upload/{{$image->img_path}}" />
+                                                                                <p class="hightlight-text">{{$image->description}}</p>
                                                                             </div>
                                                                         @endforeach
                                                                     @else

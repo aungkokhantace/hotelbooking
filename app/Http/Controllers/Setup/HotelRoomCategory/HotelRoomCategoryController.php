@@ -128,7 +128,7 @@ class HotelRoomCategoryController extends Controller
             $facilities = $facilityRepo->getObjsForRoom();
 
             $bed_types = DB::select('SELECT * FROM bed_types WHERE deleted_at IS NULL');
-            
+
             return view('backend.hotel_room_category.hotel_room_category')
                 ->with('hotels',$hotels)
                 ->with('role',$role)
@@ -221,8 +221,10 @@ class HotelRoomCategoryController extends Controller
                 $firstRoomCategoryImage         = $roomCategoryImageRepo->getFirstRoomCategoryImageByHotelRoomCategoryId($lastRoomCategoryId);
 
                 $images                         = Input::file('file');
+                $image_descriptions             = Input::get('image_description');
+
                 $count                          = 1;
-                foreach($images as $image){
+                foreach($images as $image_key=>$image){
 
                     if (! is_null($image)) {
                         $path = base_path().'/public/images/upload/';
@@ -243,7 +245,11 @@ class HotelRoomCategoryController extends Controller
                         $imageObj->h_room_category_id   = $lastRoomCategoryId;
                         // $imageObj->img_path             = $image_path;
                         $imageObj->img_path             = $photo_name;
-                        $imageObj->description          = $description;
+                        // $imageObj->description          = $description;
+
+                        //get image_description from image_description_array using $image_key as index
+                        $imageObj->description          = $image_descriptions[$image_key];
+
                         if(isset($firstRoomCategoryImage)){
                             $imageObj->default_image        = 0;
                         }else{
@@ -477,6 +483,10 @@ class HotelRoomCategoryController extends Controller
             //RoomCategoryImage
             //Delete RoomCategoryImage
             $file_id                        = Input::get('file_id');
+
+            //get image descriptions
+            $image_descriptions              = Input::get('image_description');
+
             $roomCategoryImageRepo          = new RoomCategoryImageRepository();
             $roomCategoryImages             = $roomCategoryImageRepo->getRoomCategoryImageByHotelRoomCategoryId($id);
             $r_category_image_id            = array();
@@ -488,9 +498,29 @@ class HotelRoomCategoryController extends Controller
                     }
                 }
                 else{
-                    foreach($roomCategoryImages as $cImage){
+                    foreach($roomCategoryImages as $r_category_img_key=>$cImage){
                         if(!in_array($cImage->id,$file_id)){
                             array_push($r_category_image_id,$cImage->id);
+                        }
+                        else{
+                          //this room category image is already exists in db, so check whether we need to update or not
+                          //get room category image obj by id
+                          $roomCategoryImageObj             = $roomCategoryImageRepo->getObjByID($cImage->id);
+
+                          //check image description from db and image description from form
+                            if($roomCategoryImageObj->description !== $image_descriptions[$r_category_img_key]){
+                              // if they are not equal, then update
+                              $roomCategoryImageObj->description = $image_descriptions[$r_category_img_key];
+
+                              $roomCategoryUpdateResult        = $roomCategoryImageRepo->update($roomCategoryImageObj);
+
+                              if($roomCategoryUpdateResult['aceplusStatusCode'] !=  ReturnMessage::OK){
+                                  DB::rollback();
+
+                                  return redirect()->action('Setup\HotelRoomCategory\HotelRoomCategoryController@index')
+                                      ->withMessage(FormatGenerator::message('Fail', 'Room Category Image is not updated ...'));
+                              }
+                            }
                         }
                     }
                 }
@@ -503,8 +533,9 @@ class HotelRoomCategoryController extends Controller
                 $firstRoomCategoryImage = $roomCategoryImageRepo->getFirstRoomCategoryImageByHotelRoomCategoryId($id);
 
                 $images                         = Input::file('file');
+                $image_descriptions         = Input::get('image_description');
                 $count                          = 1;
-                foreach($images as $image) {
+                foreach($images as $image_key=>$image) {
                     if($image != null){
                         $path = base_path() . '/public/images/upload/';
                         if (!file_exists($path)) {
@@ -521,7 +552,11 @@ class HotelRoomCategoryController extends Controller
                         $imageObj->h_room_category_id   = $id;
                         // $imageObj->img_path             = $image_path;
                         $imageObj->img_path             = $photo_name;
-                        $imageObj->description          = $description;
+                        // $imageObj->description          = $description;
+                        
+                        //get image_description from image_description_array using $image_key as index
+                        $imageObj->description          = $image_descriptions[$image_key];
+
                         if(isset($firstRoomCategoryImage)){
                             $imageObj->default_image        = 0;
                         }else{

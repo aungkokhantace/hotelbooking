@@ -329,7 +329,7 @@ class HotelGalleryController extends Controller
                 $images                     = Input::file('file');
                 $image_descriptions         = Input::get('image_description');
                 // $count                      = 1;
-                
+
                 foreach($images as $image_key=>$image){
                     if (! is_null($image)) {
                         $path = base_path().'/public/images/upload/';
@@ -350,7 +350,8 @@ class HotelGalleryController extends Controller
                         $paramObj->hotel_id             = $id;
                         // $paramObj->image                = $image_path;
 
-                        $paramObj->image                = $photo_name;//get image_description from image_description_array using $image_key as index
+                        $paramObj->image                = $photo_name;
+                        //get image_description from image_description_array using $image_key as index
                         $paramObj->description          = $image_descriptions[$image_key];
 
                         $paramObj->status               = 1; //status is 1 by default
