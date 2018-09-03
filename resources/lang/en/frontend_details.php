@@ -237,6 +237,12 @@ return[
     "refund_by_admin"=>"Refund by Admin",
     "cancel_second_cancellation"=>"Cancel within second cancellation days",
 
+    "agree_to_terms_1"=>"I agree to the",
+    "terms_and_policy"=>"terms and policy",
+    "agree_to_terms_2"=>"by booking this room.",
+
+    "term_and_policy"=>"Hotel Policy",
+
 
 ]
 

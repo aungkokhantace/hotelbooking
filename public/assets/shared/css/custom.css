@@ -525,3 +525,7 @@ remove_arrow::-webkit-outer-spin-button{
   padding: 10px 5px;
   z-index: 1;
 }
+
+.agree_to_terms{
+  float:left;
+}

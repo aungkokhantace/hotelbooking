@@ -64,6 +64,7 @@ use App\Setup\BookingPerson\BookingPersonRepositoryInterface;
 use App\Setup\BookingChildrenAge\BookingChildrenAge;
 use App\Setup\BookingChildrenAge\BookingChildrenAgeRepository;
 use App\Setup\BookingChildrenAge\BookingChildrenAgeRepositoryInterface;
+use App\Setup\HotelPolicy\HotelPolicyRepository;
 
 class PaymentController extends Controller
 {
@@ -662,6 +663,12 @@ class PaymentController extends Controller
             // for passing publishable key to stripe js checkout form i
             $pub_key        = PaymentConstance::STIRPE_PUBLISHABLE_KEY;
 
+
+            //get hotel policy
+            $hotelPolicyRepo        = new HotelPolicyRepository();
+            $hotelPolicyObj         = $hotelPolicyRepo->getObjsByHotelID($hotel_id);
+            $hotel_policy           = $hotelPolicyObj->policy;
+
             return view('frontend.confirm_reservation')
                 ->with('available_room_category_array',$available_room_categories)
                 ->with('hotel',$hotel)
@@ -669,7 +676,8 @@ class PaymentController extends Controller
                 ->with('hotelFacilities',$hotelFacilities)
                 ->with('totalRooms',$totalRooms)
                 ->with('countries',$countries)
-                ->with('pub_key',$pub_key);
+                ->with('pub_key',$pub_key)
+                ->with('hotel_policy',$hotel_policy);
     //            ->with('total_amount',$total_amount);
         }
         catch(\Exception $e){

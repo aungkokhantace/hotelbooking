@@ -221,6 +221,12 @@ return[
     "complete"=>"コンプリート",
     "void"=>"空",
 
+    "agree_to_terms_1"=>"この部屋を予約することで、",
+    "terms_and_policy"=>"規約とポリシー",
+    "agree_to_terms_2"=>"に同意します。",
+
+    "term_and_policy"=>"ホテルポリシー",
+
 
 
 

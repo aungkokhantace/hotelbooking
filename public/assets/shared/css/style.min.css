@@ -1288,9 +1288,13 @@ i.fa-td.fa.fa-user {
     border: none;
 }
 .button_paynow{
-    padding: 25px 0px;
+    /* padding: 25px 0px; */
     float: right;
     font-family: 'Playfair Display';
+}
+
+.button_paynow_div{
+    padding: 25px 0px;
 }
 .paymentformgroups {
     padding-bottom: 120px !important;

@@ -136,9 +136,31 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12 pd_rg_10">
-                                                    <div class="button_paynow">
-                                                        <button type="button" class="btn btn-info btn-sm" id="book_and_pay_button" name="book_and_pay_button"><i class="fa fa-lock" aria-hidden="true"></i> &nbsp;{{trans('frontend_details.book_pay')}}!</button>
+                                                  <!-- <div class="button_paynow"> -->
+                                                  <div class="button_paynow_div">
+                                                    <input type="checkbox" name="agree_to_terms" id="agree_to_terms" class="agree_to_terms"><label class="agree_to_terms">{{trans('frontend_details.agree_to_terms_1')}} <a href="#hotelPolicyModal" data-toggle="modal" id="hotel_policy_modal" class="hotel_policy">{{trans('frontend_details.terms_and_policy')}}</a> {{trans('frontend_details.agree_to_terms_2')}}</label>
+                                                    <button type="button" class="btn btn-info btn-sm button_paynow" id="book_and_pay_button" name="book_and_pay_button"><i class="fa fa-lock" aria-hidden="true"></i> &nbsp;{{trans('frontend_details.book_pay')}}!</button>
+                                                  </div>
+
+                                                  <!-- Start Modal -->
+                                                  <div id="hotelPolicyModal" class="modal fade" role="dialog">
+                                                    <div class="modal-dialog">
+                                                      <!-- Modal content-->
+                                                      <div class="modal-content">
+                                                        <div class="modal-header">
+                                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                          <h4 class="modal-title">{{trans('frontend_details.term_and_policy')}}</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                          <p>{!! $hotel_policy !!}</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                          <button type="button" class="btn btn-default" data-dismiss="modal">{{trans('frontend_details.close')}}</button>
+                                                        </div>
+                                                      </div>
                                                     </div>
+                                                  </div>
+                                                  <!-- End Modal -->
                                                 </div>
                                             </div>
                                         {{--</form>--}}
@@ -181,6 +203,8 @@
 //                }
 //            });
 
+            $('#book_and_pay_button').attr('disabled','disabled');
+
             $("#book_and_pay_button").click(function(e){
                 //validate form
                 $('#book_and_pay_form').validate({
@@ -221,7 +245,17 @@
 
             //For selectbox with search function
             $("#country").select2();
+
+            $("#agree_to_terms").change(function() {
+                if(this.checked) {
+                  $('#book_and_pay_button').attr('disabled',false);
+                }
+                else{
+                  $('#book_and_pay_button').attr('disabled','disabled');
+                }
+            });
         });
+
     </script>
 
     <script>
