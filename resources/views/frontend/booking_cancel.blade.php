@@ -12,7 +12,7 @@
                     <div class="row">
                         <h5>Cancellation Policy</h5>
                         <p style="padding: 15px 0px;">
-                            {{$booking->room_count.' Rooms  .................   '}}<b>{{$booking->charge}}</b>
+                            {{$booking->room_count.' Room(s)  .................   '}}<b>{{$booking->charge}}</b>
                         </p>
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="id" value="{{$booking->id}}">

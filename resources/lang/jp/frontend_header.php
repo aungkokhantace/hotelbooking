@@ -3,7 +3,8 @@ return[
 
     "home" => "ホーム",
     "services" =>"サービス内容",
-    "about_us"=>"私たちに関しては",
+    // "about_us"=>"私たちに関しては",
+    "about_us"=>"会社概要",
     "faq"=>"FAQ",
     "visa"=>"VISA",
     "contact_us"=>"お問い合わせ",
