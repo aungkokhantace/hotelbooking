@@ -7,9 +7,9 @@
  */
 
 return [
-    'dashboard' => 'Dashboard - English',
-    'entry'     => 'Entry Form - English',
-    'edit'      => 'Edit Form - English',
-    'home'      => 'Home - English'
+    'dashboard' => 'Dashboard',
+    'entry'     => 'Entry Form',
+    'edit'      => 'Edit Form',
+    'home'      => 'Home'
 
 ];

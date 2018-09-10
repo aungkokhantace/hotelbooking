@@ -10,8 +10,8 @@
                 <span class="info-box-icon bg-light-blue"><i class="ion ion-android-person"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">Total Staff</span>
-                    <span class="info-box-number">{{ $userCount }}</span>
+                    <span class="info-box-text">NUMBER OF HOTELS</span>
+                    <span class="info-box-number">{{ $hotelCount }}</span>
                 </div>
                 <!-- /.info-box-content -->
             </div>

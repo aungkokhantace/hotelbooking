@@ -32,9 +32,9 @@ class UserEditFormRequest extends Request
         return [
             "display_name"      => "required",
             // "user_name"         => "required|unique:core_users,user_name,".$this->get('id'),
-            'user_name'         => 'required|string|unique:core_users,user_name,'.$this->get('id')',id,deleted_at,NULL',
+            'user_name'         => 'required|string|unique:core_users,user_name,'.$this->get('id').',id,deleted_at,NULL',
             // 'email'             => "required|email|unique:core_users,email,".$this->get('id'),
-            'email'         => 'required|string|unique:core_users,email,'.$this->get('id')',id,deleted_at,NULL',
+            'email'         => 'required|string|unique:core_users,email,'.$this->get('id').',id,deleted_at,NULL',
         ];
     }
 

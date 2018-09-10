@@ -463,6 +463,7 @@ $permissions = \App\Core\Check::getPermissionByRoleId($role_id);
             </li>
             @endif
 
+            <!--
             @if((in_array("backend_mps/eventemail", $permissions)) || (in_array("backend_mps/email_template_booking_confirm", $permissions)) || (in_array("backend_mps/email_template_booking_cancel", $permissions)) || (in_array("backend_mps/email_template_booking_edit", $permissions)))
             <li  nav-id='modifier' class="has-sub">
                 <a href="javascript:;">
@@ -500,6 +501,8 @@ $permissions = \App\Core\Check::getPermissionByRoleId($role_id);
                 </ul>
             </li>
             @endif
+            -->
+
 
             @if(Auth::guard('User')->user()->role_id == 1)
             <li  nav-id='modifier' class="has-sub">
