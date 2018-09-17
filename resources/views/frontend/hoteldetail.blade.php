@@ -74,7 +74,10 @@
                                     <div>
                                         <img data-u="image" src="/images/upload/{{$hotelGalleryImage->image}}" />
                                         <img data-u="thumb" src="/images/upload/{{$hotelGalleryImage->image}}" />
+                                        <!-- <p class="hightlight-text">{{$hotelGalleryImage->description}}</p> -->
+                                        @if(isset($hotelGalleryImage->description) && $hotelGalleryImage->description !== "" && $hotelGalleryImage->description !== " ")
                                         <p class="hightlight-text">{{$hotelGalleryImage->description}}</p>
+                                        @endif
                                     </div>
                                 @endforeach
                             @else
@@ -321,6 +324,9 @@
                             </tr>
                             </thead>
                             <tbody>
+
+                            @include('frontend.login_alert_before_book_now')
+
                             {!! Form::open(array('url' => '/enter_details','files'=>true, 'id'=>'frm_booking', 'class'=> 'form-horizontal user-form-border')) !!}
                             {{ csrf_field() }}
 
@@ -336,6 +342,8 @@
                               <input type="hidden" id="logged_in_flag" name="logged_in_flag" value="0">
                             @endif
                             <!-- end flag whether customer is logged in or not -->
+
+
 
                             @if($total_available_room != 0)
                             @foreach($roomCategories as $roomCategory)
@@ -370,7 +378,10 @@
                                                                             <div>
                                                                                 <img data-u="image" src="/images/upload/{{$image->img_path}}" />
                                                                                 <img data-u="thumb" src="/images/upload/{{$image->img_path}}" />
+                                                                                <!-- <p class="hightlight-text">{{$image->description}}</p> -->
+                                                                                @if(isset($image->description) && $image->description !== "" && $image->description !== " ")
                                                                                 <p class="hightlight-text">{{$image->description}}</p>
+                                                                                @endif
                                                                             </div>
                                                                         @endforeach
                                                                     @else
@@ -769,7 +780,8 @@
                 //check whether customer is logged in or not
                 if(logged_in_flag == 0){
                   //alert customer to log in
-                  $('#loginModal').modal('show');
+                  // $('#loginModal').modal('show');
+                  $('#loginBeforeBookNowModal').modal('show');
                 }
                 else{
                   //submit the form

@@ -1,4 +1,4 @@
-<div class="modal fade" id="loginModal" role="dialog">
+<div class="modal fade" id="loginBeforeBookNowModal" role="dialog">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
         <div class="modalbody">
@@ -7,23 +7,23 @@
                 <img src="/assets/shared/images/Edit.png">
                 <button type="button" class="close" data-dismiss="modal">⨂</button>
             </div>
-            <h2 style="text-align:center;">{{trans('frontend_header.login')}}</h2>
+            <h2 style="text-align:center;">{{trans('frontend_header.login')}}-test</h2>
             <div id="show-error" class="col-sm-12"></div>
             <!-- <form class="form-horizontal"> -->
-            {!! Form::open(array('url' => '/login', 'class'=> 'form-horizontal', 'id'=>'login')) !!}
+            {!! Form::open(array('url' => '/login', 'class'=> 'form-horizontal', 'id'=>'login_before_book_now')) !!}
                 <div class="formgroup">
                     <div class="col-sm-12 pd_lf_5">
-                        <input type="email" class="formcontrols" id="login_email" placeholder="{{trans('frontend_header.email_address')}}" name="email">
+                        <input type="email" class="formcontrols" id="login_email_before_book_now" placeholder="{{trans('frontend_header.email_address')}}" name="email">
                     </div>
                 </div>
                 <div class="formgroup">
                     <div class="col-sm-12 pd_lf_5">
-                        <input type="password" class="formcontrols" id="login_password" placeholder="{{trans('frontend_header.password')}}" name="password">
+                        <input type="password" class="formcontrols" id="login_password_before_book_now" placeholder="{{trans('frontend_header.password')}}" name="password">
                     </div>
                 </div>
                 <div class="col-sm-12 pd_lf_5">
                    <!-- <button type="submit" class="btn btn-default formcontrolnew">Login</button> -->
-                   <button type="button" class="btn btn-default formcontrols login-btn">{{trans('frontend_header.login')}}</button>
+                   <button type="button" class="btn btn-default formcontrols" id="login-btn-before-book-now">{{trans('frontend_header.login')}}</button>
                 </div>
                 {{--  <div class="col-sm-12 pd_lf_5 form_text">
                     <span class="psw"><a href="#">{{trans('frontend_header.forget_password')}}</a></span>
@@ -58,16 +58,21 @@
 </script>
 <script>
     $(document).ready(function(){
-        $('.login-btn').click(function(){
-            var serializedData = $('#login').serialize();
-            // console.log('serialll-login '+serializedData);
+        // $('.login-btn').click(function(){
+        $('#login-btn-before-book-now').click(function(){
+            var serializedData = $('#login_before_book_now').serialize();
+            // console.log('serialllizz '+serializedData);
             $.ajax({
                 url: '/login',
                 type: 'POST',
                 data: serializedData,
                 success: function(data){
+                    console.log(data);
                     if(data.aceplusStatusCode == '200'){
-                        location.reload(true);
+                        // location.reload(true);
+
+                        //redirect to book now page by submitting the form
+                        $("#frm_booking").submit();
                     }
                     else if(data.aceplusStatusCode == '401'){
                         $('.alert').remove();
