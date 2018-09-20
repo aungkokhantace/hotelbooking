@@ -146,3 +146,7 @@ body {
     padding-left: 30px;
 }
 /*end password reset page*/
+
+.login-form-logo{
+  max-width: 300px;
+}

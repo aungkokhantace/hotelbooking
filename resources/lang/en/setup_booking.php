@@ -8,6 +8,7 @@
 
 return [
     'title-list'                        => 'Booking Listing',
+    'title-detail'                      => 'Booking Detail',
     'tb-col-name'                       => 'Name',
     'tb-col-description'                => 'Description',
     'tb-col-booking-number'             => 'Booking Number',
@@ -25,5 +26,5 @@ return [
     'tb-col-total-discount-amt'         => 'Total Discount Amount',
     'tb-col-total-discount-percentage'  => 'Total Discount Percentage',
     'tb-col-hotel-name'                 => 'Hotel Name',
-    'tb-col-travel-for-work'            => 'Travel For Work'  
+    'tb-col-travel-for-work'            => 'Travel For Work'
 ];

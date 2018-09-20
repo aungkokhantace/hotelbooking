@@ -144,12 +144,12 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>156,'module'=>'RecommendHotel','name'=>'New','description'=>'Recommend Hotel New','url'=>'backend_mps/recommend_hotel/create'],
             ['id'=>157,'module'=>'RecommendHotel','name'=>'Store','description'=>'Recommend Hotel Store','url'=>'backend_mps/recommend_hotel/store'],
 
-            ['id'=>160,'module'=>'HotelRoomType','name'=>'Listing','description'=>'Hotel Room Type Listing','url'=>'backend_mps/hotel_room_type'],
-            ['id'=>161,'module'=>'HotelRoomType','name'=>'New','description'=>'Hotel Room Type New','url'=>'backend_mps/hotel_room_type/create'],
-            ['id'=>162,'module'=>'HotelRoomType','name'=>'store','description'=>'Hotel Room Type Store','url'=>'backend_mps/hotel_room_type/store'],
-            ['id'=>163,'module'=>'HotelRoomType','name'=>'Edit','description'=>'Hotel Room Type Edit','url'=>'backend_mps/hotel_room_type/edit'],
-            ['id'=>164,'module'=>'HotelRoomType','name'=>'Update','description'=>'Hotel Room Type Update','url'=>'backend_mps/hotel_room_type/update'],
-            ['id'=>165,'module'=>'HotelRoomType','name'=>'Destroy','description'=>'Hotel Room Type Destroy','url'=>'backend_mps/hotel_room_type/destroy'],
+            ['id'=>160,'module'=>'Building_Type','name'=>'Listing','description'=>'Hotel Building Type Listing','url'=>'backend_mps/hotel_room_type'],
+            ['id'=>161,'module'=>'Building_Type','name'=>'New','description'=>'Hotel Building Type New','url'=>'backend_mps/hotel_room_type/create'],
+            ['id'=>162,'module'=>'Building_Type','name'=>'store','description'=>'Hotel Building Type Store','url'=>'backend_mps/hotel_room_type/store'],
+            ['id'=>163,'module'=>'Building_Type','name'=>'Edit','description'=>'Hotel Building Type Edit','url'=>'backend_mps/hotel_room_type/edit'],
+            ['id'=>164,'module'=>'Building_Type','name'=>'Update','description'=>'Hotel Building Type Update','url'=>'backend_mps/hotel_room_type/update'],
+            ['id'=>165,'module'=>'Building_Type','name'=>'Destroy','description'=>'Hotel Building Type Destroy','url'=>'backend_mps/hotel_room_type/destroy'],
 
             ['id'=>170,'module'=>'HotelRoomCategory','name'=>'Listing','description'=>'Hotel Room Category Listing','url'=>'backend_mps/hotel_room_category'],
             ['id'=>171,'module'=>'HotelRoomCategory','name'=>'New','description'=>'Hotel Room Category New','url'=>'backend_mps/hotel_room_category/create/{hotel_id?}'],

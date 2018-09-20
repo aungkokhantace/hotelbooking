@@ -8,6 +8,7 @@
 
 return [
     'title-list'                        => 'Communication Listing',
+    'title-reply'                       => 'Communication Reply',
     'place-hotel'                       => 'Hotel',
     'place-check-in'                    => 'Check In',
     'place-check-out'                   => 'Check Out',
@@ -21,7 +22,7 @@ return [
     'tb-col-description'                => 'Description',
     'tb-col-booking-number'             => 'Booking Number',
     'tb-col-username'                   => 'Username',
-    'tb-col-hotel-name'                 => 'Hotel Name', 
-    'tb-col-total-request'              => 'Total Request', 
-    'tb-col-reply'                      => 'Reply', 
+    'tb-col-hotel-name'                 => 'Hotel Name',
+    'tb-col-total-request'              => 'Total Request',
+    'tb-col-reply'                      => 'Reply',
 ];

@@ -14,7 +14,8 @@
                     <div>
                         <div class="side_profile">
                             <img src="/assets/shared/images/user.png">
-                            <h3>{{isset($customer)&&count($customer)?$customer['display_name']:''}}</h3>
+                            <!-- <h3>{{isset($customer)&&count($customer)?$customer['display_name']:''}}</h3> -->
+                            <h3>{{isset($customer)&&count($customer)?$customer['first_name'] .' '. $customer['last_name']:''}}</h3>
                         </div>
                         <div class="side_gmail">
                             <p>{{isset($customer)?$customer['email']:''}}</p>

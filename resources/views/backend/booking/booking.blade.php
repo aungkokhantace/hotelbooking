@@ -5,7 +5,7 @@
         <!-- begin #content -->
 <div id="content" class="content">
 
-    <h1 class="page-header">{{trans('setup_booking.title-list')}}</h1>
+    <h1 class="page-header">{{trans('setup_booking.title-detail')}}</h1>
 
     <div class="row">
         <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">

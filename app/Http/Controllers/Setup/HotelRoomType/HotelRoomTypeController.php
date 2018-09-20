@@ -106,25 +106,26 @@ class HotelRoomTypeController extends Controller
             $uid                = $user->id;
 
             $hotel_room_type    = $this->repo->getObjByID($id);
-            $hotelRepo          = new HotelRepository();
+            // $hotelRepo          = new HotelRepository();
 
-            if ($role == 3){
+            // if ($role == 3){
+            //     //Check User has permission to edit
+            //     //Get Hotel ID
+            //     $hotels             = $hotelRepo->getFirstHotelByUserEmail($email);
+            //     $h_id               = $hotels->id;
+            //     // $checkPermission    = $this->repo->checkHasPermission($id,$h_id);
+            //     // // dd('$hotels');
+            //     // if ($checkPermission == false) {
+            //     //     return redirect('unauthorize');
+            //     //     exit();
+            //     // }
+            //     //Get Hotel By User Email
+            //     // $hotels         = $hotelRepo->getHotelByUserEmail($email);
+            //     $hotels         = $hotelRepo->getFirstHotelByUserEmail($email);
+            // } else {
+            //     $hotels         = $hotelRepo->getObjs();
+            // }
 
-                //Check User has permission to edit
-                //Get Hotel ID
-                $hotels             = $hotelRepo->getFirstHotelByUserEmail($email);
-                $h_id               = $hotels->id;
-                $checkPermission    = $this->repo->checkHasPermission($id,$h_id);
-                if ($checkPermission == false) {
-                    return redirect('unauthorize');
-                    exit();
-                }
-                //Get Hotel By User Email
-                // $hotels         = $hotelRepo->getHotelByUserEmail($email);
-                $hotels         = $hotelRepo->getFirstHotelByUserEmail($email);
-            } else {
-                $hotels         = $hotelRepo->getObjs();
-            }
             return view('backend.hotel_room_type.hotel_room_type')->with('hotel_room_type', $hotel_room_type);
                                             // ->with('hotels',$hotels)
                                             // ->with('role',$role);

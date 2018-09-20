@@ -69,11 +69,11 @@
         </div>
     </div>
     <br />
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-md-5 col-md-offset-3 login-center">
             <img src="/images/aceplus_logo.png" class="pull-left height-full m-r-5">
         </div>
-    </div>
+    </div> -->
 </div>
 <script src="/assets/js/validation/jquery.validate.js"></script>
 <script src="/assets/js/validation/additional-methods.js"></script>
