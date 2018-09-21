@@ -7,7 +7,7 @@
                 <img src="/assets/shared/images/Edit.png">
                 <button type="button" class="close" data-dismiss="modal">⨂</button>
             </div>
-            <h2 style="text-align:center;">{{trans('frontend_header.login')}}-test</h2>
+            <h2 style="text-align:center;">{{trans('frontend_header.login')}}</h2>
             <div id="show-error" class="col-sm-12"></div>
             <!-- <form class="form-horizontal"> -->
             {!! Form::open(array('url' => '/login', 'class'=> 'form-horizontal', 'id'=>'login_before_book_now')) !!}

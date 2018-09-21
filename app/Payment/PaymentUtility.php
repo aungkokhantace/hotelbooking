@@ -137,7 +137,7 @@ class PaymentUtility
                 "currency" => $paymentCurrency,
                 "customer" => $customerId
             ));
-
+            
             $stripeObj = array();
             $stripeObj['stripe_user_id']                = $customerId;
             $stripeObj['stripe_payment_id']             = $charge->id;
@@ -155,6 +155,29 @@ class PaymentUtility
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
             $returnedObj['stripe'] = $stripeObj;
             return $returnedObj;
+        }
+        catch(\Stripe\Error\Card $e) {
+          // Since it's a decline, \Stripe\Error\Card will be caught
+          $body = $e->getJsonBody();
+          $err  = $body['error'];
+
+          // print('Status is:' . $e->getHttpStatus() . "\n");
+          // print('Type is:' . $err['type'] . "\n");
+          // print('Code is:' . $err['code'] . "\n");
+          // // param is '' in this case
+          // print('Param is:' . $err['param'] . "\n");
+          // print('Message is:' . $err['message'] . "\n");
+
+          //create error log
+          $date    = date("Y-m-d H:i:s");
+          $message = '['. $date .'] '. 'error: ' . 'User '.$currentUser.' created a payment charge and got error -------'.$err['message']. PHP_EOL;
+          LogCustom::create($date,$message);
+
+          $returnedObj['stripeDeclineHttpStatus']    = $e->getHttpStatus();
+          $returnedObj['stripeDeclineType']    = $err['type'];
+          $returnedObj['stripeDeclineCode']    = $err['code'];
+          $returnedObj['aceplusStatusMessage'] = $e->getMessage();
+          return $returnedObj;
         }
         catch(\Exception $e){
             //create error log
@@ -301,7 +324,7 @@ class PaymentUtility
             $stripeObj['stripe_payment_amt']            = $balance->amount/100;
             $stripeObj['stripe_payment_fee']            = $balance->fee/100;
             $stripeObj['stripe_payment_net']            = $balance->net/100;
-            
+
             //if stripe obj creation was successful, then create date and message for transaction log
             $date     = date('Y-m-d H:i:s');
             $message  = '['. $date .'] '. 'info: ' . 'Customer '. $currentUser.' created a balance retrieve id ='.$balance->id. PHP_EOL;
