@@ -14,6 +14,7 @@ use Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 use App\Setup\Hotel\HotelRepository;
+use App\Setup\BookingRequest\BookingRequestRepository;
 
 class BookingReportController extends Controller
 {
@@ -312,9 +313,11 @@ class BookingReportController extends Controller
             $bookingRoomRepo    = new BookingRoomRepository();
             $bookingRepo        = new BookingRepository();
             $hotelRepo          = new HotelRepository();
+            $bookingRequestRepo = new BookingRequestRepository();
 
             $booking_room       = $bookingRoomRepo->getBookingRoomByBookingId($id);
             $booking            = $bookingRepo->getBookingById($id);
+            $booking_requests   = $bookingRequestRepo->getBookingRequestByBookingId($id);
 
             $booking_no         = $booking->booking_no;
 
@@ -354,7 +357,9 @@ class BookingReportController extends Controller
             return view('report.booking_room_detail')->with('booking_room',$booking_room)
                                                      ->with('booking_no',$booking_no)
                                                      ->with('hotel',$hotel)
-                                                     ->with('customer_name',$customer_name);
+                                                     ->with('customer_name',$customer_name)
+                                                     ->with('booking',$booking)
+                                                     ->with('booking_requests',$booking_requests);
         }
     }
 }

@@ -52,6 +52,42 @@
         </div>
     </div>
 
+    @if(isset($booking_requests->booking_taxi))
+    <!-- Taxi Info -->
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <h5>Want to book taxi : </h5>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <h5>{{($booking_requests->booking_taxi == 1) ? 'Yes':'No'}}</h5>
+        </div>
+    </div>
+    @endif
+
+    @if(isset($booking_requests->booking_tour_guide))
+    <!-- Tour Guide Info -->
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <h5>Want to book tour guide : </h5>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <h5>{{($booking_requests->booking_tour_guide == 1) ? 'Yes':'No'}}</h5>
+        </div>
+    </div>
+    @endif
+
+    @if(isset($booking_requests->special_request) && $booking_requests->special_request !== null && $booking_requests->special_request !== '')
+    <!-- Special Request -->
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <h5>Special request : </h5>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <h5>{{$booking_requests->special_request}}</h5>
+        </div>
+    </div>
+    @endif
+
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 

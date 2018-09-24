@@ -17,6 +17,8 @@ use App\User;
 use App\Setup\Facilities\Facilities;
 use App\Core\Utility;
 use App\Core\ReturnMessage;
+use Exception;
+// use Stripe\Exception\CardErrorException;
 
 class PaymentUtility
 {
@@ -128,7 +130,8 @@ class PaymentUtility
         try {
             $paymentCurrency = PaymentConstance::STIRPE_CURRENCY;
             $tempStripeObj  = $this->createPaymentObj();
-            if($tempStripeObj['aceplusStatusCode'] != ReturnMessage::OK){
+
+            if($tempStripeObj['aceplusStatusCode'] !== ReturnMessage::OK){
                 throw new Exception('Error with payment token !!!!');
             }
 
@@ -137,7 +140,10 @@ class PaymentUtility
                 "currency" => $paymentCurrency,
                 "customer" => $customerId
             ));
-            
+
+            //throw card exception for testing
+            // throw new \Stripe\Error\Card;
+
             $stripeObj = array();
             $stripeObj['stripe_user_id']                = $customerId;
             $stripeObj['stripe_payment_id']             = $charge->id;

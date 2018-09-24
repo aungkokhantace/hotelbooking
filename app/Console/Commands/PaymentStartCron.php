@@ -215,9 +215,10 @@ class PaymentStartCron extends Command
                             $booking->status                        = 3; //cancel
                             $booking->booking_cancel_reason         = "Insufficient Funds in Card";
                             $result                                 = $bookingRepo->update($booking);
-                            if($result['aceplusStatusCode'] != ReturnMessage::OK){
-                                DB::rollback();
 
+                            if($result['aceplusStatusCode'] !== ReturnMessage::OK){
+                                DB::rollback();
+                                exit(result["aceplusStatusMessage"]);
                             }
                             /* END changing status for booking */
                             /* START changing status for booking room */
@@ -269,8 +270,11 @@ class PaymentStartCron extends Command
 
                         /* End booking cancel operation */
                       }
-                    }
 
+                      //stop and exit
+                      exit($result["aceplusStatusMessage"]);
+                    }
+                    
                     $stripe_card_brand                      = $result['stripe']['card_brand'];
                     $stripe_card_type                       = $result['stripe']['card_type'];
                     $stripe_balance_transaction             = $result['stripe']['stripe_balance_transaction'];

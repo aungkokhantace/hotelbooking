@@ -48,7 +48,11 @@ class BookingRequestRepository implements BookingRequestRepositoryInterface
 
     public function getBookingRequestByBookingId($id){
         $result = BookingRequest::where('booking_id',$id)->first();
+        return $result;
+    }
 
+    public function getObjsByBookingId($booking_id){
+        $result = BookingRequest::where('booking_id',$booking_id)->get();
         return $result;
     }
 }
