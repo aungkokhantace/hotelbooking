@@ -218,7 +218,7 @@ class PaymentStartCron extends Command
 
                             if($result['aceplusStatusCode'] !== ReturnMessage::OK){
                                 DB::rollback();
-                                exit(result["aceplusStatusMessage"]);
+                                exit($result["aceplusStatusMessage"]);
                             }
                             /* END changing status for booking */
                             /* START changing status for booking room */
@@ -274,7 +274,7 @@ class PaymentStartCron extends Command
                       //stop and exit
                       exit($result["aceplusStatusMessage"]);
                     }
-                    
+
                     $stripe_card_brand                      = $result['stripe']['card_brand'];
                     $stripe_card_type                       = $result['stripe']['card_type'];
                     $stripe_balance_transaction             = $result['stripe']['stripe_balance_transaction'];
