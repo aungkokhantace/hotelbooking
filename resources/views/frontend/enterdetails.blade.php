@@ -251,13 +251,16 @@
                                                                 <input type="email" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_email"}}" name="{{$available_room_category->id."_".($i+1)."_email"}}" placeholder="{{trans('frontend_header.email_address')}}" >
                                                             </div>
                                                         </div>
+
+                                                        @if($available_room_category->breakfast_included == 1)
                                                         <div class="checkbox">
                                                             <i class="fa fa-check-square-o" aria-hidden="true"></i>
                                                              <span class="included">{{trans('frontend_details.included')}}</span><span style="padding-left:30px;"><strong>{{trans('frontend_details.breakfast')}}</strong><br></span>
                                                             <span style="padding-left: 148px;">
-                                                            {{trans('frontend_details.yes_we_like_breakfast_no_addition_cost')}}
+                                                            <!-- {{trans('frontend_details.yes_we_like_breakfast_no_addition_cost')}} -->
                                                             </span>
                                                         </div>
+                                                        @endif
                                                     </div>
                                                         &nbsp;
                                                         @endfor
