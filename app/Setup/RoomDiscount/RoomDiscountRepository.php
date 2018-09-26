@@ -207,4 +207,11 @@ class RoomDiscountRepository implements RoomDiscountRepositoryInterface
 
         return $result;
     }
+
+    public function getObjsByHotelId($hotel_id){
+        $result = RoomDiscount::whereNull('deleted_at')
+                                 ->where('hotel_id',$hotel_id)
+                                 ->get();
+        return $result;
+    }
 }

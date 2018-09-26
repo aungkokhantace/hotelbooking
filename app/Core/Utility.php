@@ -344,4 +344,9 @@ class Utility
 
       return $terms_and_condition_text;
     }
+
+    public static function getCurrentUser(){
+        $user = Auth::guard('User')->user();
+        return $user;
+    }
 }

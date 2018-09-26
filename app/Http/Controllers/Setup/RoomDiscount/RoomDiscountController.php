@@ -18,6 +18,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
 use Illuminate\Support\Facades\Input;
+use App\Core\Utility;
 
 class RoomDiscountController extends Controller
 {
@@ -31,8 +32,20 @@ class RoomDiscountController extends Controller
     public function index(Request $request)
     {
         if (Auth::guard('User')->check()) {
-            $room_discount = $this->repo->getObjs();
-            return view('backend.room_discount.index')->with('room_discount',$room_discount);
+          //get current user obj
+          $current_user         = Utility::getCurrentUser();
+
+          //if hotel admin, display only restaurants he or she belongs to
+          if ($current_user->role_id == 3) {
+            $hotelRepo          = new HotelRepository();
+            $hotel              = $hotelRepo->getFirstHotelByUserEmail($current_user->email);
+            $room_discount   = $this->repo->getObjsByHotelId($hotel->id);
+          }
+          else {
+             $room_discount = $this->repo->getObjs();
+          }
+
+          return view('backend.room_discount.index')->with('room_discount',$room_discount);
         }
         return redirect('/');
     }
@@ -40,9 +53,19 @@ class RoomDiscountController extends Controller
     public function create()
     {
         if(Auth::guard('User')->check()){
-            $hotelRepo          = new HotelRepository();
+          //get current user obj
+          $current_user         = Utility::getCurrentUser();
+
+          $hotelRepo          = new HotelRepository();
+
+          //if hotel admin, display only restaurants he or she belongs to
+          if ($current_user->role_id == 3) {
+            $hotels              = $hotelRepo->getHotelByUserEmail($current_user->email);
+          }
+          else {
             $hotels             = $hotelRepo->getObjs();
-            return view('backend.room_discount.room_discount')->with('hotels',$hotels);
+          }
+          return view('backend.room_discount.room_discount')->with('hotels',$hotels);
         }
         return redirect('/');
     }
@@ -99,11 +122,23 @@ class RoomDiscountController extends Controller
     public function edit($id)
     {
         if (Auth::guard('User')->check()) {
+            //get current user obj
+            $current_user         = Utility::getCurrentUser();
+
             $room_discount          = $this->repo->getObjByID($id);
             $hotel_id               = $room_discount->hotel_id;
             $h_room_type_id         = $room_discount->h_room_type_id;
             $hotelRepo              = new HotelRepository();
-            $hotels                 = $hotelRepo->getObjs();
+            // $hotels                 = $hotelRepo->getObjs();
+
+            //if hotel admin, display only restaurants he or she belongs to
+            if ($current_user->role_id == 3) {
+              $hotels              = $hotelRepo->getHotelByUserEmail($current_user->email);
+            }
+            else {
+              $hotels             = $hotelRepo->getObjs();
+            }
+
             $hotelRoomTypeRepo      = new HotelRoomTypeRepository();
             $hotel_room_type        = $hotelRoomTypeRepo->getHotelRoomTypeWithHotelId($hotel_id);
             $hotelRoomCategoryRepo  = new HotelRoomCategoryRepository();

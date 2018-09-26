@@ -138,8 +138,11 @@
           $('.modal-body #children-age-select-box-row').html('');
           var count = $('#children').val();
 
+          var children_age_labels = ["1st Child","2nd Child","3rd Child","4th Child","5th Child","6th Child","7th Child","8th Child","9th Child","10th Child"];
+
           for (i = 1; i <= count; i++) {
-            $(".modal-body #children-age-select-box-row").append('<div class="col-md-2 children-age-select-box-div"><select class="form-control children-age-select-box" id="children-age-select-box_'+ i +'" name="children_ages[]" id="children_ages"></select></div>');
+            // $(".modal-body #children-age-select-box-row").append('<div class="col-md-2 children-age-select-box-div"><select class="form-control children-age-select-box" id="children-age-select-box_'+ i +'" name="children_ages[]" id="children_ages"></select></div>');
+            $(".modal-body #children-age-select-box-row").append('<div class="col-md-2 children-age-select-box-div"><label>'+children_age_labels[i-1]+'</label><select class="form-control children-age-select-box" id="children-age-select-box_'+ i +'" name="children_ages[]" id="children_ages"></select></div>');
             $("#children-age-select-box_"+i).append('<option selected value="<1"> <1 </option>')
             for(ii = 1; ii <= 17; ii++){
               $("#children-age-select-box_"+i).append('<option value="'+ ii +'">'+ ii +'</option>')

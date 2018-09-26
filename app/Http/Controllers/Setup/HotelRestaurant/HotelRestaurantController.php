@@ -16,6 +16,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
 use Illuminate\Support\Facades\Input;
+use App\Core\Utility;
 
 class HotelRestaurantController extends Controller
 {
@@ -29,8 +30,19 @@ class HotelRestaurantController extends Controller
     public function index(Request $request)
     {
         if (Auth::guard('User')->check()) {
-            $hotel_restaurant = $this->repo->getObjs();
-            return view('backend.hotel_restaurant.index')->with('hotel_restaurant',$hotel_restaurant);
+          //get current user obj
+          $current_user         = Utility::getCurrentUser();
+
+          //if hotel admin, display only restaurants he or she belongs to
+          if ($current_user->role_id == 3) {
+            $hotelRepo          = new HotelRepository();
+            $hotel              = $hotelRepo->getFirstHotelByUserEmail($current_user->email);
+            $hotel_restaurant   = $this->repo->getHotelRestaurantsByHotelId($hotel->id);
+          }
+          else {
+             $hotel_restaurant  = $this->repo->getObjs();
+          }
+          return view('backend.hotel_restaurant.index')->with('hotel_restaurant',$hotel_restaurant);
         }
         return redirect('/');
     }
@@ -38,12 +50,24 @@ class HotelRestaurantController extends Controller
     public function create()
     {
         if(Auth::guard('User')->check()){
-            $hotelRepo                  = new HotelRepository();
-            $hotels                     = $hotelRepo->getObjs();
-            $categoryRepo               = new HotelRestaurantCategoryRepository();
-            $hotel_restaurant_category  = $categoryRepo->getObjs();
-            return view('backend.hotel_restaurant.hotel_restaurant')->with('hotels',$hotels)
-                                                                    ->with('hotel_restaurant_category',$hotel_restaurant_category);
+          //get current user obj
+          $current_user         = Utility::getCurrentUser();
+
+          $hotelRepo                  = new HotelRepository();
+          // $hotels                     = $hotelRepo->getObjs();
+
+          //if hotel admin, display only restaurants he or she belongs to
+          if ($current_user->role_id == 3) {
+            $hotels              = $hotelRepo->getHotelByUserEmail($current_user->email);
+          }
+          else {
+            $hotels             = $hotelRepo->getObjs();
+          }
+
+          $categoryRepo               = new HotelRestaurantCategoryRepository();
+          $hotel_restaurant_category  = $categoryRepo->getObjs();
+          return view('backend.hotel_restaurant.hotel_restaurant')->with('hotels',$hotels)
+                                                                  ->with('hotel_restaurant_category',$hotel_restaurant_category);
         }
         return redirect('/');
     }
@@ -74,7 +98,7 @@ class HotelRestaurantController extends Controller
         $paramObj                           = new HotelRestaurant();
         $paramObj->name                     = $name;
         $paramObj->has_separate_open_close_hours = $has_separate_open_close_hours;
-        
+
         //if restaurant has separate opening/closing hours, set normal hours to null
         if($has_separate_open_close_hours == 1){
           $paramObj->normal_opening_hours     = null;
@@ -125,8 +149,20 @@ class HotelRestaurantController extends Controller
     public function edit($id)
     {
         if (Auth::guard('User')->check()) {
+            //get current user obj
+            $current_user         = Utility::getCurrentUser();
+
             $hotelRepo                  = new HotelRepository();
-            $hotels                     = $hotelRepo->getObjs();
+            // $hotels                     = $hotelRepo->getObjs();
+
+            //if hotel admin, display only restaurants he or she belongs to
+            if ($current_user->role_id == 3) {
+              $hotels              = $hotelRepo->getHotelByUserEmail($current_user->email);
+            }
+            else {
+              $hotels             = $hotelRepo->getObjs();
+            }
+
             $categoryRepo               = new HotelRestaurantCategoryRepository();
             $hotel_restaurant_category  = $categoryRepo->getObjs();
             $hotel_restaurant           = $this->repo->getObjByID($id);
