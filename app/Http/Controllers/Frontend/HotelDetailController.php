@@ -51,6 +51,7 @@ use App\Setup\BedType\BedTypeRepositoryInterface;
 use App\Setup\RoomView\RoomViewRepository;
 use App\Setup\RoomView\RoomViewRepositoryInterface;
 use App\Payment\PaymentConstance;
+use App\Log\LogCustom;
 
 //use Redirect;
 
@@ -336,50 +337,73 @@ class HotelDetailController extends Controller
             if($room_count > 0 || $adult_count > 0 || $children_count > 0){
                 //start converting children ages to string
                 $children_ages_string = "";
-                foreach($children_ages as $child_age){
-                  if($children_ages_string == ""){
-                    if($child_age == "1" || $child_age == "<1"){
-                      $children_ages_string = $child_age. " year";
+
+                if(isset($children_ages) && count($children_ages) > 0){
+                  foreach($children_ages as $child_age){
+                    if($children_ages_string == ""){
+                      if($child_age == "1" || $child_age == "<1"){
+                        $children_ages_string = $child_age. " year";
+                      }
+                      else{
+                        $children_ages_string = $child_age. " years";
+                      }
                     }
                     else{
-                      $children_ages_string = $child_age. " years";
+                      if($child_age == "1" || $child_age == "<1"){
+                        $children_ages_string .= " and ".$child_age. " year";
+                      }
+                      else{
+                        $children_ages_string .= " and ".$child_age. " years";
+                      }
                     }
                   }
-                  else{
-                    if($child_age == "1" || $child_age == "<1"){
-                      $children_ages_string .= " and ".$child_age. " year";
-                    }
-                    else{
-                      $children_ages_string .= " and ".$child_age. " years";
-                    }
-                  }
+                  $children_ages_string .= " old";
+                  //end converting children ages to string
                 }
-                $children_ages_string .= " old";
-                //end converting children ages to string
+
 
                 $searched_string = "* You searched ";
-                // room count
-                if($room_count > 1){
-                  $searched_string .= $room_count." rooms for ";
-                }
-                else{
-                  $searched_string .= $room_count." room for ";
-                }
-
-                // adult count
-                if($adult_count > 1){
-                  $searched_string .= $adult_count." adults";
-                }
-                else{
-                  $searched_string .= $adult_count." adult";
+                if(isset($room_count) && count($room_count) > 0){
+                  // room count
+                  if($room_count > 1){
+                    $searched_string .= $room_count." rooms ";
+                  }
+                  else if($room_count == 1){
+                    $searched_string .= $room_count." room ";
+                  }
                 }
 
-                // children count
-                if($children_count > 1){
-                  $searched_string .= " and ".$children_count." children of age ".$children_ages_string;
+                if(isset($adult_count) && count($adult_count) > 0){
+                  // adult count
+                  if($adult_count > 1){
+                    $searched_string .= 'for '.$adult_count." adults";
+                  }
+                  else if($adult_count == 1){
+                    $searched_string .= 'for '.$adult_count." adult";
+                  }
                 }
-                else{
-                  $searched_string .= " and ".$children_count." child of age ".$children_ages_string;
+
+                if(isset($children_count) && count($children_count) > 0){
+                  // children count
+                  if($children_count > 1){
+                    if(isset($adult_count) && count($adult_count) > 0 && $adult_count !== "0"){
+                      $searched_string .= " and ".$children_count." children of age ".$children_ages_string;
+                    }
+                    else{
+                      $searched_string .= $children_count." children of age ".$children_ages_string;
+                    }
+                  }
+                  else if($children_count == 1){
+                    if(isset($adult_count) && count($adult_count) > 0 && $adult_count !== "0"){
+                      $searched_string .= " and ".$children_count." child of age ".$children_ages_string;
+                    }
+                    else{
+                      $searched_string .= "for ".$children_count." child of age ".$children_ages_string;
+                    }
+                  }
+                  // else{
+                  //   $searched_string .= " and ".$children_count." child of age ".$children_ages_string;
+                  // }
                 }
             }
 
@@ -456,6 +480,11 @@ class HotelDetailController extends Controller
         }
         catch(\Exception $e){
             //write log here
+            //disable error log
+            $date    = date("Y-m-d H:i:s");
+            $message = '['. $date .'] '. 'error: ' . 'A user viewed details of  hotel_id = '.$hotel_id.' and got error : '.$e->getMessage().' at line '.$e->getLine().' of file '.$e->getFile(). PHP_EOL;
+            LogCustom::create($date,$message);
+
             Session::flush();
             return redirect('/');
         }
