@@ -76,14 +76,14 @@
         @if(Session::has('children'))
             {{--  <input type="number" id="children" class="floatLabel form-control" name="children" value="{{session('children')}}" min="1">  --}}
             <select class="form-control" name="children" id="children">
-                @for($i = 0; $i <= 100; $i++)
+                @for($i = 0; $i <= 10; $i++)
                     <option value="{{$i}}" {{$i==session('children')?'selected':''}}>{{$i}}</option>
                 @endfor
             </select>
         @else
             {{--  <input type="number" id="children" class="floatLabel form-control" name="children" value="" min="1">  --}}
             <select class="form-control" name="children" id="children">
-                @for($i = 0; $i <= 100; $i++)
+                @for($i = 0; $i <= 10; $i++)
                     <option value="{{$i}}">{{$i}}</option>
                 @endfor
             </select>

@@ -730,7 +730,7 @@ class PaymentController extends Controller
             $for_other                          = session('for_other');
 
             //get information about room count, adult count, children count and age
-            $room_count                         = session('room');
+            $room_count_from_session            = session('room');
             $adult_count                        = session('adults');
             $children_count                     = session('children');
             $children_ages                      = session('children_ages');
@@ -1161,7 +1161,7 @@ class PaymentController extends Controller
             $bookingPersonObj->booking_id                 = $booking_id;
             $bookingPersonObj->adult_count                = $adult_count;
             $bookingPersonObj->children_count             = $children_count;
-            $bookingPersonObj->room_count                 = $room_count;
+            $bookingPersonObj->room_count                 = $room_count_from_session;
             $bookingPersonRepo                            = new BookingPersonRepository();
             $booking_person_result                        = $bookingPersonRepo->create($bookingPersonObj);
 
