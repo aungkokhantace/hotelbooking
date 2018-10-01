@@ -1217,7 +1217,8 @@ class PaymentController extends Controller
 
                 $emails             = array_unique($merged_emails);
 
-                $template           = "booking_cancellation_start";
+                // $template           = "booking_cancellation_start";
+                $template           = "email_templates.booking_confirm";
                 $subject            = "Booking Complete Email";
                 $logMessage         = "created a booking";
                 $mailResult         = Utility::sendMail($template,$emails,$subject,$logMessage);
@@ -1237,7 +1238,8 @@ class PaymentController extends Controller
                 $hotel_email_str    = $hotel_email->email;
                 $system_email       = "testingmps2017@gmail.com";
                 $emails             = array($email,$hotel_email_str,$system_email);
-                $template           = "booking_cancellation_start";
+                // $template           = "booking_cancellation_start";
+                $template           = "email_templates.booking_confirm";
                 $subject            = "Booking Confirm Email";
                 $logMessage         = "created a booking";
                 $mailResult         = Utility::sendMail($template,$emails,$subject,$logMessage);

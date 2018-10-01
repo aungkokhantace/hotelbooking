@@ -134,11 +134,23 @@ class PaymentTestController extends Controller
 
     public function emailTest(){
         $emails              = ['aungkokhantace@gmail.com'];
-        $template           = "booking_cancellation_start";
+        // $template           = "booking_cancellation_start";
+        $template           = "email_templates.booking_confirm";
         $subject            = "Email Function Test";
         $logMessage         = "Test Log";
 
-        $mailResult         = Utility::sendMail($template,$emails,$subject,$logMessage);
+        $parameters = array();
+
+        $gst = Utility::getGST();
+        $parameters["gst"] = $gst;
+
+        $hotel_id = 1;
+        $service_tax = Utility::getServiceTax($hotel_id);
+        $parameters["service_tax"] = $service_tax;
+
+
+        dd('param',$parameters);
+        $mailResult         = Utility::sendMailWithParameters($template,$parameters,$emails,$subject,$logMessage);
 
         if ($mailResult['aceplusStatusCode'] == ReturnMessage::OK){
             alert()->success('Sending email was successful !')->persistent('OK');

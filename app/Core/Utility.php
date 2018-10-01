@@ -215,6 +215,12 @@ class Utility
         return $service_tax;
     }
 
+    public static function getGST(){
+      $config_gst = DB::select("SELECT * FROM core_configs WHERE `code` = 'GST'");
+      $gst = $config_gst[0]->value;
+      return $gst;
+    }
+
     public static function generateBookingNumber() {
         $booking_number = uniqid();
         return $booking_number;
@@ -233,6 +239,42 @@ class Utility
 
         try{
             Mail::send($template, [], function($message) use($emails,$subject)
+            {
+                $message->to($emails)
+                    ->subject($subject);
+            });
+
+            //create mail success log
+            $currentUser                        = Utility::getCurrentCustomerID();
+            $date                               = date("Y-m-d H:i:s");
+            $message                            = '['. $date .'] '. 'info: ' . 'Mail is sent to Customer - '.$currentUser.
+                ' ----- Log Message: '.$logMessage. PHP_EOL;
+
+            LogCustom::create($date,$message);
+
+            return $returnedObj;
+        }
+        catch(\Exception $e){
+            //create mail error log
+            $currentUser                        = Utility::getCurrentCustomerID();
+            $date                               = date("Y-m-d H:i:s");
+            $message                            = '['. $date .'] '. 'error: ' . 'Mail is not sent when Customer - '.$currentUser.
+                ' '.$logMessage.' got error -------'.$e->getMessage(). ' ----- line ' .
+                $e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+
+            LogCustom::create($date,$message);
+            $returnedObj['aceplusStatusCode']   = ReturnMessage::SERVICE_UNAVAILABLE;
+
+            return $returnedObj;
+        }
+    }
+
+    public static function sendMailWithParameters($template,$parameters,$emails,$subject,$logMessage){
+        $returnedObj                        = array();
+        $returnedObj['aceplusStatusCode']   = ReturnMessage::OK;
+        dd($parameters);
+        try{
+            Mail::send($template, $parameters, function($message) use($emails,$subject)
             {
                 $message->to($emails)
                     ->subject($subject);
