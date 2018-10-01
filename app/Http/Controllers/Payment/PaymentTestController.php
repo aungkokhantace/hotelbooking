@@ -142,15 +142,14 @@ class PaymentTestController extends Controller
         $parameters = array();
 
         $gst = Utility::getGST();
-        $parameters["gst"] = $gst;
 
         $hotel_id = 1;
         $service_tax = Utility::getServiceTax($hotel_id);
-        $parameters["service_tax"] = $service_tax;
+        
+        $parameters = ['gst'=>$gst, 'service_tax'=>$service_tax];
 
-
-        // $mailResult         = Utility::sendMailWithParameters($template,$parameters,$emails,$subject,$logMessage);
-        $mailResult         = Utility::sendMail($template,$emails,$subject,$logMessage);
+        $mailResult         = Utility::sendMailWithParameters($template,$parameters,$emails,$subject,$logMessage);
+        // $mailResult         = Utility::sendMail($template,$emails,$subject,$logMessage);
 
         if ($mailResult['aceplusStatusCode'] == ReturnMessage::OK){
             alert()->success('Sending email was successful !')->persistent('OK');

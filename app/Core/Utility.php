@@ -272,7 +272,7 @@ class Utility
     public static function sendMailWithParameters($template,$parameters,$emails,$subject,$logMessage){
         $returnedObj                        = array();
         $returnedObj['aceplusStatusCode']   = ReturnMessage::OK;
-        dd($parameters);
+
         try{
             Mail::send($template, $parameters, function($message) use($emails,$subject)
             {
@@ -291,6 +291,7 @@ class Utility
             return $returnedObj;
         }
         catch(\Exception $e){
+          dd($e);
             //create mail error log
             $currentUser                        = Utility::getCurrentCustomerID();
             $date                               = date("Y-m-d H:i:s");
