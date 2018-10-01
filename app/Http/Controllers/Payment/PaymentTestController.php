@@ -149,8 +149,8 @@ class PaymentTestController extends Controller
         $parameters["service_tax"] = $service_tax;
 
 
-        dd('param',$parameters);
-        $mailResult         = Utility::sendMailWithParameters($template,$parameters,$emails,$subject,$logMessage);
+        // $mailResult         = Utility::sendMailWithParameters($template,$parameters,$emails,$subject,$logMessage);
+        $mailResult         = Utility::sendMail($template,$emails,$subject,$logMessage);
 
         if ($mailResult['aceplusStatusCode'] == ReturnMessage::OK){
             alert()->success('Sending email was successful !')->persistent('OK');
