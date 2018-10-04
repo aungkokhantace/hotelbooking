@@ -64,6 +64,9 @@ use App\Setup\BookingPerson\BookingPersonRepositoryInterface;
 use App\Setup\BookingChildrenAge\BookingChildrenAge;
 use App\Setup\BookingChildrenAge\BookingChildrenAgeRepository;
 use App\Setup\BookingChildrenAge\BookingChildrenAgeRepositoryInterface;
+use App\Setup\BookingCancellationDate\BookingCancellationDate;
+use App\Setup\BookingCancellationDate\BookingCancellationDateRepository;
+use App\Setup\BookingCancellationDate\BookingCancellationDateRepositoryInterface;
 use App\Setup\HotelPolicy\HotelPolicyRepository;
 
 class PaymentController extends Controller
@@ -1190,6 +1193,27 @@ class PaymentController extends Controller
               }
             }
             /* END Operation for booking_children_ages */
+
+            /* START Operation to save booking_cancellation_date */
+            if(isset($first_cancellation_day_count) && isset($second_cancellation_day_count)){
+              //create obj and bind parameters
+              $bookingCancellationDateObj                                 = new BookingCancellationDate();
+              $bookingCancellationDateObj->booking_id                     = $booking_id;
+              $bookingCancellationDateObj->first_cancellation_day_count   = $first_cancellation_day_count;
+              $bookingCancellationDateObj->second_cancellation_day_count  = $second_cancellation_day_count;
+
+              //save the booking_cancellation_date object
+              $bookingCancellationDateRepo             = new BookingCancellationDateRepository();
+              $booking_cancellation_date_result        = $bookingCancellationDateRepo->create($bookingCancellationDateObj);
+
+              //if not successful, return error message
+              if($booking_cancellation_date_result['aceplusStatusCode'] != ReturnMessage::OK){
+                  DB::rollback();
+                  alert()->warning(trans('frontend_details.unsuccessful_alert'))->persistent('OK');
+                  return redirect('/');
+              }
+            }
+            /* END Operation to save booking_cancellation_date */
 
             //if all insertions were successful, commit DB and redirect to congratulation page
             DB::commit();
