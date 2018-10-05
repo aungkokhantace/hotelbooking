@@ -15,6 +15,7 @@ use App\Setup\BookingPayment\BookingPayment;
 use App\Setup\BookingPayment\BookingPaymentRepository;
 use App\Setup\BookingPaymentStripe\BookingPaymentStripe;
 use App\Setup\BookingPaymentStripe\BookingPaymentStripeRepository;
+use App\Setup\BookingCancellationDate\BookingCancellationDateRepository;
 use Mail;
 use Stripe\Charge;
 use Stripe\Customer;
@@ -56,6 +57,8 @@ class PaymentStartCron extends Command
     {
         try{
             $HotelConfigRepo    = new HotelConfigRepository();
+            $bookingCancellationDateRepo = new BookingCancellationDateRepository();
+
             $hotelsConfigs      = $HotelConfigRepo->getObjs();
             $cronCheckDay       = Carbon::now()->format('Y-m-d');
             $hotel_id           = array();
@@ -85,7 +88,14 @@ class PaymentStartCron extends Command
                 $check_in_date              = $booking->check_in_date;
 
                 $check_in_date_formatted    = date('Y-m-d', strtotime($check_in_date));
+
+                //get first cancellation day count from hotel config
                 $first_cancellation_day     = $HotelConfigRepo->getFirstCancellationDayCountHotelConfig($h_id);
+
+                //get first cancellation day count from booking (that was defined when booking was made)
+                // $first_cancellation_day     = $HotelConfigRepo->getFirstCancellationDayCountHotelConfig($h_id);
+                $first_cancellation_day = $bookingCancellationDateRepo->getObjByBookingId($booking_id);
+                
                 $first_cancellation_day_str = $first_cancellation_day->first_cancellation_day_count;
 
                 $first_cancellation_day_str = "-" . $first_cancellation_day_str . " days";
@@ -94,7 +104,6 @@ class PaymentStartCron extends Command
 
                 // $cronCheckDay is today
                 if ($check_cron_run_day == $cronCheckDay) {
-
                     /*
                     //Get Customer ID
                     $paramObj                   = Booking::find($booking_id);

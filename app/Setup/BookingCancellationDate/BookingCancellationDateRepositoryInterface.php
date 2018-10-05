@@ -10,5 +10,5 @@ namespace App\Setup\BookingCancellationDate;
 interface BookingCancellationDateRepositoryInterface
 {
     public function create($paramObj);
-    public function getObjsByBookingId($b_id);
+    public function getObjByBookingId($b_id);
 }

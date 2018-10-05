@@ -53,10 +53,16 @@ class BookingCancellationDateRepository implements BookingCancellationDateReposi
         }
     }
 
-    public function getObjsByBookingId($b_id){
+    public function getObjByBookingId($b_id){
+        /*
         $result = BookingCancellationDate::whereNull('deleted_at')
                                 ->where('booking_id',$b_id)
                                 ->first();
+        */
+
+        $raw_result = DB::select("select * from `booking_cancellation_dates` where `booking_id` = $b_id limit 1");
+        $result = $raw_result[0];
+        
         return $result;
     }
 }
