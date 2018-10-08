@@ -33,6 +33,6 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
         // $schedule->command('Run Cron Job Daily')->everyMinute();
         $schedule->command('booking:payment')->everyMinute();
-        $schedule->command('booking:cron')->everyMinute();
+        $schedule->command('booking:cron')->daily();
     }
 }
