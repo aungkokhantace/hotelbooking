@@ -51,34 +51,43 @@
                 <div class="title">
                     <h2 class="underlined-text">Hotel Booking Confirmation Form</h2>
 
-                    <p>Hello Nickie,
-                    Your booking is confirmed under our authentication code OTA9901.
-                    ..... Hotel look forward to the pleasure of having your guests.</p>
+                    <p>Hello {{$user_name}}, <br>
+                    Your booking is confirmed under our authentication code "<b>{{$booking_number}}</b>".<br>
+                    "<b>{{$hotel_name}}</b>" Hotel look forward to the pleasure of having your guests.</p>
 
                     <p>Thank you for using our service.<br>
                     Payment accepts in cash on arrival.
                     </p>
 
-                    <p>Room Detailed Information <br>
-The twin / single room with air-conditioning and WiFi available in the hotel rooms and free of charge.</p>
+                    <p>ID Number: {{$booking_number}}</p>
+                    <p>Check in Date: {{$check_in_date}}</p>
+                    <p>Check out Date: {{$check_out_date}}</p>
+                    <p>Number of night: {{$number_of_night}}</p>
+                    <p>Number of room: {{$room_count}}</p>
+                    <p>Guest Name: {{$guest_name}}</p>
 
-                    <p>Guest Name: Mr. Nickie + 1</p>
-                    <p>Check in Date: 3-Oct-18</p>
-                    <p>Check out Date: 4-Oct-18</p>
-                    <p>Number of guests: 2 pax</p>
-                    <p>Room Type: Superior Room (Twin Room)</p>
-                    <p>Number of room night: 2 Nights</p>
-                    <p>ID Number: OTA9901</p>
-                    <p>Meal Plan: Breakfast is included in the room rate</p>
-                    <p>Total Price $40</p>
+                    <hr>
+                    @foreach($booking_rooms_info_for_email as $booking_room)
+                      <p>Room Detailed Information <br>
+                        {{$booking_room->room_description}}
+                      </p>
+                      <p>Number of guests: {{$booking_room->number_of_guest}}</p>
+                      <p>Room Type: {{$booking_room->room_type}}</p>
+                      <p>Meal Plan: {{$booking_room->meal_plan}}</p>
+                      <hr>
+                    @endforeach
+
+                    <p>Total Price: <b>${{$total_price}}</b></p>
                     <br>
                     <div class="bordered">
                       Please note: Not include the extra bed price in this amount. If you would like to add extra bed, additional supplement price will add to this total.
                     </div>
                     <br>
+                    @if(isset($special_request) && $special_request !== '' && $special_request !== null)
                     <div class="bordered">
-                      Special Request: Non- Smoking Room
+                      Special Request: {{$special_request}}
                     </div>
+                    @endif
 
 
                 </div>

@@ -68,6 +68,7 @@ use App\Setup\BookingCancellationDate\BookingCancellationDate;
 use App\Setup\BookingCancellationDate\BookingCancellationDateRepository;
 use App\Setup\BookingCancellationDate\BookingCancellationDateRepositoryInterface;
 use App\Setup\HotelPolicy\HotelPolicyRepository;
+use App\Log\LogCustom;
 
 class PaymentController extends Controller
 {
@@ -1229,8 +1230,14 @@ class PaymentController extends Controller
                 $email              = $bookingObj->user->email;
                 $hotel_email        = $hotelConfigRepo->getEmailByHotelId($hotel_id);
                 $hotel_email_str    = $hotel_email->email;
-                $system_email       = "testingmps2017@gmail.com";
-                $emails_without_other_person = array($email,$hotel_email_str,$system_email);
+                // $system_email       = "testingmps2017@gmail.com";
+
+                $system_emails = Utility::getSystemAdminMail();
+
+                // $emails_without_other_person = array($email,$hotel_email_str,$system_email);
+                $user_and_hotel_emails = array($email,$hotel_email_str);
+
+                $emails_without_other_person = array_merge($user_and_hotel_emails, $system_emails);
 
                 if(isset($b_roomValue['email']) && $b_roomValue['email'] !== null && $b_roomValue['email'] !== ''){
                   $merged_emails      = array_merge($emails_without_other_person, $other_person_emails);
@@ -1245,7 +1252,75 @@ class PaymentController extends Controller
                 $template           = "email_templates.booking_confirm";
                 $subject            = "Booking Complete Email";
                 $logMessage         = "created a booking";
-                $mailResult         = Utility::sendMail($template,$emails,$subject,$logMessage);
+                // $mailResult         = Utility::sendMail($template,$emails,$subject,$logMessage);
+
+                //start creating parameter array for booking complete email
+                $parameters         = array();
+
+                $user    = session('customer');
+
+                $user_name = $user['display_name'];
+                $booking_number = $booking_number;
+                $hotel_name = $hotel->name;
+                $guest_name = $user_name;
+                $number_of_night = $nights;
+                $room_count = count($booked_rooms);
+
+                $booking_rooms_info_for_email = array();
+
+                foreach($booked_rooms as $b_roomKey=>$b_roomValue){
+                  //create object
+                  $booking_room_obj = new \stdClass();
+
+                  //start getting parameter values
+                  $category_id       = $b_roomValue['h_room_category_id'];
+                  $room_id           = $b_roomValue['id'];
+                  $room_obj          = $roomRepo->getObjByID($room_id);
+                  $room_category_obj = $room_obj->hotel_room_category;
+                  $room_type = $room_category_obj->name;
+                  $room_description = $room_category_obj->description;
+                  $number_of_guest   = $b_roomValue['guest'];
+                  $breakfast_included = $room_category_obj->breakfast_included;
+                  if($breakfast_included == 1){
+                    $meal_plan = "Breakfast is included in the room rate";
+                  }
+                  else{
+                    $meal_plan = "Breakfast is not included in the room rate";
+                  }
+                  //end getting parameter values
+
+                  //start binding parameters to object
+                  $booking_room_obj->room_type        = $room_type;
+                  $booking_room_obj->room_description = $room_description;
+                  $booking_room_obj->number_of_guest  = $number_of_guest;
+                  $booking_room_obj->meal_plan        = $meal_plan;
+                  //end binding parameters to object
+
+                  //push object to array
+                  array_push($booking_rooms_info_for_email,$booking_room_obj);
+                }
+
+                $total_price  = $payable_amount;
+
+                //create parameter array to pass to email function
+                $parameters = [
+                  'user_name'=>$user_name,
+                  'booking_number'=>$booking_number,
+                  'hotel_name'=>$hotel_name,
+                  'guest_name'=>$guest_name,
+                  'check_in_date'=>$check_in_date,
+                  'check_out_date'=>$check_out_date,
+                  'room_count'=>$room_count,
+                  'number_of_night'=>$number_of_night,
+                  'booking_number'=>$booking_number,
+                  'total_price'=>$total_price,
+                  'special_request'=>$special_request,
+                  'booking_rooms_info_for_email'=>$booking_rooms_info_for_email
+                ];
+                //end creating parameter array for booking complete email
+
+                //send email
+                $mailResult         = Utility::sendMailWithParameters($template,$parameters,$emails,$subject,$logMessage);
                 if ($mailResult['aceplusStatusCode'] != ReturnMessage::OK){
                     alert()->success('Your Booking was successful, but there was a problem in sending email to you!')->persistent('OK');
                 }
@@ -1257,6 +1332,7 @@ class PaymentController extends Controller
             //else, send booking CONFIRM mail
             else{
                 //Start sending confirm email
+                /*
                 $email              = $bookingObj->user->email;
                 $hotel_email        = $hotelConfigRepo->getEmailByHotelId($hotel_id);
                 $hotel_email_str    = $hotel_email->email;
@@ -1273,12 +1349,120 @@ class PaymentController extends Controller
                 else{
                     alert(trans('frontend_details.successful_alert'))->persistent('OK');
                 }
+                */
+
+                $email              = $bookingObj->user->email;
+                $hotel_email        = $hotelConfigRepo->getEmailByHotelId($hotel_id);
+                $hotel_email_str    = $hotel_email->email;
+                // $system_email       = "testingmps2017@gmail.com";
+
+                $system_emails = Utility::getSystemAdminMail();
+
+                // $emails_without_other_person = array($email,$hotel_email_str,$system_email);
+                $user_and_hotel_emails = array($email,$hotel_email_str);
+
+                $emails_without_other_person = array_merge($user_and_hotel_emails, $system_emails);
+
+                if(isset($b_roomValue['email']) && $b_roomValue['email'] !== null && $b_roomValue['email'] !== ''){
+                  $merged_emails      = array_merge($emails_without_other_person, $other_person_emails);
+                }
+                else{
+                  $merged_emails = $emails_without_other_person;
+                }
+
+                $emails             = array_unique($merged_emails);
+
+                // $template           = "booking_cancellation_start";
+                $template           = "email_templates.booking_confirm";
+                $subject            = "Booking Confirm Email";
+                $logMessage         = "created a booking";
+                // $mailResult         = Utility::sendMail($template,$emails,$subject,$logMessage);
+
+                //start creating parameter array for booking complete email
+                $parameters         = array();
+
+                $user    = session('customer');
+
+                $user_name = $user['display_name'];
+                $booking_number = $booking_number;
+                $hotel_name = $hotel->name;
+                $guest_name = $user_name;
+                $number_of_night = $nights;
+                $room_count = count($booked_rooms);
+
+                $booking_rooms_info_for_email = array();
+
+                foreach($booked_rooms as $b_roomKey=>$b_roomValue){
+                  //create object
+                  $booking_room_obj = new \stdClass();
+
+                  //start getting parameter values
+                  $category_id       = $b_roomValue['h_room_category_id'];
+                  $room_id           = $b_roomValue['id'];
+                  $room_obj          = $roomRepo->getObjByID($room_id);
+                  $room_category_obj = $room_obj->hotel_room_category;
+                  $room_type = $room_category_obj->name;
+                  $room_description = $room_category_obj->description;
+                  $number_of_guest   = $b_roomValue['guest'];
+                  $breakfast_included = $room_category_obj->breakfast_included;
+                  if($breakfast_included == 1){
+                    $meal_plan = "Breakfast is included in the room rate";
+                  }
+                  else{
+                    $meal_plan = "Breakfast is not included in the room rate";
+                  }
+                  //end getting parameter values
+
+                  //start binding parameters to object
+                  $booking_room_obj->room_type        = $room_type;
+                  $booking_room_obj->room_description = $room_description;
+                  $booking_room_obj->number_of_guest  = $number_of_guest;
+                  $booking_room_obj->meal_plan        = $meal_plan;
+                  //end binding parameters to object
+
+                  //push object to array
+                  array_push($booking_rooms_info_for_email,$booking_room_obj);
+                }
+
+                $total_price  = $payable_amount;
+
+                //create parameter array to pass to email function
+                $parameters = [
+                  'user_name'=>$user_name,
+                  'booking_number'=>$booking_number,
+                  'hotel_name'=>$hotel_name,
+                  'guest_name'=>$guest_name,
+                  'check_in_date'=>$check_in_date,
+                  'check_out_date'=>$check_out_date,
+                  'room_count'=>$room_count,
+                  'number_of_night'=>$number_of_night,
+                  'booking_number'=>$booking_number,
+                  'total_price'=>$total_price,
+                  'special_request'=>$special_request,
+                  'booking_rooms_info_for_email'=>$booking_rooms_info_for_email
+                ];
+                //end creating parameter array for booking complete email
+
+                //send email
+                $mailResult         = Utility::sendMailWithParameters($template,$parameters,$emails,$subject,$logMessage);
+                if ($mailResult['aceplusStatusCode'] != ReturnMessage::OK){
+                    alert()->success('Your Booking was successful, but there was a problem in sending email to you!')->persistent('OK');
+                }
+                else{
+                    alert()->success(trans('frontend_details.successful_alert'))->persistent('OK');
+                }
                 //End sending confirm email
             }
 
             return redirect('/congratulations/'.$booking_id);
         }
         catch(\Exception $e){
+            //create error log
+            $loginUserId = Utility::getCurrentCustomerID();
+            $date    = date("Y-m-d H:i:s");
+            $message = '['. $date .'] '. 'error: ' . 'Customer '.$loginUserId.' created a booking and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            LogCustom::create($date,$message);
+
             DB::rollback();
             alert()->warning(trans('frontend_details.unsuccessful_alert'))->persistent('OK');
             return redirect('/');

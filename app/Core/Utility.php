@@ -227,10 +227,16 @@ class Utility
     }
 
     public static function getSystemAdminMail(){
-        $mail_arr   = array('testingsystem2017@gmail.com');
+        // $mail_arr   = array('testingsystem2017@gmail.com');
+        $admin_roles = [1,2];
+        $admin_users = DB::select("SELECT * FROM `core_users` WHERE `role_id` IN ( '" . implode( "', '" , $admin_roles) . "' ) AND `deleted_at` IS NULL");
 
+        $mail_arr = array();
+
+        foreach($admin_users as $admin_user){
+          array_push($mail_arr,$admin_user->email);
+        }
         return $mail_arr;
-
     }
 
     public static function sendMail($template,$emails,$subject,$logMessage){
@@ -291,7 +297,6 @@ class Utility
             return $returnedObj;
         }
         catch(\Exception $e){
-          dd($e);
             //create mail error log
             $currentUser                        = Utility::getCurrentCustomerID();
             $date                               = date("Y-m-d H:i:s");

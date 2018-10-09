@@ -142,17 +142,49 @@ class PaymentTestController extends Controller
         $parameters = array();
 
         $gst = Utility::getGST();
-
         $hotel_id = 1;
         $service_tax = Utility::getServiceTax($hotel_id);
-        
-        $parameters = ['gst'=>$gst, 'service_tax'=>$service_tax];
+
+        $user    = session('customer');
+
+        $user_name = $user['display_name'];
+
+        $booking_number = "OTA009";
+        $hotel_name = "Melia";
+        $room_description = "The twin / single room with air-conditioning and WiFi available in the hotel rooms and free of charge.";
+        $guest_name = $user_name;
+        $check_in_date = "3-Aug-18";
+        $check_out_date = "4-Aug-18";
+        $number_of_guest = 2;
+        $room_type = "Superior Room";
+        $number_of_night = 1;
+        $booking_number = "OTA0009";
+        $meal_plan = "Breakfast is included in the room rate";
+        $total_price  = 100.00;
+        $special_request  = "Non-smoking Room";
+
+        $parameters = [
+          'user_name'=>$user_name,
+          'booking_number'=>$booking_number,
+          'hotel_name'=>$hotel_name,
+          'room_description'=>$room_description,
+          'guest_name'=>$guest_name,
+          'check_in_date'=>$check_in_date,
+          'check_out_date'=>$check_out_date,
+          'number_of_guest'=>$number_of_guest,
+          'room_type'=>$room_type,
+          'number_of_night'=>$number_of_night,
+          'booking_number'=>$booking_number,
+          'meal_plan'=>$meal_plan,
+          'total_price'=>$total_price,
+          'special_request'=>$special_request
+        ];
 
         $mailResult         = Utility::sendMailWithParameters($template,$parameters,$emails,$subject,$logMessage);
         // $mailResult         = Utility::sendMail($template,$emails,$subject,$logMessage);
 
         if ($mailResult['aceplusStatusCode'] == ReturnMessage::OK){
-            alert()->success('Sending email was successful !')->persistent('OK');
+            alert()->success('Sending email was successful!')->persistent('OK');
         }
         else{
             alert()->success('Sending email failed !')->persistent('OK');
