@@ -15,8 +15,8 @@ $terms_and_condition_text    = \App\Core\Utility::getTermsAndCondition();
             <div class="col-md-4">
                 <div class="title">
                     <h5>{{trans('frontend_header.accepted_carts')}}</h5>
-                    <!-- <img src="/assets/shared/images/visa.jpg"> -->
-                    <img src="/assets/shared/images/cards.jpg">
+                    <img src="/assets/shared/images/Visa.jpg">
+                    <!-- <img src="/assets/shared/images/cards.jpg"> -->
                 </div>
             </div>
             <div class="col-md-4">
