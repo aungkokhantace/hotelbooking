@@ -48,6 +48,7 @@ use PDF;
 use Mail;
 use App\Setup\RoomCategoryImage\RoomCategoryImageRepository;
 use App\Setup\HotelPolicy\HotelPolicyRepository;
+use App\Setup\BookingCancellationDate\BookingCancellationDateRepository;
 
 class BookingController extends Controller
 {
@@ -535,13 +536,57 @@ class BookingController extends Controller
                      * If booking status is 2(confirm), steps must be
                      * (1) No Charge,No Refund(Free Cancellation)
                      * (2) Change Status for booking and booking rooms
-                     * (3) Send Mail
+                     * (3) Change prices to zero (for total amount calculation in booking report)
+                     * (4) Send Mail
                      */
 
                     /* START changing status for booking */
-                    $booking->status                        = 3;
-                    $booking->booking_cancel_reason         = $reason;
-                    $result                                 = $this->repo->update($booking);
+
+                    // Start setting prices to zero (for total amount calculation in booking report)
+
+                    /*
+                      Because the booking is canceled within free cancellation, we don't get any charges.
+                      So, amounts in report must be 0.
+                    */
+
+                    $booking_price_wo_tax                         = 0.00;
+                    $booking_price_w_tax                          = 0.00;
+                    $booking_total_government_tax_amt             = 0.00;
+                    $booking_total_government_tax_percentage      = 0.00;
+                    $booking_total_service_tax_amt                = 0.00;
+                    $booking_total_service_tax_percentage         = 0.00;
+                    $booking_total_payable_amt                    = 0.00;
+                    $booking_total_discount_amt                   = 0.00;
+                    $booking_total_discount_percentage            = 0.00;
+                    $booking_total_cancel_income                  = 0.00;
+                    $booking_total_stripe_fee_amt                 = 0.00;
+                    $booking_total_stripe_net_amt                 = 0.00;
+                    $booking_total_vendor_net_amt                 = 0.00;
+                    $booking_total_stripe_fee_percent             = 0.00;
+                    $booking_stripe_fee_default_cent              = 0.00;
+
+                    // End setting prices to zero (for total amount calculation in booking report)
+
+                    $booking->price_wo_tax                        = $booking_price_wo_tax;
+                    $booking->price_w_tax                         = $booking_price_w_tax;
+                    $booking->total_government_tax_amt            = $booking_total_government_tax_amt;
+                    $booking->total_government_tax_percentage     = $booking_total_government_tax_percentage;
+                    $booking->total_service_tax_amt               = $booking_total_service_tax_amt;
+                    $booking->total_service_tax_percentage        = $booking_total_service_tax_percentage;
+                    $booking->total_payable_amt                   = $booking_total_payable_amt;
+                    $booking->total_discount_amt                  = $booking_total_discount_amt;
+                    $booking->total_discount_percentage           = $booking_total_discount_percentage;
+                    $booking->total_cancel_income                 = $booking_total_cancel_income;
+                    $booking->total_stripe_fee_amt                = $booking_total_stripe_fee_amt;
+                    $booking->total_stripe_net_amt                = $booking_total_stripe_net_amt;
+                    $booking->total_vendor_net_amt                = $booking_total_vendor_net_amt;
+                    $booking->total_stripe_fee_percent            = $booking_total_stripe_fee_percent;
+                    $booking->stripe_fee_default_cent             = $booking_stripe_fee_default_cent;
+
+                    $booking->status                              = 3;
+                    $booking->booking_cancel_reason               = $reason;
+                    $result                                       = $this->repo->update($booking);
+
                     if($result['aceplusStatusCode'] != ReturnMessage::OK){
                         DB::rollback();
                         return \Response::json($response);
@@ -574,6 +619,7 @@ class BookingController extends Controller
                     $message  = '['. $date .'] '. 'info: ' . 'Customer '. $currentUser.' cancelled booking id = '.$booking->booking_no.' with status 2 is successful'. PHP_EOL;
                     LogCustom::create($date,$message);
                     DB::commit();
+
                     /* START send mail */
                     $user_email                             = $booking->user->email;
                     $hotel                                  = Hotel::find($h_id);
@@ -587,7 +633,8 @@ class BookingController extends Controller
                         }
                     }
                     //Send Mail to Customer,SystemAdmin,HotelAdmin
-                    $mailTemplate                           = 'frontend.mail.cancel_mail';
+                    // $mailTemplate                           = 'frontend.mail.cancel_mail';
+                    $mailTemplate                           = 'email_templates.booking_cancel';
                     $subject                                = 'Booking Cancellation';
                     $logMessage                             = 'update the booking id - '.$id;
                     $returnState                            = Utility::sendMail($mailTemplate,$emails,$subject,$logMessage);
@@ -621,6 +668,11 @@ class BookingController extends Controller
                      * (1) No Refund
                      * (2) Change Status
                      * (3) Send Mail
+
+                     ** Special condition!!
+                     If today is greater than check out date,(i.e. check out date has already been passed and booking must be completed)
+                     then, user is not allowed to cancel booking.
+
                      */
                     $h_config                                       = $h_configRepo->getObjByID($booking->hotel_id);
                     $first_cancel_days                              = 0;
@@ -634,7 +686,6 @@ class BookingController extends Controller
                     $today_date                                     = Carbon::now();
                     /* For 1st Cancellation Day */
                     if($today_date >= $first_cancel_date && $today_date < $second_cancel_date){
-
                         /* Refund */
                         $stripePayment                              = $paymentStripeRepo->getStripePaymentId($id);
                         $stripePaymentId                            = '';
@@ -865,6 +916,15 @@ class BookingController extends Controller
                         /* Send Mail */
 
                     }
+
+                    /*
+                     If today is greater than check out date,(i.e. check out date has already been passed and booking must be completed)
+                     then, user is not allowed to cancel booking.
+                    */
+                    else if($today_date > $booking->check_out_date){
+                      return \Response::json($response);
+                    }
+
                     /* For 2nd Cancellation Day */
                     else{
                         $bookRooms                                      = $bookRoomRepo->getBookingRoomByBookingId($id);
@@ -1553,6 +1613,7 @@ class BookingController extends Controller
             $bPaymentRepo                       = new BookingPaymentRepository();
             $h_configRepo                       = new HotelConfigRepository();
             $paymentStripeRepo                  = new BookingPaymentStripeRepository();
+            $bookingCancellationDateRepo        = new BookingCancellationDateRepository();
             /* Repository Declaration */
 
             //Get booking info
@@ -1575,13 +1636,13 @@ class BookingController extends Controller
             $cancel_room_net_amt                = $bCancelRoom->room_net_amt;
             if($bStatus == 2){
                 /*
-                 * Change status 3 for booking room.
+                 * Change status 3 for booking room. (status 3 is "Cancel by user")
                  * Recalculate without amount of canceled room for booking and update.
                  * If the canceled room is latest room,
                  * (1) Change the status 3 for booking.
                  * (2) Change status 3 for booking_payment
                  */
-                $bCancelRoom->status                        = 3;
+                $bCancelRoom->status                        = 3;  //cancel by user
                 $bRoomUpdateRes                             = $bRoomRepo->update($bCancelRoom);
                 if($bRoomUpdateRes['aceplusStatusCode'] != ReturnMessage::OK){
                     DB::rollback();
@@ -1681,6 +1742,26 @@ class BookingController extends Controller
                 return redirect()->action('Frontend\BookingController@booking_list');
             }
             elseif($bStatus == 5){
+                /*
+                  There will be two conditions
+                  (1) cancel within first cancellation
+                  (2) cancel within second cancellation
+
+                  For first cancellation,
+                  (1) refund 50% of room payable amount
+                  (2) change status
+                  (3) send email
+
+                  For second cancellation,
+                  (1) don't refund
+                  (2) change status
+                  (3) send email
+
+                  **Special condition !!
+                  If today is greater than check out date,(i.e. check out date has already been passed and booking must be completed)
+                  then, user is not allowed to cancel booking.
+                */
+
                 //Get hotel config info
                 $h_config                                       = $h_configRepo->getObjByID($h_id);
                 $first_cancel_days                              = 0;
@@ -1688,11 +1769,17 @@ class BookingController extends Controller
                 if(isset($h_config) && count($h_config) > 0){
                     $first_cancel_days                          = $h_config->first_cancellation_day_count;
                     $second_cancel_days                         = $h_config->second_cancellation_day_count;
+
+                    // $booking_cancellation_days = $bookingCancellationDateRepo->getObjByBookingId($booking_id);
+                    // $first_cancel_days = $booking_cancellation_days->first_cancellation_day_count;
+                    // $second_cancel_days = $booking_cancellation_days->second_cancellation_day_count;
                 }
 
                 $first_cancel_date                              = Carbon::parse($booking->check_in_date)->subDays($first_cancel_days);
                 $second_cancel_date                             = Carbon::parse($booking->check_in_date)->subDays($second_cancel_days);
                 $today_date                                     = Carbon::now();
+
+                /*  First cancellation  */
                 if($today_date >= $first_cancel_date && $today_date < $second_cancel_date){
                     // first cancellation
                     // refund 50% of room payable amount with tax
@@ -1971,6 +2058,29 @@ class BookingController extends Controller
                     /* END Mail */
                     return redirect()->action('Frontend\BookingController@booking_list');
                 }
+
+                /*
+                ** Special condtion !!
+                 If today is greater than check out date,(i.e. check out date has already been passed and booking must be completed)
+                 then, user is not allowed to cancel booking.
+                 Write error log and return.
+                */
+                else if($today_date > $booking->check_out_date){
+                  //don't allow to cancel room
+                  //create cancel room error log
+                      $currentUser                        = Utility::getCurrentCustomerID();
+                      $date                               = date("Y-m-d H:i:s");
+                      $errorMessage                       = " today is greater than check out date. Booking cannot be cancelled. ";
+
+                      $message                            = '['. $date .'] '. 'error: ' . 'Customer id - '.$currentUser.
+                          ' cancelled room and got error : '.$errorMessage. PHP_EOL;
+                      LogCustom::create($date,$message);
+
+                  // alert()->warning('You could not cancel your reserved room!')->persistent('OK');
+                  alert()->warning('You could not cancel your reserved room! Check-out date has already been passed!')->persistent('OK');
+                  return redirect()->back();
+                }
+
                 else{
                     /*
                      * Update booking room with refund amount 0.00 and status 9.

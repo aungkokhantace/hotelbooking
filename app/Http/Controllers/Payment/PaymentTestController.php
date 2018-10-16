@@ -133,6 +133,7 @@ class PaymentTestController extends Controller
     }
 
     public function emailTest(){
+      return view('email_templates.booking_cancel');
         $emails              = ['aungkokhantace@gmail.com'];
         $template           = "booking_cancellation_start";
         // $template           = "email_templates.booking_confirm";
@@ -184,7 +185,7 @@ class PaymentTestController extends Controller
 
         // $mailResult         = Utility::sendMailWithParameters($template,$parameters,$emails,$subject,$logMessage);
         $mailResult         = Utility::sendMail($template,$emails,$subject,$logMessage);
-        
+
         if ($mailResult['aceplusStatusCode'] == ReturnMessage::OK){
             alert()->success('Sending email was successful!')->persistent('OK');
         }
