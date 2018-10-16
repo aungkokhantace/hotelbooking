@@ -668,6 +668,7 @@
                 },
                 function (isConfirm) {
                     if (isConfirm) {
+                        $('.confirm').attr('disabled','disabled');
                         // window.location = "/" + type + "/destroy/" + data;
                         window.location = "/booking/room/cancel/"+ booking_id + "/" + room_id;
                     } else {
