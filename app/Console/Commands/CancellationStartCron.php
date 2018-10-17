@@ -105,7 +105,7 @@ class CancellationStartCron extends Command
                     $date     = date('Y-m-d H:i:s');
                     $message  = '['. $date .'] '. 'info: ' . 'Cron Job For For Sending Email before 1 days of cancellation start run successfully'.PHP_EOL;
 
-                    LogCustom::create($date,$message);
+                    LogCustom::createCronLog($date,$message);
 
                     Mail::send('booking_cancellation_start', [], function($message) use ($emails)
                     {
@@ -126,7 +126,7 @@ class CancellationStartCron extends Command
             $message                            = '['. $date .'] '. 'error: ' . 'Cron run cancellation and got error -------'.$e->getMessage(). ' ----- line ' .
                                                   $e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
 
-            LogCustom::create($date,$message);
+            LogCustom::createCronLog($date,$message);
         }
     }
 }

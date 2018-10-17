@@ -22,6 +22,7 @@ class LogCustom
     //$message = '['. $date .'] '. 'info ' . ' TESTING MESSAGE' . PHP_EOL;
     //LogCustom::create($date,$message);
 
+    /* FOR FRONTEND AND BACKEND OPERATIONS */
     public static function create($rawDate, $message){
 
         $date = date("Y-m-d",strtotime($rawDate));
@@ -64,6 +65,50 @@ class LogCustom
         }
     }
 
+    /* FOR CRON */
+    public static function createCronLog($rawDate, $message){
+
+        $date = date("Y-m-d",strtotime($rawDate));
+        $fileName = "custom-cron-" . $date . '.log';
+        $dir        = storage_path('logs');
+        $fileNameWithPath = $dir . '/' . $fileName;
+        $rawFiles   = scandir($dir);
+        $files = array();
+        foreach($rawFiles as $rawFile){
+            if (0 === strpos($rawFile, 'custom-cron-')) {
+                array_push($files,$rawFile);
+            }
+        }
+
+        if(count($files)>0){
+
+            if(in_array($fileName, $files)){
+                // Open the file to get existing content
+                $current = file_get_contents($fileNameWithPath);
+                // Append a new person to the file
+                $current .= $message;
+                // Write the contents back to the file
+                file_put_contents($fileNameWithPath, $current);
+
+            }
+            else{
+                //$this::writeFile($fileName,$message);
+                $myfile = fopen($fileNameWithPath, "w") or die("Unable to open file!");
+                fwrite($myfile, $message);
+                fclose($myfile);
+
+            }
+        }
+
+        else{
+            // $this::writeFile($fileName,$message);
+            $myfile = fopen($fileNameWithPath, "w") or die("Unable to open file!");
+            fwrite($myfile, $message);
+            fclose($myfile);
+        }
+    }
+
+
     // This process is calling from the login function of AuthController while log in process happen
     public static function deleteLogFileAutomatically(){
 
@@ -83,6 +128,39 @@ class LogCustom
 
             foreach ($rawFiles as $rawFile) {
                 if (0 === strpos($rawFile, 'custom-laravel-')) {
+                    echo $rawFile . " == ";
+                    $fileNameWithPath = $dir . "/" . $rawFile;
+                    $rawTempLogFileDate = substr($rawFile, 15, 10);
+                    $rawTempLogFileDate = date("Y-m-d", strtotime($rawTempLogFileDate));
+
+                    if ($rawTempLogFileDate < $logStartDate) {
+                        if(!unlink($fileNameWithPath)) {
+
+                            $errorLogfileNameWithPath = $dir . "/" . "custom-error.log";
+                            $messageError = "[" . $date2 . "] " . $fileNameWithPath . " can not delete automatically by system !" . PHP_EOL;
+
+                            if (file_exists($errorLogfileNameWithPath)) {
+                                // Open the file to get existing content
+                                $current = file_get_contents($errorLogfileNameWithPath);
+                                // Append a new person to the file
+                                $current .= $messageError;
+                                // Write the contents back to the file
+                                file_put_contents($errorLogfileNameWithPath, $current);
+                            } else {
+                                //$this::writeFile($fileName,$message);
+                                if ($myfile = fopen($errorLogfileNameWithPath, "w")) {
+                                    fwrite($myfile, $messageError);
+                                    fclose($myfile);
+                                } else {
+
+                                }
+
+                            }
+                        }
+                    }
+                }
+
+                if (0 === strpos($rawFile, 'custom-cron-')) {
                     echo $rawFile . " == ";
                     $fileNameWithPath = $dir . "/" . $rawFile;
                     $rawTempLogFileDate = substr($rawFile, 15, 10);

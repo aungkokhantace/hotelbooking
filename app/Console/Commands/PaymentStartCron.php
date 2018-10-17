@@ -56,6 +56,8 @@ class PaymentStartCron extends Command
     public function handle()
     {
         try{
+
+
             $HotelConfigRepo    = new HotelConfigRepository();
             $bookingCancellationDateRepo = new BookingCancellationDateRepository();
 
@@ -95,7 +97,7 @@ class PaymentStartCron extends Command
                 //get first cancellation day count from booking (that was defined when booking was made)
                 // $first_cancellation_day     = $HotelConfigRepo->getFirstCancellationDayCountHotelConfig($h_id);
                 $first_cancellation_day = $bookingCancellationDateRepo->getObjByBookingId($booking_id);
-                
+
                 $first_cancellation_day_str = $first_cancellation_day->first_cancellation_day_count;
 
                 $first_cancellation_day_str = "-" . $first_cancellation_day_str . " days";
@@ -246,7 +248,7 @@ class PaymentStartCron extends Command
                             // log for cancelling booking because of insufficient funds in card
                             $date     = date('Y-m-d H:i:s');
                             $message  = '['. $date .'] '. 'info: booking number = '.$booking->booking_no.' is cancelled due to insufficient funds when payment is captured by Stripe.'. PHP_EOL;
-                            LogCustom::create($date,$message);
+                            LogCustom::createCronLog($date,$message);
 
                             /* START send mail */
                             // $user_email                             = $booking->user->email;
@@ -337,7 +339,7 @@ class PaymentStartCron extends Command
                      //if payment cron started successful, then create date and message for PaymentStartCron log
                     $date     = date('Y-m-d H:i:s');
                     $message  = '['. $date .'] '. 'info: ' . 'Cron Job For Sending Email and Payment run successfully'.PHP_EOL;
-                    LogCustom::create($date,$message);
+                    LogCustom::createCronLog($date,$message);
 
                     DB::commit();
                     // Send Email
@@ -361,7 +363,7 @@ class PaymentStartCron extends Command
             $message                            = '['. $date .'] '. 'error: ' . 'Cron run payment schedule and got error -------'.$e->getMessage(). ' ----- line ' .
                                                   $e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
 
-            LogCustom::create($date,$message);
+            LogCustom::createCronLog($date,$message);
             $this->info($message);
         }
     }
