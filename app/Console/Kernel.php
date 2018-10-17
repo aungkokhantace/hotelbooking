@@ -31,7 +31,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->command('booking:payment')->everyMinute();
+        $schedule->command('booking:payment')->daily();
         $schedule->command('booking:cron')->daily();
     }
 }
