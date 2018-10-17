@@ -56,8 +56,6 @@ class PaymentStartCron extends Command
     public function handle()
     {
         try{
-
-
             $HotelConfigRepo    = new HotelConfigRepository();
             $bookingCancellationDateRepo = new BookingCancellationDateRepository();
 

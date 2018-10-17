@@ -42,6 +42,26 @@
         </div>
     </div>
 
+    <!-- Customer Name -->
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <h5>Customer Phone : </h5>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <h5>{{$booking->phone}}</h5>
+        </div>
+    </div>
+
+    <!-- Customer Name -->
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <h5>Customer Email : </h5>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <h5>{{$booking->user->email}}</h5>
+        </div>
+    </div>
+
     <!-- Hotel Name -->
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">

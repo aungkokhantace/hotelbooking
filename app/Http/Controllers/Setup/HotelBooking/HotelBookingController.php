@@ -136,6 +136,66 @@ class HotelBookingController extends Controller
             $bRoomRepo              = new BookingRoomRepository();
             DB::beginTransaction();
             if($pay_date <= $b_check_out && $booking->status == 5){
+                /* Start setting booking prices to zero */
+                if($refund_percentage == 100) {
+                  /*
+                    If 100% refund, all booking prices must be 0 after refund.
+                   */
+                  $booking_price_wo_tax                         = 0.00;
+                  $booking_price_w_tax                          = 0.00;
+                  $booking_total_government_tax_amt             = 0.00;
+                  $booking_total_government_tax_percentage      = 0.00;
+                  $booking_total_service_tax_amt                = 0.00;
+                  $booking_total_service_tax_percentage         = 0.00;
+                  $booking_total_payable_amt                    = 0.00;
+                  $booking_total_discount_amt                   = 0.00;
+                  $booking_total_discount_percentage            = 0.00;
+                  $booking_total_cancel_income                  = 0.00;
+                  $booking_total_stripe_fee_amt                 = 0.00;
+                  $booking_total_stripe_net_amt                 = 0.00;
+                  $booking_total_vendor_net_amt                 = 0.00;
+                  $booking_total_stripe_fee_percent             = 0.00;
+                  $booking_stripe_fee_default_cent              = 0.00;
+
+                  $booking->price_wo_tax                        = $booking_price_wo_tax;
+                  $booking->price_w_tax                         = $booking_price_w_tax;
+                  $booking->total_government_tax_amt            = $booking_total_government_tax_amt;
+                  $booking->total_government_tax_percentage     = $booking_total_government_tax_percentage;
+                  $booking->total_service_tax_amt               = $booking_total_service_tax_amt;
+                  $booking->total_service_tax_percentage        = $booking_total_service_tax_percentage;
+                  $booking->total_payable_amt                   = $booking_total_payable_amt;
+                  $booking->total_discount_amt                  = $booking_total_discount_amt;
+                  $booking->total_discount_percentage           = $booking_total_discount_percentage;
+                  $booking->total_cancel_income                 = $booking_total_cancel_income;
+                  $booking->total_stripe_fee_amt                = $booking_total_stripe_fee_amt;
+                  $booking->total_stripe_net_amt                = $booking_total_stripe_net_amt;
+                  $booking->total_vendor_net_amt                = $booking_total_vendor_net_amt;
+                  $booking->total_stripe_fee_percent            = $booking_total_stripe_fee_percent;
+                  $booking->stripe_fee_default_cent             = $booking_stripe_fee_default_cent;
+                }
+                else if($refund_percentage == 50) {
+                  /*
+                    If 50% refund, all booking prices must be half after refund.
+                   */
+
+                  $booking->price_wo_tax                        = $booking->price_wo_tax / 2;
+                  $booking->price_w_tax                         = $booking->price_w_tax / 2;
+                  $booking->total_government_tax_amt            = $booking->total_government_tax_amt / 2;
+                  $booking->total_government_tax_percentage     = $booking->total_government_tax_percentage / 2;
+                  $booking->total_service_tax_amt               = $booking->total_service_tax_amt / 2;
+                  $booking->total_service_tax_percentage        = $booking->total_service_tax_percentage / 2;
+                  $booking->total_payable_amt                   = $booking->total_payable_amt / 2;
+                  $booking->total_discount_amt                  = $booking->total_discount_amt / 2;
+                  $booking->total_discount_percentage           = $booking->total_discount_percentage / 2;
+                  $booking->total_cancel_income                 = $booking->total_cancel_income / 2;
+                  $booking->total_stripe_fee_amt                = $booking->total_stripe_fee_amt / 2;
+                  $booking->total_stripe_net_amt                = $booking->total_stripe_net_amt / 2;
+                  $booking->total_vendor_net_amt                = $booking->total_vendor_net_amt / 2;
+                  $booking->total_stripe_fee_percent            = $booking->total_stripe_fee_percent / 2;
+                  $booking->stripe_fee_default_cent             = $booking->stripe_fee_default_cent / 2;
+                }
+                /* End setting booking prices to zero */
+
                 /* Refund */
                 $booking->status                                = 8;
                 $result                                         = $this->repo->changeBookingStatus($booking);
@@ -178,7 +238,7 @@ class HotelBookingController extends Controller
                 $newBookPayment->total_payable_amt               = $oldBookPayment->total_payable_amt;
                 $newBookPayment->payment_reference_no            = null;
                 $bookPaymentResult                               = $bPaymentRepo->createBookingPayment($newBookPayment);
-                
+
                 if($bookPaymentResult['aceplusStatusCode'] != ReturnMessage::OK){
                     DB::rollback();
                     alert()->error('Refund Operation is unsuccessful.')->persistent('Close');

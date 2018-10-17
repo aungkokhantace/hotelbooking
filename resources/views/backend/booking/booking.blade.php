@@ -151,6 +151,7 @@
                     closeOnCancel: true
                 },function(isConfirm){
                     if(isConfirm){
+                        $('.confirm').attr('disabled','disabled');
                         $("#refund_form").submit();
                     }
                     else{
