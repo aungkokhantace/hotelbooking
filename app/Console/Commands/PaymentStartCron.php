@@ -21,7 +21,8 @@ use Stripe\Charge;
 use Stripe\Customer;
 use Stripe\Stripe;
 use App\Payment\PaymentConstance;
-use App\Payment\PaymentUtility;
+// use App\Payment\PaymentUtility;
+use App\Payment\CronPaymentUtility;
 use App\Core\Utility;
 use App\Setup\Hotel\Hotel;
 
@@ -114,7 +115,7 @@ class PaymentStartCron extends Command
                     $payable_amount             = $payable_amount_formatted * 100;
                     //Start Payment
                     $flag                       = 2; //From Cron Job
-                    $paymentObjs                = new PaymentUtility();
+                    $paymentObjs                = new CronPaymentUtility();
                     $result                     = $paymentObjs->capturePayment($customerId, $payable_amount);
 
                     DB::beginTransaction();
@@ -191,7 +192,7 @@ class PaymentStartCron extends Command
                     // Get stripe user id
                     $customerId                             = $booking->booking_stripe->stripe_user_id;
                     $payable_amount                         = $booking->total_payable_amt;
-                    $paymentObjs                            = new PaymentUtility();
+                    $paymentObjs                            = new CronPaymentUtility();
                     $paymentStripeRepo                      = new BookingPaymentStripeRepository();
                     $bookPaymentRepo                        = new BookingPaymentRepository();
                     $bookRoomRepo                           = new BookingRoomRepository();
@@ -223,7 +224,7 @@ class PaymentStartCron extends Command
                             /* START changing status for booking */
                             $booking->status                        = 3; //cancel
                             $booking->booking_cancel_reason         = "Insufficient Funds in Card";
-                            $result                                 = $bookingRepo->update($booking);
+                            $result                                 = $bookingRepo->update($booking,$cron_flag = 1);
 
                             if($result['aceplusStatusCode'] !== ReturnMessage::OK){
                                 DB::rollback();
@@ -234,7 +235,7 @@ class PaymentStartCron extends Command
                             $bookRooms                              = $bookRoomRepo->getBookingRoomByBookingId($id);
                             foreach($bookRooms as $bRoom){
                                 $bRoom->status                      = 3;
-                                $bRoomResult                        = $bookRoomRepo->update($bRoom);
+                                $bRoomResult                        = $bookRoomRepo->update($bRoom,$cron_flag = 1);
 
                                 if($bRoomResult['aceplusStatusCode'] != ReturnMessage::OK){
                                     DB::rollback();
@@ -305,20 +306,20 @@ class PaymentStartCron extends Command
                     $stripeObj->stripe_payment_fee          = $stripe_payment_fee_balance;
                     $stripeObj->stripe_payment_amt          = $stripe_payment_amt_balance;
                     $stripeObj->status                      = 2;
-                    $stripeResult                           = $paymentStripeRepo->update($stripeObj);
+                    $stripeResult                           = $paymentStripeRepo->update($stripeObj,$cron_flag = 1);
 
                     // Update booking_payment
                     $paymentObj                             = BookingPayment::where('booking_id',$booking_id)->first();
                     $paymentObj->payment_amount_w_tax       = $stripe_payment_net_balance;
                     $paymentObj->payment_gateway_tax_amt    = $stripe_payment_fee_balance;
                     $paymentObj->status                     = 5;
-                    $paymentResult                          = $bookPaymentRepo->update($paymentObj);
+                    $paymentResult                          = $bookPaymentRepo->update($paymentObj,$cron_flag = 1);
 
                     // Update booking room
                     foreach($bookingRooms as $bRoom){
                         if($bRoom->booking_id == $booking->id){
                             $bRoom->status                  = 5;
-                            $bRoomResult                    = $bookRoomRepo->update($bRoom);
+                            $bRoomResult                    = $bookRoomRepo->update($bRoom,$cron_flag = 1);
                         }
                     }
 
@@ -332,7 +333,7 @@ class PaymentStartCron extends Command
                     $booking->card_brand                    = $stripe_card_brand;
                     $booking->card_type                     = $stripe_card_type;
                     $booking->status                        = 5;
-                    $bookingResult                          = $bookingRepo->update($booking);
+                    $bookingResult                          = $bookingRepo->update($booking,$cron_flag = 1);
 
                      //if payment cron started successful, then create date and message for PaymentStartCron log
                     $date     = date('Y-m-d H:i:s');

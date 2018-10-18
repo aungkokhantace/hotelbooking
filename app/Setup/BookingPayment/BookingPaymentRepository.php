@@ -47,7 +47,8 @@ class BookingPaymentRepository implements BookingPaymentRepositoryInterface
         }
     }
 
-    public function update($paramObj){
+    // if $cron_flag is set, function is called by cron job
+    public function update($paramObj,$cron_flag = null){
         $returnedObj = array();
         $returnedObj['aceplusStatusCode'] = ReturnMessage::INTERNAL_SERVER_ERROR;
 
@@ -61,7 +62,17 @@ class BookingPaymentRepository implements BookingPaymentRepositoryInterface
             //create info log
             $date = $paramObj->created_at;
             $message = '['. $date .'] '. 'info: ' . 'Customer '.$loginUserId.' updated booking_payment_id = '.$paramObj->id . PHP_EOL;
-            LogCustom::create($date,$message);
+            // LogCustom::create($date,$message);
+
+            // check whether cron log or operation log
+            if(isset($cron_flag) && $cron_flag !== null){
+              // function is called by cron, and write cron log
+              LogCustom::createCronLog($date,$message);
+            }
+            else{
+              // function is called by frontend or backend operations, and write normal transaction log
+              LogCustom::create($date,$message);
+            }
 
             $returnedObj['aceplusStatusCode'] = ReturnMessage::OK;
             $returnedObj['object'] = $paramObj;
@@ -71,7 +82,17 @@ class BookingPaymentRepository implements BookingPaymentRepositoryInterface
             //create error log
             $date    = date("Y-m-d H:i:s");
             $message = '['. $date .'] '. 'error: ' . 'Customer '.$loginUserId.' updated a booking payment and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
-            LogCustom::create($date,$message);
+            // LogCustom::create($date,$message);
+
+            // check whether cron log or operation log
+            if(isset($cron_flag) && $cron_flag !== null){
+              // function is called by cron, and write cron log
+              LogCustom::createCronLog($date,$message);
+            }
+            else{
+              // function is called by frontend or backend operations, and write normal transaction log
+              LogCustom::create($date,$message);
+            }
 
             $returnedObj['aceplusStatusMessage'] = $e->getMessage();
             return $returnedObj;
