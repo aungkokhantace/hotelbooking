@@ -225,17 +225,32 @@ class BookingRepository implements BookingRepositoryInterface
         }
 
         //check for booked rooms between check_in date and check_out date
-        $booking_query = DB::select("SELECT booking_room.room_id
-	                                  FROM booking_room
-	                                  WHERE (
-	                                    ('$check_in' BETWEEN booking_room.check_in_date AND booking_room.check_out_date)
-	                                  OR
-	                                    ('$check_out' BETWEEN booking_room.check_in_date AND booking_room.check_out_date)
-	                                    )
+        // $booking_query = DB::select("SELECT booking_room.room_id
+	      //                             FROM booking_room
+	      //                             WHERE (
+	      //                               ('$check_in' BETWEEN booking_room.check_in_date AND booking_room.check_out_date)
+	      //                             OR
+	      //                               ('$check_out' BETWEEN booking_room.check_in_date AND booking_room.check_out_date)
+	      //                               )
+        //
+        //                               AND status NOT IN (3,7,9)
+	      //                             AND (booking_room.deleted_at IS NULL)
+	      //                             AND  room_id NOT IN ('$id')");
 
-                                      AND status NOT IN (3,7,9)
-	                                  AND (booking_room.deleted_at IS NULL)
-	                                  AND  room_id NOT IN ('$id')");
+        $booking_query = DB::select("SELECT booking_room.room_id,booking_room.id
+	                                  FROM booking_room
+                                     /*
+                                     -- **** ('$newCheckIn' >= booking_room.check_in_date AND '$newCheckIn' *****<***** booking_room.check_out_date) is for the following case:
+                                      ** e.g. first customer books a room from 10-10-2018 to 11-10-2018,
+                                           second customer search for the above room for 11-10-2018, it must be available
+                                     */
+	                                  WHERE (('$newCheckIn' >= booking_room.check_in_date AND '$newCheckIn' < booking_room.check_out_date)
+                                     OR ('$newCheckOut' > booking_room.check_in_date AND '$newCheckOut' <= booking_room.check_out_date)
+                                     OR ('$newCheckIn' <= booking_room.check_in_date AND '$newCheckOut' >= booking_room.check_out_date)
+                                     OR ('$newCheckIn' >= booking_room.check_in_date AND '$newCheckOut' <= booking_room.check_out_date)
+                                     OR ('$newCheckIn' = booking_room.check_in_date AND '$newCheckOut' = booking_room.check_out_date))
+	                                  AND (booking_room.status NOT IN (3,7,8,9))
+	                                  AND (booking_room.deleted_at IS NULL)"); //"status = 3,7,8,9" is cancel
 
         //create booking array
         $booking_arr = array();

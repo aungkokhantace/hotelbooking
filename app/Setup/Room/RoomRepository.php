@@ -177,7 +177,7 @@ class RoomRepository implements RoomRepositoryInterface
                                            second customer search for the above room for 11-10-2018, it must be available
                                      */
 	                                  WHERE (('$newCheckIn' >= booking_room.check_in_date AND '$newCheckIn' < booking_room.check_out_date)
-                                     OR ('$newCheckOut' >= booking_room.check_in_date AND '$newCheckOut' <= booking_room.check_out_date)
+                                     OR ('$newCheckOut' > booking_room.check_in_date AND '$newCheckOut' <= booking_room.check_out_date)
                                      OR ('$newCheckIn' <= booking_room.check_in_date AND '$newCheckOut' >= booking_room.check_out_date)
                                      OR ('$newCheckIn' >= booking_room.check_in_date AND '$newCheckOut' <= booking_room.check_out_date)
                                      OR ('$newCheckIn' = booking_room.check_in_date AND '$newCheckOut' = booking_room.check_out_date))
@@ -221,7 +221,7 @@ class RoomRepository implements RoomRepositoryInterface
                     ->whereNotIn('rooms.id', $cutoff_arr)
                     ->select('rooms.*')
                     ->get();
-                    
+
         return $result;
     }
 
