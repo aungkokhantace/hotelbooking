@@ -520,6 +520,8 @@ class BookingController extends Controller
             $paymentStripeRepo                              = new BookingPaymentStripeRepository();
             $bookRoomRepo                                   = new BookingRoomRepository();
             $bookPaymentRepo                                = new BookingPaymentRepository();
+            $bookingCancellationDateRepo                    = new BookingCancellationDateRepository();
+
             $response                                       = array();
             $response['aceplusStatusCode']                  = '500';
 
@@ -677,10 +679,17 @@ class BookingController extends Controller
                     $h_config                                       = $h_configRepo->getObjByID($booking->hotel_id);
                     $first_cancel_days                              = 0;
                     $second_cancel_days                             = 0;
+
                     if(isset($h_config) && count($h_config) > 0){
                         $first_cancel_days                          = $h_config->first_cancellation_day_count;
                         $second_cancel_days                         = $h_config->second_cancellation_day_count;
                     }
+
+                    $bookingCancellationDates                       = $bookingCancellationDateRepo->getObjByBookingId($booking_id);
+
+                    $first_cancel_days                              = $bookingCancellationDates->first_cancellation_day_count;
+                    $second_cancel_days                             = $bookingCancellationDates->second_cancellation_day_count;
+
                     $first_cancel_date                              = Carbon::parse($booking->check_in_date)->subDays($first_cancel_days);
                     $second_cancel_date                             = Carbon::parse($booking->check_in_date)->subDays($second_cancel_days);
                     $today_date                                     = Carbon::now();
