@@ -21,10 +21,10 @@
                         </div>
                         <p></p>
                         @include('layouts_frontend.partial_frontend.search_form')
+
                         {!! Form::close() !!}
                     </div>
                 </div>
-
                 <!-- Blog Entries Column -->
                 <div class="col-md-9">
                     <!-- First Blog Post Left -->
@@ -615,42 +615,6 @@
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyAJLUg2IEbAOp4gMqRoXpSnjV0w1FDfYNk&sensor=false" type="text/javascript"></script>
     <script type="text/javascript" language="javascript" class="init">
         $(document).ready(function() {
-
-            //for tootip
-             $('[data-toggle="tooltip"]').tooltip();
-
-
-
-
-            var numslider   = $('.slider_two').length;
-            //init function
-            google.maps.event.trigger(map, 'resize');
-            var latitude  = $("#latitude").val();
-            var longitude = $("#longitude").val();
-//            setTimeout(executeQuery(latitude,longitude), 3000);
-            setTimeout(renderMap(latitude,longitude), 3000);
-            /* var nowDate = new Date();
-            var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
-            $('#check_in').datepicker({
-                format: 'dd-mm-yyyy',
-                autoclose: true,
-                defaultDate: "+1w",
-                changeMonth: true,
-                numberOfMonths: 1,
-                allowInputToggle: true,
-                startDate: today
-            });
-
-            $('#check_out').datepicker({
-                format: 'dd-mm-yyyy',
-                autoclose: true,
-                defaultDate: "+1w",
-                changeMonth: true,
-                numberOfMonths: 1,
-                allowInputToggle: true,
-                startDate: today
-            }); */
-
             //Date Picker with controls of from date and to date
             $("#check_in").datepicker({
                 format: 'dd-mm-yyyy',
@@ -675,6 +639,19 @@
             }).on('clearDate', function (selected) {
                 $('#check_in').datepicker('setEndDate',null);
             });
+
+            //for tootip
+             $('[data-toggle="tooltip"]').tooltip();
+
+
+            var numslider   = $('.slider_two').length;
+            //init function
+            google.maps.event.trigger(map, 'resize');
+            var latitude  = $("#latitude").val();
+            var longitude = $("#longitude").val();
+//            setTimeout(executeQuery(latitude,longitude), 3000);
+            setTimeout(renderMap(latitude,longitude), 3000);
+
 
             $("[type='number']").keypress(function (evt) {
                 evt.preventDefault();

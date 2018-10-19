@@ -133,6 +133,11 @@
 
 <script type="text/javascript" language="javascript" class="init">
     $(document).ready(function() {
+
+      $("#destination").autocomplete({
+          source: "/autocompletedestination"
+      });
+
       $("#children").on("change", function () {
           // console.log($('#children').val());
           $('.modal-body #children-age-select-box-row').html('');

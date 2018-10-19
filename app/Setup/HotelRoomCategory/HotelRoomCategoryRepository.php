@@ -164,7 +164,6 @@ class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterfac
             }
         }
         catch(\Exception $e){
-          dd('except',$e);
             DB::rollBack();
             //update error log
             $date    = date("Y-m-d H:i:s");
@@ -226,7 +225,7 @@ class HotelRoomCategoryRepository implements HotelRoomCategoryRepositoryInterfac
                     ->where('hotel_id','=',$hotel_id)
                     ->where('price','=',$price)
                     ->first();
-                    // dd('type',$hotel_id,$price,$room_type);
+                    
         // $room_type_name = $room_type->h_room_type->name;
         $name = $result->name;
         return $name;

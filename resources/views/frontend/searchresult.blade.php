@@ -366,9 +366,30 @@
           }
 
         $(document).ready(function() {
+            //Date Picker with controls of from date and to date
+            $("#check_in").datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                showButtonPanel: true,
+                startDate: new Date()
+            }).on('changeDate', function (selected) {
+                var startDate = new Date(selected.date.valueOf());
+                startDate.setDate(startDate.getDate() + 1);
+                $('#check_out').datepicker('setStartDate', startDate);
+            }).on('clearDate', function (selected) {
+                $('#check_out').datepicker('setStartDate',null);
+            });
 
-
-
+            $("#check_out").datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                startDate: new Date()
+            }).on('changeDate', function (selected) {
+                var endDate = new Date(selected.date.valueOf());
+                $('#check_in').datepicker('setEndDate', endDate);
+            }).on('clearDate', function (selected) {
+                $('#check_in').datepicker('setEndDate',null);
+            });
 
             //to display google map after changing bootstrap tab
             $("a[href='#service-two']").on('shown.bs.tab', function(){
@@ -409,52 +430,7 @@
 //            var destination = $("#searched_destination").val();
 //            setTimeout(executeQuery(destination), 3000);
 
-//            var nowDate = new Date();
-//            var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
-            /* $('#check_in').datepicker({
-                format: 'dd-mm-yyyy',
-                autoclose: true,
-                defaultDate: "+1w",
-                changeMonth: true,
-                numberOfMonths: 1,
-                allowInputToggle: true,
-                startDate: today
-            });
-
-            $('#check_out').datepicker({
-                format: 'dd-mm-yyyy',
-                autoclose: true,
-                defaultDate: "+1w",
-                changeMonth: true,
-                numberOfMonths: 1,
-                allowInputToggle: true,
-                startDate: today
-            }); */
-
-            //Date Picker with controls of from date and to date
-            $("#check_in").datepicker({
-                format: 'dd-mm-yyyy',
-                autoclose: true,
-                showButtonPanel: true,
-                startDate: new Date()
-            }).on('changeDate', function (selected) {
-                var startDate = new Date(selected.date.valueOf());
-                startDate.setDate(startDate.getDate() + 1);
-                $('#check_out').datepicker('setStartDate', startDate);
-            }).on('clearDate', function (selected) {
-                $('#check_out').datepicker('setStartDate',null);
-            });
-
-            $("#check_out").datepicker({
-                format: 'dd-mm-yyyy',
-                autoclose: true,
-                startDate: new Date()
-            }).on('changeDate', function (selected) {
-                var endDate = new Date(selected.date.valueOf());
-                $('#check_in').datepicker('setEndDate', endDate);
-            }).on('clearDate', function (selected) {
-                $('#check_in').datepicker('setEndDate',null);
-            });
+//
 
 
             $("#destination").autocomplete({
