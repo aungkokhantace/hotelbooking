@@ -1226,7 +1226,10 @@ class BookingController extends Controller
                     /*
                      * Check new check_in and check_out is available or not
                      */
-                    $b_room                     = $b_roomRepo->getBookingRoomByBookingId($b_id);
+                    // $b_room                     = $b_roomRepo->getBookingRoomByBookingId($b_id);
+
+                    /* get only non-cancelled rooms */
+                    $b_room                     = $b_roomRepo->getNotCancelledBookingRoomByBookingId($b_id);
                     $room_id_arr                = array();
                     foreach($b_room as $room){
                         array_push($room_id_arr,$room->room_id);
