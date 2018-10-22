@@ -160,11 +160,12 @@ class RoomRepository implements RoomRepositoryInterface
 	                                  AND (booking_room.status <> 3)
                                       AND (booking_room.deleted_at IS NULL)"); //"status = 3" is cancel */
 
+        // booking filter query
         $booking_query = DB::select("SELECT booking_room.room_id,booking_room.id
 	                                  FROM booking_room
 
 	                                  WHERE (
-                                      ('$newCheckIn' <= booking_room.check_in_date AND '$newCheckOut' >= booking_room.check_in_date AND '$newCheckOut' <= booking_room.check_out_date) OR
+                                      ('$newCheckIn' <= booking_room.check_in_date AND '$newCheckOut' > booking_room.check_in_date AND '$newCheckOut' <= booking_room.check_out_date) OR
                                       ('$newCheckIn' <= booking_room.check_in_date AND '$newCheckOut' = booking_room.check_out_date) OR
                                       ('$newCheckIn' <= booking_room.check_in_date AND '$newCheckOut' >= booking_room.check_out_date) OR
                                       ('$newCheckIn' = booking_room.check_in_date AND '$newCheckOut' >= booking_room.check_in_date AND '$newCheckOut' <= booking_room.check_out_date) OR
@@ -172,7 +173,7 @@ class RoomRepository implements RoomRepositoryInterface
                                       ('$newCheckIn' = booking_room.check_in_date AND '$newCheckOut' >= booking_room.check_out_date) OR
                                       ('$newCheckIn' >= booking_room.check_in_date AND'$newCheckIn' <= booking_room.check_out_date AND '$newCheckOut' <= booking_room.check_out_date) OR
                                       ('$newCheckIn' >= booking_room.check_in_date AND'$newCheckIn' <= booking_room.check_out_date AND '$newCheckOut' = booking_room.check_out_date) OR
-                                      ('$newCheckIn' >= booking_room.check_in_date AND'$newCheckIn' <= booking_room.check_out_date AND '$newCheckOut' >= booking_room.check_out_date)
+                                      ('$newCheckIn' >= booking_room.check_in_date AND'$newCheckIn' < booking_room.check_out_date AND '$newCheckOut' >= booking_room.check_out_date)
                                     )
 	                                  AND (booking_room.status NOT IN (3,7,8,9))
 	                                  AND (booking_room.deleted_at IS NULL)"); //"status = 3,7,8,9" is cancel
@@ -182,7 +183,7 @@ class RoomRepository implements RoomRepositoryInterface
         foreach($booking_query as $booking){
             array_push($booking_arr,$booking->room_id);
         }
-
+        // dd('booking_arr',$newCheckIn,$newCheckOut,$booking_arr);
         //check for room cutoff date
         $cutoff_query = DB::select("SELECT rooms.id as room_id,h_room_category.booking_cutoff_day as cutoff_day
                                       FROM rooms
@@ -214,7 +215,7 @@ class RoomRepository implements RoomRepositoryInterface
                     ->whereNotIn('rooms.id', $cutoff_arr)
                     ->select('rooms.*')
                     ->get();
-
+                    // dd('result',$result);
         return $result;
     }
 
@@ -245,13 +246,26 @@ class RoomRepository implements RoomRepositoryInterface
 	                                  AND (booking_room.status <> 3)
                                       AND (booking_room.deleted_at IS NULL)");*/
 
+        // booking filter query
         $booking_query = DB::select("SELECT booking_room.room_id
 	                                 FROM booking_room
-	                                 WHERE (('$newCheckIn' > booking_room.check_in_date AND '$newCheckIn' < booking_room.check_out_date) OR
-                                            ('$newCheckOut' > booking_room.check_in_date AND '$newCheckOut' < booking_room.check_out_date) OR
-                                            ('$newCheckOut' > booking_room.check_in_date AND '$newCheckOut' < booking_room.check_out_date) OR
-                                            ('$newCheckIn' < booking_room.check_in_date AND '$newCheckOut' > booking_room.check_out_date) OR
-                                            ('$newCheckIn' = booking_room.check_in_date AND '$newCheckOut' = booking_room.check_out_date))
+	                                 -- WHERE (('$newCheckIn' > booking_room.check_in_date AND '$newCheckIn' < booking_room.check_out_date) OR
+                                   --          ('$newCheckOut' > booking_room.check_in_date AND '$newCheckOut' < booking_room.check_out_date) OR
+                                   --          ('$newCheckOut' > booking_room.check_in_date AND '$newCheckOut' < booking_room.check_out_date) OR
+                                   --          ('$newCheckIn' < booking_room.check_in_date AND '$newCheckOut' > booking_room.check_out_date) OR
+                                   --          ('$newCheckIn' = booking_room.check_in_date AND '$newCheckOut' = booking_room.check_out_date))
+
+                                   WHERE(
+                                     ('$newCheckIn' <= booking_room.check_in_date AND '$newCheckOut' > booking_room.check_in_date AND '$newCheckOut' <= booking_room.check_out_date) OR
+                                     ('$newCheckIn' <= booking_room.check_in_date AND '$newCheckOut' = booking_room.check_out_date) OR
+                                     ('$newCheckIn' <= booking_room.check_in_date AND '$newCheckOut' >= booking_room.check_out_date) OR
+                                     ('$newCheckIn' = booking_room.check_in_date AND '$newCheckOut' >= booking_room.check_in_date AND '$newCheckOut' <= booking_room.check_out_date) OR
+                                     ('$newCheckIn' = booking_room.check_in_date AND '$newCheckOut' = booking_room.check_out_date) OR
+                                     ('$newCheckIn' = booking_room.check_in_date AND '$newCheckOut' >= booking_room.check_out_date) OR
+                                     ('$newCheckIn' >= booking_room.check_in_date AND'$newCheckIn' <= booking_room.check_out_date AND '$newCheckOut' <= booking_room.check_out_date) OR
+                                     ('$newCheckIn' >= booking_room.check_in_date AND'$newCheckIn' <= booking_room.check_out_date AND '$newCheckOut' = booking_room.check_out_date) OR
+                                     ('$newCheckIn' >= booking_room.check_in_date AND'$newCheckIn' < booking_room.check_out_date AND '$newCheckOut' >= booking_room.check_out_date)
+                                   )
 	                                 AND (booking_room.status NOT IN (3,7,8,9))
 	                                 AND (booking_room.deleted_at IS NULL)"); //"status = 3,7,8,9" is cancel
 
