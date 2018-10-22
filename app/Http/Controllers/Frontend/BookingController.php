@@ -269,7 +269,7 @@ class BookingController extends Controller
                     // }
 
                     //get cancellation dates when booking was made
-                    $bookingCancellationDates                       = $bookingCancellationDateRepo->getObjByBookingId($booking_id);
+                    $bookingCancellationDates                       = $bookingCancellationDateRepo->getObjByBookingId($booking->id);
 
                     $first_cancel_days                              = $bookingCancellationDates->first_cancellation_day_count;
                     $second_cancel_days                             = $bookingCancellationDates->second_cancellation_day_count;
@@ -697,7 +697,7 @@ class BookingController extends Controller
                     // }
 
                     //get cancellation dates when booking was made
-                    $bookingCancellationDates                       = $bookingCancellationDateRepo->getObjByBookingId($booking_id);
+                    $bookingCancellationDates                       = $bookingCancellationDateRepo->getObjByBookingId($id);
 
                     $first_cancel_days                              = $bookingCancellationDates->first_cancellation_day_count;
                     $second_cancel_days                             = $bookingCancellationDates->second_cancellation_day_count;
