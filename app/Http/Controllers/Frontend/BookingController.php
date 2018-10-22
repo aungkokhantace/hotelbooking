@@ -152,6 +152,7 @@ class BookingController extends Controller
                 $communicationRepo  = new CommunicationRepository();
                 $roomRepo           = new RoomRepository();
                 $rCatImageRepo      = new RoomCategoryImageRepository();
+                $bookingCancellationDateRepo = new BookingCancellationDateRepository();
 
                 $r_category_id      = array();
                 $amenity_arr        = array();
@@ -258,16 +259,26 @@ class BookingController extends Controller
                     $booking->charge                = 'free';
                 }
                 if($booking->status == 5){
+                    $booking_id         = $booking->id;
                     $h_config           = $h_configRepo->getFirstObjByHotelID($booking->hotel_id);
                     $first_cancel_days  = 0;
                     $second_cancel_days = 0;
-                    if(isset($h_config) && count($h_config) > 0){
-                        $first_cancel_days  = $h_config->first_cancellation_day_count;
-                        $second_cancel_days = $h_config->second_cancellation_day_count;
-                    }
+                    // if(isset($h_config) && count($h_config) > 0){
+                    //     $first_cancel_days  = $h_config->first_cancellation_day_count;
+                    //     $second_cancel_days = $h_config->second_cancellation_day_count;
+                    // }
+
+                    //get cancellation dates when booking was made
+                    $bookingCancellationDates                       = $bookingCancellationDateRepo->getObjByBookingId($booking_id);
+
+                    $first_cancel_days                              = $bookingCancellationDates->first_cancellation_day_count;
+                    $second_cancel_days                             = $bookingCancellationDates->second_cancellation_day_count;
+                    //get cancellation dates when booking was made
+
                     $first_cancel_date  = Carbon::parse($booking->check_in_date)->subDays($first_cancel_days);
                     $second_cancel_date = Carbon::parse($booking->check_in_date)->subDays($second_cancel_days);
                     $today_date         = Carbon::now();
+
                     if($today_date >= $first_cancel_date && $today_date < $second_cancel_date){
                         $booking->charge= 'You must pay 50% of total amount.';
                     }
@@ -680,15 +691,17 @@ class BookingController extends Controller
                     $first_cancel_days                              = 0;
                     $second_cancel_days                             = 0;
 
-                    if(isset($h_config) && count($h_config) > 0){
-                        $first_cancel_days                          = $h_config->first_cancellation_day_count;
-                        $second_cancel_days                         = $h_config->second_cancellation_day_count;
-                    }
+                    // if(isset($h_config) && count($h_config) > 0){
+                    //     $first_cancel_days                          = $h_config->first_cancellation_day_count;
+                    //     $second_cancel_days                         = $h_config->second_cancellation_day_count;
+                    // }
 
+                    //get cancellation dates when booking was made
                     $bookingCancellationDates                       = $bookingCancellationDateRepo->getObjByBookingId($booking_id);
 
                     $first_cancel_days                              = $bookingCancellationDates->first_cancellation_day_count;
                     $second_cancel_days                             = $bookingCancellationDates->second_cancellation_day_count;
+                    //get cancellation dates when booking was made
 
                     $first_cancel_date                              = Carbon::parse($booking->check_in_date)->subDays($first_cancel_days);
                     $second_cancel_date                             = Carbon::parse($booking->check_in_date)->subDays($second_cancel_days);
@@ -1778,14 +1791,17 @@ class BookingController extends Controller
                 $h_config                                       = $h_configRepo->getObjByID($h_id);
                 $first_cancel_days                              = 0;
                 $second_cancel_days                             = 0;
-                if(isset($h_config) && count($h_config) > 0){
-                    $first_cancel_days                          = $h_config->first_cancellation_day_count;
-                    $second_cancel_days                         = $h_config->second_cancellation_day_count;
+                // if(isset($h_config) && count($h_config) > 0){
+                //     $first_cancel_days                          = $h_config->first_cancellation_day_count;
+                //     $second_cancel_days                         = $h_config->second_cancellation_day_count;
+                // }
 
-                    // $booking_cancellation_days = $bookingCancellationDateRepo->getObjByBookingId($booking_id);
-                    // $first_cancel_days = $booking_cancellation_days->first_cancellation_day_count;
-                    // $second_cancel_days = $booking_cancellation_days->second_cancellation_day_count;
-                }
+                //get cancellation dates when booking was made
+                $bookingCancellationDates                       = $bookingCancellationDateRepo->getObjByBookingId($b_id);
+
+                $first_cancel_days                              = $bookingCancellationDates->first_cancellation_day_count;
+                $second_cancel_days                             = $bookingCancellationDates->second_cancellation_day_count;
+                //get cancellation dates when booking was made
 
                 $first_cancel_date                              = Carbon::parse($booking->check_in_date)->subDays($first_cancel_days);
                 $second_cancel_date                             = Carbon::parse($booking->check_in_date)->subDays($second_cancel_days);

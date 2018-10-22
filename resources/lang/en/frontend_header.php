@@ -29,7 +29,7 @@ return[
 
     "transportation_information"=>"Transportation",
     "guide"=>"Guide",
-    "term_condition"=>"Terms & Condition",
+    "term_condition"=>"Terms & Conditions",
     "accepted_carts"=>"Accepted Cards",
     "follow_us" =>"Follow us",
 

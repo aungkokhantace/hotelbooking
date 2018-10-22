@@ -9,7 +9,8 @@ $terms_and_condition_text    = \App\Core\Utility::getTermsAndCondition();
             <div class="col-md-4">
                 <div class="title">
                     <h5>{{trans('frontend_header.term_condition')}}</h5>
-                    <p>{!! $terms_and_condition_text !!}</p>
+                    <!-- <p>{!! $terms_and_condition_text !!}</p> -->
+                    <p><a href="/terms_and_conditions">READ TERMS AND CONDITIONS >></a></p>
                 </div>
             </div>
             <div class="col-md-4">

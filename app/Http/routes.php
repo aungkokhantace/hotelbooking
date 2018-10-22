@@ -97,7 +97,7 @@ Route::group(['middleware' => 'web'], function () {
     //Display About Us Information
     Route::get('about_us', array('as'=>'/about_us', 'uses'=>'Frontend\AboutUsController@index'));
 
-    //Display Contact Us Information
+    //Display Contact Us Informmation
     Route::get('contact_us', array('as'=>'/contact_us', 'uses'=>'Frontend\ContactUsController@index'));
 
     //Display Tour Information
@@ -106,6 +106,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('visa_information',array('as'=>'/visa_information','uses'=>'Frontend\VisaInformationController@index'));
     //Display FAQ Information
     Route::get('faq_information',array('as'=>'/faq_information','uses'=>'Frontend\FaqInformationController@index'));
+
+    // Display terms and condition information
+    Route::get('terms_and_conditions',array('as'=>'/terms_and_conditions','uses'=>'Frontend\TermAndConditionController@index'));
+
     //Email function test
     Route::get('/email_test', 'Payment\PaymentTestController@emailTest');
    //Fronted Language
