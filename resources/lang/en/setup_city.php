@@ -10,9 +10,11 @@ return [
     'title-entry'           => 'City Entry',
     'title-edit'            => 'City Edit',
     'city'                  => 'City Name',
+    'code'                  => 'City Code',
     'country'               => 'Country Name',
     'select-country'        => 'Select Country',
     'place-name'            => 'Enter City Name',
+    'place-code'            => 'Enter City Code',
     'photo'                 => 'Photo',
     'btn-add'               => 'ADD',
     'btn-update'            => 'UPDATE',
@@ -20,6 +22,7 @@ return [
     'title-list'            => 'City Listing',
     'tb-col-city'           => 'City Name',
     'tb-col-country'        => 'Country Name',
+    'tb-col-code'        => 'Code',
     'tb-col-image'          => 'Image',
 
 ];

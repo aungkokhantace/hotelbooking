@@ -53,6 +53,7 @@ class CityController extends Controller
         $request->validate();
         $city_name       = Input::get('name');
         $country_id      = Input::get('country_id');
+        $code            = Input::get('code');
 
         //Start Saving Image
         $removeImageFlag          = (Input::has('removeImageFlag')) ? Input::get('removeImageFlag') : 0;
@@ -78,6 +79,7 @@ class CityController extends Controller
         $paramObj = new City();
         $paramObj->name         = $city_name;
         $paramObj->country_id   = $country_id;
+        $paramObj->code         = $code;
         $paramObj->image        = $photo_name;
 
         $result = $this->repo->create($paramObj);
@@ -112,6 +114,7 @@ class CityController extends Controller
         $id                         = Input::get('id');
         $city_name                  = Input::get('name');
         $country_id                 = Input::get('country_id');
+        $code                       = Input::get('code');
         //Start Saving Image
         $removeImageFlag          = (Input::has('removeImageFlag')) ? Input::get('removeImageFlag') : 0;
         $path         = base_path().'/public/images/upload/';
@@ -136,6 +139,7 @@ class CityController extends Controller
         $paramObj                   = City::find($id);
         $paramObj->name             = $city_name;
         $paramObj->country_id       = $country_id;
+        $paramObj->code             = $code;
         if(Input::hasFile('photo')){
             $paramObj->image                 = $photo_name;
         }

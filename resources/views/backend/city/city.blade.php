@@ -53,6 +53,18 @@
         </div>
     </div>
 
+    <!-- start city code -->
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="name">{{trans('setup_city.code')}}<span class="require">*</span></label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <input type="text" class="form-control" id="code" name="code" placeholder="{{trans('setup_city.place-code')}}" value="{{ isset($city)? $city->code:Request::old('code') }}"/>
+            <p class="text-danger">{{$errors->first('code')}}</p>
+        </div>
+    </div>
+    <!-- end city code -->
+
     {{--Start File Upload--}}
     <div class="row">
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
@@ -226,11 +238,13 @@
             $('#city').validate({
                 rules: {
                     name                  : 'required',
+                    code                  : 'required',
                     country_id            : 'required',
                     photo                 : 'required',
                 },
                 messages: {
                     name                  : 'City Name is required',
+                    code                  : 'City Code is required',
                     country_id            : 'Country is required',
                     photo                 : 'Photo is required',
                 },
