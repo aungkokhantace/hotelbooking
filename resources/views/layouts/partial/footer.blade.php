@@ -1,7 +1,7 @@
 <!-- begin #Footer -->
 <div id="footer" class="footer">
     <div class="pull-right">&copy; <?php echo date('Y'); ?> AcePlus Solutions All Rights Reserved</div>
-    Backend v1.2.3
+    Backend v1.2.4
 </div>        <!-- end #footer -->
 
 <!-- begin scroll to top btn -->
