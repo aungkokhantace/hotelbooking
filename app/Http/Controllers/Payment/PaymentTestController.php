@@ -133,7 +133,7 @@ class PaymentTestController extends Controller
     }
 
     public function emailTest(){
-      return view('email_templates.booking_cancel');
+      // return view('email_templates.booking_cancel');
         $emails              = ['aungkokhantace@gmail.com'];
         $template           = "booking_cancellation_start";
         // $template           = "email_templates.booking_confirm";
