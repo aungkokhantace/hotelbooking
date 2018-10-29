@@ -221,9 +221,43 @@ class Utility
       return $gst;
     }
 
+    /*
     public static function generateBookingNumber() {
         $booking_number = uniqid();
         return $booking_number;
+    }
+    */
+
+    public static function getBookingIDPrefix(){
+      $config_booking_id_prefix = DB::select("SELECT * FROM core_configs WHERE `code` = 'BOOKING_ID_PREFIX'");
+      $booking_id_prefix = $config_booking_id_prefix[0]->value;
+      return $booking_id_prefix;
+    }
+
+    public static function generateBookingNumber($booking_id_prefix,$city_code) {
+      $offset = 1; //increase 1 at a time
+      $pad_length = 4; //number of digits for auto-increment number part
+
+      //current date
+      $year           = date("y");
+      $month          = date("m");
+
+      //prefix with current year, month and city_code (to find max)
+      $full_prefix = $booking_id_prefix.' '.$year.$month.'-'.$city_code.'-';
+
+      //start generating running number
+      $max = DB::select("SELECT MAX(`booking_no`) as booking_no FROM `bookings` WHERE booking_no LIKE '$full_prefix%'");
+
+      $newId = 1;
+      if($max[0] != null && $max[0]->booking_no != null) {
+          $oldId = $max[0]->booking_no;
+          $numberPart = str_replace($full_prefix,"",$oldId); //get autoincrement number part by removing prefixes (year,month,city_code)
+          $value = intval($numberPart); //integer value
+          $newId = $value + $offset;
+      }
+      $runningNo = str_pad($newId, $pad_length, 0, STR_PAD_LEFT);
+      return sprintf("%s%s",$full_prefix,$runningNo);
+      //end generating running number
     }
 
     public static function getSystemAdminMail(){

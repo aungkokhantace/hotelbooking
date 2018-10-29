@@ -23,7 +23,8 @@ class Default_ConfigSeeder extends Seeder
             ['code'=>'SETTING_LOGO', 'type'=>'SETTING', 'value'=>'/images/logo.jpg','description'=>'Company Logo'],
             ['code'=>'LOG_MAX_FILES', 'type'=>'SETTING', 'value'=>'60','description'=>'Maximum Log File Count'],
             ['code'=>'GST', 'type'=>'SETTING', 'value'=>'0.0','description'=>'Government Service Tax'],
-            ['code'=>'SERVICE_TAX', 'type'=>'SETTING', 'value'=>'0.0','description'=>'Service Tax']
+            ['code'=>'SERVICE_TAX', 'type'=>'SETTING', 'value'=>'0.0','description'=>'Service Tax'],
+            ['code'=>'BOOKING_ID_PREFIX', 'type'=>'SETTING', 'value'=>'PB','description'=>'Prefix for booking ID']
         );
 
         DB::table('core_configs')->insert($roles);

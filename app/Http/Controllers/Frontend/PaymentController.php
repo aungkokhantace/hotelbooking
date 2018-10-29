@@ -703,7 +703,13 @@ class PaymentController extends Controller
             $hotelRepo                          = new HotelRepository();
             $hotel                              = $hotelRepo->getObjByID($hotel_id);
             //Generate Booking Number
-            $booking_number                     = Utility::generateBookingNumber();
+            // $booking_number                     = Utility::generateBookingNumber();
+            $booking_id_prefix                  = Utility::getBookingIDPrefix();
+
+            //city code of hotel
+            $city_code                          = $hotel->city->code;
+
+            $booking_number                     = Utility::generateBookingNumber($booking_id_prefix,$city_code);
 
             $user_id                            = session('customer')['id'];
 
