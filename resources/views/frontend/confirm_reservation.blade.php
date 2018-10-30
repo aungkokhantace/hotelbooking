@@ -152,7 +152,7 @@
                                                           <h4 class="modal-title">{{trans('frontend_details.term_and_policy')}}</h4>
                                                         </div>
                                                         <div class="modal-body">
-                                                          <p>{!! $hotel_policy !!}</p>
+                                                          <p>{!! $terms_and_condition !!}</p>
                                                         </div>
                                                         <div class="modal-footer">
                                                           <button type="button" class="btn btn-default" data-dismiss="modal">{{trans('frontend_details.close')}}</button>

@@ -234,9 +234,18 @@ class Utility
       return $booking_id_prefix;
     }
 
+    public static function getBookingIDLength(){
+      $config_booking_id_length = DB::select("SELECT * FROM core_configs WHERE `code` = 'BOOKING_ID_LENGTH'");
+      $booking_id_length = $config_booking_id_length[0]->value;
+      return $booking_id_length;
+    }
+
     public static function generateBookingNumber($booking_id_prefix,$city_code) {
       $offset = 1; //increase 1 at a time
-      $pad_length = 5; //number of digits for auto-increment number part
+      // $pad_length = 5; //number of digits for auto-increment number part
+
+      //get booking number length from config table
+      $pad_length     = Utility::getBookingIDLength();
 
       //current date
       $year           = date("y");

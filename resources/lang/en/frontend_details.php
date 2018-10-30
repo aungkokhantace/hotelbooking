@@ -241,7 +241,8 @@ return[
     "terms_and_policy"=>"terms and policy",
     "agree_to_terms_2"=>"by booking this room.",
 
-    "term_and_policy"=>"Hotel Policy",
+    // "term_and_policy"=>"Hotel Policy",
+    "term_and_policy"=>"Terms and Conditions",
 
 
 ]

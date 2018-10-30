@@ -225,7 +225,8 @@ return[
     "terms_and_policy"=>"規約とポリシー",
     "agree_to_terms_2"=>"に同意します。",
 
-    "term_and_policy"=>"ホテルポリシー",
+    // "term_and_policy"=>"ホテルポリシー",
+    "term_and_policy"=>"規約と条件",
 
 
 

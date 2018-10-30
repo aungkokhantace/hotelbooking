@@ -299,6 +299,12 @@ class PaymentController extends Controller
         }
         catch(\Exception $e){
             //write log here
+            //create error log
+            $loginUserId = Utility::getCurrentCustomerID();
+            $date    = date("Y-m-d H:i:s");
+            $message = '['. $date .'] '. 'error: ' . 'Customer '.$loginUserId.' is on enter details page and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            LogCustom::create($date,$message);
+
             Session::flush(); // destroy all sessions
             return redirect('/');
         }
@@ -673,6 +679,23 @@ class PaymentController extends Controller
             $hotelPolicyObj         = $hotelPolicyRepo->getObjsByHotelID($hotel_id);
             $hotel_policy           = $hotelPolicyObj->policy;
 
+            // Start getting terms and conditions
+            $temp_terms_and_condition = DB::select("SELECT * FROM `display_information` WHERE `type` = 'TERMS_AND_CONDITION' LIMIT 1");
+
+            if(isset($temp_terms_and_condition) && count($temp_terms_and_condition)>0){
+              //check locale [language]
+              if(Session::has('locale') && Session::get('locale') == "jp"){
+                $terms_and_condition = $temp_terms_and_condition[0]->text_jp;
+              }
+              else{
+                $terms_and_condition = $temp_terms_and_condition[0]->text_en;
+              }
+            }
+            else{
+                $terms_and_condition = "";
+            }
+            // End getting terms and conditions
+
             return view('frontend.confirm_reservation')
                 ->with('available_room_category_array',$available_room_categories)
                 ->with('hotel',$hotel)
@@ -681,11 +704,18 @@ class PaymentController extends Controller
                 ->with('totalRooms',$totalRooms)
                 ->with('countries',$countries)
                 ->with('pub_key',$pub_key)
-                ->with('hotel_policy',$hotel_policy);
+                ->with('hotel_policy',$hotel_policy)
+                ->with('terms_and_condition',$terms_and_condition);
     //            ->with('total_amount',$total_amount);
         }
         catch(\Exception $e){
             // write log here
+            //create error log
+            $loginUserId = Utility::getCurrentCustomerID();
+            $date    = date("Y-m-d H:i:s");
+            $message = '['. $date .'] '. 'error: ' . 'Customer '.$loginUserId.' is on confirm reservation page and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
+            LogCustom::create($date,$message);
+
             Session::flush(); // destroy all session.
             return redirect('/');
         }
