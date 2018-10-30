@@ -236,7 +236,7 @@ class Utility
 
     public static function generateBookingNumber($booking_id_prefix,$city_code) {
       $offset = 1; //increase 1 at a time
-      $pad_length = 4; //number of digits for auto-increment number part
+      $pad_length = 5; //number of digits for auto-increment number part
 
       //current date
       $year           = date("y");
