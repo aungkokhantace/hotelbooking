@@ -441,16 +441,18 @@ class HotelDetailController extends Controller
                   else{
                     //get discount percentage
                     $dis_percent = $room_promotion->discount_percent;
-                    $dis_amount_from_percent = $discount_percent * (100/$original_price);
+                    // $dis_amount_from_percent = $discount_percent * (100/$original_price);
+                    // $dis_amount_from_percent = $dis_percent * (100/$original_price);
+
+                    $dis_amount_from_percent = $dis_percent * ($original_price/100);
                     $amount_after_discount -= $dis_amount_from_percent;
-                    $discount_text = $discount_percent.' off';
+                    $discount_text = $dis_percent.'% off';
                   }
 
                   $room_cat->amount_after_discount = number_format($amount_after_discount,2);
                   $room_cat->discount_text         = $discount_text;
                 }
             }
-
             /*end operation to check room promotion*/
 
             return view('frontend.hoteldetail')
