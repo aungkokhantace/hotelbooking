@@ -677,7 +677,13 @@ class PaymentController extends Controller
             //get hotel policy
             $hotelPolicyRepo        = new HotelPolicyRepository();
             $hotelPolicyObj         = $hotelPolicyRepo->getObjsByHotelID($hotel_id);
-            $hotel_policy           = $hotelPolicyObj->policy;
+
+            $hotel_policy           = "";
+
+            if(isset($hotelPolicyObj) && count($hotelPolicyObj)>0){
+                $hotel_policy           = $hotelPolicyObj->policy;
+            }
+
 
             // Start getting terms and conditions
             $temp_terms_and_condition = DB::select("SELECT * FROM `display_information` WHERE `type` = 'TERMS_AND_CONDITION' LIMIT 1");
