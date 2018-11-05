@@ -412,6 +412,8 @@ class HotelDetailController extends Controller
             //today date
             $today_date = Date('Y-m-d');
 
+            $reserved_date  = date('Y-m-d', strtotime($check_in));
+
             /*start operation to check room promotion*/
             foreach($roomCategories as $room_cat){
                 //original price before discount
@@ -423,7 +425,7 @@ class HotelDetailController extends Controller
                 //initialize amount after discount (initially same with original price)
                 $amount_after_discount = $original_price;
 
-                $room_promotion = $discountRepo->getRoomCategoryDiscount($room_cat->id,$today_date);
+                $room_promotion = $discountRepo->getRoomCategoryDiscount($room_cat->id,$reserved_date);
 
                 //if there is promotion for this room category
                 if(isset($room_promotion) && count($room_promotion)){
@@ -454,7 +456,7 @@ class HotelDetailController extends Controller
                 }
             }
             /*end operation to check room promotion*/
-
+            
             return view('frontend.hoteldetail')
                 ->with('hotel', $hotel)
                 ->with('roomCategoryImages',$roomCategoryImages)
