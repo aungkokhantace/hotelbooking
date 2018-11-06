@@ -70,6 +70,17 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
         return $result;
     }
 
+    public function getNotCancelledBookingRoomByBookingIdAndRoomId($booking_id,$room_id){
+        $cancel_status_array = [3,4,6,7,8,9];
+        $result     = BookingRoom::whereNull('deleted_at')
+                                    ->where('booking_id','=',$booking_id)
+                                    ->where('room_id','=',$room_id)
+                                    ->whereNotIn('status',$cancel_status_array)
+                                    ->first();
+
+        return $result;
+    }
+
 
     public function getBookingRoomAndRoomByBookingId($id){
         /*
@@ -152,7 +163,7 @@ class BookingRoomRepository implements BookingRoomRepositoryInterface
             $message                            = '['. $date .'] '. 'error: ' . 'Customer '.$loginUserId.' updated a booking room and got error -------'.$e->getMessage(). ' ----- line ' .$e->getLine(). ' ----- ' .$e->getFile(). PHP_EOL;
 
             // LogCustom::create($date,$message);
-            
+
             // check whether cron log or operation log
             if(isset($cron_flag) && $cron_flag !== null){
               // function is called by cron, and write cron log

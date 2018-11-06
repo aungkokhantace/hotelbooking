@@ -600,7 +600,7 @@ class BookingController extends Controller
                     $booking->booking_cancel_reason               = $reason;
                     $result                                       = $this->repo->update($booking);
 
-                    if($result['aceplusStatusCode'] != ReturnMessage::OK){
+                    if($result['aceplusStatusCode'] !== ReturnMessage::OK){
                         DB::rollback();
                         return \Response::json($response);
                     }
@@ -611,7 +611,7 @@ class BookingController extends Controller
                         $bRoom->status                      = 3;
                         $bRoomResult                        = $bookRoomRepo->update($bRoom);
 
-                        if($bRoomResult['aceplusStatusCode'] != ReturnMessage::OK){
+                        if($bRoomResult['aceplusStatusCode'] !== ReturnMessage::OK){
                             DB::rollback();
                             return \Response::json($response);
                         }
@@ -622,7 +622,7 @@ class BookingController extends Controller
                     /* $bPayment                               = $bookPaymentRepo->getObjsByBookingId($id);
                     $bPayment->status                       = 3;
                     $bookPaymentResult                      = $bookPaymentRepo->update($bPayment);
-                    if($bookPaymentResult['aceplusStatusCode'] != ReturnMessage::OK){
+                    if($bookPaymentResult['aceplusStatusCode'] !== ReturnMessage::OK){
                         DB::rollback();
                         return \Response::json($response);
                     }*/
@@ -737,14 +737,14 @@ class BookingController extends Controller
                                 // Refund 50% of Payment
                                 $stripePaymentObj                   = new PaymentUtility();
                                 $refundResult                       = $stripePaymentObj->refundPayment($customer_id,$refund_amt,$stripePaymentId);
-                                if($refundResult['aceplusStatusCode'] != ReturnMessage::OK){
+                                if($refundResult['aceplusStatusCode'] !== ReturnMessage::OK){
 
                                     return \Response::json($response);
                                 }
                                 // Retrieve Balance Transaction
                                 $stripe_balance_transaction         = $refundResult['stripe']['stripe_balance_transaction'];
                                 $balance                            = $stripePaymentObj->retrieveBalance($stripe_balance_transaction);
-                                if($balance['aceplusStatusCode'] != ReturnMessage::OK){
+                                if($balance['aceplusStatusCode'] !== ReturnMessage::OK){
                                     // write log or do something
 
                                     //create Retrieve Balance Transaction error log
@@ -774,7 +774,7 @@ class BookingController extends Controller
                                 $stripe->status                     = 3;
                                 $stripe->booking_id                 = $id;
                                 $stripeRes                          = $paymentStripeRepo->create($stripe);
-                                if($stripeRes['aceplusStatusCode'] != ReturnMessage::OK){
+                                if($stripeRes['aceplusStatusCode'] !== ReturnMessage::OK){
                                     //write log
                                     DB::rollback();
                                     //create Booking Payment Stripe error log
@@ -799,7 +799,7 @@ class BookingController extends Controller
                                 // $newBPayment->total_service_tax_percentage  =;
                                 $newBPayment->total_payable_amt             = $r_payment_amt_wo_tax;
                                 $newBPaymentRes                             = $bookPaymentRepo->create($newBPayment);
-                                if($newBPaymentRes['aceplusStatusCode'] != ReturnMessage::OK){
+                                if($newBPaymentRes['aceplusStatusCode'] !== ReturnMessage::OK){
                                     DB::rollback();
                                     return \Response::json($response);
                                 }
@@ -819,7 +819,7 @@ class BookingController extends Controller
                                 $bRoom->room_net_amt_af             = abs($stripe_payment_net_balance);
 
                                 $bRoomRes                           = $bookRoomRepo->update($bRoom);
-                                if($bRoomRes['aceplusStatusCode'] != ReturnMessage::OK){
+                                if($bRoomRes['aceplusStatusCode'] !== ReturnMessage::OK){
                                     DB::rollback();
                                     return \Response::json($response);
                                 }
@@ -880,7 +880,7 @@ class BookingController extends Controller
                         $booking->total_stripe_net_amt              = $total_stripe_net_amt;
                         $booking->total_vendor_net_amt              = $total_vendor_net_amt;
                         $bookingUpdateRes                           = $this->repo->update($booking);
-                        if($bookingUpdateRes['aceplusStatusCode'] != ReturnMessage::OK){
+                        if($bookingUpdateRes['aceplusStatusCode'] !== ReturnMessage::OK){
                             DB::rollback();
                             return \Response::json($response);
                         }
@@ -898,7 +898,7 @@ class BookingController extends Controller
                         // $newBPayment->total_service_tax_percentage  =;
                         $newBPayment->total_payable_amt             = $total_price_w_tax;
                         $newBPaymentRes                             = $bookPaymentRepo->create($newBPayment);
-                        if($newBPaymentRes['aceplusStatusCode'] != ReturnMessage::OK){
+                        if($newBPaymentRes['aceplusStatusCode'] !== ReturnMessage::OK){
                             DB::rollback();
                             return \Response::json($response);
                         }*/
@@ -964,7 +964,7 @@ class BookingController extends Controller
                                 $bRoom->stripe_fee_percent_af           = $bRoom->stripe_fee_percent;
                                 $bRoom->room_net_amt_af                 = $bRoom->room_net_amt;
                                 $bRoomRes                               = $bookRoomRepo->update($bRoom);
-                                if($bRoomRes['aceplusStatusCode'] != ReturnMessage::OK){
+                                if($bRoomRes['aceplusStatusCode'] !== ReturnMessage::OK){
                                     DB::rollback();
                                     return \Response::json($response);
                                 }
@@ -1015,7 +1015,7 @@ class BookingController extends Controller
                         $booking->total_vendor_net_amt                  = $total_vendor_net_amt;
                         */
                         $bookingUpdateRes                               = $this->repo->update($booking);
-                        if($bookingUpdateRes['aceplusStatusCode'] != ReturnMessage::OK){
+                        if($bookingUpdateRes['aceplusStatusCode'] !== ReturnMessage::OK){
                             DB::rollback();
                             return \Response::json($response);
                         }
@@ -1220,7 +1220,6 @@ class BookingController extends Controller
     public function change_date(Request $request){
         if($request->ajax()){
             try{
-
                 $response['aceplusStatusCode']  = '500';
                 $b_id                           = Input::get('id');
                 $check_in                       = Input::get('check_in');
@@ -1253,24 +1252,51 @@ class BookingController extends Controller
                     /* get only non-cancelled rooms */
                     $b_room                     = $b_roomRepo->getNotCancelledBookingRoomByBookingId($b_id);
                     $room_id_arr                = array();
+
+                    $booked_room_cat_id_arr     = array(); //array to store room_category ids in booking_room
+
                     foreach($b_room as $room){
                         array_push($room_id_arr,$room->room_id);
+
+                        //get room_id and room_category_id
+                        $room_id = $room->room_id;
+                        $booked_room_category_id = $roomRepo->getRoomCategoryIDByRoomID($room_id);
+                        array_push($booked_room_cat_id_arr,$booked_room_category_id);
                     }
+
                     $h_id                       = $booking->hotel_id;
-                    $r_available                = $this->repo->getAvailableRoom($new_check_in,$new_check_out,$room_id_arr);
+                    // $r_available                = $this->repo->getAvailableRoom($new_check_in,$new_check_out,$room_id_arr);
+
+                    // start
+                    //get available rooms by room category id
+                    $r_available                      = $roomRepo->getRoomArrayByRoomCategoryId($booked_room_cat_id_arr, $new_check_in, $new_check_out);
+
+                    // end
 
                     $r_available_arr            = array();
                     $r_category_arr             = array();
 
+                    /* Checked by room */
+                    // if(isset($r_available) && count($r_available) > 0){
+                    //     foreach($r_available as $available){
+                    //         array_push($r_available_arr,$available->id);
+                    //         array_push($r_category_arr,$available->h_room_category_id);
+                    //     }
+                    // }
+
+
+                    /* Checked by room category*/
                     if(isset($r_available) && count($r_available) > 0){
                         foreach($r_available as $available){
-                            array_push($r_available_arr,$available->id);
-                            array_push($r_category_arr,$available->h_room_category_id);
+                            array_push($r_available_arr,$available['id']);
+                            array_push($r_category_arr,$available['h_room_category_id']);
                         }
                     }
-                    if(empty($r_available_arr) || $room_id_arr != $r_available_arr){
+
+                    // if(empty($r_available_arr) || $room_id_arr !== $r_available_arr){
+                    if(empty($r_available_arr)){
                         /*
-                         * If room_id array from booking room is not same with room_id from available room array,
+                         * If there is no available room for new check-in and check-out date,
                          * then new check_in and check_out date can't be change.
                          * So, return error status.
                          */
@@ -1278,7 +1304,8 @@ class BookingController extends Controller
                          //create error log
                          $currentUser                        = Utility::getCurrentCustomerID();
                          $date                               = date("Y-m-d H:i:s");
-                         $error_message                      = "room_id array from booking room is not same with room_id from available room array";
+                         // $error_message                      = "room_id array from booking room is not same with room_id from available room array";
+                         $error_message                      = "there is no available room for new check-in and check-out date";
                          $message                            = '['. $date .'] '. 'error: ' . 'Customer - '.$currentUser. ' changed booking dates and got error : '.$error_message. PHP_EOL;
 
                          LogCustom::create($date,$message);
@@ -1286,6 +1313,94 @@ class BookingController extends Controller
                         return \Response::json($response);
                     }
 
+                    //compare booked room_id array and available room id array on new dates
+                    $compare_result = array_intersect($r_available_arr,$room_id_arr);
+
+                    //sort arrays to match
+                    sort($compare_result);
+                    sort($room_id_arr);
+
+                    //compare available room array and originally booked room array
+                    /*
+                      If there is no difference between available room array and originally booked room array [count($difference) == 0],
+                      it means the booked rooms are available on new dates too.
+                      so, user is able to change dates and proceed to re-calculation
+                    */
+
+                    // If there is difference between available room array and originally booked room array [count($difference) > 0],
+                    // it means NOT ALL original booked rooms are available on new dates
+                    /*
+                      In this case, we need to:
+                      (1) check whether there are other available rooms of the same category on new dates
+                      (2) if not, can't change date, return error
+                    */
+                    $rooms_not_available_on_new_dates = array_diff($room_id_arr,$compare_result);
+
+                    if(count($rooms_not_available_on_new_dates) > 0){
+                      // NOT ALL original booked rooms are available on new dates
+                      /*
+                        In this case, we need to:
+                        (1) check whether there are other available rooms of the same category on new dates
+                        (2) if not, can't change date, return error
+                      */
+
+                      foreach($rooms_not_available_on_new_dates as $room_id_not_available_on_new_dates){
+                        $room = $roomRepo->getObjById($room_id_not_available_on_new_dates);
+                        $category_id = $room->h_room_category_id;
+                        $available_rooms_for_this_category = $roomRepo->getRoomArrayByRoomCategoryId([$category_id], $new_check_in, $new_check_out);
+                        // dd('$available_rooms_for_this_category',$available_rooms_for_this_category);
+
+                        if(count($available_rooms_for_this_category) == 0){
+                          /*
+                            If there is no other available room for this room_category,
+                            user cannot change booking dates and return error message
+                          */
+
+                          //create error log
+                          $currentUser                        = Utility::getCurrentCustomerID();
+                          $date                               = date("Y-m-d H:i:s");
+                          $error_message                      = "there is no other available room for room_category_id = ".$category_id." on new check-in and check-out date";
+                          $message                            = '['. $date .'] '. 'error: ' . 'Customer - '.$currentUser. ' changed booking dates and got error : '.$error_message. PHP_EOL;
+
+                          LogCustom::create($date,$message);
+
+                         return \Response::json($response);
+                        }
+
+                        //begin transaction to start updating room_id in booking_room table
+                        DB::beginTransaction();
+                        /*
+                          If there is available room of the same room_category,
+                          then, get the first available room and update room_id in booking_room table
+                        */
+                        //get the first available room from available room array of the same category
+                        $new_available_room = $available_rooms_for_this_category[0];
+                        $new_available_room_id = $new_available_room['id'];
+                        // dd('new_id',$new_available_room_id);
+
+                        $room_obj_not_available_on_new_dates = $b_roomRepo->getObjectById($room_id_not_available_on_new_dates);
+                        // dd('$room_obj_not_available_on_new_dates',$room_obj_not_available_on_new_dates,$room_id_not_available_on_new_dates);
+
+                        $b_room_obj = $b_roomRepo->getNotCancelledBookingRoomByBookingIdAndRoomId($b_id,$room_id_not_available_on_new_dates);
+
+                        //update room_id to new available room_id
+                        $b_room_obj->room_id = $new_available_room_id;
+                        $b_room_update_res                      = $b_roomRepo->update($b_room_obj);
+
+                        if($b_room_update_res['aceplusStatusCode'] !== ReturnMessage::OK){
+                            DB::rollback();
+                            return \Response::json($response);
+                        }
+
+
+                      }
+                    }
+
+                    /*
+                      There is no difference between available room array and originally booked room array [count($difference) == 0],
+                      it means the booked rooms are available on new dates too.
+                      so, user is able to change dates and proceed to re-calculation
+                    */
 
                     // Calculate the number of night stay
                     $difference                 = strtotime($check_out) - strtotime($check_in);
@@ -1400,7 +1515,7 @@ class BookingController extends Controller
                     $total_stripe_fee_amt                       = $total_stripe_fee_percent+$this->stripe_fee_cents;
                     $total_room_net_amt                         = $total_room_net_amt-$this->stripe_fee_cents;
                     $total_vendor_amt                           = $total_room_net_amt;
-                    DB::beginTransaction();
+                    // DB::beginTransaction();
                     //Update Booking
                     $booking->check_in_date                     = $new_check_in;
                     $booking->check_out_date                    = $new_check_out;
@@ -1423,11 +1538,12 @@ class BookingController extends Controller
                     $booking->total_stripe_net_amt              = 0.00;
                     $booking->total_vendor_net_amt              = 0.00;
                     $booking_update_res                         = $this->repo->update($booking);
-                    if($booking_update_res['aceplusStatusCode'] != ReturnMessage::OK){
+                    if($booking_update_res['aceplusStatusCode'] !== ReturnMessage::OK){
                         DB::rollback();
                         return \Response::json($response);
                     }
                     //Update Booking Room
+                    $b_room = $b_roomRepo->getNotCancelledBookingRoomByBookingId($b_id);
                     foreach($b_room as $room){
                         $room->check_in_date                    = $new_check_in;
                         $room->check_out_date                   = $new_check_out;
@@ -1448,7 +1564,7 @@ class BookingController extends Controller
                             }
                         }
                         $b_room_update_res                      = $b_roomRepo->update($room);
-                        if($b_room_update_res['aceplusStatusCode'] != ReturnMessage::OK){
+                        if($b_room_update_res['aceplusStatusCode'] !== ReturnMessage::OK){
                             DB::rollback();
                             return \Response::json($response);
                         }
@@ -1465,7 +1581,7 @@ class BookingController extends Controller
                     // $b_payment->total_service_tax_percentage    = $total_service_tax_percentage;
                     $b_payment->total_payable_amt               = $price_w_tax;
                     $b_payment_update_res                       = $b_paymentRepo->update($b_payment);
-                    if($b_payment_update_res['aceplusStatusCode'] != ReturnMessage::OK){
+                    if($b_payment_update_res['aceplusStatusCode'] !== ReturnMessage::OK){
                         DB::rollback();
                         return \Response::json($response);
                     }*/
@@ -1480,7 +1596,7 @@ class BookingController extends Controller
                     // $b_payment->total_service_tax_percentage    = $total_service_tax_percentage;
                     $b_payment->total_payable_amt               = 0.00;
                     $b_payment_update_res                       = $b_paymentRepo->update($b_payment);
-                    if($b_payment_update_res['aceplusStatusCode'] != ReturnMessage::OK){
+                    if($b_payment_update_res['aceplusStatusCode'] !== ReturnMessage::OK){
                         DB::rollback();
                         return \Response::json($response);
                     }
@@ -1512,7 +1628,7 @@ class BookingController extends Controller
                         // $stripe_capture_payment['stripe']['stripe_payment_amt'] = 160.6;
                         // $stripe_capture_payment['stripe']['stripe_balance_transaction'] = "txn_1BBxegKi85kjRqY0FUFt4rdO";
 
-                        if($stripe_capture_payment['aceplusStatusCode'] != ReturnMessage::OK){
+                        if($stripe_capture_payment['aceplusStatusCode'] !== ReturnMessage::OK){
                             DB::rollback();
                             return \Response::json($response);
                         }
@@ -1523,7 +1639,7 @@ class BookingController extends Controller
                         $stripe_balance_transaction                 = $stripe_capture_payment['stripe']['stripe_balance_transaction'];
                         $stripeBalanceRes                           = $paymentObj->retrieveBalance($stripe_balance_transaction);
 
-                        if($stripeBalanceRes['aceplusStatusCode'] != ReturnMessage::OK){
+                        if($stripeBalanceRes['aceplusStatusCode'] !== ReturnMessage::OK){
                             DB::rollback();
                             return \Response::json($response);
                         }
@@ -1534,7 +1650,7 @@ class BookingController extends Controller
                         $stripe_payment->stripe_payment_net         = $stripeBalanceRes['stripe']['stripe_payment_net'];
                         $stripe_payment->status                     = 2;
                         $stripe_payment_update_res                  = $stripeRepo->update($stripe_payment);
-                        if($stripe_payment_update_res['aceplusStatusCode'] != ReturnMessage::OK){
+                        if($stripe_payment_update_res['aceplusStatusCode'] !== ReturnMessage::OK){
                             DB::rollback();
                             return \Response::json($response);
                         }
@@ -1545,7 +1661,7 @@ class BookingController extends Controller
                         $b_payment->total_payable_amt               = $stripeBalanceRes['stripe']['stripe_payment_amt'];
                         $b_payment->status                          = 5;
                         $b_payment_update_res                       = $b_paymentRepo->update($b_payment);
-                        if($b_payment_update_res['aceplusStatusCode'] != ReturnMessage::OK){
+                        if($b_payment_update_res['aceplusStatusCode'] !== ReturnMessage::OK){
                             DB::rollback();
                             return \Response::json($response);
                         }
@@ -1553,7 +1669,7 @@ class BookingController extends Controller
                         foreach($b_room as $room){
                             $room->status                           = 5;
                             $b_room_update_res                      = $b_roomRepo->update($room);
-                            if($b_room_update_res['aceplusStatusCode'] != ReturnMessage::OK){
+                            if($b_room_update_res['aceplusStatusCode'] !== ReturnMessage::OK){
                                 DB::rollback();
                                 return \Response::json($response);
                             }
@@ -1568,7 +1684,7 @@ class BookingController extends Controller
                         $booking->card_brand                        = $stripe_card_brand;
                         $booking->card_type                         = $stripe_card_type;
                         $booking_update_res                         = $this->repo->update($booking);
-                        if($booking_update_res['aceplusStatusCode'] != ReturnMessage::OK){
+                        if($booking_update_res['aceplusStatusCode'] !== ReturnMessage::OK){
                             DB::rollback();
                             return \Response::json($response);
                         }
@@ -1583,7 +1699,7 @@ class BookingController extends Controller
                         $subject            = "Updated your booking check_in and check_out date";
                         $logMessage         = "updated a booking";
                         $mailResult         = Utility::sendMail($template,$emails,$subject,$logMessage);
-                        if ($mailResult['aceplusStatusCode'] != ReturnMessage::OK){
+                        if ($mailResult['aceplusStatusCode'] !== ReturnMessage::OK){
                             $response['aceplusStatusCode']  = '203';
                             return \Response::json($response);
                         }
@@ -1669,7 +1785,7 @@ class BookingController extends Controller
                  */
                 $bCancelRoom->status                        = 3;  //cancel by user
                 $bRoomUpdateRes                             = $bRoomRepo->update($bCancelRoom);
-                if($bRoomUpdateRes['aceplusStatusCode'] != ReturnMessage::OK){
+                if($bRoomUpdateRes['aceplusStatusCode'] !== ReturnMessage::OK){
                     DB::rollback();
                     alert()->error('Cancellation of room is fail.')->persistent('OK');
                 }
@@ -1719,7 +1835,7 @@ class BookingController extends Controller
                 $booking->total_stripe_net_amt              = $total_stripe_net_amt;
                 $booking->total_vendor_net_amt              = $total_stripe_net_amt;
                 $bookingUpdateRes                           = $this->repo->update($booking);
-                if($bookingUpdateRes['aceplusStatusCode'] != ReturnMessage::OK){
+                if($bookingUpdateRes['aceplusStatusCode'] !== ReturnMessage::OK){
                     DB::rollback();
                     alert()->error('Cancellation of room is fail.')->persistent('OK');
                 }
@@ -1735,7 +1851,7 @@ class BookingController extends Controller
                 // $bPayment->total_service_tax_percentage = ;
                 $bPayment->total_payable_amt        = $total_price_w_tax;
                 $bookPaymentResult                  = $bPaymentRepo->update($bPayment);
-                if($bookPaymentResult['aceplusStatusCode'] != ReturnMessage::OK){
+                if($bookPaymentResult['aceplusStatusCode'] !== ReturnMessage::OK){
                     DB::rollback();
                     alert()->error('Cancellation of room is fail.')->persistent('OK');
                 }
@@ -1758,7 +1874,7 @@ class BookingController extends Controller
                 $subject            = "Updated your booking check_in and check_out date";
                 $logMessage         = "updated a booking";
                 $mailResult         = Utility::sendMail($template,$emails,$subject,$logMessage);
-                if ($mailResult['aceplusStatusCode'] != ReturnMessage::OK){
+                if ($mailResult['aceplusStatusCode'] !== ReturnMessage::OK){
                     alert()->warning('Room cancellation is successful.But email could not be send for some reasons.')
                            ->persistent('OK');
                 }
@@ -1856,7 +1972,7 @@ class BookingController extends Controller
                     $stripe_booking_id                          = $stripePayment->booking_id;
                     $stripePaymentObj                           = new PaymentUtility();
                     $refundResult                               = $stripePaymentObj->refundPayment($customer_id,$cancel_room_refund_amt,$stripePaymentId);
-                    if($refundResult['aceplusStatusCode'] != ReturnMessage::OK) {
+                    if($refundResult['aceplusStatusCode'] !== ReturnMessage::OK) {
                         DB::rollback();
                         alert()->error('Cancellation of room is fail.')->persistent('OK');
                     }
@@ -1865,7 +1981,7 @@ class BookingController extends Controller
                     /* START retrieve balance transaction */
                     $refund_balance_transaction                 = $refundResult['stripe']['stripe_balance_transaction'];
                     $stripeBalanceRes                           = $stripePaymentObj->retrieveBalance($refund_balance_transaction);
-                    if($stripeBalanceRes['aceplusStatusCode'] != ReturnMessage::OK){
+                    if($stripeBalanceRes['aceplusStatusCode'] !== ReturnMessage::OK){
                         // shouldn't rollback, write log or do something bcz refundPayment method is already executed.
                         DB::rollback();
                         alert()->warning('Your payment and booking was unsuccessful!')->persistent('OK');
@@ -1897,7 +2013,7 @@ class BookingController extends Controller
                     $newBookPayment->total_payable_amt              = abs($stripe_payment_amt);
                     $newBookPayment->payment_reference_no           = null;
                     $bookPaymentResult                              = $bPaymentRepo->create($newBookPayment);
-                    if($bookPaymentResult['aceplusStatusCode'] != ReturnMessage::OK){
+                    if($bookPaymentResult['aceplusStatusCode'] !== ReturnMessage::OK){
                         DB::rollback();
                         alert()->error('Cancellation of room is fail.')->persistent('OK');
                     }
@@ -1917,7 +2033,7 @@ class BookingController extends Controller
                     $newStripePayment->booking_id                   = $stripe_booking_id;
                     $newStripePayment->booking_payment_id           = $new_b_payment_id;
                     $newStripePaymentRes                            = $paymentStripeRepo->create($newStripePayment);
-                    if($newStripePaymentRes['aceplusStatusCode'] != ReturnMessage::OK){
+                    if($newStripePaymentRes['aceplusStatusCode'] !== ReturnMessage::OK){
                         // shouldn't rollback, write log or do something bcz refundPayment method is already executed.
                         DB::rollback();
 
@@ -1944,7 +2060,7 @@ class BookingController extends Controller
                     $bCancelRoom->stripe_fee_percent_af             = abs($stripe_payment_fee);
                     $bCancelRoom->room_net_amt_af                   = abs($stripe_payment_net);
                     $bRoomUpdateRes                                 = $bRoomRepo->update($bCancelRoom);
-                    if($bRoomUpdateRes['aceplusStatusCode'] != ReturnMessage::OK){
+                    if($bRoomUpdateRes['aceplusStatusCode'] !== ReturnMessage::OK){
                         DB::rollback();
                         alert()->error('Cancellation of room is fail.')->persistent('OK');
                     }
@@ -2053,7 +2169,7 @@ class BookingController extends Controller
                     $booking->total_stripe_net_amt                  = $total_stripe_net_amt;
                     $booking->total_vendor_net_amt                  = $total_stripe_net_amt;
                     $bookingUpdateRes                               = $this->repo->update($booking);
-                    if($bookingUpdateRes['aceplusStatusCode'] != ReturnMessage::OK){
+                    if($bookingUpdateRes['aceplusStatusCode'] !== ReturnMessage::OK){
                         DB::rollback();
                         alert()->error('Cancellation of room is fail.')->persistent('OK');
                     }
@@ -2077,7 +2193,7 @@ class BookingController extends Controller
                     $subject            = "Updated your booking check_in and check_out date";
                     $logMessage         = "updated a booking";
                     $mailResult         = Utility::sendMail($template,$emails,$subject,$logMessage);
-                    if ($mailResult['aceplusStatusCode'] != ReturnMessage::OK){
+                    if ($mailResult['aceplusStatusCode'] !== ReturnMessage::OK){
                         alert()->warning('Room cancellation is successful.But email could not be send for some reasons.')
                             ->persistent('OK');
                     }
@@ -2127,7 +2243,7 @@ class BookingController extends Controller
                     $bCancelRoom->room_net_amt_af               = $cancel_room_net_amt;
 
                     $bRoomUpdateRes                             = $bRoomRepo->update($bCancelRoom);
-                    if($bRoomUpdateRes['aceplusStatusCode'] != ReturnMessage::OK){
+                    if($bRoomUpdateRes['aceplusStatusCode'] !== ReturnMessage::OK){
                         DB::rollback();
                         alert()->error('Cancellation of room is fail.')->persistent('OK');
                     }
@@ -2181,7 +2297,7 @@ class BookingController extends Controller
                     $booking->status                                = $bookingStatus;
                     $booking->total_cancel_income                   = $total_cancel_income;
                     $bookingUpdateRes                               = $this->repo->update($booking);
-                    if($bookingUpdateRes['aceplusStatusCode'] != ReturnMessage::OK){
+                    if($bookingUpdateRes['aceplusStatusCode'] !== ReturnMessage::OK){
                         DB::rollback();
                         alert()->error('Cancellation of room is fail.')->persistent('OK');
                     }
@@ -2203,7 +2319,7 @@ class BookingController extends Controller
                     $subject            = "Updated your booking check_in and check_out date";
                     $logMessage         = "updated a booking";
                     $mailResult         = Utility::sendMail($template,$emails,$subject,$logMessage);
-                    if ($mailResult['aceplusStatusCode'] != ReturnMessage::OK){
+                    if ($mailResult['aceplusStatusCode'] !== ReturnMessage::OK){
                         alert()->warning('Room cancellation is successful.But email could not be send for some reasons.')
                             ->persistent('OK');
                     }

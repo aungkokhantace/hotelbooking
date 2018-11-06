@@ -8,10 +8,14 @@
  */
 class PaymentConstance
 {
-    const STRIPE_SECRET_KEY         = "sk_test_6hYuSc454rfAt7xUZSSHHwMl";
-    const STIRPE_PUBLISHABLE_KEY    = "pk_test_MeJ3mBIfgYrMPENsGNKOWJFo";
+    // const STRIPE_SECRET_KEY         = "sk_test_6hYuSc454rfAt7xUZSSHHwMl";
+    // const STIRPE_PUBLISHABLE_KEY    = "pk_test_MeJ3mBIfgYrMPENsGNKOWJFo";
+
+    const STRIPE_SECRET_KEY         = "sk_test_d4hr9cmsjRgN2S3rAZqklShI";
+    const STIRPE_PUBLISHABLE_KEY    = "pk_test_MrEcDryY3GDvlsJ1o7umnfNR";
+
     const STIRPE_CURRENCY           = "usd";
     const STIRPE_FEE_PERCENT        = 0.029; // 2.9%
-    const STRIPE_FEE_FIXED          = 0.3; // 30 cents 
+    const STRIPE_FEE_FIXED          = 0.3; // 30 cents
 
 }

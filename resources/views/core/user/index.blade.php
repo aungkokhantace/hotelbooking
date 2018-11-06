@@ -27,7 +27,7 @@
 
     <div class="row">
         <div class="col-md-10">
-          <h3><a href="/backend_mps/user/disabled_users"><i class="fa fa-angle-double-right"></i>&nbsp View Disabled User List</a></h3>
+          <h3><a href="/backend_mps/user/disabled_users"><i class="fa fa-angle-double-right"></i>&nbsp View Inactive User List</a></h3>
         </div>
     </div>
 

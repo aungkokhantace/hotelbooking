@@ -36,7 +36,7 @@
     @if($role != 3)
     <div class="row">
         <div class="col-md-10">
-          <h3><a href="/backend_mps/hotel/disabled_hotels"><i class="fa fa-angle-double-right"></i>&nbsp View Disabled Hotel List</a></h3>
+          <h3><a href="/backend_mps/hotel/disabled_hotels"><i class="fa fa-angle-double-right"></i>&nbsp View Inactive Hotel List</a></h3>
         </div>
     </div>
     @endif

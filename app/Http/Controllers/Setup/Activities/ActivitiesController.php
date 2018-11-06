@@ -41,6 +41,10 @@ class ActivitiesController extends Controller
                     $logDate = str_replace('.log',"",$logDateRaw);
                     $logfileNameWithPath = $dir . "/" . $rawFile;
                     $activities = file($logfileNameWithPath, FILE_IGNORE_NEW_LINES);
+
+                    //reverse array (order by time in descending order)
+                    $activities = array_reverse($activities);
+                    
                     $logArray[$logDate] = $activities;
                 }
             }

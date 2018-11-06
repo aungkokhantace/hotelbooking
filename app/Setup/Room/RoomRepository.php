@@ -39,6 +39,13 @@ class RoomRepository implements RoomRepositoryInterface
         return $obj;
     }
 
+    public function getRoomCategoryIDByRoomID($id)
+    {
+        $obj = Room::find($id);
+        $room_category_id = $obj->h_room_category_id;
+        return $room_category_id;
+    }
+
     public function create($paramObj)
     {
         $returnedObj = array();
