@@ -1344,11 +1344,40 @@ class BookingController extends Controller
                         (2) if not, can't change date, return error
                       */
 
+                      if(count($rooms_not_available_on_new_dates) > count($r_available_arr)) {
+                        /*
+                        ******
+                        if there are other available rooms but the number of rooms that need to be moved is greater than other available rooms,
+                            Example:
+                              There are 3 rooms of "Superior Room Category", namely room 101,102 and 103
+                              Booking A was made for room 101 and 102 for December 1
+                              Booking B was made for the same rooms (101 and 102) for December 15
+                              If user change the date of Booking B to December 1,
+                                there is a conflict between rooms of Booking A and Booking B (both 101 and 102)
+                                the system needs to check whether there are any other available rooms of the same room category "Superior room category" to update rooms of booking B
+                                Booking B has 2 rooms and if there is only 1 available room,
+                                Booking date cannot be changed because there is no sufficient available room.
+
+                         In this case, the system cannot let the customer change the date,
+                         So, return error status.
+                        ******
+                        */
+
+                        //create error log
+                        $currentUser                        = Utility::getCurrentCustomerID();
+                        $date                               = date("Y-m-d H:i:s");
+                        $error_message                      = "there is not enough available room to switch for booking_id = ".$b_id." on new check-in and check-out date";
+                        $message                            = '['. $date .'] '. 'error: ' . 'Customer - '.$currentUser. ' changed booking dates and got error : '.$error_message. PHP_EOL;
+
+                        LogCustom::create($date,$message);
+
+                       return \Response::json($response);
+                      }
+
                       foreach($rooms_not_available_on_new_dates as $room_id_not_available_on_new_dates){
                         $room = $roomRepo->getObjById($room_id_not_available_on_new_dates);
                         $category_id = $room->h_room_category_id;
                         $available_rooms_for_this_category = $roomRepo->getRoomArrayByRoomCategoryId([$category_id], $new_check_in, $new_check_out);
-                        // dd('$available_rooms_for_this_category',$available_rooms_for_this_category);
 
                         if(count($available_rooms_for_this_category) == 0){
                           /*
@@ -1376,10 +1405,8 @@ class BookingController extends Controller
                         //get the first available room from available room array of the same category
                         $new_available_room = $available_rooms_for_this_category[0];
                         $new_available_room_id = $new_available_room['id'];
-                        // dd('new_id',$new_available_room_id);
 
                         $room_obj_not_available_on_new_dates = $b_roomRepo->getObjectById($room_id_not_available_on_new_dates);
-                        // dd('$room_obj_not_available_on_new_dates',$room_obj_not_available_on_new_dates,$room_id_not_available_on_new_dates);
 
                         $b_room_obj = $b_roomRepo->getNotCancelledBookingRoomByBookingIdAndRoomId($b_id,$room_id_not_available_on_new_dates);
 

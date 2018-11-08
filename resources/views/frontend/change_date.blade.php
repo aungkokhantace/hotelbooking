@@ -88,7 +88,7 @@
             $('.btn-change-ok').click(function(){
                 /* Disable change date link */
                 $('.change_date_link').click(function () {return false;});
-
+                // $('#change_date_form').submit();
                 var serializedData = $('#change_date_form').serialize();
                 $.ajax({
                     url: '/booking/change_date',

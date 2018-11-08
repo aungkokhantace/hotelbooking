@@ -152,15 +152,15 @@ class RoomDiscountRepository implements RoomDiscountRepositoryInterface
         return $objs;
     }
 
-    public function getMaximumDiscountPercentByHotelID($hotel_id)
+    public function getMaximumDiscountPercentByHotelID($hotel_id,$check_in)
     {
         //get current date to check between from_date and to_date
-        $today = Carbon::today()->toDateString();
+        // $today = Carbon::today()->toDateString();
         $result = DB::table('room_discount')
             ->select(DB::raw('max(discount_percent) as discount_percent'))
             ->whereNull('deleted_at')
-            ->where('from_date','<=', $today)
-            ->where('to_date','>=', $today)
+            ->where('from_date','<=', $check_in)
+            ->where('to_date','>=', $check_in)
             ->where('type','=','%')
             ->where('discount_percent','!=',0)
             ->where('hotel_id','=',$hotel_id)
@@ -171,15 +171,15 @@ class RoomDiscountRepository implements RoomDiscountRepositoryInterface
         return $result;
     }
 
-    public function getMaximumDiscountAmountByHotelID($hotel_id)
+    public function getMaximumDiscountAmountByHotelID($hotel_id,$check_in)
     {
         //get current date to check between from_date and to_date
-        $today = Carbon::today()->toDateString();
+        // $today = Carbon::today()->toDateString();
         $result = DB::table('room_discount')
             ->select(DB::raw('max(discount_amount) as discount_amount'))
             ->whereNull('deleted_at')
-            ->where('from_date','<=', $today)
-            ->where('to_date','>=', $today)
+            ->where('from_date','<=', $check_in)
+            ->where('to_date','>=', $check_in)
             ->where('type','=','amount')
             ->where('discount_amount','!=',0.00)
             ->where('hotel_id','=',$hotel_id)

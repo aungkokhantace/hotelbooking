@@ -73,9 +73,19 @@ class HotelDetailController extends Controller
             if(!Session::has('destination')){
                 Session::put('destination',$hotel->name);
             }
+
+            //get check-in date from session
+            $check_in = session('check_in');
+            //get check-out date from session
+            $check_out = session('check_out');
+
+            $formatted_check_in   = date("Y-m-d", strtotime($check_in));
+            $formatted_check_out  = date("Y-m-d", strtotime($check_out));
+
             //start hotel discount
             $discountRepo           = new RoomDiscountRepository();
-            $discount_percent       = $discountRepo->getMaximumDiscountPercentByHotelID($hotel_id);
+            // $discount_percent       = $discountRepo->getMaximumDiscountPercentByHotelID($hotel_id);
+            $discount_percent       = $discountRepo->getMaximumDiscountPercentByHotelID($hotel_id,$formatted_check_in);
 
             //if there is any percent discount, assign it to $hotel->discount
             if(isset($discount_percent) && count($discount_percent)>0){
@@ -83,7 +93,7 @@ class HotelDetailController extends Controller
             }
             //else, check if there is any amount discount
             else{
-                $discount_amount = $discountRepo->getMaximumDiscountAmountByHotelID($hotel_id);
+                $discount_amount = $discountRepo->getMaximumDiscountAmountByHotelID($hotel_id,$formatted_check_in);
                 //if there is any amount discount, assign it to $hotel->discount
                 if(isset($discount_amount) && count($discount_amount)>0){
                     $hotel->discount = $discount_amount->discount_amount." USD";
@@ -171,10 +181,6 @@ class HotelDetailController extends Controller
             }
 
             //start room count for each room category
-            //get check-in date from session
-            $check_in = session('check_in');
-            //get check-out date from session
-            $check_out = session('check_out');
             $total_available_room = 0;
 
             $roomViewRepo = new RoomViewRepository;
@@ -456,7 +462,7 @@ class HotelDetailController extends Controller
                 }
             }
             /*end operation to check room promotion*/
-            
+
             return view('frontend.hoteldetail')
                 ->with('hotel', $hotel)
                 ->with('roomCategoryImages',$roomCategoryImages)
