@@ -1374,6 +1374,9 @@ class BookingController extends Controller
                        return \Response::json($response);
                       }
 
+                      //begin transaction to start updating room_id in booking_room table
+                      DB::beginTransaction();
+
                       foreach($rooms_not_available_on_new_dates as $room_id_not_available_on_new_dates){
                         $room = $roomRepo->getObjById($room_id_not_available_on_new_dates);
                         $category_id = $room->h_room_category_id;
@@ -1396,8 +1399,6 @@ class BookingController extends Controller
                          return \Response::json($response);
                         }
 
-                        //begin transaction to start updating room_id in booking_room table
-                        DB::beginTransaction();
                         /*
                           If there is available room of the same room_category,
                           then, get the first available room and update room_id in booking_room table
@@ -1440,8 +1441,27 @@ class BookingController extends Controller
                     // Get Service tax amount
                     $service_tax                        = Utility::getServiceTax($h_id);
 
+                    // Start getting not-cancelled rooms of booking again (to get updated room id array)
+                    /* get only non-cancelled rooms */
+                    $b_room                     = $b_roomRepo->getNotCancelledBookingRoomByBookingId($b_id);
+                    $room_id_arr                = array();
+
+                    $booked_room_cat_id_arr     = array(); //array to store room_category ids in booking_room
+
+                    foreach($b_room as $room){
+                        array_push($room_id_arr,$room->room_id);
+
+                        //get room_id and room_category_id
+                        // $room_id = $room->room_id;
+                        // $booked_room_category_id = $roomRepo->getRoomCategoryIDByRoomID($room_id);
+                        // array_push($booked_room_cat_id_arr,$booked_room_category_id);
+                    }
+                    // End getting not-cancelled rooms of booking again (to get updated room id array)
+
+
                     // Get Room discount
-                    $room_with_discount                 = $roomRepo->getRoomWithDiscount($r_category_arr,$r_available_arr);
+                    // $room_with_discount                 = $roomRepo->getRoomWithDiscount($r_category_arr,$r_available_arr);
+                    $room_with_discount                 = $roomRepo->getRoomWithDiscount($r_category_arr,$room_id_arr);
 
                     foreach($b_room as $room){
                         foreach($room_with_discount as $room_discount){
@@ -1471,7 +1491,6 @@ class BookingController extends Controller
                             //Calculate extra bed price
                             $extra_bed_price            = $r_discount->added_extra_bed==1?$r_discount->extra_bed_price:0.00;
                             for($i=1;$i<=$nights;$i++){
-
                                 if($next_date >= $r_discount->discount_start_date && $next_date <= $r_discount->discount_end_date) {
                                     //Calculate total discount amount
                                     $discount_amount        = $r_discount->discount_type== 'Amount'?$r_discount->discount_amount:
@@ -1544,6 +1563,7 @@ class BookingController extends Controller
                     $total_vendor_amt                           = $total_room_net_amt;
                     // DB::beginTransaction();
                     //Update Booking
+
                     $booking->check_in_date                     = $new_check_in;
                     $booking->check_out_date                    = $new_check_out;
                     $booking->price_wo_tax                      = $price_wo_tax;
@@ -1565,12 +1585,14 @@ class BookingController extends Controller
                     $booking->total_stripe_net_amt              = 0.00;
                     $booking->total_vendor_net_amt              = 0.00;
                     $booking_update_res                         = $this->repo->update($booking);
+
                     if($booking_update_res['aceplusStatusCode'] !== ReturnMessage::OK){
                         DB::rollback();
                         return \Response::json($response);
                     }
                     //Update Booking Room
                     $b_room = $b_roomRepo->getNotCancelledBookingRoomByBookingId($b_id);
+
                     foreach($b_room as $room){
                         $room->check_in_date                    = $new_check_in;
                         $room->check_out_date                   = $new_check_out;
@@ -1726,6 +1748,7 @@ class BookingController extends Controller
                         $subject            = "Updated your booking check_in and check_out date";
                         $logMessage         = "updated a booking";
                         $mailResult         = Utility::sendMail($template,$emails,$subject,$logMessage);
+
                         if ($mailResult['aceplusStatusCode'] !== ReturnMessage::OK){
                             $response['aceplusStatusCode']  = '203';
                             return \Response::json($response);
@@ -1733,6 +1756,7 @@ class BookingController extends Controller
                     }
 
                     DB::commit();
+
                     $response['aceplusStatusCode']      = '200';
                     return \Response::json($response);
 
