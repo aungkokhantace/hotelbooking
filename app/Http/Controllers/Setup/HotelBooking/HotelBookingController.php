@@ -112,6 +112,8 @@ class HotelBookingController extends Controller
             $b_check_out                = Carbon::parse($booking->check_out_date);
             $pay_date                   = Carbon::today();
             $booking->can_refund        = 0;
+
+            // $pay_date is today
             if($pay_date <= $b_check_out && $booking->status == 5){
                 $booking->can_refund    = 1;
             }
@@ -247,13 +249,29 @@ class HotelBookingController extends Controller
                 /* END booking payment */
 
                 $stripePayment                  = $paymentStripeRepo->getStripePaymentId($b_id);
+
+                /* Start getting updated stripe net amount */
+                /* Recalculate total stripe fee amt, net amt and fee percent with data from booking payment stripe */
+                $bPaymentStripes                                = $paymentStripeRepo->getAllBookingPaymentStripeByBookingId($b_id);
+
+                $stripe_net_amount = 0.0;
+
+                foreach($bPaymentStripes as $bStripe){
+                    // $total_stripe_fee_amt                      += $bStripe->stripe_payment_fee;
+                    $stripe_net_amount                      += $bStripe->stripe_payment_amt;
+
+                }
+                /* End getting updated stripe net amount */
+
                 if(isset($stripePayment) && count($stripePayment) > 0){
                     $stripePaymentId            = $stripePayment->stripe_payment_id;
                     if($refund_percentage == 100) {
-                        $refund_amount          = $stripePayment->stripe_payment_amt;
+                        // $refund_amount          = $stripePayment->stripe_payment_amt;
+                        $refund_amount          = $stripe_net_amount;
                     }
                     else{
-                        $refund_amount          = $stripePayment->stripe_payment_amt / 2;
+                        // $refund_amount          = $stripePayment->stripe_payment_amt / 2;
+                        $refund_amount          = $stripe_net_amount / 2;
                     }
                     $original_amt               = $stripePayment->stripe_payment_amt;
                     $amount                     = $original_amt-$refund_amount;
@@ -262,6 +280,7 @@ class HotelBookingController extends Controller
 
                     /* Refund Payment By hotel admin bcz customer want to pay with cash */
                     $stripePaymentObj           = new PaymentUtility();
+
                     $refundResult               = $stripePaymentObj->refundPaymentByHotelAdmin($customer_id,$refund_amount,$stripePaymentId);
 
                     /*

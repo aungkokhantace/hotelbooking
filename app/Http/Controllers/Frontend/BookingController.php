@@ -1493,8 +1493,11 @@ class BookingController extends Controller
                             for($i=1;$i<=$nights;$i++){
                                 if($next_date >= $r_discount->discount_start_date && $next_date <= $r_discount->discount_end_date) {
                                     //Calculate total discount amount
-                                    $discount_amount        = $r_discount->discount_type== 'Amount'?$r_discount->discount_amount:
+                                    // $discount_amount        = $r_discount->discount_type== 'Amount'?$r_discount->discount_amount:
+                                    //     round(($r_discount->discount_percent/100)*$r_discount->price,2);
+                                    $discount_amount        = $r_discount->discount_type== 'amount'?$r_discount->discount_amount:
                                         round(($r_discount->discount_percent/100)*$r_discount->price,2);
+
                                     $discount_amount_tmp   += $discount_amount;
                                     $total_discount_amount += $discount_amount;
 
