@@ -18,7 +18,7 @@
     @endif
     <input type="hidden" name="id" value="{{isset($city)? $city->id:''}}"/>
     <br/>
-
+    <!-- start country -->
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="country_id">{{trans('setup_city.country')}}<span class="require">*</span></label>
@@ -43,6 +43,9 @@
             <p class="text-danger">{{$errors->first('country_id')}}</p>
         </div>
     </div>
+    <!-- end country -->
+
+    <!-- start city name -->
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="name">{{trans('setup_city.city')}}<span class="require">*</span></label>
@@ -52,6 +55,19 @@
             <p class="text-danger">{{$errors->first('name')}}</p>
         </div>
     </div>
+    <!-- end city name -->
+
+    <!-- start city name (jp) -->
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <label for="name">{{trans('setup_city.city-jp')}}<span class="require">*</span></label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <input type="text" class="form-control" id="name_jp" name="name_jp" placeholder="{{trans('setup_city.place-name-jp')}}" value="{{ isset($city)? $city->name_jp:Request::old('name_jp') }}"/>
+            <p class="text-danger">{{$errors->first('name_jp')}}</p>
+        </div>
+    </div>
+    <!-- end city name (jp) -->
 
     <!-- start city code -->
     <div class="row">
@@ -238,12 +254,14 @@
             $('#city').validate({
                 rules: {
                     name                  : 'required',
+                    name_jp               : 'required',
                     code                  : 'required',
                     country_id            : 'required',
                     photo                 : 'required',
                 },
                 messages: {
                     name                  : 'City Name is required',
+                    name_jp               : 'City Name(JP) is required',
                     code                  : 'City Code is required',
                     country_id            : 'Country is required',
                     photo                 : 'Photo is required',

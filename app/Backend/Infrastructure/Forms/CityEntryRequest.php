@@ -24,8 +24,9 @@ class CityEntryRequest extends Request
     {
         return [
             'country_id'         => 'required',
-            'name'          => 'required|unique:cities,name,NULL,id,country_id,'.Input::get('country_id').',deleted_at,NULL',
-            'code'          => 'required|unique:cities,code,NULL,id,code,'.Input::get('code').',deleted_at,NULL',
+            'name'               => 'required|unique:cities,name,NULL,id,country_id,'.Input::get('country_id').',deleted_at,NULL',
+            'name_jp'            => 'required',
+            'code'               => 'required|unique:cities,code,NULL,id,code,'.Input::get('code').',deleted_at,NULL',
             'photo'              => 'required'
         ];
     }
@@ -35,6 +36,7 @@ class CityEntryRequest extends Request
             'country_id.required'=> 'Country is required',
             'name.required'      => 'City Name is required!',
             'name.unique'        => 'City already exists!',
+            'name_jp.required'   => 'City Name(JP) is required!',
             'code.required'      => 'City Code is required!',
             'code.unique'        => 'City Code already exists!',
             'photo.required'     => 'Photo is required!'

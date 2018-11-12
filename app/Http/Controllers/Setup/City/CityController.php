@@ -52,6 +52,7 @@ class CityController extends Controller
     {
         $request->validate();
         $city_name       = Input::get('name');
+        $city_name_jp    = Input::get('name_jp');
         $country_id      = Input::get('country_id');
         $code            = Input::get('code');
 
@@ -78,6 +79,7 @@ class CityController extends Controller
 
         $paramObj = new City();
         $paramObj->name         = $city_name;
+        $paramObj->name_jp      = $city_name_jp;
         $paramObj->country_id   = $country_id;
         $paramObj->code         = $code;
         $paramObj->image        = $photo_name;
@@ -113,6 +115,7 @@ class CityController extends Controller
         $request->validate();
         $id                         = Input::get('id');
         $city_name                  = Input::get('name');
+        $city_name_jp               = Input::get('name_jp');
         $country_id                 = Input::get('country_id');
         $code                       = Input::get('code');
         //Start Saving Image
@@ -138,6 +141,7 @@ class CityController extends Controller
 
         $paramObj                   = City::find($id);
         $paramObj->name             = $city_name;
+        $paramObj->name_jp          = $city_name_jp;
         $paramObj->country_id       = $country_id;
         $paramObj->code             = $code;
         if(Input::hasFile('photo')){
