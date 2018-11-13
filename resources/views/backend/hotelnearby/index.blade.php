@@ -38,6 +38,7 @@
                         <tr>
                             <th><input type='checkbox' name='check' id='check_all'/></th>
                             <th>{{trans('setup_nearby.tb-col-name')}}</th>
+                            <th>{{trans('setup_nearby.tb-col-name-jp')}}</th>
                             <th>{{trans('setup_nearby.tb-col-category')}}</th>
                             <th>{{trans('setup_nearby.tb-col-description')}}</th>
                         </tr>
@@ -46,6 +47,7 @@
                         <tr>
                             <th></th>
                             <th class="search-col" con-id="hotel">Name</th>
+                            <th class="search-col" con-id="hotel">Name(JP)</th>
                             <th class="search-col" con-id="hotel">Category</th>
                             <th class="search-col" con-id="name">Description</th>
                         </tr>
@@ -55,6 +57,7 @@
                             <tr>
                                 <td><input type="checkbox" class="check_source" name="edit_check" value="{{ $nearby->id }}" id="all"></td>
                                 <td><a href="hotel_nearby/edit/{{ $nearby->id }}">{{$nearby->name}}</a></td>
+                                <td><a href="hotel_nearby/edit/{{ $nearby->id }}">{{$nearby->name_jp}}</a></td>
                                 <td>{{$nearby->nearby_category->name}}</td>
                                 <td>{{$nearby->description}}</td>
 

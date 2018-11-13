@@ -26,6 +26,7 @@ class HotelNearbyEditRequest extends Request
         return [
             // 'name'              => 'required',
             'name'              => 'required|unique:nearby,name,'.$this->get('id').',id,deleted_at,NULL',
+            'name_jp'           => 'required',
             'hotel_category'    => 'required',
             'description'       => 'required',
         ];
@@ -36,6 +37,7 @@ class HotelNearbyEditRequest extends Request
         return [
             'name.required'               => 'Name is required!',
             'name.unique'                 => 'The name has already been taken!',
+            'name_jp.required'            => 'Name(JP) is required!',
             'hotel_category.required'     => 'Hotel Category is required!',
             'description.required'        => 'Description is required!',
         ];

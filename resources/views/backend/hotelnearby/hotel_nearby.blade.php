@@ -16,17 +16,29 @@
         <input type="hidden" name="id" value="{{isset($hotel_nearby)? $hotel_nearby->id:''}}"/>
         <br/>
 
+        <!-- start name -->
         <div class="row">
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                <label for="category">Name<span class="require">*</span></label>
+                <label for="name">Name<span class="require">*</span></label>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                <input type="text" class="form-control" id="name" name="name"
-                       placeholder="{{ trans('setup_nearby.name') }}"
-                       value="{{ isset($hotel_nearby)? $hotel_nearby->name:Request::old('name') }}"/>
+                <input type="text" class="form-control" id="name" name="name" placeholder="{{ trans('setup_nearby.name') }}" value="{{ isset($hotel_nearby)? $hotel_nearby->name:Request::old('name') }}"/>
                 <p class="text-danger">{{$errors->first('name')}}</p>
             </div>
         </div>
+        <!-- end name -->
+
+        <!-- start japanese name -->
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <label for="name_jp">Name(JP)<span class="require">*</span></label>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <input type="text" class="form-control" id="name_jp" name="name_jp" placeholder="{{ trans('setup_nearby.name_jp') }}" value="{{ isset($hotel_nearby)? $hotel_nearby->name_jp:Request::old('name_jp') }}"/>
+                <p class="text-danger">{{$errors->first('name_jp')}}</p>
+            </div>
+        </div>
+        <!-- end japanese name -->
 
         <div class="row">
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -90,13 +102,15 @@
             $('#hotel_nearby').validate({
                 rules: {
                     name            : 'required',
+                    name_jp         : 'required',
                     hotel_category  : 'required',
                     description     : 'required',
                 },
                 messages: {
-                    name            : 'Nearby Name required!',
-                    hotel_category  : 'Hotel Nearby Category required!',
-                    description     : 'Description required',
+                    name            : 'Nearby Name is required!',
+                    name_jp         : 'Nearby Name(JP) is required!',
+                    hotel_category  : 'Hotel Nearby Category is required!',
+                    description     : 'Description is required',
                 },
                 submitHandler: function(form) {
                     $('input[type="submit"]').attr('disabled','disabled');

@@ -10,6 +10,7 @@ return [
     'title-entry'           => 'Hotel Nearby Entry',
     'title-edit'            => 'Hotel Nearby Edit',
     'name'                  => 'Enter Name',
+    'name_jp'               => 'Enter Name(JP)',
     'nearby'                => 'Hotel Nearby',
     'Description'           => 'Enter Description',
     'select-category'       => 'Select Category',
@@ -19,6 +20,7 @@ return [
     'btn-cancel'            => 'CANCEL',
     'title-list'            => 'Hotel Nearby Listing',
     'tb-col-name'           => 'Name',
+    'tb-col-name-jp'        => 'Name(JP)',
     'tb-col-category'       => 'Category',
     'tb-col-description'    => 'Description',
 

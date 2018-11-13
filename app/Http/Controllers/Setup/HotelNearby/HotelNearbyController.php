@@ -50,11 +50,13 @@ class HotelNearbyController extends Controller
     {
         $request->validate();
         $name                   = Input::get('name');
+        $name_jp                = Input::get('name_jp');
         $hotel_category         = Input::get('hotel_category');
         $description            = Input::get('description');
 
         $paramObj                        = new HotelNearby();
         $paramObj->name                  = $name;
+        $paramObj->name_jp               = $name_jp;
         $paramObj->h_nearby_category_id  = $hotel_category;
         $paramObj->description           = $description;
         $paramObj->status                = 1;
@@ -88,11 +90,13 @@ class HotelNearbyController extends Controller
         $request->validate();
         $id                     = Input::get('id');
         $name                   = Input::get('name');
+        $name_jp                = Input::get('name_jp');
         $hotel_category         = Input::get('hotel_category');
         $description            = Input::get('description');
 
         $paramObj               = $this->repo->getObjByID($id);
         $paramObj->name                  = $name;
+        $paramObj->name_jp               = $name_jp;
         $paramObj->h_nearby_category_id  = $hotel_category;
         $paramObj->description           = $description;
 
