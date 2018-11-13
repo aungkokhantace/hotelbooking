@@ -22,6 +22,7 @@ class HotelEntryRequest extends Request
     {
         return [
             'name'                      => 'required',
+            'name_jp'                   => 'required',
             'h_type_id'                 => 'required',
             'address'                   => 'required',
             'phone'                     => 'required',
@@ -61,6 +62,7 @@ class HotelEntryRequest extends Request
     {
         return [
             'name.required'             => 'Name is required!',
+            'name_jp.required'          => 'Name(JP) is required!',
             'h_type_id.required'        => 'Type is required!',
             'address.required'          => 'Address is required!',
             'phone.required'            => 'Phone is required!',

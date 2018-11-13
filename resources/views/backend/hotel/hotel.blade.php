@@ -18,67 +18,88 @@
     <br/>
 
     <div class="row">
-        {{-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+      <!-- start hotel name (eng) -->
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+          <label for="name">{{trans('setup_hotel.name')}}<span class="require">*</span></label>
+          <input type="text" class="form-control" id="name" name="name"
+                 placeholder="{{trans('setup_hotel.place-name')}}" value="{{ isset($hotel)? $hotel->name:Request::old('name') }}"/>
+          <p class="text-danger">{{$errors->first('name')}}</p>
+      </div>
+      <!-- end hotel name (eng) -->
+
+      <!-- start hotel name (jp) -->
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+          <label for="name_jp">{{trans('setup_hotel.name-jp')}}<span class="require">*</span></label>
+          <input type="text" class="form-control" id="name_jp" name="name_jp"
+                 placeholder="{{trans('setup_hotel.place-name-jp')}}" value="{{ isset($hotel)? $hotel->name_jp:Request::old('name_jp') }}"/>
+          <p class="text-danger">{{$errors->first('name_jp')}}</p>
+      </div>
+      <!-- end hotel name (jp) -->
+
+      <!-- start hotel category -->
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+          <label for="h_type_id">{{trans('setup_hotel.type')}}<span class="require">*</span></label>
+          <select class="form-control" name="h_type_id" id="h_type_id">
+              @if(isset($hotel))
+                  @if($hotel->h_type_id == 1)
+                      <option value="1" selected>Hotel</option>
+                  @else
+                      <option value="1">Hotel</option>
+                  @endif
+                  @if($hotel->h_type_id == 2)
+                      <option value="2" selected>Motel</option>
+                  @else
+                      <option value="2">Motel</option>
+                  @endif
+                  @if($hotel->h_type_id == 3)
+                      <option value="3" selected>Guest House</option>
+                  @else
+                      <option value="3">Guest House</option>
+                  @endif
+                  @if($hotel->h_type_id == 4)
+                      <option value="4" selected>Inn</option>
+                  @else
+                      <option value="4">Inn</option>
+                  @endif
+                  @if($hotel->h_type_id == 5)
+                      <option value="5" selected>Hostel</option>
+                  @else
+                      <option value="5">Hostel</option>
+                  @endif
+              @else
+                  <option value="" disabled selected>{{trans('setup_hotel.place-type')}}</option>
+                  <option value="1">Hotel</option>
+                  <option value="2">Motel</option>
+                  <option value="3">Guest House</option>
+                  <option value="4">Inn</option>
+                  <option value="5">Hostel</option>
+              @endif
+          </select>
+          <p class="text-danger">{{$errors->first('h_type_id')}}</p>
+      </div>
+      <!-- end hotel category -->
+    </div>
+
+    <div class="row">
+        <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="name">{{trans('setup_hotel.name')}}<span class="require">*</span></label>
-        </div> --}}
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <label for="name">{{trans('setup_hotel.name')}}<span class="require">*</span></label>
-            <input type="text" class="form-control" id="name" name="name"
-                   placeholder="{{trans('setup_hotel.place-name')}}" value="{{ isset($hotel)? $hotel->name:Request::old('name') }}"/>
-            <p class="text-danger">{{$errors->first('name')}}</p>
-        </div>
-    {{-- </div>
+        </div> -->
+
+    <!-- </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="h_type_id">{{trans('setup_hotel.type')}}<span class="require">*</span></label>
-        </div> --}}
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <label for="h_type_id">{{trans('setup_hotel.type')}}<span class="require">*</span></label>
-            <select class="form-control" name="h_type_id" id="h_type_id">
-                @if(isset($hotel))
-                    @if($hotel->h_type_id == 1)
-                        <option value="1" selected>Hotel</option>
-                    @else
-                        <option value="1">Hotel</option>
-                    @endif
-                    @if($hotel->h_type_id == 2)
-                        <option value="2" selected>Motel</option>
-                    @else
-                        <option value="2">Motel</option>
-                    @endif
-                    @if($hotel->h_type_id == 3)
-                        <option value="3" selected>Guest House</option>
-                    @else
-                        <option value="3">Guest House</option>
-                    @endif
-                    @if($hotel->h_type_id == 4)
-                        <option value="4" selected>Inn</option>
-                    @else
-                        <option value="4">Inn</option>
-                    @endif
-                    @if($hotel->h_type_id == 5)
-                        <option value="5" selected>Hostel</option>
-                    @else
-                        <option value="5">Hostel</option>
-                    @endif
-                @else
-                    <option value="" disabled selected>{{trans('setup_hotel.place-type')}}</option>
-                    <option value="1">Hotel</option>
-                    <option value="2">Motel</option>
-                    <option value="3">Guest House</option>
-                    <option value="4">Inn</option>
-                    <option value="5">Hostel</option>
-                @endif
-            </select>
-            <p class="text-danger">{{$errors->first('h_type_id')}}</p>
-        </div>
-    {{-- </div>
+        </div> -->
+
+    <!-- </div>
 
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
             <label for="address">{{trans('setup_hotel.address')}}<span class="require">*</span></label>
-        </div> --}}
+        </div> -->
+
+        <!-- start star rate -->
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <label for="star">{{trans('setup_hotel.star')}}<span class="require">*</span></label>
             <select class="form-control" name="star" id="star">
@@ -131,12 +152,9 @@
             </select>
             <p class="text-danger">{{$errors->first('star')}}</p>
         </div>
-    </div>
+        <!-- end star rate -->
 
-    <div class="row">
-        {{-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="phone">{{trans('setup_hotel.phone')}}<span class="require">*</span></label>
-        </div> --}}
+        <!-- start number of floor -->
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <label for="number_of_floors">{{trans('setup_hotel.floor')}}<span class="require">*</span></label>
             <select class="form-control" name="number_of_floors" id="number_of_floors">
@@ -157,67 +175,49 @@
             </select>
             <p class="text-danger">{{$errors->first('number_of_floors')}}</p>
         </div>
-    {{-- </div>
+        <!-- end number of floor -->
 
-    <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="phone">{{trans('setup_hotel.phone')}}<span class="require">*</span></label>
-        </div> --}}
+        <!-- start phone -->
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <label for="phone">{{trans('setup_hotel.phone')}}<span class="require">*</span></label>
             <input type="text" class="form-control" id="phone" name="phone"
                    placeholder="{{trans('setup_hotel.place-phone')}}" value="{{ isset($hotel)? $hotel->phone:Request::old('phone') }}"/>
             <p class="text-danger">{{$errors->first('phone')}}</p>
         </div>
-    {{-- </div>
-
-    <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="fax">{{trans('setup_hotel.fax')}}</label>
-        </div> --}}
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <label for="fax">{{trans('setup_hotel.fax')}}</label>
-            <input type="text" class="form-control" id="fax" name="fax"
-                   placeholder="{{trans('setup_hotel.fax')}}" value="{{ isset($hotel)? $hotel->fax:Request::old('fax') }}"/>
-            <p class="text-danger">{{$errors->first('fax')}}</p>
-        </div>
+        <!-- end phone -->
     </div>
 
     <div class="row">
-        {{-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="latitude">{{trans('setup_hotel.latitude')}}</label>
-        </div> --}}
+        <!-- start website -->
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <label for="website">{{trans('setup_hotel.website')}}</label>
             <input type="text" class="form-control" id="website" name="website"
                    placeholder="{{trans('setup_hotel.place-website')}}" value="{{ isset($hotel)? $hotel->website:Request::old('website') }}"/>
             <p class="text-danger">{{$errors->first('website')}}</p>
         </div>
+        <!-- end website -->
 
+        <!-- start latitude -->
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <label for="latitude">{{trans('setup_hotel.latitude')}}<span class="require">*</span></label>
             <input type="text" class="form-control" id="latitude" name="latitude"
                    placeholder="{{trans('setup_hotel.place-latitude')}}" value="{{ isset($hotel)? $hotel->latitude:Request::old('latitude') }}"/>
             <p class="text-danger">{{$errors->first('latitude')}}</p>
         </div>
-   {{--  </div>
+        <!-- end latitude -->
 
-    <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="longitude">{{trans('setup_hotel.longitude')}}<span class="require">*</span></label>
-        </div> --}}
+        <!-- start longitude -->
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <label for="longitude">{{trans('setup_hotel.longitude')}}<span class="require">*</span></label>
             <input type="text" class="form-control" id="longitude" name="longitude"
                    placeholder="{{trans('setup_hotel.place-longitude')}}" value="{{ isset($hotel)? $hotel->longitude:Request::old('longitude') }}"/>
             <p class="text-danger">{{$errors->first('longitude')}}</p>
         </div>
+        <!-- end longitude -->
     </div>
 
     <div class="row">
-        {{-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="country_id">{{trans('setup_hotel.country')}}<span class="require">*</span></label>
-        </div> --}}
+        <!-- start country -->
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <label for="country_id">{{trans('setup_hotel.country')}}<span class="require">*</span></label>
             <select class="form-control" name="country_id" id="country_id">
@@ -238,12 +238,9 @@
             </select>
             <p class="text-danger">{{$errors->first('country_id')}}</p>
         </div>
-    {{-- </div>
+        <!-- end country -->
 
-    <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="city_id">{{trans('setup_hotel.city')}}<span class="require">*</span></label>
-        </div> --}}
+        <!-- start city -->
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <label for="city_id">{{trans('setup_hotel.city')}}<span class="require">*</span></label>
             <select class="form-control" name="city_id" id="city_id">
@@ -264,11 +261,9 @@
             </select>
             <p class="text-danger">{{$errors->first('city_id')}}</p>
         </div>
-   {{--  </div>
-    <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="township_id">{{trans('setup_hotel.township')}}<span class="require">*</span></label>
-        </div> --}}
+        <!-- end city -->
+
+        <!-- start township -->
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <label for="township_id">{{trans('setup_hotel.township')}}<span class="require">*</span></label>
             <select class="form-control" name="township_id" id="township_id">
@@ -289,12 +284,22 @@
             </select>
             <p class="text-danger">{{$errors->first('township_id')}}</p>
         </div>
+        <!-- end township -->
     </div>
 
     <div class="row">
-        {{-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="check_in_time">{{trans('setup_hotel.check-in')}}<span class="require">*</span></label>
-        </div> --}}
+      <!-- start fax -->
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <label for="fax">{{trans('setup_hotel.fax')}}</label>
+            <input type="text" class="form-control" id="fax" name="fax"
+                   placeholder="{{trans('setup_hotel.fax')}}" value="{{ isset($hotel)? $hotel->fax:Request::old('fax') }}"/>
+            <p class="text-danger">{{$errors->first('fax')}}</p>
+        </div>
+        <!-- end fax -->
+    </div>
+
+    <div class="row">
+      <!-- start check in -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
             <label for="check_in_time">{{trans('setup_hotel.check-in')}}<span class="require">*</span></label>
             <div class="input-group bootstrap-timepicker timepicker">
@@ -304,11 +309,9 @@
             </div>
             <p class="text-danger">{{$errors->first('check_in_time')}}</p>
         </div>
-    {{-- </div>
-    <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="check_out_time">{{trans('setup_hotel.check-out')}}<span class="require">*</span></label>
-        </div> --}}
+        <!-- end check in -->
+
+        <!-- start check out  -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
             <label for="check_out_time">{{trans('setup_hotel.check-out')}}<span class="require">*</span></label>
             <div class="input-group bootstrap-timepicker timepicker">
@@ -318,12 +321,11 @@
             </div>
             <p class="text-danger">{{$errors->first('check_out_time')}}</p>
         </div>
+        <!-- end check out -->
     </div>
 
     <div class="row">
-       {{--  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="breakfast_start_time">{{trans('setup_hotel.breakfast-start')}}<span class="require">*</span></label>
-        </div> --}}
+        <!-- start breakfast start time -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
             <label for="breakfast_start_time">{{trans('setup_hotel.breakfast-start')}}<span class="require">*</span></label>
             <div class="input-group bootstrap-timepicker timepicker">
@@ -333,12 +335,9 @@
             </div>
             <p class="text-danger">{{$errors->first('breakfast_start_time')}}</p>
         </div>
-   {{--  </div>
+        <!-- end breakfast start time -->
 
-    <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="breakfast_end_time">{{trans('setup_hotel.breakfast-end')}}<span class="require">*</span></label>
-        </div> --}}
+        <!-- start breakfast end time -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
             <label for="breakfast_end_time">{{trans('setup_hotel.breakfast-end')}}<span class="require">*</span></label>
             <div class="input-group bootstrap-timepicker timepicker">
@@ -348,31 +347,30 @@
             </div>
             <p class="text-danger">{{$errors->first('breakfast_end_time')}}</p>
         </div>
+        <!-- end breakfast end time -->
     </div>
 
     <div class="row">
-        {{-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="address">{{trans('setup_hotel.address')}}<span class="require">*</span></label>
-        </div> --}}
+        <!-- start hotel address -->
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <label for="address">{{trans('setup_hotel.address')}}<span class="require">*</span></label>
             <textarea rows="5" cols="50" class="form-control" id="address" name="address" placeholder="{{trans('setup_hotel.place-address')}}">{{ isset($hotel)? $hotel->address:Request::old('address') }}</textarea>
             <p class="text-danger">{{$errors->first('address')}}</p>
         </div>
+        <!-- end hotel address -->
     </div>
 
     <div class="row">
-        {{-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <label for="description">{{trans('setup_hotel.description')}}</label>
-        </div> --}}
+      <!-- start hotel description -->
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <label for="description">{{trans('setup_hotel.description')}}</label>
             <textarea rows="5" cols="50" class="form-control" id="description" name="description" placeholder="{{trans('setup_hotel.place-description')}}">{{ isset($hotel)? $hotel->description:Request::old('description') }}</textarea>
             <p class="text-danger">{{$errors->first('description')}}</p>
         </div>
+      <!-- end hotel description -->
     </div>
 
-    {{--Start File Upload--}}
+    <!-- Start File Upload -->
     <div class="row">
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <label for="photo" class="text_bold_black">{{trans('setup_hotel.logo')}}<span class="require">*</span></label>
@@ -401,22 +399,12 @@
         </div>
     </div>
     <br/>
-    {{--End File Upload--}}
+    <!-- End File Upload -->
 
-      {{--  @if(isset($hotel))
-            @if($h_nearby_places->count()==0)
-                @include('backend.hotel.nearby')
-                @else
-            @include('backend.hotel.nearby_edit')
-            @endif
-        @else
-            @include('backend.hotel.nearby')
-        @endif--}}
-
-    {{--Start hotel admin--}}
+    <!-- Start hotel admin -->
     <div class="row">
         <div class="panel panel-primary">
-        {{--Start Panel--}}
+        <!-- Start Panel -->
         <div class="panel-heading">
             <h3 class="panel-title">Hotel Admin</h3>
         </div>
@@ -430,23 +418,13 @@
                     <input required type="text" class="form-control" id="user_name" name="user_name" placeholder="Enter Staff Login User Name" value="{{ isset($hotel_admin)? $hotel_admin->user_name:Request::old('user_name') }}"/>
                     <p class="text-danger">{{$errors->first('user_name')}}</p>
                 </div>
-            {{-- </div>
 
-            <div class="row">
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                    <label for="display_name">Display Name<span class="require">*</span></label>
-                </div> --}}
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                     <label for="display_name">Display Name<span class="require">*</span></label>
                     <input required type="text" class="form-control" id="display_name" name="display_name" placeholder="Enter Staff Display Name" value="{{ isset($hotel_admin)? $hotel_admin->display_name:Request::old('display_name') }}"/>
                     <p class="text-danger">{{$errors->first('display_name')}}</p>
                 </div>
-            {{-- </div>
 
-            <div class="row">
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                    <label for="email">Email<span class="require">*</span></label>
-                </div> --}}
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                     <label for="email">Email<span class="require">*</span></label>
                     <input required type="email" class="form-control" id="user_email" name="user_email" placeholder="Enter Staff Email" value="{{ isset($hotel_admin)? $hotel_admin->email:Request::old('user_email') }}"/>
@@ -456,21 +434,11 @@
 
             @if(!isset($hotel_admin))
                 <div class="row">
-                    {{-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                        <label for="discount">Password<span class="require">*</span></label>
-                    </div> --}}
-
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <label for="discount">Password<span class="require">*</span></label>
                         <input required type="password" class="form-control" id="password" name="password" placeholder="Enter Password"/>
                         <p class="text-danger">{{$errors->first('password')}}</p>
                     </div>
-                {{-- </div>
-
-                <div class="row">
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                        <label for="discount">Confirm Password<span class="require">*</span></label>
-                    </div> --}}
 
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <label for="discount">Confirm Password<span class="require">*</span></label>
@@ -481,22 +449,18 @@
             @endif
 
             <div class="row">
-                {{--<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                    <label for="address">Address</label>
-                </div> --}}
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <label for="address">Address</label>
                     <textarea rows="4" cols="50"class="form-control" id="user_address" name="user_address" placeholder="Enter Staff Address">{{ isset($hotel_admin)? $hotel_admin->address:Request::old('user_address') }}</textarea>
-                    {{--<p class="text-danger">{{$errors->first('user_address')}}</p>--}}
                 </div>
             </div>
         </div>
-        {{--End Panel--}}
+        <!-- End Panel -->
     </div>
     </div>
-    {{--End hotel admin--}}
+    <!-- End hotel admin -->
 
-    {{--Start Tab Panel--}}
+    <!-- Start Tab Panel -->
     <div class="row">
         <div id="exTab2">
             <ul class="nav nav-tabs hotel">
@@ -511,16 +475,13 @@
                 </li>
                 <li><a href="#5" data-toggle="tab">Hotel Facility</a>
                 </li>
-                {{--  <li><a href="#6" data-toggle="tab">Hotel RoomType</a>
-                </li>  --}}
+                <!-- <li><a href="#6" data-toggle="tab">Hotel RoomType</a>
+                </li> -->
             </ul>
 
             <div class="tab-content ">
                 <div class="tab-pane active" id="1">
                         <div class="row">
-                            {{-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                <label for="hotel_id">{{trans('setup_hotelconfig.first-cancellation-day')}}<span class="require">*</span></label>
-                            </div> --}}
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                 <label for="hotel_id">{{trans('setup_hotelconfig.first-cancellation-day')}}<span class="require">*</span></label>
                                 <select class="form-control" name="first_cancellation_day" id="first_cancellation_day">
@@ -548,12 +509,7 @@
                                 </select>
                                 <p class="text-danger">{{$errors->first('first_cancellation_day')}}
                             </div>
-                        {{-- </div>
 
-                        <div class="row">
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                <label for="hotel_id">{{trans('setup_hotelconfig.second-cancellation-day')}}<span class="require">*</span></label>
-                            </div> --}}
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                 <label for="hotel_id">{{trans('setup_hotelconfig.second-cancellation-day')}}<span class="require">*</span></label>
                                 <select class="form-control" name="second_cancellation_day" id="second_cancellation_day">
@@ -584,9 +540,6 @@
                         </div>
 
                         <div class="row">
-                           {{--  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                <label for="name">{{trans('setup_hotelconfig.breakfast-fees')}}<span class="require">*</span></label>
-                            </div> --}}
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                 <label for="name">{{trans('setup_hotelconfig.breakfast-fees')}}<span class="require">*</span></label>
                                 @if(isset($hotel))
@@ -607,12 +560,7 @@
                                     <p class="text-danger">{{$errors->first('breakfast_fees')}}</p>
                                     @endif
                             </div>
-                        {{-- </div>
 
-                        <div class="row">
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                <label for="name">{{trans('setup_hotelconfig.tax')}}(%)<span class="require">*</span></label>
-                            </div> --}}
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                 <label for="name">{{trans('setup_hotelconfig.tax')}}(%)<span class="require">*</span></label>
                             @if(isset($hotel))
@@ -1152,8 +1100,11 @@
                     <div class="col-md-12 text-center">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 380px; height: 220px;">
-
+                              @if(isset($hotel))
+                                <img id='user_image_PopUp' src="{{'/images/upload/'.$hotel->logo}}" alt="Load Image"/>
+                              @else
                                 <img id='user_image_PopUp' src="" alt="Load Image"/>
+                              @endif
                             </div>
                             <div data-provides="fileinput">
                         <span class="btn btn-default btn-file">
@@ -1276,6 +1227,7 @@
             $('#hotel').validate({
                 rules: {
                     name                    : 'required',
+                    name_jp                 : 'required',
                     address                 : 'required',
                     h_type_id               : 'required',
                     phone                   : 'required',
@@ -1381,6 +1333,7 @@
                 },
                 messages: {
                     name                    : 'Name is required',
+                    name_jp                 : 'Name(JP) is required',
                     h_type_id               : 'Type is required',
                     address                 : 'Address is required',
                     phone                   : 'Phone is required',

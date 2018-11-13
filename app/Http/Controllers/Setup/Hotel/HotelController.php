@@ -158,6 +158,7 @@ class HotelController extends Controller
         try{
             $input                      = $request->all();
             $name                       = (Input::has('name')) ? Input::get('name') : "";
+            $name_jp                    = (Input::has('name_jp')) ? Input::get('name_jp') : "";
             $type                       = (Input::has('h_type_id')) ? Input::get('h_type_id') : "";
             $address                    = (Input::has('address')) ? Input::get('address') : "";
             $phone                      = (Input::has('phone')) ? Input::get('phone') : "";
@@ -391,6 +392,7 @@ class HotelController extends Controller
             /********** Start creating Hotel Object  **********/
             $paramObj                           = new Hotel();
             $paramObj->name                     = $name;
+            $paramObj->name_jp                  = $name_jp;
             $paramObj->h_type_id                = $type;
             $paramObj->address                  = $address;
             $paramObj->phone                    = $phone;
@@ -681,6 +683,7 @@ class HotelController extends Controller
             $id                 = (Input::has('id')) ? Input::get('id') : "";
 
             $name               = (Input::has('name')) ? Input::get('name') : "";
+            $name_jp            = (Input::has('name_jp')) ? Input::get('name_jp') : "";
             $type               = (Input::has('h_type_id')) ? Input::get('h_type_id') : "";
             $address            = (Input::has('address')) ? Input::get('address') : "";
             $phone              = (Input::has('phone')) ? Input::get('phone') : "";
@@ -938,6 +941,7 @@ class HotelController extends Controller
 
             $paramObj                           = $this->repo->getObjByID($id);
             $paramObj->name                     = $name;
+            $paramObj->name_jp                  = $name_jp;
             $paramObj->h_type_id                = $type;
             $paramObj->address                  = $address;
             $paramObj->phone                    = $phone;
