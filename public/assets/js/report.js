@@ -45,6 +45,8 @@ function check_year(from_year, to_year){
 function report_search_with_type(module){
     var type        = $("#type").val();
     var status      = $('#status').val();
+    var customer    = $('#customer').val();
+
     var form_action = "";
 
     if(type == "yearly"){           //type is yearly
@@ -137,6 +139,10 @@ function report_search_with_type(module){
                 if(status != undefined){
                     form_action += "/"+status;
                 }
+
+                if(customer != undefined){
+                    form_action += "/"+customer;
+                }
             }
             else{
                 sweetAlert("Oops...", "Please Choose the valid date !");
@@ -151,6 +157,8 @@ function report_search_with_type(module){
 function report_export_with_type(module){
     var type        = $("#type").val();
     var status      = $('#status').val();
+    var customer    = $('#customer').val();
+
     var form_action = "";
     if(type == "yearly"){           //type is yearly
         var from_year = $("#from_year").val();
@@ -175,6 +183,9 @@ function report_export_with_type(module){
                 form_action = "/backend_mps/"+module+"/exportexcel/" + type + "/" + from_year + "/" + to_year;
                 if(status != undefined){
                     form_action += "/"+status;
+                }
+                if(customer != undefined){
+                    form_action += "/"+customer;
                 }
             }
             else{

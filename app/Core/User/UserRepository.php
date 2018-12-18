@@ -203,4 +203,13 @@ class UserRepository implements UserRepositoryInterface
                         ->get();
         return $result;
     }
+
+    public function getCustomers()
+    {
+        $customers = User::whereNull('deleted_at')
+                        ->where('role_id','=', 4)
+                        ->where('status','=', 1)
+                        ->get();
+        return $customers;
+    }
 }

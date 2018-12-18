@@ -593,14 +593,14 @@ Route::group(['middleware' => 'web'], function () {
                 'as'=>'backend_mps/bookingreport',
                 'uses'=>'Report\BookingReportController@index'
             ));
-            Route::get('bookingreport/search/{type?}/{from?}/{to?}/{status?}',
+            Route::get('bookingreport/search/{type?}/{from?}/{to?}/{status?}/{customer?}',
                 array(
-                    'as'=>'backend_mps/bookingreport/search/{type?}/{from?}/{to?}/{status?}',
+                    'as'=>'backend_mps/bookingreport/search/{type?}/{from?}/{to?}/{status?}/{customer?}',
                     'uses'=>'Report\BookingReportController@search'
                 ));
-            Route::get('bookingreport/exportexcel/{type?}/{from?}/{to?}/{status?}',
+            Route::get('bookingreport/exportexcel/{type?}/{from?}/{to?}/{status?}/{customer?}',
                 array(
-                    'as'=>'backend_mps/bookingreport/exportexcel/{type?}/{from?}/{to?}/{status?}',
+                    'as'=>'backend_mps/bookingreport/exportexcel/{type?}/{from?}/{to?}/{status?}/{customer?}',
                     'uses'=>'Report\BookingReportController@excel'
                 ));
             Route::get('bookingreport/room_detail/{id}',array(

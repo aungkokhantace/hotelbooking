@@ -75,7 +75,25 @@
     </div>
     <br>
 
-    {{--Start Datepicker--}}
+    <!-- start user filter -->
+    <div class="row">
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+            <label for="status" class="text_bold_black">Customer</label>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <select class="form-control" id="customer">
+                <option value=0>All</option>
+                @foreach($customers as $customer)
+                <option value = {{$customer->id}} {{isset($customer_id) && $customer_id == $customer->id ? 'selected':'' }}>{{ucwords($customer->first_name.' '.$customer->last_name)}}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+    <br>
+    <!-- end user filter -->
+
+    <!-- Start Datepicker -->
     <div class="row days" style="display:none;">
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <label for="from_date" class="text_bold_black">From Date</label>
@@ -104,10 +122,10 @@
             </div>
         </div>
     </div>
-    {{--End Datepicker--}}
+    <!-- End Datepicker -->
     <br class="days">
 
-    {{--Start Monthpicker--}}
+    <!-- Start Monthpicker -->
     <div class="row months" style="display:none;">
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <label for="from_month" class="text_bold_black">From Month</label>
@@ -136,10 +154,10 @@
             </div>
         </div>
     </div>
-    {{--End Monthpicker--}}
+    <!-- End Monthpicker -->
     <br class="months">
 
-    {{--Start Yearpicker--}}
+    <!-- Start Yearpicker -->
     <div class="row years" style="display:none;">
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             <label for="from_year" class="text_bold_black">From Year</label>
@@ -168,7 +186,7 @@
             </div>
         </div>
     </div>
-    {{--End Yearpicker--}}
+    <!-- End Yearpicker -->
     <br class="years">
 
     <!-- <div class="row">

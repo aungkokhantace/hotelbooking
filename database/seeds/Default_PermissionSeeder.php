@@ -290,8 +290,8 @@ class Default_PermissionSeeder extends Seeder
             ['id'=>362,'module'=>'Report','name'=>'Sale Summary Report Excel','description'=>'Sale Summary Report Excel','url'=>'backend_mps/salesummaryreport/exportexcel/{type?}/{from?}/{to?}'],
 
             ['id'=>370,'module'=>'Report','name'=>'Booking Report','description'=>'Booking Report Listing','url'=>'backend_mps/bookingreport'],
-            ['id'=>371,'module'=>'Report','name'=>'Booking Report Search','description'=>'Booking Report Search','url'=>'backend_mps/bookingreport/search/{type?}/{from?}/{to?}/{status?}'],
-            ['id'=>372,'module'=>'Report','name'=>'Booking Report Excel','description'=>'Booking Report Excel','url'=>'backend_mps/bookingreport/exportexcel/{type?}/{from?}/{to?}/{status?}'],
+            ['id'=>371,'module'=>'Report','name'=>'Booking Report Search','description'=>'Booking Report Search','url'=>'backend_mps/bookingreport/search/{type?}/{from?}/{to?}/{status?}/{customer?}'],
+            ['id'=>372,'module'=>'Report','name'=>'Booking Report Excel','description'=>'Booking Report Excel','url'=>'backend_mps/bookingreport/exportexcel/{type?}/{from?}/{to?}/{status?}/{customer?}'],
             ['id'=>373,'module'=>'Report','name'=>'Booking Room Detail','description'=>'Booking Room Detail Listing','url'=>'backend_mps/bookingreport/room_detail/{id}'],
 
             ['id'=>500,'module'=>'Backend','name'=>'Multi_Language','description'=>'Backend Multi_Language','url'=>'backend_mps/language'],

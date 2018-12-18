@@ -58,6 +58,14 @@
 </script>
 <script>
     $(document).ready(function(){
+        //login when "Enter" key is pressed
+        $(document).bind('keypress', function(e) {
+            if(e.keyCode==13){
+                 $('#login-btn-before-book-now').trigger('click');
+             }
+        });
+        //login when "Enter" key is pressed
+
         // $('.login-btn').click(function(){
         $('#login-btn-before-book-now').click(function(){
             var serializedData = $('#login_before_book_now').serialize();

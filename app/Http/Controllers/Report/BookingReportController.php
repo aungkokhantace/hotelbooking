@@ -15,6 +15,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 use App\Setup\Hotel\HotelRepository;
 use App\Setup\BookingRequest\BookingRequestRepository;
+use App\Core\User\UserRepository;
 
 class BookingReportController extends Controller
 {
@@ -32,9 +33,11 @@ class BookingReportController extends Controller
             $to_date            = null;
             $grandTotal         = 0.00;
 
+            $bookingRoomRepo    = new BookingRoomRepository();
+            $userRepo           = new UserRepository();
+
             $bookings           = $this->repo->bookingReport($type,$from_date,$to_date);
 
-            $bookingRoomRepo    = new BookingRoomRepository();
             $booking_room       = $bookingRoomRepo->getAllBookingRoom();
 
             // Start original Code
@@ -83,14 +86,21 @@ class BookingReportController extends Controller
                 }
             }
             //end new code(Added by AKK at 2018-03-28 01:32 PM)
+
+            //start getting frontend users
+            $customers = $userRepo->getCustomers();
+            //end getting frontend users
+
+
             return view('report.booking_report')->with('bookings',$bookings)
-                                                ->with('grandTotal',$grandTotal);
+                                                ->with('grandTotal',$grandTotal)
+                                                ->with('customers',$customers);
         }
         return redirect('/');
 
     }
 
-    public function search($type = null, $from = null, $to = null,$status = null){
+    public function search($type = null, $from = null, $to = null,$status = null, $customer = null){
         if(Auth::guard('User')->check()){
             $from_year      = null;
             $to_year        = null;
@@ -99,6 +109,9 @@ class BookingReportController extends Controller
             $from_date      = null;
             $to_date        = null;
             $grandTotal     = 0.00;
+
+            $bookingRoomRepo    = new BookingRoomRepository();
+            $userRepo           = new UserRepository();
 
             if($type == "yearly"){
                 $from_year  = $from;
@@ -113,9 +126,8 @@ class BookingReportController extends Controller
                 $to_date    = $to;
             }
 
-            $bookings           = $this->repo->bookingReport($type, $from, $to,$status);
+            $bookings           = $this->repo->bookingReport($type, $from, $to,$status,$customer);
 
-            $bookingRoomRepo    = new BookingRoomRepository();
             $booking_room       = $bookingRoomRepo->getAllBookingRoom();
 
             //Start old code
@@ -161,6 +173,10 @@ class BookingReportController extends Controller
             }
             //end new code(Added by AKK at 2018-03-28 01:32 PM)
 
+            //start getting frontend users
+            $customers = $userRepo->getCustomers();
+            //end getting frontend users
+
             return view('report.booking_report')->with('bookings',$bookings)
                 ->with('from_year',$from_year)
                 ->with('from_month',$from_month)
@@ -170,16 +186,18 @@ class BookingReportController extends Controller
                 ->with('to_date',$to_date)
                 ->with('grandTotal',$grandTotal)
                 ->with('type',$type)
+                ->with('customer_id',$customer)
+                ->with('customers',$customers)
                 ->with('status',$status);
         }
         return redirect('/');
     }
 
-    public function excel($type = null, $from = null, $to = null, $status = null){
+    public function excel($type = null, $from = null, $to = null, $status = null, $customer = null){
         if(Auth::guard('User')->check()){
             ob_end_clean();
             ob_start();
-            $bookings           = $this->repo->bookingReport($type, $from, $to, $status);
+            $bookings           = $this->repo->bookingReport($type, $from, $to, $status, $customer);
 
             $bookingRoomRepo    = new BookingRoomRepository();
             $booking_room       = $bookingRoomRepo->getAllBookingRoom();

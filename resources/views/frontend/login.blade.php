@@ -58,6 +58,14 @@
 </script>
 <script>
     $(document).ready(function(){
+        //login when "Enter" key is pressed
+        $(document).bind('keypress', function(e) {
+            if(e.keyCode==13){
+                 $('.login-btn').trigger('click');
+             }
+        });
+        //login when "Enter" key is pressed
+
         $('.login-btn').click(function(){
             var serializedData = $('#login').serialize();
             // console.log('serialll-login '+serializedData);

@@ -124,7 +124,7 @@ class ReportRepository implements ReportRepositoryInterface
 //         return $result;
 //     }
 
-    public function bookingReport($type=null, $from=null, $to=null, $status=null){
+    public function bookingReport($type=null, $from=null, $to=null, $status=null, $customer=null){
         $query      = Booking::query();
         $query      = $query->leftjoin('core_users','bookings.user_id','=','core_users.id');
         $query      = $query->select('bookings.*','core_users.first_name','core_users.last_name', DB::raw('DATE(bookings.created_at) as date'));
@@ -162,6 +162,10 @@ class ReportRepository implements ReportRepositoryInterface
 
         if($status != 0){
             $query = $query->where('bookings.status','=',$status);
+        }
+
+        if($customer != 0){
+            $query = $query->where('bookings.user_id','=',$customer);
         }
 
         $query      = $query->whereNull('bookings.deleted_at');
