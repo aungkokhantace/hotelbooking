@@ -74,6 +74,9 @@ function report_search_with_type(module){
                 if(status != undefined){
                     form_action += "/"+status;
                 }
+                if(customer != undefined){
+                    form_action += "/"+customer;
+                }
             }
             else{
                 sweetAlert("Oops...", "Please Choose the valid year !");
@@ -105,6 +108,9 @@ function report_search_with_type(module){
 
                 if(status != undefined){
                     form_action += "/"+status;
+                }
+                if(customer != undefined){
+                    form_action += "/"+customer;
                 }
             }
             else{
@@ -218,6 +224,9 @@ function report_export_with_type(module){
                 if(status != undefined){
                     form_action += "/"+status;
                 }
+                if(customer != undefined){
+                    form_action += "/"+customer;
+                }
             }
             else{
                 sweetAlert("Oops...", "Please Choose the valid month !");
@@ -247,6 +256,9 @@ function report_export_with_type(module){
                 form_action = "/backend_mps/"+module+"/exportexcel/" + type + "/" + from_date + "/" + to_date;
                 if(status != undefined){
                     form_action += "/"+status;
+                }
+                if(customer != undefined){
+                    form_action += "/"+customer;
                 }
             }
             else{
