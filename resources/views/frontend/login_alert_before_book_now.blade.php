@@ -8,9 +8,11 @@
                 <button type="button" class="close" data-dismiss="modal">⨂</button>
             </div>
             <h2 style="text-align:center;">{{trans('frontend_header.login')}}</h2>
-            <div id="show-error" class="col-sm-12"></div>
+            <div id="show-error-before-book-now" class="col-sm-12"></div>
             <!-- <form class="form-horizontal"> -->
             {!! Form::open(array('url' => '/login', 'class'=> 'form-horizontal', 'id'=>'login_before_book_now')) !!}
+            <input type="hidden" id="login_popup_before_book_now_flag" name="login_popup_before_book_now_flag" value="0">
+
                 <div class="formgroup">
                     <div class="col-sm-12 pd_lf_5">
                         <input type="email" class="formcontrols" id="login_email_before_book_now" placeholder="{{trans('frontend_header.email_address')}}" name="email">
@@ -58,18 +60,12 @@
 </script>
 <script>
     $(document).ready(function(){
-        //login when "Enter" key is pressed
-        $(document).bind('keypress', function(e) {
-            if(e.keyCode==13){
-                 $('#login-btn-before-book-now').trigger('click');
-             }
-        });
-        //login when "Enter" key is pressed
+        
 
         // $('.login-btn').click(function(){
         $('#login-btn-before-book-now').click(function(){
             var serializedData = $('#login_before_book_now').serialize();
-            // console.log('serialllizz '+serializedData);
+
             $.ajax({
                 url: '/login',
                 type: 'POST',
@@ -83,11 +79,12 @@
                         $("#frm_booking").submit();
                     }
                     else if(data.aceplusStatusCode == '401'){
+
                         $('.alert').remove();
                         var showError    = '<p class="alert alert-danger">';
                         showError       += 'Email or password is incorrect!';
                         showError       += '</p>';
-                        $('#show-error').append(showError);
+                        $('#show-error-before-book-now').append(showError);
                         return;
                     }
                     else{

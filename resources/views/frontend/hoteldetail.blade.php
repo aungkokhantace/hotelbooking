@@ -758,6 +758,10 @@
                 if(logged_in_flag == 0){
                   //alert customer to log in
                   // $('#loginModal').modal('show');
+
+                  //set login_popup_before_book_now_flag to 1 (to identify which login popup is appearing)
+                  $('#login_popup_before_book_now_flag').val(1);
+
                   $('#loginBeforeBookNowModal').modal('show');
                 }
                 else{

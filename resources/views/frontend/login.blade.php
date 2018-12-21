@@ -11,6 +11,7 @@
             <div id="show-error" class="col-sm-12"></div>
             <!-- <form class="form-horizontal"> -->
             {!! Form::open(array('url' => '/login', 'class'=> 'form-horizontal', 'id'=>'login')) !!}
+
                 <div class="formgroup">
                     <div class="col-sm-12 pd_lf_5">
                         <input type="email" class="formcontrols" id="login_email" placeholder="{{trans('frontend_header.email_address')}}" name="email">
@@ -61,7 +62,21 @@
         //login when "Enter" key is pressed
         $(document).bind('keypress', function(e) {
             if(e.keyCode==13){
-                 $('.login-btn').trigger('click');
+                 // $('#login-btn-before-book-now').trigger('click');
+                 // console.log('enter');
+                 // console.log($('#login_popup_before_book_now_flag').val());
+                 //check whether login form is main frontend login form or not
+                 if($('#login_popup_before_book_now_flag').val() == 1){
+                   // console.log('if');
+                   $('#login-btn-before-book-now').trigger('click');
+
+                   // reset flag value back to 0 after login
+                   $('#login_popup_before_book_now_flag').val(0);
+                 }
+                 else{
+                   // console.log('else');
+                   $('.login-btn').trigger('click');
+                 }
              }
         });
         //login when "Enter" key is pressed

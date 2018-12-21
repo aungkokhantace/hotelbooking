@@ -241,14 +241,14 @@
                                                         <div class="payment_formgroup">
                                                             <div class="col-sm-3 pd_rg_10 flast">
                                                                 {{--<input type="text" class="formcontrols" id="name" placeholder="First name, Last name">--}}
-                                                                <input type="text" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_firstname"}}" name="{{$available_room_category->id."_".($i+1)."_firstname"}}" placeholder="{{trans('frontend_header.first_name')}}" autocomplete="off">
+                                                                <input type="text" class="formcontrols someone_else_info" id="{{$available_room_category->id."_".($i+1)."_firstname"}}" name="{{$available_room_category->id."_".($i+1)."_firstname"}}" placeholder="{{trans('frontend_header.first_name')}}" autocomplete="off">
                                                             </div>
                                                              <div class="col-sm-3 pd_rg_10 flast">
                                                                 {{--<input type="text" class="formcontrols" id="name" placeholder="First name, Last name">--}}
-                                                                <input type="text" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_lastname"}}" name="{{$available_room_category->id."_".($i+1)."_lastname"}}" placeholder="{{trans('frontend_header.last_name')}}" autocomplete="off">
+                                                                <input type="text" class="formcontrols someone_else_info" id="{{$available_room_category->id."_".($i+1)."_lastname"}}" name="{{$available_room_category->id."_".($i+1)."_lastname"}}" placeholder="{{trans('frontend_header.last_name')}}" autocomplete="off">
                                                             </div>
                                                             <div class="col-sm-6 pd_lf_5 flast">
-                                                                <input type="email" class="formcontrols" id="{{$available_room_category->id."_".($i+1)."_email"}}" name="{{$available_room_category->id."_".($i+1)."_email"}}" placeholder="{{trans('frontend_header.email_address')}}" >
+                                                                <input type="email" class="formcontrols someone_else_info" id="{{$available_room_category->id."_".($i+1)."_email"}}" name="{{$available_room_category->id."_".($i+1)."_email"}}" placeholder="{{trans('frontend_header.email_address')}}" >
                                                             </div>
                                                         </div>
 
@@ -459,6 +459,18 @@
         $(document).ready(function(){
             //validate form
             $('#enter_detail_form').validate({
+              // validate only if user is booking for someone else
+              // details: {
+              //       required: "#other:checked"
+              //   }
+
+
+
+              // jQuery.validator.addClassRules("someone-else-info", {
+              //   required: true
+              // });
+              // validate only if user is booking for someone else
+
                 rules: {
                     first_name          : 'required',
                     last_name           : 'required',
@@ -471,6 +483,8 @@
 //                        email           : true,
 //                        equalTo         : "#email_address"
 //                        },
+
+
 
                 },
                 messages: {
@@ -490,6 +504,17 @@
                     $('input[type="submit"]').attr('disabled','disabled');
                     form.submit();
                 }
+            });
+
+            // $(".someone-else-info").rules("add", {
+            //   required:true
+            // });
+
+            $.validator.addClassRules({
+                someone_else_info:{
+                // required: true
+                required: "#inlineRadio3:checked"
+              }
             });
         });
 
