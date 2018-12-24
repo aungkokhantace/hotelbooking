@@ -180,8 +180,9 @@ $companyLogo = \App\Core\Check::companyLogo();
         </tr>
     </table>
     <br style="line-height: 50px;">
+    <br>
     <table>
-        <tr>
+        <!-- <tr>
             <td width="50%">
                 <span style="font-size:13px;font-weight:bold;">{{trans('frontend_details.hotel_policies')}}</span>
                 <div style="width: 45%">
@@ -198,7 +199,29 @@ $companyLogo = \App\Core\Check::companyLogo();
             </td>
             @endif
             <td></td>
+        </tr> -->
+        <tr>
+            <td>
+                <span style="font-size:13px;font-weight:bold;">{{trans('frontend_details.hotel_policies')}}</span>
+                <div style="width: 45%; text-align:justify;">
+                    {!! !is_null($h_config) && !is_null($h_config->hotel_policies)?$h_config->hotel_policies:'' !!}
+                    {!! !is_null($hotel->policy) ? $hotel->policy:'' !!}
+                </div>
+            </td>
         </tr>
+        <tr>
+          @if(isset($b_request_arr) && count($b_request_arr)>0)
+          <td>
+              <b>{{trans('frontend_details.special_request')}}</b><br>
+              @foreach($b_request_arr as $request)
+                  {!! '-'.$request !!}<br>
+              @endforeach
+          </td>
+          @else
+            <td></td>
+          @endif
+        </tr>
+
     </table>
 </body>
 </html>
