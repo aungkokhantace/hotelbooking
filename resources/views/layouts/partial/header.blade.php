@@ -18,6 +18,8 @@ $companyLogo = \App\Core\Check::companyLogo();
     <meta content="" name="author" />
     <title>{{$companyName}} - @yield('title')</title>
 
+    <link rel="shortcut icon" href="{{$companyLogo}}"/>
+
     <link href="/assets/css/AdminLTE.css" rel="stylesheet">
     <link media="all" type="text/css" rel="stylesheet" href="/assets/js/datepicker/datepicker3.css">
     <link media="all" type="text/css" rel="stylesheet" href="/assets/css/fullcalendar.css">

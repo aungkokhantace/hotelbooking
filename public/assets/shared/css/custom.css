@@ -533,3 +533,7 @@ remove_arrow::-webkit-outer-spin-button{
 .header-service-dropdown{
   margin-top:-1px;
 }
+
+.fit_in_div{
+  max-width:100%;
+}

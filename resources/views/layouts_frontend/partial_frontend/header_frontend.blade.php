@@ -21,6 +21,8 @@ $companyLogo    = \App\Core\Check::companyLogo();
 
     <title>Myanmar Polestar</title>
 
+    <link rel="shortcut icon" href="{{$companyLogo}}"/>
+
     <!-- for entire site font -->
     <link media="all" type="text/css" rel="stylesheet" href="/assets/shared/css/font-style.css">
     <!-- for entire site font -->

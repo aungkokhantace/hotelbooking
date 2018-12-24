@@ -17,7 +17,7 @@
                     <div class="row">
                         <span class="glyphicon glyphicon-map-marker"></span>{{trans('frontend_details.direction_to')}}<br>
                         <span>{{$hotel->name}}</span><br>
-                        <img src="/images/upload/{{$hotel->logo}}"><br>
+                        <img class="fit_in_div" src="/images/upload/{{$hotel->logo}}"><br>
                         {{$hotel->address}}<br>
                         {{trans('frontend_details.latitude')}} : {{$hotel->latitude}}, {{trans('frontend_details.longitude')}} : {{$hotel->longitude}}
                     </div>
